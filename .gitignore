@@ -95,3 +95,6 @@ fabric.properties
 hs_err_pid*
 
 /apriori-qa.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
