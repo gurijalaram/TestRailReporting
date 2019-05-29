@@ -1,0 +1,34 @@
+<configuration>
+
+    <appender name="startupDailyRolloverAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/%d/${methodName}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+
+
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%thread] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="startupDailyRolloverAppender" />
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <logger name="org.hibernate">
+        <level value="info" />
+    </logger>
+
+    <logger name="org.hibernate.SQL" level="DEBUG" />
+
+</configuration>
