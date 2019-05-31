@@ -7,6 +7,11 @@
 
 NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited to repo so for local run, you don't need to point to anything. It will always take from repo
 
+## Building the project (you will need this for the very first time after you clone repo):
+
+* Create a maven build config with apbuild as the base directory
+* Enter the following goals `clean install -DskipTests=true`
+
 ## How to run a test:
 
 1. Running a single test or test class in your IDE
@@ -16,8 +21,3 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 	* Select the module where the test is as the base directory
 	* Enter the following goals `clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=LOCAL -DthreadCount=3`. To run more tests in parallel, change `-DthreadCoun=t` number
 	* To see supported browsers, check `DriverFactory.java`
-
-## Building the project:
-
-* Create a maven build config with apbuild as the base directory
-* Enter the following goals `clean install -DskipTests=true`
