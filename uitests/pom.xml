@@ -14,6 +14,13 @@
         <relativePath>../build</relativePath>
     </parent>
 
+    <properties>
+        <!-- <browser>chrome</browser> -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <include.tests>placeholder</include.tests>
+        <exclude.tests1>placeholder1</exclude.tests1>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.apriori.qa</groupId>
@@ -22,10 +29,31 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
         </dependency>
     </dependencies>
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <inherited>true</inherited>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
     <build>
         <plugins>
@@ -33,6 +61,43 @@
                 <inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>exclude.tests1</name>
+                            <value>${exclude.tests1}</value>
+                        </property>
+                    </systemProperties>
+                    <trimStackTrace>false</trimStackTrace>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>func-test-execution</id>
+                        <phase>test</phase>
+                        <configuration>
+                            <skip>false</skip>
+                            <groups>${include.groups}</groups>
+                            <includes>
+                                <include>**/main/**/*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <configuration>
+                    <webAppSourceDirectory>${project.build.directory}/site/allure-maven-plugin</webAppSourceDirectory>
+                    <stopKey>stop</stopKey>
+                    <stopPort>${jetty.stop.port}</stopPort>
+                </configuration>
             </plugin>
         </plugins>
     </build>

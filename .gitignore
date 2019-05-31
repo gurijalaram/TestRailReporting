@@ -103,5 +103,8 @@ hs_err_pid*
 .idea/modules.xml
 .idea/vcs.xml
 /build/.idea/
+.idea/
 target/
 logs/
+allure-results/
+screenshots/
