@@ -1,9 +1,9 @@
-package main.java;
+package main.java.login;
 
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
-import main.java.pages.LoginPage;
-import main.java.pages.PrivateWorkspacePage;
+import main.java.pages.explore.PrivateWorkspacePage;
+import main.java.pages.login.LoginPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class LoginTests extends TestBase {
     }
 
     /**
-     * Test successuful login
+     * Test successful login
      */
     @Test
     public void testLogin() {

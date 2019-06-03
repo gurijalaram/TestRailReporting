@@ -15,7 +15,7 @@ public class ConcurrentTestRunner extends BlockJUnit4ClassRunner {
 
     public ConcurrentTestRunner(Class<?> klass) throws InitializationError {
         super(klass);
-        logger_ConcurrentTestRunner.debug("ConcurrentTestRunner contructor");
+        logger_ConcurrentTestRunner.debug("ConcurrentTestRunner constructor");
         String threads = "1";
         if (StringUtils.isNotEmpty(System.getProperty("threadCount"))) {
             threads = System.getProperty("threadCount");

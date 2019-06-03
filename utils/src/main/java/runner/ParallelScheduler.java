@@ -18,12 +18,12 @@ class ParallelScheduler implements RunnerScheduler {
     private ExecutorService executor;
 
     public ParallelScheduler(String threadCount) {
-        logger.debug("ThreadPoolScheduler contructor start");
+        logger.debug("ThreadPoolScheduler constructor start");
 
         int numThreads = Integer.parseInt(threadCount);
         logger.debug("ThreadPoolScheduler number of threads: " + numThreads);
         executor = Executors.newFixedThreadPool(numThreads);
-        logger.debug("ThreadPoolScheduler contructor end");
+        logger.debug("ThreadPoolScheduler constructor end");
     }
 
     public void finished() {

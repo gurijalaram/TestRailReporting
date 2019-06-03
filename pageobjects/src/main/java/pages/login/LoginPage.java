@@ -1,6 +1,7 @@
-package main.java.pages;
+package main.java.pages.login;
 
 import main.java.constants.Constants;
+import main.java.pages.explore.PrivateWorkspacePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -88,16 +89,16 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         submitLogin();
     }
 
-    private void enterEmail(String emailaddress) {
+    private void enterEmail(String emailAddress) {
         email.click();
         pageUtils.clearInput(email);
-        email.sendKeys(emailaddress);
+        email.sendKeys(emailAddress);
     }
 
-    private void enterPassword(String passsword) {
+    private void enterPassword(String passWord) {
         password.click();
         pageUtils.clearInput(password);
-        password.sendKeys(passsword);
+        password.sendKeys(passWord);
     }
 
     private void submitLogin() {
