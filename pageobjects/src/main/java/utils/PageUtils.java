@@ -176,8 +176,7 @@ public class PageUtils {
     /*
      * @param scrollDown - true scrolls down and the element is visible on top of the page - false
      * scroll to the top of the page (try to scroll as high that the given element is in the bottom
-     * of the screen) this method is needed for the new Forsight bcz some of the elements are hidden
-     * from the nav bar and are not clickable in a point
+     * of the screen)
      */
     public WebElement scrollWithJavaScript(WebElement element, boolean scrollDown) {
         steps_logger.debug("Scroll down");
