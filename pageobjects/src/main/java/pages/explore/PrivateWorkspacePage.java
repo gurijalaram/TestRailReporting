@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,30 +43,6 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
     @FindBy(css = "button[data-ap-comp='togglePreviewButton']")
     WebElement previewButton;
 
-    @FindBy(css = "input[data-ap-field='privateWorkspace']")
-    WebElement privateCheckBox;
-
-    @FindBy(css = "input[data-ap-field='publicWorkspace']")
-    WebElement publicCheckBox;
-
-    @FindBy(css = "input[data-ap-field='partScenarioType']")
-    WebElement partCheckBox;
-
-    @FindBy(css = "input[data-ap-field='assemblyScenarioType']")
-    WebElement assemblyCheckBox;
-
-    @FindBy(css = "input[data-ap-field='comparisonScenarioType']")
-    WebElement comparisonCheckBox;
-
-    @FindBy(css = "select[data-ap-field='criteria0.criteriaName']")
-    WebElement attributeDropdown;
-
-    @FindBy(css = "select[data-ap-field='criteria0.operation']")
-    WebElement conditionDropdown;
-
-    @FindBy(css = "input[data-ap-field='criteria0.value']")
-    WebElement valueInput;
-
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -93,47 +68,22 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
         return deleteButton.isDisplayed();
     }
 
-    public PrivateWorkspacePage filterPrivateCriteria(String attribute, String condition, String input) {
+    public PrivateWorkspacePage filterPrivateCriteria(String type, String attribute, String condition, String value) {
         filterButton.click();
-        selectPrivateWorkSpace();
-        selectPartType();
-        selectAttribute(attribute);
-        selectCondition(condition);
-        setValueInput(input);
+        new FilterCriteriaPage(driver).setScenarioType(type)
+            .selectAttribute(attribute)
+            .selectCondition(condition)
+            .setTypeOfValue(value);
         return new PrivateWorkspacePage(driver);
     }
 
-    private void selectPrivateWorkSpace() {
-        pageUtils.waitForElementToAppear(privateCheckBox).click();
-    }
-
-    private void selectPublicWorkspace() {
-        publicCheckBox.click();
-    }
-
-    private void selectPartType() {
-        partCheckBox.click();
-    }
-
-    private void selectAssemblyType() {
-        assemblyCheckBox.click();
-    }
-
-    private void selectComparisonType() {
-        comparisonCheckBox.click();
-    }
-
-    private void selectAttribute(String attribute) {
-        new Select(attributeDropdown).selectByVisibleText(attribute);
-    }
-
-    private void selectCondition(String condition) {
-        new Select(conditionDropdown).selectByVisibleText(condition);
-    }
-
-    private void setValueInput(String input) {
-        valueInput.click();
-        pageUtils.clearInput(valueInput);
-        valueInput.sendKeys(input);
+    public PrivateWorkspacePage filterPublicCriteria(String type, String attribute, String condition, String value) {
+        filterButton.click();
+        new FilterCriteriaPage(driver).selectPublicWorkspace()
+            .setScenarioType(type)
+            .selectAttribute(attribute)
+            .selectCondition(condition)
+            .setTypeOfValue(value);
+        return new PrivateWorkspacePage(driver);
     }
 }
