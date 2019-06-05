@@ -16,6 +16,15 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     WebElement newFileDropdown;
 
+    @FindBy(css = "button[data-ap-comp='newComponentButton']")
+    WebElement componentButton;
+
+    @FindBy(css = "button[data-ap-comp='saveAsButton']")
+    WebElement scenarioButton;
+
+    @FindBy(css = "button[data-ap-comp='newComparisonButton']")
+    WebElement comparisonButton;
+
     @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
     WebElement publishButton;
 
@@ -66,6 +75,13 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
 
     public boolean isDeleteButtonPresent() {
         return deleteButton.isDisplayed();
+    }
+
+    public PrivateWorkspacePage uploadFile(String scenarioName, String filePath, String fileName) {
+        newFileDropdown.click();
+        componentButton.click();
+        new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
+        return this;
     }
 
     public PrivateWorkspacePage filterPrivateCriteria(String type, String attribute, String condition, String value) {
