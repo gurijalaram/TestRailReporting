@@ -70,7 +70,9 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
 
     public PrivateWorkspacePage filterPrivateCriteria(String type, String attribute, String condition, String value) {
         filterButton.click();
-        new FilterCriteriaPage(driver).setScenarioType(type)
+        new FilterCriteriaPage(driver).clearAllCheckBoxes()
+            .setPrivateWorkSpace()
+            .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)
             .setTypeOfValue(value);
@@ -79,7 +81,8 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
 
     public PrivateWorkspacePage filterPublicCriteria(String type, String attribute, String condition, String value) {
         filterButton.click();
-        new FilterCriteriaPage(driver).selectPublicWorkspace()
+        new FilterCriteriaPage(driver).clearAllCheckBoxes()
+            .setPublicWorkspace()
             .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)

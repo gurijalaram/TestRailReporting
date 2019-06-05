@@ -75,32 +75,39 @@ public class FilterCriteriaPage extends LoadableComponent<PrivateWorkspacePage> 
         pageUtils.waitForElementToAppear(attributeDropdown);
     }
 
+    protected FilterCriteriaPage clearAllCheckBoxes() {
+        WebElement[] checkBoxes = {privateCheckBox, publicCheckBox, partCheckBox, assemblyCheckBox, comparisonCheckBox};
+        for (WebElement checkBox : checkBoxes) {
+            if (checkBox.getAttribute("checked") != null) {
+                checkBox.click();
+            }
+        }
+        return this;
+    }
+
     protected FilterCriteriaPage setScenarioType(String type) {
         switch (type) {
             case "Part":
                 partCheckBox.click();
                 break;
-
             case "Assembly":
                 assemblyCheckBox.click();
                 break;
-
             case "Comparison":
                 comparisonCheckBox.click();
                 break;
-
             default:
                 throw new IllegalArgumentException("The type: " + type + " is not found");
         }
         return this;
     }
 
-    protected FilterCriteriaPage selectPrivateWorkSpace() {
+    protected FilterCriteriaPage setPrivateWorkSpace() {
         privateCheckBox.click();
         return this;
     }
 
-    protected FilterCriteriaPage selectPublicWorkspace() {
+    protected FilterCriteriaPage setPublicWorkspace() {
         publicCheckBox.click();
         return this;
     }
