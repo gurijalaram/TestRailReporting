@@ -22,6 +22,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", "15136");
         filterCriteriaPage = new FilterCriteriaPage(driver);
         filterCriteriaPage.apply();
+        //Assert.assertTrue();
     }
 
     @Test
@@ -31,6 +32,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Part", "Process Group", "is", "Casting");
         filterCriteriaPage = new FilterCriteriaPage(driver);
         filterCriteriaPage.apply();
+        //Assert.assertTrue();
     }
 
     @Test
@@ -40,6 +42,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Test");
         filterCriteriaPage = new FilterCriteriaPage(driver);
         filterCriteriaPage.apply();
+        //Assert.assertTrue();
     }
 
     @Test
@@ -49,6 +52,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Part", "Status", "is", "Waiting");
         filterCriteriaPage = new FilterCriteriaPage(driver);
         filterCriteriaPage.cancel();
+        //Assert.assertFalse();
     }
 
     @Test
@@ -58,6 +62,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Assembly", "Part Name", "Contains", "15136");
         filterCriteriaPage = new FilterCriteriaPage(driver);
         filterCriteriaPage.apply();
+        //Assert.assertTrue();
     }
 
     @Test
@@ -67,6 +72,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Assembly", "Status", "is", "Nothing selected");
         filterCriteriaPage = new FilterCriteriaPage(driver);
         filterCriteriaPage.apply();
+        //Assert.assertTrue();
     }
 
     @Test
@@ -76,6 +82,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "15136");
         filterCriteriaPage = new FilterCriteriaPage(driver);
         filterCriteriaPage.cancel();
+        //Assert.assertFalse();
     }
 
     @Test
@@ -85,6 +92,8 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Assembly", "Description", "Contains", "Test");
         filterCriteriaPage = new FilterCriteriaPage(driver);
         filterCriteriaPage.cancel();
+        filterCriteriaPage.cancel();
+        //Assert.assertFalse();
     }
 
     @Test
@@ -94,5 +103,6 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Comparison", "Cost Maturity", "is", "Nothing selected");
         filterCriteriaPage = new FilterCriteriaPage(driver);
         filterCriteriaPage.apply();
+        //Assert.assertTrue();
     }
 }

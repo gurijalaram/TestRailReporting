@@ -1,56 +1,74 @@
 package main.java.pages.explore;
 
 import main.java.utils.PageUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Coordinates;
+import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage> {
 
     private final Logger logger = LoggerFactory.getLogger(PrivateWorkspacePage.class);
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
-    WebElement newFileDropdown;
+    private WebElement newFileDropdown;
 
     @FindBy(css = "button[data-ap-comp='newComponentButton']")
-    WebElement componentButton;
+    private WebElement componentButton;
 
     @FindBy(css = "button[data-ap-comp='saveAsButton']")
-    WebElement scenarioButton;
+    private WebElement scenarioButton;
 
     @FindBy(css = "button[data-ap-comp='newComparisonButton']")
-    WebElement comparisonButton;
+    private WebElement comparisonButton;
 
     @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
-    WebElement publishButton;
+    private WebElement publishButton;
 
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
-    WebElement revertButton;
+    private WebElement revertButton;
 
     @FindBy(css = "span.delete-button")
-    WebElement deleteButton;
+    private WebElement deleteButton;
 
     @FindBy(css = "span.glyphicons-settings")
-    WebElement actionsDropdown;
+    private WebElement actionsDropdown;
+
+    @FindBy(css = "select[data-ap-field='filter'] option")
+    private List<WebElement> workspaceDropdownList;
 
     @FindBy(css = "select.form-control.input-md.auto-width")
-    WebElement workspaceDropdown;
+    private WebElement workspaceDropdown;
 
     @FindBy(css = "button[data-ap-nav-dialog='showScenarioSearchCriteria']")
-    WebElement filterButton;
+    private WebElement filterButton;
 
     @FindBy(css = "span[data-ap-comp='resultCount']")
-    WebElement objectsFound;
+    private WebElement objectsFound;
 
     @FindBy(css = "button[data-ap-nav-dialog='showTableViewEditor']")
-    WebElement columnsButton;
+    private WebElement columnsButton;
 
     @FindBy(css = "button[data-ap-comp='togglePreviewButton']")
-    WebElement previewButton;
+    private WebElement previewButton;
+
+    By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href='#openFromSearch::sk,partState,PLASTIC MOULDED CAP THINPART,Initial,0']");
+    //By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href='#openFromSearch::sk,partState,CASTING 1,Initial,0']");
+    //@FindBy(css = "div[data-ap-comp='componentTable'] a[href='#openFromSearch::sk,partState,PLASTIC MOULDED CAP THINPART,Initial,0']")
+    //private WebElement scenario;
+
+    @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
+    private WebElement componentScroller;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -70,7 +88,7 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(deleteButton);
-        pageUtils.waitForElementToAppear(filterButton);
+        pageUtils.waitForElementsToAppear(workspaceDropdownList);
     }
 
     public boolean isDeleteButtonPresent() {
@@ -104,5 +122,29 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
             .selectCondition(condition)
             .setTypeOfValue(value);
         return new PrivateWorkspacePage(driver);
+    }
+
+    public PrivateWorkspacePage selectWorkSpace(String workspace) {
+        new Select(workspaceDropdown).selectByVisibleText(workspace);
+        return this;
+    }
+
+    public PrivateWorkspacePage findScenario() {
+
+        pageUtils.waitForElementToAppear(componentScroller);
+
+        long startTime = System.currentTimeMillis() / 1000;
+        do {
+            componentScroller.sendKeys(Keys.DOWN);
+        } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < 60);
+
+        Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+        processCoordinates.inViewPort();
+        return this;
+    }
+
+    public PrivateWorkspacePage openScenario() {
+        pageUtils.waitForElementToAppear(scenario).click();
+        return this;
     }
 }

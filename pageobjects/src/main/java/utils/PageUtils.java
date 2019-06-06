@@ -1,6 +1,16 @@
 package main.java.utils;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -173,7 +183,7 @@ public class PageUtils {
         return driver.manage().window().getSize();
     }
 
-    /*
+    /**
      * @param scrollDown - true scrolls down and the element is visible on top of the page - false
      * scroll to the top of the page (try to scroll as high that the given element is in the bottom
      * of the screen)

@@ -18,40 +18,40 @@ public class FilterCriteriaPage extends LoadableComponent<PrivateWorkspacePage> 
     private final Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
 
     @FindBy(css = "h3.modal-title")
-    WebElement modalDialog;
+    private WebElement modalDialog;
 
     @FindBy(css = "input[data-ap-field='privateWorkspace']")
-    WebElement privateCheckBox;
+    private WebElement privateCheckBox;
 
     @FindBy(css = "input[data-ap-field='publicWorkspace']")
-    WebElement publicCheckBox;
+    private WebElement publicCheckBox;
 
     @FindBy(css = "input[data-ap-field='partScenarioType']")
-    WebElement partCheckBox;
+    private WebElement partCheckBox;
 
     @FindBy(css = "input[data-ap-field='assemblyScenarioType']")
-    WebElement assemblyCheckBox;
+    private WebElement assemblyCheckBox;
 
     @FindBy(css = "input[data-ap-field='comparisonScenarioType']")
-    WebElement comparisonCheckBox;
+    private WebElement comparisonCheckBox;
 
     @FindBy(css = "select[data-ap-field='criteria0.criteriaName']")
-    WebElement attributeDropdown;
+    private WebElement attributeDropdown;
 
     @FindBy(css = "select[data-ap-field='criteria0.operation']")
-    WebElement conditionDropdown;
+    private WebElement conditionDropdown;
 
     @FindBy(css = "input[data-ap-field='criteria0.value']")
-    WebElement valueInput;
+    private WebElement valueInput;
 
     @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
-    WebElement valueInputDropdown;
+    private WebElement valueInputDropdown;
 
     @FindBy(css = "button.gwt-Button.btn.btn-primary")
-    WebElement applyButton;
+    private WebElement applyButton;
 
     @FindBy(css = "button.gwt-Button.btn.btn-default")
-    WebElement cancelButton;
+    private WebElement cancelButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;

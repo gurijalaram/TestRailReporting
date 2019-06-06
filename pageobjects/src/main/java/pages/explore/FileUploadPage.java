@@ -16,19 +16,19 @@ public class FileUploadPage extends LoadableComponent<PrivateWorkspacePage> {
     private final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
 
     @FindBy(css = "h3.modal-title")
-    WebElement modalDialog;
+    private WebElement modalDialog;
 
     @FindBy(css = "input[type='file']")
-    WebElement fileInput;
+    private WebElement fileInput;
 
     @FindBy(css = "input[data-ap-field='scenarioName']")
-    WebElement scenarioNameInput;
+    private WebElement scenarioNameInput;
 
     @FindBy(css = "button.gwt-Button.btn.btn-primary")
-    WebElement okButton;
+    private WebElement okButton;
 
     @FindBy(css = "button.gwt-Button.btn.btn-default")
-    WebElement cancelButton;
+    private WebElement cancelButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
