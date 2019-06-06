@@ -136,12 +136,12 @@ public class FilterCriteriaPage extends LoadableComponent<PrivateWorkspacePage> 
         return this;
     }
 
-    public PrivateWorkspacePage apply() {
+    protected PrivateWorkspacePage apply() {
         applyButton.click();
         return new PrivateWorkspacePage(driver);
     }
 
-    public PrivateWorkspacePage cancel() {
+    protected PrivateWorkspacePage cancel() {
         cancelButton.click();
         return new PrivateWorkspacePage(driver);
     }
@@ -165,11 +165,12 @@ public class FilterCriteriaPage extends LoadableComponent<PrivateWorkspacePage> 
         }
     }
 
-    protected void setTypeOfValue(String value) {
+    protected FilterCriteriaPage setTypeOfValue(String value) {
         if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
             selectValue(value);
         } else {
             inputValue(value);
         }
+        return this;
     }
 }

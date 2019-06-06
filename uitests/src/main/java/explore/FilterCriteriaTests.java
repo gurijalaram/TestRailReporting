@@ -20,8 +20,6 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
             .filterPrivateCriteria("Part", "Part Name", "Contains", "15136");
-        filterCriteriaPage = new FilterCriteriaPage(driver);
-        filterCriteriaPage.apply();
         //Assert.assertTrue();
     }
 
@@ -30,8 +28,6 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
             .filterPrivateCriteria("Part", "Process Group", "is", "Casting");
-        filterCriteriaPage = new FilterCriteriaPage(driver);
-        filterCriteriaPage.apply();
         //Assert.assertTrue();
     }
 
@@ -40,8 +36,6 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Test");
-        filterCriteriaPage = new FilterCriteriaPage(driver);
-        filterCriteriaPage.apply();
         //Assert.assertTrue();
     }
 
@@ -50,8 +44,6 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
             .filterPrivateCriteria("Part", "Status", "is", "Waiting");
-        filterCriteriaPage = new FilterCriteriaPage(driver);
-        filterCriteriaPage.cancel();
         //Assert.assertFalse();
     }
 
@@ -60,8 +52,6 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
             .filterPrivateCriteria("Assembly", "Part Name", "Contains", "15136");
-        filterCriteriaPage = new FilterCriteriaPage(driver);
-        filterCriteriaPage.apply();
         //Assert.assertTrue();
     }
 
@@ -70,8 +60,6 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
             .filterPrivateCriteria("Assembly", "Status", "is", "Nothing selected");
-        filterCriteriaPage = new FilterCriteriaPage(driver);
-        filterCriteriaPage.apply();
         //Assert.assertTrue();
     }
 
@@ -80,8 +68,6 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
             .filterPublicCriteria("Part", "Part Name", "Contains", "15136");
-        filterCriteriaPage = new FilterCriteriaPage(driver);
-        filterCriteriaPage.cancel();
         //Assert.assertFalse();
     }
 
@@ -89,10 +75,7 @@ public class FilterCriteriaTests extends TestBase {
     public void testPublicCriteriaAssemblyDesc() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
-            .filterPrivateCriteria("Assembly", "Description", "Contains", "Test");
-        filterCriteriaPage = new FilterCriteriaPage(driver);
-        filterCriteriaPage.cancel();
-        filterCriteriaPage.cancel();
+            .filterPublicCriteria("Assembly", "Description", "Contains", "Test");
         //Assert.assertFalse();
     }
 
@@ -100,9 +83,7 @@ public class FilterCriteriaTests extends TestBase {
     public void testPublicCriteriaComparison() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
-            .filterPrivateCriteria("Comparison", "Cost Maturity", "is", "Nothing selected");
-        filterCriteriaPage = new FilterCriteriaPage(driver);
-        filterCriteriaPage.apply();
+            .filterPublicCriteria("Comparison", "Cost Maturity", "is", "Nothing selected");
         //Assert.assertTrue();
     }
 }

@@ -109,7 +109,8 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
             .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)
-            .setTypeOfValue(value);
+            .setTypeOfValue(value)
+            .apply();
         return new PrivateWorkspacePage(driver);
     }
 
@@ -120,7 +121,8 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
             .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)
-            .setTypeOfValue(value);
+            .setTypeOfValue(value)
+            .apply();
         return new PrivateWorkspacePage(driver);
     }
 

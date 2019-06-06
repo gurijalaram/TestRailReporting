@@ -1,5 +1,6 @@
 package main.java.pages.explore;
 
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -74,9 +75,9 @@ public class FileUploadPage extends LoadableComponent<PrivateWorkspacePage> {
         return this;
     }
 
-    private PrivateWorkspacePage selectOkButton() {
-        okButton.click();
-        return new PrivateWorkspacePage(driver);
+    private EvaluatePage selectOkButton() {
+        pageUtils.waitForElementToBeClickable(okButton).click();
+        return new EvaluatePage(driver);
     }
 
     private PrivateWorkspacePage selectCancelButton() {

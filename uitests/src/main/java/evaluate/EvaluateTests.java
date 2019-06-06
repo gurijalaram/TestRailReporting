@@ -1,0 +1,40 @@
+package main.java.evaluate;
+
+import main.java.base.TestBase;
+import main.java.enums.UsersEnum;
+import main.java.pages.evaluate.EvaluatePage;
+import main.java.pages.login.LoginPage;
+import org.junit.Test;
+
+import java.util.Scanner;
+
+public class EvaluateTests extends TestBase {
+
+    private LoginPage loginPage;
+    private EvaluatePage evaluatePage;
+    private String filePath = new Scanner(EvaluateTests.class.getClassLoader()
+        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
+
+    public EvaluateTests() {
+        super();
+    }
+
+    @Test
+    public void testCostScenario() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
+            .uploadFile("Scenario A", filePath, "testpart-4.prt");
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.costScenario();
+    }
+
+    @Test
+    public void testPublishScenario() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
+            .uploadFile("Scenario A", filePath, "testpart-4.prt");
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.costScenario()
+            .publishScenario();
+    }
+}
