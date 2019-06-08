@@ -261,11 +261,11 @@ public class PageUtils {
     /**
      * Waits for a given time
      *
-     * @param milis - time in milliseconds
+     * @param millis - time in milliseconds
      */
-    public void waitFor(Integer milis) {
+    public void waitFor(Integer millis) {
         try {
-            Thread.sleep(milis);
+            Thread.sleep(millis);
         } catch (InterruptedException e1) {
             logger.info("InterruptedException");
         }

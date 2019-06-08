@@ -14,10 +14,10 @@ public class PrivateWorkspaceTests extends TestBase {
     }
 
     @Test
-    public void testSearchForScenario() {
+    public void testSearchOpenScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
-            .selectWorkSpace("Public Workspace")
-            .findScenario();
+            .selectWorkSpace("Private Workspace")
+            .openScenario("TESTPART-4", "Scenario A");
     }
 }

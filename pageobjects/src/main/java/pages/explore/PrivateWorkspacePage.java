@@ -62,11 +62,6 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
     @FindBy(css = "button[data-ap-comp='togglePreviewButton']")
     private WebElement previewButton;
 
-    By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href='#openFromSearch::sk,partState,PLASTIC MOULDED CAP THINPART,Initial,0']");
-    //By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href='#openFromSearch::sk,partState,CASTING 1,Initial,0']");
-    //@FindBy(css = "div[data-ap-comp='componentTable'] a[href='#openFromSearch::sk,partState,PLASTIC MOULDED CAP THINPART,Initial,0']")
-    //private WebElement scenario;
-
     @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
     private WebElement componentScroller;
 
@@ -131,22 +126,29 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
         return this;
     }
 
-    public PrivateWorkspacePage findScenario() {
-
-        pageUtils.waitForElementToAppear(componentScroller);
+    public WebElement findScenario(String partName, String scenarioName) {
+        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName + "," + scenarioName + "']");
+        // TODO: ciene 08/06/2019 - the below does that same as the above. will need to discuss which is better
+        //By scenario = By.xpath("//div[@data-ap-comp='componentTable']//div[@title='" + partName + "']/../..//a[@title='" + scenarioName + "']");
 
         long startTime = System.currentTimeMillis() / 1000;
-        do {
-            componentScroller.sendKeys(Keys.DOWN);
-        } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < 60);
 
-        Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
-        processCoordinates.inViewPort();
-        return this;
+        if (componentScroller.isDisplayed()) {
+            do {
+                componentScroller.sendKeys(Keys.DOWN);
+            } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < 60);
+
+            Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+            processCoordinates.inViewPort();
+
+            return driver.findElement(scenario);
+        } else {
+            return driver.findElement(scenario);
+        }
     }
 
-    public PrivateWorkspacePage openScenario() {
-        pageUtils.waitForElementToAppear(scenario).click();
+    public PrivateWorkspacePage openScenario(String partName, String scenarioName) {
+        findScenario(partName, scenarioName).click();
         return this;
     }
 }
