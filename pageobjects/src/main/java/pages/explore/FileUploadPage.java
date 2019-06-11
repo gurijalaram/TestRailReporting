@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-public class FileUploadPage extends LoadableComponent<PrivateWorkspacePage> {
+public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
 
@@ -52,11 +52,11 @@ public class FileUploadPage extends LoadableComponent<PrivateWorkspacePage> {
         pageUtils.waitForElementToAppear(cancelButton);
     }
 
-    public PrivateWorkspacePage uploadFile(String scenarioName, String filePath, String fileName) {
+    public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
         inputScenarioName(scenarioName)
             .uploadFileDetails(filePath, fileName);
         selectOkButton();
-        return new PrivateWorkspacePage(driver);
+        return new EvaluatePage(driver);
     }
 
     private FileUploadPage inputScenarioName(String scenarioName) {

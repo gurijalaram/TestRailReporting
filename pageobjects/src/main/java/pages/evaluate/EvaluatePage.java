@@ -114,14 +114,14 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     public EvaluatePage costScenario() {
         costButton.click();
-        dialogCostButton.click();
+        pageUtils.waitForElementToBeClickable(dialogCostButton).click();
         checkCostLabel(COST_UP_TO_DATE);
         return this;
     }
 
     public EvaluatePage costScenario(String costText) {
         costButton.click();
-        dialogCostButton.click();
+        pageUtils.waitForElementToBeClickable(dialogCostButton).click();
         checkCostLabel(costText);
         return this;
     }

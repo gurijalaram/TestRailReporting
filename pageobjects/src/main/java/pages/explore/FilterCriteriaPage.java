@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public class FilterCriteriaPage extends LoadableComponent<PrivateWorkspacePage> {
+public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
 
