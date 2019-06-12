@@ -75,6 +75,10 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         pageUtils.waitForElementToAppear(attributeDropdown);
     }
 
+    /**
+     * Clears all listed checkboxes
+     * @return current page object
+     */
     protected FilterCriteriaPage clearAllCheckBoxes() {
         WebElement[] checkBoxes = {privateCheckBox, publicCheckBox, partCheckBox, assemblyCheckBox, comparisonCheckBox};
         for (WebElement checkBox : checkBoxes) {
@@ -85,6 +89,11 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    /**
+     * Sets the scenario type
+     * @param type - scenario type
+     * @return current page object
+     */
     protected FilterCriteriaPage setScenarioType(String type) {
         switch (type) {
             case "Part":
@@ -102,27 +111,50 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    /**
+     * Selects the checkbox
+     * @return current page object
+     */
     protected FilterCriteriaPage setPrivateWorkSpace() {
         privateCheckBox.click();
         return this;
     }
 
+    /**
+     * Selects the checkbox
+     * @return current page object
+     */
     protected FilterCriteriaPage setPublicWorkspace() {
         publicCheckBox.click();
         return this;
     }
 
+    /**
+     * Selects the dropdown
+     * @param attribute - the attribute
+     * @return current page object
+     */
     protected FilterCriteriaPage selectAttribute(String attribute) {
         new Select(attributeDropdown).selectByVisibleText(attribute);
         this.attribute = attribute;
         return this;
     }
 
+    /**
+     * Selects the condition
+     * @param condition - the condition
+     * @return current page object
+     */
     protected FilterCriteriaPage selectCondition(String condition) {
         new Select(conditionDropdown).selectByVisibleText(condition);
         return this;
     }
 
+    /**
+     * Sets the value as input
+     * @param input - the input value
+     * @return current page object
+     */
     protected FilterCriteriaPage inputValue(String input) {
         valueInput.click();
         pageUtils.clearInput(valueInput);
@@ -130,22 +162,38 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    /**
+     * Selects the value as a dropdown
+     * @param input - the input value
+     * @return current page object
+     */
     protected FilterCriteriaPage selectValue(String input) {
         valueInputDropdown.sendKeys(input);
         valueInputDropdown.sendKeys(Keys.ESCAPE);
         return this;
     }
 
+    /**
+     * Selects the button
+     * @return current page object
+     */
     protected PrivateWorkspacePage apply() {
         applyButton.click();
         return new PrivateWorkspacePage(driver);
     }
 
+    /**
+     * Selects the button
+     * @return current page object
+     */
     protected PrivateWorkspacePage cancel() {
         cancelButton.click();
         return new PrivateWorkspacePage(driver);
     }
 
+    /**
+     * Enum to select specific attributes
+     */
     protected enum Attribute {
         PROCESSGROUP("Process Group"),
         VPE("VPE"),
@@ -165,6 +213,11 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         }
     }
 
+    /**
+     * Choose how data is entered either via input or dropdown based on enum
+     * @param value - enum value
+     * @return current page object
+     */
     protected FilterCriteriaPage setTypeOfValue(String value) {
         if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
             selectValue(value);

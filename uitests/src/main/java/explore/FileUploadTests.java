@@ -17,6 +17,9 @@ public class FileUploadTests extends TestBase {
         super();
     }
 
+    /**
+     * Test file upload
+     */
     @Test
     public void testFileUpload() {
         loginPage = new LoginPage(driver);

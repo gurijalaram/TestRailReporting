@@ -52,6 +52,13 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         pageUtils.waitForElementToAppear(cancelButton);
     }
 
+    /**
+     * Uploads a file
+     * @param scenarioName - scenario name
+     * @param filePath - file path
+     * @param fileName - file name
+     * @return current page object
+     */
     public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
         inputScenarioName(scenarioName)
             .uploadFileDetails(filePath, fileName);
@@ -59,6 +66,11 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         return new EvaluatePage(driver);
     }
 
+    /**
+     * Input scenario name
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
     private FileUploadPage inputScenarioName(String scenarioName) {
         scenarioNameInput.click();
         pageUtils.clearInput(scenarioNameInput);
@@ -66,6 +78,12 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         return this;
     }
 
+    /**
+     * Gets details of file for upload
+     * @param filePath - the file path
+     * @param fileName - the file name
+     * @return current page object
+     */
     private FileUploadPage uploadFileDetails(String filePath, String fileName) {
         String filePathAndName = filePath + fileName;
         fileInput.sendKeys(filePathAndName);
@@ -75,11 +93,19 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         return this;
     }
 
+    /**
+     * Selects the button
+     * @return new page object
+     */
     private EvaluatePage selectOkButton() {
         pageUtils.waitForElementToBeClickable(okButton).click();
         return new EvaluatePage(driver);
     }
 
+    /**
+     * Select the button
+     * @return current page object
+     */
     private PrivateWorkspacePage selectCancelButton() {
         cancelButton.click();
         return new PrivateWorkspacePage(driver);

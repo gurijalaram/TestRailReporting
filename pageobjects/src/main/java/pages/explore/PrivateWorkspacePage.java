@@ -1,5 +1,6 @@
 package main.java.pages.explore;
 
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -86,10 +87,21 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
         pageUtils.waitForElementsToAppear(workspaceDropdownList);
     }
 
+    /**
+     * Checks delete button is displayed
+     * @return visibility of button
+     */
     public boolean isDeleteButtonPresent() {
         return deleteButton.isDisplayed();
     }
 
+    /**
+     * Collective method to upload a file
+     * @param scenarioName - the name of the scenario
+     * @param filePath - location of the file
+     * @param fileName - name of the file
+     * @return current page object
+     */
     public PrivateWorkspacePage uploadFile(String scenarioName, String filePath, String fileName) {
         newFileDropdown.click();
         componentButton.click();
@@ -97,6 +109,14 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
         return this;
     }
 
+    /**
+     * Filter criteria for private selection
+     * @param type - type of selection whether private or public
+     * @param attribute - the attribute
+     * @param condition - specified condition
+     * @param value - the value
+     * @return current page object
+     */
     public PrivateWorkspacePage filterPrivateCriteria(String type, String attribute, String condition, String value) {
         filterButton.click();
         new FilterCriteriaPage(driver).clearAllCheckBoxes()
@@ -109,6 +129,14 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
         return new PrivateWorkspacePage(driver);
     }
 
+    /**
+     * Filter criteria for public selection
+     * @param type - type of selection whether private or public
+     * @param attribute - the attribute
+     * @param condition - specified condition
+     * @param value - the value
+     * @return current page object
+     */
     public PrivateWorkspacePage filterPublicCriteria(String type, String attribute, String condition, String value) {
         filterButton.click();
         new FilterCriteriaPage(driver).clearAllCheckBoxes()
@@ -121,15 +149,24 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
         return new PrivateWorkspacePage(driver);
     }
 
+    /**
+     * Selects the workspace from the dropdown
+     * @param workspace - workspace dropdown
+     * @return current page object
+     */
     public PrivateWorkspacePage selectWorkSpace(String workspace) {
         new Select(workspaceDropdown).selectByVisibleText(workspace);
         return this;
     }
 
+    /**
+     * Find specific scenario in the component table
+     * @param partName - name of the part
+     * @param scenarioName - scenario name
+     * @return the part as webelement
+     */
     public WebElement findScenario(String partName, String scenarioName) {
         By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName + "," + scenarioName + "']");
-        // TODO: ciene 08/06/2019 - the below does that same as the above. will need to discuss which is better
-        //By scenario = By.xpath("//div[@data-ap-comp='componentTable']//div[@title='" + partName + "']/../..//a[@title='" + scenarioName + "']");
 
         long startTime = System.currentTimeMillis() / 1000;
 
@@ -147,8 +184,14 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
         }
     }
 
-    public PrivateWorkspacePage openScenario(String partName, String scenarioName) {
+    /**
+     * Opens the scenario
+     * @param partName - name of the part
+     * @param scenarioName - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openScenario(String partName, String scenarioName) {
         findScenario(partName, scenarioName).click();
-        return this;
+        return new EvaluatePage(driver);
     }
 }

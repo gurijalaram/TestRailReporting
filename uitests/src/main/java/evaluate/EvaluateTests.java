@@ -1,7 +1,9 @@
 package main.java.evaluate;
 
 import main.java.base.TestBase;
+import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
@@ -19,6 +21,9 @@ public class EvaluateTests extends TestBase {
         super();
     }
 
+    /**
+     * Test successfully costing a scenario
+     */
     @Test
     public void testCostScenario() {
         loginPage = new LoginPage(driver);
@@ -28,6 +33,9 @@ public class EvaluateTests extends TestBase {
         evaluatePage.costScenario();
     }
 
+    /**
+     * Test successfully costing and publishing a scenario
+     */
     @Test
     public void testPublishScenario() {
         loginPage = new LoginPage(driver);
@@ -37,4 +45,19 @@ public class EvaluateTests extends TestBase {
         evaluatePage.costScenario()
             .publishScenario();
     }
+
+    /**
+     * Test successful cost change vpe and process group
+     */
+    @Test
+    public void testCostVPE() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
+            .uploadFile("Scenario A", filePath, "testpart-4.prt");
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
+            .costScenario();
+    }
+
 }

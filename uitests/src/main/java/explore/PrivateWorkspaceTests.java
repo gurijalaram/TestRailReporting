@@ -14,6 +14,9 @@ public class PrivateWorkspaceTests extends TestBase {
         super();
     }
 
+    /**
+     * Test opening private workspace scenario
+     */
     @Test
     public void testSearchOpenScenario() {
         loginPage = new LoginPage(driver);

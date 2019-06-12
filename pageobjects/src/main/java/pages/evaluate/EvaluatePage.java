@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,6 +113,10 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         pageUtils.waitForElementToAppear(controlToolbars);
     }
 
+    /**
+     * Cost the scenario
+     * @return current page object
+     */
     public EvaluatePage costScenario() {
         costButton.click();
         pageUtils.waitForElementToBeClickable(dialogCostButton).click();
@@ -119,6 +124,11 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         return this;
     }
 
+    /**
+     * Cost the scenario
+     * @param costText - the text in the cost label
+     * @return current page object
+     */
     public EvaluatePage costScenario(String costText) {
         costButton.click();
         pageUtils.waitForElementToBeClickable(dialogCostButton).click();
@@ -126,21 +136,57 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         return this;
     }
 
+    /**
+     * Check the cost label text
+     * @param costText - the cost label text
+     * @return current page object
+     */
     private EvaluatePage checkCostLabel(String costText) {
         pageUtils.waitForElementToAppear(costLabel).getText().equalsIgnoreCase(costText);
         return this;
     }
 
+    /**
+     * Publishes the scenario
+     * @return new page object
+     */
     public PrivateWorkspacePage publishScenario() {
         publishButton.click();
         return new PrivateWorkspacePage(driver);
     }
 
+    /**
+     * Publishes the scenario
+     * @param status - the status dropdown
+     * @param costMaturity - the cost maturity dropdown
+     * @param assignee - the assignee
+     * @return new page object
+     */
     public PrivateWorkspacePage publishScenario(String status, String costMaturity, String assignee) {
         publishButton.click();
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
             .selectAssignee(assignee);
         return new PrivateWorkspacePage(driver);
+    }
+
+    /**
+     * Selects the dropdown
+     * @param processGroup - the process group
+     * @return current page object
+     */
+    public EvaluatePage selectProcessGroup(String processGroup) {
+        new Select(processGroupDropdown).selectByVisibleText(processGroup);
+        return this;
+    }
+
+    /**
+     * Selects the dropdown
+     * @param vpe - the vpe
+     * @return current page object
+     */
+    public EvaluatePage selectVPE(String vpe) {
+        new Select(vpeDropdown).selectByVisibleText(vpe);
+        return this;
     }
 }

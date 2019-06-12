@@ -58,26 +58,49 @@ public class PublishPage extends LoadableComponent<PublishPage> {
         pageUtils.waitForElementToAppear(statusDropdown);
     }
 
+    /**
+     * Selects status dropdown
+     * @param status - dropdown status
+     * @return current page object
+     */
     protected PublishPage selectStatus(String status) {
         new Select(statusDropdown).selectByVisibleText(status);
         return this;
     }
 
+    /**
+     * Selects the dropdown
+     * @param costMaturity - cost maturity dropdown
+     * @return current page object
+     */
     protected PublishPage selectCostMaturity(String costMaturity) {
         new Select(costMaturityDropdown).selectByVisibleText(costMaturity);
         return this;
     }
 
+    /**
+     * Selects the dropdown
+     * @param assignee - assignee dropdown
+     * @return current page object
+     */
     protected PublishPage selectAssignee(String assignee) {
         new Select(assigneeDropdown).selectByVisibleText(assignee);
         return this;
     }
 
+    /**
+     * Selects the button
+     * @return new page object
+     */
     protected PrivateWorkspacePage selectPublishButton() {
         publishButton.click();
         return new PrivateWorkspacePage(driver);
     }
 
+    /**
+     * Selects the button
+     * @return new page object
+     */
     protected PrivateWorkspacePage selectCancelButton() {
         cancelButton.click();
         return new PrivateWorkspacePage(driver);

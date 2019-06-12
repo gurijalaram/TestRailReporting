@@ -15,6 +15,9 @@ public class FilterCriteriaTests extends TestBase {
         super();
     }
 
+    /**
+     * Test private criteria part
+     */
     @Test
     public void testPrivateCriteriaPart() {
         loginPage = new LoginPage(driver);
@@ -23,6 +26,9 @@ public class FilterCriteriaTests extends TestBase {
         //Assert.assertTrue();
     }
 
+    /**
+     * Test private criteria attribute
+     */
     @Test
     public void testPrivateCriteriaAttribute() {
         loginPage = new LoginPage(driver);
@@ -31,6 +37,9 @@ public class FilterCriteriaTests extends TestBase {
         //Assert.assertTrue();
     }
 
+    /**
+     * Test private criteria part 'contains'
+     */
     @Test
     public void testPrivateCriteriaContains() {
         loginPage = new LoginPage(driver);
@@ -39,6 +48,9 @@ public class FilterCriteriaTests extends TestBase {
         //Assert.assertTrue();
     }
 
+    /**
+     * Test private criteria value option
+     */
     @Test
     public void testPrivateCriteriaPartValue() {
         loginPage = new LoginPage(driver);
@@ -47,6 +59,9 @@ public class FilterCriteriaTests extends TestBase {
         //Assert.assertFalse();
     }
 
+    /**
+     * Test private criteria assembly
+     */
     @Test
     public void testPrivateCriteriaAssembly() {
         loginPage = new LoginPage(driver);
@@ -55,6 +70,9 @@ public class FilterCriteriaTests extends TestBase {
         //Assert.assertTrue();
     }
 
+    /**
+     * Test private criteria assembly status
+     */
     @Test
     public void testPrivateCriteriaAssemblyStatus() {
         loginPage = new LoginPage(driver);
@@ -63,6 +81,9 @@ public class FilterCriteriaTests extends TestBase {
         //Assert.assertTrue();
     }
 
+    /**
+     * Test public criteria part
+     */
     @Test
     public void testPublicCriteriaPart() {
         loginPage = new LoginPage(driver);
@@ -71,6 +92,9 @@ public class FilterCriteriaTests extends TestBase {
         //Assert.assertFalse();
     }
 
+    /**
+     * Test public criteria assembly description
+     */
     @Test
     public void testPublicCriteriaAssemblyDesc() {
         loginPage = new LoginPage(driver);
@@ -79,6 +103,9 @@ public class FilterCriteriaTests extends TestBase {
         //Assert.assertFalse();
     }
 
+    /**
+     * Test public criteria comparison
+     */
     @Test
     public void testPublicCriteriaComparison() {
         loginPage = new LoginPage(driver);
