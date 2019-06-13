@@ -1,6 +1,7 @@
 package main.java.enums;
 
 public enum VPEEnum {
+
     APRIORI_BRAZIL("aPriori Brazil"),
     APRIORI_CHINA("aPriori China"),
     APRIORI_EASTERN_EUROPE("aPriori Eastern Europe"),

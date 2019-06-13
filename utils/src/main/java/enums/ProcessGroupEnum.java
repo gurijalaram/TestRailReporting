@@ -1,6 +1,7 @@
 package main.java.enums;
 
 public enum ProcessGroupEnum {
+
     ADDITIVE_MANUFACTURING("Additive Manufacturing"),
     BAR_TUBE_FAB("Bar & Tube Fab"),
     CASTING("Casting"),

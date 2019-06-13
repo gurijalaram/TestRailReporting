@@ -5,6 +5,7 @@ package main.java.enums;
  */
 
 public enum WorkspaceEnum {
+
     PRIVATE("Private Workspace"),
     PUBLIC("Public Workspace"),
     RECENT("Recent"),
