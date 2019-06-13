@@ -196,6 +196,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage enterAnnualVolume(String annVolume) {
+        annualVolume.click();
         pageUtils.clearInput(annualVolume);
         annualVolume.sendKeys(annVolume);
         return this;
@@ -207,6 +208,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage enterAnnualYears(String years) {
+        annualVolumeYrs.click();
         pageUtils.clearInput(annualVolumeYrs);
         annualVolumeYrs.sendKeys(years);
         return this;
