@@ -189,4 +189,26 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         new Select(vpeDropdown).selectByVisibleText(vpe);
         return this;
     }
+
+    /**
+     * Enters the annual volume
+     * @param annVolume - the annual volume
+     * @return current page object
+     */
+    public EvaluatePage enterAnnualVolume(String annVolume) {
+        pageUtils.clearInput(annualVolume);
+        annualVolume.sendKeys(annVolume);
+        return this;
+    }
+
+    /**
+     * Enters the years of annual volume
+     * @param years - the years
+     * @return current page object
+     */
+    public EvaluatePage enterAnnualYears(String years) {
+        pageUtils.clearInput(annualVolumeYrs);
+        annualVolumeYrs.sendKeys(years);
+        return this;
+    }
 }
