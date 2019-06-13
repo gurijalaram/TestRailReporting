@@ -59,5 +59,4 @@ public class EvaluateTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .costScenario();
     }
-
 }

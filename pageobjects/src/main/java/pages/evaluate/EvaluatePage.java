@@ -147,7 +147,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     }
 
     /**
-     * Publishes the scenario
+     * Publish the scenario
      * @return new page object
      */
     public PrivateWorkspacePage publishScenario() {
@@ -156,7 +156,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     }
 
     /**
-     * Publishes the scenario
+     * Publish the scenario
      * @param status - the status dropdown
      * @param costMaturity - the cost maturity dropdown
      * @param assignee - the assignee
@@ -171,7 +171,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     }
 
     /**
-     * Selects the dropdown
+     * Selects the pg dropdown
      * @param processGroup - the process group
      * @return current page object
      */
@@ -181,7 +181,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     }
 
     /**
-     * Selects the dropdown
+     * Selects the vpe dropdown
      * @param vpe - the vpe
      * @return current page object
      */

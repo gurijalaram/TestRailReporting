@@ -72,39 +72,71 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         pageUtils.waitForElementToAppear(submitLogin);
     }
 
+    /**
+     * Login to cid
+     * @param email - the email
+     * @param password - the password
+     * @return new page object
+     */
     public PrivateWorkspacePage login(String email, String password) {
         executeLogin(email, password);
         return new PrivateWorkspacePage(driver);
     }
 
+    /**
+     * Failed login to cid
+     * @param email - the email
+     * @param password - the password
+     * @return the current page object
+     */
     public LoginPage failedLoginAs(String email, String password) {
         executeLogin(email, password);
         pageUtils.waitForElementToAppear(loginErrorMsg);
         return new LoginPage(driver, false);
     }
 
+    /**
+     * Execute actions to login
+     * @param email - the email
+     * @param password - the password
+     */
     private void executeLogin(String email, String password) {
         enterEmail(email);
         enterPassword(password);
         submitLogin();
     }
 
+    /**
+     * Enters the email details
+     * @param emailAddress - the email address
+     */
     private void enterEmail(String emailAddress) {
         email.click();
         pageUtils.clearInput(email);
         email.sendKeys(emailAddress);
     }
 
+    /**
+     * Enters the password
+     * @param passWord - the password
+     */
     private void enterPassword(String passWord) {
         password.click();
         pageUtils.clearInput(password);
         password.sendKeys(passWord);
     }
 
+    /**
+     * Single action that login to cid
+     */
     private void submitLogin() {
         submitLogin.click();
     }
 
+    /**
+     * Gets the login error message
+     * @return login error message
+     */
     public String getLoginErrorMessage() {
         return loginErrorMsg.getText();
     }

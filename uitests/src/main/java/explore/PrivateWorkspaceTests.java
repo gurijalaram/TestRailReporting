@@ -15,7 +15,7 @@ public class PrivateWorkspaceTests extends TestBase {
     }
 
     /**
-     * Test opening private workspace scenario
+     * Test opening scenario from private workspace
      */
     @Test
     public void testSearchOpenScenario() {

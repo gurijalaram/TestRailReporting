@@ -94,7 +94,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     }
 
     /**
-     * Selects the button
+     * Selects the ok button
      * @return new page object
      */
     private EvaluatePage selectOkButton() {
@@ -103,7 +103,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     }
 
     /**
-     * Select the button
+     * Select the cancel button
      * @return current page object
      */
     private PrivateWorkspacePage selectCancelButton() {

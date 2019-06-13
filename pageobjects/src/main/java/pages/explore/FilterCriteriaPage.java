@@ -130,7 +130,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
-     * Selects the dropdown
+     * Selects the attribute
      * @param attribute - the attribute
      * @return current page object
      */
@@ -174,7 +174,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
-     * Selects the button
+     * Selects the apply button
      * @return current page object
      */
     protected PrivateWorkspacePage apply() {
@@ -183,7 +183,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
-     * Selects the button
+     * Selects the cancel button
      * @return current page object
      */
     protected PrivateWorkspacePage cancel() {

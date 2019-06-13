@@ -46,4 +46,14 @@ public class LoginTests extends TestBase {
         loginPage = loginPage.failedLoginAs(UsersEnum.CIE_TE_USER.getUsername(), "asdfdasfas");
         Assert.assertEquals(loginPageErrorMessage.toUpperCase(), loginPage.getLoginErrorMessage());
     }
+
+    /**
+     * Test unsuccessful login with incorrect email, correct password
+     */
+    @Test
+    public void testIncorrectEmail() {
+        loginPage = new LoginPage(driver);
+        loginPage = loginPage.failedLoginAs("jacky348", UsersEnum.CIE_TE_USER.getPassword());
+        Assert.assertEquals(loginPageErrorMessage.toUpperCase(), loginPage.getLoginErrorMessage());
+    }
 }  

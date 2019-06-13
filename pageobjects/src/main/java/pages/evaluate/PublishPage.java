@@ -69,7 +69,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     }
 
     /**
-     * Selects the dropdown
+     * Selects the cost maturity dropdown
      * @param costMaturity - cost maturity dropdown
      * @return current page object
      */
@@ -79,7 +79,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     }
 
     /**
-     * Selects the dropdown
+     * Selects the assignee dropdown
      * @param assignee - assignee dropdown
      * @return current page object
      */
@@ -89,7 +89,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     }
 
     /**
-     * Selects the button
+     * Selects the publish button
      * @return new page object
      */
     protected PrivateWorkspacePage selectPublishButton() {
@@ -98,7 +98,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     }
 
     /**
-     * Selects the button
+     * Selects the cancel button
      * @return new page object
      */
     protected PrivateWorkspacePage selectCancelButton() {
