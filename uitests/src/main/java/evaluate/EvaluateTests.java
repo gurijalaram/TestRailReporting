@@ -27,7 +27,7 @@ public class EvaluateTests extends TestBase {
     @Test
     public void testCostScenario() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", filePath, "testpart-4.prt");
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
@@ -39,7 +39,7 @@ public class EvaluateTests extends TestBase {
     @Test
     public void testPublishScenario() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", filePath, "testpart-4.prt");
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario()
@@ -52,7 +52,7 @@ public class EvaluateTests extends TestBase {
     @Test
     public void testCostVPE() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", filePath, "testpart-4.prt");
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())

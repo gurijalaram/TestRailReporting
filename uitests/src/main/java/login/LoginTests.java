@@ -33,7 +33,7 @@ public class LoginTests extends TestBase {
     @Test
     public void testLogin() {
         loginPage = new LoginPage(driver);
-        privateWorkspacePage = loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword());
+        privateWorkspacePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
         Assert.assertTrue(privateWorkspacePage.isDeleteButtonPresent());
     }
 
@@ -43,7 +43,7 @@ public class LoginTests extends TestBase {
     @Test
     public void testIncorrectPwd() {
         loginPage = new LoginPage(driver);
-        loginPage = loginPage.failedLoginAs(UsersEnum.CIE_TE_USER.getUsername(), "asdfdasfas");
+        loginPage = loginPage.failedLoginAs(UsersEnum.CID_TE_USER.getUsername(), "asdfdasfas");
         Assert.assertEquals(loginPageErrorMessage.toUpperCase(), loginPage.getLoginErrorMessage());
     }
 
@@ -53,7 +53,7 @@ public class LoginTests extends TestBase {
     @Test
     public void testIncorrectEmail() {
         loginPage = new LoginPage(driver);
-        loginPage = loginPage.failedLoginAs("jacky348", UsersEnum.CIE_TE_USER.getPassword());
+        loginPage = loginPage.failedLoginAs("jacky348", UsersEnum.CID_TE_USER.getPassword());
         Assert.assertEquals(loginPageErrorMessage.toUpperCase(), loginPage.getLoginErrorMessage());
     }
 }  

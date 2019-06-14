@@ -20,7 +20,7 @@ public class PrivateWorkspaceTests extends TestBase {
     @Test
     public void testSearchOpenScenario() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword())
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("TESTPART-4", "Scenario A");
     }
