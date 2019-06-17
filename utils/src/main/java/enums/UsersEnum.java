@@ -20,7 +20,7 @@ public enum UsersEnum {
     /**
      * Return username of the requested user
      *
-     * @return forsight username
+     * @return username
      */
     public String getUsername() {
         return username;
@@ -29,7 +29,7 @@ public enum UsersEnum {
     /**
      * Return password of the requested user
      *
-     * @return forsight password
+     * @return password
      */
     public String getPassword() {
         return password;

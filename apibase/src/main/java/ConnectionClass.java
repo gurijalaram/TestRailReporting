@@ -60,6 +60,12 @@ public abstract class ConnectionClass {
         private String scope;
         private boolean alreadyLoggedIn;
 
+        UserForAPIConnection(String emailAddress, String password) {
+            this.emailAddress = emailAddress;
+            this.password = password;
+            this.alreadyLoggedIn = false;
+        }
+
         UserForAPIConnection(String emailAddress, String sessionId, boolean alreadyLoggedIn) {
             this.emailAddress = emailAddress;
             this.sessionId = sessionId;
