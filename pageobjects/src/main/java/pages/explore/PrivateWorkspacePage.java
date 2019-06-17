@@ -3,11 +3,8 @@ package main.java.pages.explore;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Coordinates;
-import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -160,28 +157,14 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
     }
 
     /**
-     * Find specific scenario in the component table
+     * Find specific element in the table
      * @param partName - name of the part
      * @param scenarioName - scenario name
      * @return the part as webelement
      */
     public WebElement findScenario(String partName, String scenarioName) {
         By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName + "," + scenarioName + "']");
-
-        long startTime = System.currentTimeMillis() / 1000;
-
-        if (componentScroller.isDisplayed()) {
-            do {
-                componentScroller.sendKeys(Keys.DOWN);
-            } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < 60);
-
-            Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
-            processCoordinates.inViewPort();
-
-            return driver.findElement(scenario);
-        } else {
-            return driver.findElement(scenario);
-        }
+        return pageUtils.scrollToElement(scenario, componentScroller);
     }
 
     /**

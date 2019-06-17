@@ -30,7 +30,7 @@ public class EvaluateTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", filePath, "testpart-4.prt");
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario();
+        evaluatePage.costScenario(null);
     }
 
     /**
@@ -42,12 +42,12 @@ public class EvaluateTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", filePath, "testpart-4.prt");
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario()
+        evaluatePage.costScenario(null)
             .publishScenario();
     }
 
     /**
-     * Test successful cost change vpe and process group
+     * Test successful costing, change vpe and process group
      */
     @Test
     public void testCostVPE() {
@@ -57,6 +57,6 @@ public class EvaluateTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
-            .costScenario();
+            .costScenario(null);
     }
 }

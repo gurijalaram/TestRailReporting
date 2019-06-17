@@ -4,6 +4,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
@@ -12,6 +13,8 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.Coordinates;
+import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -403,5 +406,28 @@ public class PageUtils {
             }
         }
         throw new AssertionError("Element did not appear: " + childLocator);
+    }
+
+    /**
+     * Finds element in a table.  If the element is not visible then the method will scroll to the element.
+     * @param scenario - the locator for the scenario
+     * @param scroller - the scroller to scroll the element into view
+     * @return - the element as a webelement
+     */
+    public WebElement scrollToElement(By scenario, WebElement scroller) {
+        long startTime = System.currentTimeMillis() / 1000;
+
+        if (scroller.isDisplayed()) {
+            do {
+                scroller.sendKeys(Keys.DOWN);
+            } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+
+            Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+            processCoordinates.inViewPort();
+
+            return driver.findElement(scenario);
+        } else {
+            return driver.findElement(scenario);
+        }
     }
 }

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
@@ -53,6 +54,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
 
+    @FindBy(css = "div[data-ap-comp='additionalSearchCriteria'] input")
+    private List<WebElement> listOfCheckboxes;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private String attribute;
@@ -80,12 +84,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     protected FilterCriteriaPage clearAllCheckBoxes() {
-        WebElement[] checkBoxes = {privateCheckBox, publicCheckBox, partCheckBox, assemblyCheckBox, comparisonCheckBox};
-        for (WebElement checkBox : checkBoxes) {
-            if (checkBox.getAttribute("checked") != null) {
-                checkBox.click();
-            }
-        }
+        listOfCheckboxes.stream().filter(checkbox -> checkbox.getAttribute("checked") != null).forEach(WebElement::click);
         return this;
     }
 

@@ -118,12 +118,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     /**
      * Enters the password
-     * @param passWord - the password
+     * @param password - the password
      */
-    private void enterPassword(String passWord) {
-        password.click();
-        pageUtils.clearInput(password);
-        password.sendKeys(passWord);
+    private void enterPassword(String password) {
+        this.password.click();
+        pageUtils.clearInput(this.password);
+        this.password.sendKeys(password);
     }
 
     /**

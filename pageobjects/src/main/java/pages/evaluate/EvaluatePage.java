@@ -1,5 +1,6 @@
 package main.java.pages.evaluate;
 
+import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.PrivateWorkspacePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -114,36 +115,25 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     }
 
     /**
-     * Cost the scenario
-     * @return current page object
-     */
-    public EvaluatePage costScenario() {
-        costButton.click();
-        pageUtils.waitForElementToBeClickable(dialogCostButton).click();
-        checkCostLabel(COST_UP_TO_DATE);
-        return this;
-    }
-
-    /**
-     * Cost the scenario
-     * @param costText - the text in the cost label
+     * Cost the scenario passing in null or text values
+     * @param costText - the text for the cost label
      * @return current page object
      */
     public EvaluatePage costScenario(String costText) {
         costButton.click();
         pageUtils.waitForElementToBeClickable(dialogCostButton).click();
+        costText = costText == null ? COST_UP_TO_DATE : costText;
         checkCostLabel(costText);
         return this;
     }
 
     /**
-     * Check the cost label text
+     * Checks the text in the cost label
      * @param costText - the cost label text
-     * @return current page object
+     * @return true or false
      */
-    private EvaluatePage checkCostLabel(String costText) {
-        pageUtils.waitForElementToAppear(costLabel).getText().equalsIgnoreCase(costText);
-        return this;
+    private boolean checkCostLabel(String costText) {
+        return pageUtils.waitForElementToAppear(costLabel).getText().equalsIgnoreCase(costText);
     }
 
     /**
@@ -212,5 +202,14 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         pageUtils.clearInput(annualVolumeYrs);
         annualVolumeYrs.sendKeys(years);
         return this;
+    }
+
+    /**
+     * Opens the design guidance dialog
+     * @return new page object
+     */
+    public GuidancePage openDesignGuidance() {
+        pageUtils.waitForElementToAppear(guidanceDetails).click();
+        return new GuidancePage(driver);
     }
 }
