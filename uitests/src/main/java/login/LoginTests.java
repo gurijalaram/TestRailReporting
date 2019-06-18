@@ -1,9 +1,9 @@
-package main.java;
+package main.java.login;
 
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
-import main.java.pages.LoginPage;
-import main.java.pages.PrivateWorkspacePage;
+import main.java.pages.explore.PrivateWorkspacePage;
+import main.java.pages.login.LoginPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,12 +28,12 @@ public class LoginTests extends TestBase {
     }
 
     /**
-     * Test successuful login
+     * Test successful login
      */
     @Test
     public void testLogin() {
         loginPage = new LoginPage(driver);
-        privateWorkspacePage = loginPage.login(UsersEnum.CIE_TE_USER.getUsername(), UsersEnum.CIE_TE_USER.getPassword());
+        privateWorkspacePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
         Assert.assertTrue(privateWorkspacePage.isDeleteButtonPresent());
     }
 
@@ -43,7 +43,17 @@ public class LoginTests extends TestBase {
     @Test
     public void testIncorrectPwd() {
         loginPage = new LoginPage(driver);
-        loginPage = loginPage.failedLoginAs(UsersEnum.CIE_TE_USER.getUsername(), "asdfdasfas");
+        loginPage = loginPage.failedLoginAs(UsersEnum.CID_TE_USER.getUsername(), "asdfdasfas");
+        Assert.assertEquals(loginPageErrorMessage.toUpperCase(), loginPage.getLoginErrorMessage());
+    }
+
+    /**
+     * Test unsuccessful login with incorrect email, correct password
+     */
+    @Test
+    public void testIncorrectEmail() {
+        loginPage = new LoginPage(driver);
+        loginPage = loginPage.failedLoginAs("jacky348", UsersEnum.CID_TE_USER.getPassword());
         Assert.assertEquals(loginPageErrorMessage.toUpperCase(), loginPage.getLoginErrorMessage());
     }
 }  

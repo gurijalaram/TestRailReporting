@@ -7,7 +7,7 @@ package main.java.enums;
 
 public enum UsersEnum {
 
-    CIE_TE_USER("cfrith@apriori.com", "TestEvent2018");
+    CID_TE_USER("cfrith@apriori.com", "TestEvent2018");
 
     private final String username;
     private final String password;
@@ -20,7 +20,7 @@ public enum UsersEnum {
     /**
      * Return username of the requested user
      *
-     * @return forsight username
+     * @return CID username
      */
     public String getUsername() {
         return username;
@@ -29,7 +29,7 @@ public enum UsersEnum {
     /**
      * Return password of the requested user
      *
-     * @return forsight password
+     * @return cid password
      */
     public String getPassword() {
         return password;

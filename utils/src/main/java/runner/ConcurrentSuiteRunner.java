@@ -16,7 +16,7 @@ public class ConcurrentSuiteRunner extends Suite {
 
     public ConcurrentSuiteRunner(final Class<?> klass) throws InitializationError {
         super(klass, new AllDefaultPossibilitiesBuilder(true));
-        logger_ConcurrentSuiteRunner.debug("ConcurrentTestRunner contructor");
+        logger_ConcurrentSuiteRunner.debug("ConcurrentTestRunner constructor");
         String threads = "1";
         if (StringUtils.isNotEmpty(System.getProperty("threadCountClasses"))) {
             threads = System.getProperty("threadCountClasses");
