@@ -20,7 +20,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     @FindBy(css = ".gwt-ListBox")
     private WebElement threadableDropdown;
 
-    @FindBy(css = "div[data-ap-comp='dtcInvestigationTableControls'] .edit-tolerances-btn")
+    @FindBy(css = "div[data-ap-comp='dtcInvestigationTableExt'] .edit-tolerances-btn")
     private WebElement editButton;
 
     @FindBy(css = "div[data-ap-comp='dtcTableExtArea'] div.v-grid-scroller-vertical")
