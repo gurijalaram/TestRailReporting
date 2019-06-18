@@ -1,6 +1,7 @@
-package main.java.pages.evaluate.designguidance.Investigation;
+package main.java.pages.evaluate.designguidance.investigation;
 
 import main.java.utils.PageUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +16,15 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     @FindBy(css = "div[data-ap-comp='dtcTopicTable']")
     private WebElement topicTable;
+
+    @FindBy(css = ".gwt-ListBox")
+    private WebElement threadableDropdown;
+
+    @FindBy(css = "div[data-ap-comp='dtcInvestigationTableExt'] .edit-tolerances-btn")
+    private WebElement editButton;
+
+    @FindBy(css = "div[data-ap-comp='dtcTableExtArea'] div.v-grid-scroller-vertical")
+    private WebElement threadScroller;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -35,5 +45,16 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(topicTable);
+    }
+
+    public InvestigationPage selectInvestigationTopic(String topic) {
+        By investigationTopic = By.xpath("//div[@data-ap-comp='dtcTopicTable']//div[.='" + topic + "']");
+        pageUtils.waitForElementToAppear(investigationTopic).click();
+        return this;
+    }
+
+    private WebElement selectGCD(String thread) {
+        By threadType = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + thread + "')]");
+        return pageUtils.scrollToElement(threadType, threadScroller);
     }
 }

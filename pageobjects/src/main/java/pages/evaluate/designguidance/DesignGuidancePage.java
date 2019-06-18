@@ -1,6 +1,7 @@
 package main.java.pages.evaluate.designguidance;
 
-import main.java.pages.evaluate.designguidance.Investigation.InvestigationPage;
+import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
+import main.java.pages.evaluate.designguidance.tolerances.TolerancePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
