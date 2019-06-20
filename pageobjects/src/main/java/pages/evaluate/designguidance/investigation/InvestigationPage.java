@@ -47,14 +47,39 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
         pageUtils.waitForElementToAppear(topicTable);
     }
 
+    public ThreadingPage editThread(String thread) {
+        selectGCD(thread).click();
+        edit();
+        return new ThreadingPage(driver);
+    }
+
+    /**
+     * Selects investigation topic
+     * @param topic - the investigation topic
+     * @return current page object
+     */
     public InvestigationPage selectInvestigationTopic(String topic) {
         By investigationTopic = By.xpath("//div[@data-ap-comp='dtcTopicTable']//div[.='" + topic + "']");
         pageUtils.waitForElementToAppear(investigationTopic).click();
         return this;
     }
 
+    /**
+     * Selects the gcd
+     * @param thread - the thread
+     * @return the thread as a webelement
+     */
     private WebElement selectGCD(String thread) {
         By threadType = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + thread + "')]");
         return pageUtils.scrollToElement(threadType, threadScroller);
+    }
+
+    /**
+     * Selects the edit button
+     * @return new page object
+     */
+    private ThreadingPage edit() {
+        editButton.click();
+        return new ThreadingPage(driver);
     }
 }
