@@ -62,16 +62,27 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
         pageUtils.waitForElementToAppear(treatmentTable);
     }
 
-    // TODO: 21/06/2019 ciene - need to find a more efficient way to implement this, maybe javascript
     /**
-     * Selects the secondary types in the process tree
-     * @param processTree - the secondary process tree
+     * Selects both the process type and process name of the secondary process
+     * @param processType - accepts a comma separated list of type string
+     * @param processName - the process name
      * @return current page object
      */
-    public SecondaryProcessPage selectProcessTree(String processTree) {
-        String[] processes = processTree.split(",");
+    public SecondaryProcessPage selectSecondaryProcess(String processType, String processName) {
+        selectProcessType(processType)
+            .selectProcessName(processName).click();
+        return this;
+    }
 
-        for (String process : processes) {
+    /**
+     * Selects the secondary types dropdowns in the process tree
+     * @param processType - the secondary process type
+     * @return current page object
+     */
+    private SecondaryProcessPage selectProcessType(String processType) {
+        String[] processTypes = processType.split(",");
+
+        for (String process : processTypes) {
             By pro = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//span[@class='fa fa-caret-right']");
             pageUtils.scrollToElement(pro, processScroller).click();
         }
@@ -81,13 +92,12 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     /**
      * Select the secondary process checkbox
      *
-     * @param secondaryProcess - the secondary process
+     * @param processName - the secondary process
      * @return current page object
      */
-    public SecondaryProcessPage selectSecondaryProcess(String secondaryProcess) {
-        By processBox = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + secondaryProcess + "']/ancestor::tr//input[@class='gwt-SimpleCheckBox']");
-        pageUtils.scrollToElement(processBox, processScroller);
-        return this;
+    private WebElement selectProcessName(String processName) {
+        By processBox = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName + "']/ancestor::tr//input[@class='gwt-SimpleCheckBox']");
+        return pageUtils.scrollToElement(processBox, processScroller);
     }
 
     /**
