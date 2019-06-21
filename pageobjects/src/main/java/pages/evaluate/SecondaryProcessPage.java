@@ -62,6 +62,22 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
         pageUtils.waitForElementToAppear(treatmentTable);
     }
 
+    // TODO: 21/06/2019 ciene - need to find a more efficient way to implement this, maybe javascript
+    /**
+     * Selects the secondary types in the process tree
+     * @param processTree - the secondary process tree
+     * @return current page object
+     */
+    public SecondaryProcessPage selectProcessTree(String processTree) {
+        String[] processes = processTree.split(",");
+
+        for (String process : processes) {
+            By pro = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//span[@class='fa fa-caret-right']");
+            pageUtils.scrollToElement(pro, processScroller).click();
+        }
+        return this;
+    }
+
     /**
      * Select the secondary process checkbox
      *
