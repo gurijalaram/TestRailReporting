@@ -1,6 +1,6 @@
 package main.java.enums;
 
-public enum CostingLabelsEnum {
+public enum CostingLabelEnum {
 
     COSTING_FAILURE("Costing Failure"),
     COSTING_INCOMPLETE("Costing Incomplete"),
@@ -10,7 +10,7 @@ public enum CostingLabelsEnum {
 
     private final String costingLabel;
 
-    CostingLabelsEnum(String costingLabel) {
+    CostingLabelEnum(String costingLabel) {
         this.costingLabel = costingLabel;
     }
 

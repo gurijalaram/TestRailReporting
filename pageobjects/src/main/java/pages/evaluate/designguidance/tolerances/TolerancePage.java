@@ -54,33 +54,35 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @return current page object
      */
     public TolerancePage selectToleranceTypeAndGCD(String toleranceType, String gcdType) {
-        selectToleranceType(toleranceType);
-        selectGCD(gcdType);
+        selectToleranceType(toleranceType).click();
+        selectGCD(gcdType).click();
         return this;
     }
 
     /**
      * Selects the tolerance type.  Selection is based on exact match so unit must be specified eg. Flatness (mm)
      * @param toleranceType - the tolerance type
-     * @return current page object
+     * @return the tolerance as webelement
      */
-    private TolerancePage selectToleranceType(String toleranceType) {
+    private WebElement selectToleranceType(String toleranceType) {
         By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[.='" + toleranceType + "']");
-        pageUtils.scrollToElement(tolerance,toleranceScroller);
-        return this;
+        return pageUtils.scrollToElement(tolerance,toleranceScroller);
     }
 
     /**
      * Selects the gcd.  Selection is based on exact match
      * @param gcdType - the gcd type
-     * @return current page object
+     * @return the gcd as webelement
      */
-    private TolerancePage selectGCD(String gcdType) {
+    private WebElement selectGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']");
-        pageUtils.scrollToElement(gcd, detailsScroller);
-        return this;
+        return pageUtils.scrollToElement(gcd, detailsScroller);
     }
 
+    /**
+     * Selects the edit button
+     * @return current page object
+     */
     private ToleranceEditPage editTolerance() {
         editToleranceButton.click();
         return new ToleranceEditPage(driver);
