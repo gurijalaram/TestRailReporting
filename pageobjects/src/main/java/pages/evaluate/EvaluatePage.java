@@ -212,4 +212,13 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         pageUtils.waitForElementToAppear(guidanceDetails).click();
         return new GuidancePage(driver);
     }
+
+    /**
+     * Opens the secondary process dialog
+     * @return new page object
+     */
+    public SecondaryProcessPage openSecondaryProcess() {
+        pageUtils.waitForElementToAppear(secondaryProcessButton).click();
+        return new SecondaryProcessPage(driver);
+    }
 }
