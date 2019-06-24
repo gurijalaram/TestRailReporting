@@ -4,7 +4,7 @@ import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
-import main.java.pages.explore.PrivateWorkspacePage;
+import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -146,9 +146,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * Publish the scenario
      * @return new page object
      */
-    public PrivateWorkspacePage publishScenario() {
+    public ExplorePage publishScenario() {
         publishButton.click();
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 
     /**
@@ -158,12 +158,12 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @param assignee - the assignee
      * @return new page object
      */
-    public PrivateWorkspacePage publishScenario(String status, String costMaturity, String assignee) {
+    public ExplorePage publishScenario(String status, String costMaturity, String assignee) {
         publishButton.click();
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
             .selectAssignee(assignee);
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 
     /**

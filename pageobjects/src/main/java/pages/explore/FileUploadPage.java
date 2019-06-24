@@ -106,8 +106,8 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * Select the cancel button
      * @return current page object
      */
-    private PrivateWorkspacePage selectCancelButton() {
+    private ExplorePage selectCancelButton() {
         cancelButton.click();
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 }

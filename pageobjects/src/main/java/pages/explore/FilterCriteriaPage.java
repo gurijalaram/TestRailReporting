@@ -176,18 +176,18 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Selects the apply button
      * @return current page object
      */
-    protected PrivateWorkspacePage apply() {
+    protected ExplorePage apply() {
         applyButton.click();
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 
     /**
      * Selects the cancel button
      * @return current page object
      */
-    protected PrivateWorkspacePage cancel() {
+    protected ExplorePage cancel() {
         cancelButton.click();
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 
     /**

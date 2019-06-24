@@ -2,7 +2,7 @@ package main.java.login;
 
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
-import main.java.pages.explore.PrivateWorkspacePage;
+import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +12,7 @@ import org.junit.Test;
 public class LoginTests extends TestBase {
 
     private LoginPage loginPage;
-    private PrivateWorkspacePage privateWorkspacePage;
+    private ExplorePage explorePage;
     private static String loginPageErrorMessage = "Wrong email or password.";
 
     public LoginTests() {
@@ -33,8 +33,8 @@ public class LoginTests extends TestBase {
     @Test
     public void testLogin() {
         loginPage = new LoginPage(driver);
-        privateWorkspacePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-        Assert.assertTrue(privateWorkspacePage.isDeleteButtonPresent());
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+        Assert.assertTrue(explorePage.isDeleteButtonPresent());
     }
 
     /**
