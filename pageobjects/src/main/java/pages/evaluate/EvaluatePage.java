@@ -3,6 +3,7 @@ package main.java.pages.evaluate;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
+import main.java.pages.evaluate.process.ProcessPage;
 import main.java.pages.explore.PrivateWorkspacePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -80,6 +81,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     @FindBy(css = "a[data-ap-nav-viewport='showCycleTimeDetails']")
     private WebElement processDetails;
+
+    @FindBy(css = "label[data-ap-field='processRoutingName'] div")
+    private WebElement processRoutingName;
 
     @FindBy(css = "a[data-ap-nav-viewport='showCostResultDetails']")
     private WebElement resultsDetails;
@@ -204,6 +208,23 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         pageUtils.clearInput(annualVolumeYrs);
         annualVolumeYrs.sendKeys(years);
         return this;
+    }
+
+    /**
+     * Opens the process tab
+     * @return new page object
+     */
+    public ProcessPage openProcessDetails() {
+        pageUtils.waitForElementToAppear(processDetails).click();
+        return new ProcessPage(driver);
+    }
+
+    /**
+     * Gets the process routing details
+     * @return the details as string
+     */
+    public String getProcessRoutingDetails() {
+        return processRoutingName.getText();
     }
 
     /**
