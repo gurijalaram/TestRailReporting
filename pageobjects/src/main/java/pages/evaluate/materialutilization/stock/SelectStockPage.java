@@ -90,5 +90,4 @@ public class SelectStockPage extends LoadableComponent<SelectStockPage> {
         cancelButton.click();
         return new MaterialUtilizationPage(driver);
     }
-
 }
