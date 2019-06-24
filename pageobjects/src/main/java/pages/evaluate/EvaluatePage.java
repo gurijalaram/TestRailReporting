@@ -1,6 +1,9 @@
 package main.java.pages.evaluate;
 
 import main.java.pages.evaluate.designguidance.GuidancePage;
+import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
+import main.java.pages.evaluate.materialutilization.MaterialPage;
+import main.java.pages.evaluate.process.ProcessPage;
 import main.java.pages.explore.PrivateWorkspacePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -78,6 +81,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     @FindBy(css = "a[data-ap-nav-viewport='showCycleTimeDetails']")
     private WebElement processDetails;
+
+    @FindBy(css = "label[data-ap-field='processRoutingName'] div")
+    private WebElement processRoutingName;
 
     @FindBy(css = "a[data-ap-nav-viewport='showCostResultDetails']")
     private WebElement resultsDetails;
@@ -205,11 +211,55 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     }
 
     /**
+     * Opens the process tab
+     * @return new page object
+     */
+    public ProcessPage openProcessDetails() {
+        pageUtils.waitForElementToAppear(processDetails).click();
+        return new ProcessPage(driver);
+    }
+
+    /**
+     * Gets the process routing details
+     * @return the details as string
+     */
+    public String getProcessRoutingDetails() {
+        return processRoutingName.getText();
+    }
+
+    /**
      * Opens the design guidance dialog
      * @return new page object
      */
     public GuidancePage openDesignGuidance() {
         pageUtils.waitForElementToAppear(guidanceDetails).click();
         return new GuidancePage(driver);
+    }
+
+    /**
+     * Opens the secondary process dialog
+     * @return new page object
+     */
+    public SecondaryProcessPage openSecondaryProcess() {
+        pageUtils.waitForElementToAppear(secondaryProcessButton).click();
+        return new SecondaryProcessPage(driver);
+    }
+
+    /**
+     * Opens the material composition dialog
+     * @return new page object
+     */
+    public MaterialPage openMaterialComposition() {
+        pageUtils.waitForElementToAppear(materialsDetails).click();
+        return new MaterialPage(driver);
+    }
+
+    /**
+     * Opens the material composition table
+     * @return new page object
+     */
+    public MaterialCompositionPage openMaterialCompositionTable() {
+        pageUtils.waitForElementToAppear(materialsButton).click();
+        return new MaterialCompositionPage(driver);
     }
 }

@@ -45,8 +45,19 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
     }
 
     /**
+     * Selects both gcd and gcd property
+     * @param gcdType - the gcd type
+     * @param gcdProperty - the gcd property
+     * @return current page object
+     */
+    public GeometryPage selectGCDAndGCDProperty(String gcdType, String gcdProperty) {
+        selectGCDType(gcdType).click();
+        selectGCDProperty(gcdProperty).click();
+        return this;
+    }
+
+    /**
      * Selects the gcd type
-     *
      * @param gcdType - the gcd type
      * @return gcd type as webelement
      */
@@ -57,7 +68,6 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
 
     /**
      * Selects the gcd property
-     *
      * @param gcdProperty - the gcd property
      * @return gcd property as webelement
      */
