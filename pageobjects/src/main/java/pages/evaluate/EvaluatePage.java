@@ -1,6 +1,8 @@
 package main.java.pages.evaluate;
 
 import main.java.pages.evaluate.designguidance.GuidancePage;
+import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
+import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.explore.PrivateWorkspacePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -220,5 +222,23 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     public SecondaryProcessPage openSecondaryProcess() {
         pageUtils.waitForElementToAppear(secondaryProcessButton).click();
         return new SecondaryProcessPage(driver);
+    }
+
+    /**
+     * Opens the material composition dialog
+     * @return new page object
+     */
+    public MaterialPage openMaterialComposition() {
+        pageUtils.waitForElementToAppear(materialsDetails).click();
+        return new MaterialPage(driver);
+    }
+
+    /**
+     * Opens the material composition table
+     * @return new page object
+     */
+    public MaterialCompositionPage openMaterialCompositionTable() {
+        pageUtils.waitForElementToAppear(materialsButton).click();
+        return new MaterialCompositionPage(driver);
     }
 }
