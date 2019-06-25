@@ -1,6 +1,6 @@
 package main.java.pages.evaluate;
 
-import main.java.pages.explore.PrivateWorkspacePage;
+import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -92,17 +92,17 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * Selects the publish button
      * @return new page object
      */
-    protected PrivateWorkspacePage selectPublishButton() {
+    protected ExplorePage selectPublishButton() {
         publishButton.click();
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 
     /**
      * Selects the cancel button
      * @return new page object
      */
-    protected PrivateWorkspacePage selectCancelButton() {
+    protected ExplorePage selectCancelButton() {
         cancelButton.click();
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 }

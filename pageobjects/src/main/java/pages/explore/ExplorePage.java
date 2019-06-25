@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage> {
+public class ExplorePage extends LoadableComponent<ExplorePage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PrivateWorkspacePage.class);
+    private final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
@@ -66,7 +66,7 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public PrivateWorkspacePage(WebDriver driver) {
+    public ExplorePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -99,7 +99,7 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
      * @param fileName - name of the file
      * @return current page object
      */
-    public PrivateWorkspacePage uploadFile(String scenarioName, String filePath, String fileName) {
+    public ExplorePage uploadFile(String scenarioName, String filePath, String fileName) {
         newFileDropdown.click();
         componentButton.click();
         new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
@@ -114,7 +114,7 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
      * @param value - the value
      * @return current page object
      */
-    public PrivateWorkspacePage filterPrivateCriteria(String type, String attribute, String condition, String value) {
+    public ExplorePage filterPrivateCriteria(String type, String attribute, String condition, String value) {
         filterButton.click();
         new FilterCriteriaPage(driver).clearAllCheckBoxes()
             .setPrivateWorkSpace()
@@ -123,7 +123,7 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
             .selectCondition(condition)
             .setTypeOfValue(value)
             .apply();
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 
     /**
@@ -134,7 +134,7 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
      * @param value - the value
      * @return current page object
      */
-    public PrivateWorkspacePage filterPublicCriteria(String type, String attribute, String condition, String value) {
+    public ExplorePage filterPublicCriteria(String type, String attribute, String condition, String value) {
         filterButton.click();
         new FilterCriteriaPage(driver).clearAllCheckBoxes()
             .setPublicWorkspace()
@@ -143,7 +143,7 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
             .selectCondition(condition)
             .setTypeOfValue(value)
             .apply();
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 
     /**
@@ -151,7 +151,7 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
      * @param workspace - workspace dropdown
      * @return current page object
      */
-    public PrivateWorkspacePage selectWorkSpace(String workspace) {
+    public ExplorePage selectWorkSpace(String workspace) {
         new Select(workspaceDropdown).selectByVisibleText(workspace);
         return this;
     }

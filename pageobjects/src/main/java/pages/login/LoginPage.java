@@ -1,7 +1,7 @@
 package main.java.pages.login;
 
 import main.java.constants.Constants;
-import main.java.pages.explore.PrivateWorkspacePage;
+import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -78,9 +78,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @param password - the password
      * @return new page object
      */
-    public PrivateWorkspacePage login(String email, String password) {
+    public ExplorePage login(String email, String password) {
         executeLogin(email, password);
-        return new PrivateWorkspacePage(driver);
+        return new ExplorePage(driver);
     }
 
     /**
