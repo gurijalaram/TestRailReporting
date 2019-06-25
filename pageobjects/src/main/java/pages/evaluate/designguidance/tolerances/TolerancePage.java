@@ -65,7 +65,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @return the tolerance as webelement
      */
     private WebElement selectToleranceType(String toleranceType) {
-        By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[.='" + toleranceType + "']");
+        By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]");
         return pageUtils.scrollToElement(tolerance,toleranceScroller);
     }
 
