@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +48,9 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
         pageUtils.waitForElementToAppear(topicTable);
     }
 
-    public ThreadingPage editThread(String thread) {
-        selectGCD(thread).click();
+    public ThreadingPage editThread(String gcdType, String gcd) {
+        selectGCDType(gcdType).click();
+        selectGCD(gcd).click();
         edit();
         return new ThreadingPage(driver);
     }
@@ -65,13 +67,33 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     }
 
     /**
-     * Selects the gcd
-     * @param thread - the thread
-     * @return the thread as a webelement
+     * Selects the gcd type
+     * @param gcdType - the gcd type
+     * @return the gcd type as a webelement
      */
-    private WebElement selectGCD(String thread) {
-        By threadType = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + thread + "')]");
-        return pageUtils.scrollToElement(threadType, threadScroller);
+    private WebElement selectGCDType(String gcdType) {
+        By type = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcdType + "')]/ancestor::tr//label[@class]");
+        return pageUtils.scrollToElement(type, threadScroller);
+    }
+
+    /**
+     * Selects the gcd
+     * @param gcd  - the gcd
+     * @return the gcd as webelement
+     */
+    private WebElement selectGCD(String gcd) {
+        By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]");
+        return pageUtils.scrollToElement(gcdElement, threadScroller);
+    }
+
+    /**
+     * Selects the threadable dropdown
+     * @param option - the dropdown in the option
+     * @return current page object
+     */
+    public InvestigationPage selectThreadableGCD(String option)  {
+        new Select(threadableDropdown).selectByVisibleText(option);
+        return this;
     }
 
     /**
