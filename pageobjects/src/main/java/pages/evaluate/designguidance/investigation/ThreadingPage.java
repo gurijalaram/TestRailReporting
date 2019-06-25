@@ -75,6 +75,14 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     }
 
     /**
+     * Gets the thread length
+     * @return - the thread length
+     */
+    public String getThreadLength() {
+        return pageUtils.waitForElementToAppear(lengthInput).getText();
+    }
+
+    /**
      * Selects the apply button
      * @return new page object
      */
