@@ -231,9 +231,12 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     private ToleranceEditPage setTotalRunout(String value) {
         pageUtils.clearInput(totalRunoutInput);
         totalRunoutInput.sendKeys(value);
+        return this;
+    }
 
     /**
      * Selects the apply button
+     *
      * @return new page object
      */
     public TolerancePage apply() {
@@ -243,6 +246,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public TolerancePage cancel() {
