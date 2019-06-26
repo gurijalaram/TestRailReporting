@@ -231,7 +231,8 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     private ToleranceEditPage setTotalRunout(String value) {
         pageUtils.clearInput(totalRunoutInput);
         totalRunoutInput.sendKeys(value);
-
+        return new ToleranceEditPage(driver);
+    }
     /**
      * Selects the apply button
      * @return new page object
