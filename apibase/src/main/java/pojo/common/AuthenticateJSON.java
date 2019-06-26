@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 /**
  * @author kpatel
  */
-// TODO: future when we have a real external end-point. This spec here is just a placeholder, we may not have same field
-@Schema(location = "location_of_authentication_json")
+@Schema(location = "AuthenticateJSONSchema.json")
 public class AuthenticateJSON {
 
     private String auth;

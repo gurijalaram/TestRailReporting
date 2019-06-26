@@ -5,7 +5,7 @@ package main.java.enums.common;
  */
 public enum AuthEndpointEnum implements ExternalEndpointEnum {
 
-    POST_AUTH("auth/token"),
+    POST_AUTH("/auth/token"),
     ;
 
     private final String endpoint;

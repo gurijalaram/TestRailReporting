@@ -10,6 +10,7 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import main.java.constants.Constants;
 import main.java.enums.EndpointEnum;
 import main.java.enums.EndpointType;
 import main.java.enums.Schema;
@@ -45,6 +46,10 @@ import static org.hamcrest.Matchers.isOneOf;
  * GET ({@link #get()}), POST ({@link #post()}), PUT ({@link #put()}), PATCH ({@link #patch()}) and DELETE ({@link #delete()}) methods
  * - Converts response JSON into the desired POJO object
  */
+
+//TODO z: I think we need to split initialization and functionality in this class
+//    e.g. Initialization.class send ObjectWrapper.class to Functionality.class
+//    it is more convenient from the logic view
 public class ConnectionManager<T> {
 
     private static Map<String, String> sessionIds = new ConcurrentHashMap<>();
@@ -127,8 +132,33 @@ public class ConnectionManager<T> {
         private int connectionTimeout = 60000;
         private int socketTimeout = 60000;
 
+
         private ConnectionManagerBuilder(ConnectionClass connectionClass) {
+            this(connectionClass, false);
+        }
+
+        private ConnectionManagerBuilder(ConnectionClass connectionClass, boolean useFormData) {
             this.connectionClass = connectionClass;
+
+            if(useFormData) {
+                this.initFormUrlUserData();
+            }
+        }
+
+        private void initFormUrlUserData() {
+            UserForAPIConnection userForAPIConnection = connectionClass.getUserForAPIConnection();
+
+            if (userForAPIConnection != null) {
+
+                this.xwwwwFormUrlEncoded(new HashMap<String, String>() {{
+                    put("grant_type",userForAPIConnection.getGrant_type());
+                    put("username", userForAPIConnection.getEmailAddress());
+                    put("password", userForAPIConnection.getPassword());
+                    put("client_id",userForAPIConnection.getClient_id());
+                    put("client_secret",userForAPIConnection.getClient_secret());
+                    put("scope", userForAPIConnection.getScope());
+                }});
+            }
         }
 
         private ConnectionManagerBuilder(boolean useCookie) {
@@ -137,6 +167,10 @@ public class ConnectionManager<T> {
 
         public static ConnectionManagerBuilder builder(ConnectionClass connectionClass) {
             return new ConnectionManagerBuilder(connectionClass);
+        }
+
+        public static ConnectionManagerBuilder fullUserDataBuild(ConnectionClass connectionClass) {
+            return new ConnectionManagerBuilder(connectionClass, true);
         }
 
         public static ConnectionManagerBuilder builder() {
@@ -393,7 +427,7 @@ public class ConnectionManager<T> {
                 throw new RuntimeException(String.format("Your returnType %s is not annotated with @Schema annotation", returnType.getName()));
             }
 
-            final URL resource = Thread.currentThread().getContextClassLoader().getResource(schemaLocation);
+            final URL resource = Thread.currentThread().getContextClassLoader().getResource(Constants.schemaBasePath + schemaLocation);
             if (resource == null) {
                 throw new RuntimeException(
                     String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
