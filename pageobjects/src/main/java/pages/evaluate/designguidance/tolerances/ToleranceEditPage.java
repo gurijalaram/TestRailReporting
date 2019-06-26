@@ -93,7 +93,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return current page object
      */
     ToleranceEditPage setCircularity(String value) {
-        clearInputAndSendKeys(circularityInput,value);
+        clearInputAndSendKeys(circularityInput, value);
         return this;
     }
 
@@ -102,7 +102,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return current page object
      */
     ToleranceEditPage setConcentricity(String value) {
-        clearInputAndSendKeys(concentricityInput,value);
+        clearInputAndSendKeys(concentricityInput, value);
         return this;
     }
 
@@ -221,8 +221,9 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     /**
      * Private helper method used to clear and input box and sendkeys
+     *
      * @param element - the webelement
-     * @param value - the value
+     * @param value   - the value
      * @return current page object
      */
     ToleranceEditPage clearInputAndSendKeys(WebElement element, String value) {
@@ -233,6 +234,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     /**
      * Selects the apply button
+     *
      * @return new page object
      */
     public TolerancePage apply() {
@@ -242,10 +244,178 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public TolerancePage cancel() {
         cancelButton.click();
         return new TolerancePage(driver);
+    }
+
+    public static class ToleranceBuilder {
+
+        private String circularity;
+        private String concentricity;
+        private String cylindricity;
+        private String diamtolerance;
+        private String parallelism;
+        private String perpendicularity;
+        private String truePosition;
+        private String profileSurface;
+        private String roughnessRa;
+        private String roughnessRz;
+        private String runout;
+        private String straightness;
+        private String symmetry;
+        private String toleranceCoor;
+        private String totalRunout;
+
+        private WebDriver driver;
+
+        public ToleranceBuilder(WebDriver driver) {
+            this.driver = driver;
+        }
+
+        /**
+         * @param circularity
+         * @return
+         */
+        public ToleranceBuilder setCircularity(String circularity) {
+            this.circularity = circularity;
+            return this;
+        }
+
+        /**
+         * @param concentricity
+         * @return
+         */
+        public ToleranceBuilder setConcentricity(String concentricity) {
+            this.concentricity = concentricity;
+            return this;
+        }
+
+        /**
+         * @param cylindricity
+         */
+        public ToleranceBuilder setCylindricity(String cylindricity) {
+            this.cylindricity = cylindricity;
+            return this;
+        }
+
+        /**
+         * @param diamtolerance
+         */
+        public ToleranceBuilder setDiamtolerance(String diamtolerance) {
+            this.diamtolerance = diamtolerance;
+            return this;
+        }
+
+        /**
+         * @param parallelism
+         */
+        public ToleranceBuilder setParallelism(String parallelism) {
+            this.parallelism = parallelism;
+            return this;
+        }
+
+        /**
+         * @param perpendicularity
+         */
+        public ToleranceBuilder setPerpendicularity(String perpendicularity) {
+            this.perpendicularity = perpendicularity;
+            return this;
+        }
+
+        /**
+         * @param truePosition
+         */
+        public ToleranceBuilder setTruePosition(String truePosition) {
+            this.truePosition = truePosition;
+            return this;
+        }
+
+        /**
+         * @param profileSurface
+         */
+        public ToleranceBuilder setProfileSurface(String profileSurface) {
+            this.profileSurface = profileSurface;
+            return this;
+        }
+
+        /**
+         * @param roughnessRa
+         */
+        public ToleranceBuilder setRoughnessRa(String roughnessRa) {
+            this.roughnessRa = roughnessRa;
+            return this;
+        }
+
+        /**
+         * @param roughnessRz
+         */
+        public ToleranceBuilder setRoughnessRz(String roughnessRz) {
+            this.roughnessRz = roughnessRz;
+            return this;
+        }
+
+        /**
+         * @param runout
+         */
+        public ToleranceBuilder setRunout(String runout) {
+            this.runout = runout;
+            return this;
+        }
+
+        /**
+         * @param straightness
+         */
+        public ToleranceBuilder setStraightness(String straightness) {
+            this.straightness = straightness;
+            return this;
+        }
+
+        /**
+         * @param symmetry
+         */
+        public ToleranceBuilder setSymmetry(String symmetry) {
+            this.symmetry = symmetry;
+            return this;
+        }
+
+        /**
+         * @param toleranceCoor
+         */
+        public ToleranceBuilder setToleranceCoor(String toleranceCoor) {
+            this.toleranceCoor = toleranceCoor;
+            return this;
+        }
+
+        /**
+         * @param totalRunout
+         */
+        public ToleranceBuilder setTotalRunout(String totalRunout) {
+            this.totalRunout = totalRunout;
+            return this;
+        }
+
+        public ToleranceEditPage build() {
+            ToleranceEditPage toleranceEditPage = new ToleranceEditPage(driver);
+            toleranceEditPage.setCircularity(this.circularity);
+            toleranceEditPage.setConcentricity(this.concentricity);
+            toleranceEditPage.setCylindricity(this.cylindricity);
+            toleranceEditPage.setDiamTolerance(this.diamtolerance);
+            toleranceEditPage.setParallelism(this.parallelism);
+            toleranceEditPage.setPerpendicularity(this.perpendicularity);
+            toleranceEditPage.setTruePosition(this.truePosition);
+            toleranceEditPage.setProfileSurface(this.profileSurface);
+            toleranceEditPage.setRoughnessRa(this.roughnessRa);
+            toleranceEditPage.setRoughnessRz(this.roughnessRz);
+            toleranceEditPage.setRunout(this.runout);
+            toleranceEditPage.setStraightness(this.straightness);
+            toleranceEditPage.setSymmetry(this.symmetry);
+            toleranceEditPage.setToleranceCoor(this.toleranceCoor);
+            toleranceEditPage.setTotalRunout(this.totalRunout);
+            return new ToleranceEditPage(driver);
+        }
     }
 }
