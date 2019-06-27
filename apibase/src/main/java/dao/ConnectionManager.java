@@ -1,4 +1,4 @@
-package main.java;
+package main.java.dao;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -10,6 +10,10 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import main.java.common.ConnectionClass;
+import main.java.utils.MultiPartFiles;
+import main.java.utils.URLParams;
+import main.java.common.UserForAPIConnection;
 import main.java.constants.Constants;
 import main.java.enums.EndpointEnum;
 import main.java.enums.EndpointType;
@@ -133,11 +137,11 @@ public class ConnectionManager<T> {
         private int socketTimeout = 60000;
 
 
-        private ConnectionManagerBuilder(ConnectionClass connectionClass) {
+        public ConnectionManagerBuilder(ConnectionClass connectionClass) {
             this(connectionClass, false);
         }
 
-        private ConnectionManagerBuilder(ConnectionClass connectionClass, boolean useFormData) {
+        public ConnectionManagerBuilder(ConnectionClass connectionClass, boolean useFormData) {
             this.connectionClass = connectionClass;
 
             if(useFormData) {

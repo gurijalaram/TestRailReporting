@@ -1,4 +1,4 @@
-package main.java;
+package main.java.utils;
 
 import io.restassured.mapper.ObjectMapper;
 import io.restassured.mapper.ObjectMapperDeserializationContext;

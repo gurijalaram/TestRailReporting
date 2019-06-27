@@ -1,4 +1,4 @@
-package main.java;
+package main.java.common;
 /**
  * The class is intended to hold necessary user data to be able to login with a user through internal API.
  * You can also pass an already existing JSESSIONID from an already logged in user.
