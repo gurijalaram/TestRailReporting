@@ -404,7 +404,7 @@ public class ConnectionManager<T> {
                     .returnType(AuthenticateJSON.class)
                     .connect()
                     .post()
-            ).getAuth();
+            ).getAccessToken();
 
             authTokens.put(connectionClass.getUserForAPIConnection().getEmailAddress(), authToken);
         }

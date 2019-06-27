@@ -2,14 +2,13 @@ package main.java;
 
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
+import main.java.enums.common.AuthEndpointEnum;
 import main.java.pages.LoginPage;
 import main.java.pages.PrivateWorkspacePage;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import main.java.pojo.common.AuthenticateJSON;
+import org.junit.*;
 
-public class LoginTests extends TestBase {
+public class LoginTests  extends TestBase {
 
     private LoginPage loginPage;
     private PrivateWorkspacePage privateWorkspacePage;
@@ -30,6 +29,7 @@ public class LoginTests extends TestBase {
     /**
      * Test successuful login
      */
+    @Ignore
     @Test
     public void testLogin() {
         loginPage = new LoginPage(driver);
@@ -40,10 +40,11 @@ public class LoginTests extends TestBase {
     /**
      * Test unsuccessful login with correct email, incorrect password
      */
+    @Ignore
     @Test
     public void testIncorrectPwd() {
         loginPage = new LoginPage(driver);
         loginPage = loginPage.failedLoginAs(UsersEnum.CIE_TE_USER.getUsername(), "asdfdasfas");
         Assert.assertEquals(loginPageErrorMessage.toUpperCase(), loginPage.getLoginErrorMessage());
     }
-}  
+}
