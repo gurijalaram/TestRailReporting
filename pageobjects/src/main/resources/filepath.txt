@@ -1,1 +1,1 @@
-C:\parts\
+\\share.apriori.com\common\svn\parts\apriori-parts\QA-Automation\CIDesign\Evaluate\Inputs\SecondaryProcesses\
