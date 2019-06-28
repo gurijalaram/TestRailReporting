@@ -94,10 +94,26 @@
 	
 	<profiles>
 		<profile>
-			<id>default</id>
+			<id>sonar</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+			<properties>
+				<sonar.host.url>https://sonarqube.apriori.com</sonar.host.url>
+				<sonar.scm.provider>git</sonar.scm.provider>
+				<sonar.language>java</sonar.language>
+				<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+			</properties>
+			<modules>
+				<module>../utils</module>
+				<module>../apibase</module>
+				<module>../internalapi</module>
+				<module>../pageobjects</module>
+				<module>../uitests</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>build</id>
 			<modules>
 				<module>../utils</module>
 				<module>../apibase</module>
@@ -675,6 +691,11 @@
 						<target>${java.version}</target>
 						<excludes>settings.xml</excludes>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>3.6.0.1398</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
