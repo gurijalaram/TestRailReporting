@@ -1,17 +1,21 @@
 package main.java.pages.evaluate;
 
+import main.java.enums.CostingLabelEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +43,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     @FindBy(css = "button[data-ap-comp='costButton']")
     private WebElement costButton;
+
+    @FindBy(css = ".bottom .popover-content .gwt-HTML")
+    private WebElement costLabelPopover;
 
     @FindBy(css = "li[data-ap-comp='costButton']")
     private WebElement costLabel;
@@ -99,7 +106,6 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private static final String COST_UP_TO_DATE = "Cost up to\n" + "Date";
 
     public EvaluatePage(WebDriver driver) {
         this.driver = driver;
@@ -121,14 +127,14 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     }
 
     /**
-     * Cost the scenario passing in null or text values
+     * Cost the scenario. Enter 'null' if the cost label is expected to be default label
      * @param costText - the text for the cost label
      * @return current page object
      */
     public EvaluatePage costScenario(String costText) {
-        costButton.click();
-        pageUtils.waitForElementToBeClickable(dialogCostButton).click();
-        costText = costText == null ? COST_UP_TO_DATE : costText;
+        pageUtils.waitForElementToBeClickable(costButton).click();
+        pageUtils.waitForElementToAppear(dialogCostButton).click();
+        costText = costText == "Success" ? CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel() : costText;
         checkCostLabel(costText);
         return this;
     }
@@ -139,6 +145,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return true or false
      */
     private boolean checkCostLabel(String costText) {
+        pageUtils.waitForElementToAppear(costLabelPopover);
         return pageUtils.waitForElementToAppear(costLabel).getText().equalsIgnoreCase(costText);
     }
 
@@ -224,7 +231,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return the details as string
      */
     public String getProcessRoutingDetails() {
-        return processRoutingName.getText();
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        wait.until((ExpectedCondition<Boolean>) ele -> (driver.findElements(By.cssSelector("label.dirty")).size() < 1));
+        return processRoutingName.getAttribute("title");
     }
 
     /**

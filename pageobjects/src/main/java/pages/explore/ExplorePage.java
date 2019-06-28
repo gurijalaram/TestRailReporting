@@ -99,11 +99,30 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @param fileName - name of the file
      * @return current page object
      */
-    public ExplorePage uploadFile(String scenarioName, String filePath, String fileName) {
+    public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
         newFileDropdown.click();
         componentButton.click();
-        new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
-        return this;
+        return new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
+    }
+
+    /**
+     * Selects new scenario button
+     * @return new page object
+     */
+    public ScenarioPage createNewScenario() {
+        newFileDropdown.click();
+        scenarioButton.click();
+        return new ScenarioPage(driver);
+    }
+
+    /**
+     * Selects new comparison button
+     * @return new page object
+     */
+    public ComparisonPage createNewComparison() {
+        newFileDropdown.click();
+        comparisonButton.click();
+        return new ComparisonPage(driver);
     }
 
     /**
@@ -165,6 +184,16 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     public WebElement findScenario(String partName, String scenarioName) {
         By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName + "," + scenarioName + "']");
         return pageUtils.scrollToElement(scenario, componentScroller);
+    }
+
+    /**
+     * Find specific scenario in the table
+     * @param comparisonName - name of the scenario
+     * @return the scenario as webelement
+     */
+    public WebElement findComparison(String comparisonName) {
+        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName + "']");
+        return pageUtils.scrollToElement(comparison, componentScroller);
     }
 
     /**
