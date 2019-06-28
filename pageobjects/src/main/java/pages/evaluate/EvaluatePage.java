@@ -1,23 +1,21 @@
 package main.java.pages.evaluate;
 
-import main.java.enums.CostingLabelEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
@@ -92,6 +90,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     @FindBy(css = "label[data-ap-field='processRoutingName'] div")
     private WebElement processRoutingName;
 
+    @FindBy(css = "label.dirty")
+    private List<WebElement> processRoutingState;
+
     @FindBy(css = "a[data-ap-nav-viewport='showCostResultDetails']")
     private WebElement resultsDetails;
 
@@ -106,6 +107,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private static final String COST_UP_TO_DATE = "Cost up to\n" + "Date";
 
     public EvaluatePage(WebDriver driver) {
         this.driver = driver;
@@ -134,7 +136,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     public EvaluatePage costScenario(String costText) {
         pageUtils.waitForElementToBeClickable(costButton).click();
         pageUtils.waitForElementToAppear(dialogCostButton).click();
-        costText = costText == "Success" ? CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel() : costText;
+        costText = costText == null ? COST_UP_TO_DATE : costText;
         checkCostLabel(costText);
         return this;
     }
@@ -231,8 +233,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return the details as string
      */
     public String getProcessRoutingDetails() {
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        wait.until((ExpectedCondition<Boolean>) ele -> (driver.findElements(By.cssSelector("label.dirty")).size() < 1));
+        pageUtils.waitForElementsNotVisible(processRoutingState);
         return processRoutingName.getAttribute("title");
     }
 

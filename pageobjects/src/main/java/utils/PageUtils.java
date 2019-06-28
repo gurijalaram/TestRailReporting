@@ -430,4 +430,10 @@ public class PageUtils {
             return driver.findElement(scenario);
         }
     }
+
+    // TODO: 28/06/2019 i need to make this method a bit more generic and create a proper wrapper for it
+    public Boolean waitForElementsNotVisible(List<WebElement> elements) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 6);
+        return wait.until((ExpectedCondition<Boolean>) element -> (elements).size() < 1);
+    }
 }
