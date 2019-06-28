@@ -54,7 +54,7 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      * @return current page object
      */
     public ComparisonTablePage selectComparison(String partName, String scenarioName) {
-        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName + "," + scenarioName + "']/ancestor::tr//input[@class]");
+        By comparison = By.cssSelector("//div[@data-ap-comp='componentTable']//a[contains(@href,'" + partName + "," + scenarioName + "')]/ancestor::tr//input[@class]");
         pageUtils.scrollToElement(comparison, comparisonScroller).click();
         return this;
     }
