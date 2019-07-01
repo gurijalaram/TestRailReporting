@@ -1,18 +1,13 @@
 package main.java.enums.common;
 
-/**
- * @author kpatel
- */
-public enum CommonEndpointEnum implements InternalEndpointEnum {
+public enum TemporaryAPIEnum implements TemporaryAPI {
 
-    POST_SESSIONID("/login"),
     GET_ACCOUNTS_STATUS("/accounts/status")
-
     ;
 
     private final String endpoint;
 
-    CommonEndpointEnum(String endpoint) {
+    TemporaryAPIEnum(String endpoint) {
         this.endpoint = endpoint;
     }
 

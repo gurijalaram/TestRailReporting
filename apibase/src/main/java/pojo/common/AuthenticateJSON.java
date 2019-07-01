@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 /**
  * @author kpatel
  */
+
+//https://www.jsonschema.net/
 @Schema(location = "AuthenticateJSONSchema.json")
 public class AuthenticateJSON {
 
@@ -17,8 +19,8 @@ public class AuthenticateJSON {
     private String accessToken;
 
     @JsonProperty("expires_in")
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmss.class)
-    private LocalDateTime expires_in;
+//    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmss.class)
+    private Integer expiresIn;
 
     public String getAccessToken() {
         return accessToken;
@@ -29,12 +31,12 @@ public class AuthenticateJSON {
         return this;
     }
 
-    public LocalDateTime getExpires_in() {
-        return expires_in;
+    public Integer getExpiresIn() {
+        return expiresIn;
     }
 
-    public AuthenticateJSON setExpires_in(LocalDateTime expires_in) {
-        this.expires_in = expires_in;
+    public AuthenticateJSON setExpiresIn(Integer expiresIn) {
+        this.expiresIn = expiresIn;
         return this;
     }
 }

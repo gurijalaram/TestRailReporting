@@ -10,28 +10,23 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import main.java.common.ConnectionClass;
+import main.java.common.HTTPRequest;
+import main.java.service.RequestDataInit;
 import main.java.utils.MultiPartFiles;
 import main.java.utils.URLParams;
-import main.java.common.UserForAPIConnection;
 import main.java.constants.Constants;
-import main.java.enums.EndpointEnum;
 import main.java.enums.EndpointType;
 import main.java.enums.Schema;
 import main.java.enums.common.AuthEndpointEnum;
 import main.java.enums.common.CommonEndpointEnum;
-import main.java.enums.common.ExternalEndpointEnum;
-import main.java.enums.common.InternalEndpointEnum;
 import main.java.pojo.common.AuthenticateJSON;
 import main.java.pojo.common.LoginJSON;
 import main.java.pojo.common.PayloadJSON;
-import org.apache.http.HttpStatus;
 import org.openqa.selenium.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +39,7 @@ import static org.hamcrest.Matchers.isOneOf;
 
 /**
  * {@link ConnectionManager} class has the following purposes:
- * - Holds your request parameters what you can set up using {@link ConnectionManagerBuilder} class.
+ * - Holds your request parameters what you can set up using {@link RequestDataInit} class.
  * - Creates {@link RequestSpecification} using {{@link #createRequestSpecification(List, PayloadJSON)}}
  * - Connects to desired endpoint using
  * GET ({@link #get()}), POST ({@link #post()}), PUT ({@link #put()}), PATCH ({@link #patch()}) and DELETE ({@link #delete()}) methods
@@ -59,7 +54,7 @@ public class ConnectionManager<T> {
     private static Map<String, String> sessionIds = new ConcurrentHashMap<>();
     private static Map<String, String> authTokens = new ConcurrentHashMap<>();
 
-    private ConnectionClass connectionClass;
+    private HTTPRequest HTTPRequest;
     private String endpoint;
     private Integer[] statusCode;
     private EndpointType endpointType;
@@ -77,7 +72,7 @@ public class ConnectionManager<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
 
-    public ConnectionManager(ConnectionClass connectionClass,
+    public ConnectionManager(HTTPRequest HTTPRequest,
                              String endpoint,
                              int[] statusCode,
                              boolean autoLogin,
@@ -91,7 +86,7 @@ public class ConnectionManager<T> {
                              Class<T> returnType,
                              int connectionTimeout,
                              int socketTimeout) {
-        this.connectionClass = connectionClass;
+        this.HTTPRequest = HTTPRequest;
         this.endpoint = endpoint;
         this.statusCode = Arrays.stream(statusCode).boxed().toArray(Integer[]::new);
         this.useCookie = useCookie;
@@ -108,179 +103,6 @@ public class ConnectionManager<T> {
         this.socketTimeout = socketTimeout;
 
         RestAssured.defaultParser = Parser.JSON;
-    }
-
-    /**
-     * Just a builder class which is designed to make you life easier to setup your Internal API endpoint request.
-     * You can setup:
-     * {@link #endpoint}           -   internal api endpoint
-     * {@link #statusCode}         -   expected response status code
-     * {@link #urlParams}          -   inline url params formatted in the following way: ?param1=value1&param2=value2
-     * {@link #inlineVariables}    -   inline variables.
-     * {@link #payloadJSON}        -   payload JSON what you want to send in the request
-     */
-    public static class ConnectionManagerBuilder {
-        private ConnectionClass connectionClass;
-        private EndpointEnum endpoint;
-        private int[] statusCode = {HttpStatus.SC_OK};
-        private boolean useCookie = false;
-        private boolean autoLogin = true;
-        private EndpointType endpointType;
-        private boolean followRedirection = true;
-        private List<Map<String, ?>> urlParams = new ArrayList<>();
-        private List<Map<String, ?>> xwwwwFormUrlEncoded = new ArrayList<>();
-        private Object[] inlineVariables;
-        private MultiPartFiles multiPartFiles;
-        private PayloadJSON payloadJSON;
-        private Class<?> returnType;
-        private int connectionTimeout = 60000;
-        private int socketTimeout = 60000;
-
-
-        public ConnectionManagerBuilder(ConnectionClass connectionClass) {
-            this(connectionClass, false);
-        }
-
-        public ConnectionManagerBuilder(ConnectionClass connectionClass, boolean useFormData) {
-            this.connectionClass = connectionClass;
-
-            if(useFormData) {
-                this.initFormUrlUserData();
-            }
-        }
-
-        private void initFormUrlUserData() {
-            UserForAPIConnection userForAPIConnection = connectionClass.getUserForAPIConnection();
-
-            if (userForAPIConnection != null) {
-
-                this.xwwwwFormUrlEncoded(new HashMap<String, String>() {{
-                    put("grant_type",userForAPIConnection.getGrant_type());
-                    put("username", userForAPIConnection.getEmailAddress());
-                    put("password", userForAPIConnection.getPassword());
-                    put("client_id",userForAPIConnection.getClient_id());
-                    put("client_secret",userForAPIConnection.getClient_secret());
-                    put("scope", userForAPIConnection.getScope());
-                }});
-            }
-        }
-
-        private ConnectionManagerBuilder(boolean useCookie) {
-            this.useCookie = useCookie;
-        }
-
-        public static ConnectionManagerBuilder builder(ConnectionClass connectionClass) {
-            return new ConnectionManagerBuilder(connectionClass);
-        }
-
-        public static ConnectionManagerBuilder fullUserDataBuild(ConnectionClass connectionClass) {
-            return new ConnectionManagerBuilder(connectionClass, true);
-        }
-
-        public static ConnectionManagerBuilder builder() {
-            return new ConnectionManagerBuilder(false);
-        }
-
-        public ConnectionManagerBuilder endpoint(EndpointEnum endpoint) {
-            this.endpoint = endpoint;
-            if (this.endpoint instanceof InternalEndpointEnum) {
-                this.endpointType = EndpointType.INTERNAL;
-            } else if (this.endpoint instanceof ExternalEndpointEnum) {
-                this.endpointType = EndpointType.EXTERNAL;
-            }
-            return this;
-        }
-
-        public ConnectionManagerBuilder statusCode(int... statusCode) {
-            this.statusCode = statusCode;
-            return this;
-        }
-
-        public ConnectionManagerBuilder useCookie(boolean useCookie) {
-            this.useCookie = useCookie;
-            return this;
-        }
-
-        public ConnectionManagerBuilder useAutoLogin(boolean autoLogin) {
-            this.autoLogin = autoLogin;
-            return this;
-        }
-
-        public ConnectionManagerBuilder followRedirection(boolean followRedirection) {
-            this.followRedirection = followRedirection;
-            return this;
-        }
-
-        public ConnectionManagerBuilder urlParam(Map<String, ?> urlParams) {
-            if (urlParams != null) {
-                this.urlParams.add(urlParams);
-            }
-            return this;
-        }
-
-        public ConnectionManagerBuilder xwwwwFormUrlEncoded(Map<String, ?> xwwwwFormUrlEncoded) {
-            if (xwwwwFormUrlEncoded != null) {
-                this.xwwwwFormUrlEncoded.add(xwwwwFormUrlEncoded);
-            }
-            return this;
-        }
-
-        public ConnectionManagerBuilder inlineVariables(Object... inlineVariables) {
-            this.inlineVariables = inlineVariables;
-            return this;
-        }
-
-        public ConnectionManagerBuilder multiPart(MultiPartFiles multiPartFiles) {
-            this.multiPartFiles = multiPartFiles;
-            return this;
-        }
-
-        public ConnectionManagerBuilder payloadJSON(PayloadJSON payloadJSON) {
-            this.payloadJSON = payloadJSON;
-            return this;
-        }
-
-        public ConnectionManagerBuilder returnType(Class<?> returnType) {
-            this.returnType = returnType;
-            return this;
-        }
-
-        public ConnectionManagerBuilder setConnectionTimeout(int connectionTimeout) {
-            this.connectionTimeout = connectionTimeout;
-            return this;
-        }
-
-        public ConnectionManagerBuilder setSocketTimeout(int socketTimeout) {
-            this.socketTimeout = socketTimeout;
-            return this;
-        }
-
-        private String buildEndpoint() {
-            if (inlineVariables != null) {
-                return endpoint.getEndpoint(inlineVariables);
-            } else {
-                return endpoint.getEndpoint();
-            }
-        }
-
-        public ConnectionManager<?> connect() {
-            return new ConnectionManager<>(
-                this.connectionClass,
-                this.buildEndpoint(),
-                this.statusCode,
-                this.autoLogin,
-                this.useCookie,
-                this.endpointType,
-                this.followRedirection,
-                this.urlParams,
-                this.xwwwwFormUrlEncoded,
-                this.multiPartFiles,
-                this.payloadJSON,
-                this.returnType,
-                this.connectionTimeout,
-                this.socketTimeout
-            );
-        }
     }
 
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, PayloadJSON payloadJson) {
@@ -363,57 +185,57 @@ public class ConnectionManager<T> {
     }
 
     private String getSessionId() {
-        if (connectionClass.getDriver() != null) {
+        if (HTTPRequest.getDriver() != null) {
             StringBuilder cookie = new StringBuilder();
-            Set<Cookie> allCookies = connectionClass.getDriver().manage().getCookies();
+            Set<Cookie> allCookies = HTTPRequest.getDriver().manage().getCookies();
             for (Cookie c : allCookies) {
                 cookie.append(c.getName()).append("=").append(c.getValue()).append(";");
             }
             return cookie.toString();
         } else {
-            if (sessionIds.get(connectionClass.getUserForAPIConnection().getEmailAddress()) == null) {
-                logger.info("Missing session id for: " + connectionClass.getUserForAPIConnection().getEmailAddress());
+            if (sessionIds.get(HTTPRequest.getUserForAPIConnection().getEmailAddress()) == null) {
+                logger.info("Missing session id for: " + HTTPRequest.getUserForAPIConnection().getEmailAddress());
 
                 String sessionId = LoginJSON.class.cast(
-                    ConnectionManager.ConnectionManagerBuilder
+                    RequestDataInit
                         .builder()
                         .endpoint(CommonEndpointEnum.POST_SESSIONID)
                         .useAutoLogin(false)
                         .urlParam(URLParams.params()
-                            .use("username", connectionClass.getUserForAPIConnection().getEmailAddress())
-                            .use("password", connectionClass.getUserForAPIConnection().getPassword()))
+                            .use("username", HTTPRequest.getUserForAPIConnection().getEmailAddress())
+                            .use("password", HTTPRequest.getUserForAPIConnection().getPassword()))
                         .returnType(LoginJSON.class)
                         .connect()
                         .post()
                 ).getSessionId();
 
-                sessionIds.put(connectionClass.getUserForAPIConnection().getEmailAddress(), sessionId);
+                sessionIds.put(HTTPRequest.getUserForAPIConnection().getEmailAddress(), sessionId);
             }
-            return sessionIds.get(connectionClass.getUserForAPIConnection().getEmailAddress());
+            return sessionIds.get(HTTPRequest.getUserForAPIConnection().getEmailAddress());
         }
     }
 
     // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
     private String setAuthToken() {
-        if (authTokens.get(connectionClass.getUserForAPIConnection().getEmailAddress()) == null) {
-            logger.info("Missing auth id for: " + connectionClass.getUserForAPIConnection().getEmailAddress());
+        if (authTokens.get(HTTPRequest.getUserForAPIConnection().getEmailAddress()) == null) {
+            logger.info("Missing auth id for: " + HTTPRequest.getUserForAPIConnection().getEmailAddress());
             String authToken = AuthenticateJSON.class.cast(
-                ConnectionManager.ConnectionManagerBuilder
+                RequestDataInit
                     .builder()
                     .endpoint(AuthEndpointEnum.POST_AUTH)
                     .urlParam(URLParams.params()
-                        .use("username", connectionClass.getUserForAPIConnection().getEmailAddress())
-                        .use("password", connectionClass.getUserForAPIConnection().getPassword()))
+                        .use("username", HTTPRequest.getUserForAPIConnection().getEmailAddress())
+                        .use("password", HTTPRequest.getUserForAPIConnection().getPassword()))
                     .useAutoLogin(false)
                     .returnType(AuthenticateJSON.class)
                     .connect()
                     .post()
             ).getAccessToken();
 
-            authTokens.put(connectionClass.getUserForAPIConnection().getEmailAddress(), authToken);
+            authTokens.put(HTTPRequest.getUserForAPIConnection().getEmailAddress(), authToken);
         }
 
-        return authTokens.get(connectionClass.getUserForAPIConnection().getEmailAddress());
+        return authTokens.get(HTTPRequest.getUserForAPIConnection().getEmailAddress());
 
     }
 

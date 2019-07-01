@@ -1,8 +1,7 @@
 package main.java.common;
 
-import main.java.common.UserForAPIConnection;
-import main.java.dao.ConnectionManager;
 import main.java.enums.UsersEnum;
+import main.java.service.RequestDataInit;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -10,40 +9,40 @@ import org.openqa.selenium.WebDriver;
  * This class can be initialized with {@link WebDriver} or a {@link UserForAPIConnection} for further communication
  * with internal API endpoints.
  */
-public class ConnectionClass {
+public class HTTPRequest {
 
     private WebDriver driver;
     private UserForAPIConnection userForAPIConnection;
 
 
-    public ConnectionClass(){}
+    public HTTPRequest(){}
 
     /**
      * This constructor should be used only for UIvsAPI test cases to avoid double login.
      * For DBvsAPI tests please use constructors which are not using driver as parameter.
      * @param driver - the driver what we are using for test run.
      */
-    public ConnectionClass(WebDriver driver) {
+    public HTTPRequest(WebDriver driver) {
         this.driver = driver;
     }
 
-    public ConnectionManager.ConnectionManagerBuilder userEnum(UsersEnum user) {
+    public RequestDataInit userEnum(UsersEnum user) {
         return userAuthorizationData(user.getUsername(), user.getPassword());
     }
 
-    public ConnectionManager.ConnectionManagerBuilder userAuthorizationData(final String username, final String password) {
+    public RequestDataInit userAuthorizationData(final String username, final String password) {
         this.userForAPIConnection = new UserForAPIConnection(username, password);
-        return new ConnectionManager.ConnectionManagerBuilder(this);
+        return new RequestDataInit(this);
     }
 
-    public ConnectionManager.ConnectionManagerBuilder userFullData(UserForAPIConnection userForAPIConnection) {
+    public RequestDataInit userFullData(UserForAPIConnection userForAPIConnection) {
         this.userForAPIConnection = userForAPIConnection;
-        return new ConnectionManager.ConnectionManagerBuilder(this, true);
+        return new RequestDataInit(this, true);
     }
 
-    public ConnectionManager.ConnectionManagerBuilder userSessionLigin(String emailAddress, String sessionId, boolean alreadyLoggedIn) {
+    public RequestDataInit userSessionLigin(String emailAddress, String sessionId, boolean alreadyLoggedIn) {
         this.userForAPIConnection = new UserForAPIConnection(emailAddress, sessionId, alreadyLoggedIn);
-        return new ConnectionManager.ConnectionManagerBuilder(this);
+        return new RequestDataInit(this);
     }
 
     public WebDriver getDriver() {
