@@ -17,6 +17,7 @@ import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,11 +58,7 @@ public class PageUtils {
     public boolean isAlertPresent(String alertText) {
         try {
             Alert alert = driver.switchTo().alert();
-            if (alert.getText().equalsIgnoreCase(alertText)) {
-                return true;
-            } else {
-                return false;
-            }
+            return alert.getText().equalsIgnoreCase(alertText);
         } catch (NoAlertPresentException e) {
             return false;
         }
@@ -431,9 +428,34 @@ public class PageUtils {
         }
     }
 
-    // TODO: 28/06/2019 i need to make this method a bit more generic and create a proper wrapper for it
-    public Boolean waitForElementsNotVisible(List<WebElement> elements) {
+    /**
+     * Checks the element's size on the page is less than 1 and return true/false
+     * @param webElements - the element as list
+     * @return true/false
+     */
+    public <T> Boolean checkElementsNotVisibleByBoolean(List<T> webElements) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 6);
-        return wait.until((ExpectedCondition<Boolean>) element -> (elements).size() < 1);
+        return wait.until((ExpectedCondition<Boolean>) element -> (webElements).size() < 1);
+    }
+
+    /**
+     * Waits for the options in dropdown to be greater 0 to stop StaleElementReferenceException.
+     * @param webElement - the webelement
+     * @return true/false
+     */
+    public Boolean waitForDropdownToBeClickable(WebElement webElement) {
+        int count = 0;
+        while (count < 12) {
+            try {
+                return waitForAppear(element -> new Select(webElement).getOptions().size() > 0,"Element not clickable");
+            } catch (StaleElementReferenceException e) {
+                // e.toString();
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            } catch (TimeoutException e) {
+                count = count + 1;
+            }
+        }
+        throw new AssertionError("Element is not clickable: " + webElement);
     }
 }

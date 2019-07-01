@@ -181,6 +181,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
+        pageUtils.waitForDropdownToBeClickable(processGroupDropdown);
         new Select(processGroupDropdown).selectByVisibleText(processGroup);
         return this;
     }
@@ -191,6 +192,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectVPE(String vpe) {
+        pageUtils.waitForDropdownToBeClickable(vpeDropdown);
         new Select(vpeDropdown).selectByVisibleText(vpe);
         return this;
     }
@@ -233,7 +235,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return the details as string
      */
     public String getProcessRoutingDetails() {
-        pageUtils.waitForElementsNotVisible(processRoutingState);
+        pageUtils.checkElementsNotVisibleByBoolean(processRoutingState);
         return processRoutingName.getAttribute("title");
     }
 
@@ -269,7 +271,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return new page object
      */
     public MaterialCompositionPage openMaterialCompositionTable() {
-        pageUtils.waitForElementToAppear(materialsButton).click();
+        pageUtils.waitForElementToBeClickable(materialsButton).click();
         return new MaterialCompositionPage(driver);
     }
 }

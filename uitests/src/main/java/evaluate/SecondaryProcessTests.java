@@ -205,7 +205,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize");
+            .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I");
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario(COSTING_SUCCESS);
