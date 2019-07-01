@@ -42,6 +42,24 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     @FindBy(css = "span.glyphicons-settings")
     private WebElement actionsDropdown;
 
+    @FindBy(css = "button[data-ap-comp='toggleLockButton']")
+    private WebElement lockButton;
+
+    @FindBy(css = "button[data-ap-comp='reloadButton']")
+    private WebElement cadModelButton;
+
+    @FindBy(css = "button[data-ap-comp='assignScenarioButton']")
+    private WebElement assignButton;
+
+    @FindBy(css = "button[data-ap-comp='updateAdminInfoButton']")
+    private WebElement scenarioNotesButton;
+
+    @FindBy(css = "button[data-ap-comp='partCostReportButton']")
+    private WebElement partCostButton;
+
+    @FindBy(css = "button[data-ap-comp='costComparisonReportButton']")
+    private WebElement comparisonReportButton;
+
     @FindBy(css = "select[data-ap-field='filter'] option")
     private List<WebElement> workspaceDropdownList;
 
@@ -205,5 +223,35 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     public EvaluatePage openScenario(String partName, String scenarioName) {
         findScenario(partName, scenarioName).click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Locks a scenario
+     * @return current page object
+     */
+    public ExplorePage lockScenario() {
+        pageUtils.waitForElementToAppear(actionsDropdown).click();
+        lockButton.click();
+        return this;
+    }
+
+    /**
+     * Selects assign scenario
+     * @return new page object
+     */
+    public AssignPage selectAssignScenario() {
+        pageUtils.waitForElementToAppear(actionsDropdown).click();
+        assignButton.click();
+        return new AssignPage(driver);
+    }
+
+    /**
+     * Selects scenario info and notes
+     * @return new page object
+     */
+    public ScenarioNotesPage selectScenarioInfoNotes() {
+        pageUtils.waitForElementToAppear(actionsDropdown).click();
+        scenarioNotesButton.click();
+        return new ScenarioNotesPage(driver);
     }
 }

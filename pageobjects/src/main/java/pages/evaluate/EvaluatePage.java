@@ -70,7 +70,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     private WebElement secondaryProcessButton;
 
     @FindBy(css = "input[data-ap-field='annualVolume']")
-    private WebElement annualVolume;
+    private WebElement annVolume;
 
     @FindBy(css = "input[data-ap-field='productionLife']")
     private WebElement annualVolumeYrs;
@@ -136,7 +136,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     public EvaluatePage costScenario(String costText) {
         pageUtils.waitForElementToBeClickable(costButton).click();
         pageUtils.waitForElementToAppear(dialogCostButton).click();
-        costText = costText == null ? COST_UP_TO_DATE : costText;
+        costText = costText == "Success" ? COST_UP_TO_DATE : costText;
         checkCostLabel(costText);
         return this;
     }
@@ -181,7 +181,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
-        pageUtils.waitForDropdownToBeClickable(processGroupDropdown);
+        pageUtils.waitForElementToBeClickable(processGroupDropdown).click();
         new Select(processGroupDropdown).selectByVisibleText(processGroup);
         return this;
     }
@@ -192,20 +192,20 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectVPE(String vpe) {
-        pageUtils.waitForDropdownToBeClickable(vpeDropdown);
+        pageUtils.waitForElementToBeClickable(vpeDropdown).click();
         new Select(vpeDropdown).selectByVisibleText(vpe);
         return this;
     }
 
     /**
      * Enters the annual volume
-     * @param annVolume - the annual volume
+     * @param annualVolume - the annual volume
      * @return current page object
      */
-    public EvaluatePage enterAnnualVolume(String annVolume) {
-        annualVolume.click();
-        pageUtils.clearInput(annualVolume);
-        annualVolume.sendKeys(annVolume);
+    public EvaluatePage enterAnnualVolume(String annualVolume) {
+        annVolume.click();
+        pageUtils.clearInput(annVolume);
+        annVolume.sendKeys(annualVolume);
         return this;
     }
 
