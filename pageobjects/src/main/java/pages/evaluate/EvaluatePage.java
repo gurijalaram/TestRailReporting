@@ -15,6 +15,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
@@ -39,6 +41,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     @FindBy(css = "button[data-ap-comp='costButton']")
     private WebElement costButton;
+
+    @FindBy(css = ".bottom .popover-content .gwt-HTML")
+    private WebElement costLabelPopover;
 
     @FindBy(css = "li[data-ap-comp='costButton']")
     private WebElement costLabel;
@@ -65,7 +70,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     private WebElement secondaryProcessButton;
 
     @FindBy(css = "input[data-ap-field='annualVolume']")
-    private WebElement annualVolume;
+    private WebElement annVolume;
 
     @FindBy(css = "input[data-ap-field='productionLife']")
     private WebElement annualVolumeYrs;
@@ -84,6 +89,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     @FindBy(css = "label[data-ap-field='processRoutingName'] div")
     private WebElement processRoutingName;
+
+    @FindBy(css = "label.dirty")
+    private List<WebElement> processRoutingState;
 
     @FindBy(css = "a[data-ap-nav-viewport='showCostResultDetails']")
     private WebElement resultsDetails;
@@ -121,14 +129,14 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     }
 
     /**
-     * Cost the scenario passing in null or text values
+     * Cost the scenario. Enter 'null' if the cost label is expected to be default label
      * @param costText - the text for the cost label
      * @return current page object
      */
     public EvaluatePage costScenario(String costText) {
-        costButton.click();
-        pageUtils.waitForElementToBeClickable(dialogCostButton).click();
-        costText = costText == null ? COST_UP_TO_DATE : costText;
+        pageUtils.waitForElementToBeClickable(costButton).click();
+        pageUtils.waitForElementToAppear(dialogCostButton).click();
+        costText = costText == "Success" ? COST_UP_TO_DATE : costText;
         checkCostLabel(costText);
         return this;
     }
@@ -139,6 +147,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return true or false
      */
     private boolean checkCostLabel(String costText) {
+        pageUtils.waitForElementToAppear(costLabelPopover);
         return pageUtils.waitForElementToAppear(costLabel).getText().equalsIgnoreCase(costText);
     }
 
@@ -172,6 +181,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
+        pageUtils.waitForElementToBeClickable(processGroupDropdown).click();
         new Select(processGroupDropdown).selectByVisibleText(processGroup);
         return this;
     }
@@ -182,19 +192,20 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectVPE(String vpe) {
+        pageUtils.waitForElementToBeClickable(vpeDropdown).click();
         new Select(vpeDropdown).selectByVisibleText(vpe);
         return this;
     }
 
     /**
      * Enters the annual volume
-     * @param annVolume - the annual volume
+     * @param annualVolume - the annual volume
      * @return current page object
      */
-    public EvaluatePage enterAnnualVolume(String annVolume) {
-        annualVolume.click();
-        pageUtils.clearInput(annualVolume);
-        annualVolume.sendKeys(annVolume);
+    public EvaluatePage enterAnnualVolume(String annualVolume) {
+        annVolume.click();
+        pageUtils.clearInput(annVolume);
+        annVolume.sendKeys(annualVolume);
         return this;
     }
 
@@ -224,7 +235,8 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return the details as string
      */
     public String getProcessRoutingDetails() {
-        return processRoutingName.getText();
+        pageUtils.checkElementsNotVisibleByBoolean(processRoutingState);
+        return processRoutingName.getAttribute("title");
     }
 
     /**
@@ -259,7 +271,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return new page object
      */
     public MaterialCompositionPage openMaterialCompositionTable() {
-        pageUtils.waitForElementToAppear(materialsButton).click();
+        pageUtils.waitForElementToBeClickable(materialsButton).click();
         return new MaterialCompositionPage(driver);
     }
 }

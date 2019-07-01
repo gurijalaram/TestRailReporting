@@ -24,7 +24,7 @@ public class FileUploadTests extends TestBase {
     public void testFileUpload() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("Scenario A", filePath, "testpart-4.prt");
+            .uploadFile("Scenario A", filePath, "Casting.prt");
         //Assert.assertTrue();
     }
 }
