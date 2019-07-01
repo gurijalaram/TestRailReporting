@@ -1,5 +1,8 @@
 package main.java.properties.reader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -9,6 +12,7 @@ import java.util.Properties;
  */
 public class BaseReader {
 
+    private static final Logger logger = LoggerFactory.getLogger(BaseReader.class);
     Properties properties;
 
     public BaseReader(String fileName) {
@@ -16,7 +20,7 @@ public class BaseReader {
             properties = new Properties();
             properties.load(fileStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 
