@@ -82,7 +82,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return the gcd as webelement
      */
     private WebElement selectGCD(String gcd) {
-        By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]");
+        By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]/ancestor::tr[@class]");
         return pageUtils.scrollToElement(gcdElement, threadScroller);
     }
 

@@ -83,8 +83,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
         String[] processTypes = processType.split(",");
 
         for (String process : processTypes) {
-            By pro = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//span[@class='fa fa-caret-right']");
-            pageUtils.scrollToElement(pro, processScroller).click();
+            By secondaryProcess = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//span[@class='fa fa-caret-right']");
+            pageUtils.scrollToElement(secondaryProcess, processScroller).click();
         }
         return this;
     }
