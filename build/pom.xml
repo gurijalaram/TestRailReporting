@@ -95,9 +95,6 @@
 	<profiles>
 		<profile>
 			<id>sonar</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<properties>
 				<sonar.host.url>https://sonarqube.apriori.com</sonar.host.url>
 				<sonar.scm.provider>git</sonar.scm.provider>
@@ -105,15 +102,18 @@
 				<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
 			</properties>
 			<modules>
+				<module>../uitests</module>
 				<module>../utils</module>
 				<module>../apibase</module>
 				<module>../internalapi</module>
 				<module>../pageobjects</module>
-				<module>../uitests</module>
 			</modules>
 		</profile>
 		<profile>
 			<id>build</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<modules>
 				<module>../utils</module>
 				<module>../apibase</module>

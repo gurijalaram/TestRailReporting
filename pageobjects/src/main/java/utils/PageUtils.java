@@ -270,7 +270,7 @@ public class PageUtils {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e1) {
-            logger.info("InterruptedException");
+            Thread.currentThread().interrupt();
         }
     }
 
