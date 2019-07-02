@@ -8,16 +8,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class SessionFactoryClass {
+public class SessionFactoryClass<T> {
 
     private String dbType;
+    private Class<T> entity;
+
+    public SessionFactoryClass(String dbType, Class<T> entity) {
+        this.dbType = dbType;
+        this.entity = entity;
+    }
 
     public String getDbType() {
         return dbType;
     }
 
-    public SessionFactoryClass(String dbType) {
-        this.dbType = dbType;
+    public Class<T> getEntity() {
+        return entity;
     }
 
     public Session getSession() {
@@ -28,7 +34,7 @@ public class SessionFactoryClass {
             try {
                 return new Configuration()
                         .setProperties(properties)
-                        .addAnnotatedClass(User.class)
+                        .addAnnotatedClass(entity)
                         .buildSessionFactory().openSession();
             } catch (Exception e) {
                 e.printStackTrace();

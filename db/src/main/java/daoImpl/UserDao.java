@@ -13,7 +13,7 @@ public class UserDao extends GlobalDao <User> {
     }
 
     public User getByFullName(User user) {
-        Query query = session.createQuery("FROM " + User.class.getName() + " u where u.fullName =: userfullName").setParameter("userfullName", user.getFullName());
+        Query query = session.createQuery("FROM User u where fullName =: userfullName", User.class).setParameter("userfullName", user.getFullName());
         List<User> dbListObjects = query.getResultList();
         return dbListObjects.get(0);
     }

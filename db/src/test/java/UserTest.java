@@ -10,7 +10,7 @@ public class UserTest {
 
     @Test
     public void testGetAllUsersFromDB(){
-        UserDao userDao = new UserDao(new SessionFactoryClass("mysql").getSession()); /// mysql - will be as parameter
+        UserDao userDao = new UserDao(new SessionFactoryClass("mysql", User.class).getSession()); /// mysql - will be as parameter
         User user = new User();
         for (User userFromList : userDao.getAllObjects(user.getClass())){
             System.out.println(userFromList.getFullName());
@@ -19,7 +19,7 @@ public class UserTest {
 
     @Test
     public void testCreateUser(){
-        UserDao userDao = new UserDao(new SessionFactoryClass("mysql").getSession()); /// mysql - will be as parameter
+        UserDao userDao = new UserDao(new SessionFactoryClass("mysql", User.class).getSession()); /// mysql - will be as parameter
         List <User> userForDelete = new ArrayList<User>();
 
         /* Users Examples */
@@ -35,7 +35,7 @@ public class UserTest {
         getByFullName - returns entity which should be updated. */
     @Test
     public void testUpdateUser(){
-        UserDao userDao = new UserDao(new SessionFactoryClass("mysql").getSession()); /// mysql - will be as parameter
+        UserDao userDao = new UserDao(new SessionFactoryClass("mysql", User.class).getSession()); /// mysql - will be as parameter
         List <User> userForDelete = new ArrayList<User>();
 
         /* Users Examples */
@@ -49,7 +49,7 @@ public class UserTest {
 
     @Test
     public void testDeleteUser(){
-        UserDao userDao = new UserDao(new SessionFactoryClass("mysql").getSession()); /// mysql - will be as parameter
+        UserDao userDao = new UserDao(new SessionFactoryClass("mysql", User.class).getSession()); /// mysql - will be as parameter
         List <User> userForDelete = new ArrayList<User>();
 
         /* Users Examples */
@@ -63,8 +63,8 @@ public class UserTest {
 
     @Test
     public void testGetUserByNameFromDB(){
-        UserDao userDao = new UserDao(new SessionFactoryClass("mysql").getSession()); /// mysql - will be as parameter
-        User user = new User().setFullName("aPriori Default User");
+        UserDao userDao = new UserDao(new SessionFactoryClass("mysql", User.class).getSession()); /// mysql - will be as parameter
+        User user = new User().setFullName("Salvador Sakho");
         System.out.println(userDao.getByFullName(user).getUser_ID());
     }
 }
