@@ -205,7 +205,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     }
 
     /**
-     * Private helper method used to clear and input box and sendkeys
+     * Private helper method used to clear input box and sendkeys
      *
      * @param element - the webelement
      * @param value   - the value
