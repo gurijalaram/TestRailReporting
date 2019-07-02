@@ -1,6 +1,7 @@
 package main.java.pages.explore;
 
 import main.java.pages.evaluate.EvaluatePage;
+import main.java.pages.settings.SettingsPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -77,6 +78,9 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     @FindBy(css = "button[data-ap-comp='togglePreviewButton']")
     private WebElement previewButton;
+
+    @FindBy(css = "a span.glyphicon-cog")
+    private WebElement settingsButton;
 
     @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
     private WebElement componentScroller;
@@ -253,5 +257,14 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
         pageUtils.waitForElementToAppear(actionsDropdown).click();
         scenarioNotesButton.click();
         return new ScenarioNotesPage(driver);
+    }
+
+    /**
+     * Opens the settings page
+     * @return new page object
+     */
+    public SettingsPage openSettings() {
+        pageUtils.waitForElementToAppear(settingsButton).click();
+        return new SettingsPage(driver);
     }
 }
