@@ -1,5 +1,6 @@
 package utils;
 
+import entity.User;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
 
@@ -22,12 +23,12 @@ public class SessionFactoryClass {
     public Session getSession() {
         Properties properties = new Properties();
         InputStream resourceStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(getDbType().concat(".hibernate.properties"));
-
         try {
             properties.load(resourceStream);
             try {
                 return new Configuration()
                         .setProperties(properties)
+                        .addAnnotatedClass(User.class)
                         .buildSessionFactory().openSession();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -35,7 +36,6 @@ public class SessionFactoryClass {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }

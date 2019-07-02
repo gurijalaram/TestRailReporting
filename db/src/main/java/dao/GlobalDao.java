@@ -1,27 +1,62 @@
 package dao;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import javax.persistence.Query;
+import java.util.List;
 
 public abstract class GlobalDao<T> {
+
     protected Session session;
 
     public GlobalDao(Session session) {
         this.session = session;
     }
+    public GlobalDao (){}
 
-    public T get(T dbObject) {
-        return session.get((Class<T>) dbObject, new Integer(1));
+    public List<T> getAllObjects(Class<?> dbObject) {
+        Query query = session.createQuery("FROM " + dbObject.getName());
+        List<T> dbListObjects = query.getResultList();
+        return dbListObjects;
     }
 
-    public void update(T dbObject) {
-        session.update(dbObject);
+    public void update(List<T> dbObject) {
+        Transaction transaction;
+        try {
+            transaction = session.beginTransaction();
+            for (int i = 0; i < dbObject.size(); i++) {
+                session.saveOrUpdate(dbObject.get(i));
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void delete(T dbObject){
-        session.delete(dbObject);
-    }
-    public void create(T dbObject){
-        session.delete(dbObject);
+    public void delete(List <T> dbObject) {
+        Transaction transaction;
+        try {
+            transaction = session.beginTransaction();
+            for(int i = 0; i < dbObject.size(); i++) {
+                session.delete(dbObject.get(i));
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    public void create(List<T> dbObject) {
+        Transaction transaction;
+        try {
+            transaction = session.beginTransaction();
+            for(int i = 0; i < dbObject.size(); i++) {
+                session.save(dbObject.get(i));
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

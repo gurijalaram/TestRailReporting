@@ -1,62 +1,20 @@
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "fbc_user")
-public class User {
+public class User implements Serializable {
 
+    private static final Long serialVersionUID = -231312312L;
     public User(){}
-    public User(Integer user_ID, String rawLoginID, String fullName, String firstName, String lastName, String middleName, String password, String siteId, String licenseId, String preferredPlantName, String signatureData, String location, String department, String function, String manager, String email, String provenance, Byte resetPassword, String defaultDeploymentUuid, String defaultScenarioSchemaUuid, String lengthUnitSymbol, String massUnitSymbol, String forceUnitSymbol, String angleUnitSymbol, String timeUnitSymbol, String temperatureUnitSymbol, String energyUnitSymbol, String currencyCode, String currencyLabel, String userDataXML, String defaultRole, String extra1, String extra2, String extra3, String extra4, String extra5, String extra6, String extra7, String extra8, String extra9, String extra10) {
-        this.user_ID = user_ID;
-        this.rawLoginID = rawLoginID;
-        this.fullName = fullName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.middleName = middleName;
-        this.password = password;
-        this.siteId = siteId;
-        this.licenseId = licenseId;
-        this.preferredPlantName = preferredPlantName;
-        this.signatureData = signatureData;
-        this.location = location;
-        this.department = department;
-        this.function = function;
-        this.manager = manager;
-        this.email = email;
-        this.provenance = provenance;
-        this.resetPassword = resetPassword;
-        this.defaultDeploymentUuid = defaultDeploymentUuid;
-        this.defaultScenarioSchemaUuid = defaultScenarioSchemaUuid;
-        this.lengthUnitSymbol = lengthUnitSymbol;
-        this.massUnitSymbol = massUnitSymbol;
-        this.forceUnitSymbol = forceUnitSymbol;
-        this.angleUnitSymbol = angleUnitSymbol;
-        this.timeUnitSymbol = timeUnitSymbol;
-        this.temperatureUnitSymbol = temperatureUnitSymbol;
-        this.energyUnitSymbol = energyUnitSymbol;
-        this.currencyCode = currencyCode;
-        this.currencyLabel = currencyLabel;
-        this.userDataXML = userDataXML;
-        this.defaultRole = defaultRole;
-        this.extra1 = extra1;
-        this.extra2 = extra2;
-        this.extra3 = extra3;
-        this.extra4 = extra4;
-        this.extra5 = extra5;
-        this.extra6 = extra6;
-        this.extra7 = extra7;
-        this.extra8 = extra8;
-        this.extra9 = extra9;
-        this.extra10 = extra10;
-    }
 
-    @Column(name = "user_ID")
     @Id
-    private Integer user_ID;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "user_ID")
+    private Long user_ID;
     @Column(name = "rawLoginID")
     private String rawLoginID;
     @Column(name = "fullName")
@@ -111,8 +69,7 @@ public class User {
     private String energyUnitSymbol;
     @Column(name = "currencyCode")
     private String currencyCode;
-    @Column(name = "currencyLabel")
-    private String currencyLabel;
+
     @Column(name = "userDataXML")
     private String userDataXML;
     @Column(name = "defaultRole")
@@ -138,11 +95,15 @@ public class User {
     @Column(name = "extra10")
     private String extra10;
 
-    public Integer getUser_ID() {
+    public static Long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getUser_ID() {
         return user_ID;
     }
 
-    public User setUser_ID(Integer user_ID) {
+    public User setUser_ID(Long user_ID) {
         this.user_ID = user_ID;
         return this;
     }
@@ -390,14 +351,7 @@ public class User {
         return this;
     }
 
-    public String getCurrencyLabel() {
-        return currencyLabel;
-    }
 
-    public User setCurrencyLabel(String currencyLabel) {
-        this.currencyLabel = currencyLabel;
-        return this;
-    }
 
     public String getUserDataXML() {
         return userDataXML;
@@ -506,4 +460,5 @@ public class User {
         this.extra10 = extra10;
         return this;
     }
+
 }
