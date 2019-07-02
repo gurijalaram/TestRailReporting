@@ -219,7 +219,6 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     /**
      * Selects the apply button
-     *
      * @return new page object
      */
     public TolerancePage apply() {
@@ -229,7 +228,6 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     /**
      * Selects the cancel button
-     *
      * @return new page object
      */
     public TolerancePage cancel() {

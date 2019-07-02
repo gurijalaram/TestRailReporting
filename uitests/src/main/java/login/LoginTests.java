@@ -1,11 +1,14 @@
 package main.java.login;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +37,7 @@ public class LoginTests extends TestBase {
     public void testLogin() {
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-        Assert.assertTrue(explorePage.isDeleteButtonPresent());
+        assertThat(explorePage.isDeleteButtonPresent(), is(true));
     }
 
     /**
@@ -44,7 +47,7 @@ public class LoginTests extends TestBase {
     public void testIncorrectPwd() {
         loginPage = new LoginPage(driver);
         loginPage = loginPage.failedLoginAs(UsersEnum.CID_TE_USER.getUsername(), "asdfdasfas");
-        Assert.assertEquals(loginPageErrorMessage.toUpperCase(), loginPage.getLoginErrorMessage());
+        assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
     /**
@@ -54,6 +57,6 @@ public class LoginTests extends TestBase {
     public void testIncorrectEmail() {
         loginPage = new LoginPage(driver);
         loginPage = loginPage.failedLoginAs("jacky348", UsersEnum.CID_TE_USER.getPassword());
-        Assert.assertEquals(loginPageErrorMessage.toUpperCase(), loginPage.getLoginErrorMessage());
+        assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 }  
