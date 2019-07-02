@@ -11,6 +11,8 @@ import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import main.java.common.HTTPRequest;
+import main.java.common.UserForAPIConnection;
+import main.java.enums.UsersEnum;
 import main.java.service.RequestDataInit;
 import main.java.utils.MultiPartFiles;
 import main.java.utils.URLParams;
@@ -22,6 +24,7 @@ import main.java.enums.common.CommonEndpointEnum;
 import main.java.pojo.common.AuthenticateJSON;
 import main.java.pojo.common.LoginJSON;
 import main.java.pojo.common.PayloadJSON;
+import main.java.utils.Util;
 import org.openqa.selenium.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +57,7 @@ public class ConnectionManager<T> {
     private static Map<String, String> sessionIds = new ConcurrentHashMap<>();
     private static Map<String, String> authTokens = new ConcurrentHashMap<>();
 
-    private HTTPRequest HTTPRequest;
+    private HTTPRequest httpRequest;
     private String endpoint;
     private Integer[] statusCode;
     private EndpointType endpointType;
@@ -72,7 +75,7 @@ public class ConnectionManager<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
 
-    public ConnectionManager(HTTPRequest HTTPRequest,
+    public ConnectionManager(HTTPRequest httpRequest,
                              String endpoint,
                              int[] statusCode,
                              boolean autoLogin,
@@ -86,7 +89,7 @@ public class ConnectionManager<T> {
                              Class<T> returnType,
                              int connectionTimeout,
                              int socketTimeout) {
-        this.HTTPRequest = HTTPRequest;
+        this.httpRequest = httpRequest;
         this.endpoint = endpoint;
         this.statusCode = Arrays.stream(statusCode).boxed().toArray(Integer[]::new);
         this.useCookie = useCookie;
@@ -124,7 +127,8 @@ public class ConnectionManager<T> {
                     }
                     break;
                 case EXTERNAL:
-                    String authToken = setAuthToken(); // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
+                    String authToken = setAuthToken();
+                     // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
                     //TODO handle null
                     Map<String, String> auth = new HashMap<>();
                     auth.put("auth", authToken);
@@ -185,16 +189,16 @@ public class ConnectionManager<T> {
     }
 
     private String getSessionId() {
-        if (HTTPRequest.getDriver() != null) {
+        if (httpRequest.getDriver() != null) {
             StringBuilder cookie = new StringBuilder();
-            Set<Cookie> allCookies = HTTPRequest.getDriver().manage().getCookies();
+            Set<Cookie> allCookies = httpRequest.getDriver().manage().getCookies();
             for (Cookie c : allCookies) {
                 cookie.append(c.getName()).append("=").append(c.getValue()).append(";");
             }
             return cookie.toString();
         } else {
-            if (sessionIds.get(HTTPRequest.getUserForAPIConnection().getEmailAddress()) == null) {
-                logger.info("Missing session id for: " + HTTPRequest.getUserForAPIConnection().getEmailAddress());
+            if (sessionIds.get(httpRequest.getUserForAPIConnection().getEmailAddress()) == null) {
+                logger.info("Missing session id for: " + httpRequest.getUserForAPIConnection().getEmailAddress());
 
                 String sessionId = LoginJSON.class.cast(
                     RequestDataInit
@@ -202,40 +206,41 @@ public class ConnectionManager<T> {
                         .endpoint(CommonEndpointEnum.POST_SESSIONID)
                         .useAutoLogin(false)
                         .urlParam(URLParams.params()
-                            .use("username", HTTPRequest.getUserForAPIConnection().getEmailAddress())
-                            .use("password", HTTPRequest.getUserForAPIConnection().getPassword()))
+                            .use("username", httpRequest.getUserForAPIConnection().getEmailAddress())
+                            .use("password", httpRequest.getUserForAPIConnection().getPassword()))
                         .returnType(LoginJSON.class)
                         .connect()
                         .post()
                 ).getSessionId();
 
-                sessionIds.put(HTTPRequest.getUserForAPIConnection().getEmailAddress(), sessionId);
+                sessionIds.put(httpRequest.getUserForAPIConnection().getEmailAddress(), sessionId);
             }
-            return sessionIds.get(HTTPRequest.getUserForAPIConnection().getEmailAddress());
+            return sessionIds.get(httpRequest.getUserForAPIConnection().getEmailAddress());
         }
     }
 
     // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
     private String setAuthToken() {
-        if (authTokens.get(HTTPRequest.getUserForAPIConnection().getEmailAddress()) == null) {
-            logger.info("Missing auth id for: " + HTTPRequest.getUserForAPIConnection().getEmailAddress());
+
+        UserForAPIConnection userForAPIConnection = httpRequest.getUserForAPIConnection();
+
+        if (authTokens.get(userForAPIConnection.getEmailAddress()) == null) {
+            logger.info("Missing auth id for: " + userForAPIConnection.getEmailAddress());
             String authToken = AuthenticateJSON.class.cast(
-                RequestDataInit
-                    .builder()
-                    .endpoint(AuthEndpointEnum.POST_AUTH)
-                    .urlParam(URLParams.params()
-                        .use("username", HTTPRequest.getUserForAPIConnection().getEmailAddress())
-                        .use("password", HTTPRequest.getUserForAPIConnection().getPassword()))
-                    .useAutoLogin(false)
-                    .returnType(AuthenticateJSON.class)
-                    .connect()
-                    .post()
+                    new HTTPRequest().defaultFormAuthorization(userForAPIConnection.getEmailAddress(), userForAPIConnection.getPassword())
+                            .endpoint(AuthEndpointEnum.POST_AUTH)
+                            .useAutoLogin(false)
+                            .followRedirection(false)
+                            .statusCode(200)
+                            .returnType(AuthenticateJSON.class)
+                            .connect()
+                            .post()
             ).getAccessToken();
 
-            authTokens.put(HTTPRequest.getUserForAPIConnection().getEmailAddress(), authToken);
+            authTokens.put(httpRequest.getUserForAPIConnection().getEmailAddress(), authToken);
         }
 
-        return authTokens.get(HTTPRequest.getUserForAPIConnection().getEmailAddress());
+        return authTokens.get(httpRequest.getUserForAPIConnection().getEmailAddress());
 
     }
 

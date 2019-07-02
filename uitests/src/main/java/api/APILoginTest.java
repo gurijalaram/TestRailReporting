@@ -13,13 +13,20 @@ public class APILoginTest {
 
     @Test
     public void testTokenAutoLoginFiledIfIncorrectLoginProcess() {
-        new HTTPRequest().userFullData(this.initUserConnectionData("admin@apriori.com", "admin"))
-                .endpoint(AuthEndpointEnum.POST_AUTH);
+        new HTTPRequest().userEnum(UsersEnum.ADMIN_DEFAULT_USER)
+                .endpoint(AuthEndpointEnum.POST_AUTH)
+                .useAutoLogin(false)
+                .followRedirection(false)
+                .statusCode(200)
+                .returnType(AuthenticateJSON.class)
+                .connect()
+                .post();
     }
 
     @Test
     public void testLoginFiledIfIncorrectUserData() {
-        AuthenticateJSON authenticateJSON = (AuthenticateJSON) new HTTPRequest().userFullData(this.initUserConnectionData("admin@apriori.com", "admin"))
+        AuthenticateJSON authenticateJSON = (AuthenticateJSON)
+                new HTTPRequest().customFormAuthorization(this.initUserConnectionData("admin@apriori.com", "admin"))
                 .endpoint(AuthEndpointEnum.POST_AUTH)
                 .useAutoLogin(false)
                 .followRedirection(false)

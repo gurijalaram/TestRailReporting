@@ -1,5 +1,6 @@
 package main.java.utils;
 
+import main.java.constants.Constants;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +11,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -75,5 +77,14 @@ public class Util {
             Collections.shuffle(collected);
             return collected.stream();
         });
+    }
+
+    //TODO z: just to contain all process with default authorization form in one place and make it comfortable to use
+    public static Map<String, String> getDefaultAuthorizationForm(final String username, final String password) {
+        Map<String, String> formWithUserCredentials = Constants.DEFAULT_AUTHORIZATION_FORM_WITHOUT_USERCREDS;
+        formWithUserCredentials.put("username", username);
+        formWithUserCredentials.put("password", password);
+
+        return formWithUserCredentials;
     }
 }

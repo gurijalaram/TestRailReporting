@@ -27,22 +27,28 @@ public class HTTPRequest {
     }
 
     public RequestDataInit userEnum(UsersEnum user) {
-        return userAuthorizationData(user.getUsername(), user.getPassword());
+        return defaultFormAuthorization(user.getUsername(), user.getPassword());
     }
 
     public RequestDataInit userAuthorizationData(final String username, final String password) {
         this.userForAPIConnection = new UserForAPIConnection(username, password);
-        return new RequestDataInit(this);
+        return RequestDataInit.buildWithUrlAuthorization(this);
     }
 
-    public RequestDataInit userFullData(UserForAPIConnection userForAPIConnection) {
+    public RequestDataInit defaultFormAuthorization(final String username, final String password) {
+        this.userForAPIConnection = new UserForAPIConnection(username, password);
+
+        return RequestDataInit.buildWithDefaultAuthorization(this);
+    }
+
+    public RequestDataInit customFormAuthorization(UserForAPIConnection userForAPIConnection) {
         this.userForAPIConnection = userForAPIConnection;
-        return new RequestDataInit(this, true);
+        return RequestDataInit.buildWithCustomAuthorization(this);
     }
 
     public RequestDataInit userSessionLigin(String emailAddress, String sessionId, boolean alreadyLoggedIn) {
         this.userForAPIConnection = new UserForAPIConnection(emailAddress, sessionId, alreadyLoggedIn);
-        return new RequestDataInit(this);
+        return RequestDataInit.buildWithUrlAuthorization(this);
     }
 
     public WebDriver getDriver() {

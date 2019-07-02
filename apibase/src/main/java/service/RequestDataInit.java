@@ -9,6 +9,7 @@ import main.java.enums.common.ExternalEndpointEnum;
 import main.java.enums.common.InternalEndpointEnum;
 import main.java.pojo.common.PayloadJSON;
 import main.java.utils.MultiPartFiles;
+import main.java.utils.Util;
 import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
@@ -25,12 +26,15 @@ import java.util.Map;
  * {@link #inlineVariables}    -   inline variables.
  * {@link #payloadJSON}        -   payload JSON what you want to send in the request
  */
+//TODO z: in plans to split this class on transfer entity which contain only this properties + spliteted UserAPIinfo and driver instead of HTTPRequest.class (split this class by the same way)
+    // and RequestDataService.class which contain only functionality, than it will comfortable for developers
 public class RequestDataInit {
-    private HTTPRequest HTTPRequest;
+    private HTTPRequest httpRequest;
     private EndpointEnum endpoint;
     private int[] statusCode = {HttpStatus.SC_OK};
     private boolean useCookie = false;
     private boolean autoLogin = true;
+    private boolean defaultAuthorizationData = true;
     private EndpointType endpointType;
     private boolean followRedirection = true;
     private List<Map<String, ?>> urlParams = new ArrayList<>();
@@ -43,12 +47,14 @@ public class RequestDataInit {
     private int socketTimeout = 60000;
 
 
-    public RequestDataInit(HTTPRequest HTTPRequest) {
-        this(HTTPRequest, false);
+
+    private RequestDataInit(HTTPRequest httpRequest) {
+        this(httpRequest, false, false);
     }
 
-    public RequestDataInit(HTTPRequest HTTPRequest, boolean useFormData) {
-        this.HTTPRequest = HTTPRequest;
+    private RequestDataInit(HTTPRequest httpRequest, boolean useFormData, boolean defaultAuthorizationData) {
+        this.httpRequest = httpRequest;
+        this.defaultAuthorizationData = defaultAuthorizationData;
 
         if(useFormData) {
             this.initFormUrlUserData();
@@ -59,25 +65,39 @@ public class RequestDataInit {
         this.useCookie = useCookie;
     }
 
-    private void initFormUrlUserData() {
-        UserForAPIConnection userForAPIConnection = HTTPRequest.getUserForAPIConnection();
+    private List<Map<String, ?>> initFormUrlUserData() {
+        if (this.defaultAuthorizationData) {
 
-        if (userForAPIConnection != null) {
-
-            this.xwwwwFormUrlEncoded(new HashMap<String, String>() {{
-                put("grant_type",userForAPIConnection.getGrant_type());
-                put("username", userForAPIConnection.getEmailAddress());
-                put("password", userForAPIConnection.getPassword());
-                put("client_id",userForAPIConnection.getClient_id());
-                put("client_secret",userForAPIConnection.getClient_secret());
-                put("scope", userForAPIConnection.getScope());
-            }});
+           return this.initDefaultFormAuthorization();
         }
+
+        return this.initCustomFormAuthorization();
+    }
+
+    private List<Map<String, ?>> initDefaultFormAuthorization() {
+        this.xwwwwFormUrlEncoded.add(Util.getDefaultAuthorizationForm(httpRequest.getUserForAPIConnection().getEmailAddress(), httpRequest.getUserForAPIConnection().getPassword()));
+
+        return this.xwwwwFormUrlEncoded;
+    }
+
+    private List<Map<String, ?>> initCustomFormAuthorization() {
+        final UserForAPIConnection userForAPIConnection = httpRequest.getUserForAPIConnection();
+
+        this.xwwwwFormUrlEncoded(new HashMap<String, String>() {{
+            put("grant_type",userForAPIConnection.getGrant_type());
+            put("username", userForAPIConnection.getEmailAddress());
+            put("password", userForAPIConnection.getPassword());
+            put("client_id",userForAPIConnection.getClient_id());
+            put("client_secret",userForAPIConnection.getClient_secret());
+            put("scope", userForAPIConnection.getScope());
+        }});
+
+        return this.xwwwwFormUrlEncoded;
     }
 
     public ConnectionManager<?> connect() {
         return new ConnectionManager<>(
-                this.HTTPRequest,
+                this.httpRequest,
                 this.buildEndpoint(),
                 this.statusCode,
                 this.autoLogin,
@@ -90,17 +110,22 @@ public class RequestDataInit {
                 this.payloadJSON,
                 this.returnType,
                 this.connectionTimeout,
-                this.socketTimeout
+                this.socketTimeout,
+                this.defaultAuthorizationData
         );
     }
 
-
-    public static RequestDataInit builder(HTTPRequest HTTPRequest) {
-        return new RequestDataInit(HTTPRequest);
+    public static RequestDataInit buildWithUrlAuthorization(HTTPRequest httpRequest) {
+        return new RequestDataInit(httpRequest);
     }
 
-    public static RequestDataInit fullUserDataBuild(HTTPRequest HTTPRequest) {
-        return new RequestDataInit(HTTPRequest, true);
+    public static RequestDataInit buildWithCustomAuthorization(HTTPRequest httpRequest) {
+        return new RequestDataInit(httpRequest, true, false);
+    }
+
+
+    public static RequestDataInit buildWithDefaultAuthorization(HTTPRequest httpRequest) {
+        return new RequestDataInit(httpRequest, true, true);
     }
 
     public static RequestDataInit builder() {
@@ -132,6 +157,15 @@ public class RequestDataInit {
         return this;
     }
 
+    public boolean getDefaultAuthorizationData() {
+        return defaultAuthorizationData;
+    }
+
+    public RequestDataInit isDefaultAuthorization(boolean defaultAuthorization) {
+        this.defaultAuthorizationData = defaultAuthorization;
+        return this;
+    }
+
     public RequestDataInit followRedirection(boolean followRedirection) {
         this.followRedirection = followRedirection;
         return this;
@@ -147,6 +181,13 @@ public class RequestDataInit {
     public RequestDataInit xwwwwFormUrlEncoded(Map<String, ?> xwwwwFormUrlEncoded) {
         if (xwwwwFormUrlEncoded != null) {
             this.xwwwwFormUrlEncoded.add(xwwwwFormUrlEncoded);
+        }
+        return this;
+    }
+
+    public RequestDataInit setXwwwwFormUrlEncoded(List<Map<String, ?>> xwwwwFormUrlEncoded) {
+        if (xwwwwFormUrlEncoded != null) {
+            this.xwwwwFormUrlEncoded = xwwwwFormUrlEncoded;
         }
         return this;
     }
