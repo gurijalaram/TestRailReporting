@@ -673,6 +673,7 @@
 						<encoding>UTF-8</encoding>
 						<source>${java.version}</source>
 						<target>${java.version}</target>
+						<excludes>settings.xml</excludes>
 					</configuration>
 				</plugin>
 				<plugin>
