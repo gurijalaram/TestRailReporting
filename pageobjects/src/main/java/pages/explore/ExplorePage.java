@@ -42,24 +42,6 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     @FindBy(css = "span.glyphicons-settings")
     private WebElement actionsDropdown;
 
-    @FindBy(css = "button[data-ap-comp='toggleLockButton']")
-    private WebElement lockButton;
-
-    @FindBy(css = "button[data-ap-comp='reloadButton']")
-    private WebElement cadModelButton;
-
-    @FindBy(css = "button[data-ap-comp='assignScenarioButton']")
-    private WebElement assignButton;
-
-    @FindBy(css = "button[data-ap-comp='updateAdminInfoButton']")
-    private WebElement scenarioNotesButton;
-
-    @FindBy(css = "button[data-ap-comp='partCostReportButton']")
-    private WebElement partCostButton;
-
-    @FindBy(css = "button[data-ap-comp='costComparisonReportButton']")
-    private WebElement comparisonReportButton;
-
     @FindBy(css = "select[data-ap-field='filter'] option")
     private List<WebElement> workspaceDropdownList;
 
@@ -117,30 +99,11 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @param fileName - name of the file
      * @return current page object
      */
-    public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
+    public ExplorePage uploadFile(String scenarioName, String filePath, String fileName) {
         newFileDropdown.click();
         componentButton.click();
-        return new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
-    }
-
-    /**
-     * Selects new scenario button
-     * @return new page object
-     */
-    public ScenarioPage createNewScenario() {
-        newFileDropdown.click();
-        scenarioButton.click();
-        return new ScenarioPage(driver);
-    }
-
-    /**
-     * Selects new comparison button
-     * @return new page object
-     */
-    public ComparisonPage createNewComparison() {
-        newFileDropdown.click();
-        comparisonButton.click();
-        return new ComparisonPage(driver);
+        new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
+        return this;
     }
 
     /**
@@ -205,16 +168,6 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
-     * Find specific scenario in the table
-     * @param comparisonName - name of the scenario
-     * @return the scenario as webelement
-     */
-    public WebElement findComparison(String comparisonName) {
-        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName + "']");
-        return pageUtils.scrollToElement(comparison, componentScroller);
-    }
-
-    /**
      * Opens the scenario
      * @param partName - name of the part
      * @param scenarioName - scenario name
@@ -223,35 +176,5 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     public EvaluatePage openScenario(String partName, String scenarioName) {
         findScenario(partName, scenarioName).click();
         return new EvaluatePage(driver);
-    }
-
-    /**
-     * Locks a scenario
-     * @return current page object
-     */
-    public ExplorePage lockScenario() {
-        pageUtils.waitForElementToAppear(actionsDropdown).click();
-        lockButton.click();
-        return this;
-    }
-
-    /**
-     * Selects assign scenario
-     * @return new page object
-     */
-    public AssignPage selectAssignScenario() {
-        pageUtils.waitForElementToAppear(actionsDropdown).click();
-        assignButton.click();
-        return new AssignPage(driver);
-    }
-
-    /**
-     * Selects scenario info and notes
-     * @return new page object
-     */
-    public ScenarioNotesPage selectScenarioInfoNotes() {
-        pageUtils.waitForElementToAppear(actionsDropdown).click();
-        scenarioNotesButton.click();
-        return new ScenarioNotesPage(driver);
     }
 }

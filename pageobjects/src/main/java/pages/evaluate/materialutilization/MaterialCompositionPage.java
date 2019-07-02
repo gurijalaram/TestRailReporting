@@ -28,10 +28,10 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
     @FindBy(css = "div[data-ap-comp='materialSelectionTable'] div.v-grid-scroller-vertical")
     private WebElement materialScroller;
 
-    @FindBy(css = "button.btn.btn-primary")
+    @FindBy(css = "button.gwt-Button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "button.btn.btn-default")
+    @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
 
     private WebDriver driver;
@@ -81,7 +81,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
      * @param materialName - the material name
      * @return current page object
      */
-    public MaterialCompositionPage selectMaterialComposition(String materialName) {
+    public MaterialCompositionPage materialComposition(String materialName) {
         By material = By.xpath("//div[@data-ap-comp='materialSelectionTable']//tbody//td[.='" + materialName + "']");
         pageUtils.scrollToElement(material, materialScroller).click();
         return this;

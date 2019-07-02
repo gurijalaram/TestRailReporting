@@ -35,10 +35,10 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     @FindBy(css = "select[data-ap-field='platingMethod.modeValues.platingMethod.storedListValue']")
     private WebElement platingMethodSelect;
 
-    @FindBy(css = "button.btn.btn-primary")
+    @FindBy(css = "button.gwt-Button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "button.btn.btn-default")
+    @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
 
     private WebDriver driver;
@@ -71,7 +71,6 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     public SecondaryProcessPage selectSecondaryProcess(String processType, String processName) {
         selectProcessType(processType)
             .selectProcessName(processName).click();
-        apply();
         return this;
     }
 
@@ -84,8 +83,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
         String[] processTypes = processType.split(",");
 
         for (String process : processTypes) {
-            By secondaryProcess = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//span[@class='fa fa-caret-right']");
-            pageUtils.scrollToElement(secondaryProcess, processScroller).click();
+            By pro = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//span[@class='fa fa-caret-right']");
+            pageUtils.scrollToElement(pro, processScroller).click();
         }
         return this;
     }
@@ -106,7 +105,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      *
      * @return new page object
      */
-    public EvaluatePage apply() {
+    protected EvaluatePage apply() {
         applyButton.click();
         return new EvaluatePage(driver);
     }
@@ -116,7 +115,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      *
      * @return new page object
      */
-    public EvaluatePage cancel() {
+    protected EvaluatePage cancel() {
         cancelButton.click();
         return new EvaluatePage(driver);
     }

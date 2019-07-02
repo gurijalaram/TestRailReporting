@@ -1,1 +1,1 @@
-\\share.apriori.com\common\svn\parts\apriori-parts\QA-Automation\CIDesign\Evaluate\Inputs\SecondaryProcesses\
+\\share.apriori.com\common\Departments\Engineering\QA\Automation\CID\QAE\parts\Machining\Milling\3 Axis Mill\
