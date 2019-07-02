@@ -57,21 +57,16 @@ public class PageUtils {
     public boolean isAlertPresent(String alertText) {
         try {
             Alert alert = driver.switchTo().alert();
-            if (alert.getText().equalsIgnoreCase(alertText)) {
-                return true;
-            } else {
-                return false;
-            }
+            return alert.getText().equalsIgnoreCase(alertText);
         } catch (NoAlertPresentException e) {
             return false;
         }
     }
 
     /**
-     * 
      * Check if the element is present in the DOM or not. Important: this is not a wait method, it
      * only shows the current status of the element.
-     * 
+     *
      * @param by By object
      * @return boolean whether element is present or not
      */
@@ -97,7 +92,7 @@ public class PageUtils {
     /**
      * Check if the element is displayed or not. Important: this is not a wait method, it only shows
      * the current status of the element.
-     * 
+     *
      * @param by - By object
      * @return returns whether element is visible or not
      */
@@ -112,7 +107,7 @@ public class PageUtils {
     /**
      * Check if the element is displayed or not. Important: this is not a wait method, it only shows
      * the current status of the element.
-     * 
+     *
      * @param element - WebElement
      * @return - returns whether element is displayed or not
      */
@@ -127,9 +122,9 @@ public class PageUtils {
     /**
      * Check if the sub element is displayed or not. Important: this is not a wait method, it only
      * shows the current status of the element.
-     * 
+     *
      * @param parent - parent element
-     * @param by - by
+     * @param by     - by
      * @return boolean whether sub-eleent id displayed or not
      */
     public boolean isSubElementDisplayed(WebElement parent, By by) {
@@ -176,6 +171,7 @@ public class PageUtils {
 
     /**
      * Sets the value attribute to empty string
+     *
      * @param targetElement - web element
      */
     public void clearInput(WebElement targetElement) {
@@ -188,8 +184,8 @@ public class PageUtils {
 
     /**
      * @param scrollDown - true scrolls down and the element is visible on top of the page - false
-     * scroll to the top of the page (try to scroll as high that the given element is in the bottom
-     * of the screen)
+     *                   scroll to the top of the page (try to scroll as high that the given element is in the bottom
+     *                   of the screen)
      */
     public WebElement scrollWithJavaScript(WebElement element, boolean scrollDown) {
         steps_logger.debug("Scroll down");
@@ -201,7 +197,7 @@ public class PageUtils {
     /**
      * Internal wait implementation for the function waitForElementToStop() It waits for the
      * elements to stop moving also checking if it is displayed and is it on top.
-     * 
+     *
      * @param locator
      * @param onTop
      * @return
@@ -247,18 +243,18 @@ public class PageUtils {
 
     /**
      * Helper function which checks if the element is on Top
-     * 
+     *
      * @param element
      * @return
      */
     private boolean isOnTop(WebElement element) {
 
-        return (boolean)((JavascriptExecutor)driver).executeScript(
+        return (boolean) ((JavascriptExecutor) driver).executeScript(
             "var elm = arguments[0];" +
                 "var doc = elm.ownerDocument || document;" +
                 "var rect = elm.getBoundingClientRect();" +
                 "return elm === doc.elementFromPoint(rect.left + (rect.width / 2), rect.top + (rect.height / 2));",
-                element);
+            element);
     }
 
     /**
@@ -410,6 +406,7 @@ public class PageUtils {
 
     /**
      * Finds element in a table.  If the element is not visible then the method will scroll to the element.
+     *
      * @param scenario - the locator for the scenario
      * @param scroller - the scroller to scroll the element into view
      * @return - the element as a webelement
@@ -429,5 +426,16 @@ public class PageUtils {
         } else {
             return driver.findElement(scenario);
         }
+    }
+
+    /**
+     * Checks the element's size on the page is less than 1 and return true/false
+     *
+     * @param webElements - the element as list
+     * @return true/false
+     */
+    public <T> Boolean checkElementsNotVisibleByBoolean(List<T> webElements) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 6);
+        return wait.until((ExpectedCondition<Boolean>) element -> (webElements).size() < 1);
     }
 }
