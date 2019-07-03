@@ -1,4 +1,4 @@
-package main.java.enums;
+package main.java.http.enums;
 
 /**
  * @author kpatel

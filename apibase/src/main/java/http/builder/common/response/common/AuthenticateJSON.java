@@ -1,11 +1,7 @@
-package main.java.pojo.common;
+package main.java.http.builder.common.response.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import main.java.enums.Schema;
-import main.java.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmss;
-
-import java.time.LocalDateTime;
+import main.java.http.enums.Schema;
 
 /**
  * @author kpatel

@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -81,10 +78,13 @@ public class Util {
 
     //TODO z: just to contain all process with default authorization form in one place and make it comfortable to use
     public static Map<String, String> getDefaultAuthorizationForm(final String username, final String password) {
-        Map<String, String> formWithUserCredentials = Constants.DEFAULT_AUTHORIZATION_FORM_WITHOUT_USERCREDS;
-        formWithUserCredentials.put("username", username);
-        formWithUserCredentials.put("password", password);
-
-        return formWithUserCredentials;
+        return new HashMap<String, String>() {{
+            put("grant_type", "password");
+            put("client_id", "apriori-web-cost");
+            put("client_secret", "donotusethiskey");
+            put("scope", "tenantGroup%3Ddefault%20tenant%3Ddefault");
+            put("username", username);
+            put("password", password);
+        }};
     }
 }

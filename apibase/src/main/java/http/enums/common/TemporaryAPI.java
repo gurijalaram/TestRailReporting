@@ -1,7 +1,6 @@
-package main.java.enums.common;
+package main.java.http.enums.common;
 
-import main.java.constants.Constants;
-import main.java.enums.EndpointEnum;
+import main.java.http.enums.EndpointEnum;
 
 //TODO delete enum
 // Created regarding short testing externals API

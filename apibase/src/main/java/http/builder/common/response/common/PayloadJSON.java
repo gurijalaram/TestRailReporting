@@ -1,4 +1,4 @@
-package main.java.pojo.common;
+package main.java.http.builder.common.response.common;
 
 /**
  * @author kpatel

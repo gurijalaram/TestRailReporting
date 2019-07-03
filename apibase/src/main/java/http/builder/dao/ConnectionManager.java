@@ -1,4 +1,4 @@
-package main.java.dao;
+package main.java.http.builder.dao;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -10,27 +10,24 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import main.java.common.HTTPRequest;
-import main.java.common.UserForAPIConnection;
-import main.java.enums.UsersEnum;
-import main.java.service.RequestDataInit;
+import main.java.constants.Constants;
+import main.java.http.builder.common.entity.RequestEntity;
+import main.java.http.builder.common.entity.UserAuthenticationEntity;
+import main.java.http.builder.common.response.common.AuthenticateJSON;
+import main.java.http.builder.common.response.common.LoginJSON;
+import main.java.http.builder.common.response.common.PayloadJSON;
+import main.java.http.builder.service.HTTPRequest;
+import main.java.http.builder.service.RequestInitService;
+import main.java.http.enums.Schema;
+import main.java.http.enums.common.AuthEndpointEnum;
+import main.java.http.enums.common.CommonEndpointEnum;
 import main.java.utils.MultiPartFiles;
 import main.java.utils.URLParams;
-import main.java.constants.Constants;
-import main.java.enums.EndpointType;
-import main.java.enums.Schema;
-import main.java.enums.common.AuthEndpointEnum;
-import main.java.enums.common.CommonEndpointEnum;
-import main.java.pojo.common.AuthenticateJSON;
-import main.java.pojo.common.LoginJSON;
-import main.java.pojo.common.PayloadJSON;
-import main.java.utils.Util;
 import org.openqa.selenium.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,69 +39,29 @@ import static org.hamcrest.Matchers.isOneOf;
 
 /**
  * {@link ConnectionManager} class has the following purposes:
- * - Holds your request parameters what you can set up using {@link RequestDataInit} class.
+ * - Holds your request parameters what you can set up using {@link RequestInitService} class.
  * - Creates {@link RequestSpecification} using {{@link #createRequestSpecification(List, PayloadJSON)}}
  * - Connects to desired endpoint using
  * GET ({@link #get()}), POST ({@link #post()}), PUT ({@link #put()}), PATCH ({@link #patch()}) and DELETE ({@link #delete()}) methods
  * - Converts response JSON into the desired POJO object
  */
-
-//TODO z: I think we need to split initialization and functionality in this class
-//    e.g. Initialization.class send ObjectWrapper.class to Functionality.class
-//    it is more convenient from the logic view
+//INFO z: Now ALL operations are going with requestEntity....
+    // because of this, when somebody now all request data, he may write e.g new ConnectionManager<Response>(requestEntity, returnType).post() ;
+    // because of this ConnectionManager has not references to another objects and all that we need is only RequestEntity
 public class ConnectionManager<T> {
 
     private static Map<String, String> sessionIds = new ConcurrentHashMap<>();
     private static Map<String, String> authTokens = new ConcurrentHashMap<>();
+    Class<T> returnType;
 
-    private HTTPRequest httpRequest;
-    private String endpoint;
-    private Integer[] statusCode;
-    private EndpointType endpointType;
-    private boolean autoLogin;
-    private boolean useCookie;
-    private boolean followRedirection;
-    private List<Map<String, ?>> urlParams;
-    private List<Map<String, ?>> xwwwwFormUrlEncoded;
-    private MultiPartFiles multiPartFiles;
-    private PayloadJSON payloadJSON;
-    private Class<T> returnType;
 
-    private int connectionTimeout;
-    private int socketTimeout;
+    private RequestEntity requestEntity;
 
     private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
 
-    public ConnectionManager(HTTPRequest httpRequest,
-                             String endpoint,
-                             int[] statusCode,
-                             boolean autoLogin,
-                             boolean useCookie,
-                             EndpointType endpointType,
-                             boolean followRedirection,
-                             List<Map<String, ?>> urlParams,
-                             List<Map<String, ?>> xwwwwFormUrlEncoded,
-                             MultiPartFiles multiPartFiles,
-                             PayloadJSON payloadJSON,
-                             Class<T> returnType,
-                             int connectionTimeout,
-                             int socketTimeout) {
-        this.httpRequest = httpRequest;
-        this.endpoint = endpoint;
-        this.statusCode = Arrays.stream(statusCode).boxed().toArray(Integer[]::new);
-        this.useCookie = useCookie;
-        this.autoLogin = autoLogin;
-        this.endpointType = endpointType;
-        this.followRedirection = followRedirection;
-        this.urlParams = urlParams;
-        this.xwwwwFormUrlEncoded = xwwwwFormUrlEncoded;
-        this.multiPartFiles = multiPartFiles;
-        this.payloadJSON = payloadJSON;
+    public ConnectionManager(RequestEntity requestEntity, Class<T> returnType) {
+        this.requestEntity = requestEntity;
         this.returnType = returnType;
-
-        this.connectionTimeout = connectionTimeout;
-        this.socketTimeout = socketTimeout;
-
         RestAssured.defaultParser = Parser.JSON;
     }
 
@@ -119,10 +76,10 @@ public class ConnectionManager<T> {
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, PayloadJSON payloadJson, MultiPartFiles multiPartFiles) {
         RequestSpecBuilder builder = new RequestSpecBuilder();
 
-        if (autoLogin) {
-            switch (endpointType) {
+        if (requestEntity.isAutoLogin()) {
+            switch (requestEntity.getEndpointType()) {
                 case INTERNAL:
-                    if (useCookie) {
+                    if (requestEntity.isUseCookie()) {
                         builder.setSessionId(getSessionId());
                     }
                     break;
@@ -149,9 +106,9 @@ public class ConnectionManager<T> {
             urlParams.forEach(builder::addQueryParams);
         }
 
-        if (xwwwwFormUrlEncoded != null && !xwwwwFormUrlEncoded.isEmpty()) {
+        if (requestEntity.getXwwwwFormUrlEncoded() != null && !requestEntity.getXwwwwFormUrlEncoded().isEmpty()) {
             builder.setContentType(ContentType.URLENC);
-            xwwwwFormUrlEncoded.forEach(builder::addFormParams);
+            requestEntity.getXwwwwFormUrlEncoded().forEach(builder::addFormParams);
         }
 
         if (payloadJson != null) {
@@ -177,74 +134,78 @@ public class ConnectionManager<T> {
          */
         builder.setConfig(RestAssuredConfig.config().httpClient(
             HttpClientConfig.httpClientConfig()
-                .setParam("http.connection.timeout", connectionTimeout)
-                .setParam("http.socket.timeout", socketTimeout)
+                .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
+                .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
         ));
 
         return RestAssured.given()
             .spec(builder.build())
-            .redirects().follow(followRedirection)
+            .redirects().follow(requestEntity.isFollowRedirection())
             .log()
             .all();
     }
 
     private String getSessionId() {
-        if (httpRequest.getDriver() != null) {
+        if (requestEntity.getDriver() != null) {
             StringBuilder cookie = new StringBuilder();
-            Set<Cookie> allCookies = httpRequest.getDriver().manage().getCookies();
+            Set<Cookie> allCookies = requestEntity.getDriver().manage().getCookies();
             for (Cookie c : allCookies) {
                 cookie.append(c.getName()).append("=").append(c.getValue()).append(";");
             }
             return cookie.toString();
         } else {
-            if (sessionIds.get(httpRequest.getUserForAPIConnection().getEmailAddress()) == null) {
-                logger.info("Missing session id for: " + httpRequest.getUserForAPIConnection().getEmailAddress());
+            if (sessionIds.get(requestEntity.getUserAuthenticationEntity().getEmailAddress()) == null) {
+                logger.info("Missing session id for: " + requestEntity.getUserAuthenticationEntity().getEmailAddress());
 
-                String sessionId = LoginJSON.class.cast(
-                    RequestDataInit
-                        .builder()
-                        .endpoint(CommonEndpointEnum.POST_SESSIONID)
-                        .useAutoLogin(false)
-                        .urlParam(URLParams.params()
-                            .use("username", httpRequest.getUserForAPIConnection().getEmailAddress())
-                            .use("password", httpRequest.getUserForAPIConnection().getPassword()))
-                        .returnType(LoginJSON.class)
-                        .connect()
-                        .post()
-                ).getSessionId();
-
-                sessionIds.put(httpRequest.getUserForAPIConnection().getEmailAddress(), sessionId);
+//                TODO z: finish it
+//                String sessionId = LoginJSON.class.cast(
+//                    RequestInitService
+//                        .builder()
+//                        .endpoint(CommonEndpointEnum.POST_SESSIONID)
+//                        .useAutoLogin(false)
+//                        .urlParam(URLParams.params()
+//                            .use("username", requestEntity.getUserAuthenticationEntity().getEmailAddress())
+//                            .use("password", requestEntity.getUserAuthenticationEntity().getPassword()))
+//                        .returnType(LoginJSON.class)
+//                        .connect()
+//                        .post()
+//                ).getSessionId();
+//
+//                sessionIds.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), sessionId);
             }
-            return sessionIds.get(httpRequest.getUserForAPIConnection().getEmailAddress());
+            return sessionIds.get(requestEntity.getUserAuthenticationEntity().getEmailAddress());
         }
     }
 
     // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
     private String setAuthToken() {
 
-        UserForAPIConnection userForAPIConnection = httpRequest.getUserForAPIConnection();
+        UserAuthenticationEntity userAuthenticationEntity = requestEntity.getUserAuthenticationEntity();
 
-        if (authTokens.get(userForAPIConnection.getEmailAddress()) == null) {
-            logger.info("Missing auth id for: " + userForAPIConnection.getEmailAddress());
-            String authToken = AuthenticateJSON.class.cast(
-                    new HTTPRequest().defaultFormAuthorization(userForAPIConnection.getEmailAddress(), userForAPIConnection.getPassword())
-                            .endpoint(AuthEndpointEnum.POST_AUTH)
-                            .useAutoLogin(false)
-                            .followRedirection(false)
-                            .statusCode(200)
-                            .returnType(AuthenticateJSON.class)
-                            .connect()
-                            .post()
-            ).getAccessToken();
+        if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
+            logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
 
-            authTokens.put(httpRequest.getUserForAPIConnection().getEmailAddress(), authToken);
+//                TODO z: finish it
+//            String authToken = AuthenticateJSON.class.cast(
+//                    new HTTPRequest().defaultFormAuthorization(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
+//                            .endpoint(AuthEndpointEnum.POST_AUTH)
+//                            .useAutoLogin(false)
+//                            .followRedirection(false)
+//                            .statusCode(200)
+//                            .returnType(AuthenticateJSON.class)
+//                            .connect()
+//                            .post()
+//            ).getAccessToken();
+//
+//            authTokens.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), authToken);
         }
 
-        return authTokens.get(httpRequest.getUserForAPIConnection().getEmailAddress());
+        return authTokens.get(requestEntity.getUserAuthenticationEntity().getEmailAddress());
 
     }
 
     private T resultOf(ValidatableResponse response) {
+
         if (returnType != null) {
 
             if (returnType.isAssignableFrom(Boolean.class)) {
@@ -281,11 +242,11 @@ public class ConnectionManager<T> {
 
 
         return resultOf(
-            createRequestSpecification(urlParams, payloadJSON)
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
                 .expect()
-                .statusCode(isOneOf(statusCode))
+                .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
-                .get(endpoint)
+                .get(requestEntity.buildEndpoint())
                 .then()
                 .log().all()
         );
@@ -297,11 +258,11 @@ public class ConnectionManager<T> {
      * @return raw JSON string
      */
     public String getJSON() {
-        return createRequestSpecification(urlParams, payloadJSON)
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
             .expect()
-            .statusCode(isOneOf(statusCode))
+            .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
-            .get(endpoint)
+            .get(requestEntity.buildEndpoint())
             .asString();
     }
 
@@ -312,11 +273,11 @@ public class ConnectionManager<T> {
      */
     public Headers getHeader() {
 
-        return createRequestSpecification(urlParams, payloadJSON)
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
             .expect()
-            .statusCode(isOneOf(statusCode))
+            .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
-            .get(endpoint).headers();
+            .get(requestEntity.buildEndpoint()).headers();
     }
 
     /**
@@ -326,11 +287,11 @@ public class ConnectionManager<T> {
      */
     public T post() {
         return resultOf(
-            createRequestSpecification(urlParams, payloadJSON)
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
                 .expect()
-                .statusCode(isOneOf(statusCode))
+                .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
-                .post(endpoint)
+                .post(requestEntity.buildEndpoint())
                 .then()
                 .log().all()
         );
@@ -342,11 +303,11 @@ public class ConnectionManager<T> {
      * @return Headers object instance from response
      */
     public Headers postHeader() {
-        return createRequestSpecification(urlParams, payloadJSON)
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
             .expect()
-            .statusCode(isOneOf(statusCode))
+            .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
-            .post(endpoint).headers();
+            .post(requestEntity.buildEndpoint()).headers();
     }
 
     /**
@@ -354,11 +315,11 @@ public class ConnectionManager<T> {
      * @return header
      */
     public Headers patchHeader() {
-        return createRequestSpecification(urlParams, payloadJSON)
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
             .expect()
-            .statusCode(isOneOf(statusCode))
+            .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
-            .patch(endpoint)
+            .patch(requestEntity.buildEndpoint())
             .headers();
     }
 
@@ -370,11 +331,11 @@ public class ConnectionManager<T> {
      */
     public T postMultiPart() {
         return resultOf(
-            createRequestSpecification(urlParams, multiPartFiles)
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getMultiPartFiles())
                 .expect()
-                .statusCode(isOneOf(statusCode))
+                .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
-                .post(endpoint)
+                .post(requestEntity.buildEndpoint())
                 .then()
                 .log().all()
         );
@@ -387,11 +348,11 @@ public class ConnectionManager<T> {
      */
     public T put() {
         return resultOf(
-            createRequestSpecification(urlParams, payloadJSON)
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
                 .expect()
-                .statusCode(isOneOf(statusCode))
+                .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
-                .put(endpoint)
+                .put(requestEntity.buildEndpoint())
                 .then()
                 .log().all()
         );
@@ -399,11 +360,11 @@ public class ConnectionManager<T> {
 
     public T patch() {
         return resultOf(
-            createRequestSpecification(urlParams, payloadJSON)
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
                 .expect()
-                .statusCode(isOneOf(statusCode))
+                .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
-                .patch(endpoint)
+                .patch(requestEntity.buildEndpoint())
                 .then()
                 .log()
                 .all()
@@ -416,11 +377,11 @@ public class ConnectionManager<T> {
      * @return Headers object instance from response
      */
     public Headers putHeader() {
-        return createRequestSpecification(urlParams, payloadJSON)
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
             .expect()
-            .statusCode(isOneOf(statusCode))
+            .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
-            .put(endpoint).headers();
+            .put(requestEntity.buildEndpoint()).headers();
     }
 
     /**
@@ -430,11 +391,11 @@ public class ConnectionManager<T> {
      */
     public T delete() {
         return resultOf(
-            createRequestSpecification(urlParams, payloadJSON)
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
                 .expect()
-                .statusCode(isOneOf(statusCode))
+                .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
-                .delete(endpoint)
+                .delete(requestEntity.buildEndpoint())
                 .then()
                 .log().all()
         );

@@ -1,6 +1,6 @@
-package main.java.pojo.common;
+package main.java.http.builder.common.response.common;
 
-import main.java.enums.Schema;
+import main.java.http.enums.Schema;
 
 /**
  * @author kpatel

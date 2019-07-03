@@ -1,4 +1,4 @@
-package main.java.enums;
+package main.java.http.enums;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

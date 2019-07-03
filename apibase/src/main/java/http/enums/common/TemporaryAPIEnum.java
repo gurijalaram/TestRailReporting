@@ -1,4 +1,4 @@
-package main.java.enums.common;
+package main.java.http.enums.common;
 
 public enum TemporaryAPIEnum implements TemporaryAPI {
 

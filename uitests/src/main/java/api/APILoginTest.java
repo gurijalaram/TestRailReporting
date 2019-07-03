@@ -1,24 +1,24 @@
 package main.java.api;
 
-import main.java.common.HTTPRequest;
-import main.java.common.UserForAPIConnection;
 import main.java.enums.UsersEnum;
-import main.java.enums.common.AuthEndpointEnum;
-import main.java.enums.common.CommonEndpointEnum;
-import main.java.enums.common.TemporaryAPIEnum;
-import main.java.pojo.common.AuthenticateJSON;
+import main.java.http.builder.common.entity.UserAuthenticationEntity;
+import main.java.http.builder.common.response.common.AuthenticateJSON;
+import main.java.http.builder.service.HTTPRequest;
+import main.java.http.enums.common.AuthEndpointEnum;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class APILoginTest {
 
     @Test
     public void testTokenAutoLoginFiledIfIncorrectLoginProcess() {
-        new HTTPRequest().userEnum(UsersEnum.ADMIN_DEFAULT_USER)
-                .endpoint(AuthEndpointEnum.POST_AUTH)
-                .useAutoLogin(false)
-                .followRedirection(false)
-                .statusCode(200)
-                .returnType(AuthenticateJSON.class)
+        new HTTPRequest().defaultFormAuthorization(UsersEnum.ADMIN_DEFAULT_USER)
+                .customizeRequest()
+                .setEndpoint(AuthEndpointEnum.POST_AUTH)
+                .setAutoLogin(false)
+                .setFollowRedirection(false)
+                .setReturnType(AuthenticateJSON.class)
+                .commitChanges()
                 .connect()
                 .post();
     }
@@ -27,30 +27,22 @@ public class APILoginTest {
     public void testLoginFiledIfIncorrectUserData() {
         AuthenticateJSON authenticateJSON = (AuthenticateJSON)
                 new HTTPRequest().customFormAuthorization(this.initUserConnectionData("admin@apriori.com", "admin"))
-                .endpoint(AuthEndpointEnum.POST_AUTH)
-                .useAutoLogin(false)
-                .followRedirection(false)
-                .statusCode(200)
-                .returnType(AuthenticateJSON.class)
+                .customizeRequest()
+                .setEndpoint(AuthEndpointEnum.POST_AUTH)
+                .setAutoLogin(false)
+                .setFollowRedirection(false)
+                .setReturnType(AuthenticateJSON.class)
+                .commitChanges()
                 .connect()
                 .post();
 
+        Assert.assertNotNull("Access token should be present", authenticateJSON.getAccessToken());
+        Assert.assertNotNull("Access token should be present", authenticateJSON.getExpiresIn());
     }
 
-    @Test
-    public void testAccountsStatusFiledIf() {
-        new HTTPRequest().userEnum(UsersEnum.CIE_TE_USER)
-                .endpoint(TemporaryAPIEnum.GET_ACCOUNTS_STATUS)
-//                .endpoint("http://edc-api.atv.awsdev.apriori.com/accounts/status")
-                .statusCode(200)
-//                .returnType(AuthenticateJSON.class)
-                .connect()
-                .get();
 
-    }
-
-    public UserForAPIConnection initUserConnectionData(final String username, final String password) {
-        return new UserForAPIConnection(
+    public UserAuthenticationEntity initUserConnectionData(final String username, final String password) {
+        return new UserAuthenticationEntity(
                 username,
                 password,
                 null,

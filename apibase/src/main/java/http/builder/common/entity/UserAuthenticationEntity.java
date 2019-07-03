@@ -1,9 +1,12 @@
-package main.java.common;
+package main.java.http.builder.common.entity;
+
+import main.java.enums.UsersEnum;
+
 /**
  * The class is intended to hold necessary user data to be able to login with a user through internal API.
  * You can also pass an already existing JSESSIONID from an already logged in user.
  */
-public class UserForAPIConnection {
+public class UserAuthenticationEntity {
     private String emailAddress;
     private String password;
     private String sessionId;
@@ -13,19 +16,25 @@ public class UserForAPIConnection {
     private String scope;
     private boolean alreadyLoggedIn;
 
-    public UserForAPIConnection(String emailAddress, String password) {
+    public UserAuthenticationEntity(String emailAddress, String password) {
         this.emailAddress = emailAddress;
         this.password = password;
         this.alreadyLoggedIn = false;
     }
 
-    public UserForAPIConnection(String emailAddress, String sessionId, boolean alreadyLoggedIn) {
+    public UserAuthenticationEntity(UsersEnum usersEnum) {
+        this.emailAddress = usersEnum.getUsername();
+        this.password = usersEnum.getPassword();
+        this.alreadyLoggedIn = false;
+    }
+
+    public UserAuthenticationEntity(String emailAddress, String sessionId, boolean alreadyLoggedIn) {
         this.emailAddress = emailAddress;
         this.sessionId = sessionId;
         this.alreadyLoggedIn = alreadyLoggedIn;
     }
 
-    public UserForAPIConnection(String emailAddress, String password, String sessionId, String grant_type, String client_id, String client_secret, String scope, boolean alreadyLoggedIn) {
+    public UserAuthenticationEntity(String emailAddress, String password, String sessionId, String grant_type, String client_id, String client_secret, String scope, boolean alreadyLoggedIn) {
         this.emailAddress = emailAddress;
         this.password = password;
         this.sessionId = sessionId;
@@ -81,7 +90,7 @@ public class UserForAPIConnection {
             return false;
         }
 
-        UserForAPIConnection that = (UserForAPIConnection) o;
+        UserAuthenticationEntity that = (UserAuthenticationEntity) o;
 
         if (!emailAddress.equals(that.emailAddress)) {
             return false;
