@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +17,9 @@ import java.util.List;
 public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     private final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
+
+    @FindBy(css = "a[data-ap-comp='exploreButton']")
+    private WebElement exploreButton;
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
@@ -115,6 +117,15 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
+     * Selects the explore button
+     * @return current page object
+     */
+    public ExplorePage selectExploreButton() {
+        pageUtils.waitForElementToBeClickable(exploreButton).click();
+        return this;
+    }
+
+    /**
      * Collective method to upload a file
      * @param scenarioName - the name of the scenario
      * @param filePath - location of the file
@@ -193,7 +204,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @return current page object
      */
     public ExplorePage selectWorkSpace(String workspace) {
-        new Select(workspaceDropdown).selectByVisibleText(workspace);
+        pageUtils.selectDropdownOption(workspaceDropdown, workspace);
         return this;
     }
 
@@ -214,7 +225,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @return the scenario as webelement
      */
     public WebElement findComparison(String comparisonName) {
-        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName + "']");
+        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
         return pageUtils.scrollToElement(comparison, componentScroller);
     }
 

@@ -17,6 +17,7 @@ import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -437,5 +438,23 @@ public class PageUtils {
     public <T> Boolean checkElementsNotVisibleByBoolean(List<T> webElements) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 6);
         return wait.until((ExpectedCondition<Boolean>) element -> (webElements).size() < 1);
+    }
+
+    /**
+     * Selects the correct option in the dropdown.  Conditional statement is included because the system
+     * tends to revert to previous selection.
+     * @param locator - the locator of the element
+     * @param dropdownOption - the dropdown option
+     */
+    public void selectDropdownOption(WebElement locator, String dropdownOption) {
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+            .ignoring(StaleElementReferenceException.class)
+            .until((WebDriver driver) -> {
+                new Select(locator).selectByVisibleText(dropdownOption);
+                if (!new Select(locator).getFirstSelectedOption().equals(dropdownOption)) {
+                    new Select(locator).selectByVisibleText(dropdownOption);
+                }
+                return true;
+            });
     }
 }

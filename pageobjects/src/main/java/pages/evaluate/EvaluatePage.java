@@ -11,7 +11,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,8 +180,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
-        pageUtils.waitForElementToBeClickable(processGroupDropdown).click();
-        new Select(processGroupDropdown).selectByVisibleText(processGroup);
+        pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
         return this;
     }
 
@@ -192,8 +190,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectVPE(String vpe) {
-        pageUtils.waitForElementToBeClickable(vpeDropdown).click();
-        new Select(vpeDropdown).selectByVisibleText(vpe);
+        pageUtils.selectDropdownOption(vpeDropdown, vpe);
         return this;
     }
 
