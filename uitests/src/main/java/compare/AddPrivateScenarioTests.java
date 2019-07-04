@@ -6,7 +6,7 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.enums.WorkspaceEnum;
+import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.hamcrest.Matchers;
@@ -26,10 +26,10 @@ public class AddPrivateScenarioTests extends TestBase {
     }
 
     /**
-     * Test adding a private scenario
+     * Test filtering and adding a private scenario then searching component table for the scenario
      */
     @Test
-    public void addPrivateScenario() {
+    public void filterAddPrivateScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -41,13 +41,10 @@ public class AddPrivateScenarioTests extends TestBase {
         explorePage.createNewComparison()
             .enterComparisonName("Private Comparison")
             .save()
-            .addScenario()
-            .selectComparison("PlasticMoulding", "Xray Inspection")
-            .apply();
+            .addScenario();
 
-        explorePage.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+        explorePage.filterPublicCriteria("Part", "Part Name", "Contains", "PlasticMoulding");
 
-        assertThat(explorePage.findComparison("Private Comparison").isDisplayed(), Matchers.is(true));
+        assertThat(new ComparisonTablePage(driver).findComparison("PlasticMoulding", "Initial").isDisplayed(), Matchers.is(true));
     }
 }
