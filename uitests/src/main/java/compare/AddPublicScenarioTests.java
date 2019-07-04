@@ -1,53 +1,45 @@
 package main.java.compare;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.Scanner;
 
-public class AddPrivateScenarioTests extends TestBase {
+public class AddPublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private String filePath = new Scanner(AddPrivateScenarioTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
-    public AddPrivateScenarioTests() {
+    public AddPublicScenarioTests() {
         super();
     }
 
     /**
-     * Test adding a private scenario
+     * Test adding a public scenario
      */
     @Test
-    public void addPrivateScenario() {
+    public void addPublicScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Standard Anneal", filePath, "Casting.prt")
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .publishScenario();
 
         explorePage.createNewComparison()
-            .enterComparisonName("Private Comparison")
+            .enterComparisonName("Public Comparison")
             .save()
-            .addScenario()
-            .selectComparison("PlasticMoulding", "Xray Inspection")
-            .apply();
+            .addScenario();
 
-        explorePage.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
-
-        assertThat(explorePage.findComparison("Private Comparison").isDisplayed(), Matchers.is(true));
     }
 }
+

@@ -154,9 +154,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * Publish the scenario
      * @return new page object
      */
-    public ExplorePage publishScenario() {
-        publishButton.click();
-        return new ExplorePage(driver);
+    public PublishPage publishScenario() {
+        pageUtils.waitForElementToBeClickable(publishButton).click();
+        return new PublishPage(driver);
     }
 
     /**

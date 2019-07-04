@@ -30,7 +30,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "input[data-ap-field='assignee']")
     private WebElement lockCheckBox;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(css = "button.gwt-SubmitButton")
     private WebElement publishButton;
 
     @FindBy(css = "button.gwt-Button.btn.btn-default")
@@ -63,7 +63,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @param status - dropdown status
      * @return current page object
      */
-    protected PublishPage selectStatus(String status) {
+    public PublishPage selectStatus(String status) {
         new Select(statusDropdown).selectByVisibleText(status);
         return this;
     }
@@ -73,7 +73,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @param costMaturity - cost maturity dropdown
      * @return current page object
      */
-    protected PublishPage selectCostMaturity(String costMaturity) {
+    public PublishPage selectCostMaturity(String costMaturity) {
         new Select(costMaturityDropdown).selectByVisibleText(costMaturity);
         return this;
     }
@@ -83,7 +83,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @param assignee - assignee dropdown
      * @return current page object
      */
-    protected PublishPage selectAssignee(String assignee) {
+    public PublishPage selectAssignee(String assignee) {
         new Select(assigneeDropdown).selectByVisibleText(assignee);
         return this;
     }
@@ -92,7 +92,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * Selects the publish button
      * @return new page object
      */
-    protected ExplorePage selectPublishButton() {
+    public ExplorePage selectPublishButton() {
         publishButton.click();
         return new ExplorePage(driver);
     }
@@ -101,7 +101,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * Selects the cancel button
      * @return new page object
      */
-    protected ExplorePage selectCancelButton() {
+    public ExplorePage selectCancelButton() {
         cancelButton.click();
         return new ExplorePage(driver);
     }
