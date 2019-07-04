@@ -24,6 +24,14 @@ public class HTTPRequest {
     }
 
     /**
+     * Request without authorization
+     * @return
+     */
+    public RequestInitService unauthorized() {
+        return RequestInitService.build(RequestEntity.unAuthorized());
+    }
+
+    /**
      * Form authorization
      * Using default form parameters, from utils sub-project, for common authorization
      * @param user - Enum with username and password

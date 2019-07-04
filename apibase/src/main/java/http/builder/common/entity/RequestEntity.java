@@ -33,7 +33,6 @@ public class RequestEntity {
     private RequestInitService requestInitService;
 
 
-    private HTTPRequest httpRequest;
     private EndpointEnum endpoint;
     private Integer[] statusCode = {HttpStatus.SC_OK};
     private boolean useCookie = false;
@@ -64,6 +63,10 @@ public class RequestEntity {
 
     public static RequestEntity initUrlAuthorizationData(final String username, final String password) {
         return new RequestEntity(new UserAuthenticationEntity(username, password), null);
+    }
+
+    public static RequestEntity unAuthorized() {
+        return new RequestEntity(new UserAuthenticationEntity(), null).setAutoLogin(false);
     }
 
     private RequestEntity(UserAuthenticationEntity userAuthenticationEntity, WebDriver driver, boolean defaultAuthorizationData, boolean useFormData) {
@@ -129,18 +132,14 @@ public class RequestEntity {
         return this;
     }
 
-    public HTTPRequest getHttpRequest() {
-        return httpRequest;
-    }
-
-    public RequestEntity setHttpRequest(HTTPRequest httpRequest) {
-        this.httpRequest = httpRequest;
-        return this;
-    }
-
     public EndpointEnum getEndpoint() {
         return endpoint;
     }
+
+//    public RequestEntity setCustomEndpoint(final String url, EndpointType endpointType) {
+//        this.end
+//    }
+
 
     public RequestEntity setEndpoint(EndpointEnum endpoint) {
         this.endpoint = endpoint;
@@ -214,8 +213,10 @@ public class RequestEntity {
         return urlParams;
     }
 
-    public RequestEntity setUrlParams(List<Map<String, ?>> urlParams) {
-        this.urlParams = urlParams;
+    public RequestEntity setUrlParams(Map<String, ?> urlParams) {
+        if (urlParams != null) {
+            this.urlParams.add(urlParams);
+        }
         return this;
     }
 

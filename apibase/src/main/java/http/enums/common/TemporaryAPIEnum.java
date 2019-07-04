@@ -2,7 +2,7 @@ package main.java.http.enums.common;
 
 public enum TemporaryAPIEnum implements TemporaryAPI {
 
-    GET_ACCOUNTS_STATUS("/accounts/status")
+    GET_ACCOUNTS_STATUS("accounts/status")
     ;
 
     private final String endpoint;

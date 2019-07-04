@@ -136,7 +136,8 @@ public class ConnectionManager<T> {
             HttpClientConfig.httpClientConfig()
                 .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
                 .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
-        ));
+        ))
+        .setBaseUri(requestEntity.buildEndpoint());
 
         return RestAssured.given()
             .spec(builder.build())
@@ -157,21 +158,22 @@ public class ConnectionManager<T> {
             if (sessionIds.get(requestEntity.getUserAuthenticationEntity().getEmailAddress()) == null) {
                 logger.info("Missing session id for: " + requestEntity.getUserAuthenticationEntity().getEmailAddress());
 
-//                TODO z: finish it
-//                String sessionId = LoginJSON.class.cast(
-//                    RequestInitService
-//                        .builder()
-//                        .endpoint(CommonEndpointEnum.POST_SESSIONID)
-//                        .useAutoLogin(false)
-//                        .urlParam(URLParams.params()
-//                            .use("username", requestEntity.getUserAuthenticationEntity().getEmailAddress())
-//                            .use("password", requestEntity.getUserAuthenticationEntity().getPassword()))
-//                        .returnType(LoginJSON.class)
-//                        .connect()
-//                        .post()
-//                ).getSessionId();
-//
-//                sessionIds.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), sessionId);
+                UserAuthenticationEntity userAuthenticationEntity = requestEntity.getUserAuthenticationEntity();
+
+                String sessionId = LoginJSON.class.cast(
+                        new HTTPRequest().userAuthorizationData(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
+                        .customizeRequest()
+                        .setEndpoint(CommonEndpointEnum.POST_SESSIONID)
+                        .setAutoLogin(false)
+                        .setUrlParams(URLParams.params()
+                                .use("username", requestEntity.getUserAuthenticationEntity().getEmailAddress())
+                                .use("password", requestEntity.getUserAuthenticationEntity().getPassword()))
+                        .setReturnType(LoginJSON.class)
+                        .commitChanges()
+                        .connect()
+                        .post()
+                ).getSessionId();
+                sessionIds.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), sessionId);
             }
             return sessionIds.get(requestEntity.getUserAuthenticationEntity().getEmailAddress());
         }
@@ -185,19 +187,19 @@ public class ConnectionManager<T> {
         if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
             logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
 
-//                TODO z: finish it
-//            String authToken = AuthenticateJSON.class.cast(
-//                    new HTTPRequest().defaultFormAuthorization(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
-//                            .endpoint(AuthEndpointEnum.POST_AUTH)
-//                            .useAutoLogin(false)
-//                            .followRedirection(false)
-//                            .statusCode(200)
-//                            .returnType(AuthenticateJSON.class)
-//                            .connect()
-//                            .post()
-//            ).getAccessToken();
-//
-//            authTokens.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), authToken);
+            String authToken = AuthenticateJSON.class.cast(
+            new HTTPRequest().defaultFormAuthorization(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
+                    .customizeRequest()
+                    .setEndpoint(AuthEndpointEnum.POST_AUTH)
+                    .setAutoLogin(false)
+                    .setFollowRedirection(false)
+                    .setReturnType(AuthenticateJSON.class)
+                    .commitChanges()
+                    .connect()
+                    .post()
+            ).getAccessToken();
+
+            authTokens.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), authToken);
         }
 
         return authTokens.get(requestEntity.getUserAuthenticationEntity().getEmailAddress());

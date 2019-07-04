@@ -10,8 +10,20 @@ import org.junit.Test;
 
 public class APILoginTest {
 
+
     @Test
     public void testTokenAutoLoginFiledIfIncorrectLoginProcess() {
+        new HTTPRequest().defaultFormAuthorization(UsersEnum.ADMIN_DEFAULT_USER)
+                .customizeRequest()
+                .setEndpoint(AuthEndpointEnum.POST_AUTH)
+                .setFollowRedirection(false)
+                .commitChanges()
+                .connect()
+                .post();
+    }
+
+    @Test
+    public void testDefaultLoginFiledIfIncorrectLoginProcess() {
         new HTTPRequest().defaultFormAuthorization(UsersEnum.ADMIN_DEFAULT_USER)
                 .customizeRequest()
                 .setEndpoint(AuthEndpointEnum.POST_AUTH)

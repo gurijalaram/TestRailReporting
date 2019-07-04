@@ -2,13 +2,14 @@ package main.java.http.enums.common;
 
 import main.java.http.enums.EndpointEnum;
 
-//TODO delete enum
+//TODO z: delete enum
 // Created regarding short testing externals API
-public interface TemporaryAPI extends EndpointEnum {
+public interface TemporaryAPI extends ExternalEndpointEnum {
 
-        default String getEndpoint(Object... variables) {
-            return  "edc-api.atv.awsdev.apriori.com/" + String.format(getEndpointString(), ((Object[]) variables));
-        }
+    @Override
+    default String getEndpoint(Object... variables) {
+            return  "http://edc-api.atv.awsdev.apriori.com/" + String.format(getEndpointString(), ((Object[]) variables));
+    }
 
         default String getSchemaLocation() {
             return null;

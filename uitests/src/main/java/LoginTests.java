@@ -2,10 +2,8 @@ package main.java;
 
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
-import main.java.enums.common.AuthEndpointEnum;
 import main.java.pages.LoginPage;
 import main.java.pages.PrivateWorkspacePage;
-import main.java.pojo.common.AuthenticateJSON;
 import org.junit.*;
 
 public class LoginTests  extends TestBase {

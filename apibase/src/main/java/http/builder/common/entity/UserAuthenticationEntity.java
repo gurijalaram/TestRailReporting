@@ -16,6 +16,8 @@ public class UserAuthenticationEntity {
     private String scope;
     private boolean alreadyLoggedIn;
 
+    public UserAuthenticationEntity(){}
+
     public UserAuthenticationEntity(String emailAddress, String password) {
         this.emailAddress = emailAddress;
         this.password = password;
@@ -79,6 +81,46 @@ public class UserAuthenticationEntity {
 
     public boolean isAlreadyLoggedIn() {
         return alreadyLoggedIn;
+    }
+
+    public UserAuthenticationEntity setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+        return this;
+    }
+
+    public UserAuthenticationEntity setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public UserAuthenticationEntity setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+        return this;
+    }
+
+    public UserAuthenticationEntity setGrant_type(String grant_type) {
+        this.grant_type = grant_type;
+        return this;
+    }
+
+    public UserAuthenticationEntity setClient_id(String client_id) {
+        this.client_id = client_id;
+        return this;
+    }
+
+    public UserAuthenticationEntity setClient_secret(String client_secret) {
+        this.client_secret = client_secret;
+        return this;
+    }
+
+    public UserAuthenticationEntity setScope(String scope) {
+        this.scope = scope;
+        return this;
+    }
+
+    public UserAuthenticationEntity setAlreadyLoggedIn(boolean alreadyLoggedIn) {
+        this.alreadyLoggedIn = alreadyLoggedIn;
+        return this;
     }
 
     @Override
