@@ -19,7 +19,7 @@ public class AddPublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private String filePath = new Scanner(AddPrivateScenarioTests.class.getClassLoader()
+    private String filePath = new Scanner(AddPublicScenarioTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public AddPublicScenarioTests() {
@@ -30,7 +30,7 @@ public class AddPublicScenarioTests extends TestBase {
      * Test filtering and adding a public scenario then searching component table for the scenario
      */
     @Test
-    public void filterAddPublicScenario() throws Exception {
+    public void filterAddPublicScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
