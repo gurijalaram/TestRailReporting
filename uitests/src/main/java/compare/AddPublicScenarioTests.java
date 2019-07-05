@@ -30,7 +30,7 @@ public class AddPublicScenarioTests extends TestBase {
      * Test filtering and adding a public scenario then searching component table for the scenario
      */
     @Test
-    public void filterAddPublicScenario() {
+    public void filterAddPublicScenario() throws Exception {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -46,8 +46,8 @@ public class AddPublicScenarioTests extends TestBase {
             .addScenario()
             .filterCriteria();
 
-        new FilterCriteriaPage(driver).filterPublicCriteria("Part", "Part Name", "Contains", "HoleProximityTest");
-
+        new FilterCriteriaPage(driver).filterPublicCriteria("Part", "Part Name", "Contains", "HoleProximityTest")
+            .apply();
         assertThat(new ComparisonTablePage(driver).findComparison("HoleProximityTest", "Initial").isDisplayed(), Matchers.is(true));
     }
 }

@@ -88,14 +88,13 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
-        new FilterCriteriaPage(driver).clearAllCheckBoxes()
+        clearAllCheckBoxes()
             .setPrivateWorkSpace()
             .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)
-            .setTypeOfValue(value)
-            .apply();
-        return new FilterCriteriaPage(driver);
+            .setTypeOfValue(value);
+        return this;
     }
 
     /**
@@ -107,14 +106,13 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage filterPublicCriteria(String type, String attribute, String condition, String value) {
-        new FilterCriteriaPage(driver).clearAllCheckBoxes()
+        clearAllCheckBoxes()
             .setPublicWorkspace()
             .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)
-            .setTypeOfValue(value)
-            .apply();
-        return new FilterCriteriaPage(driver);
+            .setTypeOfValue(value);
+        return this;
     }
 
     /**
@@ -212,7 +210,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the apply button
-     * @return current page object
+     * @return generic page object as method is utilized by various classes
      */
     public <T> T apply() {
         pageUtils.waitForElementToAppear(applyButton).click();
@@ -221,7 +219,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the cancel button
-     * @return current page object
+     * @return generic page object as method is utilized by various classes
      */
     public <T> T cancel() {
         cancelButton.click();
