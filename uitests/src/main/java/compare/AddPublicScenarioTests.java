@@ -8,6 +8,7 @@ import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
+import main.java.pages.explore.FilterCriteriaPage;
 import main.java.pages.login.LoginPage;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -43,9 +44,10 @@ public class AddPublicScenarioTests extends TestBase {
         explorePage.createNewComparison()
             .enterComparisonName("Public Comparison")
             .save()
-            .addScenario();
+            .addScenario()
+            .filterCriteria();
 
-        explorePage.filterPrivateCriteria("Part", "Part Name", "Contains", "HoleProximityTest");
+        new FilterCriteriaPage(driver).filterPublicCriteria("Part", "Part Name", "Contains", "HoleProximityTest");
 
         assertThat(new ComparisonTablePage(driver).findComparison("HoleProximityTest", "Initial").isDisplayed(), Matchers.is(true));
     }

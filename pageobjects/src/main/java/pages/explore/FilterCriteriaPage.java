@@ -80,10 +80,48 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
+     * Filter criteria for private selection
+     * @param type - type of selection whether private or public
+     * @param attribute - the attribute
+     * @param condition - specified condition
+     * @param value - the value
+     * @return current page object
+     */
+    public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
+        new FilterCriteriaPage(driver).clearAllCheckBoxes()
+            .setPrivateWorkSpace()
+            .setScenarioType(type)
+            .selectAttribute(attribute)
+            .selectCondition(condition)
+            .setTypeOfValue(value)
+            .apply();
+        return new FilterCriteriaPage(driver);
+    }
+
+    /**
+     * Filter criteria for public selection
+     * @param type - type of selection whether private or public
+     * @param attribute - the attribute
+     * @param condition - specified condition
+     * @param value - the value
+     * @return current page object
+     */
+    public FilterCriteriaPage filterPublicCriteria(String type, String attribute, String condition, String value) {
+        new FilterCriteriaPage(driver).clearAllCheckBoxes()
+            .setPublicWorkspace()
+            .setScenarioType(type)
+            .selectAttribute(attribute)
+            .selectCondition(condition)
+            .setTypeOfValue(value)
+            .apply();
+        return new FilterCriteriaPage(driver);
+    }
+
+    /**
      * Clears all listed checkboxes
      * @return current page object
      */
-    protected FilterCriteriaPage clearAllCheckBoxes() {
+    private FilterCriteriaPage clearAllCheckBoxes() {
         listOfCheckboxes.stream().filter(checkbox -> checkbox.getAttribute("checked") != null).forEach(WebElement::click);
         return this;
     }
@@ -114,7 +152,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Selects the checkbox
      * @return current page object
      */
-    protected FilterCriteriaPage setPrivateWorkSpace() {
+    private FilterCriteriaPage setPrivateWorkSpace() {
         privateCheckBox.click();
         return this;
     }
@@ -123,7 +161,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Selects the checkbox
      * @return current page object
      */
-    protected FilterCriteriaPage setPublicWorkspace() {
+    private FilterCriteriaPage setPublicWorkspace() {
         publicCheckBox.click();
         return this;
     }
@@ -133,7 +171,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param attribute - the attribute
      * @return current page object
      */
-    protected FilterCriteriaPage selectAttribute(String attribute) {
+    private FilterCriteriaPage selectAttribute(String attribute) {
         new Select(attributeDropdown).selectByVisibleText(attribute);
         this.attribute = attribute;
         return this;
@@ -144,7 +182,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param condition - the condition
      * @return current page object
      */
-    protected FilterCriteriaPage selectCondition(String condition) {
+    private FilterCriteriaPage selectCondition(String condition) {
         new Select(conditionDropdown).selectByVisibleText(condition);
         return this;
     }
@@ -154,7 +192,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param input - the input value
      * @return current page object
      */
-    protected FilterCriteriaPage inputValue(String input) {
+    private FilterCriteriaPage inputValue(String input) {
         valueInput.click();
         pageUtils.clearInput(valueInput);
         valueInput.sendKeys(input);
@@ -166,7 +204,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param input - the input value
      * @return current page object
      */
-    protected FilterCriteriaPage selectValue(String input) {
+    private FilterCriteriaPage selectValue(String input) {
         valueInputDropdown.sendKeys(input);
         valueInputDropdown.sendKeys(Keys.ESCAPE);
         return this;
@@ -176,18 +214,18 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Selects the apply button
      * @return current page object
      */
-    public ExplorePage apply() {
+    public <T> T apply() {
         pageUtils.waitForElementToAppear(applyButton).click();
-        return new ExplorePage(driver);
+        return (T) PageFactory.initElements(driver, Object.class);
     }
 
     /**
      * Selects the cancel button
      * @return current page object
      */
-    public ExplorePage cancel() {
+    public <T> T cancel() {
         cancelButton.click();
-        return new ExplorePage(driver);
+        return (T) PageFactory.initElements(driver, Object.class);
     }
 
     /**
@@ -204,10 +242,12 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         private String attributeValue;
 
         Attribute(String attributeValue) {
+
             this.attributeValue = attributeValue;
         }
 
         public String getAttributeValue() {
+
             return attributeValue;
         }
     }
@@ -217,7 +257,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param value - enum value
      * @return current page object
      */
-    protected FilterCriteriaPage setTypeOfValue(String value) {
+    private FilterCriteriaPage setTypeOfValue(String value) {
         if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
             selectValue(value);
         } else {
