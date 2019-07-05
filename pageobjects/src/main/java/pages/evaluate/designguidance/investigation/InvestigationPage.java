@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +50,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     public ThreadingPage editThread(String gcdType, String gcd) {
         selectGCDType(gcdType).click();
         selectGCD(gcd).click();
-        edit();
+        selectEditButton();
         return new ThreadingPage(driver);
     }
 
@@ -92,16 +91,25 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return current page object
      */
     public InvestigationPage selectThreadableGCD(String option)  {
-        new Select(threadableDropdown).selectByVisibleText(option);
+        pageUtils.selectDropdownOption(threadableDropdown,option);
         return this;
     }
 
     /**
-     * Selects the edit button
+     * Selects the selectEditButton button
      * @return new page object
      */
-    private ThreadingPage edit() {
-        editButton.click();
+    public ThreadingPage selectEditButton() {
+        pageUtils.waitForElementToAppear(editButton);
+        pageUtils.waitForElementToBeClickable(editButton).click();
         return new ThreadingPage(driver);
+    }
+
+    /**
+     * Gets the button as a webelement
+     * @return the button as webelement
+     */
+    public WebElement getEditButton() {
+        return editButton;
     }
 }

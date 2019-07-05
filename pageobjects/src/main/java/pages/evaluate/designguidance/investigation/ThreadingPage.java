@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +25,10 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     @FindBy(css = "input[data-ap-field='threadLength']")
     private WebElement lengthInput;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(css = "div[data-ap-comp='threadEditor'] button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-default")
+    @FindBy(css = "div[data-ap-comp='threadEditor'] button.btn.btn-default")
     private WebElement cancelButton;
 
     private WebDriver driver;
@@ -59,7 +58,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return current page object
      */
     public ThreadingPage selectThreadDropdown(String option) {
-        new Select(threadDropdown).selectByVisibleText(option);
+        pageUtils.selectDropdownOption(threadDropdown,option);
         return this;
     }
 
@@ -69,6 +68,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return current page object
      */
     public ThreadingPage enterThreadLength(String length) {
+        lengthInput.click();
         pageUtils.clearInput(lengthInput);
         lengthInput.sendKeys(length);
         return this;
@@ -79,15 +79,15 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return - the thread length
      */
     public String getThreadLength() {
-        return pageUtils.waitForElementToAppear(lengthInput).getText();
+        return pageUtils.waitForElementToAppear(lengthInput).getAttribute("value");
     }
 
     /**
      * Selects the apply button
      * @return new page object
      */
-    protected InvestigationPage apply() {
-        applyButton.click();
+    public InvestigationPage apply() {
+        pageUtils.waitForElementToBeClickable(applyButton).click();
         return new InvestigationPage(driver);
     }
 
@@ -95,7 +95,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * Selects the cancel button
      * @return new page object
      */
-    protected InvestigationPage cancel() {
+    public InvestigationPage cancel() {
         cancelButton.click();
         return new InvestigationPage(driver);
     }

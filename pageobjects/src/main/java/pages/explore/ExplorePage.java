@@ -175,7 +175,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @return the part as webelement
      */
     public WebElement findScenario(String partName, String scenarioName) {
-        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName + "," + scenarioName + "']");
+        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
         return pageUtils.scrollToElement(scenario, componentScroller);
     }
 
