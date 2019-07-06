@@ -210,20 +210,24 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the apply button
-     * @return generic page object as method is utilized by various classes
+     * @param className - the class the method should return
+     * @param <T> - the return type
+     * @return generic page object
      */
-    public <T> T apply() {
+    public <T> T apply(Class<T> className) {
         pageUtils.waitForElementToAppear(applyButton).click();
-        return (T) PageFactory.initElements(driver, Object.class);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
      * Selects the cancel button
-     * @return generic page object as method is utilized by various classes
+     * @param className - the class the method should return
+     * @param <T> - the return type
+     * @return generic page object
      */
-    public <T> T cancel() {
+    public <T> T cancel(Class<T> className) {
         cancelButton.click();
-        return (T) PageFactory.initElements(driver, Object.class);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

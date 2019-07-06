@@ -13,7 +13,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ThreadingPage.class);
 
-    @FindBy(css = ".modal-content")
+    @FindBy(css = "div[data-ap-comp='threadEditor'] .modal-content")
     private WebElement threadDialog;
 
     @FindBy(css = "label[data-ap-field='cadThreaded']")
@@ -82,13 +82,16 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
         return pageUtils.waitForElementToAppear(lengthInput).getAttribute("value");
     }
 
+
     /**
      * Selects the apply button
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T> - the return type
+     * @return generic page object
      */
-    public InvestigationPage apply() {
+    public <T> T apply(Class<T> className) {
         pageUtils.waitForElementToBeClickable(applyButton).click();
-        return new InvestigationPage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

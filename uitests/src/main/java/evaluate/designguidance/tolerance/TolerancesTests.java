@@ -6,7 +6,6 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.enums.WorkspaceEnum;
 import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
 import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
@@ -58,16 +57,16 @@ public class TolerancesTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        /*explorePage = new ExplorePage(driver);
+        explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();*/
+            .openDesignGuidance();
 
-        explorePage = new ExplorePage(driver);
+        /*explorePage = new ExplorePage(driver);
         explorePage.selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .openScenario("Dtccastingissues", "Scenario b")
-            .openDesignGuidance();
+            .openDesignGuidance();*/
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
@@ -75,7 +74,7 @@ public class TolerancesTests extends TestBase {
             .editThread("Curved Walls", "CurvedWall:10")
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.28")
-            .apply()
+            .apply(InvestigationPage.class)
             .selectEditButton();
 
         assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(Matchers.equalTo("0.28")));
