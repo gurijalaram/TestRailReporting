@@ -1,4 +1,4 @@
-package main.java.pages.explore;
+package main.java.pages.logout;
 
 import main.java.pages.login.LoginPage;
 import main.java.utils.PageUtils;

@@ -1,6 +1,7 @@
 package main.java.pages.explore;
 
 import main.java.pages.evaluate.EvaluatePage;
+import main.java.pages.logout.LogoutPage;
 import main.java.pages.settings.SettingsPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
