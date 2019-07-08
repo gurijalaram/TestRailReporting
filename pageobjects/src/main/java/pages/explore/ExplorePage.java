@@ -81,8 +81,17 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     @FindBy(css = "button[data-ap-comp='togglePreviewButton']")
     private WebElement previewButton;
 
+    @FindBy(css = "a[data-ap-comp='jobQueue']")
+    private WebElement jobQueueButton;
+
     @FindBy(css = "a span.glyphicon-cog")
     private WebElement settingsButton;
+
+    @FindBy(css = "a.navbar-help")
+    private WebElement helpButton;
+
+    @FindBy(css = "span.glyphicon-user")
+    private WebElement logoutButton;
 
     @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
     private WebElement componentScroller;
@@ -244,7 +253,32 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
-        filterButton.click();
+        pageUtils.waitForElementToAppear(filterButton).click();
         return new FilterCriteriaPage(driver);
+    }
+
+    /**
+     * Selects the job queue button
+     * @return new page object
+     */
+    public void openJobQueue() {
+        pageUtils.waitForElementToAppear(jobQueueButton).click();
+    }
+
+    /**
+     * Selects the help button
+     * @retun new page object
+     */
+    public void openHelp() {
+        pageUtils.waitForElementToAppear(helpButton).click();
+    }
+
+    /**
+     * Selects the logout button
+     * @return new page object
+     */
+    public LogoutPage openLogOut() {
+        pageUtils.waitForElementToAppear(logoutButton).click();
+        return new LogoutPage(driver);
     }
 }
