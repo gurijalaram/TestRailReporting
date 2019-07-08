@@ -13,7 +13,7 @@ public class WarningPage extends LoadableComponent<WarningPage> {
 
     private final Logger logger = LoggerFactory.getLogger(WarningPage.class);
 
-    @FindBy(css = "divdiv[data-ap-comp='genericDialog'] .modal-content")
+    @FindBy(css = "div[data-ap-comp='genericDialog'] .modal-content")
     private WebElement dialog;
 
     @FindBy(css = "div[data-ap-scope='genericDialog'] .gwt-Label")
@@ -55,8 +55,8 @@ public class WarningPage extends LoadableComponent<WarningPage> {
      * Selects the ok button
      * @return new page object
      */
-    public <T> T ok(Class<T> getClassName) {
+    public <T> T ok(Class<T> className) {
         pageUtils.waitForElementToBeClickable(okButton).click();
-        return PageFactory.initElements(driver, getClassName);
+        return PageFactory.initElements(driver, className);
     }
 }
