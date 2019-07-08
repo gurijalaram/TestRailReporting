@@ -54,16 +54,18 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
 
     /**
      * Selects the thread dropdown option
+     *
      * @param option - the option
      * @return current page object
      */
     public ThreadingPage selectThreadDropdown(String option) {
-        pageUtils.selectDropdownOption(threadDropdown,option);
+        pageUtils.selectDropdownOption(threadDropdown, option);
         return this;
     }
 
     /**
      * Enters the thread length
+     *
      * @param length - the thread length
      * @return current page object
      */
@@ -75,7 +77,18 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     }
 
     /**
+     * Removes the thread length
+     *
+     * @return current page object
+     */
+    public ThreadingPage removeThreadLength() {
+        lengthInput.clear();
+        return this;
+    }
+
+    /**
      * Gets the thread length
+     *
      * @return - the thread length
      */
     public String getThreadLength() {
@@ -85,8 +98,9 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
 
     /**
      * Selects the apply button
+     *
      * @param className - the class the method should return
-     * @param <T> - the return type
+     * @param <T>       - the return type
      * @return generic page object
      */
     public <T> T apply(Class<T> className) {
@@ -96,6 +110,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public InvestigationPage cancel() {
