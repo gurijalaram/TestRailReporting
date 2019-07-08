@@ -1,4 +1,6 @@
-package main.java.http.enums.common;
+package main.java.http.enums.common.api;
+
+import main.java.http.enums.common.InternalEndpointEnum;
 
 /**
  * @author kpatel
@@ -6,8 +8,6 @@ package main.java.http.enums.common;
 public enum CommonEndpointEnum implements InternalEndpointEnum {
 
     POST_SESSIONID("/login"),
-    GET_ACCOUNTS_STATUS("/accounts/status")
-
     ;
 
     private final String endpoint;

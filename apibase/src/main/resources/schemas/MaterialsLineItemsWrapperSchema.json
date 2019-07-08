@@ -1,0 +1,219 @@
+{
+  "definitions": {},
+  "$schema": "schema#",
+  "$id": "root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "title": "The Response Schema",
+      "required": [
+        "isFirstPage",
+        "isLastPage",
+        "pageNumber",
+        "pageSize",
+        "pageItemCount",
+        "totalItemCount",
+        "totalPageCount",
+        "hasNextPage",
+        "hasPreviousPage",
+        "results"
+      ],
+      "properties": {
+        "isFirstPage": {
+          "$id": "#/properties/response/properties/isFirstPage",
+          "type": "boolean",
+          "title": "The Isfirstpage Schema",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "isLastPage": {
+          "$id": "#/properties/response/properties/isLastPage",
+          "type": "boolean",
+          "title": "The Islastpage Schema",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "pageNumber": {
+          "$id": "#/properties/response/properties/pageNumber",
+          "type": "integer",
+          "title": "The Pagenumber Schema",
+          "default": 0,
+          "examples": [
+            1
+          ]
+        },
+        "pageSize": {
+          "$id": "#/properties/response/properties/pageSize",
+          "type": "integer",
+          "title": "The Pagesize Schema",
+          "default": 0,
+          "examples": [
+            5
+          ]
+        },
+        "pageItemCount": {
+          "$id": "#/properties/response/properties/pageItemCount",
+          "type": "integer",
+          "title": "The Pageitemcount Schema",
+          "default": 0,
+          "examples": [
+            5
+          ]
+        },
+        "totalItemCount": {
+          "$id": "#/properties/response/properties/totalItemCount",
+          "type": "integer",
+          "title": "The Totalitemcount Schema",
+          "default": 0,
+          "examples": [
+            135
+          ]
+        },
+        "totalPageCount": {
+          "$id": "#/properties/response/properties/totalPageCount",
+          "type": "integer",
+          "title": "The Totalpagecount Schema",
+          "default": 0,
+          "examples": [
+            27
+          ]
+        },
+        "hasNextPage": {
+          "$id": "#/properties/response/properties/hasNextPage",
+          "type": "boolean",
+          "title": "The Hasnextpage Schema",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "hasPreviousPage": {
+          "$id": "#/properties/response/properties/hasPreviousPage",
+          "type": "boolean",
+          "title": "The Haspreviouspage Schema",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "results": {
+          "$id": "#/properties/response/properties/results",
+          "type": "array",
+          "title": "The Results Schema",
+          "items": {
+            "$id": "#/properties/response/properties/results/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "identity",
+              "createdAt",
+              "createdBy",
+              "costingStatus",
+              "customerPartNumber",
+              "manufacturerPartNumber",
+              "manufacturer",
+              "quantity",
+              "parts"
+            ],
+            "properties": {
+              "identity": {
+                "$id": "#/properties/response/properties/results/items/properties/identity",
+                "type": "string",
+                "title": "The Identity Schema",
+                "default": "",
+                "examples": [
+                  "-58A9A856FHF"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "createdAt": {
+                "$id": "#/properties/response/properties/results/items/properties/createdAt",
+                "type": "string",
+                "title": "The Createdat Schema",
+                "default": "",
+                "examples": [
+                  "2019-05-30T19:40:43Z"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "createdBy": {
+                "$id": "#/properties/response/properties/results/items/properties/createdBy",
+                "type": "string",
+                "title": "The Createdby Schema",
+                "default": "",
+                "examples": [
+                  "todo"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "costingStatus": {
+                "$id": "#/properties/response/properties/results/items/properties/costingStatus",
+                "type": "string",
+                "title": "The Costingstatus Schema",
+                "default": "",
+                "examples": [
+                  "Cannot Cost"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "customerPartNumber": {
+                "$id": "#/properties/response/properties/results/items/properties/customerPartNumber",
+                "type": "string",
+                "title": "The Customerpartnumber Schema",
+                "default": "",
+                "examples": [
+                  "WIRE-HARNESS-001"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "manufacturerPartNumber": {
+                "$id": "#/properties/response/properties/results/items/properties/manufacturerPartNumber",
+                "type": "string",
+                "title": "The Manufacturerpartnumber Schema",
+                "default": "",
+                "examples": [
+                  ""
+                ],
+                "pattern": "^(.*)$"
+              },
+              "manufacturer": {
+                "$id": "#/properties/response/properties/results/items/properties/manufacturer",
+                "type": "string",
+                "title": "The Manufacturer Schema",
+                "default": "",
+                "examples": [
+                  ""
+                ],
+                "pattern": "^(.*)$"
+              },
+              "quantity": {
+                "$id": "#/properties/response/properties/results/items/properties/quantity",
+                "type": "null",
+                "title": "The Quantity Schema",
+                "default": null,
+                "examples": [
+                  null
+                ]
+              },
+              "parts": {
+                "$id": "#/properties/response/properties/results/items/properties/parts",
+                "type": "array",
+                "title": "The Parts Schema"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

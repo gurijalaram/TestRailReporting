@@ -13,13 +13,13 @@ import java.time.format.DateTimeFormatter;
  * @author kpatel
  */
 public class DateTimeDeserializer_yyyyMMddTHHmmss extends JsonDeserializer<LocalDateTime> {
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
 
-        if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_NUMBER_INT)) {
+        if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_STRING)) {
             LocalDateTime temp = LocalDateTime.parse(jsonParser.getText(), formatter);
             return temp;
         }

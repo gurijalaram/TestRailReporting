@@ -1,0 +1,183 @@
+{
+  "definitions": {},
+  "$schema": "07/schema#",
+  "$id": "htdsffroot.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "isReadyForExport",
+    "isUserPart",
+    "isSaved",
+    "identity",
+    "lineItemIdentity",
+    "externalId",
+    "manufacturerPartNumber",
+    "manufacturer",
+    "classification",
+    "description",
+    "averageCost",
+    "minimumCost",
+    "availability",
+    "dataSheetUrl",
+    "rohs",
+    "rohsVersion"
+  ],
+
+  "properties": {
+    "isReadyForExport": {
+      "$id": "#/properties/isReadyForExport",
+      "type": "boolean",
+      "title": "The Isreadyforexport Schema",
+      "default": false,
+      "examples": [
+        true
+      ]
+    },
+    "isUserPart": {
+      "$id": "#/properties/isUserPart",
+      "type": "boolean",
+      "title": "The Isuserpart Schema",
+      "default": false,
+      "examples": [
+        false
+      ]
+    },
+    "isSaved": {
+      "$id": "#/properties/isSaved",
+      "type": "boolean",
+      "title": "The Issaved Schema",
+      "default": false,
+      "examples": [
+        true
+      ]
+    },
+    "identity": {
+      "$id": "#/properties/identity",
+      "type": "string",
+      "title": "The Identity Schema",
+      "default": "",
+      "examples": [
+        "-58A995CJL8N"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "lineItemIdentity": {
+      "$id": "#/properties/lineItemIdentity",
+      "type": "string",
+      "title": "The Lineitemidentity Schema",
+      "default": "",
+      "examples": [
+        "-58A9A855G19"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "externalId": {
+      "$id": "#/properties/externalId",
+      "type": "string",
+      "title": "The Externalid Schema",
+      "default": "",
+      "examples": [
+        "54577430"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "manufacturerPartNumber": {
+      "$id": "#/properties/manufacturerPartNumber",
+      "type": "string",
+      "title": "The Manufacturerpartnumber Schema",
+      "default": "",
+      "examples": [
+        "DT06-2S-CE01"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "manufacturer": {
+      "$id": "#/properties/manufacturer",
+      "type": "string",
+      "title": "The Manufacturer Schema",
+      "default": "",
+      "examples": [
+        "TE Connectivity"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "classification": {
+      "$id": "#/properties/classification",
+      "type": "string",
+      "title": "The Classification Schema",
+      "default": "",
+      "examples": [
+        "Connectors > Wire and PCB Connectors > Connector Discrete Wire Housing"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "description": {
+      "$id": "#/properties/description",
+      "type": "string",
+      "title": "The Description Schema",
+      "default": "",
+      "examples": [
+        "Conn Housing PL 2 POS Crimp ST Cable Mount Automotive Package"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "averageCost": {
+      "$id": "#/properties/averageCost",
+      "type": "number",
+      "title": "The Averagecost Schema",
+      "default": 0.0,
+      "examples": [
+        1.17
+      ]
+    },
+    "minimumCost": {
+      "$id": "#/properties/minimumCost",
+      "type": "number",
+      "title": "The Minimumcost Schema",
+      "default": 0.0,
+      "examples": [
+        0.79
+      ]
+    },
+    "availability": {
+      "$id": "#/properties/availability",
+      "type": "string",
+      "title": "The Availability Schema",
+      "default": "",
+      "examples": [
+        "Active"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "dataSheetUrl": {
+      "$id": "#/properties/dataSheetUrl",
+      "type": "string",
+      "title": "The Datasheeturl Schema",
+      "default": "",
+      "examples": [
+        "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=DT06-2S-XXXX&DocType=Customer+Drawing&DocLang=English"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "rohs": {
+      "$id": "#/properties/rohs",
+      "type": "string",
+      "title": "The Rohs Schema",
+      "default": "",
+      "examples": [
+        "Yes"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "rohsVersion": {
+      "$id": "#/properties/rohsVersion",
+      "type": "string",
+      "title": "The Rohsversion Schema",
+      "default": "",
+      "examples": [
+        "2011/65/EU, 2015/863"
+      ],
+      "pattern": "^(.*)$"
+    }
+  }
+}

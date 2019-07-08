@@ -1,4 +1,6 @@
-package main.java.http.enums.common;
+package main.java.http.enums.common.api;
+
+import main.java.http.enums.common.ExternalEndpointEnum;
 
 /**
  * @author kpatel

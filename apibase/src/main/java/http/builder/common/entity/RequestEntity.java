@@ -39,7 +39,7 @@ public class RequestEntity {
     private boolean autoLogin = true;
     private boolean defaultAuthorizationData = false;
     private EndpointType endpointType;
-    private boolean followRedirection = true;
+    private boolean followRedirection = false;
     private List<Map<String, ?>> urlParams = new ArrayList<>();
     private List<Map<String, ?>> xwwwwFormUrlEncoded = new ArrayList<>();
     private Object[] inlineVariables;

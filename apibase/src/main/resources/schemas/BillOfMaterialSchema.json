@@ -1,0 +1,76 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "identity",
+    "createdAt",
+    "createdBy",
+    "name",
+    "numberOfLineItemsReadyForExport",
+    "totalNumberOfLineItems"
+  ],
+
+  "properties": {
+    "identity": {
+      "$id": "#/properties/identity",
+      "type": "string",
+      "title": "The Identity Schema",
+      "default": "",
+      "examples": [
+        "-5BM107K09E1"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "createdAt": {
+      "$id": "#/properties/createdAt",
+      "type": "string",
+      "title": "The Createdat Schema",
+      "default": "",
+      "examples": [
+        "2019-05-30T16:08:34Z"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "createdBy": {
+      "$id": "#/properties/createdBy",
+      "type": "string",
+      "title": "The Createdby Schema",
+      "default": "",
+      "examples": [
+        "todo"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "name": {
+      "$id": "#/properties/name",
+      "type": "string",
+      "title": "The Name Schema",
+      "default": "",
+      "examples": [
+        "apriori-3-items.csv"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "numberOfLineItemsReadyForExport": {
+      "$id": "#/properties/numberOfLineItemsReadyForExport",
+      "type": "integer",
+      "title": "The Numberoflineitemsreadyforexport Schema",
+      "default": 0,
+      "examples": [
+        3
+      ]
+    },
+    "totalNumberOfLineItems": {
+      "$id": "#/properties/totalNumberOfLineItems",
+      "type": "integer",
+      "title": "The Totalnumberoflineitems Schema",
+      "default": 0,
+      "examples": [
+        3
+      ]
+    }
+  }
+}
