@@ -43,7 +43,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = "input[data-ap-field='roughness.current']")
     private WebElement roughnessInput;
 
-    @FindBy(css = "input[data-ap-field='roughessRz.current']")
+    @FindBy(css = "input[data-ap-field='rougnessRz.current']")
     private WebElement roughnessRzInput;
 
     @FindBy(css = "input[data-ap-field='runout.current']")
@@ -92,108 +92,136 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setCircularity(String value) {
-        return clearInputAndSendKeys(circularityInput, value);
+    private ToleranceEditPage setCircularity(String value) {
+        pageUtils.clearInput(circularityInput);
+        circularityInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setConcentricity(String value) {
-        return clearInputAndSendKeys(concentricityInput, value);
+    private ToleranceEditPage setConcentricity(String value) {
+        pageUtils.clearInput(concentricityInput);
+        concentricityInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setCylindricity(String value) {
-        return clearInputAndSendKeys(cylindricityInput, value);
+    private ToleranceEditPage setCylindricity(String value) {
+        pageUtils.clearInput(cylindricityInput);
+        cylindricityInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setDiamTolerance(String value) {
-        return clearInputAndSendKeys(diamToleranceInput, value);
+    private ToleranceEditPage setDiamTolerance(String value) {
+        pageUtils.clearInput(diamToleranceInput);
+        diamToleranceInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setParallelism(String value) {
-        return clearInputAndSendKeys(parallelismInput, value);
+    private ToleranceEditPage setParallelism(String value) {
+        pageUtils.clearInput(parallelismInput);
+        parallelismInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setPerpendicularity(String value) {
-        return clearInputAndSendKeys(perpendicularityInput, value);
+    private ToleranceEditPage setPerpendicularity(String value) {
+        pageUtils.clearInput(perpendicularityInput);
+        perpendicularityInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setTruePosition(String value) {
-        return clearInputAndSendKeys(truePositionInput, value);
+    private ToleranceEditPage setTruePosition(String value) {
+        pageUtils.clearInput(truePositionInput);
+        truePositionInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setProfileSurface(String value) {
-        return clearInputAndSendKeys(profileSurfaceInput, value);
+    private ToleranceEditPage setProfileSurface(String value) {
+        pageUtils.clearInput(profileSurfaceInput);
+        profileSurfaceInput.sendKeys(value);
+        return this;
     }
 
-    public ToleranceEditPage setRoughnessRa(String value) {
-        return clearInputAndSendKeys(roughnessInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    public ToleranceEditPage setRoughnessRz(String value) {
-        return clearInputAndSendKeys(roughnessRzInput, value);
+    private ToleranceEditPage setRoughnessRa(String value) {
+        pageUtils.clearInput(roughnessInput);
+        roughnessInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setRunout(String value) {
-        return clearInputAndSendKeys(runoutInput, value);
+    private ToleranceEditPage setRoughnessRz(String value) {
+        pageUtils.clearInput(roughnessRzInput);
+        roughnessRzInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setStraightness(String value) {
-        return clearInputAndSendKeys(straightnessInput, value);
+    private ToleranceEditPage setRunout(String value) {
+        pageUtils.clearInput(runoutInput);
+        runoutInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setSymmetry(String value) {
-        return clearInputAndSendKeys(symmetryInput, value);
+    private ToleranceEditPage setStraightness(String value) {
+        pageUtils.clearInput(straightnessInput);
+        straightnessInput.sendKeys(value);
+        return this;
     }
 
     /**
      * @param value
      * @return current page object
      */
-    public ToleranceEditPage setToleranceCoor(String value) {
-        return clearInputAndSendKeys(toleranceInput, value);
+    private ToleranceEditPage setSymmetry(String value) {
+        pageUtils.clearInput(symmetryInput);
+        symmetryInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * @param value
+     * @return current page object
+     */
+    private ToleranceEditPage setToleranceCoor(String value) {
+        pageUtils.clearInput(toleranceInput);
+        toleranceInput.sendKeys(value);
+        return this;
     }
 
     /**
