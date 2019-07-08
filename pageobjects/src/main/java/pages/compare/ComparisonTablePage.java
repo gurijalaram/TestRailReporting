@@ -14,8 +14,8 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
 
     private final Logger logger = LoggerFactory.getLogger(ComparisonTablePage.class);
 
-    @FindBy(css = "div[data-ap-comp='workspaceList']")
-    private WebElement workspaceList;
+    @FindBy(css = "div[data-ap-comp='componentTable'] .v-grid-row-has-data")
+    private WebElement workspaceRow;
 
     @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
@@ -44,19 +44,29 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(workspaceList);
+        pageUtils.waitForElementToAppear(workspaceRow);
+    }
+
+    /**
+     * Selects the comparison in the table
+     * @param partName - the name of the part
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
+    public ComparisonTablePage selectComparison(String partName, String scenarioName) {
+        findComparison(partName, scenarioName).click();
+        return this;
     }
 
     /**
      * Find and select the comparison in the table
      * @param partName - name of the part
      * @param scenarioName - scenario name
-     * @return current page object
+     * @return comparison as webelement
      */
-    public ComparisonTablePage selectComparison(String partName, String scenarioName) {
-        By comparison = By.cssSelector("//div[@data-ap-comp='componentTable']//a[contains(@href,'" + partName + "," + scenarioName + "')]/ancestor::tr//input[@class]");
-        pageUtils.scrollToElement(comparison, comparisonScroller).click();
-        return this;
+    public WebElement findComparison(String partName, String scenarioName) {
+        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]");
+        return pageUtils.scrollToElement(comparison, comparisonScroller);
     }
 
     /**

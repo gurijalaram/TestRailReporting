@@ -48,10 +48,10 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
     private WebElement valueInputDropdown;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.gwt-Button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-default")
+    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
 
     @FindBy(css = "div[data-ap-comp='additionalSearchCriteria'] input")
@@ -176,8 +176,8 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Selects the apply button
      * @return current page object
      */
-    protected ExplorePage apply() {
-        applyButton.click();
+    public ExplorePage apply() {
+        pageUtils.waitForElementToAppear(applyButton).click();
         return new ExplorePage(driver);
     }
 
@@ -185,7 +185,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Selects the cancel button
      * @return current page object
      */
-    protected ExplorePage cancel() {
+    public ExplorePage cancel() {
         cancelButton.click();
         return new ExplorePage(driver);
     }
