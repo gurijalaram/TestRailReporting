@@ -10,9 +10,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LogoutPage extends LoadableComponent<LogoutPage> {
+public class LogOutPage extends LoadableComponent<LogOutPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(LogoutPage.class);
+    private final Logger logger = LoggerFactory.getLogger(LogOutPage.class);
 
     @FindBy(css = "li.user-menu-schema-info")
     private WebElement logOutInfo;
@@ -29,7 +29,7 @@ public class LogoutPage extends LoadableComponent<LogoutPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public LogoutPage(WebDriver driver) {
+    public LogOutPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

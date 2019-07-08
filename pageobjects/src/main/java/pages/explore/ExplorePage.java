@@ -277,8 +277,17 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * Selects the logout button
      * @return new page object
      */
-    public LogoutPage openLogOut() {
+    public LogOutPage openLogOut() {
         pageUtils.waitForElementToAppear(logoutButton).click();
-        return new LogoutPage(driver);
+        return new LogOutPage(driver);
+    }
+
+    /**
+     * Selects the table column button
+     * @return new page object
+     */
+    public TableColumnsPage openColumnsTable() {
+        pageUtils.waitForElementToAppear(columnsButton).click();
+        return new TableColumnsPage(driver);
     }
 }
