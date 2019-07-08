@@ -159,46 +159,6 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
-     * Filter criteria for private selection
-     * @param type - type of selection whether private or public
-     * @param attribute - the attribute
-     * @param condition - specified condition
-     * @param value - the value
-     * @return current page object
-     */
-    public ExplorePage filterPrivateCriteria(String type, String attribute, String condition, String value) {
-        filterButton.click();
-        new FilterCriteriaPage(driver).clearAllCheckBoxes()
-            .setPrivateWorkSpace()
-            .setScenarioType(type)
-            .selectAttribute(attribute)
-            .selectCondition(condition)
-            .setTypeOfValue(value)
-            .apply();
-        return new ExplorePage(driver);
-    }
-
-    /**
-     * Filter criteria for public selection
-     * @param type - type of selection whether private or public
-     * @param attribute - the attribute
-     * @param condition - specified condition
-     * @param value - the value
-     * @return current page object
-     */
-    public ExplorePage filterPublicCriteria(String type, String attribute, String condition, String value) {
-        filterButton.click();
-        new FilterCriteriaPage(driver).clearAllCheckBoxes()
-            .setPublicWorkspace()
-            .setScenarioType(type)
-            .selectAttribute(attribute)
-            .selectCondition(condition)
-            .setTypeOfValue(value)
-            .apply();
-        return new ExplorePage(driver);
-    }
-
-    /**
      * Selects the workspace from the dropdown
      * @param workspace - workspace dropdown
      * @return current page object
@@ -277,5 +237,14 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     public SettingsPage openSettings() {
         pageUtils.waitForElementToAppear(settingsButton).click();
         return new SettingsPage(driver);
+    }
+
+    /**
+     * Selects filter criteria button
+     * @return new page object
+     */
+    public FilterCriteriaPage filterCriteria() {
+        filterButton.click();
+        return new FilterCriteriaPage(driver);
     }
 }

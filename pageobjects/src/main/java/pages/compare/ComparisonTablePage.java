@@ -1,5 +1,6 @@
 package main.java.pages.compare;
 
+import main.java.pages.explore.FilterCriteriaPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -25,6 +26,9 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
 
     @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
     private WebElement comparisonScroller;
+
+    @FindBy(css = "button[data-ap-nav-dialog='showScenarioSearchCriteria']")
+    private WebElement filterButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -67,6 +71,15 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
     public WebElement findComparison(String partName, String scenarioName) {
         By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]");
         return pageUtils.scrollToElement(comparison, comparisonScroller);
+    }
+
+    /**
+     * Selects filter criteria button
+     * @return new page object
+     */
+    public FilterCriteriaPage filterCriteria() {
+        filterButton.click();
+        return new FilterCriteriaPage(driver);
     }
 
     /**

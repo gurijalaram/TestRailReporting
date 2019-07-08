@@ -3,6 +3,7 @@ package main.java.utils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
@@ -414,19 +415,31 @@ public class PageUtils {
      */
     public WebElement scrollToElement(By scenario, WebElement scroller) {
         long startTime = System.currentTimeMillis() / 1000;
+        int count = 0;
 
-        if (scroller.isDisplayed()) {
-            do {
-                scroller.sendKeys(Keys.DOWN);
-            } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+        while (count < 12) {
+            try {
+                if (scroller.isDisplayed()) {
+                    do {
+                        scroller.sendKeys(Keys.DOWN);
+                    } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
 
-            Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
-            processCoordinates.inViewPort();
+                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+                    processCoordinates.inViewPort();
 
-            return driver.findElement(scenario);
-        } else {
-            return driver.findElement(scenario);
+                    return driver.findElement(scenario);
+                } else {
+                    return driver.findElement(scenario);
+                }
+            } catch (ElementNotInteractableException e) {
+                logger.debug("Trying to recover from an element not interactable exception");
+                count = count + 1;
+            } catch (StaleElementReferenceException e) {
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            }
         }
+        return driver.findElement(scenario);
     }
 
     /**
