@@ -46,7 +46,8 @@ public class AddPrivateScenarioTests extends TestBase {
             .filterCriteria();
 
         new FilterCriteriaPage(driver).filterPrivateCriteria("Part", "Part Name", "Contains", "PlasticMoulding")
-            .apply();
+            .apply(ComparisonTablePage.class);
+
         assertThat(new ComparisonTablePage(driver).findComparison("PlasticMoulding", "Initial").isDisplayed(), Matchers.is(true));
     }
 }

@@ -2,6 +2,7 @@ package main.java.explore;
 
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
+import main.java.pages.explore.ExplorePage;
 import main.java.pages.explore.FilterCriteriaPage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
@@ -23,7 +24,8 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "15136");
+            .filterPrivateCriteria("Part", "Part Name", "Contains", "15136")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
@@ -35,7 +37,8 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .filterCriteria()
-            .filterPrivateCriteria("Part", "Process Group", "is", "Casting");
+            .filterPrivateCriteria("Part", "Process Group", "is", "Casting")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
@@ -47,7 +50,8 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "Test");
+            .filterPrivateCriteria("Part", "Part Name", "Contains", "Test")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
@@ -59,7 +63,8 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .filterCriteria()
-            .filterPrivateCriteria("Part", "Status", "is", "Waiting");
+            .filterPrivateCriteria("Part", "Status", "is", "Waiting")
+            .apply(ExplorePage.class);
         //Assert.assertFalse();
     }
 
@@ -71,7 +76,8 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .filterCriteria()
-            .filterPrivateCriteria("Assembly", "Part Name", "Contains", "15136");
+            .filterPrivateCriteria("Assembly", "Part Name", "Contains", "15136")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
@@ -83,7 +89,8 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .filterCriteria()
-            .filterPrivateCriteria("Assembly", "Status", "is", "Nothing selected");
+            .filterPrivateCriteria("Assembly", "Status", "is", "Nothing selected")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
@@ -95,7 +102,8 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "15136");
+            .filterPublicCriteria("Part", "Part Name", "Contains", "15136")
+            .apply(ExplorePage.class);
         //Assert.assertFalse();
     }
 
@@ -107,7 +115,8 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .filterCriteria()
-            .filterPublicCriteria("Assembly", "Description", "Contains", "Test");
+            .filterPublicCriteria("Assembly", "Description", "Contains", "Test")
+            .apply(ExplorePage.class);
         //Assert.assertFalse();
     }
 
@@ -119,7 +128,8 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .filterCriteria()
-            .filterPublicCriteria("Comparison", "Cost Maturity", "is", "Nothing selected");
+            .filterPublicCriteria("Comparison", "Cost Maturity", "is", "Nothing selected")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 }

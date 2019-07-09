@@ -1,6 +1,6 @@
 package main.java.pages.evaluate;
 
-import main.java.pages.evaluate.designguidance.GuidancePage;
+import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
@@ -239,9 +239,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * Opens the design guidance dialog
      * @return new page object
      */
-    public GuidancePage openDesignGuidance() {
+    public DesignGuidancePage openDesignGuidance() {
         pageUtils.waitForElementToAppear(guidanceDetails).click();
-        return new GuidancePage(driver);
+        return new DesignGuidancePage(driver);
     }
 
     /**
