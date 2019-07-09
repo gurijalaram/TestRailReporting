@@ -7,11 +7,15 @@ import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Random;
 
 public class BillOfMaterialsTest {
+
+    private static Logger logger = LoggerFactory.getLogger(BillOfMaterialsTest.class);
 
     private static BillOfMaterialsWrapper billOfMaterialsWrapper;
     private static List<BillOfMaterial> billOfMaterials;
@@ -21,7 +25,7 @@ public class BillOfMaterialsTest {
         billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
+                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
                 .connect()
@@ -35,7 +39,7 @@ public class BillOfMaterialsTest {
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
+                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
                 .connect()
@@ -48,14 +52,14 @@ public class BillOfMaterialsTest {
         BillOfSingleMaterialWrapper billOfSingleMaterialWrapper = (BillOfSingleMaterialWrapper) new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS_IDENTITY)
+                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY)
                 .setInlineVariables(billOfMaterials.get(new Random().nextInt(billOfMaterials.size())).getIdentity())
                 .setReturnType(BillOfSingleMaterialWrapper.class)
                 .commitChanges()
                 .connect()
                 .get();
 
-        System.out.println(billOfSingleMaterialWrapper.getBillOfMaterial().getName());
+        logger.debug(billOfSingleMaterialWrapper.getBillOfMaterial().getName());
     }
 
     @Test
@@ -64,7 +68,7 @@ public class BillOfMaterialsTest {
         BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
+                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
                 .connect()
@@ -75,7 +79,7 @@ public class BillOfMaterialsTest {
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS_IDENTITY)
+                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY)
                 .setInlineVariables(materials.get(new Random().nextInt(materials.size())).getIdentity())
                 .setStatusCode(204)
                 .commitChanges()
@@ -88,7 +92,7 @@ public class BillOfMaterialsTest {
         BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
+                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
                 .connect()
@@ -99,7 +103,7 @@ public class BillOfMaterialsTest {
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.EXPORT_BILL_OF_METERIALS_IDENTITY)
+                .setEndpoint(BillOfMaterialsAPIEnum.EXPORT_BILL_OF_MATERIALS_IDENTITY)
                 .setInlineVariables(materials.get(new Random().nextInt(materials.size())).getIdentity())
                 .commitChanges()
                 .connect()
@@ -111,7 +115,7 @@ public class BillOfMaterialsTest {
         BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
+                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
                 .connect()
@@ -121,7 +125,7 @@ public class BillOfMaterialsTest {
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.POST_BILL_OF_METERIALS)
+                .setEndpoint(BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS)
                 .setReturnType(BillOfMaterial.class)
 //                TODO z: add test file
 //                .setMultiPartFiles()

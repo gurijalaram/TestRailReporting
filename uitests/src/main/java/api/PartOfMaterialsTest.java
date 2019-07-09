@@ -20,7 +20,7 @@ public class PartOfMaterialsTest {
         billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
+                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
                 .connect()

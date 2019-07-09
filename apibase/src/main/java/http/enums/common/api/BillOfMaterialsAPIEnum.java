@@ -5,12 +5,12 @@ import main.java.http.enums.common.TemporaryAPI;
 public enum BillOfMaterialsAPIEnum implements TemporaryAPI {
 
     GET_ACCOUNTS_STATUS("accounts/status"),
-    GET_BILL_OF_METERIALS("bill-of-materials"),
-    POST_BILL_OF_METERIALS("bill-of-materials"),
-    DELETE_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s"),
-    GET_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s"),
-    EXPORT_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s/export"),
-    POST_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s"),
+    GET_BILL_OF_MATERIALS("bill-of-materials"),
+    POST_BILL_OF_MATERIALS("bill-of-materials"),
+    DELETE_BILL_OF_MATERIALS_IDENTITY("bill-of-materials/%s"),
+    GET_BILL_OF_MATERIALS_IDENTITY("bill-of-materials/%s"),
+    EXPORT_BILL_OF_MATERIALS_IDENTITY("bill-of-materials/%s/export"),
+    POST_BILL_OF_MATERIALS_IDENTITY("bill-of-materials/%s"),
     POST_AUTH("/auth/token"),
     ;
 
