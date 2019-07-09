@@ -26,6 +26,9 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     @FindBy(css = "div[data-ap-comp='dtcTableExtArea'] div.v-grid-scroller-vertical")
     private WebElement threadScroller;
 
+    @FindBy(css = "div[data-ap-comp='dtcInvestigationTableExt'] .v-grid-header")
+    private WebElement threadHeader;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -111,5 +114,13 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      */
     public WebElement getEditButton() {
         return editButton;
+    }
+
+    /**
+     * Gets the thread header information
+     * @return details as web
+     */
+    public String getThreadHeader() {
+        return threadHeader.getText();
     }
 }

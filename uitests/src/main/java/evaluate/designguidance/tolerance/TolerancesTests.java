@@ -1,5 +1,6 @@
 package main.java.evaluate.designguidance.tolerance;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -8,6 +9,7 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
@@ -15,6 +17,7 @@ import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.pages.settings.SettingsPage;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -27,10 +30,10 @@ public class TolerancesTests extends TestBase {
     private DesignGuidancePage designGuidancePage;
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
+    private SettingsPage settingsPage;
 
     private String filePath = new Scanner(TolerancesTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
-
 
     public TolerancesTests() {
         super();
@@ -161,11 +164,11 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:23")
             .selectThreadDropdown("Yes")
-            .enterThreadLength("")
+            .enterThreadLength("0.64")
             .apply(InvestigationPage.class)
             .selectEditButton();
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("")));
+        assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("0.64")));
     }
 
     /**
@@ -179,12 +182,13 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:2")
+            .editThread("Curved Walls", "CurvedWall:24")
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.25")
             .apply(InvestigationPage.class);
@@ -195,5 +199,306 @@ public class TolerancesTests extends TestBase {
             .apply(WarningPage.class);
 
         assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
+    }
+
+    /**
+     * Testing changing the thread value and cancelling doesn't remove the value
+     */
+    @Test
+    public void changeThreadValueCancel() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:25")
+            .selectThreadDropdown("Yes")
+            .enterThreadLength("3.50")
+            .apply(InvestigationPage.class);
+
+        investigationPage = new InvestigationPage(driver);
+        investigationPage.selectEditButton()
+            .enterThreadLength("1.70")
+            .cancel();
+
+        new InvestigationPage(driver).selectEditButton();
+
+        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("3.50")));
+    }
+
+    /**
+     * Testing that adding text values in the thread length shows a warning message
+     */
+    @Test
+    public void junkValuesTest() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:25")
+            .selectThreadDropdown("Yes")
+            .enterThreadLength("apriori")
+            .apply(WarningPage.class);
+
+        assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
+    }
+
+
+    /**
+     * Testing that adding no value in the thread shows a warning message
+     */
+    @Test
+    public void junkNoValueTest() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:25")
+            .selectThreadDropdown("Yes")
+            .enterThreadLength("")
+            .apply(WarningPage.class);
+
+        assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
+    }
+
+    /**
+     * Testing a public thread cannot be edited
+     */
+    @Test
+    public void cannotEditPublicThread() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .publishScenario();
+
+        explorePage = new ExplorePage(driver);
+        explorePage.openScenario("DTCCastingIssues", "Scenario b")
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Threading");
+
+        assertThat(new InvestigationPage(driver).getEditButton().isEnabled(), is(false));
+    }
+
+    /**
+     * Testing thread length persist when attributes are changed
+     */
+    @Test
+    public void maintainingThreadChangeAttributes() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:26")
+            .selectThreadDropdown("Yes")
+            .enterThreadLength("4.85")
+            .apply(InvestigationPage.class);
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
+            .apply()
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:26");
+
+        assertThat(new ThreadingPage(driver).getThreadLength(), equalTo("4.85"));
+    }
+
+    /**
+     * Testing thread units persist when changed to inches
+     */
+    @Test
+    public void validateThreadUnitsInches() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+
+        settingsPage = new SettingsPage(driver);
+        settingsPage.changeDisplayUnits("English")
+            .save();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Threading");
+
+        assertThat(new InvestigationPage(driver).getThreadHeader(), containsString("in"));
+    }
+
+    /**
+     * Testing thread units persist when changed to millimetres
+     */
+    @Test
+    public void validateThreadUnitsMM() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+
+        settingsPage = new SettingsPage(driver);
+        settingsPage.changeDisplayUnits("System")
+            .save();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Threading");
+
+        assertThat(new InvestigationPage(driver).getThreadHeader(), containsString("mm"));
+    }
+
+    /**
+     * Testing threading persist when secondary process is added
+     */
+    @Test
+    public void maintainingThreadSecondaryProcessGroup() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:27")
+            .selectThreadDropdown("Yes")
+            .enterThreadLength("4.85")
+            .apply(InvestigationPage.class);
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.openSecondaryProcess()
+            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .apply()
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:27");
+
+        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
+    }
+
+    /**
+     * Testing compatible thread length for DTC files
+     */
+    @Test
+    public void threadsCompatibleCadDTC() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:28");
+
+        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
+    }
+
+    /**
+     * Testing compatible thread length for NX files
+     */
+    @Test
+    public void threadsCompatibleCadNX() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:29");
+
+        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
+    }
+
+    /**
+     * Testing compatible thread length for Creo files
+     */
+    @Test
+    public void threadsCompatibleCadCreo() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Curved Walls", "CurvedWall:30");
+
+        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
     }
 }
