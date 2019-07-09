@@ -20,10 +20,13 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     @FindBy(css = "a[href='#tolerancePolicyTab']")
     private WebElement tolerancesButton;
 
-    @FindBy(css = "button.btn.btn-primary")
+    @FindBy(css = "select[data-ap-field='unitSystem']")
+    private WebElement unitsDropdown;
+
+    @FindBy(css = ".btn.btn-primary")
     private WebElement saveButton;
 
-    @FindBy(css = "button.btn.btn-default")
+    @FindBy(css = ".btn.btn-default")
     private WebElement cancelButton;
 
     private WebDriver driver;
@@ -57,11 +60,16 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
         return new ToleranceSettingsPage(driver);
     }
 
+    public SettingsPage changeDisplayUnits(String units) {
+        pageUtils.selectDropdownOption(unitsDropdown, units);
+        return this;
+    }
+
     /**
      * Selects the save button
      * @return new page object
      */
-    protected ExplorePage selectSaveButton() {
+    public ExplorePage save() {
         saveButton.click();
         return new ExplorePage(driver);
     }
@@ -70,7 +78,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
      * Selects the cancel button
      * @return new page object
      */
-    protected ExplorePage selectCancelButton() {
+    public ExplorePage cancel() {
         cancelButton.click();
         return new ExplorePage(driver);
     }
