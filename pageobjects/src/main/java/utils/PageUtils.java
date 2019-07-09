@@ -1,9 +1,24 @@
 package main.java.utils;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.Coordinates;
+import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,21 +59,16 @@ public class PageUtils {
     public boolean isAlertPresent(String alertText) {
         try {
             Alert alert = driver.switchTo().alert();
-            if (alert.getText().equalsIgnoreCase(alertText)) {
-                return true;
-            } else {
-                return false;
-            }
+            return alert.getText().equalsIgnoreCase(alertText);
         } catch (NoAlertPresentException e) {
             return false;
         }
     }
 
     /**
-     * 
      * Check if the element is present in the DOM or not. Important: this is not a wait method, it
      * only shows the current status of the element.
-     * 
+     *
      * @param by By object
      * @return boolean whether element is present or not
      */
@@ -84,7 +94,7 @@ public class PageUtils {
     /**
      * Check if the element is displayed or not. Important: this is not a wait method, it only shows
      * the current status of the element.
-     * 
+     *
      * @param by - By object
      * @return returns whether element is visible or not
      */
@@ -99,7 +109,7 @@ public class PageUtils {
     /**
      * Check if the element is displayed or not. Important: this is not a wait method, it only shows
      * the current status of the element.
-     * 
+     *
      * @param element - WebElement
      * @return - returns whether element is displayed or not
      */
@@ -114,9 +124,9 @@ public class PageUtils {
     /**
      * Check if the sub element is displayed or not. Important: this is not a wait method, it only
      * shows the current status of the element.
-     * 
+     *
      * @param parent - parent element
-     * @param by - by
+     * @param by     - by
      * @return boolean whether sub-eleent id displayed or not
      */
     public boolean isSubElementDisplayed(WebElement parent, By by) {
@@ -163,6 +173,7 @@ public class PageUtils {
 
     /**
      * Sets the value attribute to empty string
+     *
      * @param targetElement - web element
      */
     public void clearInput(WebElement targetElement) {
@@ -173,11 +184,10 @@ public class PageUtils {
         return driver.manage().window().getSize();
     }
 
-    /*
+    /**
      * @param scrollDown - true scrolls down and the element is visible on top of the page - false
-     * scroll to the top of the page (try to scroll as high that the given element is in the bottom
-     * of the screen) this method is needed for the new Forsight bcz some of the elements are hidden
-     * from the nav bar and are not clickable in a point
+     *                   scroll to the top of the page (try to scroll as high that the given element is in the bottom
+     *                   of the screen)
      */
     public WebElement scrollWithJavaScript(WebElement element, boolean scrollDown) {
         steps_logger.debug("Scroll down");
@@ -189,7 +199,7 @@ public class PageUtils {
     /**
      * Internal wait implementation for the function waitForElementToStop() It waits for the
      * elements to stop moving also checking if it is displayed and is it on top.
-     * 
+     *
      * @param locator
      * @param onTop
      * @return
@@ -235,28 +245,28 @@ public class PageUtils {
 
     /**
      * Helper function which checks if the element is on Top
-     * 
+     *
      * @param element
      * @return
      */
     private boolean isOnTop(WebElement element) {
 
-        return (boolean)((JavascriptExecutor)driver).executeScript(
+        return (boolean) ((JavascriptExecutor) driver).executeScript(
             "var elm = arguments[0];" +
                 "var doc = elm.ownerDocument || document;" +
                 "var rect = elm.getBoundingClientRect();" +
                 "return elm === doc.elementFromPoint(rect.left + (rect.width / 2), rect.top + (rect.height / 2));",
-                element);
+            element);
     }
 
     /**
      * Waits for a given time
      *
-     * @param milis - time in milliseconds
+     * @param millis - time in milliseconds
      */
-    public void waitFor(Integer milis) {
+    public void waitFor(Integer millis) {
         try {
-            Thread.sleep(milis);
+            Thread.sleep(millis);
         } catch (InterruptedException e1) {
             logger.info("InterruptedException");
         }
@@ -394,5 +404,70 @@ public class PageUtils {
             }
         }
         throw new AssertionError("Element did not appear: " + childLocator);
+    }
+
+    /**
+     * Finds element in a table.  If the element is not visible then the method will scroll to the element.
+     *
+     * @param scenario - the locator for the scenario
+     * @param scroller - the scroller to scroll the element into view
+     * @return - the element as a webelement
+     */
+    public WebElement scrollToElement(By scenario, WebElement scroller) {
+        long startTime = System.currentTimeMillis() / 1000;
+        int count = 0;
+
+        while (count < 12) {
+            try {
+                if (scroller.isDisplayed()) {
+                    do {
+                        scroller.sendKeys(Keys.DOWN);
+                    } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+
+                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+                    processCoordinates.inViewPort();
+
+                    return driver.findElement(scenario);
+                } else {
+                    return driver.findElement(scenario);
+                }
+            } catch (ElementNotInteractableException e) {
+                logger.debug("Trying to recover from an element not interactable exception");
+                count = count + 1;
+            } catch (StaleElementReferenceException e) {
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            }
+        }
+        return driver.findElement(scenario);
+    }
+
+    /**
+     * Checks the element's size on the page is less than 1 and return true/false
+     *
+     * @param webElements - the element as list
+     * @return true/false
+     */
+    public <T> Boolean checkElementsNotVisibleByBoolean(List<T> webElements) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 6);
+        return wait.until((ExpectedCondition<Boolean>) element -> (webElements).size() < 1);
+    }
+
+    /**
+     * Selects the correct option in the dropdown.  Conditional statement is included because the system
+     * tends to revert to previous selection.
+     * @param locator - the locator of the element
+     * @param dropdownOption - the dropdown option
+     */
+    public void selectDropdownOption(WebElement locator, String dropdownOption) {
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+            .ignoring(StaleElementReferenceException.class)
+            .until((WebDriver driver) -> {
+                new Select(locator).selectByVisibleText(dropdownOption);
+                if (!new Select(locator).getFirstSelectedOption().equals(dropdownOption)) {
+                    new Select(locator).selectByVisibleText(dropdownOption);
+                }
+                return true;
+            });
     }
 }

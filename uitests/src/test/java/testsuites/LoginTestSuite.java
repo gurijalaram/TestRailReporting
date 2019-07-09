@@ -1,6 +1,6 @@
 package test.java.testsuites;
 
-import main.java.LoginTests;
+import main.java.login.LoginTests;
 import main.java.runner.ConcurrentSuiteRunner;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
