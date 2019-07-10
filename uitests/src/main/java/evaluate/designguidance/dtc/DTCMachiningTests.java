@@ -30,7 +30,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     /**
-     * Testing DTC Machining Keysear Mill
+     * Testing DTC Machining Keyseat Mill
      */
     @Test
     public void testDTCKeyseat() {
