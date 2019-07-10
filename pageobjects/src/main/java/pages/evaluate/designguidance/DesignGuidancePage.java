@@ -39,6 +39,9 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     @FindBy(css = "a[href='#geometryTab")
     private WebElement geometryTab;
 
+    @FindBy(css = ".panel .glyphicon-remove")
+    private WebElement closePanelButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -95,5 +98,14 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     public GeometryPage openGeometryTab() {
         geometryTab.click();
         return new GeometryPage(driver);
+    }
+
+    /**
+     * Closes the design guidance
+     * @return current page object
+     */
+    public DesignGuidancePage closeDesignGuidance() {
+        pageUtils.waitForElementToAppear(closePanelButton).click();
+        return this;
     }
 }
