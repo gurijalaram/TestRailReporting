@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import java.util.Scanner;
 
-public class DTCMouldingDraft extends TestBase {
+public class DTCMouldingDraftTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -25,7 +25,7 @@ public class DTCMouldingDraft extends TestBase {
     private String filePath = new Scanner(TolerancesTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
-    public DTCMouldingDraft() {
+    public DTCMouldingDraftTests() {
         super();
     }
 
