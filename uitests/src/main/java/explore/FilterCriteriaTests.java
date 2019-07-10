@@ -3,14 +3,12 @@ package main.java.explore;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
-import main.java.pages.explore.FilterCriteriaPage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
 
 public class FilterCriteriaTests extends TestBase {
 
     private LoginPage loginPage;
-    private FilterCriteriaPage filterCriteriaPage;
 
     public FilterCriteriaTests() {
         super();
