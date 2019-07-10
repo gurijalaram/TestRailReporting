@@ -31,6 +31,18 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.smattme</groupId>
+            <artifactId>mysql-backup4j</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>fbc-util-core</artifactId>
+            <version>19.1.1.0</version>
+        </dependency>
+
 
     </dependencies>
 

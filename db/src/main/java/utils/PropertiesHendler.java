@@ -26,5 +26,4 @@ public class PropertiesHendler {
 
     public PropertiesHendler() {
     }
-
 }

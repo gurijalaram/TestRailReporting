@@ -1,7 +1,6 @@
 import daoImpl.UserDao;
 import entity.User;
 import org.junit.Test;
-import utils.DatabaseDumpCreator;
 import utils.PropertiesHendler;
 import utils.SessionFactoryClass;
 
@@ -44,19 +43,17 @@ public class UserTest {
         userDao.create(userForDelete);
     }
 
-
-/* Currently didn't find another way, of how to update multiple entities.
-        getByFullName - returns entity which should be updated. */
-
     @Test
     public void testUpdateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
         List<User> userForDelete = new ArrayList<User>();
 
         /* Users Examples */
-
         User user = new User().setFullName("aPriori User");
         User salvaUser = new User().setFullName("Salva");
+
+        /* Currently didn't find another way, of how to update multiple entities.
+        getByFullName - returns entity which should be updated. */
 
         userForDelete.add(userDao.getByFullName(user).setFullName("aPriori Default User"));
         userForDelete.add(userDao.getByFullName(salvaUser).setFullName("Salvador Sakho"));
@@ -83,12 +80,4 @@ public class UserTest {
         User user = new User().setFullName("Salvador Sakho");
         System.out.println(userDao.getByFullName(user).getUser_ID());
     }
-
-    @Test
-    public void createDBdump() {
-        DatabaseDumpCreator databaseDumpCreator = new DatabaseDumpCreator("mysql");
-        databaseDumpCreator.createMySqlDBdump();
-    }
-
-
 }
