@@ -70,7 +70,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return current page object
      */
     public ThreadingPage enterThreadLength(String length) {
-        lengthInput.clear();
+        pageUtils.waitForElementToAppear(lengthInput).clear();
         lengthInput.sendKeys(length);
         return this;
     }
@@ -81,6 +81,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return current page object
      */
     public ThreadingPage removeThreadLength() {
+        pageUtils.waitForElementToAppear(lengthInput).click();
         lengthInput.clear();
         return this;
     }
