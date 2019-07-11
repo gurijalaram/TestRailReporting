@@ -4,6 +4,7 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
+import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -128,6 +129,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Cost the scenario. Enter 'null' if the cost label is expected to be default label
+     *
      * @param costText - the text for the cost label
      * @return current page object
      */
@@ -141,6 +143,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Checks the text in the cost label
+     *
      * @param costText - the cost label text
      * @return true or false
      */
@@ -151,31 +154,36 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Publish the scenario
+     *
      * @return new page object
      */
-    public PublishPage publishScenario() {
-        pageUtils.waitForElementEnabled(publishButton);
-        pageUtils.javaScriptClick(publishButton);
-        return new PublishPage(driver);
+    public ExplorePage publishScenario() {
+        pageUtils.waitForElementToAppear(viewerCanvas);
+        pageUtils.waitForElementToBeClickable(publishButton).click();
+        new PublishPage(driver).selectPublishButton();
+        return new ExplorePage(driver);
     }
 
     /**
      * Publish the scenario
-     * @param status - the status dropdown
+     *
+     * @param status       - the status dropdown
      * @param costMaturity - the cost maturity dropdown
-     * @param assignee - the assignee
+     * @param assignee     - the assignee
      * @return new page object
      */
-    public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        publishButton.click();
+    public ExplorePage publishScenario(String status, String costMaturity, String assignee) {
+        pageUtils.waitForElementToBeClickable(publishButton).click();
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
-            .selectAssignee(assignee);
-        return new PublishPage(driver);
+            .selectAssignee(assignee)
+            .selectPublishButton();
+        return new ExplorePage(driver);
     }
 
     /**
      * Selects the pg dropdown
+     *
      * @param processGroup - the process group
      * @return current page object
      */
@@ -186,6 +194,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Selects the vpe dropdown
+     *
      * @param vpe - the vpe
      * @return current page object
      */
@@ -196,6 +205,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Enters the annual volume
+     *
      * @param annualVolume - the annual volume
      * @return current page object
      */
@@ -207,6 +217,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Enters the years of annual volume
+     *
      * @param years - the years
      * @return current page object
      */
@@ -218,6 +229,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Opens the process tab
+     *
      * @return new page object
      */
     public ProcessPage openProcessDetails() {
@@ -227,6 +239,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Gets the process routing details
+     *
      * @return the details as string
      */
     public String getProcessRoutingDetails() {
@@ -236,6 +249,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Opens the design guidance dialog
+     *
      * @return new page object
      */
     public DesignGuidancePage openDesignGuidance() {
@@ -245,6 +259,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Opens the secondary process dialog
+     *
      * @return new page object
      */
     public SecondaryProcessPage openSecondaryProcess() {
@@ -254,6 +269,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Opens the material composition dialog
+     *
      * @return new page object
      */
     public MaterialPage openMaterialComposition() {
@@ -263,6 +279,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     /**
      * Opens the material composition table
+     *
      * @return new page object
      */
     public MaterialCompositionPage openMaterialCompositionTable() {
