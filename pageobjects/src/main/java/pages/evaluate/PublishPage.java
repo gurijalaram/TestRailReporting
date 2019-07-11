@@ -15,7 +15,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     private final Logger logger = LoggerFactory.getLogger(PublishPage.class);
 
-    @FindBy(css = "h3.modal-title")
+    @FindBy(css = "[data-ap-scope='publishDialog'] h3.modal-title")
     private WebElement modalDialog;
 
     @FindBy(css = "select[data-ap-field='status']")
