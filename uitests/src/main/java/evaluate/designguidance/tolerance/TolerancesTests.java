@@ -260,6 +260,7 @@ public class TolerancesTests extends TestBase {
         assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
+
     /**
      * Testing that adding no value in the thread shows a warning message
      */
