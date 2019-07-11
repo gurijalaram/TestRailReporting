@@ -382,7 +382,7 @@ public class PageUtils {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
-            } catch (TimeoutException | ElementClickInterceptedException e) {
+            } catch (TimeoutException e) {
                 count = count + 1;
             }
         }
