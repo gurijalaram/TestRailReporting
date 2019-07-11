@@ -1,5 +1,6 @@
 package main.java.pages.evaluate;
 
+import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -94,7 +95,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public ExplorePage selectPublishButton() {
         publishButton.click();
-        return new ExplorePage(driver);
+        return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
     }
 
     /**
