@@ -70,8 +70,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return current page object
      */
     public ThreadingPage enterThreadLength(String length) {
-        lengthInput.click();
-        pageUtils.clearInput(lengthInput);
+        lengthInput.clear();
         lengthInput.sendKeys(length);
         return this;
     }
