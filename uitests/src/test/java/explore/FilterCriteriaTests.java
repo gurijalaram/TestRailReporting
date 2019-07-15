@@ -1,4 +1,4 @@
-package main.java.explore;
+package test.java.explore;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;

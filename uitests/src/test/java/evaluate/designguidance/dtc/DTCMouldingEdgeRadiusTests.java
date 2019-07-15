@@ -1,4 +1,4 @@
-package main.java.evaluate.designguidance.dtc;
+package test.java.evaluate.designguidance.dtc;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,7 +10,6 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.evaluate.designguidance.tolerance.TolerancesTests;
 import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
@@ -25,7 +24,7 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
     private ExplorePage explorePage;
     private DesignGuidancePage designGuidancePage;
 
-    private String filePath = new Scanner(TolerancesTests.class.getClassLoader()
+    private String filePath = new Scanner(DTCMouldingEdgeRadiusTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public DTCMouldingEdgeRadiusTests() {

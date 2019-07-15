@@ -1,4 +1,4 @@
-package main.java.evaluate;
+package test.java.evaluate;
 
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;

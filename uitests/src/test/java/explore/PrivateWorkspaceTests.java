@@ -1,4 +1,4 @@
-package main.java.explore;
+package test.java.explore;
 
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
