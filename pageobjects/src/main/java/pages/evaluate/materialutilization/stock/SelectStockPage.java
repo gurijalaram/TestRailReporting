@@ -1,6 +1,5 @@
 package main.java.pages.evaluate.materialutilization.stock;
 
-import main.java.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,16 +18,19 @@ public class SelectStockPage extends LoadableComponent<SelectStockPage> {
     @FindBy(css = "div[data-ap-comp='stockSelectionTable']")
     private WebElement stockTable;
 
+    @FindBy(css = "div[data-ap-comp='stockSelectionTable'] td")
+    private WebElement stockTableCells;
+
     @FindBy(css = "select[data-ap-field='stockModes']")
     private WebElement selectionMode;
 
     @FindBy(css = "div[data-ap-comp='stockSelectionTable'] div.v-grid-scroller-vertical")
     private WebElement stockScroller;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(css = ".material-selection-dialog button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-default")
+    @FindBy(css = ".material-selection-dialog button.btn.btn-default")
     private WebElement cancelButton;
 
     private WebDriver driver;
@@ -50,6 +52,7 @@ public class SelectStockPage extends LoadableComponent<SelectStockPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(stockTable);
+        pageUtils.waitForElementToAppear(stockTableCells);
     }
 
     /**
@@ -77,17 +80,17 @@ public class SelectStockPage extends LoadableComponent<SelectStockPage> {
      * Selects the apply button
      * @return new page object
      */
-    protected MaterialUtilizationPage apply() {
+    public StockPage apply() {
         applyButton.click();
-        return new MaterialUtilizationPage(driver);
+        return new StockPage(driver);
     }
 
     /**
      * Selects the cancel button
      * @return new page object
      */
-    protected MaterialUtilizationPage cancel() {
+    public StockPage cancel() {
         cancelButton.click();
-        return new MaterialUtilizationPage(driver);
+        return new StockPage(driver);
     }
 }
