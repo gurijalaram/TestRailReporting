@@ -1,4 +1,4 @@
-package main.java.evaluate.materialutilization;
+package test.java.evaluate.materialutilization;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,7 +10,6 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.explore.FileUploadTests;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.materialutilization.stock.StockPage;
 import main.java.pages.explore.ExplorePage;
@@ -24,7 +23,7 @@ public class ChangeStockSelectionTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
 
-    private String filePath = new Scanner(FileUploadTests.class.getClassLoader()
+    private String filePath = new Scanner(ChangeStockSelectionTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public ChangeStockSelectionTests() {

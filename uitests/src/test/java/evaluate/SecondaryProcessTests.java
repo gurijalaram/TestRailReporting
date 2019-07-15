@@ -1,4 +1,4 @@
-package main.java.evaluate;
+package test.java.evaluate;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,7 +9,6 @@ import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.explore.FileUploadTests;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -24,7 +23,7 @@ public class SecondaryProcessTests extends TestBase {
     private EvaluatePage evaluatePage;
     private final String COSTING_SUCCESS = "Success";
 
-    private String filePath = new Scanner(FileUploadTests.class.getClassLoader()
+    private String filePath = new Scanner(SecondaryProcessTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public SecondaryProcessTests() {
