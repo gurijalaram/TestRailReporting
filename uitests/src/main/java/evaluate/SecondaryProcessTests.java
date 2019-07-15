@@ -3,6 +3,9 @@ package main.java.evaluate;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -28,10 +31,9 @@ public class SecondaryProcessTests extends TestBase {
     private String filePath = new Scanner(FileUploadTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
-    /**
-     * Test secondary process leak test
-     */
     @Test
+    @Description("Test secondary process leak test")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessLeakTest() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -51,10 +53,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Hydrostatic Leak Testing"));
     }
 
-    /**
-     * Test secondary process xray
-     */
     @Test
+    @Description("Test secondary process xray")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessXray() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -74,10 +75,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Xray Inspection"));
     }
 
-    /**
-     * Test secondary process Carburize
-     */
     @Test
+    @Description("Test secondary process Carburize")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessCarburize() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -97,10 +97,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Carburize"));
     }
 
-    /**
-     * Test secondary process Atmosphere Oil Harden
-     */
     @Test
+    @Description("Test secondary process Atmosphere Oil Harden")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessAtmosphereOilHarden() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -120,10 +119,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Atmosphere Oil Harden"));
     }
 
-    /**
-     * Test secondary process Standard Anneal
-     */
     @Test
+    @Description("Test secondary process Standard Anneal")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessStandardAnneal() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -143,10 +141,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Standard Anneal"));
     }
 
-    /**
-     * Test secondary process Vacuum Temper
-     */
     @Test
+    @Description("Test secondary process Vacuum Temper")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessVacuumTemper() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -166,10 +163,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Vacuum Temper"));
     }
 
-    /**
-     * Test secondary process Stress Relief
-     */
     @Test
+    @Description("Test secondary process Stress Relief")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessStressRelief() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -189,10 +185,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stress Relief"));
     }
 
-    /**
-     * Test secondary process Anodize
-     */
     @Test
+    @Description("Test secondary process Anodize")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessAnodize() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -212,10 +207,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize"));
     }
 
-    /**
-     * Test secondary process Certification
-     */
     @Test
+    @Description("Test secondary process Paint")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessCertification() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -235,10 +229,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Certification"));
     }
 
-    /**
-     * Test secondary process Paint
-     */
     @Test
+    @Description("Test secondary process Paint")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessPaint() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -258,10 +251,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Coat Cart"));
     }
 
-    /**
-     * Test secondary process Passivation
-     */
     @Test
+    @Description("Test secondary process Passivation")
+    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessPassivation() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
