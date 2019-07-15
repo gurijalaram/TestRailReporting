@@ -1,5 +1,6 @@
 package main.java.pages.evaluate;
 
+import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +16,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     private final Logger logger = LoggerFactory.getLogger(PublishPage.class);
 
-    @FindBy(css = "h3.modal-title")
+    @FindBy(css = "[data-ap-scope='publishDialog'] h3.modal-title")
     private WebElement modalDialog;
 
     @FindBy(css = "select[data-ap-field='status']")
@@ -94,7 +95,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public ExplorePage selectPublishButton() {
         publishButton.click();
-        return new ExplorePage(driver);
+        return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
     }
 
     /**

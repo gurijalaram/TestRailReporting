@@ -39,7 +39,6 @@ public class AddPublicScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario()
-            .selectPublishButton()
             .createNewComparison()
             .enterComparisonName("Public Comparison")
             .save()

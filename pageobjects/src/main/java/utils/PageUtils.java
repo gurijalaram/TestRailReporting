@@ -3,6 +3,7 @@ package main.java.utils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -380,7 +381,7 @@ public class PageUtils {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
-            } catch (TimeoutException e) {
+            } catch (TimeoutException | ElementClickInterceptedException e) {
                 count = count + 1;
             }
         }
@@ -397,9 +398,7 @@ public class PageUtils {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
-            } catch (TimeoutException e) {
-                count = count + 1;
-            } catch (NoSuchElementException e) {
+            } catch (TimeoutException | NoSuchElementException e) {
                 count = count + 1;
             }
         }
@@ -456,7 +455,8 @@ public class PageUtils {
     /**
      * Selects the correct option in the dropdown.  Conditional statement is included because the system
      * tends to revert to previous selection.
-     * @param locator - the locator of the element
+     *
+     * @param locator        - the locator of the element
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
@@ -467,6 +467,19 @@ public class PageUtils {
                 if (!new Select(locator).getFirstSelectedOption().equals(dropdownOption)) {
                     new Select(locator).selectByVisibleText(dropdownOption);
                 }
+                return true;
+            });
+    }
+
+    /**
+     * Waits for the element to become enabled
+     * @param locator - the locator of the element
+     */
+    public void waitForElementEnabled(WebElement locator) {
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+            .ignoring(StaleElementReferenceException.class)
+            .until((WebDriver driver) -> {
+                locator.isEnabled();
                 return true;
             });
     }

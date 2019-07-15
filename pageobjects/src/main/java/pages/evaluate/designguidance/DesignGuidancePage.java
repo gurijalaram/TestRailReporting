@@ -108,7 +108,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return current page object
      */
     public DesignGuidancePage closeDesignGuidance() {
-        pageUtils.waitForElementToAppear(closePanelButton).click();
+        pageUtils.javaScriptClick(closePanelButton);
         return this;
     }
 }

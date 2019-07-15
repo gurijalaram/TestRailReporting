@@ -17,7 +17,6 @@ import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.pages.settings.SettingsPage;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -30,7 +29,6 @@ public class TolerancesTests extends TestBase {
     private DesignGuidancePage designGuidancePage;
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
-    private SettingsPage settingsPage;
 
     private String filePath = new Scanner(TolerancesTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
@@ -57,7 +55,7 @@ public class TolerancesTests extends TestBase {
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading");
 
-        assertThat(new InvestigationPage(driver).getEditButton().isEnabled(), Matchers.is(true));
+        assertThat(new InvestigationPage(driver).getEditButton().isEnabled(), Matchers.is(false));
     }
 
     /**
@@ -108,6 +106,8 @@ public class TolerancesTests extends TestBase {
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.28")
             .apply(InvestigationPage.class);
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
@@ -237,7 +237,7 @@ public class TolerancesTests extends TestBase {
      * Testing that adding text values in the thread length shows a warning message
      */
     @Test
-    public void junkValuesTest() {
+    public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -262,7 +262,7 @@ public class TolerancesTests extends TestBase {
      * Testing that adding no value in the thread shows a warning message
      */
     @Test
-    public void junkNoValueTest() {
+    public void junkValueTest() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -315,7 +315,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.CATPart")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -360,16 +360,16 @@ public class TolerancesTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        settingsPage = new SettingsPage(driver);
-        settingsPage.changeDisplayUnits("English")
-            .save();
+        explorePage.openSettings()
+            .changeDisplayUnits("English")
+            .save(EvaluatePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading");
 
-        assertThat(new InvestigationPage(driver).getThreadHeader(), containsString("in"));
+        assertThat(new InvestigationPage(driver).getThreadHeader(), containsString("(in)"));
     }
 
     /**
@@ -385,16 +385,16 @@ public class TolerancesTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        settingsPage = new SettingsPage(driver);
-        settingsPage.changeDisplayUnits("System")
-            .save();
+        explorePage.openSettings()
+            .changeDisplayUnits("System")
+            .save(EvaluatePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading");
 
-        assertThat(new InvestigationPage(driver).getThreadHeader(), containsString("mm"));
+        assertThat(new InvestigationPage(driver).getThreadHeader(), containsString("(mm)"));
     }
 
     /**

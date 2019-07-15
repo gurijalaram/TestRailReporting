@@ -84,7 +84,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return the gcd as webelement
      */
     private WebElement selectGCD(String gcd) {
-        By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]/ancestor::tr[@class]");
+        By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]/ancestor::td[@class]");
         return pageUtils.scrollToElement(gcdElement, threadScroller);
     }
 
@@ -103,8 +103,8 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return new page object
      */
     public ThreadingPage selectEditButton() {
-        pageUtils.waitForElementToAppear(editButton);
-        pageUtils.waitForElementToBeClickable(editButton).click();
+        pageUtils.waitForElementEnabled(editButton);
+        pageUtils.javaScriptClick(editButton);
         return new ThreadingPage(driver);
     }
 

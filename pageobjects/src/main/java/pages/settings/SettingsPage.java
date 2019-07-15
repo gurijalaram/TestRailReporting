@@ -1,6 +1,5 @@
 package main.java.pages.settings;
 
-import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -61,25 +60,29 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     }
 
     public SettingsPage changeDisplayUnits(String units) {
-        pageUtils.selectDropdownOption(unitsDropdown, units);
+        pageUtils.selectDropdownOption(unitsDropdown, units.toUpperCase());
         return this;
     }
 
     /**
      * Selects the save button
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T> - the return type
+     * @return generic page object
      */
-    public ExplorePage save() {
+    public <T> T save(Class<T> className) {
         saveButton.click();
-        return new ExplorePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
      * Selects the cancel button
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T> - the return type
+     * @return generic page object
      */
-    public ExplorePage cancel() {
+    public <T> T cancel(Class<T> className) {
         cancelButton.click();
-        return new ExplorePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 }

@@ -50,6 +50,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(threadDialog);
+        pageUtils.waitForElementToAppear(threadDropdown);
     }
 
     /**
@@ -70,8 +71,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return current page object
      */
     public ThreadingPage enterThreadLength(String length) {
-        lengthInput.click();
-        pageUtils.clearInput(lengthInput);
+        pageUtils.waitForElementToAppear(lengthInput).clear();
         lengthInput.sendKeys(length);
         return this;
     }
@@ -82,7 +82,8 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return current page object
      */
     public ThreadingPage removeThreadLength() {
-        lengthInput.clear();
+        pageUtils.waitForElementToAppear(lengthInput).click();
+        pageUtils.clearInput(lengthInput);
         return this;
     }
 
@@ -104,7 +105,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return generic page object
      */
     public <T> T apply(Class<T> className) {
-        pageUtils.waitForElementToBeClickable(applyButton).click();
+        pageUtils.javaScriptClick(applyButton);
         return PageFactory.initElements(driver, className);
     }
 
