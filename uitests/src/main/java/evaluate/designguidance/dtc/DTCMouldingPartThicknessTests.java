@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import java.util.Scanner;
 
-public class DTCMouldingTests extends TestBase {
+public class DTCMouldingPartThicknessTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -25,49 +25,49 @@ public class DTCMouldingTests extends TestBase {
     private String filePath = new Scanner(TolerancesTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
-    public DTCMouldingTests() {
+    public DTCMouldingPartThicknessTests() {
         super();
     }
 
     /**
-     * Testing DTC Plastic Moulding Edge Radius Internal
+     * Testing DTC Moulding Thickness Minimum
      */
     @Test
-    public void testMouldingEdgeInternal() {
+    public void testDTCMouldingThicknessMin() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioEdgeRadiusInternal", filePath, "Plastic moulded cap edge Radius.CATPart")
+        explorePage.uploadFile("ScenarioMinThickness", filePath, "Plastic moulded cap thinPart.SLDPRT")
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii  Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
+            .selectIssueTypeAndGCD("Material Issues", "Minimum Wall Thickness", "Component:1");
 
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Internal Edge Radius is less than the minimum limit"));
+        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
     }
 
     /**
-     * Testing DTC Plastic Moulding Edge Radius External
+     * Testing DTC Moulding Thickness Maximum
      */
     @Test
-    public void testMouldingEdgeExternal() {
+    public void testDTCMouldingThicknessMax() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioEdgeRadiusExternal", filePath, "Plastic moulded cap edge Radius.CATPart")
+        explorePage.uploadFile("ScenarioMaxThickness", filePath, "Plastic moulded cap thinPart.SLDPRT")
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii  Issue", "Minimum External Edge Radius", "SharpEdge:9");
+            .selectIssueTypeAndGCD("Material Issues", "Maximum Wall Thickness", "Component:1");
 
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("External Edge Radius is less than the minimum limit"));
+        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
     }
 }
