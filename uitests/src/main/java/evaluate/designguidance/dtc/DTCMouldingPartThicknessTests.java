@@ -3,6 +3,9 @@ package main.java.evaluate.designguidance.dtc;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
@@ -29,10 +32,9 @@ public class DTCMouldingPartThicknessTests extends TestBase {
         super();
     }
 
-    /**
-     * Testing DTC Moulding Thickness Minimum
-     */
     @Test
+    @Description("Testing DTC Moulding Thickness Minimum")
+    @Severity(SeverityLevel.NORMAL)
     public void testDTCMouldingThicknessMin() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -50,10 +52,9 @@ public class DTCMouldingPartThicknessTests extends TestBase {
         assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
     }
 
-    /**
-     * Testing DTC Moulding Thickness Maximum
-     */
     @Test
+    @Description("Testing DTC Moulding Thickness Maximum")
+    @Severity(SeverityLevel.NORMAL)
     public void testDTCMouldingThicknessMax() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
