@@ -24,12 +24,12 @@ public class SecondaryProcessTests extends TestBase {
     private EvaluatePage evaluatePage;
     private final String COSTING_SUCCESS = "Success";
 
+    private String filePath = new Scanner(FileUploadTests.class.getClassLoader()
+        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
+
     public SecondaryProcessTests() {
         super();
     }
-
-    private String filePath = new Scanner(FileUploadTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     @Test
     @Description("Test secondary process leak test")

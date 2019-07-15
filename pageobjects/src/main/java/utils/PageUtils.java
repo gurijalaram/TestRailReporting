@@ -473,6 +473,7 @@ public class PageUtils {
 
     /**
      * Waits for the element to become enabled
+     *
      * @param locator - the locator of the element
      */
     public void waitForElementEnabled(WebElement locator) {
@@ -482,5 +483,16 @@ public class PageUtils {
                 locator.isEnabled();
                 return true;
             });
+    }
+
+    /**
+     * Checks for string to be present in element text and returns true/false
+     * @param locator
+     * @param text
+     * @return
+     */
+    public Boolean checkElementContains(WebElement locator, String text) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
     }
 }
