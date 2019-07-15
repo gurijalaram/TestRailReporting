@@ -3,6 +3,9 @@ package main.java.evaluate.designguidance.dtc;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
@@ -29,10 +32,9 @@ public class DTCMouldingDraftTests extends TestBase {
         super();
     }
 
-    /**
-     * Testing DTC Machining DTC Moulding Draft
-     */
     @Test
+    @Description("Testing DTC Machining Moulding Draft")
+    @Severity(SeverityLevel.NORMAL)
     public void testDTCMouldingDraft() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());

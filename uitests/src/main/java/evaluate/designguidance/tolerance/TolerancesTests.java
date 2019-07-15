@@ -5,6 +5,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
@@ -37,10 +40,9 @@ public class TolerancesTests extends TestBase {
         super();
     }
 
-    /**
-     * Test to check edit thread button is disabled
-     */
     @Test
+    @Description("Test to check edit thread button is disabled")
+    @Severity(SeverityLevel.CRITICAL)
     public void threadButtonDisabled() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -58,10 +60,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new InvestigationPage(driver).getEditButton().isEnabled(), Matchers.is(false));
     }
 
-    /**
-     * Test to check thread length persist
-     */
     @Test
+    @Description("Test to check thread length persist")
+    @Severity(SeverityLevel.CRITICAL)
     public void editThread() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -85,10 +86,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("0.28")));
     }
 
-    /**
-     * Test to verify costed thread
-     */
     @Test
+    @Description("Test to verify costed thread")
+    @Severity(SeverityLevel.CRITICAL)
     public void verifyCostedThread() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -119,10 +119,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("0.28")));
     }
 
-    /**
-     * Test to set dropdown value to no
-     */
     @Test
+    @Description("Test to set dropdown value to no")
+    @Severity(SeverityLevel.CRITICAL)
     public void setDropdownValueNo() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -145,10 +144,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("")));
     }
 
-    /**
-     * Test to set dropdown value to yes
-     */
     @Test
+    @Description("Test to set dropdown value to yes")
+    @Severity(SeverityLevel.CRITICAL)
     public void setDropdownValueYes() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -171,10 +169,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("0.64")));
     }
 
-    /**
-     * Testing warning message displayed when thread length is removed
-     */
     @Test
+    @Description("Testing warning message displayed when thread length is removed")
+    @Severity(SeverityLevel.CRITICAL)
     public void costedThreadLengthRemoved() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -201,10 +198,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
-    /**
-     * Testing changing the thread value and cancelling doesn't remove the value
-     */
     @Test
+    @Description("Testing changing the thread value and cancelling doesn't remove the value")
+    @Severity(SeverityLevel.CRITICAL)
     public void changeThreadValueCancel() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -233,10 +229,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("3.50")));
     }
 
-    /**
-     * Testing that adding text values in the thread length shows a warning message
-     */
     @Test
+    @Description("Testing that adding text values in the thread length shows a warning message")
+    @Severity(SeverityLevel.CRITICAL)
     public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -258,10 +253,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
-    /**
-     * Testing that adding no value in the thread shows a warning message
-     */
     @Test
+    @Description("Testing that adding no value in the thread shows a warning message")
+    @Severity(SeverityLevel.CRITICAL)
     public void junkValueTest() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -283,10 +277,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
-    /**
-     * Testing a public thread cannot be edited
-     */
     @Test
+    @Description("Testing a public thread cannot be edited")
+    @Severity(SeverityLevel.CRITICAL)
     public void cannotEditPublicThread() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -306,10 +299,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new InvestigationPage(driver).getEditButton().isEnabled(), is(false));
     }
 
-    /**
-     * Testing thread length persist when attributes are changed
-     */
     @Test
+    @Description("Testing thread length persist when attributes are changed")
+    @Severity(SeverityLevel.CRITICAL)
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -347,10 +339,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new ThreadingPage(driver).getThreadLength(), equalTo("4.85"));
     }
 
-    /**
-     * Testing thread units persist when changed to inches
-     */
     @Test
+    @Description("Testing thread units persist when changed to inches")
+    @Severity(SeverityLevel.CRITICAL)
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -372,10 +363,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new InvestigationPage(driver).getThreadHeader(), containsString("(in)"));
     }
 
-    /**
-     * Testing thread units persist when changed to millimetres
-     */
     @Test
+    @Description("Testing thread units persist when changed to millimetres")
+    @Severity(SeverityLevel.CRITICAL)
     public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -397,10 +387,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new InvestigationPage(driver).getThreadHeader(), containsString("(mm)"));
     }
 
-    /**
-     * Testing threading persist when secondary process is added
-     */
     @Test
+    @Description("Testing threading persist when secondary process is added")
+    @Severity(SeverityLevel.CRITICAL)
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -435,10 +424,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
     }
 
-    /**
-     * Testing compatible thread length for DTC files
-     */
     @Test
+    @Description("Testing compatible thread length for DTC files")
+    @Severity(SeverityLevel.CRITICAL)
     public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -457,10 +445,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
     }
 
-    /**
-     * Testing compatible thread length for NX files
-     */
     @Test
+    @Description("Testing compatible thread length for NX files")
+    @Severity(SeverityLevel.CRITICAL)
     public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -479,10 +466,9 @@ public class TolerancesTests extends TestBase {
         assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
     }
 
-    /**
-     * Testing compatible thread length for Creo files
-     */
     @Test
+    @Description("Testing compatible thread length for Creo files")
+    @Severity(SeverityLevel.CRITICAL)
     public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
