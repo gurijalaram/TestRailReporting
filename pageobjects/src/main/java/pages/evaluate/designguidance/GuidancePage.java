@@ -50,12 +50,12 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     /**
      * Selects both issue type and gcd details
-     * @param issueTypeParents - the issue type parent
+     * @param issueTypeDropdown - the issue type parent
      * @param gcd - the gcd
      * @return current page object
      */
-    public GuidancePage selectIssueTypeAndGCD(String issueTypeParents, String issueType, String gcd) {
-        selectIssue(issueTypeParents);
+    public GuidancePage selectIssueTypeAndGCD(String issueTypeDropdown, String issueType, String gcd) {
+        selectIssue(issueTypeDropdown);
         selectIssueType(issueType).click();
         selectGCD(gcd).click();
         return this;
@@ -63,15 +63,15 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     /**
      * Selects the issue type dropdown
-     * @param issueTypeParents - the issue type dropdown
+     * @param issueTypeDropdown - the issue type dropdown
      * @return issue type as webelement
      */
-    private GuidancePage selectIssue(String issueTypeParents) {
+    private GuidancePage selectIssue(String issueTypeDropdown) {
 
-        String[] parents = issueTypeParents.split(",");
+        String[] parents = issueTypeDropdown.split(",");
 
         for (String parent : parents) {
-            By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + parent.trim() + "')]/ancestor::tr//span");
+            By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + parent.trim() + "')]/ancestor::tr//span[@class]");
             pageUtils.scrollToElement(issue, guidanceTableScroller);
 
             if (driver.findElement(issue).getAttribute("class").contains("right")) {

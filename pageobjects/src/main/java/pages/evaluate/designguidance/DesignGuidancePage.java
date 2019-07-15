@@ -18,6 +18,9 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;
 
+    @FindBy(css = "a[href='#failuresAndWarningsTab']")
+    private WebElement failuresTab;
+
     @FindBy(css = "button[data-ap-comp='expandPanelButton']")
     private WebElement chevronButton;
 
@@ -60,8 +63,8 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToBeClickable(failuresTab);
         pageUtils.waitForElementToAppear(panelDetails);
-        pageUtils.waitForElementToAppear(closeButton);
     }
 
     /**
@@ -69,7 +72,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public GuidancePage openGuidanceTab() {
-        guidanceTab.click();
+        pageUtils.waitForElementToBeClickable(guidanceTab).click();
         return new GuidancePage(driver);
     }
 
