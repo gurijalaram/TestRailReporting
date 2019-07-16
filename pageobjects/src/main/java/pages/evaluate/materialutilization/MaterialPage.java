@@ -14,6 +14,9 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
+    @FindBy(css = ".panel.panel-details")
+    private WebElement panelDetails;
+
     @FindBy(css = "div[data-ap-comp='materialDetails']")
     private WebElement materialTable;
 
@@ -44,6 +47,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(panelDetails);
         pageUtils.waitForElementToAppear(materialTable);
     }
 
