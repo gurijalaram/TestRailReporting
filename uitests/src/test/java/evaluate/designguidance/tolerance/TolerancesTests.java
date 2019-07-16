@@ -291,7 +291,7 @@ public class TolerancesTests extends TestBase {
             .publishScenario();
 
         explorePage = new ExplorePage(driver);
-        explorePage.openScenario("DTCCastingIssues", "Scenario b")
+        explorePage.openScenario("Scenario b", "DTCCastingIssues")
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading");
