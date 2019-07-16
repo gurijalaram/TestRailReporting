@@ -492,7 +492,7 @@ public class PageUtils {
      * @return
      */
     public Boolean checkElementContains(WebElement locator, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
     }
 }
