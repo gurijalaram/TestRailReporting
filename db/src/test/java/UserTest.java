@@ -58,6 +58,7 @@ public class UserTest {
         userForDelete.add(userDao.getByFullName(user).setFullName("aPriori Default User"));
         userForDelete.add(userDao.getByFullName(salvaUser).setFullName("Salvador Sakho"));
         userDao.update(userForDelete);
+
     }
 
     @Test

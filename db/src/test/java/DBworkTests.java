@@ -1,4 +1,6 @@
+import com.apriori.testutil.testdata.DataLoader;
 import org.junit.Test;
+import utils.DBDataImporter;
 import utils.DatabaseDumpCreator;
 import utils.PropertiesHendler;
 
@@ -34,6 +36,10 @@ public class DBworkTests {
         databaseDumpCreator.createMySqlDBdump(excludedTablesList);
     }
 
-
-
+    @Test
+    public void importIntoDB(){
+        DBDataImporter dbDataImporter = new DBDataImporter();
+        String [] partPath = new String [] {"C:\\Users\\ssakho.FBC\\Desktop\\testData\\Smoke Test Data"}; /* Path could be to share.point folder */
+        dbDataImporter.imporFilesIntoDB(partPath);
+    }
 }

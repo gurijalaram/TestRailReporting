@@ -7,9 +7,9 @@
     <groupId>com.apriori.qa</groupId>
     <artifactId>db</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -37,14 +37,15 @@
             <version>1.0.1</version>
         </dependency>
 
+
         <dependency>
-            <groupId>com.fbc</groupId>
-            <artifactId>fbc-util-core</artifactId>
-            <version>19.1.1.0</version>
+            <groupId>com.apriori</groupId>
+            <artifactId>apriori-commons-testutil</artifactId>
+            <version>19.1.1.1</version>
         </dependency>
 
-
     </dependencies>
+
 
 
 
