@@ -1,7 +1,5 @@
 package main.java.api;
 
-import main.java.enums.UsersEnum;
-import main.java.http.builder.common.response.common.AuthenticateJSON;
 import main.java.http.builder.common.response.common.BillOfMaterial;
 import main.java.http.builder.common.response.common.BillOfMaterialsWrapper;
 import main.java.http.builder.common.response.common.BillOfSingleMaterialWrapper;
@@ -10,6 +8,8 @@ import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
 import main.java.utils.WebDriverUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Random;
 
 public class BillOfMaterialsTest {
+
+    private static Logger logger = LoggerFactory.getLogger(BillOfMaterialsTest.class);
 
     private static List<BillOfMaterial> billOfMaterials;
     private static Map<String, String> authorizationHeaders;
@@ -26,6 +28,7 @@ public class BillOfMaterialsTest {
     public static void initBillOfMaterials() {
 //TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
         token = WebDriverUtils.init().getToken("email", "passsword");
+
         authorizationHeaders =  new HashMap<String, String>() {{
             put("Authorization", "Bearer " + token);
             put("ap-cloud-context", "EDC");
@@ -69,6 +72,7 @@ public class BillOfMaterialsTest {
                 .commitChanges()
                 .connect()
                 .get();
+
     }
 
     @Test

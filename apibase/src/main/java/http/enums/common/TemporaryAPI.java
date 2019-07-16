@@ -1,7 +1,5 @@
 package main.java.http.enums.common;
 
-import main.java.http.enums.EndpointEnum;
-
 //TODO z: delete enum
 // Created regarding short testing externals API
 public interface TemporaryAPI extends ExternalEndpointEnum {

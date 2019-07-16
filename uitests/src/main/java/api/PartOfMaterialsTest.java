@@ -22,11 +22,11 @@ public class PartOfMaterialsTest {
     @BeforeClass
     public static void getLineItems(){
         //TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
-        token = WebDriverUtils.init().getToken("email", "passsword");
+        token = WebDriverUtils.init().getToken("email", "password");
+
         authorizationHeaders =  new HashMap<String, String>() {{
             put("Authorization", "Bearer " + token);
             put("ap-cloud-context", "EDC");
-            put("Content-Type", "*/*");
         }};
 
         BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
@@ -34,6 +34,7 @@ public class PartOfMaterialsTest {
                 .customizeRequest()
                 .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
                 .setHeaders(authorizationHeaders)
+
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
                 .connect()
@@ -72,7 +73,6 @@ public class PartOfMaterialsTest {
 
     @Test
     public void getParts(){
-
         new HTTPRequest().unauthorized()
                 .customizeRequest()
                 .setEndpoint(PartsAPIEnum.GET_PARTS_BY_BILL_AND_LINE_IDENTITY)
@@ -145,10 +145,7 @@ public class PartOfMaterialsTest {
                 .customizeRequest()
                 .setEndpoint(PartsAPIEnum.POST_SELECT_PART_BY_BILL_LINE_AND_PART_IDENTITY)
                 .setStatusCode(204)
-                .setHeaders(new HashMap<String, String>() {{
-                        put("Authorization", "Bearer " + token);
-                        put("ap-cloud-context", "EDC");
-                    }})
+                .setHeaders(authorizationHeaders)
                 .setInlineVariables(
                         billOfMaterial.getIdentity(),
                         lineItem.getIdentity(),
