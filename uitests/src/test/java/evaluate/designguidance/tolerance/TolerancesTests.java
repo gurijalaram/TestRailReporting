@@ -1,4 +1,4 @@
-package main.java.evaluate.designguidance.tolerance;
+package test.java.evaluate.designguidance.tolerance;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

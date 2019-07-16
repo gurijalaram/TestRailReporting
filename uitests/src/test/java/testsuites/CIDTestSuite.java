@@ -1,20 +1,20 @@
 package test.java.testsuites;
 
-import main.java.compare.AddPrivateScenarioTests;
-import main.java.compare.AddPublicScenarioTests;
-import main.java.evaluate.EvaluateTests;
-import main.java.evaluate.SecondaryProcessTests;
-import main.java.evaluate.designguidance.dtc.DTCMachiningTests;
-import main.java.evaluate.designguidance.dtc.DTCMouldingDraftTests;
-import main.java.evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
-import main.java.evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
-import main.java.evaluate.designguidance.tolerance.TolerancesTests;
-import main.java.evaluate.materialutilization.ChangeStockSelectionTests;
-import main.java.explore.FilterCriteriaTests;
-import main.java.login.LoginTests;
 import main.java.runner.ConcurrentSuiteRunner;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import test.java.compare.AddPrivateScenarioTests;
+import test.java.compare.AddPublicScenarioTests;
+import test.java.evaluate.EvaluateTests;
+import test.java.evaluate.SecondaryProcessTests;
+import test.java.evaluate.designguidance.dtc.DTCMachiningTests;
+import test.java.evaluate.designguidance.dtc.DTCMouldingDraftTests;
+import test.java.evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
+import test.java.evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
+import test.java.evaluate.designguidance.tolerance.TolerancesTests;
+import test.java.evaluate.materialutilization.ChangeStockSelectionTests;
+import test.java.explore.FilterCriteriaTests;
+import test.java.login.LoginTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
