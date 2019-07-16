@@ -29,9 +29,6 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     @FindBy(css = "ul.viewer-controls-toolbar")
     private WebElement controlToolbars;
 
-    @FindBy(css = "button[data-ap-comp='editScenarioButton']")
-    private WebElement editButton;
-
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
     private WebElement revertButton;
 
@@ -104,6 +101,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     @FindBy(css = "button[data-ap-comp='publishScenarioButton'] span")
     private WebElement publishButton;
 
+    @FindBy(css = "a[data-ap-comp='exploreButton']")
+    private WebElement exploreButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private static final String COST_UP_TO_DATE = "Cost up to\n" + "Date";
@@ -128,6 +128,15 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     }
 
     /**
+     * Selects the explore button
+     * @return current page object
+     */
+    public ExplorePage selectExploreButton() {
+        pageUtils.waitForElementToBeClickable(exploreButton).click();
+        return new ExplorePage(driver);
+    }
+
+    /**
      * Cost the scenario. Enter 'null' if the cost label is expected to be default label
      *
      * @param costText - the text for the cost label
@@ -137,6 +146,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         pageUtils.waitForElementToBeClickable(costButton).click();
         pageUtils.waitForElementToAppear(dialogCostButton).click();
         costText = costText == "Success" ? COST_UP_TO_DATE : costText;
+        pageUtils.waitForElementToAppear(costLabelPopover);
         checkCostLabel(costText);
         return this;
     }
@@ -147,9 +157,16 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @param costText - the cost label text
      * @return true or false
      */
-    private boolean checkCostLabel(String costText) {
-        pageUtils.waitForElementToAppear(costLabelPopover);
-        return pageUtils.waitForElementToAppear(costLabel).getText().equalsIgnoreCase(costText);
+    public boolean checkCostLabel(String costText) {
+        return pageUtils.checkElementContains(costLabel, costText);
+    }
+
+    /**
+     * Gets the text in the cost label
+     * @return text as string
+     */
+    public String getCostLabel() {
+        return pageUtils.waitForElementToAppear(costLabel).getText();
     }
 
     /**

@@ -22,6 +22,6 @@ public class PrivateWorkspaceTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario("Casting", "Scenario A");
+            .openScenario("Scenario A", "Casting");
     }
 }
