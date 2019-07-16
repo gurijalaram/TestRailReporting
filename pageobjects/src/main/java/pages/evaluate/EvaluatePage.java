@@ -259,9 +259,8 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      *
      * @return the details as string
      */
-    public String getProcessRoutingDetails() {
-        pageUtils.checkElementsNotVisibleByBoolean(processRoutingState);
-        return processRoutingName.getAttribute("title");
+    public boolean getProcessRoutingDetails(String text) {
+        return pageUtils.checkElementContains(processRoutingName, text);
     }
 
     /**
