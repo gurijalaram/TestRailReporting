@@ -2,6 +2,9 @@ package main.java.compare;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
@@ -26,10 +29,9 @@ public class AddPublicScenarioTests extends TestBase {
         super();
     }
 
-    /**
-     * Test filtering and adding a public scenario then searching component table for the scenario
-     */
     @Test
+    @Description("Test filtering and adding a public scenario then searching component table for the scenario")
+    @Severity(SeverityLevel.CRITICAL)
     public void filterAddPublicScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());

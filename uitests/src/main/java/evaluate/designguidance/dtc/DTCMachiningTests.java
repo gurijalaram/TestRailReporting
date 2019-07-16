@@ -3,6 +3,9 @@ package main.java.evaluate.designguidance.dtc;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
@@ -29,10 +32,9 @@ public class DTCMachiningTests extends TestBase {
         super();
     }
 
-    /**
-     * Testing DTC Machining Keyseat Mill
-     */
     @Test
+    @Description("Testing DTC Machining Keyseat Mill")
+    @Severity(SeverityLevel.NORMAL)
     public void testDTCKeyseat() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -50,10 +52,9 @@ public class DTCMachiningTests extends TestBase {
         assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("There is no available Groove milling tool that can fit inside the Slot."));
     }
 
-    /**
-     * Testing DTC Machining Curved Surface
-     */
     @Test
+    @Description("Testing DTC Machining Curved Surface")
+    @Severity(SeverityLevel.NORMAL)
     public void testDTCCurvedSurface() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -71,10 +72,9 @@ public class DTCMachiningTests extends TestBase {
         assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Feature contains a sharp corner"));
     }
 
-    /**
-     * Testing DTC Machining Sharp Corner
-     */
     @Test
+    @Description("Testing DTC Machining Sharp Corner")
+    @Severity(SeverityLevel.NORMAL)
     public void testDTCSharpCorner() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -92,10 +92,9 @@ public class DTCMachiningTests extends TestBase {
         assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Feature contains a sharp corner"));
     }
 
-    /**
-     * Testing DTC Machining Side Milling
-     */
     @Test
+    @Description("Testing DTC Machining Side Milling")
+    @Severity(SeverityLevel.NORMAL)
     public void testDTCSideMilling() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -113,10 +112,9 @@ public class DTCMachiningTests extends TestBase {
         assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Required tool exceeds the max L/D Ratio"));
     }
 
-    /**
-     * Testing DTC Machining Missing Setups
-     */
     @Test
+    @Description("Testing DTC Machining Missing Setups")
+    @Severity(SeverityLevel.NORMAL)
     public void testDTCMissingSetup() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -134,10 +132,9 @@ public class DTCMachiningTests extends TestBase {
         assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Setup Axis was not automatically assigned"));
     }
 
-    /**
-     * Testing DTC Machining Planar Face
-     */
     @Test
+    @Description("Testing DTC Machining Planar Face")
+    @Severity(SeverityLevel.NORMAL)
     public void testDTCPlanarFace() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
