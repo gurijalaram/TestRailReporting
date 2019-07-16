@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import main.java.http.enums.Schema;
+import main.java.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import main.java.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssZ;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ public class MaterialLineItem {
     private String identity;
 
     @JsonProperty
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
 
     @JsonProperty
@@ -37,6 +38,9 @@ public class MaterialLineItem {
     @JsonProperty
     private String quantity;
 
+    @JsonProperty
+    private Integer level;
+
     @JsonProperty("parts")
     private List<MaterialPart> materialParts;
 
@@ -46,6 +50,15 @@ public class MaterialLineItem {
 
     public MaterialLineItem setIdentity(String identity) {
         this.identity = identity;
+        return this;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public MaterialLineItem setLevel(Integer level) {
+        this.level = level;
         return this;
     }
 

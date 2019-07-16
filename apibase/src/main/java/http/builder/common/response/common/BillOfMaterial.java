@@ -1,9 +1,9 @@
 package main.java.http.builder.common.response.common;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import main.java.http.enums.Schema;
-import main.java.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssZ;
+import main.java.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class BillOfMaterial {
 
     @JsonProperty
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
 
     @JsonProperty

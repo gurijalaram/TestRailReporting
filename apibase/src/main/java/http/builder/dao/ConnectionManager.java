@@ -106,6 +106,10 @@ public class ConnectionManager<T> {
             urlParams.forEach(builder::addQueryParams);
         }
 
+        if (requestEntity.getHeaders() != null) {
+            builder.addHeaders(requestEntity.getHeaders());
+        }
+
         if (requestEntity.getXwwwwFormUrlEncoded() != null && !requestEntity.getXwwwwFormUrlEncoded().isEmpty()) {
             builder.setContentType(ContentType.URLENC);
             requestEntity.getXwwwwFormUrlEncoded().forEach(builder::addFormParams);

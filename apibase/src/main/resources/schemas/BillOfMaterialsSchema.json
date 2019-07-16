@@ -22,7 +22,7 @@
         "totalPageCount",
         "hasNextPage",
         "hasPreviousPage",
-        "results"
+        "items"
       ],
       "properties": {
         "isFirstPage": {
@@ -106,12 +106,12 @@
             false
           ]
         },
-        "results": {
-          "$id": "#/properties/response/properties/results",
+        "items": {
+          "$id": "#/properties/response/properties/items",
           "type": "array",
           "title": "The Results Schema",
           "items": {
-            "$id": "#/properties/response/properties/results/items",
+            "$id": "#/properties/response/properties/items",
             "type": "object",
             "title": "The Items Schema",
             "required": [

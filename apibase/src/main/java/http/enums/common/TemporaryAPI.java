@@ -8,7 +8,7 @@ public interface TemporaryAPI extends ExternalEndpointEnum {
 
     @Override
     default String getEndpoint(Object... variables) {
-            return  "http://edc-api.atv.awsdev.apriori.com/" + String.format(getEndpointString(), ((Object[]) variables));
+            return  "http://edc-api.qa.awsdev.apriori.com/" + String.format(getEndpointString(), ((Object[]) variables));
     }
 
         default String getSchemaLocation() {

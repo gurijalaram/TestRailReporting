@@ -35,7 +35,7 @@ public class BillOfMaterialsWrapper extends CommonResponse {
     @JsonProperty
     private Boolean hasPreviousPage;
 
-    @JsonProperty("results")
+    @JsonProperty("items")
     private List<BillOfMaterial> billOfMaterialsList;
 
 

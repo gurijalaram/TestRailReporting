@@ -4,23 +4,36 @@ import main.java.http.builder.common.response.common.*;
 import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
 import main.java.http.enums.common.api.PartsAPIEnum;
+import main.java.utils.WebDriverUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class PartOfMaterialsTest {
 
-    private static BillOfMaterialsWrapper billOfMaterialsWrapper;
     private static MaterialLineItem lineItem;
     private static BillOfMaterial billOfMaterial;
+    private static Map<String, String> authorizationHeaders;
+    private static String token;
 
     @BeforeClass
     public static void getLineItems(){
-        billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
+        //TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
+        token = WebDriverUtils.init().getToken("email", "passsword");
+        authorizationHeaders =  new HashMap<String, String>() {{
+            put("Authorization", "Bearer " + token);
+            put("ap-cloud-context", "EDC");
+            put("Content-Type", "*/*");
+        }};
+
+        BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
                 .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
+                .setHeaders(authorizationHeaders)
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
                 .connect()
@@ -32,6 +45,7 @@ public class PartOfMaterialsTest {
                 .unauthorized()
                 .customizeRequest()
                 .setInlineVariables(billOfMaterial.getIdentity())
+                .setHeaders(authorizationHeaders)
                 .setEndpoint(PartsAPIEnum.GET_LINE_ITEMS)
                 .setReturnType(MaterialsLineItemsWrapper.class)
                 .commitChanges()
@@ -39,6 +53,7 @@ public class PartOfMaterialsTest {
                 .get();
 
         lineItem = getRandomLineItemWithParts(materialsLineItemsWrapper);
+
 
     }
 
@@ -53,12 +68,15 @@ public class PartOfMaterialsTest {
         return materialLineItem;
     }
 
+
+
     @Test
     public void getParts(){
 
         new HTTPRequest().unauthorized()
                 .customizeRequest()
                 .setEndpoint(PartsAPIEnum.GET_PARTS_BY_BILL_AND_LINE_IDENTITY)
+                .setHeaders(authorizationHeaders)
                 .setInlineVariables(
                         billOfMaterial.getIdentity(),
                         lineItem.getIdentity())
@@ -91,6 +109,7 @@ public class PartOfMaterialsTest {
                 .customizeRequest()
                 .setEndpoint(PartsAPIEnum.POST_COST_PARTS_BY_BILL_AND_LINE_IDENTITY)
                 .setReturnType(MaterialPart.class)
+                .setHeaders(authorizationHeaders)
                 .setInlineVariables(
                         billOfMaterial.getIdentity(),
                         lineItem.getIdentity())
@@ -126,6 +145,10 @@ public class PartOfMaterialsTest {
                 .customizeRequest()
                 .setEndpoint(PartsAPIEnum.POST_SELECT_PART_BY_BILL_LINE_AND_PART_IDENTITY)
                 .setStatusCode(204)
+                .setHeaders(new HashMap<String, String>() {{
+                        put("Authorization", "Bearer " + token);
+                        put("ap-cloud-context", "EDC");
+                    }})
                 .setInlineVariables(
                         billOfMaterial.getIdentity(),
                         lineItem.getIdentity(),
@@ -134,9 +157,4 @@ public class PartOfMaterialsTest {
                 .connect()
                 .post();
     }
-
-
-
-
-
 }

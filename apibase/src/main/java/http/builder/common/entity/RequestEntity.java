@@ -34,6 +34,7 @@ public class RequestEntity {
 
 
     private EndpointEnum endpoint;
+    private Map<String, String> headers = new HashMap<>();
     private Integer[] statusCode = {HttpStatus.SC_OK};
     private boolean useCookie = false;
     private boolean autoLogin = true;
@@ -227,6 +228,17 @@ public class RequestEntity {
         return this;
     }
 
+
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
+
+    public RequestEntity setHeaders(Map<String, String> headers) {
+        if (headers != null) {
+            this.headers = headers;
+        }
+        return this;
+    }
 
     public List<Map<String, ?>> getXwwwwFormUrlEncoded() {
         return xwwwwFormUrlEncoded;

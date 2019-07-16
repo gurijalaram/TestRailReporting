@@ -35,7 +35,7 @@ public class MaterialsLineItemsWrapper extends CommonResponse{
     @JsonProperty
     private Boolean hasPreviousPage;
 
-    @JsonProperty("results")
+    @JsonProperty("items")
     private List<MaterialLineItem> materialLineItems;
 
     public Boolean getFirstPage() {

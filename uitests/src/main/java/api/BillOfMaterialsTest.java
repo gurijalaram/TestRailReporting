@@ -1,28 +1,42 @@
 package main.java.api;
 
+import main.java.enums.UsersEnum;
+import main.java.http.builder.common.response.common.AuthenticateJSON;
 import main.java.http.builder.common.response.common.BillOfMaterial;
 import main.java.http.builder.common.response.common.BillOfMaterialsWrapper;
 import main.java.http.builder.common.response.common.BillOfSingleMaterialWrapper;
 import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
+import main.java.utils.WebDriverUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class BillOfMaterialsTest {
 
-    private static BillOfMaterialsWrapper billOfMaterialsWrapper;
     private static List<BillOfMaterial> billOfMaterials;
+    private static Map<String, String> authorizationHeaders;
+    private static String token;
 
     @BeforeClass
     public static void initBillOfMaterials() {
-        billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
+//TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
+        token = WebDriverUtils.init().getToken("email", "passsword");
+        authorizationHeaders =  new HashMap<String, String>() {{
+            put("Authorization", "Bearer " + token);
+            put("ap-cloud-context", "EDC");
+        }};
+
+        BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
                 .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
                 .setReturnType(BillOfMaterialsWrapper.class)
+                .setHeaders(authorizationHeaders)
                 .commitChanges()
                 .connect()
                 .get();
@@ -35,6 +49,7 @@ public class BillOfMaterialsTest {
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
+                .setHeaders(authorizationHeaders)
                 .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
@@ -44,39 +59,26 @@ public class BillOfMaterialsTest {
 
     @Test
     public void getBillOfMaterialsByIdentity() {
-
-        BillOfSingleMaterialWrapper billOfSingleMaterialWrapper = (BillOfSingleMaterialWrapper) new HTTPRequest()
+        new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
+                .setHeaders(authorizationHeaders)
                 .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS_IDENTITY)
                 .setInlineVariables(billOfMaterials.get(new Random().nextInt(billOfMaterials.size())).getIdentity())
                 .setReturnType(BillOfSingleMaterialWrapper.class)
                 .commitChanges()
                 .connect()
                 .get();
-
-        System.out.println(billOfSingleMaterialWrapper.getBillOfMaterial().getName());
     }
 
     @Test
     public void deleteBillOfMaterialsByIdentity() {
-
-        BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
-                .setReturnType(BillOfMaterialsWrapper.class)
-                .commitChanges()
-                .connect()
-                .get();
-
-        List<BillOfMaterial> materials = billOfMaterialsWrapper.getBillOfMaterialsList();
-
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
+                .setHeaders(authorizationHeaders)
                 .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS_IDENTITY)
-                .setInlineVariables(materials.get(new Random().nextInt(materials.size())).getIdentity())
+                .setInlineVariables(billOfMaterials.get(new Random().nextInt(billOfMaterials.size())).getIdentity())
                 .setStatusCode(204)
                 .commitChanges()
                 .connect()
@@ -85,22 +87,12 @@ public class BillOfMaterialsTest {
 
     @Test
     public void exportBillOfMaterialsByIdentity() {
-        BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
-                .setReturnType(BillOfMaterialsWrapper.class)
-                .commitChanges()
-                .connect()
-                .get();
-
-        List<BillOfMaterial> materials = billOfMaterialsWrapper.getBillOfMaterialsList();
-
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
+                .setHeaders(authorizationHeaders)
                 .setEndpoint(BillOfMaterialsAPIEnum.EXPORT_BILL_OF_METERIALS_IDENTITY)
-                .setInlineVariables(materials.get(new Random().nextInt(materials.size())).getIdentity())
+                .setInlineVariables(billOfMaterials.get(new Random().nextInt(billOfMaterials.size())).getIdentity())
                 .commitChanges()
                 .connect()
                 .post();
@@ -108,19 +100,10 @@ public class BillOfMaterialsTest {
 
     @Test
     public void postBillOfMaterials() {
-        BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
-                .setReturnType(BillOfMaterialsWrapper.class)
-                .commitChanges()
-                .connect()
-                .get();
-
-
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
+                .setHeaders(authorizationHeaders)
                 .setEndpoint(BillOfMaterialsAPIEnum.POST_BILL_OF_METERIALS)
                 .setReturnType(BillOfMaterial.class)
 //                TODO z: add test file
