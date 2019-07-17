@@ -28,14 +28,14 @@ public class DeletePublicScenarioTests extends TestBase {
     }
 
     @Test
-    @Description("Test a private scenario can be deleted from the component table")
+    @Description("Test a public scenario can be deleted from the component table")
     @Severity(SeverityLevel.NORMAL)
     public void testDeletePrivateScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateScenario", filePath, "casting.prt")
+        explorePage.uploadFile("DeletePublicScenario", filePath, "casting.prt")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario("Initial", "DTCCASTINGISSUES")

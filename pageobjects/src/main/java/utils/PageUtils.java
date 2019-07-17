@@ -444,12 +444,12 @@ public class PageUtils {
     /**
      * Checks the element's size on the page is less than 1 and return true/false
      *
-     * @param webElements - the element as list
+     * @param locator - the element as list
      * @return true/false
      */
-    public <T> Boolean checkElementsNotVisibleByBoolean(List<T> webElements) {
+    public <T> Boolean checkElementsNotVisibleByBoolean(List<T> locator) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 6);
-        return wait.until((ExpectedCondition<Boolean>) element -> (webElements).size() < 1);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() < 1);
     }
 
     /**

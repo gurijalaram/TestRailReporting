@@ -50,6 +50,6 @@ public class AddPublicScenarioTests extends TestBase {
         new FilterCriteriaPage(driver).filterPublicCriteria("Part", "Part Name", "Contains", "HoleProximityTest")
             .apply(ComparisonTablePage.class);
 
-        assertThat(new ComparisonTablePage(driver).findComparison("HoleProximityTest", "Initial").isDisplayed(), Matchers.is(true));
+        assertThat(new ComparisonTablePage(driver).findComparison("Initial", "HoleProximityTest").isDisplayed(), Matchers.is(true));
     }
 }

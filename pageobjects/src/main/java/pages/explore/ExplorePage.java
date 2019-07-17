@@ -96,6 +96,9 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
     private WebElement componentScroller;
 
+    @FindBy(css = "button[data-ap-comp='saveComparisonAsButton']")
+    private WebElement saveAsButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -327,7 +330,15 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @return new page object
      */
     public DeletePage delete() {
-        pageUtils.waitForElementToBeClickable(deleteButton).click();
+        deleteButton.click();
         return new DeletePage(driver);
+    }
+
+    /**
+     * Gets the state of save as button
+     * @return visibility of button
+     */
+    public boolean getSaveAsButton() {
+        return saveAsButton.isDisplayed();
     }
 }
