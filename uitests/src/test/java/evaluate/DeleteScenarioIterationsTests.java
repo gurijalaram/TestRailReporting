@@ -7,6 +7,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
+import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
@@ -36,6 +37,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("DeletePublicScenarioIteration", filePath, "casting.prt")
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario("DeletePublicScenarioIteration", "DTCCASTINGISSUES")
@@ -57,6 +59,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("DeletePrivateScenarioIteration", filePath, "casting.prt")
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .highlightScenario("DeletePrivateScenarioIteration", "DTCCASTINGISSUES")
