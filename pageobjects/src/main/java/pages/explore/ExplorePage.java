@@ -1,5 +1,6 @@
 package main.java.pages.explore;
 
+import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.settings.SettingsPage;
 import main.java.utils.PageUtils;
@@ -232,6 +233,16 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     public EvaluatePage openScenario(String scenarioName, String partName) {
         findScenario(scenarioName, partName).click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Opens the comparison
+     * @param comparisonName - the comparison name
+     * @return new page object
+     */
+    public ComparePage openComparison(String comparisonName) {
+        findComparison(comparisonName).click();
+        return new ComparePage(driver);
     }
 
     /**
