@@ -7,6 +7,7 @@ import test.java.compare.AddPrivateScenarioTests;
 import test.java.compare.AddPublicScenarioTests;
 import test.java.evaluate.CostAllCadTests;
 import test.java.evaluate.DeletePrivateScenarioTests;
+import test.java.evaluate.DeletePublicScenarioTests;
 import test.java.evaluate.EvaluateTests;
 import test.java.evaluate.ProcessGroupsTests;
 import test.java.evaluate.SecondaryProcessTests;
@@ -35,7 +36,8 @@ import test.java.login.LoginTests;
     ChangeStockSelectionTests.class,
     ProcessGroupsTests.class,
     CostAllCadTests.class,
-    DeletePrivateScenarioTests.class
+    DeletePrivateScenarioTests.class,
+    DeletePublicScenarioTests.class
 })
 public class CIDTestSuite {
 }
