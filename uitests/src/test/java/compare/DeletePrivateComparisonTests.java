@@ -13,19 +13,18 @@ import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
-import test.java.evaluate.DeletePrivateScenarioTests;
 
 import java.util.Scanner;
 
-public class DeletePrivateComparison extends TestBase {
+public class DeletePrivateComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
 
-    private String filePath = new Scanner(DeletePrivateScenarioTests.class.getClassLoader()
+    private String filePath = new Scanner(DeletePrivateComparisonTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
-    public DeletePrivateComparison() {
+    public DeletePrivateComparisonTests() {
         super();
     }
 
@@ -37,7 +36,7 @@ public class DeletePrivateComparison extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparison", filePath, "casting.prt")
+        explorePage.uploadFile("DeletePrivateComparisonTests", filePath, "casting.prt")
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")
