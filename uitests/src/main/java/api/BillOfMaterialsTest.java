@@ -1,5 +1,6 @@
 package main.java.api;
 
+import main.java.base.DriverFactory;
 import main.java.http.builder.common.response.common.BillOfMaterial;
 import main.java.http.builder.common.response.common.BillOfMaterialsWrapper;
 import main.java.http.builder.common.response.common.BillOfSingleMaterialWrapper;
@@ -27,7 +28,7 @@ public class BillOfMaterialsTest {
     @BeforeClass
     public static void initBillOfMaterials() {
 //TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
-        token = WebDriverUtils.init().getToken("email", "passsword");
+        token = new WebDriverUtils().getToken("email", "password");
 
         authorizationHeaders =  new HashMap<String, String>() {{
             put("Authorization", "Bearer " + token);
@@ -104,6 +105,7 @@ public class BillOfMaterialsTest {
 
     @Test
     public void postBillOfMaterials() {
+
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()

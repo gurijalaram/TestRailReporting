@@ -22,7 +22,7 @@ public class PartOfMaterialsTest {
     @BeforeClass
     public static void getLineItems(){
         //TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
-        token = WebDriverUtils.init().getToken("email", "password");
+        token = new WebDriverUtils().getToken("email", "password");
 
         authorizationHeaders =  new HashMap<String, String>() {{
             put("Authorization", "Bearer " + token);
@@ -34,7 +34,6 @@ public class PartOfMaterialsTest {
                 .customizeRequest()
                 .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
                 .setHeaders(authorizationHeaders)
-
                 .setReturnType(BillOfMaterialsWrapper.class)
                 .commitChanges()
                 .connect()

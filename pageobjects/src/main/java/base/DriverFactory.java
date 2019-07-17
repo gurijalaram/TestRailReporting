@@ -48,8 +48,10 @@ public class DriverFactory {
                 case QA:
                     logger_DriverFactory.debug("Getting host and port from properties file");
                     BaseReader propertiesReader = new BaseReader("seleniumconfig.properties");
+                    String seleniumProtocol = propertiesReader.getProperties().getProperty("protocol");
                     String seleniumPort = propertiesReader.getProperties().getProperty("port");
                     String seleniumHost = propertiesReader.getProperties().getProperty("host");
+                    String seleniumPrefix = propertiesReader.getProperties().getProperty("prefix");
                     if (StringUtils.isNotEmpty(System.getProperty("selenium.port"))) {
                         seleniumPort = System.getProperty("selenium.port");
                     }
@@ -58,7 +60,14 @@ public class DriverFactory {
                     }
                     logger_DriverFactory.debug("Starting driver on " + seleniumHost + ":" + seleniumPort);
 
-                    server = "http://" + seleniumHost + ":" + seleniumPort + "/wd/hub";
+                    StringBuilder serverBuilder = new StringBuilder(seleniumProtocol + "://" + seleniumHost);
+
+                    if(seleniumPort != null && !seleniumPort.isEmpty()) {
+                        serverBuilder.append(":" + seleniumPort);
+                    }
+                    serverBuilder.append(seleniumPrefix);
+
+                    server = serverBuilder.toString();
 
                     if (testType.equals(TestType.EXPORT)) {
                         driver = getQADriver(server, browser, proxy, downloadPath, remoteDownloadPath, locale);

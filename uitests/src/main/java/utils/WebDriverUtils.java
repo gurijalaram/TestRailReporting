@@ -1,26 +1,25 @@
 package main.java.utils;
 
+import main.java.base.DriverFactory;
+import main.java.base.TestMode;
+import main.java.base.TestType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
-
 public class WebDriverUtils {
 
-    private static WebDriver driver;
-    private static WebDriverWait wait;
+    private static WebDriver driver = new DriverFactory(TestMode.LOCAL,
+            TestType.UI,
+            "chrome",
+            null,
+            "../",
+            null,
+            null).getDriver();
 
-    public static WebDriverUtils init(){
-        System.setProperty("webdriver.chrome.driver", new File("../pageobjects/src/main/resources/chromedriver.exe").getAbsolutePath());
-
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 10);
-
-        return new WebDriverUtils();
-    }
+    private static WebDriverWait wait = new WebDriverWait(driver, 10);
 
     public String getToken(final String email, final String password) {
 
