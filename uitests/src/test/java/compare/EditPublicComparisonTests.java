@@ -10,6 +10,7 @@ import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparePage;
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
@@ -43,7 +44,7 @@ public class EditPublicComparisonTests extends TestBase {
             .enterComparisonName("DeletePrivateComparison10")
             .save();
 
-        publish();
+        new EvaluatePage(driver).publishScenario();
 
         assertThat(new ExplorePage(driver).findComparison("DeletePrivateComparison10").isDisplayed(), is(true));
 
@@ -63,7 +64,7 @@ public class EditPublicComparisonTests extends TestBase {
             .enterComparisonName("DeletePrivateComparison10")
             .save();
 
-        publish().openComparison("DeletePrivateComparison10");
+        new EvaluatePage(driver).publishScenario().openComparison("DeletePrivateComparison10");
 
         assertThat(new ComparePage(driver).getDescriptionText(), containsString("DeletePrivateComparison10"));
     }
