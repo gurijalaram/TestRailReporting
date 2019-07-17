@@ -39,7 +39,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
     private WebElement revertButton;
 
-    @FindBy(css = "span.delete-button")
+    @FindBy(css = "button[data-ap-comp='deleteScenarioButton']")
     private WebElement deleteButton;
 
     @FindBy(css = "span.glyphicons-settings")
@@ -119,6 +119,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Checks delete button is displayed
+     *
      * @return visibility of button
      */
     public boolean isDeleteButtonPresent() {
@@ -127,9 +128,10 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Collective method to upload a file
+     *
      * @param scenarioName - the name of the scenario
-     * @param filePath - location of the file
-     * @param fileName - name of the file
+     * @param filePath     - location of the file
+     * @param fileName     - name of the file
      * @return current page object
      */
     public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
@@ -140,6 +142,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects new scenario button
+     *
      * @return new page object
      */
     public ScenarioPage createNewScenario() {
@@ -150,6 +153,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects new comparison button
+     *
      * @return new page object
      */
     public ComparisonPage createNewComparison() {
@@ -160,6 +164,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects the workspace from the dropdown
+     *
      * @param workspace - workspace dropdown
      * @return current page object
      */
@@ -170,7 +175,8 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Find specific element in the table
-     * @param partName - name of the part
+     *
+     * @param partName     - name of the part
      * @param scenarioName - scenario name
      * @return the part as webelement
      */
@@ -181,16 +187,19 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Highlights the scenario in the table
+     *
      * @param scenarioName - scenario name
-     * @param partName - name of the part
+     * @param partName     - name of the part
      */
-    public void highlightScenario(String scenarioName, String partName) {
+    public ExplorePage highlightScenario(String scenarioName, String partName) {
         By scenario = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller).click();
+        return this;
     }
 
     /**
      * Find specific scenario in the table
+     *
      * @param comparisonName - name of the scenario
      * @return the scenario as webelement
      */
@@ -201,7 +210,8 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Opens the scenario
-     * @param partName - name of the part
+     *
+     * @param partName     - name of the part
      * @param scenarioName - scenario name
      * @return a new page object
      */
@@ -212,6 +222,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Locks a scenario
+     *
      * @return current page object
      */
     public ExplorePage lockScenario() {
@@ -222,6 +233,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects assign scenario
+     *
      * @return new page object
      */
     public AssignPage selectAssignScenario() {
@@ -232,6 +244,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects scenario info and notes
+     *
      * @return new page object
      */
     public ScenarioNotesPage selectScenarioInfoNotes() {
@@ -242,6 +255,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Opens the settings page
+     *
      * @return new page object
      */
     public SettingsPage openSettings() {
@@ -251,6 +265,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects filter criteria button
+     *
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
@@ -260,6 +275,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects the job queue button
+     *
      * @return new page object
      */
     public void openJobQueue() {
@@ -268,6 +284,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects the help button
+     *
      * @retun new page object
      */
     public void openHelp() {
@@ -276,6 +293,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects the logout button
+     *
      * @return new page object
      */
     public LogOutPage openLogOut() {
@@ -285,6 +303,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Selects the table column button
+     *
      * @return new page object
      */
     public TableColumnsPage openColumnsTable() {
@@ -294,10 +313,21 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     /**
      * Edits the scenario
+     *
      * @return new page object
      */
     public EvaluatePage editScenario() {
         pageUtils.waitForElementToAppear(editButton).click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Deletes the scenario
+     *
+     * @return new page object
+     */
+    public DeletePage delete() {
+        pageUtils.waitForElementToBeClickable(deleteButton).click();
+        return new DeletePage(driver);
     }
 }
