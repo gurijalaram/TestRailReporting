@@ -212,6 +212,17 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
+     * Highlights the comparison in the table
+     * @param comparisonName - the comparison name
+     * @return the scenarion as webelement
+     */
+    public ExplorePage highlightComparison(String comparisonName) {
+        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
+        pageUtils.scrollToElement(comparison, componentScroller);
+        return this;
+    }
+
+    /**
      * Opens the scenario
      *
      * @param partName     - name of the part
