@@ -9,6 +9,7 @@ import test.java.compare.DeletePrivateComparisonTests;
 import test.java.evaluate.CostAllCadTests;
 import test.java.evaluate.DeletePrivateScenarioTests;
 import test.java.evaluate.DeletePublicScenarioTests;
+import test.java.evaluate.DeleteScenarioIterationsTests;
 import test.java.evaluate.EvaluateTests;
 import test.java.evaluate.ProcessGroupsTests;
 import test.java.evaluate.SecondaryProcessTests;
@@ -39,7 +40,8 @@ import test.java.login.LoginTests;
     CostAllCadTests.class,
     DeletePrivateScenarioTests.class,
     DeletePublicScenarioTests.class,
-    DeletePrivateComparisonTests.class
+    DeletePrivateComparisonTests.class,
+    DeleteScenarioIterationsTests.class
 })
 public class CIDTestSuite {
 }

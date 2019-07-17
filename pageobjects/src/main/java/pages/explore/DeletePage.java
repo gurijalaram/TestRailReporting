@@ -55,6 +55,11 @@ public class DeletePage extends LoadableComponent<DeletePage> {
         return this;
     }
 
+    public ExplorePage deleteScenarioIteration() {
+        selectIterationsCheckbox();
+        return deleteScenario();
+    }
+
     /**
      * Selects the delete button
      * @return new page object

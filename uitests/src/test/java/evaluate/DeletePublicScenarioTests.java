@@ -20,7 +20,7 @@ public class DeletePublicScenarioTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
 
-    private String filePath = new Scanner(DeletePrivateScenarioTests.class.getClassLoader()
+    private String filePath = new Scanner(DeletePublicScenarioTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public DeletePublicScenarioTests() {
@@ -42,6 +42,6 @@ public class DeletePublicScenarioTests extends TestBase {
             .delete()
             .deleteScenario();
 
-        assertThat(new ExplorePage(driver).findScenario("Initial", "DTCCASTINGISSUESe").isDisplayed(), is(false));
+        assertThat(new ExplorePage(driver).findScenario("Initial", "DTCCASTINGISSUES").isDisplayed(), is(false));
     }
 }
