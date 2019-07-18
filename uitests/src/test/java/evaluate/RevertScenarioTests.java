@@ -24,7 +24,7 @@ public class RevertScenarioTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
 
-    private String filePath = new Scanner(DeletePrivateScenarioTests.class.getClassLoader()
+    private String filePath = new Scanner(RevertScenarioTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public RevertScenarioTests() {
