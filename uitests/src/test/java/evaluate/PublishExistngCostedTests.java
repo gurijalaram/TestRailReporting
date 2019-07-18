@@ -1,7 +1,7 @@
 package test.java.evaluate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
