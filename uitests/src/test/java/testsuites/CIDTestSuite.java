@@ -5,7 +5,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import test.java.compare.AddPrivateScenarioTests;
 import test.java.compare.AddPublicScenarioTests;
+import test.java.evaluate.CostAllCadTests;
 import test.java.evaluate.EvaluateTests;
+import test.java.evaluate.ProcessGroupsTests;
 import test.java.evaluate.SecondaryProcessTests;
 import test.java.evaluate.designguidance.dtc.DTCMachiningTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingDraftTests;
@@ -30,6 +32,8 @@ import test.java.login.LoginTests;
     FilterCriteriaTests.class,
     LoginTests.class,
     ChangeStockSelectionTests.class,
+    ProcessGroupsTests.class,
+    CostAllCadTests.class
 })
 public class CIDTestSuite {
 }

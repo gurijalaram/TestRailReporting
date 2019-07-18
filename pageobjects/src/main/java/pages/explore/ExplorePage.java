@@ -1,7 +1,6 @@
 package main.java.pages.explore;
 
 import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.logout.LogoutPage;
 import main.java.pages.settings.SettingsPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
@@ -19,11 +18,11 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     private final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
-    @FindBy(css = "a[data-ap-comp='exploreButton']")
-    private WebElement exploreButton;
-
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
+
+    @FindBy(css = "button[data-ap-comp='editScenarioButton']")
+    private WebElement editButton;
 
     @FindBy(css = "button[data-ap-comp='newComponentButton']")
     private WebElement componentButton;
@@ -127,15 +126,6 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
-     * Selects the explore button
-     * @return current page object
-     */
-    public ExplorePage selectExploreButton() {
-        pageUtils.waitForElementToBeClickable(exploreButton).click();
-        return this;
-    }
-
-    /**
      * Collective method to upload a file
      * @param scenarioName - the name of the scenario
      * @param filePath - location of the file
@@ -184,9 +174,19 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @param scenarioName - scenario name
      * @return the part as webelement
      */
-    public WebElement findScenario(String partName, String scenarioName) {
+    public WebElement findScenario(String scenarioName, String partName) {
         By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
         return pageUtils.scrollToElement(scenario, componentScroller);
+    }
+
+    /**
+     * Highlights the scenario in the table
+     * @param scenarioName - scenario name
+     * @param partName - name of the part
+     */
+    public void highlightScenario(String scenarioName, String partName) {
+        By scenario = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
+        pageUtils.scrollToElement(scenario, componentScroller).click();
     }
 
     /**
@@ -205,8 +205,8 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @param scenarioName - scenario name
      * @return a new page object
      */
-    public EvaluatePage openScenario(String partName, String scenarioName) {
-        findScenario(partName, scenarioName).click();
+    public EvaluatePage openScenario(String scenarioName, String partName) {
+        findScenario(scenarioName, partName).click();
         return new EvaluatePage(driver);
     }
 
@@ -290,5 +290,14 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     public TableColumnsPage openColumnsTable() {
         pageUtils.waitForElementToAppear(columnsButton).click();
         return new TableColumnsPage(driver);
+    }
+
+    /**
+     * Edits the scenario
+     * @return new page object
+     */
+    public EvaluatePage editScenario() {
+        pageUtils.waitForElementToAppear(editButton).click();
+        return new EvaluatePage(driver);
     }
 }
