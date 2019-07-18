@@ -18,6 +18,7 @@ import test.java.evaluate.EvaluateTests;
 import test.java.evaluate.NewScenarioNameTests;
 import test.java.evaluate.ProcessGroupsTests;
 import test.java.evaluate.PublishExistngCostedTests;
+import test.java.evaluate.ReCostScenarioTests;
 import test.java.evaluate.SecondaryProcessTests;
 import test.java.evaluate.designguidance.dtc.DTCMachiningTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingDraftTests;
@@ -53,7 +54,8 @@ import test.java.login.LoginTests;
     NewScenarioNameTests.class,
     PublishExistngCostedTests.class,
     PublishNewCostedTests.class,
-    PublishPublicComparison.class
+    PublishPublicComparison.class,
+    ReCostScenarioTests.class
 })
 public class CIDTestSuite {
 }
