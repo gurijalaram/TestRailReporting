@@ -13,6 +13,7 @@ import test.java.evaluate.DeletePrivateScenarioTests;
 import test.java.evaluate.DeletePublicScenarioTests;
 import test.java.evaluate.DeleteScenarioIterationsTests;
 import test.java.evaluate.EvaluateTests;
+import test.java.evaluate.NewScenarioNameTests;
 import test.java.evaluate.ProcessGroupsTests;
 import test.java.evaluate.SecondaryProcessTests;
 import test.java.evaluate.designguidance.dtc.DTCMachiningTests;
@@ -45,7 +46,8 @@ import test.java.login.LoginTests;
     DeletePrivateComparisonTests.class,
     DeleteScenarioIterationsTests.class,
     DeletePublicComparisonTests.class,
-    EditPublicComparisonTests.class
+    EditPublicComparisonTests.class,
+    NewScenarioNameTests.class
 })
 public class CIDTestSuite {
 }
