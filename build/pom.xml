@@ -27,7 +27,7 @@
 		<joda.version>2.10.1</joda.version>
 		<fge.json.schema.core.version>1.2.5</fge.json.schema.core.version>
 		<restassured.version>3.2.0</restassured.version>
-		<com.fasterxml.jackson.version>2.9.9</com.fasterxml.jackson.version>
+		<com.fasterxml.jackson.version>[2.9.9.1,)</com.fasterxml.jackson.version>
 		<com.github.fge.jackson.version>1.8</com.github.fge.jackson.version>
 		<skyscreamer.jsonassert>1.2.3</skyscreamer.jsonassert>
 		<json.version>20090211</json.version>
