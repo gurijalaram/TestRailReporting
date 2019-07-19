@@ -13,7 +13,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author kpatel
  */
 
-public class GenericHeader extends LoadableComponent<GenericHeader> {
+public class GenericHeader extends PageHeader {
 
     private static Logger logger = LoggerFactory.getLogger(GenericHeader.class);
 
@@ -74,6 +73,7 @@ public class GenericHeader extends LoadableComponent<GenericHeader> {
     private PageUtils pageUtils;
 
     public GenericHeader(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -172,9 +172,10 @@ public class GenericHeader extends LoadableComponent<GenericHeader> {
      * Publish the scenario
      * @return new page object
      */
-    public PublishPage publishScenario() {
+    public ExplorePage publishScenario() {
         publishButton.click();
-        return new PublishPage(driver);
+        new PublishPage(driver).selectPublishButton();
+        return new ExplorePage(driver);
     }
 
     /**
@@ -190,5 +191,14 @@ public class GenericHeader extends LoadableComponent<GenericHeader> {
             .selectCostMaturity(costMaturity)
             .selectAssignee(assignee);
         return new PublishPage(driver);
+    }
+
+    /**
+     * Edits the scenario
+     * @return new page object
+     */
+    public EvaluatePage editScenario() {
+        pageUtils.waitForElementToAppear(editButton).click();
+        return new EvaluatePage(driver);
     }
 }
