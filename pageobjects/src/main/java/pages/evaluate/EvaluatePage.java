@@ -5,6 +5,7 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
+import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -111,7 +112,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         evaluateHeader.selectCostButton();
         evaluateHeader.selectDialogCostButton();
         costText = costText == "Success" ? COST_UP_TO_DATE : costText;
-        pageUtils.waitForElementToAppear(costLabelPopover);
+        evaluateHeader.getCostLabel();
         checkCostLabel(costText);
         return this;
     }
@@ -121,7 +122,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @param costText - the cost label text
      * @return true or false
      */
-    private boolean checkCostLabel(String costText) {
+    public boolean checkCostLabel(String costText) {
         return evaluateHeader.costLabelPopover(costText);
     }
 
@@ -129,7 +130,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * Publish the scenario
      * @return new page object
      */
-    public PublishPage publishScenario() {
+    public ExplorePage publishScenario() {
         return evaluateHeader.publishScenario();
     }
 

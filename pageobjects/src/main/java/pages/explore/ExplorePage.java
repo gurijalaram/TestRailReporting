@@ -118,6 +118,14 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
+     * Edits the scenario
+     * @return new page object
+     */
+    public EvaluatePage editScenario() {
+        return exploreHeader.editScenario();
+    }
+
+    /**
      * Selects the workspace from the dropdown
      *
      * @param workspace - workspace dropdown

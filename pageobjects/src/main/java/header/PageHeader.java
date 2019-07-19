@@ -1,5 +1,6 @@
 package main.java.header;
 
+import main.java.pages.settings.SettingsPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,9 +14,9 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class TopHeader extends LoadableComponent<TopHeader> {
+public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private static Logger logger = LoggerFactory.getLogger(TopHeader.class);
+    private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(css = "a[data-ap-comp='exploreButton'")
     private WebElement exploreTab;
@@ -44,7 +45,7 @@ public class TopHeader extends LoadableComponent<TopHeader> {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public TopHeader(WebDriver driver) {
+    public PageHeader(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -68,7 +69,7 @@ public class TopHeader extends LoadableComponent<TopHeader> {
      *
      * @return current page object
      */
-    TopHeader selectExploreButton() {
+    PageHeader selectExploreButton() {
         pageUtils.waitForElementToBeClickable(exploreTab).click();
         return this;
     }
@@ -78,7 +79,7 @@ public class TopHeader extends LoadableComponent<TopHeader> {
      *
      * @return current page object
      */
-    TopHeader selectEvaluateButton() {
+    PageHeader selectEvaluateButton() {
         pageUtils.waitForElementToBeClickable(exploreTab).click();
         return this;
     }
@@ -88,7 +89,7 @@ public class TopHeader extends LoadableComponent<TopHeader> {
      *
      * @return current page object
      */
-    TopHeader selectCompareButton() {
+    PageHeader selectCompareButton() {
         pageUtils.waitForElementToBeClickable(exploreTab).click();
         return this;
     }
@@ -98,9 +99,9 @@ public class TopHeader extends LoadableComponent<TopHeader> {
      *
      * @return new page object
      */
-    public TopHeader openSettings() {
+    public SettingsPage openSettings() {
         pageUtils.waitForElementToAppear(settingsButton).click();
-        return this;
+        return new SettingsPage(driver);
     }
 
     /**
@@ -108,7 +109,7 @@ public class TopHeader extends LoadableComponent<TopHeader> {
      *
      * @return new page object
      */
-    public TopHeader openJobQueue() {
+    public PageHeader openJobQueue() {
         pageUtils.waitForElementToAppear(jobQueueButton).click();
         return this;
     }
@@ -118,7 +119,7 @@ public class TopHeader extends LoadableComponent<TopHeader> {
      *
      * @retun new page object
      */
-    public TopHeader openHelp() {
+    public PageHeader openHelp() {
         pageUtils.waitForElementToAppear(helpButton).click();
         return this;
     }
@@ -128,7 +129,7 @@ public class TopHeader extends LoadableComponent<TopHeader> {
      *
      * @return new page object
      */
-    public TopHeader openLogOut() {
+    public PageHeader openLogOut() {
         pageUtils.waitForElementToAppear(logoutButton).click();
         return this;
     }
