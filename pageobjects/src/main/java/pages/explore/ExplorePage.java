@@ -62,14 +62,6 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
-     * Checks delete button is displayed
-     * @return visibility of button
-     */
-    public boolean isDeleteButtonPresent() {
-        return exploreHeader.getDeleteButton();
-    }
-
-    /**
      * Collective method to upload a file
      *
      * @param scenarioName - the name of the scenario
@@ -78,9 +70,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @return current page object
      */
     public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
-        exploreHeader.selectNewFileDropdown();
-        exploreHeader.selectComponentButton();
-        return new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
+        return exploreHeader.uploadFile(scenarioName, filePath, fileName);
     }
 
     /**
@@ -89,9 +79,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @return new page object
      */
     public ScenarioPage createNewScenario() {
-        exploreHeader.selectNewFileDropdown();
-        exploreHeader.selectScenarioButton();
-        return new ScenarioPage(driver);
+        return exploreHeader.createNewScenario();
     }
 
     /**
@@ -99,9 +87,34 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @return new page object
      */
     public ComparisonPage createNewComparison() {
-        exploreHeader.selectNewFileDropdown();
-        exploreHeader.selectComparisonButton();
-        return new ComparisonPage(driver);
+        return exploreHeader.createNewComparison();
+    }
+
+    /**
+     * Locks a scenario
+     *
+     * @return current page object
+     */
+    public ExplorePage lockScenario() {
+        return exploreHeader.lockScenario();
+    }
+
+    /**
+     * Selects assign scenario
+     *
+     * @return new page object
+     */
+    public AssignPage selectAssignScenario() {
+        return exploreHeader.selectAssignScenario();
+    }
+
+    /**
+     * Selects scenario info and notes
+     *
+     * @return new page object
+     */
+    public ScenarioNotesPage selectScenarioInfoNotes() {
+        return  selectScenarioInfoNotes();
     }
 
     /**
@@ -158,36 +171,6 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
-     * Locks a scenario
-     * @return current page object
-     */
-    public ExplorePage lockScenario() {
-        exploreHeader.selectActionsButton();
-        exploreHeader.selectLockButton();
-        return this;
-    }
-
-    /**
-     * Selects assign scenario
-     * @return new page object
-     */
-    public AssignPage selectAssignScenario() {
-        exploreHeader.selectActionsButton();
-        exploreHeader.selectAssignButton();
-        return new AssignPage(driver);
-    }
-
-    /**
-     * Selects scenario info and notes
-     * @return new page object
-     */
-    public ScenarioNotesPage selectScenarioInfoNotes() {
-        exploreHeader.selectActionsButton();
-        exploreHeader.selectScenarioNotesButton();
-        return new ScenarioNotesPage(driver);
-    }
-
-    /**
      * Selects filter criteria button
      * @return new page object
      */
@@ -203,5 +186,14 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     public TableColumnsPage openColumnsTable() {
         pageUtils.waitForElementToAppear(columnsButton).click();
         return new TableColumnsPage(driver);
+    }
+
+    /**
+     * Checks delete button is displayed
+     *
+     * @return visibility of button
+     */
+    public boolean isDeleteButtonPresent() {
+        return exploreHeader.isDeleteButtonPresent();
     }
 }

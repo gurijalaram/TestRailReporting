@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author kpatel
  */
 
-public class EvaluateHeader extends LoadableComponent<EvaluateHeader> {
+public class EvaluateHeader extends GenericHeader {
 
     private static Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
 
@@ -29,14 +28,13 @@ public class EvaluateHeader extends LoadableComponent<EvaluateHeader> {
     @FindBy(css = "button.gwt-Button.btn.btn-primary")
     private WebElement dialogCostButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
-    GenericHeader genericHeader;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public EvaluateHeader(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.genericHeader = new GenericHeader(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -54,6 +52,7 @@ public class EvaluateHeader extends LoadableComponent<EvaluateHeader> {
 
     /**
      * Selects cost button
+     *
      * @return current page object
      */
     public EvaluateHeader selectCostButton() {
@@ -63,6 +62,7 @@ public class EvaluateHeader extends LoadableComponent<EvaluateHeader> {
 
     /**
      * Selects dialog cost button
+     *
      * @return current page object
      */
     public EvaluateHeader selectDialogCostButton() {
@@ -72,26 +72,19 @@ public class EvaluateHeader extends LoadableComponent<EvaluateHeader> {
 
     /**
      * Wait for cost label popover
+     *
      * @return current page object
      */
-    public EvaluateHeader costLabelPopover() {
-        pageUtils.waitForElementToAppear(costLabelPopover);
-        return this;
+    public boolean costLabelPopover(String costText) {
+        return pageUtils.waitForElementToAppear(costLabelPopover).getText().equalsIgnoreCase(costText);
     }
 
     /**
      * Gets cost label
+     *
      * @return webelement
      */
     public WebElement getCostLabel() {
         return pageUtils.waitForElementToAppear(costLabel);
-    }
-
-    /**
-     * Selects publish button
-     * @return
-     */
-    public GenericHeader selectPublishButton() {
-        return genericHeader.selectPublishButton();
     }
 }

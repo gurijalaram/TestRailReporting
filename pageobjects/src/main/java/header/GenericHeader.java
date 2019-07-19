@@ -1,5 +1,13 @@
 package main.java.header;
 
+import main.java.pages.evaluate.EvaluatePage;
+import main.java.pages.evaluate.PublishPage;
+import main.java.pages.explore.AssignPage;
+import main.java.pages.explore.ComparisonPage;
+import main.java.pages.explore.ExplorePage;
+import main.java.pages.explore.FileUploadPage;
+import main.java.pages.explore.ScenarioNotesPage;
+import main.java.pages.explore.ScenarioPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -83,111 +91,104 @@ public class GenericHeader extends LoadableComponent<GenericHeader> {
     }
 
     /**
-     * Selects new file dropdown
-     *
-     * @return current page object
-     */
-    GenericHeader selectNewFileDropdown() {
-        pageUtils.waitForElementToAppear(newFileDropdown).click();
-        return this;
-    }
-
-    /**
-     * Selects component button
-     *
-     * @return current page object
-     */
-    GenericHeader selectComponentButton() {
-        pageUtils.waitForElementToAppear(componentButton).click();
-        return this;
-    }
-
-    /**
-     * Selects scenario button
-     *
-     * @return current page object
-     */
-    GenericHeader selectScenarioButton() {
-        pageUtils.waitForElementToAppear(scenarioButton).click();
-        return this;
-    }
-
-    /**
-     * Selects comparison button
-     *
-     * @return current page object
-     */
-    GenericHeader selectComparisonButton() {
-        pageUtils.waitForElementToAppear(comparisonButton).click();
-        return this;
-    }
-
-    /**
-     * Selects actions button
-     *
-     * @return current page object
-     */
-    GenericHeader selectActionsButton() {
-        pageUtils.waitForElementToAppear(actionsDropdown).click();
-        return this;
-    }
-
-    /**
-     * Selects edit button
-     *
-     * @return current page object
-     */
-    GenericHeader selectEditButton() {
-        pageUtils.waitForElementToAppear(editButton).click();
-        return this;
-    }
-
-    /**
-     * Selects lock button
-     *
-     * @return current page object
-     */
-    GenericHeader selectLockButton() {
-        pageUtils.waitForElementToAppear(lockButton).click();
-        return this;
-    }
-
-    /**
-     * Selects assign button
-     *
-     * @return current page object
-     */
-    GenericHeader selectAssignButton() {
-        pageUtils.waitForElementToAppear(assignButton).click();
-        return this;
-    }
-
-    /**
-     * Selects scenario notes button
-     *
-     * @return current page object
-     */
-    GenericHeader selectScenarioNotesButton() {
-        pageUtils.waitForElementToAppear(scenarioButton).click();
-        return this;
-    }
-
-    /**
-     * Selects publish button
-     *
-     * @return current page object
-     */
-    GenericHeader selectPublishButton() {
-        pageUtils.waitForElementToAppear(publishButton).click();
-        return this;
-    }
-
-    /**
      * Checks delete button is displayed
      *
      * @return visibility of button
      */
-    boolean getDeleteButton() {
+    public boolean isDeleteButtonPresent() {
         return deleteButton.isDisplayed();
+    }
+
+    /**
+     * Collective method to upload a file
+     *
+     * @param scenarioName - the name of the scenario
+     * @param filePath     - location of the file
+     * @param fileName     - name of the file
+     * @return current page object
+     */
+    public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
+        newFileDropdown.click();
+        componentButton.click();
+        return new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
+    }
+
+    /**
+     * Selects new scenario button
+     *
+     * @return new page object
+     */
+    public ScenarioPage createNewScenario() {
+        newFileDropdown.click();
+        scenarioButton.click();
+        return new ScenarioPage(driver);
+    }
+
+    /**
+     * Selects new comparison button
+     *
+     * @return new page object
+     */
+    public ComparisonPage createNewComparison() {
+        newFileDropdown.click();
+        comparisonButton.click();
+        return new ComparisonPage(driver);
+    }
+
+    /**
+     * Locks a scenario
+     *
+     * @return current page object
+     */
+    public ExplorePage lockScenario() {
+        actionsDropdown.click();
+        lockButton.click();
+        return new ExplorePage(driver);
+    }
+
+    /**
+     * Selects assign scenario
+     *
+     * @return new page object
+     */
+    public AssignPage selectAssignScenario() {
+        actionsDropdown.click();
+        assignButton.click();
+        return new AssignPage(driver);
+    }
+
+    /**
+     * Selects scenario info and notes
+     *
+     * @return new page object
+     */
+    public ScenarioNotesPage selectScenarioInfoNotes() {
+        actionsDropdown.click();
+        scenarioNotesButton.click();
+        return new ScenarioNotesPage(driver);
+    }
+
+    /**
+     * Publish the scenario
+     * @return new page object
+     */
+    public PublishPage publishScenario() {
+        publishButton.click();
+        return new PublishPage(driver);
+    }
+
+    /**
+     * Publish the scenario
+     * @param status - the status dropdown
+     * @param costMaturity - the cost maturity dropdown
+     * @param assignee - the assignee
+     * @return new page object
+     */
+    public PublishPage publishScenario(String status, String costMaturity, String assignee) {
+        publishScenario();
+        new PublishPage(driver).selectStatus(status)
+            .selectCostMaturity(costMaturity)
+            .selectAssignee(assignee);
+        return new PublishPage(driver);
     }
 }

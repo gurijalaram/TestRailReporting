@@ -5,7 +5,6 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
-import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -123,8 +122,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return true or false
      */
     private boolean checkCostLabel(String costText) {
-        evaluateHeader.costLabelPopover();
-        return evaluateHeader.getCostLabel().getText().equalsIgnoreCase(costText);
+        return evaluateHeader.costLabelPopover(costText);
     }
 
     /**
@@ -132,8 +130,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return new page object
      */
     public PublishPage publishScenario() {
-        pageUtils.waitForElementToBeClickable(publishButton).click();
-        return new PublishPage(driver);
+        return evaluateHeader.publishScenario();
     }
 
     /**
@@ -143,13 +140,8 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @param assignee - the assignee
      * @return new page object
      */
-    public ExplorePage publishScenario(String status, String costMaturity, String assignee) {
-        evaluateHeader.selectPublishButton();
-        new PublishPage(driver).selectStatus(status)
-            .selectCostMaturity(costMaturity)
-            .selectAssignee(assignee)
-            .selectPublishButton();
-        return new ExplorePage(driver);
+    public PublishPage publishScenario(String status, String costMaturity, String assignee) {
+        return evaluateHeader.publishScenario(status, costMaturity, assignee);
     }
 
     /**
