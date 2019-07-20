@@ -8,13 +8,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class ExplorePage extends LoadableComponent<ExplorePage> {
+public class ExplorePage extends ExploreHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
@@ -41,12 +40,11 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private ExploreHeader exploreHeader;
 
     public ExplorePage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.exploreHeader = new ExploreHeader(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -59,70 +57,6 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementsToAppear(workspaceDropdownList);
-    }
-
-    /**
-     * Collective method to upload a file
-     *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
-     * @param fileName     - name of the file
-     * @return current page object
-     */
-    public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
-        return exploreHeader.uploadFile(scenarioName, filePath, fileName);
-    }
-
-    /**
-     * Selects new scenario button
-     *
-     * @return new page object
-     */
-    public ScenarioPage createNewScenario() {
-        return exploreHeader.createNewScenario();
-    }
-
-    /**
-     * Selects new comparison button
-     * @return new page object
-     */
-    public ComparisonPage createNewComparison() {
-        return exploreHeader.createNewComparison();
-    }
-
-    /**
-     * Locks a scenario
-     *
-     * @return current page object
-     */
-    public ExplorePage lockScenario() {
-        return exploreHeader.lockScenario();
-    }
-
-    /**
-     * Selects assign scenario
-     *
-     * @return new page object
-     */
-    public AssignPage selectAssignScenario() {
-        return exploreHeader.selectAssignScenario();
-    }
-
-    /**
-     * Selects scenario info and notes
-     *
-     * @return new page object
-     */
-    public ScenarioNotesPage selectScenarioInfoNotes() {
-        return  selectScenarioInfoNotes();
-    }
-
-    /**
-     * Edits the scenario
-     * @return new page object
-     */
-    public EvaluatePage editScenario() {
-        return exploreHeader.editScenario();
     }
 
     /**
@@ -194,14 +128,5 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     public TableColumnsPage openColumnsTable() {
         pageUtils.waitForElementToAppear(columnsButton).click();
         return new TableColumnsPage(driver);
-    }
-
-    /**
-     * Checks delete button is displayed
-     *
-     * @return visibility of button
-     */
-    public boolean isDeleteButtonPresent() {
-        return exploreHeader.isDeleteButtonPresent();
     }
 }

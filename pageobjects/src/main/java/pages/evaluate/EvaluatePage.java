@@ -5,19 +5,17 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
-import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class EvaluatePage extends LoadableComponent<EvaluatePage> {
+public class EvaluatePage extends EvaluateHeader {
 
     private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
@@ -80,13 +78,11 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private static final String COST_UP_TO_DATE = "Cost up to\n" + "Date";
-    private EvaluateHeader evaluateHeader;
 
     public EvaluatePage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.evaluateHeader = new EvaluateHeader(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -101,48 +97,6 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         pageUtils.waitForElementToAppear(leftPanel);
         pageUtils.waitForElementToAppear(viewerCanvas);
         pageUtils.waitForElementToAppear(controlToolbars);
-    }
-
-    /**
-     * Cost the scenario. Enter 'null' if the cost label is expected to be default label
-     * @param costText - the text for the cost label
-     * @return current page object
-     */
-    public EvaluatePage costScenario(String costText) {
-        evaluateHeader.selectCostButton();
-        evaluateHeader.selectDialogCostButton();
-        costText = costText == "Success" ? COST_UP_TO_DATE : costText;
-        evaluateHeader.getCostLabel();
-        checkCostLabel(costText);
-        return this;
-    }
-
-    /**
-     * Checks the text in the cost label
-     * @param costText - the cost label text
-     * @return true or false
-     */
-    public boolean checkCostLabel(String costText) {
-        return evaluateHeader.costLabelPopover(costText);
-    }
-
-    /**
-     * Publish the scenario
-     * @return new page object
-     */
-    public ExplorePage publishScenario() {
-        return evaluateHeader.publishScenario();
-    }
-
-    /**
-     * Publish the scenario
-     * @param status - the status dropdown
-     * @param costMaturity - the cost maturity dropdown
-     * @param assignee - the assignee
-     * @return new page object
-     */
-    public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        return evaluateHeader.publishScenario(status, costMaturity, assignee);
     }
 
     /**
