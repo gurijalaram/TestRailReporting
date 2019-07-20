@@ -1,6 +1,5 @@
-package main.java.header;
+package main.java.pages.compare;
 
-import main.java.pages.compare.ComparePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

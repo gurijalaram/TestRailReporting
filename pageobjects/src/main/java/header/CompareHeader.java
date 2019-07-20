@@ -1,5 +1,6 @@
 package main.java.header;
 
+import main.java.pages.compare.SaveAsPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

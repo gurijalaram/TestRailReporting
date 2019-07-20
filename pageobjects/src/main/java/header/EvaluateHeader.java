@@ -1,5 +1,8 @@
 package main.java.header;
 
+import main.java.pages.evaluate.EvaluatePage;
+import main.java.pages.evaluate.PublishPage;
+import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,6 +33,7 @@ public class EvaluateHeader extends GenericHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private static final String COST_UP_TO_DATE = "Cost up to\n" + "Date";
 
     public EvaluateHeader(WebDriver driver) {
         super(driver);
@@ -51,23 +55,45 @@ public class EvaluateHeader extends GenericHeader {
     }
 
     /**
-     * Selects cost button
-     *
+     * Cost the scenario. Enter 'null' if the cost label is expected to be default label
+     * @param costText - the text for the cost label
      * @return current page object
      */
-    public EvaluateHeader selectCostButton() {
-        pageUtils.waitForElementToAppear(costButton).click();
-        return this;
+    public EvaluatePage costScenario(String costText) {
+        costButton.click();
+        dialogCostButton.click();
+        costText = costText == "Success" ? COST_UP_TO_DATE : costText;
+        getCostLabel();
+        checkCostLabel(costText);
+        return new EvaluatePage(driver);
     }
 
     /**
-     * Selects dialog cost button
-     *
-     * @return current page object
+     * Checks the text in the cost label
+     * @param costText - the cost label text
+     * @return true or false
      */
-    public EvaluateHeader selectDialogCostButton() {
-        pageUtils.waitForElementToAppear(dialogCostButton).click();
-        return this;
+    public boolean checkCostLabel(String costText) {
+        return costLabelPopover(costText);
+    }
+
+    /**
+     * Publish the scenario
+     * @return new page object
+     */
+    public ExplorePage publishScenario() {
+        return publishScenario();
+    }
+
+    /**
+     * Publish the scenario
+     * @param status - the status dropdown
+     * @param costMaturity - the cost maturity dropdown
+     * @param assignee - the assignee
+     * @return new page object
+     */
+    public PublishPage publishScenario(String status, String costMaturity, String assignee) {
+        return publishScenario(status, costMaturity, assignee);
     }
 
     /**
