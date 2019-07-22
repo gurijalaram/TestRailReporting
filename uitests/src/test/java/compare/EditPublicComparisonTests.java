@@ -47,7 +47,6 @@ public class EditPublicComparisonTests extends TestBase {
         new EvaluatePage(driver).publishScenario();
 
         assertThat(new ExplorePage(driver).findComparison("DeletePrivateComparison10").isDisplayed(), is(true));
-
     }
 
     @Test
