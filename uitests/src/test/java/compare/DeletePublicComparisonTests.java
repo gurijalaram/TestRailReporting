@@ -55,6 +55,6 @@ public class DeletePublicComparisonTests extends TestBase {
             .delete()
             .deleteScenario();
 
-        assertThat(new ExplorePage(driver).findComparison("PublicComparisonDelete1").isDisplayed(), is(false));
+        assertThat(new ExplorePage(driver).getListOfComparisons("PublicComparisonDelete1") < 1, is(true));
     }
 }

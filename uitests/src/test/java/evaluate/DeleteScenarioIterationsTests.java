@@ -40,14 +40,14 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("DeletePublicScenarioIteration", "DTCCASTINGISSUES")
+            .highlightScenario("DeletePublicScenarioIteration", "casting")
             .editScenario();
 
         new ExplorePage(driver).delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
 
-        assertThat(new ExplorePage(driver).findScenario("DeletePublicScenarioIteration", "DTCCASTINGISSUES").isDisplayed(), is(false));
+        assertThat(new ExplorePage(driver).getListOfScenarios("DeletePublicScenarioIteration", "casting") < 1, is(true));
     }
 
     @Test
@@ -62,13 +62,13 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .highlightScenario("DeletePrivateScenarioIteration", "DTCCASTINGISSUES")
+            .highlightScenario("DeletePrivateScenarioIteration", "casting")
             .editScenario();
 
         new ExplorePage(driver).delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
 
-        assertThat(new ExplorePage(driver).findScenario("DeletePrivateScenarioIteration", "DTCCASTINGISSUES").isDisplayed(), is(false));
+        assertThat(new ExplorePage(driver).getListOfScenarios("DeletePrivateScenarioIteration", "casting") < 1, is(true));
     }
 }
