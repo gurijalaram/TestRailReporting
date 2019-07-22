@@ -1,7 +1,7 @@
 {
   "definitions": {},
-  "$schema": "/schema#",
-  "$id": "root.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -17,6 +17,9 @@
         "createdAt",
         "createdBy",
         "name",
+        "numberOfLineItemsCannotCost",
+        "numberOfLineItemsNotCosted",
+        "numberOfLineItemsCosted",
         "numberOfLineItemsReadyForExport",
         "totalNumberOfLineItems"
       ],
@@ -27,7 +30,7 @@
           "title": "The Identity Schema",
           "default": "",
           "examples": [
-            "-5BM107K09E1"
+            "-3932E8JI2C6"
           ],
           "pattern": "^(.*)$"
         },
@@ -37,7 +40,7 @@
           "title": "The Createdat Schema",
           "default": "",
           "examples": [
-            "2019-05-30T16:08:34Z"
+            "2019-07-19T14:44:24.000+0000"
           ],
           "pattern": "^(.*)$"
         },
@@ -47,7 +50,7 @@
           "title": "The Createdby Schema",
           "default": "",
           "examples": [
-            "todo"
+            "3IFG0K64CBJF"
           ],
           "pattern": "^(.*)$"
         },
@@ -61,13 +64,40 @@
           ],
           "pattern": "^(.*)$"
         },
+        "numberOfLineItemsCannotCost": {
+          "$id": "#/properties/response/properties/numberOfLineItemsCannotCost",
+          "type": "integer",
+          "title": "The Numberoflineitemscannotcost Schema",
+          "default": 0,
+          "examples": [
+            0
+          ]
+        },
+        "numberOfLineItemsNotCosted": {
+          "$id": "#/properties/response/properties/numberOfLineItemsNotCosted",
+          "type": "integer",
+          "title": "The Numberoflineitemsnotcosted Schema",
+          "default": 0,
+          "examples": [
+            0
+          ]
+        },
+        "numberOfLineItemsCosted": {
+          "$id": "#/properties/response/properties/numberOfLineItemsCosted",
+          "type": "integer",
+          "title": "The Numberoflineitemscosted Schema",
+          "default": 0,
+          "examples": [
+            2
+          ]
+        },
         "numberOfLineItemsReadyForExport": {
           "$id": "#/properties/response/properties/numberOfLineItemsReadyForExport",
           "type": "integer",
           "title": "The Numberoflineitemsreadyforexport Schema",
           "default": 0,
           "examples": [
-            3
+            1
           ]
         },
         "totalNumberOfLineItems": {

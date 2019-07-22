@@ -24,7 +24,6 @@ import java.util.Map;
  * {@link #statusCode}         -   expected response status code
  * {@link #urlParams}          -   inline url params formatted in the following way: ?param1=value1&param2=value2
  * {@link #inlineVariables}    -   inline variables.
- * {@link #payloadJSON}        -   payload JSON what you want to send in the request
  */
 public class RequestEntity {
 
@@ -45,7 +44,7 @@ public class RequestEntity {
     private List<Map<String, ?>> xwwwwFormUrlEncoded = new ArrayList<>();
     private Object[] inlineVariables;
     private MultiPartFiles multiPartFiles;
-    private PayloadJSON payloadJSON;
+    private Object body;
     private Class<?> returnType;
     private int connectionTimeout = 60000;
     private int socketTimeout = 60000;
@@ -278,12 +277,17 @@ public class RequestEntity {
         return this;
     }
 
-    public PayloadJSON getPayloadJSON() {
-        return payloadJSON;
+    public RequestEntity setUrlParams(List<Map<String, ?>> urlParams) {
+        this.urlParams = urlParams;
+        return this;
     }
 
-    public RequestEntity setPayloadJSON(PayloadJSON payloadJSON) {
-        this.payloadJSON = payloadJSON;
+    public Object getBody() {
+        return body;
+    }
+
+    public RequestEntity setBody(Object body) {
+        this.body = body;
         return this;
     }
 

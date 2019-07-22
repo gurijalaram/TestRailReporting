@@ -65,15 +65,15 @@ public class ConnectionManager<T> {
         RestAssured.defaultParser = Parser.JSON;
     }
 
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, PayloadJSON payloadJson) {
-        return createRequestSpecification(urlParams, payloadJson, null);
+    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body) {
+        return createRequestSpecification(urlParams, body, null);
     }
 
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, MultiPartFiles multiPartFiles) {
         return createRequestSpecification(urlParams, null, multiPartFiles);
     }
 
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, PayloadJSON payloadJson, MultiPartFiles multiPartFiles) {
+    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, MultiPartFiles multiPartFiles) {
         RequestSpecBuilder builder = new RequestSpecBuilder();
 
         if (requestEntity.isAutoLogin()) {
@@ -115,8 +115,8 @@ public class ConnectionManager<T> {
             requestEntity.getXwwwwFormUrlEncoded().forEach(builder::addFormParams);
         }
 
-        if (payloadJson != null) {
-            builder.setBody(payloadJson, ObjectMapperType.JACKSON_2);
+        if (body != null) {
+            builder.setBody(body, ObjectMapperType.JACKSON_2);
         }
 
         if (multiPartFiles != null) {
@@ -248,7 +248,7 @@ public class ConnectionManager<T> {
 
 
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
                 .expect()
                 .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
@@ -264,7 +264,7 @@ public class ConnectionManager<T> {
      * @return raw JSON string
      */
     public String getJSON() {
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
             .expect()
             .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
@@ -279,7 +279,7 @@ public class ConnectionManager<T> {
      */
     public Headers getHeader() {
 
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
             .expect()
             .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
@@ -293,7 +293,7 @@ public class ConnectionManager<T> {
      */
     public T post() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
                 .expect()
                 .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
@@ -309,7 +309,7 @@ public class ConnectionManager<T> {
      * @return Headers object instance from response
      */
     public Headers postHeader() {
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
             .expect()
             .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
@@ -321,7 +321,7 @@ public class ConnectionManager<T> {
      * @return header
      */
     public Headers patchHeader() {
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
             .expect()
             .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
@@ -354,7 +354,7 @@ public class ConnectionManager<T> {
      */
     public T put() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
                 .expect()
                 .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
@@ -366,7 +366,7 @@ public class ConnectionManager<T> {
 
     public T patch() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
                 .expect()
                 .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
@@ -383,7 +383,7 @@ public class ConnectionManager<T> {
      * @return Headers object instance from response
      */
     public Headers putHeader() {
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
             .expect()
             .statusCode(isOneOf(requestEntity.getStatusCode()))
             .when()
@@ -397,7 +397,7 @@ public class ConnectionManager<T> {
      */
     public T delete() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getPayloadJSON())
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
                 .expect()
                 .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()

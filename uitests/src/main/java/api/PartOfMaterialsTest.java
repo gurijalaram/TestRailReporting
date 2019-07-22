@@ -8,6 +8,7 @@ import main.java.utils.WebDriverUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -18,6 +19,7 @@ public class PartOfMaterialsTest {
     private static BillOfMaterial billOfMaterial;
     private static Map<String, String> authorizationHeaders;
     private static String token;
+    private static MaterialPart materialPart;
 
     @BeforeClass
     public static void getLineItems(){
@@ -55,6 +57,10 @@ public class PartOfMaterialsTest {
         lineItem = getRandomLineItemWithParts(materialsLineItemsWrapper);
 
 
+        materialPart = new MaterialPart()
+                .setUserPart(true)
+                .setAverageCost(1f)
+                .setManufacturerPartNumber(lineItem.getManufacturerPartNumber());
     }
 
     private static MaterialLineItem getRandomLineItemWithParts(MaterialsLineItemsWrapper materialsLineItemsWrapper) {
@@ -89,13 +95,14 @@ public class PartOfMaterialsTest {
 
         new HTTPRequest().unauthorized()
                 .customizeRequest()
+                .setHeaders(authorizationHeaders)
                 .setEndpoint(PartsAPIEnum.POST_PARTS_BY_BILL_AND_LINE_IDENTITY)
-                .setReturnType(MaterialPart.class)
+                .setReturnType(MaterialPartWrapper.class)
+                .setStatusCode(201)
                 .setInlineVariables(
                         billOfMaterial.getIdentity(),
                         lineItem.getIdentity())
-//                TODO z: add test data
-//                .setPayloadJSON()
+                .setBody(materialPart)
                 .commitChanges()
                 .connect()
                 .post();
@@ -107,13 +114,11 @@ public class PartOfMaterialsTest {
         new HTTPRequest().unauthorized()
                 .customizeRequest()
                 .setEndpoint(PartsAPIEnum.POST_COST_PARTS_BY_BILL_AND_LINE_IDENTITY)
-                .setReturnType(MaterialPart.class)
                 .setHeaders(authorizationHeaders)
                 .setInlineVariables(
                         billOfMaterial.getIdentity(),
                         lineItem.getIdentity())
-//                TODO z: add test data
-//                .setPayloadJSON()
+                .setBody(Arrays.asList(lineItem.getIdentity()))
                 .commitChanges()
                 .connect()
                 .post();
@@ -125,16 +130,16 @@ public class PartOfMaterialsTest {
         new HTTPRequest().unauthorized()
                 .customizeRequest()
                 .setEndpoint(PartsAPIEnum.PATCH_UPDATE_PART_BY_BILL_LINE_AND_PART_IDENTITY)
-                .setReturnType(MaterialPart.class)
+                .setReturnType(MaterialPartWrapper.class)
+                .setHeaders(authorizationHeaders)
                 .setInlineVariables(
                         billOfMaterial.getIdentity(),
                         lineItem.getIdentity(),
                         lineItem.getMaterialParts().get(new Random().nextInt(lineItem.getMaterialParts().size())).getIdentity())
-//                TODO z: add test data
-//                .setPayloadJSON()
+                .setBody(materialPart)
                 .commitChanges()
                 .connect()
-                .post();
+                .patch();
     }
 
     @Test

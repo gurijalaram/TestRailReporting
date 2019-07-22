@@ -1,8 +1,8 @@
 package main.java.http.enums.common.api;
 
-import main.java.http.enums.common.TemporaryAPI;
+import main.java.http.enums.common.EdcQaAPI;
 
-public enum PartsAPIEnum implements TemporaryAPI {
+public enum PartsAPIEnum implements EdcQaAPI {
 
     GET_LINE_ITEMS("bill-of-materials/%s/line-items"),
     GET_PARTS_BY_BILL_AND_LINE_IDENTITY("bill-of-materials/%s/line-items/%s/parts"),

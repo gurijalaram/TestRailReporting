@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import main.java.http.enums.Schema;
 
 @Schema(location = "MaterialPartSchema.json")
-public class MaterialPart {
+public class MaterialPart implements PayloadJSON{
 
     @JsonProperty
     private Boolean isReadyForExport;
@@ -50,6 +50,9 @@ public class MaterialPart {
 
     @JsonProperty
     private String rohs;
+
+    @JsonProperty
+    private String costingStatus;
 
     @JsonProperty
     private String rohsVersion;
@@ -195,6 +198,15 @@ public class MaterialPart {
 
     public MaterialPart setRohsVersion(String rohsVersion) {
         this.rohsVersion = rohsVersion;
+        return this;
+    }
+
+    public String getCostingStatus() {
+        return costingStatus;
+    }
+
+    public MaterialPart setCostingStatus(String costingStatus) {
+        this.costingStatus = costingStatus;
         return this;
     }
 }

@@ -11,6 +11,15 @@ import java.time.LocalDateTime;
 public class BillOfMaterial {
 
     @JsonProperty
+    private Integer numberOfLineItemsCannotCost;
+
+    @JsonProperty
+    private Integer numberOfLineItemsNotCosted;
+
+    @JsonProperty
+    private Integer numberOfLineItemsCosted;
+
+    @JsonProperty
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
 
@@ -81,6 +90,33 @@ public class BillOfMaterial {
 
     public BillOfMaterial setTotalNumberOfLineItems(Integer totalNumberOfLineItems) {
         this.totalNumberOfLineItems = totalNumberOfLineItems;
+        return this;
+    }
+
+    public Integer getNumberOfLineItemsCannotCost() {
+        return numberOfLineItemsCannotCost;
+    }
+
+    public BillOfMaterial setNumberOfLineItemsCannotCost(Integer numberOfLineItemsCannotCost) {
+        this.numberOfLineItemsCannotCost = numberOfLineItemsCannotCost;
+        return this;
+    }
+
+    public Integer getNumberOfLineItemsNotCosted() {
+        return numberOfLineItemsNotCosted;
+    }
+
+    public BillOfMaterial setNumberOfLineItemsNotCosted(Integer numberOfLineItemsNotCosted) {
+        this.numberOfLineItemsNotCosted = numberOfLineItemsNotCosted;
+        return this;
+    }
+
+    public Integer getNumberOfLineItemsCosted() {
+        return numberOfLineItemsCosted;
+    }
+
+    public BillOfMaterial setNumberOfLineItemsCosted(Integer numberOfLineItemsCosted) {
+        this.numberOfLineItemsCosted = numberOfLineItemsCosted;
         return this;
     }
 }

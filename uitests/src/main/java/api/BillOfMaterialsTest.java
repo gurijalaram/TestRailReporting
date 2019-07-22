@@ -1,17 +1,19 @@
 package main.java.api;
 
-import main.java.base.DriverFactory;
 import main.java.http.builder.common.response.common.BillOfMaterial;
 import main.java.http.builder.common.response.common.BillOfMaterialsWrapper;
 import main.java.http.builder.common.response.common.BillOfSingleMaterialWrapper;
 import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
+import main.java.utils.MultiPartFiles;
 import main.java.utils.WebDriverUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +27,10 @@ public class BillOfMaterialsTest {
     private static Map<String, String> authorizationHeaders;
     private static String token;
 
-    @BeforeClass
+   @BeforeClass
     public static void initBillOfMaterials() {
 //TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
-        token = new WebDriverUtils().getToken("email", "password");
+        token = new WebDriverUtils().getToken("email@apriori.com", "pass");
 
         authorizationHeaders =  new HashMap<String, String>() {{
             put("Authorization", "Bearer " + token);
@@ -110,12 +112,18 @@ public class BillOfMaterialsTest {
                 .unauthorized()
                 .customizeRequest()
                 .setHeaders(authorizationHeaders)
+                .setMultiPartFiles(
+                        new MultiPartFiles().use("multiPartFile",
+                        new File(
+                                getClass().getClassLoader().getResource(
+                                        "test-data/apriori-3-items.csv").getFile()
+                        ))
+                )
+                .setStatusCode(201)
                 .setEndpoint(BillOfMaterialsAPIEnum.POST_BILL_OF_METERIALS)
-                .setReturnType(BillOfMaterial.class)
-//                TODO z: add test file
-//                .setMultiPartFiles()
                 .commitChanges()
                 .connect()
-                .post();
+                .postMultiPart();
+
     }
 }

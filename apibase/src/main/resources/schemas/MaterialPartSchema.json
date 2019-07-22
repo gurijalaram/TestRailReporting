@@ -4,24 +4,6 @@
   "$id": "htdsffroot.json",
   "type": "object",
   "title": "The Root Schema",
-  "required": [
-    "isReadyForExport",
-    "isUserPart",
-    "isSaved",
-    "identity",
-    "lineItemIdentity",
-    "externalId",
-    "manufacturerPartNumber",
-    "manufacturer",
-    "classification",
-    "description",
-    "averageCost",
-    "minimumCost",
-    "availability",
-    "dataSheetUrl",
-    "rohs",
-    "rohsVersion"
-  ],
 
   "properties": {
     "isReadyForExport": {
@@ -177,6 +159,13 @@
       "examples": [
         "2011/65/EU, 2015/863"
       ],
+      "pattern": "^(.*)$"
+    },
+    "costingStatus": {
+      "$id": "#/properties/rohsVersion",
+      "type": "string",
+      "title": "The Rohsversion Schema",
+      "default": "",
       "pattern": "^(.*)$"
     }
   }

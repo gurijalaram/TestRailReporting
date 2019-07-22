@@ -1,7 +1,7 @@
 {
   "definitions": {},
-  "$schema": "schema#",
-  "$id": "root.json",
+  "$schema": "http://json-s-07/schema#",
+  "$id": "ItemsWrapper",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -40,7 +40,7 @@
           "title": "The Islastpage Schema",
           "default": false,
           "examples": [
-            false
+            true
           ]
         },
         "pageNumber": {
@@ -67,7 +67,7 @@
           "title": "The Pageitemcount Schema",
           "default": 0,
           "examples": [
-            10
+            3
           ]
         },
         "totalItemCount": {
@@ -76,7 +76,7 @@
           "title": "The Totalitemcount Schema",
           "default": 0,
           "examples": [
-            12
+            3
           ]
         },
         "totalPageCount": {
@@ -85,7 +85,7 @@
           "title": "The Totalpagecount Schema",
           "default": 0,
           "examples": [
-            2
+            1
           ]
         },
         "hasNextPage": {
@@ -94,7 +94,7 @@
           "title": "The Hasnextpage Schema",
           "default": false,
           "examples": [
-            true
+            false
           ]
         },
         "hasPreviousPage": {
@@ -133,7 +133,7 @@
                 "title": "The Identity Schema",
                 "default": "",
                 "examples": [
-                  "-7979CGMN409"
+                  "-3932E8JLG13"
                 ],
                 "pattern": "^(.*)$"
               },
@@ -143,7 +143,7 @@
                 "title": "The Createdat Schema",
                 "default": "",
                 "examples": [
-                  "2019-07-15T13:10:34.000+0000"
+                  "2019-07-19T14:44:24.000+0000"
                 ],
                 "pattern": "^(.*)$"
               },
@@ -153,7 +153,7 @@
                 "title": "The Createdby Schema",
                 "default": "",
                 "examples": [
-                  "HIIE6GI5H764"
+                  "3IFG0K64CBJF"
                 ],
                 "pattern": "^(.*)$"
               },
@@ -163,7 +163,7 @@
                 "title": "The Costingstatus Schema",
                 "default": "",
                 "examples": [
-                  "Cannot Cost"
+                  "Costed"
                 ],
                 "pattern": "^(.*)$"
               },
@@ -182,7 +182,7 @@
                 "title": "The Customerpartnumber Schema",
                 "default": "",
                 "examples": [
-                  "Test"
+                  "ABC123"
                 ],
                 "pattern": "^(.*)$"
               },
@@ -201,7 +201,7 @@
                 "title": "The Manufacturerpartnumber Schema",
                 "default": "",
                 "examples": [
-                  ""
+                  "BAV99"
                 ],
                 "pattern": "^(.*)$"
               },
@@ -211,14 +211,95 @@
                 "title": "The Manufacturer Schema",
                 "default": "",
                 "examples": [
-                  ""
+                  "NATIONAL/TI"
                 ],
                 "pattern": "^(.*)$"
               },
               "parts": {
                 "$id": "#/properties/response/properties/items/items/properties/parts",
                 "type": "array",
-                "title": "The Parts Schema"
+                "title": "The Parts Schema",
+                "items": {
+                  "$id": "#/properties/response/properties/items/items/properties/parts/items",
+                  "type": "object",
+                  "title": "The Items Schema",
+                  "required": [
+                    "isUserPart",
+                    "isSaved",
+                    "identity",
+                    "costingStatus",
+                    "manufacturerPartNumber"
+                  ],
+                  "properties": {
+                    "isUserPart": {
+                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/isUserPart",
+                      "type": "boolean",
+                      "title": "The Isuserpart Schema",
+                      "default": false,
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "isSaved": {
+                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/isSaved",
+                      "type": "boolean",
+                      "title": "The Issaved Schema",
+                      "default": false,
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "identity": {
+                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/identity",
+                      "type": "string",
+                      "title": "The Identity Schema",
+                      "default": "",
+                      "examples": [
+                        "-FH52C7IJJL8"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "lineItemIdentity": {
+                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/lineItemIdentity",
+                      "type": "string",
+                      "title": "The Lineitemidentity Schema",
+                      "default": "",
+                      "examples": [
+                        "-3932E8JLG13"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "costingStatus": {
+                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/costingStatus",
+                      "type": "string",
+                      "title": "The Costingstatus Schema",
+                      "default": "",
+                      "examples": [
+                        "Costed"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "manufacturerPartNumber": {
+                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/manufacturerPartNumber",
+                      "type": "string",
+                      "title": "The Manufacturerpartnumber Schema",
+                      "default": "",
+                      "examples": [
+                        "BAV99"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "averageCost": {
+                      "$id": "#/properties/averageCost",
+                      "type": "number",
+                      "title": "The Averagecost Schema",
+                      "default": 0.0,
+                      "examples": [
+                        1.17
+                      ]
+                    }
+                  }
+                }
               }
             }
           }

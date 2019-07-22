@@ -1,8 +1,8 @@
 package main.java.http.enums.common.api;
 
-import main.java.http.enums.common.TemporaryAPI;
+import main.java.http.enums.common.EdcQaAPI;
 
-public enum BillOfMaterialsAPIEnum implements TemporaryAPI {
+public enum BillOfMaterialsAPIEnum implements EdcQaAPI {
 
     GET_ACCOUNTS_STATUS("accounts/status"),
     GET_BILL_OF_METERIALS("bill-of-materials"),
