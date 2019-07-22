@@ -53,28 +53,31 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
 
     /**
      * Selects the comparison in the table
-     * @param partName - the name of the part
+     *
+     * @param partName     - the name of the part
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    public ComparisonTablePage selectComparison(String partName, String scenarioName) {
-        findComparison(partName, scenarioName).click();
+    public ComparisonTablePage selectComparison(String scenarioName, String partName) {
+        findComparison(scenarioName, partName).click();
         return this;
     }
 
     /**
      * Find and select the comparison in the table
-     * @param partName - name of the part
+     *
+     * @param partName     - name of the part
      * @param scenarioName - scenario name
      * @return comparison as webelement
      */
-    public WebElement findComparison(String partName, String scenarioName) {
+    public WebElement findComparison(String scenarioName, String partName) {
         By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]");
         return pageUtils.scrollToElement(comparison, comparisonScroller);
     }
 
     /**
      * Selects filter criteria button
+     *
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {

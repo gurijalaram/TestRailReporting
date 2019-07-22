@@ -50,7 +50,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     @FindBy(css = "span.gwt-InlineHTML.glyphicon.glyphicon-chevron-right")
     private WebElement infoNotesChevron;
 
-    @FindBy(css = "div.btn-group.bootstrap-select.form-control.open")
+    @FindBy(css = ".pull-left .filter-option-text")
     private WebElement scenarioDropdown;
 
     @FindBy(css = "a[data-ap-nav-viewport='showInputDetails']")
@@ -301,5 +301,10 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     public MaterialCompositionPage openMaterialCompositionTable() {
         pageUtils.waitForElementToBeClickable(materialsButton).click();
         return new MaterialCompositionPage(driver);
+    }
+
+    public EvaluatePage getCurrentScenarioName() {
+        scenarioDropdown.getText();
+        return this;
     }
 }
