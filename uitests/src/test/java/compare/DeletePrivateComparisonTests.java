@@ -53,6 +53,6 @@ public class DeletePrivateComparisonTests extends TestBase {
             .deleteScenario()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
-        assertThat(new ExplorePage(driver).getSaveAsButton(), is(false));
+        assertThat(new ExplorePage(driver).getListOfComparisons("DeletePrivateComparison10") < 1, is(true));
     }
 }
