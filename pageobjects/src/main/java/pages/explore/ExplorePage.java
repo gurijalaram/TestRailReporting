@@ -202,6 +202,17 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
+     * Gets the number of elements present on the page
+     * @param scenarioName - scenario name
+     * @param partName - part name
+     * @return size of the element as int
+     */
+    public int getListOfScenarios(String scenarioName, String partName) {
+        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
+        return pageUtils.scrollToElements(scenario, componentScroller).size();
+    }
+
+    /**
      * Find specific scenario in the table
      *
      * @param comparisonName - name of the scenario
@@ -213,14 +224,13 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     }
 
     /**
-     * Highlights the comparison in the table
-     * @param comparisonName - the comparison name
-     * @return the scenarion as webelement
+     * Gets the number of elements present on the page
+     * @param comparisonName - scenario name
+     * @return size of the element as int
      */
-    public ExplorePage highlightComparison(String comparisonName) {
-        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
-        pageUtils.scrollToElement(comparison, componentScroller);
-        return this;
+    public int getListOfComparisons(String comparisonName) {
+        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        return pageUtils.scrollToElements(comparison, componentScroller).size();
     }
 
     /**

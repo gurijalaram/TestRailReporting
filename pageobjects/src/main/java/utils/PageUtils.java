@@ -406,7 +406,7 @@ public class PageUtils {
     }
 
     /**
-     * Finds element in a table.  If the element is not visible then the method will scroll to the element.
+     * Finds element in a table by scrolling.
      *
      * @param scenario - the locator for the scenario
      * @param scroller - the scroller to scroll the element into view
@@ -439,6 +439,42 @@ public class PageUtils {
             }
         }
         return driver.findElement(scenario);
+    }
+
+    /**
+     * Finds elements in a table by scrolling.
+     *
+     * @param scenario - the locator for the scenario
+     * @param scroller - the scroller to scroll the element into view
+     * @return - the element as a webelement
+     */
+    public List<WebElement> scrollToElements(By scenario, WebElement scroller) {
+        long startTime = System.currentTimeMillis() / 1000;
+        int count = 0;
+
+        while (count < 12) {
+            try {
+                if (scroller.isDisplayed()) {
+                    do {
+                        scroller.sendKeys(Keys.DOWN);
+                    } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+
+                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+                    processCoordinates.inViewPort();
+
+                    return driver.findElements(scenario);
+                } else {
+                    return driver.findElements(scenario);
+                }
+            } catch (ElementNotInteractableException e) {
+                logger.debug("Trying to recover from an element not interactable exception");
+                count = count + 1;
+            } catch (StaleElementReferenceException e) {
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            }
+        }
+        return driver.findElements(scenario);
     }
 
     /**
