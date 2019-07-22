@@ -1,25 +1,20 @@
-package main.java.pages;
+package main.java.pages.evaluate.designguidance;
 
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage> {
+public class GeometryPage extends LoadableComponent<GeometryPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PrivateWorkspacePage.class);
-
-    @FindBy(css = "span.delete-button")
-    private WebElement deleteButton;
+    private final Logger logger = LoggerFactory.getLogger(GeometryPage.class);
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public PrivateWorkspacePage(WebDriver driver) {
+    public GeometryPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -29,14 +24,11 @@ public class PrivateWorkspacePage extends LoadableComponent<PrivateWorkspacePage
 
     @Override
     protected void load() {
+
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(deleteButton);
-    }
 
-    public boolean isDeleteButtonPresent() {
-        return deleteButton.isDisplayed();
     }
 }

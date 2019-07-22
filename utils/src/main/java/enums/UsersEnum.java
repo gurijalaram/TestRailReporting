@@ -21,7 +21,7 @@ public enum UsersEnum {
     /**
      * Return username of the requested user
      *
-     * @return username
+     * @return CID username
      */
     public String getUsername() {
         return username;
@@ -30,7 +30,7 @@ public enum UsersEnum {
     /**
      * Return password of the requested user
      *
-     * @return password
+     * @return cid password
      */
     public String getPassword() {
         return password;
