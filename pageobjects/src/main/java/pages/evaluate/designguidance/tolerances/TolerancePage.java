@@ -81,8 +81,11 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
         return this;
     }
 
-    private ToleranceEditPage editTolerance() {
+    //TODO : class is not implemented
+//    private ToleranceEditPage editTolerance() {
+    private Object editTolerance() {
         editToleranceButton.click();
-        return new ToleranceEditPage(driver);
+//        return new ToleranceEditPage(driver);
+        return null;
     }
 }
