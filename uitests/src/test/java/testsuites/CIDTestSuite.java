@@ -1,5 +1,6 @@
 package test.java.testsuites;
 
+import main.java.pages.evaluate.PublishNewCostedTests;
 import main.java.runner.ConcurrentSuiteRunner;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -49,7 +50,8 @@ import test.java.login.LoginTests;
     DeletePublicComparisonTests.class,
     EditPublicComparisonTests.class,
     NewScenarioNameTests.class,
-    PublishExistngCostedTests.class
+    PublishExistngCostedTests.class,
+    PublishNewCostedTests.class
 })
 public class CIDTestSuite {
 }
