@@ -1,8 +1,7 @@
 package main.java.pages.explore;
 
-import main.java.header.ExploreHeader;
-import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
+import main.java.header.ExploreHeader;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
