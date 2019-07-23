@@ -30,7 +30,6 @@ public class EvaluateTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", filePath, "testpart-42.prt");
         evaluatePage = new EvaluatePage(driver);
-        //evaluatePage.costScenario(null);
     }
 
     /**

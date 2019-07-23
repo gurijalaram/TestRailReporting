@@ -36,8 +36,6 @@ public class DeletePrivateComparisonTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        /*explorePage.uploadFile("DeletePrivateComparisonTests", filePath, "casting.prt")
-            .publishScenario()*/
         explorePage.createNewComparison()
             .enterComparisonName("DeletePrivateComparison11")
             .save()
