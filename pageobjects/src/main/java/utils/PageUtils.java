@@ -382,7 +382,7 @@ public class PageUtils {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
-            } catch (TimeoutException | ElementClickInterceptedException e) {
+            } catch (TimeoutException e) {
                 count = count + 1;
             }
         }
@@ -492,8 +492,7 @@ public class PageUtils {
     /**
      * Selects the correct option in the dropdown.  Conditional statement is included because the system
      * tends to revert to previous selection.
-     *
-     * @param locator        - the locator of the element
+     * @param locator - the locator of the element
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
