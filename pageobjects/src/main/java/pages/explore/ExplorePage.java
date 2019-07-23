@@ -123,6 +123,16 @@ public class ExplorePage extends ExploreHeader {
     }
 
     /**
+     * Gets the number of elements present on the page
+     * @param comparisonName - scenario name
+     * @return size of the element as int
+     */
+    public int getListOfComparisons(String comparisonName) {
+        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        return pageUtils.scrollToElements(comparison, componentScroller).size();
+    }
+
+    /**
      * Opens the scenario
      * @param partName - name of the part
      * @param scenarioName - scenario name

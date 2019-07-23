@@ -29,17 +29,17 @@ public class DeletePrivateComparisonTests extends TestBase {
     }
 
     @Test
-    @Description("Test a private comparison can be deleted from the comparison table")
+    @Description("Test a private comparison can be deleted from the comparison page")
     @Severity(SeverityLevel.NORMAL)
     public void testDeletePrivateScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparisonTests", filePath, "casting.prt")
-            .publishScenario()
-            .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison10")
+        /*explorePage.uploadFile("DeletePrivateComparisonTests", filePath, "casting.prt")
+            .publishScenario()*/
+        explorePage.createNewComparison()
+            .enterComparisonName("DeletePrivateComparison11")
             .save()
             .addScenario()
             .filterCriteria()
@@ -53,6 +53,6 @@ public class DeletePrivateComparisonTests extends TestBase {
             .deleteScenario()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
-        assertThat(new ExplorePage(driver).getSaveAsButton(), is(false));
+        assertThat(explorePage.getListOfComparisons("DeletePrivateComparison11") < 1, is(true));
     }
 }
