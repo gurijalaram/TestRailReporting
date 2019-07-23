@@ -1,30 +1,26 @@
-package main.java.pages.explore;
+package main.java.pages.compare;
 
-import main.java.header.CompareHeader;
-import main.java.pages.compare.ComparePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ComparisonPage extends CompareHeader {
+public class SaveAsPage extends LoadableComponent<SaveAsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ComparisonPage.class);
-
-    @FindBy(css = "h3.modal-title")
-    private WebElement modalDialog;
+    private final Logger logger = LoggerFactory.getLogger(SaveAsPage.class);
 
     @FindBy(css = "input[data-ap-field='name']")
     private WebElement nameInput;
 
-    @FindBy(css = "textarea[data-ap-field='description']")
+    @FindBy (css = "textarea[data-ap-field='description']")
     private WebElement descriptionInput;
 
     @FindBy(css = "button.btn.btn-primary")
-    private WebElement saveButton;
+    private WebElement createButton;
 
     @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
@@ -32,8 +28,7 @@ public class ComparisonPage extends CompareHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public ComparisonPage(WebDriver driver) {
-        super(driver);
+    public SaveAsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -48,46 +43,46 @@ public class ComparisonPage extends CompareHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(modalDialog);
+
     }
 
     /**
-     * Enters the comparison name
-     * @param comparisonName - the comparison name
+     * Enters the name
+     * @param name - the name
      * @return current page object
      */
-    public ComparisonPage enterComparisonName(String comparisonName) {
-        nameInput.sendKeys(comparisonName);
+    public SaveAsPage inputName(String name) {
+        nameInput.clear();
+        nameInput.sendKeys(name);
         return this;
     }
 
     /**
-     * Enters the comparison description
-     * @param comparisonDescription - the comparison description
+     * Enters the description
+     * @param description - the description
      * @return current page object
      */
-    public ComparisonPage enterComparisonDescription(String comparisonDescription) {
-        descriptionInput.sendKeys(comparisonDescription);
+    public SaveAsPage inputDescription(String description) {
+        descriptionInput.clear();
+        descriptionInput.sendKeys(description);
         return this;
     }
 
     /**
-     * Selects the apply button
-     *
+     * Selects the create button
      * @return new page object
      */
-    public ComparePage save() {
-        saveButton.click();
+    public ComparePage selectCreateButton() {
+        createButton.click();
         return new ComparePage(driver);
     }
 
     /**
      * Selects the cancel button
-     *
      * @return new page object
      */
-    public ExplorePage cancel() {
+    public ComparePage selectCancelButton() {
         cancelButton.click();
-        return new ExplorePage(driver);
+        return new ComparePage(driver);
     }
 }

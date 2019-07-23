@@ -69,9 +69,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      * @return current page object
      */
     public SecondaryProcessPage selectSecondaryProcess(String processType, String processName) {
-        selectProcessType(processType)
-            .selectProcessName(processName).click();
-        apply();
+        selectProcessType(processType);
+        selectProcessName(processName).click();
         return this;
     }
 
