@@ -103,17 +103,6 @@ public class ExplorePage extends ExploreHeader {
     }
 
     /**
-     * Gets the number of elements present on the page
-     * @param scenarioName - scenario name
-     * @param partName - part name
-     * @return size of the element as int
-     */
-    public int getListOfScenarios(String scenarioName, String partName) {
-        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElements(scenario, componentScroller).size();
-    }
-
-    /**
      * Find specific scenario in the table
      * @param comparisonName - name of the scenario
      * @return the scenario as webelement
