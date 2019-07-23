@@ -1,7 +1,5 @@
 package main.java.http.builder.common.entity;
 
-import main.java.http.builder.common.response.common.PayloadJSON;
-import main.java.http.builder.service.HTTPRequest;
 import main.java.http.builder.service.RequestInitService;
 import main.java.http.enums.EndpointEnum;
 import main.java.http.enums.EndpointType;
@@ -74,7 +72,7 @@ public class RequestEntity {
         this.driver = driver;
         this.defaultAuthorizationData = defaultAuthorizationData;
 
-        if(useFormData) {
+        if (useFormData) {
             this.initFormUrlUserData();
         }
 
@@ -113,7 +111,6 @@ public class RequestEntity {
         return this.xwwwwFormUrlEncoded;
     }
 
-
     public WebDriver getDriver() {
         return driver;
     }
@@ -135,11 +132,6 @@ public class RequestEntity {
     public EndpointEnum getEndpoint() {
         return endpoint;
     }
-
-//    public RequestEntity setCustomEndpoint(final String url, EndpointType endpointType) {
-//        this.end
-//    }
-
 
     public RequestEntity setEndpoint(EndpointEnum endpoint) {
         this.endpoint = endpoint;

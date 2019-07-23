@@ -15,7 +15,6 @@ public class AuthenticateJSON {
     private String accessToken;
 
     @JsonProperty("expires_in")
-//    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmss.class)
     private Integer expiresIn;
 
     public String getAccessToken() {

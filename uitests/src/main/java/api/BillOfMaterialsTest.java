@@ -1,5 +1,8 @@
 package main.java.api;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.http.builder.common.response.common.BillOfMaterial;
 import main.java.http.builder.common.response.common.BillOfMaterialsWrapper;
 import main.java.http.builder.common.response.common.BillOfSingleMaterialWrapper;
@@ -51,6 +54,8 @@ public class BillOfMaterialsTest {
     }
 
     @Test
+    @Description("Get list bill of materials")
+    @Severity(SeverityLevel.NORMAL)
     public void getBillOfMaterials() {
         new HTTPRequest()
                 .unauthorized()
@@ -64,6 +69,8 @@ public class BillOfMaterialsTest {
     }
 
     @Test
+    @Description("Get list bill of materials by identity")
+    @Severity(SeverityLevel.NORMAL)
     public void getBillOfMaterialsByIdentity() {
         new HTTPRequest()
                 .unauthorized()
@@ -79,6 +86,8 @@ public class BillOfMaterialsTest {
     }
 
     @Test
+    @Description("Delete list bill of materials by identity")
+    @Severity(SeverityLevel.NORMAL)
     public void deleteBillOfMaterialsByIdentity() {
         new HTTPRequest()
                 .unauthorized()
@@ -93,6 +102,8 @@ public class BillOfMaterialsTest {
     }
 
     @Test
+    @Description("Export bill of material by identity")
+    @Severity(SeverityLevel.NORMAL)
     public void exportBillOfMaterialsByIdentity() {
         new HTTPRequest()
                 .unauthorized()
@@ -106,6 +117,8 @@ public class BillOfMaterialsTest {
     }
 
     @Test
+    @Description("Post bill of material")
+    @Severity(SeverityLevel.NORMAL)
     public void postBillOfMaterials() {
 
         new HTTPRequest()

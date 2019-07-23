@@ -10,8 +10,7 @@ public enum BillOfMaterialsAPIEnum implements EdcQaAPI {
     DELETE_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s"),
     GET_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s"),
     EXPORT_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s/export"),
-    POST_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s"),
-    POST_AUTH("auth/token"),
+    POST_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s")
     ;
 
 

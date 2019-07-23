@@ -5,8 +5,7 @@ import main.java.http.enums.Schema;
 /**
  * @author kpatel
  */
-// TODO: replace location of json schema with actual location
-@Schema(location = "location_of_login_json")
+@Schema(location = "LoginJSONSchema.json")
 public class LoginJSON {
 
     private String sessionId;

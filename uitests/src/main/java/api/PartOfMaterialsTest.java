@@ -1,5 +1,8 @@
 package main.java.api;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.http.builder.common.response.common.*;
 import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
@@ -77,6 +80,8 @@ public class PartOfMaterialsTest {
 
 
     @Test
+    @Description("Get list of parts")
+    @Severity(SeverityLevel.NORMAL)
     public void getParts(){
         new HTTPRequest().unauthorized()
                 .customizeRequest()
@@ -91,6 +96,8 @@ public class PartOfMaterialsTest {
     }
 
     @Test
+    @Description("Post the part to environment")
+    @Severity(SeverityLevel.NORMAL)
     public void postPart(){
 
         new HTTPRequest().unauthorized()
@@ -109,6 +116,8 @@ public class PartOfMaterialsTest {
     }
 
     @Test
+    @Description("Get list bill of materials")
+    @Severity(SeverityLevel.NORMAL)
     public void costPart(){
 
         new HTTPRequest().unauthorized()
@@ -125,6 +134,8 @@ public class PartOfMaterialsTest {
     }
 
     @Test
+    @Description("Patch the part to environment")
+    @Severity(SeverityLevel.NORMAL)
     public void updatePart(){
 
         new HTTPRequest().unauthorized()
@@ -143,6 +154,8 @@ public class PartOfMaterialsTest {
     }
 
     @Test
+    @Description("Get the part from environment")
+    @Severity(SeverityLevel.NORMAL)
     public void selectPart(){
 
         new HTTPRequest().unauthorized()
