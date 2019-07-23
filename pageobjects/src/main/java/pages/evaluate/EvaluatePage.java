@@ -194,8 +194,29 @@ public class EvaluatePage extends EvaluateHeader {
         return new MaterialCompositionPage(driver);
     }
 
+    /**
+     * Gets the scenario name
+     * @return current page object
+     */
     public EvaluatePage getCurrentScenarioName() {
         scenarioDropdown.getText();
         return this;
+    }
+
+    /**
+     * Gets the process group details
+     * @return group details as string
+     */
+    public String getProcessGroup() {
+        return processGroupDropdown.getText();
+    }
+
+    /**
+     * Selects the revert button
+     * @return new page object
+     */
+    public RevertPage revert() {
+        pageUtils.waitForElementToAppear(revertButton).click();
+        return new RevertPage(driver);
     }
 }
