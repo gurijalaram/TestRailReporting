@@ -36,10 +36,10 @@ public class DeletePrivateScenarioTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("DeletePrivateScenario", filePath, "casting.prt")
             .selectExploreButton()
-            .highlightScenario("Initial", "DTCCASTINGISSUES")
+            .highlightScenario("DeletePrivateScenario", "casting")
             .delete()
             .deleteScenario();
 
-        assertThat(new ExplorePage(driver).findScenario("Initial", "DTCCASTINGISSUESe").isDisplayed(), is(false));
+        assertThat(new ExplorePage(driver).getListOfScenarios("DeletePrivateScenario", "casting") < 1, is(true));
     }
 }
