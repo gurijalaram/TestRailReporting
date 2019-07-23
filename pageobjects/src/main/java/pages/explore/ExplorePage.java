@@ -1,6 +1,7 @@
 package main.java.pages.explore;
 
 import main.java.header.ExploreHeader;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
@@ -113,13 +114,14 @@ public class ExplorePage extends ExploreHeader {
     }
 
     /**
-     * Gets the number of elements present on the page
-     * @param comparisonName - scenario name
-     * @return size of the element as int
+     * Highlights the comparison in the table
+     * @param comparisonName - the comparison name
+     * @return the scenarion as webelement
      */
-    public int getListOfComparisons(String comparisonName) {
-        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
-        return pageUtils.scrollToElements(comparison, componentScroller).size();
+    public ExplorePage highlightComparison(String comparisonName) {
+        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
+        pageUtils.scrollToElement(comparison, componentScroller);
+        return this;
     }
 
     /**
@@ -141,6 +143,16 @@ public class ExplorePage extends ExploreHeader {
     public EvaluatePage openScenario(String scenarioName, String partName) {
         findScenario(scenarioName, partName).click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Opens the comparison
+     * @param comparisonName - the comparison name
+     * @return new page object
+     */
+    public ComparePage openComparison(String comparisonName) {
+        findComparison(comparisonName).click();
+        return new ComparePage(driver);
     }
 
     /**

@@ -69,7 +69,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return current page object
      */
-    PageHeader selectExploreButton() {
+    public PageHeader selectExploreButton() {
         pageUtils.waitForElementToBeClickable(exploreTab).click();
         return this;
     }
@@ -79,7 +79,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return current page object
      */
-    PageHeader selectEvaluateButton() {
+    public PageHeader selectEvaluateButton() {
         pageUtils.waitForElementToBeClickable(exploreTab).click();
         return this;
     }
@@ -89,7 +89,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return current page object
      */
-    PageHeader selectCompareButton() {
+    public PageHeader selectCompareButton() {
         pageUtils.waitForElementToBeClickable(exploreTab).click();
         return this;
     }
