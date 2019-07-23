@@ -1,5 +1,6 @@
 package test.java.testsuites;
 
+import main.java.pages.evaluate.PublishNewCostedTests;
 import main.java.runner.ConcurrentSuiteRunner;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -8,6 +9,7 @@ import test.java.compare.AddPublicScenarioTests;
 import test.java.compare.DeletePrivateComparisonTests;
 import test.java.compare.DeletePublicComparisonTests;
 import test.java.compare.EditPublicComparisonTests;
+import test.java.compare.PublishPublicComparison;
 import test.java.evaluate.CostAllCadTests;
 import test.java.evaluate.DeletePrivateScenarioTests;
 import test.java.evaluate.DeletePublicScenarioTests;
@@ -49,7 +51,9 @@ import test.java.login.LoginTests;
     DeletePublicComparisonTests.class,
     EditPublicComparisonTests.class,
     NewScenarioNameTests.class,
-    PublishExistngCostedTests.class
+    PublishExistngCostedTests.class,
+    PublishNewCostedTests.class,
+    PublishPublicComparison.class
 })
 public class CIDTestSuite {
 }

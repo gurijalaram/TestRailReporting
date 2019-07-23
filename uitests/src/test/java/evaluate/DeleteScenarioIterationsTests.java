@@ -40,14 +40,15 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("DeletePublicScenarioIteration", "DTCCASTINGISSUES")
-            .editScenario();
+            .highlightScenario("DeletePublicScenarioIteration", "casting");
 
-        new ExplorePage(driver).delete()
+        explorePage = new ExplorePage(driver);
+        explorePage.editScenario()
+            .delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
 
-        assertThat(new ExplorePage(driver).findScenario("DeletePublicScenarioIteration", "DTCCASTINGISSUES").isDisplayed(), is(false));
+        assertThat(explorePage.getListOfScenarios("DeletePublicScenarioIteration", "casting") < 1, is(true));
     }
 
     @Test
@@ -61,14 +62,15 @@ public class DeleteScenarioIterationsTests extends TestBase {
         explorePage.uploadFile("DeletePrivateScenarioIteration", filePath, "casting.prt")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
-            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .highlightScenario("DeletePrivateScenarioIteration", "DTCCASTINGISSUES")
-            .editScenario();
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario("DeletePrivateScenarioIteration", "casting");
 
-        new ExplorePage(driver).delete()
+        explorePage = new ExplorePage(driver);
+        explorePage.editScenario()
+            .delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
 
-        assertThat(new ExplorePage(driver).findScenario("DeletePrivateScenarioIteration", "DTCCASTINGISSUES").isDisplayed(), is(false));
+        assertThat(explorePage.getListOfScenarios("DeletePrivateScenarioIteration", "casting") < 1, is(true));
     }
 }

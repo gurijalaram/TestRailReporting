@@ -21,6 +21,7 @@ public class CostAllCadTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private EvaluatePage evaluatePage;
 
     private String filePath = new Scanner(ProcessGroupsTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
@@ -37,11 +38,11 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD Forging", filePath, "Machined Box AMERICAS.SLDPRT")
+        evaluatePage = explorePage.uploadFile("CostAllCAD Forging", filePath, "Machined Box AMERICAS.SLDPRT")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -52,11 +53,11 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD par", filePath, "26136.par")
+        evaluatePage = explorePage.uploadFile("CostAllCAD par", filePath, "26136.par")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -67,11 +68,11 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD CATPart", filePath, "Plastic moulded cap DFM.CATPart")
+        evaluatePage = explorePage.uploadFile("CostAllCAD CATPart", filePath, "Plastic moulded cap DFM.CATPart")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -82,11 +83,11 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD prt 4", filePath, "turning.prt.4")
+        evaluatePage = explorePage.uploadFile("CostAllCAD prt 4", filePath, "turning.prt.4")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -97,11 +98,11 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD Creo", filePath, "turning.prt.4")
+        evaluatePage = explorePage.uploadFile("CostAllCAD Creo", filePath, "turning.prt.4")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -112,11 +113,11 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD NX", filePath, "Locker_bottom_panel.prt")
+        evaluatePage = explorePage.uploadFile("CostAllCAD NX", filePath, "Locker_bottom_panel.prt")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -127,11 +128,11 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD Inventor", filePath, "VERTICAL PLATE.ipt")
+        evaluatePage = explorePage.uploadFile("CostAllCAD Inventor", filePath, "VERTICAL PLATE.ipt")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -142,11 +143,11 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD STEP", filePath, "partbody_2.stp")
+        evaluatePage = explorePage.uploadFile("CostAllCAD STEP", filePath, "partbody_2.stp")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -157,11 +158,11 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD Parasolid", filePath, "bracket_basic_steel_PMI.x_t")
+        evaluatePage = explorePage.uploadFile("CostAllCAD Parasolid", filePath, "bracket_basic_steel_PMI.x_t")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -172,10 +173,10 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("CostAllCAD ACIS", filePath, "Plastic moulded cap thinPart.SAT")
+        evaluatePage = explorePage.uploadFile("CostAllCAD ACIS", filePath, "Plastic moulded cap thinPart.SAT")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 }

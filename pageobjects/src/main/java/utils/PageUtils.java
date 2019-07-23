@@ -24,6 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -381,7 +382,7 @@ public class PageUtils {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
-            } catch (TimeoutException | ElementClickInterceptedException e) {
+            } catch (TimeoutException e) {
                 count = count + 1;
             }
         }
@@ -491,8 +492,7 @@ public class PageUtils {
     /**
      * Selects the correct option in the dropdown.  Conditional statement is included because the system
      * tends to revert to previous selection.
-     *
-     * @param locator        - the locator of the element
+     * @param locator - the locator of the element
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
@@ -530,5 +530,18 @@ public class PageUtils {
     public Boolean checkElementContains(WebElement locator, String text) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+    }
+
+    /**
+     * Ignores exceptions and waits for the element to be clickable
+     * @param locator - the locator of the element
+     */
+    public void waitForElementAndClick(WebElement locator) {
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class, StaleElementReferenceException.class))
+            .until((WebDriver webDriver) -> {
+                locator.click();
+                return true;
+            });
     }
 }
