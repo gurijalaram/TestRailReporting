@@ -523,9 +523,9 @@ public class PageUtils {
 
     /**
      * Checks for string to be present in element text and returns true/false
-     * @param locator
-     * @param text
-     * @return
+     * @param locator - the element locator
+     * @param text - the text to check
+     * @return true/false
      */
     public Boolean checkElementContains(WebElement locator, String text) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
