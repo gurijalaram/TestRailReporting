@@ -51,10 +51,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading");
 
         assertThat(new InvestigationPage(driver).getEditButton().isEnabled(), Matchers.is(false));
@@ -71,17 +69,14 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:20")
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.28")
-            .apply(InvestigationPage.class);
-
-        new InvestigationPage(driver).selectEditButton();
+            .apply(InvestigationPage.class)
+            .selectEditButton();
 
         assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("0.28")));
     }
@@ -97,10 +92,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:21")
             .selectThreadDropdown("Yes")
@@ -130,16 +123,13 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:22")
             .selectThreadDropdown("No")
-            .apply(InvestigationPage.class);
-
-        new InvestigationPage(driver).selectEditButton();
+            .apply(InvestigationPage.class)
+            .selectEditButton();
 
         assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("")));
     }
@@ -155,10 +145,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:23")
             .selectThreadDropdown("Yes")
@@ -180,18 +168,14 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:24")
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.25")
-            .apply(InvestigationPage.class);
-
-        investigationPage = new InvestigationPage(driver);
-        investigationPage.selectEditButton()
+            .apply(InvestigationPage.class)
+            .selectEditButton()
             .removeThreadLength()
             .apply(WarningPage.class);
 
@@ -217,14 +201,11 @@ public class TolerancesTests extends TestBase {
             .editThread("Curved Walls", "CurvedWall:25")
             .selectThreadDropdown("Yes")
             .enterThreadLength("3.50")
-            .apply(InvestigationPage.class);
-
-        investigationPage = new InvestigationPage(driver);
-        investigationPage.selectEditButton()
+            .apply(InvestigationPage.class)
+            .selectEditButton()
             .enterThreadLength("1.70")
-            .cancel();
-
-        new InvestigationPage(driver).selectEditButton();
+            .cancel()
+            .selectEditButton();
 
         assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("3.50")));
     }
@@ -240,10 +221,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:25")
             .selectThreadDropdown("Yes")
@@ -264,10 +243,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:25")
             .selectThreadDropdown("Yes")
@@ -288,10 +265,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .publishScenario();
-
-        explorePage = new ExplorePage(driver);
-        explorePage.openScenario("Scenario b", "DTCCastingIssues")
+            .publishScenario()
+            .openScenario("Scenario b", "DTCCastingIssues")
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading");
@@ -310,10 +285,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.CATPart")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:26")
             .selectThreadDropdown("Yes")
@@ -329,10 +302,8 @@ public class TolerancesTests extends TestBase {
             .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
             .apply()
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:26");
 
@@ -353,10 +324,8 @@ public class TolerancesTests extends TestBase {
 
         explorePage.openSettings()
             .changeDisplayUnits("English")
-            .save(EvaluatePage.class);
-
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.openDesignGuidance()
+            .save(EvaluatePage.class)
+            .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading");
 
@@ -377,10 +346,8 @@ public class TolerancesTests extends TestBase {
 
         explorePage.openSettings()
             .changeDisplayUnits("System")
-            .save(EvaluatePage.class);
-
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.openDesignGuidance()
+            .save(EvaluatePage.class)
+            .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading");
 
@@ -398,10 +365,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:27")
             .selectThreadDropdown("Yes")
@@ -414,10 +379,9 @@ public class TolerancesTests extends TestBase {
         evaluatePage.openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:27");
 
@@ -435,10 +399,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:28");
 
@@ -456,10 +418,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:29");
 
@@ -477,10 +437,8 @@ public class TolerancesTests extends TestBase {
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openInvestigationTab()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:30");
 
