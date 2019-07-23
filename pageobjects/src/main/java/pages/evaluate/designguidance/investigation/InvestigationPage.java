@@ -103,8 +103,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return new page object
      */
     public ThreadingPage selectEditButton() {
-        pageUtils.waitForElementEnabled(editButton);
-        pageUtils.javaScriptClick(editButton);
+        pageUtils.waitForElementAndClick(editButton);
         return new ThreadingPage(driver);
     }
 
