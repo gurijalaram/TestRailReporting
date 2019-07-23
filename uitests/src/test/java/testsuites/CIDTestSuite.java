@@ -9,6 +9,7 @@ import test.java.compare.AddPublicScenarioTests;
 import test.java.compare.DeletePrivateComparisonTests;
 import test.java.compare.DeletePublicComparisonTests;
 import test.java.compare.EditPublicComparisonTests;
+import test.java.compare.PublishPublicComparison;
 import test.java.evaluate.CostAllCadTests;
 import test.java.evaluate.DeletePrivateScenarioTests;
 import test.java.evaluate.DeletePublicScenarioTests;
@@ -51,7 +52,8 @@ import test.java.login.LoginTests;
     EditPublicComparisonTests.class,
     NewScenarioNameTests.class,
     PublishExistngCostedTests.class,
-    PublishNewCostedTests.class
+    PublishNewCostedTests.class,
+    PublishPublicComparison.class
 })
 public class CIDTestSuite {
 }
