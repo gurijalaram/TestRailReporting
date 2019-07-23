@@ -1,116 +1,127 @@
-package main.java.explore;
+package test.java.explore;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
-import main.java.pages.explore.FilterCriteriaPage;
+import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
 
 public class FilterCriteriaTests extends TestBase {
 
     private LoginPage loginPage;
-    private FilterCriteriaPage filterCriteriaPage;
 
     public FilterCriteriaTests() {
         super();
     }
 
-    /**
-     * Test private criteria part
-     */
     @Test
+    @Description("Test private criteria part")
+    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaPart() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "15136");
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Part Name", "Contains", "15136")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
-    /**
-     * Test private criteria attribute
-     */
     @Test
+    @Description("Test private criteria attribute")
+    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaAttribute() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterPrivateCriteria("Part", "Process Group", "is", "Casting");
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Process Group", "is", "Casting")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
-    /**
-     * Test private criteria part 'contains'
-     */
     @Test
+    @Description("Test private criteria part contains")
+    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaContains() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "Test");
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Part Name", "Contains", "Test")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
-    /**
-     * Test private criteria value option
-     */
     @Test
+    @Description("Test private criteria value option")
+    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaPartValue() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterPrivateCriteria("Part", "Status", "is", "Waiting");
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Status", "is", "Waiting")
+            .apply(ExplorePage.class);
         //Assert.assertFalse();
     }
 
-    /**
-     * Test private criteria assembly
-     */
     @Test
+    @Description("Test private criteria assembly")
+    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaAssembly() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterPrivateCriteria("Assembly", "Part Name", "Contains", "15136");
+            .filterCriteria()
+            .filterPrivateCriteria("Assembly", "Part Name", "Contains", "15136")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
-    /**
-     * Test private criteria assembly status
-     */
     @Test
+    @Description("Test private criteria assembly status")
+    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaAssemblyStatus() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterPrivateCriteria("Assembly", "Status", "is", "Nothing selected");
+            .filterCriteria()
+            .filterPrivateCriteria("Assembly", "Status", "is", "Nothing selected")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 
-    /**
-     * Test public criteria part
-     */
     @Test
+    @Description("Test public criteria part")
+    @Severity(SeverityLevel.MINOR)
     public void testPublicCriteriaPart() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterPublicCriteria("Part", "Part Name", "Contains", "15136");
+            .filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "15136")
+            .apply(ExplorePage.class);
         //Assert.assertFalse();
     }
 
-    /**
-     * Test public criteria assembly description
-     */
     @Test
+    @Description("Test public criteria assembly description")
+    @Severity(SeverityLevel.MINOR)
     public void testPublicCriteriaAssemblyDesc() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterPublicCriteria("Assembly", "Description", "Contains", "Test");
+            .filterCriteria()
+            .filterPublicCriteria("Assembly", "Description", "Contains", "Test")
+            .apply(ExplorePage.class);
         //Assert.assertFalse();
     }
 
-    /**
-     * Test public criteria comparison
-     */
     @Test
+    @Description("Test public criteria comparison")
+    @Severity(SeverityLevel.MINOR)
     public void testPublicCriteriaComparison() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterPublicCriteria("Comparison", "Cost Maturity", "is", "Nothing selected");
+            .filterCriteria()
+            .filterPublicCriteria("Comparison", "Cost Maturity", "is", "Nothing selected")
+            .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
 }

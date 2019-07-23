@@ -50,27 +50,46 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     /**
      * Selects both issue type and gcd details
-     * @param issueType - the issue type
+     * @param issueTypeDropdown - the issue type parent
      * @param gcd - the gcd
      * @return current page object
      */
-    public GuidancePage selectIssueTypeAndGCD(String issueType, String gcd) {
+    public GuidancePage selectIssueTypeAndGCD(String issueTypeDropdown, String issueType, String gcd) {
+        selectIssue(issueTypeDropdown);
         selectIssueType(issueType).click();
         selectGCD(gcd).click();
         return this;
     }
 
     /**
+     * Selects the issue type dropdown
+     * @param issueTypeDropdown - the issue type dropdown
+     * @return issue type as webelement
+     */
+    private GuidancePage selectIssue(String issueTypeDropdown) {
+
+        String[] parents = issueTypeDropdown.split(",");
+
+        for (String parent : parents) {
+            By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + parent.trim() + "')]/ancestor::tr//span[@class]");
+            pageUtils.scrollToElement(issue, guidanceTableScroller);
+
+            if (driver.findElement(issue).getAttribute("class").contains("right")) {
+                driver.findElement(issue).click();
+            }
+        }
+        return this;
+    }
+
+    /**
      * Selects the issue type
      * @param issueType - the issue type
-     * @return issue type as webelement
+     * @return
      */
     private WebElement selectIssueType(String issueType) {
         By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]");
-        return pageUtils.scrollToElement(issue, guidanceTableScroller);
+        return pageUtils.scrollToElement(issue,guidanceTableScroller);
     }
-
-    // TODO: 17/06/2019 ciene - implement functionality to properly scroll the issue type and select dropdown caret.  this functionality will be used for geometry and secondary processes
 
     /**
      * Selects the gcd
@@ -78,18 +97,8 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      * @return gcd as a webelement
      */
     private WebElement selectGCD(String gcdType) {
-        By gcd = By.xpath("//div[@data-ap-comp='guidanceIssuesDetailsTable']//td[contains(text(),'" + gcdType + "')]");
+        By gcd = By.xpath("//div[@data-ap-comp='guidanceIssuesDetailsTable']//td[contains(text(),'" + gcdType + "')]/ancestor::tr");
         return pageUtils.scrollToElement(gcd, detailsTableScroller);
-    }
-
-    /**
-     * Selects the entire row of the gcd
-     * @param gcdType - the gcd
-     * @return gcd as a webelement
-     */
-    public WebElement selectGCDRow(String gcdType) {
-        By gcdRow = By.xpath("//div[@data-ap-comp='guidanceIssuesDetailsTable']//td[contains(text(),'" + gcdType + "')]/ancestor::tr");
-        return pageUtils.scrollToElement(gcdRow,detailsTableScroller);
     }
 
     /**
