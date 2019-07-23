@@ -1,6 +1,7 @@
 package main.java.pages.explore;
 
 import main.java.header.ExploreHeader;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
@@ -142,6 +143,16 @@ public class ExplorePage extends ExploreHeader {
     public EvaluatePage openScenario(String scenarioName, String partName) {
         findScenario(scenarioName, partName).click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Opens the comparison
+     * @param comparisonName - the comparison name
+     * @return new page object
+     */
+    public ComparePage openComparison(String comparisonName) {
+        findComparison(comparisonName).click();
+        return new ComparePage(driver);
     }
 
     /**

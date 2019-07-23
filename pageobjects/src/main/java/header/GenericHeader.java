@@ -4,6 +4,7 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.PublishPage;
 import main.java.pages.explore.AssignPage;
 import main.java.pages.explore.ComparisonPage;
+import main.java.pages.explore.DeletePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.explore.FileUploadPage;
 import main.java.pages.explore.ScenarioNotesPage;
@@ -200,5 +201,15 @@ public class GenericHeader extends PageHeader {
     public EvaluatePage editScenario() {
         pageUtils.waitForElementToAppear(editButton).click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Deletes the scenario
+     *
+     * @return new page object
+     */
+    public DeletePage delete() {
+        deleteButton.click();
+        return new DeletePage(driver);
     }
 }

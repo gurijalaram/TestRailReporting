@@ -39,11 +39,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Forging", filePath, "case_001_006-8613190_2.prt.2")
+        explorePage.uploadFile("Forging", filePath, "case_001_006-8613190_2.prt.2")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Forging", "case_001_006-8613190_2")
-            .editScenario()
+            .highlightScenario("Forging", "case_001_006-8613190_2");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -58,11 +60,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Stock Machining", filePath, "42x1021_ref.prt.1")
+        explorePage.uploadFile("Stock Machining", filePath, "42x1021_ref.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Stock Machining", "42x1021_ref")
-            .editScenario()
+            .highlightScenario("Stock Machining", "42x1021_ref");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -77,11 +81,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Bar and Tube", filePath, "350611.prt.1")
+        explorePage.uploadFile("Bar and Tube", filePath, "350611.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Bar and Tube", "350611")
-            .editScenario()
+            .highlightScenario("Bar and Tube", "350611");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -96,11 +102,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Casting", filePath, "case_012_009-0020647_hinge_2.prt.1")
+        explorePage.uploadFile("Casting", filePath, "case_012_009-0020647_hinge_2.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Casting", "case_012_009-0020647_hinge_2")
-            .editScenario()
+            .highlightScenario("Casting", "case_012_009-0020647_hinge_2");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -115,11 +123,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Extrusion", filePath, "700-33770-01_A0.stp")
+        explorePage.uploadFile("Extrusion", filePath, "700-33770-01_A0.stp")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Extrusion", "case_012_009-700-33770-01_A0")
-            .editScenario()
+            .highlightScenario("Extrusion", "case_012_009-700-33770-01_A0");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -134,11 +144,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Filleting", filePath, "case_005_flat end mill contouring.SLDPRT")
+        explorePage.uploadFile("Filleting", filePath, "case_005_flat end mill contouring.SLDPRT")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Filleting", "case_005_flat end mill contouring")
-            .editScenario()
+            .highlightScenario("Filleting", "case_005_flat end mill contouring");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -153,11 +165,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Gear Making", filePath, "Case_001_-_Rockwell_2075-0243G.stp")
+        explorePage.uploadFile("Gear Making", filePath, "Case_001_-_Rockwell_2075-0243G.stp")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Gear Making", "Case_001_-_Rockwell_2075-0243G")
-            .editScenario()
+            .highlightScenario("Gear Making", "Case_001_-_Rockwell_2075-0243G");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -172,11 +186,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Machining-Contouring", filePath, "case_002_00400016-003M10_A.STP")
+        explorePage.uploadFile("Machining-Contouring", filePath, "case_002_00400016-003M10_A.STP")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Machining-Contouring", "case_002_00400016-003M10_A")
-            .editScenario()
+            .highlightScenario("Machining-Contouring", "case_002_00400016-003M10_A");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -191,11 +207,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Machining-Gage Parts", filePath, "GagePart_Case_011_gundrillgagepart-01.prt.1")
+        explorePage.uploadFile("Machining-Gage Parts", filePath, "GagePart_Case_011_gundrillgagepart-01.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Machining-Gage Parts", "GagePart_Case_011_gundrillgagepart-01")
-            .editScenario()
+            .highlightScenario("Machining-Gage Parts", "GagePart_Case_011_gundrillgagepart-01");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -210,11 +228,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Machining-Milling-4 Axis Mill", filePath, "prt0001.prt.1")
+        explorePage.uploadFile("Machining-Milling-4 Axis Mill", filePath, "prt0001.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Machining-Milling-4 Axis Mill", "prt0001")
-            .editScenario()
+            .highlightScenario("Machining-Milling-4 Axis Mill", "prt0001");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -229,11 +249,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Machining-Milling-5 Axis Mill", filePath, "7021021-2_rib.prt.1")
+        explorePage.uploadFile("Machining-Milling-5 Axis Mill", filePath, "7021021-2_rib.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Machining-Milling-5 Axis Mill", "7021021-2_rib")
-            .editScenario()
+            .highlightScenario("Machining-Milling-5 Axis Mill", "7021021-2_rib");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -248,11 +270,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Machining-Milling-Mill Turn", filePath, "ms16555-627_1.prt.1")
+        explorePage.uploadFile("Machining-Milling-Mill Turn", filePath, "ms16555-627_1.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Machining-Milling-Mill Turn", "ms16555-627_1")
-            .editScenario()
+            .highlightScenario("Machining-Milling-Mill Turn", "ms16555-627_1");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -267,11 +291,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Partially Automated Machining", filePath, "14100640.stp")
+        explorePage.uploadFile("Partially Automated Machining", filePath, "14100640.stp")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Partially Automated Machining", "14100640")
-            .editScenario()
+            .highlightScenario("Partially Automated Machining", "14100640");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -286,11 +312,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Perimeter Milling", filePath, "14100640.stp")
+        explorePage.uploadFile("Perimeter Milling", filePath, "14100640.stp")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Perimeter Milling", "14100640")
-            .editScenario()
+            .highlightScenario("Perimeter Milling", "14100640");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -305,11 +333,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Pocket Recognition", filePath, "03229_0032_002_A.stp")
+        explorePage.uploadFile("Pocket Recognition", filePath, "03229_0032_002_A.stp")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Pocket Recognition", "03229_0032_002_A")
-            .editScenario()
+            .highlightScenario("Pocket Recognition", "03229_0032_002_A");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -324,11 +354,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Pocket Recognition - shared walls", filePath, "case_066_SpaceX_00128711-001_A.stp")
+        explorePage.uploadFile("Pocket Recognition - shared walls", filePath, "case_066_SpaceX_00128711-001_A.stp")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Pocket Recognition - shared walls", "case_066_SpaceX_00128711-001_A")
-            .editScenario()
+            .highlightScenario("Pocket Recognition - shared walls", "case_066_SpaceX_00128711-001_A");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -343,11 +375,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Rough Milling", filePath, "16-340053-00-04.prt.1")
+        explorePage.uploadFile("Rough Milling", filePath, "16-340053-00-04.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Rough Milling", "16-340053-00-04")
-            .editScenario()
+            .highlightScenario("Rough Milling", "16-340053-00-04");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -362,11 +396,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Slot Examples", filePath, "case_007_SpaceX_00088481-001_C.stp")
+        explorePage.uploadFile("Slot Examples", filePath, "case_007_SpaceX_00088481-001_C.stp")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Slot Examples", "case_007_SpaceX_00088481-001_C")
-            .editScenario()
+            .highlightScenario("Slot Examples", "case_007_SpaceX_00088481-001_C");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -381,11 +417,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Turning", filePath, "case_002_006-8611543_prt.stp")
+        explorePage.uploadFile("Turning", filePath, "case_002_006-8611543_prt.stp")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Turning", "case_002_006-8611543_prt")
-            .editScenario()
+            .highlightScenario("Turning", "case_002_006-8611543_prt");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -400,11 +438,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Blow Molding", filePath, "225_gasket-1-solid1.prt.1")
+        explorePage.uploadFile("Blow Molding", filePath, "225_gasket-1-solid1.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Blow Molding", "225_gasket-1-solid1")
-            .editScenario()
+            .highlightScenario("Blow Molding", "225_gasket-1-solid1");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -419,11 +459,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("PMI", filePath, "case_04_gtoldtc.prt")
+        explorePage.uploadFile("PMI", filePath, "case_04_gtoldtc.prt")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("PMI", "case_04_gtoldtc")
-            .editScenario()
+            .highlightScenario("PMI", "case_04_gtoldtc");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -438,11 +480,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Powder Metal", filePath, "case_31_test_part_6_small.prt.2")
+        explorePage.uploadFile("Powder Metal", filePath, "case_31_test_part_6_small.prt.2")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Powder Metal", "case_31_test_part_6_small")
-            .editScenario()
+            .highlightScenario("Powder Metal", "case_31_test_part_6_small");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -457,11 +501,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Roll Bending", filePath, "AGCO _ 71421375.prt.1")
+        explorePage.uploadFile("Roll Bending", filePath, "AGCO _ 71421375.prt.1")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Roll Bending", "AGCO _ 71421375")
-            .editScenario()
+            .highlightScenario("Roll Bending", "AGCO _ 71421375");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -476,11 +522,13 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Transfer Die", filePath, "case_011_CENA-009-A1-LH-Rear-Body-Mount.prt")
+        explorePage.uploadFile("Transfer Die", filePath, "case_011_CENA-009-A1-LH-Rear-Body-Mount.prt")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Transfer Die", "case_011_CENA-009-A1-LH-Rear-Body-Mount")
-            .editScenario()
+            .highlightScenario("Transfer Die", "case_011_CENA-009-A1-LH-Rear-Body-Mount");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 

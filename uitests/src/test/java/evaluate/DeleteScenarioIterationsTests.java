@@ -40,11 +40,11 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("DeletePublicScenarioIteration", "casting")
-            .editScenario();
+            .highlightScenario("DeletePublicScenarioIteration", "casting");
 
         explorePage = new ExplorePage(driver);
-        explorePage.delete()
+        explorePage.editScenario()
+            .delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
 
@@ -63,11 +63,11 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("DeletePrivateScenarioIteration", "casting")
-            .editScenario();
+            .highlightScenario("DeletePrivateScenarioIteration", "casting");
 
         explorePage = new ExplorePage(driver);
-        explorePage.delete()
+        explorePage.editScenario()
+            .delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
 
