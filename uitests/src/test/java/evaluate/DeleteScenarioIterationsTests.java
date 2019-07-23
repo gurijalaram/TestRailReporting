@@ -43,11 +43,12 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .highlightScenario("DeletePublicScenarioIteration", "casting")
             .editScenario();
 
-        new ExplorePage(driver).delete()
+        explorePage = new ExplorePage(driver);
+        explorePage.delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
 
-        assertThat(new ExplorePage(driver).getListOfScenarios("DeletePublicScenarioIteration", "casting") < 1, is(true));
+        assertThat(explorePage.getListOfScenarios("DeletePublicScenarioIteration", "casting") < 1, is(true));
     }
 
     @Test
@@ -61,14 +62,15 @@ public class DeleteScenarioIterationsTests extends TestBase {
         explorePage.uploadFile("DeletePrivateScenarioIteration", filePath, "casting.prt")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
-            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario("DeletePrivateScenarioIteration", "casting")
             .editScenario();
 
-        new ExplorePage(driver).delete()
+        explorePage = new ExplorePage(driver);
+        explorePage.delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
 
-        assertThat(new ExplorePage(driver).getListOfScenarios("DeletePrivateScenarioIteration", "casting") < 1, is(true));
+        assertThat(explorePage.getListOfScenarios("DeletePrivateScenarioIteration", "casting") < 1, is(true));
     }
 }

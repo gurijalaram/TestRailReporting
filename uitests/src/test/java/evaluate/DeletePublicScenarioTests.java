@@ -42,6 +42,6 @@ public class DeletePublicScenarioTests extends TestBase {
             .delete()
             .deleteScenario();
 
-        assertThat(new ExplorePage(driver).getListOfScenarios("DeletePublicScenario", "casting") < 1, is(true));
+        assertThat(explorePage.getListOfScenarios("DeletePublicScenario", "casting") < 1, is(true));
     }
 }
