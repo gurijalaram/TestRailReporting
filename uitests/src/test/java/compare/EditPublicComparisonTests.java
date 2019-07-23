@@ -63,7 +63,8 @@ public class EditPublicComparisonTests extends TestBase {
             .enterComparisonName("DeletePrivateComparison10")
             .save();
 
-        new EvaluatePage(driver).publishScenario().openComparison("DeletePrivateComparison10");
+        new EvaluatePage(driver).publishScenario()
+            .openComparison("DeletePrivateComparison10");
 
         assertThat(new ComparePage(driver).getDescriptionText(), containsString("DeletePrivateComparison10"));
     }
