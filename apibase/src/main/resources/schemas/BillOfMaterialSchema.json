@@ -1,0 +1,220 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "MaterialsSchema",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "title": "The Response Schema",
+      "required": [
+        "isFirstPage",
+        "isLastPage",
+        "pageNumber",
+        "pageSize",
+        "pageItemCount",
+        "totalItemCount",
+        "totalPageCount",
+        "hasNextPage",
+        "hasPreviousPage",
+        "items"
+      ],
+      "properties": {
+        "isFirstPage": {
+          "$id": "#/properties/response/properties/isFirstPage",
+          "type": "boolean",
+          "title": "The Isfirstpage Schema",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "isLastPage": {
+          "$id": "#/properties/response/properties/isLastPage",
+          "type": "boolean",
+          "title": "The Islastpage Schema",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "pageNumber": {
+          "$id": "#/properties/response/properties/pageNumber",
+          "type": "integer",
+          "title": "The Pagenumber Schema",
+          "default": 0,
+          "examples": [
+            1
+          ]
+        },
+        "pageSize": {
+          "$id": "#/properties/response/properties/pageSize",
+          "type": "integer",
+          "title": "The Pagesize Schema",
+          "default": 0,
+          "examples": [
+            10
+          ]
+        },
+        "pageItemCount": {
+          "$id": "#/properties/response/properties/pageItemCount",
+          "type": "integer",
+          "title": "The Pageitemcount Schema",
+          "default": 0,
+          "examples": [
+            1
+          ]
+        },
+        "totalItemCount": {
+          "$id": "#/properties/response/properties/totalItemCount",
+          "type": "integer",
+          "title": "The Totalitemcount Schema",
+          "default": 0,
+          "examples": [
+            1
+          ]
+        },
+        "totalPageCount": {
+          "$id": "#/properties/response/properties/totalPageCount",
+          "type": "integer",
+          "title": "The Totalpagecount Schema",
+          "default": 0,
+          "examples": [
+            1
+          ]
+        },
+        "hasNextPage": {
+          "$id": "#/properties/response/properties/hasNextPage",
+          "type": "boolean",
+          "title": "The Hasnextpage Schema",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "hasPreviousPage": {
+          "$id": "#/properties/response/properties/hasPreviousPage",
+          "type": "boolean",
+          "title": "The Haspreviouspage Schema",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "items": {
+          "$id": "#/properties/response/properties/items",
+          "type": "array",
+          "title": "The Items Schema",
+          "items": {
+            "$id": "#/properties/response/properties/items/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "identity",
+              "createdAt",
+              "createdBy",
+              "name",
+              "numberOfLineItemsCannotCost",
+              "numberOfLineItemsNotCosted",
+              "numberOfLineItemsCosted",
+              "numberOfLineItemsReadyForExport",
+              "totalNumberOfLineItems"
+            ],
+            "properties": {
+              "identity": {
+                "$id": "#/properties/response/properties/items/items/properties/identity",
+                "type": "string",
+                "title": "The Identity Schema",
+                "default": "",
+                "examples": [
+                  "-3932E8JI2C6"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "createdAt": {
+                "$id": "#/properties/response/properties/items/items/properties/createdAt",
+                "type": "string",
+                "title": "The Createdat Schema",
+                "default": "",
+                "examples": [
+                  "2019-07-19T14:44:24.000+0000"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "createdBy": {
+                "$id": "#/properties/response/properties/items/items/properties/createdBy",
+                "type": "string",
+                "title": "The Createdby Schema",
+                "default": "",
+                "examples": [
+                  "3IFG0K64CBJF"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "name": {
+                "$id": "#/properties/response/properties/items/items/properties/name",
+                "type": "string",
+                "title": "The Name Schema",
+                "default": "",
+                "examples": [
+                  "apriori-3-items.csv"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "numberOfLineItemsCannotCost": {
+                "$id": "#/properties/response/properties/items/items/properties/numberOfLineItemsCannotCost",
+                "type": "integer",
+                "title": "The Numberoflineitemscannotcost Schema",
+                "default": 0,
+                "examples": [
+                  0
+                ]
+              },
+              "numberOfLineItemsNotCosted": {
+                "$id": "#/properties/response/properties/items/items/properties/numberOfLineItemsNotCosted",
+                "type": "integer",
+                "title": "The Numberoflineitemsnotcosted Schema",
+                "default": 0,
+                "examples": [
+                  3
+                ]
+              },
+              "numberOfLineItemsCosted": {
+                "$id": "#/properties/response/properties/items/items/properties/numberOfLineItemsCosted",
+                "type": "integer",
+                "title": "The Numberoflineitemscosted Schema",
+                "default": 0,
+                "examples": [
+                  0
+                ]
+              },
+              "numberOfLineItemsReadyForExport": {
+                "$id": "#/properties/response/properties/items/items/properties/numberOfLineItemsReadyForExport",
+                "type": "integer",
+                "title": "The Numberoflineitemsreadyforexport Schema",
+                "default": 0,
+                "examples": [
+                  0
+                ]
+              },
+              "totalNumberOfLineItems": {
+                "$id": "#/properties/response/properties/items/items/properties/totalNumberOfLineItems",
+                "type": "integer",
+                "title": "The Totalnumberoflineitems Schema",
+                "default": 0,
+                "examples": [
+                  3
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
