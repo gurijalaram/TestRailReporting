@@ -42,6 +42,7 @@
 		<!-- Miscellaneous dependencies/plugins -->
 		<jetty.stop.port>1234</jetty.stop.port>
 		<plugin.checkstyle-maven-plugin.version>3.0.0</plugin.checkstyle-maven-plugin.version>
+		<puppycrawl.checkstyle>8.22</puppycrawl.checkstyle>
 		<logback.classic.version>1.2.3</logback.classic.version>
 		<sl4j.version>1.7.25</sl4j.version>
 		<xmlbeans.version>2.6.0</xmlbeans.version>
@@ -715,7 +716,7 @@
 						<dependency>
 							<groupId>com.puppycrawl.tools</groupId>
 							<artifactId>checkstyle</artifactId>
-							<version>[8.18,)</version>
+							<version>${puppycrawl.checkstyle}</version>
 						</dependency>
 					</dependencies>
 				</plugin>
