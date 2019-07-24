@@ -210,13 +210,4 @@ public class EvaluatePage extends EvaluateHeader {
     public String getProcessGroup() {
         return processGroupDropdown.getText();
     }
-
-    /**
-     * Selects the revert button
-     * @return new page object
-     */
-    public RevertPage revert() {
-        pageUtils.waitForElementToAppear(revertButton).click();
-        return new RevertPage(driver);
-    }
 }

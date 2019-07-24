@@ -2,6 +2,7 @@ package main.java.header;
 
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.PublishPage;
+import main.java.pages.evaluate.RevertPage;
 import main.java.pages.explore.AssignPage;
 import main.java.pages.explore.ComparisonPage;
 import main.java.pages.explore.DeletePage;
@@ -211,5 +212,14 @@ public class GenericHeader extends PageHeader {
     public DeletePage delete() {
         deleteButton.click();
         return new DeletePage(driver);
+    }
+
+    /**
+     * Selects the revert button
+     * @return new page object
+     */
+    public RevertPage revert() {
+        pageUtils.waitForElementToAppear(revertButton).click();
+        return new RevertPage(driver);
     }
 }
