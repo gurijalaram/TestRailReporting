@@ -62,7 +62,7 @@ public class DriverFactory {
 
                     StringBuilder serverBuilder = new StringBuilder(seleniumProtocol + "://" + seleniumHost);
 
-                    if(seleniumPort != null && !seleniumPort.isEmpty()) {
+                    if (seleniumPort != null && !seleniumPort.isEmpty()) {
                         serverBuilder.append(":" + seleniumPort);
                     }
                     serverBuilder.append(seleniumPrefix);

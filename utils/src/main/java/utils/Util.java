@@ -1,6 +1,5 @@
 package main.java.utils;
 
-import main.java.constants.Constants;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,10 +8,16 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+;
 
 
 public class Util {
@@ -79,12 +84,12 @@ public class Util {
     //TODO z: just to contain all process with default authorization form in one place and make it comfortable to use
     public static Map<String, String> getDefaultAuthorizationForm(final String username, final String password) {
         return new HashMap<String, String>() {{
-            put("grant_type", "password");
-            put("client_id", "apriori-web-cost");
-            put("client_secret", "donotusethiskey");
-            put("scope", "tenantGroup%3Ddefault%20tenant%3Ddefault");
-            put("username", username);
-            put("password", password);
-        }};
+                put("grant_type", "password");
+                put("client_id", "apriori-web-cost");
+                put("client_secret", "donotusethiskey");
+                put("scope", "tenantGroup%3Ddefault%20tenant%3Ddefault");
+                put("username", username);
+                put("password", password);
+            }};
     }
 }
