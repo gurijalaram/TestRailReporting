@@ -10,13 +10,15 @@ public class UserAuthenticationEntity {
     private String emailAddress;
     private String password;
     private String sessionId;
-    private String grant_type;
-    private String client_id;
-    private String client_secret;
+    private String grantType;
+    private String clientId;
+    private String clientSecret;
     private String scope;
     private boolean alreadyLoggedIn;
 
-    public UserAuthenticationEntity(){}
+    public UserAuthenticationEntity(){
+
+    }
 
     public UserAuthenticationEntity(String emailAddress, String password) {
         this.emailAddress = emailAddress;
@@ -36,13 +38,13 @@ public class UserAuthenticationEntity {
         this.alreadyLoggedIn = alreadyLoggedIn;
     }
 
-    public UserAuthenticationEntity(String emailAddress, String password, String sessionId, String grant_type, String client_id, String client_secret, String scope, boolean alreadyLoggedIn) {
+    public UserAuthenticationEntity(String emailAddress, String password, String sessionId, String grantType, String clientId, String clientSecret, String scope, boolean alreadyLoggedIn) {
         this.emailAddress = emailAddress;
         this.password = password;
         this.sessionId = sessionId;
-        this.grant_type = grant_type;
-        this.client_id = client_id;
-        this.client_secret = client_secret;
+        this.grantType = grantType;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
         this.scope = scope;
         this.alreadyLoggedIn = alreadyLoggedIn;
     }
@@ -63,16 +65,16 @@ public class UserAuthenticationEntity {
         return sessionId;
     }
 
-    public String getGrant_type() {
-        return grant_type;
+    public String getGrantType() {
+        return grantType;
     }
 
-    public String getClient_id() {
-        return client_id;
+    public String getClientId() {
+        return clientId;
     }
 
-    public String getClient_secret() {
-        return client_secret;
+    public String getClientSecret() {
+        return clientSecret;
     }
 
     public String getScope() {
@@ -98,18 +100,18 @@ public class UserAuthenticationEntity {
         return this;
     }
 
-    public UserAuthenticationEntity setGrant_type(String grant_type) {
-        this.grant_type = grant_type;
+    public UserAuthenticationEntity setGrantType(String grantType) {
+        this.grantType = grantType;
         return this;
     }
 
-    public UserAuthenticationEntity setClient_id(String client_id) {
-        this.client_id = client_id;
+    public UserAuthenticationEntity setClientId(String clientId) {
+        this.clientId = clientId;
         return this;
     }
 
-    public UserAuthenticationEntity setClient_secret(String client_secret) {
-        this.client_secret = client_secret;
+    public UserAuthenticationEntity setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
         return this;
     }
 

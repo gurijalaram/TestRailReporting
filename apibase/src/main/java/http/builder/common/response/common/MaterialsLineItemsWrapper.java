@@ -6,7 +6,7 @@ import main.java.http.enums.Schema;
 import java.util.List;
 
 @Schema(location = "MaterialsLineItemsWrapperSchema.json")
-public class MaterialsLineItemsWrapper extends CommonResponse{
+public class MaterialsLineItemsWrapper extends CommonResponse {
 
     @JsonProperty
     private Boolean isFirstPage;

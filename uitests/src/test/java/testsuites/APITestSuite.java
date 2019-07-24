@@ -1,6 +1,5 @@
 package test.java.testsuites;
 
-
 import main.java.api.AccountsTest;
 import main.java.api.BillOfMaterialsTest;
 import main.java.api.PartOfMaterialsTest;

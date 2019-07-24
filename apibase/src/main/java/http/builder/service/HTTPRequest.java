@@ -12,11 +12,14 @@ public class HTTPRequest {
 
     private WebDriver driver;
 
-    public HTTPRequest(){}
+    public HTTPRequest() {
+
+    }
 
     /**
      * This constructor should be used only for UIvsAPI test cases to avoid double login.
      * For DBvsAPI tests please use constructors which are not using driver as parameter.
+     *
      * @param driver - the driver what we are using for test run.
      */
     public HTTPRequest(WebDriver driver) {
@@ -25,6 +28,7 @@ public class HTTPRequest {
 
     /**
      * Request without authorization
+     *
      * @return
      */
     public RequestInitService unauthorized() {
@@ -34,6 +38,7 @@ public class HTTPRequest {
     /**
      * Form authorization
      * Using default form parameters, from utils sub-project, for common authorization
+     *
      * @param user - Enum with username and password
      * @return
      */
@@ -44,6 +49,7 @@ public class HTTPRequest {
     /**
      * Form authorization
      * Using default form parameters, from utils sub-project, for common authorization
+     *
      * @param username - authorization user email/username
      * @param password - authorization user password
      * @return
@@ -59,6 +65,7 @@ public class HTTPRequest {
     /**
      * Form authorization
      * Use for common authorization with custom form parameters
+     *
      * @param userAuthenticationEntity - object with custom form parameters
      * @return
      */
@@ -72,6 +79,7 @@ public class HTTPRequest {
     /**
      * Session authorization
      * Use browser session id for http requests
+     *
      * @param emailAddress
      * @param sessionId
      * @param alreadyLoggedIn
@@ -89,6 +97,7 @@ public class HTTPRequest {
 
     /**
      * URL authorization
+     *
      * @param username
      * @param password
      * @return

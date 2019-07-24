@@ -3,7 +3,12 @@ package main.java.api;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import main.java.http.builder.common.response.common.*;
+import main.java.http.builder.common.response.common.BillOfMaterial;
+import main.java.http.builder.common.response.common.BillOfMaterialsWrapper;
+import main.java.http.builder.common.response.common.MaterialLineItem;
+import main.java.http.builder.common.response.common.MaterialPart;
+import main.java.http.builder.common.response.common.MaterialPartWrapper;
+import main.java.http.builder.common.response.common.MaterialsLineItemsWrapper;
 import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
 import main.java.http.enums.common.api.PartsAPIEnum;
@@ -25,14 +30,14 @@ public class PartOfMaterialsTest {
     private static MaterialPart materialPart;
 
     @BeforeClass
-    public static void getLineItems(){
+    public static void getLineItems() {
         //TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
         token = new WebDriverUtils().getToken("email", "password");
 
-        authorizationHeaders =  new HashMap<String, String>() {{
-            put("Authorization", "Bearer " + token);
-            put("ap-cloud-context", "EDC");
-        }};
+        authorizationHeaders = new HashMap<String, String>() {{
+                put("Authorization", "Bearer " + token);
+                put("ap-cloud-context", "EDC");
+            }};
 
         BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
                 .unauthorized()
@@ -70,7 +75,7 @@ public class PartOfMaterialsTest {
         MaterialLineItem materialLineItem = materialsLineItemsWrapper.getMaterialLineItems()
                 .get(new Random().nextInt(materialsLineItemsWrapper.getMaterialLineItems().size()));
 
-        if(materialLineItem.getMaterialParts().size() == 0){
+        if (materialLineItem.getMaterialParts().size() == 0) {
             return getRandomLineItemWithParts(materialsLineItemsWrapper);
         }
 
@@ -78,11 +83,10 @@ public class PartOfMaterialsTest {
     }
 
 
-
     @Test
     @Description("Get list of parts")
     @Severity(SeverityLevel.NORMAL)
-    public void getParts(){
+    public void getParts() {
         new HTTPRequest().unauthorized()
                 .customizeRequest()
                 .setEndpoint(PartsAPIEnum.GET_PARTS_BY_BILL_AND_LINE_IDENTITY)
@@ -98,7 +102,7 @@ public class PartOfMaterialsTest {
     @Test
     @Description("Post the part to environment")
     @Severity(SeverityLevel.NORMAL)
-    public void postPart(){
+    public void postPart() {
 
         new HTTPRequest().unauthorized()
                 .customizeRequest()
@@ -118,7 +122,7 @@ public class PartOfMaterialsTest {
     @Test
     @Description("Get list bill of materials")
     @Severity(SeverityLevel.NORMAL)
-    public void costPart(){
+    public void costPart() {
 
         new HTTPRequest().unauthorized()
                 .customizeRequest()
@@ -136,7 +140,7 @@ public class PartOfMaterialsTest {
     @Test
     @Description("Patch the part to environment")
     @Severity(SeverityLevel.NORMAL)
-    public void updatePart(){
+    public void updatePart() {
 
         new HTTPRequest().unauthorized()
                 .customizeRequest()
@@ -156,7 +160,7 @@ public class PartOfMaterialsTest {
     @Test
     @Description("Get the part from environment")
     @Severity(SeverityLevel.NORMAL)
-    public void selectPart(){
+    public void selectPart() {
 
         new HTTPRequest().unauthorized()
                 .customizeRequest()

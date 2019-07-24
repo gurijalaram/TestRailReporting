@@ -30,15 +30,15 @@ public class BillOfMaterialsTest {
     private static Map<String, String> authorizationHeaders;
     private static String token;
 
-   @BeforeClass
+    @BeforeClass
     public static void initBillOfMaterials() {
-//TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
+        //TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
         token = new WebDriverUtils().getToken("email@apriori.com", "pass");
 
-        authorizationHeaders =  new HashMap<String, String>() {{
-            put("Authorization", "Bearer " + token);
-            put("ap-cloud-context", "EDC");
-        }};
+        authorizationHeaders = new HashMap<String, String>() {{
+                put("Authorization", "Bearer " + token);
+                put("ap-cloud-context", "EDC");
+            }};
 
         BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
                 .unauthorized()
@@ -127,10 +127,10 @@ public class BillOfMaterialsTest {
                 .setHeaders(authorizationHeaders)
                 .setMultiPartFiles(
                         new MultiPartFiles().use("multiPartFile",
-                        new File(
-                                getClass().getClassLoader().getResource(
-                                        "test-data/apriori-3-items.csv").getFile()
-                        ))
+                                new File(
+                                        getClass().getClassLoader().getResource(
+                                                "test-data/apriori-3-items.csv").getFile()
+                                ))
                 )
                 .setStatusCode(201)
                 .setEndpoint(BillOfMaterialsAPIEnum.POST_BILL_OF_METERIALS)

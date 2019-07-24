@@ -1,6 +1,6 @@
 package main.java.http.builder.common.response.common;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import main.java.http.enums.Schema;
 import main.java.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmss;

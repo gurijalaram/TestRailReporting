@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import main.java.http.enums.Schema;
 
 @Schema(location = "MaterialPartSchema.json")
-public class MaterialPart implements PayloadJSON{
+public class MaterialPart implements PayloadJSON {
 
     @JsonProperty
     private Boolean isReadyForExport;

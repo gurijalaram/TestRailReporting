@@ -6,11 +6,11 @@ public interface EdcQaAPI extends ExternalEndpointEnum {
 
     @Override
     default String getEndpoint(Object... variables) {
-            return  Constants.EdcQaURL + String.format(getEndpointString(), ((Object[]) variables));
+        return Constants.EdcQaURL + String.format(getEndpointString(), ((Object[]) variables));
     }
 
-        default String getSchemaLocation() {
-            return null;
-        }
-  }
+    default String getSchemaLocation() {
+        return null;
+    }
+}
 

@@ -100,13 +100,14 @@ public class RequestEntity {
 
     private List<Map<String, ?>> initCustomFormAuthorization() {
         this.addXwwwwFormUrlEncoded(new HashMap<String, String>() {{
-            put("grant_type", userAuthenticationEntity.getGrant_type());
-            put("username", userAuthenticationEntity.getEmailAddress());
-            put("password", userAuthenticationEntity.getPassword());
-            put("client_id", userAuthenticationEntity.getClient_id());
-            put("client_secret", userAuthenticationEntity.getClient_secret());
-            put("scope", userAuthenticationEntity.getScope());
-        }});
+                put("grant_type", userAuthenticationEntity.getGrantType());
+                put("username", userAuthenticationEntity.getEmailAddress());
+                put("password", userAuthenticationEntity.getPassword());
+                put("client_id", userAuthenticationEntity.getClientId());
+                put("client_secret", userAuthenticationEntity.getClientSecret());
+                put("scope", userAuthenticationEntity.getScope());
+            }
+        });
 
         return this.xwwwwFormUrlEncoded;
     }
@@ -212,6 +213,11 @@ public class RequestEntity {
         return this;
     }
 
+    public RequestEntity setUrlParams(List<Map<String, ?>> urlParams) {
+        this.urlParams = urlParams;
+        return this;
+    }
+
     public RequestEntity addUrlParam(Map<String, ?> urlParams) {
         if (urlParams != null) {
             this.urlParams.add(urlParams);
@@ -266,11 +272,6 @@ public class RequestEntity {
 
     public RequestEntity setMultiPartFiles(MultiPartFiles multiPartFiles) {
         this.multiPartFiles = multiPartFiles;
-        return this;
-    }
-
-    public RequestEntity setUrlParams(List<Map<String, ?>> urlParams) {
-        this.urlParams = urlParams;
         return this;
     }
 
