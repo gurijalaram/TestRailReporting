@@ -1,6 +1,7 @@
 package main.java.pages.evaluate.designguidance.investigation;
 
 import main.java.utils.PageUtils;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -73,6 +74,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     public ThreadingPage enterThreadLength(String length) {
         pageUtils.waitForElementToAppear(lengthInput).clear();
         lengthInput.sendKeys(length);
+        lengthInput.sendKeys(Keys.TAB);
         return this;
     }
 
@@ -95,7 +97,6 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     public String getThreadLength() {
         return pageUtils.waitForElementToAppear(lengthInput).getAttribute("value");
     }
-
 
     /**
      * Selects the apply button

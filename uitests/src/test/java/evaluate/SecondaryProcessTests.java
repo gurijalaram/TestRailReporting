@@ -38,17 +38,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("LeakTest", filePath, "PlasticMoulding.CATPart")
+        evaluatePage = explorePage.uploadFile("LeakTest", filePath, "PlasticMoulding.CATPart")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing");
+            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Hydrostatic Leak Testing"), is(true));
     }
 
@@ -60,17 +60,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Xray Inspection", filePath, "PlasticMoulding.CATPart")
+        evaluatePage = explorePage.uploadFile("Xray Inspection", filePath, "PlasticMoulding.CATPart")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection");
+            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Xray Inspection"), is(true));
     }
 
@@ -82,17 +82,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Carburize", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Carburize", filePath, "Casting.prt")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carburize");
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carburize")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Carburize"), is(true));
     }
 
@@ -104,17 +104,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Atmosphere Oil Harden", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Atmosphere Oil Harden", filePath, "Casting.prt")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Atmosphere Oil Harden");
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Atmosphere Oil Harden")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Atmosphere Oil Harden"), is(true));
     }
 
@@ -126,17 +126,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Standard Anneal", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Standard Anneal", filePath, "Casting.prt")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Standard Anneal");
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Standard Anneal")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Standard Anneal"), is(true));
     }
 
@@ -148,17 +148,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Vacuum Temper", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Vacuum Temper", filePath, "Casting.prt")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper");
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Vacuum Temper"), is(true));
     }
 
@@ -170,17 +170,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Stress Relief", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Stress Relief", filePath, "Casting.prt")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes", "Stress Relief");
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes", "Stress Relief")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Stress Relief"), is(true));
     }
 
@@ -192,17 +192,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Anodize", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Anodize", filePath, "Casting.prt")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I");
+            .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Anodize"), is(true));
     }
 
@@ -214,17 +214,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Certification", filePath, "SheetMetal.prt")
+        evaluatePage = explorePage.uploadFile("Certification", filePath, "SheetMetal.prt")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment", "Certification");
+            .selectSecondaryProcess("Heat Treatment", "Certification")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Certification"), is(true));
     }
 
@@ -236,17 +236,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Paint", filePath, "SheetMetal.prt")
+        evaluatePage = explorePage.uploadFile("Paint", filePath, "SheetMetal.prt")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart");
+            .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Powder Coat Cart"), is(true));
     }
 
@@ -258,17 +258,17 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Passivation", filePath, "SheetMetal.prt")
+        evaluatePage = explorePage.uploadFile("Passivation", filePath, "SheetMetal.prt")
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Surface Treatment", "Passivation");
+            .selectSecondaryProcess("Surface Treatment", "Passivation")
+            .apply()
+            .costScenario(COSTING_SUCCESS);
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(COSTING_SUCCESS);
         assertThat(evaluatePage.getProcessRoutingDetails("Passivation"), is(true));
     }
 }

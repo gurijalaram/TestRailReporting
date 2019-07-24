@@ -211,7 +211,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     /**
      * Selects the apply button
      * @param className - the class the method should return
-     * @param <T> - the return type
+     * @param <T> - the generic declaration type
      * @return generic page object
      */
     public <T> T apply(Class<T> className) {
@@ -222,7 +222,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     /**
      * Selects the cancel button
      * @param className - the class the method should return
-     * @param <T> - the return type
+     * @param <T> - the generic declaration type
      * @return generic page object
      */
     public <T> T cancel(Class<T> className) {

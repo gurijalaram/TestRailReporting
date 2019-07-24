@@ -38,10 +38,11 @@ public class DeletePublicScenarioTests extends TestBase {
         explorePage.uploadFile("DeletePublicScenario", filePath, "casting.prt")
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("Initial", "DTCCASTINGISSUES")
-            .delete()
+            .highlightScenario("DeletePublicScenario", "casting");
+
+        new ExplorePage(driver).delete()
             .deleteScenario();
 
-        assertThat(new ExplorePage(driver).findScenario("Initial", "DTCCASTINGISSUES").isDisplayed(), is(false));
+        assertThat(explorePage.getListOfScenarios("DeletePublicScenario", "casting") < 1, is(true));
     }
 }

@@ -13,6 +13,7 @@ import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
+import main.java.header.PageHeader;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
@@ -32,6 +33,7 @@ public class TolerancesTests extends TestBase {
     private DesignGuidancePage designGuidancePage;
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
+    private PageHeader pageHeader;
 
     private String filePath = new Scanner(TolerancesTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
@@ -351,7 +353,8 @@ public class TolerancesTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        explorePage.openSettings()
+        pageHeader = new PageHeader(driver);
+        pageHeader.openSettings()
             .changeDisplayUnits("English")
             .save(EvaluatePage.class);
 
@@ -375,7 +378,8 @@ public class TolerancesTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        explorePage.openSettings()
+        pageHeader = new PageHeader(driver);
+        pageHeader.openSettings()
             .changeDisplayUnits("System")
             .save(EvaluatePage.class);
 

@@ -22,6 +22,7 @@ public class ProcessGroupsTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private EvaluatePage evaluatePage;
 
     private String filePath = new Scanner(ProcessGroupsTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
@@ -44,11 +45,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Forging", "case_001_006-8613190_2");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -65,11 +66,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Stock Machining", "42x1021_ref");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -86,11 +87,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Bar and Tube", "350611");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -107,11 +108,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Casting", "case_012_009-0020647_hinge_2");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -128,11 +129,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Extrusion", "case_012_009-700-33770-01_A0");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -149,11 +150,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Filleting", "case_005_flat end mill contouring");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -170,11 +171,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Gear Making", "Case_001_-_Rockwell_2075-0243G");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -191,11 +192,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Machining-Contouring", "case_002_00400016-003M10_A");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -212,11 +213,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Machining-Gage Parts", "GagePart_Case_011_gundrillgagepart-01");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -233,11 +234,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Machining-Milling-4 Axis Mill", "prt0001");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -254,11 +255,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Machining-Milling-5 Axis Mill", "7021021-2_rib");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -275,11 +276,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Machining-Milling-Mill Turn", "ms16555-627_1");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -296,11 +297,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Partially Automated Machining", "14100640");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -317,11 +318,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Perimeter Milling", "14100640");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -338,11 +339,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Pocket Recognition", "03229_0032_002_A");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -359,11 +360,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Pocket Recognition - shared walls", "case_066_SpaceX_00128711-001_A");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -380,11 +381,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Rough Milling", "16-340053-00-04");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -401,11 +402,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Slot Examples", "case_007_SpaceX_00088481-001_C");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -422,11 +423,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Turning", "case_002_006-8611543_prt");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -443,11 +444,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Blow Molding", "225_gasket-1-solid1");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -464,11 +465,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("PMI", "case_04_gtoldtc");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -485,11 +486,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Powder Metal", "case_31_test_part_6_small");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -506,11 +507,11 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Roll Bending", "AGCO _ 71421375");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -527,10 +528,10 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario("Transfer Die", "case_011_CENA-009-A1-LH-Rear-Body-Mount");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 }

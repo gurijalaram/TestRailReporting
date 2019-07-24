@@ -24,6 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -381,7 +382,7 @@ public class PageUtils {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
-            } catch (TimeoutException | ElementClickInterceptedException e) {
+            } catch (TimeoutException e) {
                 count = count + 1;
             }
         }
@@ -406,7 +407,7 @@ public class PageUtils {
     }
 
     /**
-     * Finds element in a table.  If the element is not visible then the method will scroll to the element.
+     * Finds element in a table by scrolling.
      *
      * @param scenario - the locator for the scenario
      * @param scroller - the scroller to scroll the element into view
@@ -442,6 +443,42 @@ public class PageUtils {
     }
 
     /**
+     * Finds elements in a table by scrolling.
+     *
+     * @param scenario - the locator for the scenario
+     * @param scroller - the scroller to scroll the element into view
+     * @return - the element as a webelement
+     */
+    public List<WebElement> scrollToElements(By scenario, WebElement scroller) {
+        long startTime = System.currentTimeMillis() / 1000;
+        int count = 0;
+
+        while (count < 12) {
+            try {
+                if (scroller.isDisplayed()) {
+                    do {
+                        scroller.sendKeys(Keys.DOWN);
+                    } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+
+                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+                    processCoordinates.inViewPort();
+
+                    return driver.findElements(scenario);
+                } else {
+                    return driver.findElements(scenario);
+                }
+            } catch (ElementNotInteractableException e) {
+                logger.debug("Trying to recover from an element not interactable exception");
+                count = count + 1;
+            } catch (StaleElementReferenceException e) {
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            }
+        }
+        return driver.findElements(scenario);
+    }
+
+    /**
      * Checks the element's size on the page is less than 1 and return true/false
      *
      * @param locator - the element as list
@@ -455,8 +492,7 @@ public class PageUtils {
     /**
      * Selects the correct option in the dropdown.  Conditional statement is included because the system
      * tends to revert to previous selection.
-     *
-     * @param locator        - the locator of the element
+     * @param locator - the locator of the element
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
@@ -487,12 +523,25 @@ public class PageUtils {
 
     /**
      * Checks for string to be present in element text and returns true/false
-     * @param locator
-     * @param text
-     * @return
+     * @param locator - the element locator
+     * @param text - the text to check
+     * @return true/false
      */
     public Boolean checkElementContains(WebElement locator, String text) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+    }
+
+    /**
+     * Ignores exceptions and waits for the element to be clickable
+     * @param locator - the locator of the element
+     */
+    public void waitForElementAndClick(WebElement locator) {
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class, StaleElementReferenceException.class))
+            .until((WebDriver webDriver) -> {
+                locator.click();
+                return true;
+            });
     }
 }
