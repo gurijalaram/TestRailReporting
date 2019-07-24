@@ -1,8 +1,5 @@
 package main.java.pages.evaluate;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -17,6 +14,9 @@ import org.junit.Test;
 
 import java.util.Scanner;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class PublishNewCostedTests extends TestBase {
 
     private LoginPage loginPage;
@@ -29,6 +29,7 @@ public class PublishNewCostedTests extends TestBase {
         super();
     }
 
+    // TODO: This test should be in uitests package, not pageobjects
     @Test
     @Description("Edit & publish an existing unlocked scenario from the Public Workspace back to the Public Workspace")
     @Severity(SeverityLevel.NORMAL)
