@@ -550,4 +550,15 @@ public class PageUtils {
                 return true;
             });
     }
+
+    /**
+     * Waits for the element and check attribute is empty
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public Boolean checkElementAttribute(WebElement locator, String attribute) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
+    }
 }
