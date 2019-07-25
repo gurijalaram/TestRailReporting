@@ -28,7 +28,6 @@ public class PublishNewCostedTests extends TestBase {
         super();
     }
 
-    // TODO: This test should be in uitests package, not pageobjects
     @Test
     @Description("Edit & publish an existing unlocked scenario from the Public Workspace back to the Public Workspace")
     @Severity(SeverityLevel.NORMAL)
