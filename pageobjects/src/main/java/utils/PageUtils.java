@@ -434,6 +434,9 @@ public class PageUtils {
             } catch (ElementNotInteractableException e) {
                 logger.debug("Trying to recover from an element not interactable exception");
                 count = count + 1;
+            } catch (NoSuchElementException e) {
+                logger.debug("Trying to recover from no such element exception");
+                count = count + 1;
             } catch (StaleElementReferenceException e) {
                 logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
@@ -492,7 +495,8 @@ public class PageUtils {
     /**
      * Selects the correct option in the dropdown.  Conditional statement is included because the system
      * tends to revert to previous selection.
-     * @param locator - the locator of the element
+     *
+     * @param locator        - the locator of the element
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
@@ -523,6 +527,7 @@ public class PageUtils {
 
     /**
      * Checks for string to be present in element text and returns true/false
+     *
      * @param locator
      * @param text
      * @return
@@ -534,6 +539,7 @@ public class PageUtils {
 
     /**
      * Ignores exceptions and waits for the element to be clickable
+     *
      * @param locator - the locator of the element
      */
     public void waitForElementAndClick(WebElement locator) {
