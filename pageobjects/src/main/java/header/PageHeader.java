@@ -1,5 +1,8 @@
 package main.java.header;
 
+import main.java.pages.compare.ComparePage;
+import main.java.pages.evaluate.EvaluatePage;
+import main.java.pages.explore.ExplorePage;
 import main.java.pages.settings.SettingsPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -50,7 +53,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
     }
 
     @Override
@@ -69,9 +71,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return current page object
      */
-    public PageHeader selectExploreButton() {
+    public ExplorePage selectExploreButton() {
         pageUtils.waitForElementToBeClickable(exploreTab).click();
-        return this;
+        return new ExplorePage(driver);
     }
 
     /**
@@ -79,9 +81,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return current page object
      */
-    public PageHeader selectEvaluateButton() {
+    public EvaluatePage selectEvaluateButton() {
         pageUtils.waitForElementToBeClickable(exploreTab).click();
-        return this;
+        return new EvaluatePage(driver);
     }
 
     /**
@@ -89,9 +91,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return current page object
      */
-    public PageHeader selectCompareButton() {
+    public ComparePage selectCompareButton() {
         pageUtils.waitForElementToBeClickable(exploreTab).click();
-        return this;
+        return new ComparePage(driver);
     }
 
     /**

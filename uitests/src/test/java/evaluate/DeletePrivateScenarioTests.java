@@ -8,7 +8,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
-import main.java.header.PageHeader;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
@@ -35,12 +34,9 @@ public class DeletePrivateScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateScenario", filePath, "casting.prt");
-
-        new PageHeader(driver).selectExploreButton();
-
-        explorePage = new ExplorePage(driver);
-        explorePage.highlightScenario("DeletePrivateScenario", "casting");
+        explorePage.uploadFile("DeletePrivateScenario", filePath, "casting.prt")
+            .selectExploreButton()
+            .highlightScenario("DeletePrivateScenario", "casting");
 
         explorePage = new ExplorePage(driver);
         explorePage.delete()

@@ -351,10 +351,8 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
-
-        pageHeader = new PageHeader(driver);
-        pageHeader.openSettings()
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openSettings()
             .changeDisplayUnits("English")
             .save(EvaluatePage.class);
 
@@ -376,10 +374,8 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
-
-        pageHeader = new PageHeader(driver);
-        pageHeader.openSettings()
+            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .openSettings()
             .changeDisplayUnits("System")
             .save(EvaluatePage.class);
 

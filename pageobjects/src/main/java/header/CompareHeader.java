@@ -29,19 +29,12 @@ public class CompareHeader extends GenericHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
     }
 
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-
-    }
-
+    /**
+     * Saves the comparison
+     * @return new page object
+     */
     public SaveAsPage saveAs() {
         pageUtils.waitForElementToAppear(saveAs).click();
         return new SaveAsPage(driver);
