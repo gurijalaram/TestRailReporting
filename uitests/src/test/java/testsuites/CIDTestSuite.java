@@ -28,6 +28,7 @@ import test.java.evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
 import test.java.evaluate.designguidance.tolerance.TolerancesTests;
 import test.java.evaluate.materialutilization.ChangeStockSelectionTests;
 import test.java.explore.FilterCriteriaTests;
+import test.java.explore.PreviewPanelTests;
 import test.java.login.LoginTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
@@ -57,7 +58,8 @@ import test.java.login.LoginTests;
     PublishNewCostedTests.class,
     PublishPublicComparison.class,
     ReCostScenarioTests.class,
-    RevertScenarioTests.class
+    RevertScenarioTests.class,
+    PreviewPanelTests.class
 })
 public class CIDTestSuite {
 }
