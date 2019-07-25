@@ -1,4 +1,4 @@
-package main.java.pages.evaluate;
+package test.java.evaluate;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,7 +10,6 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
@@ -43,6 +42,6 @@ public class PublishNewCostedTests extends TestBase {
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario();
 
-        assertThat(new ComparisonTablePage(driver).findComparison("Publish Existing Costed Scenario", "testpart-4").isDisplayed(), is(true));
+        assertThat(explorePage.findComparison("Publish Existing Costed Scenario").isDisplayed(), is(true));
     }
 }
