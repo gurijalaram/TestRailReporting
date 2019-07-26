@@ -15,6 +15,7 @@ import test.java.evaluate.DeletePrivateScenarioTests;
 import test.java.evaluate.DeletePublicScenarioTests;
 import test.java.evaluate.DeleteScenarioIterationsTests;
 import test.java.evaluate.EvaluateTests;
+import test.java.evaluate.ListOfVPETests;
 import test.java.evaluate.NewScenarioNameTests;
 import test.java.evaluate.ProcessGroupsTests;
 import test.java.evaluate.PublishExistngCostedTests;
@@ -28,6 +29,7 @@ import test.java.evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
 import test.java.evaluate.designguidance.tolerance.TolerancesTests;
 import test.java.evaluate.materialutilization.ChangeStockSelectionTests;
 import test.java.explore.FilterCriteriaTests;
+import test.java.explore.PreviewPanelTests;
 import test.java.login.LoginTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
@@ -58,6 +60,9 @@ import test.java.login.LoginTests;
     PublishPublicComparison.class,
     ReCostScenarioTests.class,
     RevertScenarioTests.class,
+    PreviewPanelTests.class,
+    ListOfVPETests.class,
+    ProcessGroupsTests.class
 })
 public class CIDTestSuite {
 }

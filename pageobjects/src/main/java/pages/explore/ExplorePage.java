@@ -36,6 +36,12 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "button[data-ap-comp='togglePreviewButton']")
     private WebElement previewButton;
 
+    @FindBy(css = "[data-ap-comp='closePreviewButton'] .glyphicon-remove")
+    private WebElement closePreviewButton;
+
+    @FindBy(css = "[data-ap-comp='previewPanel']")
+    private WebElement previewPanelData;
+
     @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
     private WebElement componentScroller;
 
@@ -171,5 +177,25 @@ public class ExplorePage extends ExploreHeader {
     public TableColumnsPage openColumnsTable() {
         pageUtils.waitForElementToAppear(columnsButton).click();
         return new TableColumnsPage(driver);
+    }
+
+    /**
+     * Opens the preview panel
+     * @return new page object
+     */
+    public ExplorePage openPreviewPanel() {
+        if (pageUtils.isElementDisplayed(closePreviewButton)) {
+            closePreviewButton.click();
+        }
+        pageUtils.waitForElementToAppear(previewButton).click();
+        return this;
+    }
+
+    /**
+     * Gets the data in the preview panel
+     * @return current page object
+     */
+    public boolean viewPreviewPanelData() {
+        return previewPanelData.isDisplayed();
     }
 }
