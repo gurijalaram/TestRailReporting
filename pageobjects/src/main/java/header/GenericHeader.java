@@ -35,7 +35,7 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
     private WebElement revertButton;
 
-    @FindBy(css = "span.delete-button")
+    @FindBy(css = "button[data-ap-comp='deleteScenarioButton']")
     private WebElement deleteButton;
 
     @FindBy(css = "span.glyphicons-settings")
@@ -80,16 +80,6 @@ public class GenericHeader extends PageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(deleteButton);
     }
 
     /**
@@ -98,6 +88,7 @@ public class GenericHeader extends PageHeader {
      * @return visibility of button
      */
     public boolean isDeleteButtonPresent() {
+        pageUtils.waitForElementAndClick(newFileDropdown);
         return deleteButton.isDisplayed();
     }
 
@@ -172,6 +163,7 @@ public class GenericHeader extends PageHeader {
 
     /**
      * Publish the scenario
+     *
      * @return new page object
      */
     public ExplorePage publishScenario() {
@@ -182,9 +174,10 @@ public class GenericHeader extends PageHeader {
 
     /**
      * Publish the scenario
-     * @param status - the status dropdown
+     *
+     * @param status       - the status dropdown
      * @param costMaturity - the cost maturity dropdown
-     * @param assignee - the assignee
+     * @param assignee     - the assignee
      * @return new page object
      */
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
@@ -197,6 +190,7 @@ public class GenericHeader extends PageHeader {
 
     /**
      * Edits the scenario
+     *
      * @return new page object
      */
     public EvaluatePage editScenario() {
@@ -210,7 +204,8 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public DeletePage delete() {
-        deleteButton.click();
+        pageUtils.checkElementAttribute(deleteButton,"title");
+        pageUtils.waitForElementAndClick(deleteButton);
         return new DeletePage(driver);
     }
 
