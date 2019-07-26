@@ -1,7 +1,7 @@
 package test.java.evaluate;
 
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -15,14 +15,14 @@ import org.junit.Test;
 
 import java.util.Scanner;
 
-public class ProcessGroupTests extends TestBase {
+public class ListProcessGroupTests extends TestBase {
 
     private LoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private String filePath = new Scanner(ProcessGroupTests.class.getClassLoader()
+    private String filePath = new Scanner(ListProcessGroupTests.class.getClassLoader()
         .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
-    public ProcessGroupTests() {
+    public ListProcessGroupTests() {
         super();
     }
 
