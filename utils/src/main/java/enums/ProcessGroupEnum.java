@@ -1,5 +1,7 @@
 package main.java.enums;
 
+import java.util.stream.Stream;
+
 public enum ProcessGroupEnum {
 
     ADDITIVE_MANUFACTURING("Additive Manufacturing"),
@@ -27,5 +29,9 @@ public enum ProcessGroupEnum {
 
     public String getProcessGroup() {
         return this.processGroup;
+    }
+
+    public static String[] getNames() {
+        return Stream.of(ProcessGroupEnum.values()).map(ProcessGroupEnum::getProcessGroup).toArray(String[]::new);
     }
 }
