@@ -3,55 +3,15 @@ package main.java.api;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import main.java.http.builder.common.response.common.BillOfMaterial;
 import main.java.http.builder.common.response.common.BillOfMaterialsWrapper;
 import main.java.http.builder.common.response.common.BillOfSingleMaterialWrapper;
 import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
-import main.java.utils.MultiPartFiles;
-import main.java.utils.WebDriverUtils;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-public class BillOfMaterialsTest {
-
-    private static Logger logger = LoggerFactory.getLogger(BillOfMaterialsTest.class);
-
-    private static List<BillOfMaterial> billOfMaterials;
-    private static Map<String, String> authorizationHeaders;
-    private static String token;
-
-    @BeforeClass
-    public static void initBillOfMaterials() {
-        //TODO z: add real credentials for qa environment http://edc-api.qa.awsdev.apriori.com/
-        token = new WebDriverUtils().getToken("email@apriori.com", "pass");
-
-        authorizationHeaders = new HashMap<String, String>() {{
-                put("Authorization", "Bearer " + token);
-                put("ap-cloud-context", "EDC");
-            }};
-
-        BillOfMaterialsWrapper billOfMaterialsWrapper = (BillOfMaterialsWrapper) new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS)
-                .setReturnType(BillOfMaterialsWrapper.class)
-                .setHeaders(authorizationHeaders)
-                .commitChanges()
-                .connect()
-                .get();
-
-        billOfMaterials = billOfMaterialsWrapper.getBillOfMaterialsList();
-    }
+public class BillOfMaterialsTest extends BaseTestData {
 
     @Test
     @Description("Get list bill of materials")
@@ -89,16 +49,20 @@ public class BillOfMaterialsTest {
     @Description("Delete list bill of materials by identity")
     @Severity(SeverityLevel.NORMAL)
     public void deleteBillOfMaterialsByIdentity() {
+        final int deleteIndex = new Random().nextInt(billOfMaterials.size());
+
         new HTTPRequest()
                 .unauthorized()
                 .customizeRequest()
                 .setHeaders(authorizationHeaders)
                 .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_METERIALS_IDENTITY)
-                .setInlineVariables(billOfMaterials.get(new Random().nextInt(billOfMaterials.size())).getIdentity())
+                .setInlineVariables(billOfMaterials.get(deleteIndex).getIdentity())
                 .setStatusCode(204)
                 .commitChanges()
                 .connect()
                 .delete();
+
+        billOfMaterials.remove(deleteIndex);
     }
 
     @Test
@@ -120,23 +84,7 @@ public class BillOfMaterialsTest {
     @Description("Post bill of material")
     @Severity(SeverityLevel.NORMAL)
     public void postBillOfMaterials() {
-
-        new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setHeaders(authorizationHeaders)
-                .setMultiPartFiles(
-                        new MultiPartFiles().use("multiPartFile",
-                                new File(
-                                        getClass().getClassLoader().getResource(
-                                                "test-data/apriori-3-items.csv").getFile()
-                                ))
-                )
-                .setStatusCode(201)
-                .setEndpoint(BillOfMaterialsAPIEnum.POST_BILL_OF_METERIALS)
-                .commitChanges()
-                .connect()
-                .postMultiPart();
-
+        uploadTestData();
     }
+
 }

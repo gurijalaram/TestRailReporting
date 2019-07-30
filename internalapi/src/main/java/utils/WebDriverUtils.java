@@ -26,6 +26,7 @@ public class WebDriverUtils {
         userAuthorization(email, password);
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//img[@class='logo logo']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//h2[text() ='Upload new Bill of Materials']")));
         return ((ChromeDriver) driver).getLocalStorage().getItem("ID_TOKEN");
     }
 
