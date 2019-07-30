@@ -11,6 +11,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> {
 
     private final Logger logger = LoggerFactory.getLogger(ComparisonTablePage.class);

@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class DeletePage extends LoadableComponent<DeletePage> {
 
     private final Logger logger = LoggerFactory.getLogger(DeletePage.class);

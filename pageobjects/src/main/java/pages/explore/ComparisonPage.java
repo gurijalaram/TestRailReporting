@@ -10,6 +10,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class ComparisonPage extends CompareHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ComparisonPage.class);
