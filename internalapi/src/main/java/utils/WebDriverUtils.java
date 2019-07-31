@@ -23,11 +23,22 @@ public class WebDriverUtils {
 
     public String getToken(final String email, final String password) {
 
-        userAuthorization(email, password);
+        String token;
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//img[@class='logo logo']")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//h2[text() ='Upload new Bill of Materials']")));
-        return ((ChromeDriver) driver).getLocalStorage().getItem("ID_TOKEN");
+        try {
+            userAuthorization(email, password);
+
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//img[@class='logo logo']")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//h2[text() ='Upload new Bill of Materials']")));
+
+            token = ((ChromeDriver) driver).getLocalStorage().getItem("ID_TOKEN");
+        }
+        finally {
+            driver.quit();
+        }
+
+
+        return token;
     }
 
     public void userAuthorization(String email, String password) {

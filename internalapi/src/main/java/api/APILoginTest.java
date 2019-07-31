@@ -55,8 +55,6 @@ public class APILoginTest {
                 .connect()
                 .post();
 
-        Assert.assertNotNull("Access token should be present", authenticateJSON.getAccessToken());
-        Assert.assertNotNull("Access token should be present", authenticateJSON.getExpiresIn());
     }
 
 

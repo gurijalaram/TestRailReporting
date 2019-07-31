@@ -1,31 +1,62 @@
 package main.java.http.builder.common.response.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import main.java.http.enums.Schema;
-import main.java.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmss;
 
-import java.time.LocalDateTime;
 
 @Schema(location = "AccountsStatusSchema.json")
 public class AccountsStatus extends CommonResponse {
 
     @JsonProperty
+    private Boolean isValid;
+
+    @JsonProperty
+    private Boolean isActive;
+
+    @JsonProperty
     private String identity;
 
     @JsonProperty
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmss.class)
-    private LocalDateTime licenseStart;
+    private String name;
 
     @JsonProperty
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmss.class)
-    private LocalDateTime licenseEnd;
+    private String type;
 
     @JsonProperty
-    private Integer totalRequests;
+    private String accountId;
 
     @JsonProperty
-    private Integer requestsUsed;
+    private String accountSecret;
+
+    @JsonProperty
+    private Integer licenseLimit;
+
+    @JsonProperty
+    private Integer licenseUsage;
+
+    @JsonProperty
+    private String validFrom;
+
+    @JsonProperty
+    private String validTo;
+
+    public Boolean getValid() {
+        return isValid;
+    }
+
+    public AccountsStatus setValid(Boolean valid) {
+        isValid = valid;
+        return this;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public AccountsStatus setActive(Boolean active) {
+        isActive = active;
+        return this;
+    }
 
     public String getIdentity() {
         return identity;
@@ -36,39 +67,75 @@ public class AccountsStatus extends CommonResponse {
         return this;
     }
 
-    public LocalDateTime getLicenseStart() {
-        return licenseStart;
+    public String getName() {
+        return name;
     }
 
-    public AccountsStatus setLicenseStart(LocalDateTime licenseStart) {
-        this.licenseStart = licenseStart;
+    public AccountsStatus setName(String name) {
+        this.name = name;
         return this;
     }
 
-    public LocalDateTime getLicenseEnd() {
-        return licenseEnd;
+    public String getType() {
+        return type;
     }
 
-    public AccountsStatus setLicenseEnd(LocalDateTime licenseEnd) {
-        this.licenseEnd = licenseEnd;
+    public AccountsStatus setType(String type) {
+        this.type = type;
         return this;
     }
 
-    public Integer getTotalRequests() {
-        return totalRequests;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public AccountsStatus setTotalRequests(Integer totalRequests) {
-        this.totalRequests = totalRequests;
+    public AccountsStatus setAccountId(String accountId) {
+        this.accountId = accountId;
         return this;
     }
 
-    public Integer getRequestsUsed() {
-        return requestsUsed;
+    public String getAccountSecret() {
+        return accountSecret;
     }
 
-    public AccountsStatus setRequestsUsed(Integer requestsUsed) {
-        this.requestsUsed = requestsUsed;
+    public AccountsStatus setAccountSecret(String accountSecret) {
+        this.accountSecret = accountSecret;
+        return this;
+    }
+
+    public Integer getLicenseLimit() {
+        return licenseLimit;
+    }
+
+    public AccountsStatus setLicenseLimit(Integer licenseLimit) {
+        this.licenseLimit = licenseLimit;
+        return this;
+    }
+
+    public Integer getLicenseUsage() {
+        return licenseUsage;
+    }
+
+    public AccountsStatus setLicenseUsage(Integer licenseUsage) {
+        this.licenseUsage = licenseUsage;
+        return this;
+    }
+
+    public String getValidFrom() {
+        return validFrom;
+    }
+
+    public AccountsStatus setValidFrom(String validFrom) {
+        this.validFrom = validFrom;
+        return this;
+    }
+
+    public String getValidTo() {
+        return validTo;
+    }
+
+    public AccountsStatus setValidTo(String validTo) {
+        this.validTo = validTo;
         return this;
     }
 }

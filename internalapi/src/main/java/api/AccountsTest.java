@@ -8,7 +8,8 @@ import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
 import org.junit.Test;
 
-public class AccountsTest {
+
+public class AccountsTest extends BaseTestData {
 
 
     @Test
@@ -17,6 +18,7 @@ public class AccountsTest {
     public void testAccountsStatus() {
         new HTTPRequest().unauthorized()
                 .customizeRequest()
+                .setHeaders(authorizationHeaders)
                 .setEndpoint(BillOfMaterialsAPIEnum.GET_ACCOUNTS_STATUS)
                 .setReturnType(AccountsStatus.class)
                 .commitChanges()
