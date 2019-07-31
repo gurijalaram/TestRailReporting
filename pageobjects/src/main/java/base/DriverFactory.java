@@ -112,8 +112,6 @@ public class DriverFactory {
                 FirefoxProfile fp = new FirefoxProfile();
                 System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, driverLocation);
                 fp.setPreference("browser.search.geoip.url", "http://127.0.0.1");
-                fp.setPreference("browser.newtabpage.directory.source", "http://127.0.0.1");
-                fp.setPreference("browser.newtabpage.directory.ping", "http://127.0.0.1");
                 fp.setPreference("browser.download.folderList", 2);
                 fp.setPreference("browser.download.manager.showWhenStarting", false);
                 fp.setPreference("browser.download.dir", downloadPath);
