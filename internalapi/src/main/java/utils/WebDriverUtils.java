@@ -32,8 +32,7 @@ public class WebDriverUtils {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//h2[text() ='Upload new Bill of Materials']")));
 
             token = ((ChromeDriver) driver).getLocalStorage().getItem("ID_TOKEN");
-        }
-        finally {
+        } finally {
             driver.quit();
         }
 
