@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EvaluatePage extends EvaluateHeader {
 
@@ -43,8 +44,14 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "select[data-ap-field='processGroupSelection']")
     private WebElement processGroupDropdown;
 
+    @FindBy(css = "select[data-ap-field='processGroupSelection'] option")
+    private List<WebElement> processGroupList;
+
     @FindBy(css = "select[data-ap-field='primaryVpeName']")
     private WebElement vpeDropdown;
+
+    @FindBy(css = "select[data-ap-field='primaryVpeName'] option")
+    private List<WebElement> vpeList;
 
     @FindBy(css = "button[data-ap-comp='secondaryTreatmentsButton']")
     private WebElement secondaryProcessButton;
@@ -209,5 +216,21 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public String getProcessGroup() {
         return processGroupDropdown.getText();
+    }
+
+    /**
+     * Gets list of vpe's
+     * @return list as string
+     */
+    public List<String> getListOfVPEs() {
+        return vpeList.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets list of process groups
+     * @return list as string
+     */
+    public List<String> getListOfProcessGroups() {
+        return processGroupList.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 }
