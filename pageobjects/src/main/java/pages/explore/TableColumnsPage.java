@@ -10,6 +10,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
     private final Logger logger = LoggerFactory.getLogger(TableColumnsPage.class);

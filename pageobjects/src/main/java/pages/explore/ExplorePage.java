@@ -14,6 +14,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * @author cfrith
+ */
+
 public class ExplorePage extends ExploreHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
