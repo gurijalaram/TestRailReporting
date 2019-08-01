@@ -1,6 +1,5 @@
 package test.java.testsuites;
 
-import test.java.evaluate.PublishNewCostedTests;
 import main.java.runner.ConcurrentSuiteRunner;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -19,6 +18,7 @@ import test.java.evaluate.ListOfVPETests;
 import test.java.evaluate.NewScenarioNameTests;
 import test.java.evaluate.ProcessGroupsTests;
 import test.java.evaluate.PublishExistngCostedTests;
+import test.java.evaluate.PublishNewCostedTests;
 import test.java.evaluate.ReCostScenarioTests;
 import test.java.evaluate.RevertScenarioTests;
 import test.java.evaluate.SecondaryProcessTests;
@@ -28,9 +28,9 @@ import test.java.evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
 import test.java.evaluate.designguidance.tolerance.TolerancesTests;
 import test.java.evaluate.materialutilization.ChangeStockSelectionTests;
-import test.java.explore.DefaultTableHeadersTests;
 import test.java.explore.FilterCriteriaTests;
 import test.java.explore.PreviewPanelTests;
+import test.java.explore.TableHeadersTests;
 import test.java.login.LoginTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
@@ -64,7 +64,7 @@ import test.java.login.LoginTests;
     PreviewPanelTests.class,
     ListOfVPETests.class,
     ProcessGroupsTests.class,
-    DefaultTableHeadersTests.class
+    TableHeadersTests.class
 })
 public class CIDTestSuite {
 }

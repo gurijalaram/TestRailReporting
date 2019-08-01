@@ -14,12 +14,12 @@ import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
 
-public class DefaultTableHeadersTests extends TestBase {
+public class TableHeadersTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
 
-    public DefaultTableHeadersTests() {
+    public TableHeadersTests() {
         super();
     }
 
@@ -45,5 +45,33 @@ public class DefaultTableHeadersTests extends TestBase {
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.NAME_SCENARIO.getColumns(), ColumnsEnum.LOCKED_WORKSPACE.getColumns(),
             ColumnsEnum.STATUS.getColumns(), ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.LAST_SAVED.getColumns()));
+    }
+
+    @Test
+    @Description("Test added columns are displayed in the public workspace")
+    @Severity(SeverityLevel.MINOR)
+    public void testPublicAddColumnHeaders() {
+        loginPage = new LoginPage(driver);
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openColumnsTable()
+            .addColumn(ColumnsEnum.TYPE.getColumns())
+            .selectSaveButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
+
+        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.TYPE.getColumns()));
+    }
+
+    @Test
+    @Description("Test added columns are displayed in the private workspace")
+    @Severity(SeverityLevel.MINOR)
+    public void testPrivateAddColumnHeaders() {
+        loginPage = new LoginPage(driver);
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openColumnsTable()
+            .addColumn(ColumnsEnum.ASSIGNEE.getColumns())
+            .selectSaveButton()
+            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
+
+        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.ASSIGNEE.getColumns()));
     }
 }
