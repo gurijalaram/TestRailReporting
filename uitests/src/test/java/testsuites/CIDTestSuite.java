@@ -28,6 +28,7 @@ import test.java.evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
 import test.java.evaluate.designguidance.tolerance.TolerancesTests;
 import test.java.evaluate.materialutilization.ChangeStockSelectionTests;
+import test.java.explore.DefaultTableHeadersTests;
 import test.java.explore.FilterCriteriaTests;
 import test.java.explore.PreviewPanelTests;
 import test.java.login.LoginTests;
@@ -62,7 +63,8 @@ import test.java.login.LoginTests;
     RevertScenarioTests.class,
     PreviewPanelTests.class,
     ListOfVPETests.class,
-    ProcessGroupsTests.class
+    ProcessGroupsTests.class,
+    DefaultTableHeadersTests.class
 })
 public class CIDTestSuite {
 }
