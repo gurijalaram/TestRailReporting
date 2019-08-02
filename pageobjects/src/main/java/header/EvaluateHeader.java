@@ -88,7 +88,7 @@ public class EvaluateHeader extends GenericHeader {
     /**
      * Wait for cost label popover
      *
-     * @return current page object
+     * @return boolean true/false
      */
     public boolean costLabelPopover(String costText) {
         return pageUtils.waitForElementToAppear(costLabelPopover).getText().equalsIgnoreCase(costText);

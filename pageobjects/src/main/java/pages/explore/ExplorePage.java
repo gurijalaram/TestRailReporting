@@ -12,7 +12,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -48,6 +50,9 @@ public class ExplorePage extends ExploreHeader {
 
     @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
     private WebElement componentScroller;
+
+    @FindBy(css = ".v-grid-header")
+    private WebElement columnHeaders;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -201,5 +206,13 @@ public class ExplorePage extends ExploreHeader {
      */
     public boolean viewPreviewPanelData() {
         return previewPanelData.isDisplayed();
+    }
+
+    /**
+     * Gets all column headers in the table
+     * @return column headers as string
+     */
+    public List<String> getColumnHeaderNames() {
+        return Arrays.stream(columnHeaders.getText().split("\n")).collect(Collectors.toList());
     }
 }

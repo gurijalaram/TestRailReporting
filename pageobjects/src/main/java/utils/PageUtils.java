@@ -463,9 +463,6 @@ public class PageUtils {
                         scroller.sendKeys(Keys.DOWN);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
 
-                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
-                    processCoordinates.inViewPort();
-
                     return driver.findElements(scenario);
                 } else {
                     return driver.findElements(scenario);
@@ -482,7 +479,7 @@ public class PageUtils {
     }
 
     /**
-     * Checks the element's size on the page is less than 1 and return true/false
+     * Checks the element's size on the page is less than 1 and returns true/false
      *
      * @param locator - the element as list
      * @return true/false
@@ -558,5 +555,16 @@ public class PageUtils {
     public Boolean checkElementAttribute(WebElement locator, String attribute) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
+    }
+
+    /**
+     * Checks the element's size on the page is greater than 0 and returns true/false
+     *
+     * @param locator - the element as list
+     * @return true/false
+     */
+    public <T> Boolean checkElementVisibleByBoolean(List<T> locator) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 6);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
     }
 }
