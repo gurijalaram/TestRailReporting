@@ -13,17 +13,15 @@ import main.java.enums.WorkspaceEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
-import test.java.compare.AddPublicScenarioTests;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class NewScenarioNameTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private String filePath = new Scanner(AddPublicScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public NewScenarioNameTests() {
         super();
@@ -32,11 +30,11 @@ public class NewScenarioNameTests extends TestBase {
     @Test
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     @Severity(SeverityLevel.NORMAL)
-    public void testEnterNewScenarioName() {
+    public void testEnterNewScenarioName() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        new ExplorePage(driver).uploadFile("scenario name", filePath, "Lug.SLDPRT");
+        new ExplorePage(driver).uploadFile("scenario name", new FileResourceReader().getResourceFile("partbody_2.stp"));
 
         explorePage = new ExplorePage(driver);
         explorePage.createNewScenario()
@@ -49,12 +47,12 @@ public class NewScenarioNameTests extends TestBase {
     @Test
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     @Severity(SeverityLevel.NORMAL)
-    public void testPublishEnterNewScenarioName() {
+    public void testPublishEnterNewScenarioName() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("publish scenario name", filePath, "Lug.SLDPRT")
+        explorePage.uploadFile("publish scenario name", new FileResourceReader().getResourceFile("partbody_2.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .createNewScenario()

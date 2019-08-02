@@ -14,18 +14,16 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class DTCMouldingDraftTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private DesignGuidancePage designGuidancePage;
-
-    private String filePath = new Scanner(DTCMouldingDraftTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public DTCMouldingDraftTests() {
         super();
@@ -34,12 +32,12 @@ public class DTCMouldingDraftTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Moulding Draft")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCMouldingDraft() {
+    public void testDTCMouldingDraft() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioNoDraft", filePath, "Plastic moulded cap noDraft.CATPart")
+        explorePage.uploadFile("ScenarioNoDraft", new FileResourceReader().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();

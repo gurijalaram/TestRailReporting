@@ -21,10 +21,11 @@ import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class TolerancesTests extends TestBase {
 
@@ -35,9 +36,6 @@ public class TolerancesTests extends TestBase {
     private InvestigationPage investigationPage;
     private PageHeader pageHeader;
 
-    private String filePath = new Scanner(TolerancesTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
-
     public TolerancesTests() {
         super();
     }
@@ -45,12 +43,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to check edit thread button is disabled")
     @Severity(SeverityLevel.CRITICAL)
-    public void threadButtonDisabled() {
+    public void threadButtonDisabled() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -65,12 +63,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to check thread length persist")
     @Severity(SeverityLevel.CRITICAL)
-    public void editThread() {
+    public void editThread() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -91,12 +89,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to verify costed thread")
     @Severity(SeverityLevel.CRITICAL)
-    public void verifyCostedThread() {
+    public void verifyCostedThread() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -124,12 +122,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to set dropdown value to no")
     @Severity(SeverityLevel.CRITICAL)
-    public void setDropdownValueNo() {
+    public void setDropdownValueNo() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -149,12 +147,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to set dropdown value to yes")
     @Severity(SeverityLevel.CRITICAL)
-    public void setDropdownValueYes() {
+    public void setDropdownValueYes() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -174,12 +172,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing warning message displayed when thread length is removed")
     @Severity(SeverityLevel.CRITICAL)
-    public void costedThreadLengthRemoved() {
+    public void costedThreadLengthRemoved() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -203,12 +201,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     @Severity(SeverityLevel.CRITICAL)
-    public void changeThreadValueCancel() {
+    public void changeThreadValueCancel() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -234,12 +232,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing that adding text values in the thread length shows a warning message")
     @Severity(SeverityLevel.CRITICAL)
-    public void junkValuesCharTest() {
+    public void junkValuesCharTest() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -258,12 +256,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing that adding no value in the thread shows a warning message")
     @Severity(SeverityLevel.CRITICAL)
-    public void junkValueTest() {
+    public void junkValueTest() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -282,12 +280,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing a public thread cannot be edited")
     @Severity(SeverityLevel.CRITICAL)
-    public void cannotEditPublicThread() {
+    public void cannotEditPublicThread() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario();
@@ -304,12 +302,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing thread length persist when attributes are changed")
     @Severity(SeverityLevel.CRITICAL)
-    public void maintainingThreadChangeAttributes() {
+    public void maintainingThreadChangeAttributes() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.CATPart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -344,12 +342,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing thread units persist when changed to inches")
     @Severity(SeverityLevel.CRITICAL)
-    public void validateThreadUnitsInches() {
+    public void validateThreadUnitsInches() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openSettings()
@@ -367,12 +365,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing thread units persist when changed to millimetres")
     @Severity(SeverityLevel.CRITICAL)
-    public void validateThreadUnitsMM() {
+    public void validateThreadUnitsMM() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openSettings()
@@ -390,12 +388,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing threading persist when secondary process is added")
     @Severity(SeverityLevel.CRITICAL)
-    public void maintainingThreadSecondaryProcessGroup() {
+    public void maintainingThreadSecondaryProcessGroup() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -427,12 +425,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing compatible thread length for DTC files")
     @Severity(SeverityLevel.CRITICAL)
-    public void threadsCompatibleCadDTC() {
+    public void threadsCompatibleCadDTC() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -448,12 +446,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing compatible thread length for NX files")
     @Severity(SeverityLevel.CRITICAL)
-    public void threadsCompatibleCadNX() {
+    public void threadsCompatibleCadNX() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -469,12 +467,12 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing compatible thread length for Creo files")
     @Severity(SeverityLevel.CRITICAL)
-    public void threadsCompatibleCadCreo() {
+    public void threadsCompatibleCadCreo() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", filePath, "DTCCastingIssues.catpart")
+        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();

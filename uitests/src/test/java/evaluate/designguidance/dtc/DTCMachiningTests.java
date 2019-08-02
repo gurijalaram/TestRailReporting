@@ -14,18 +14,16 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class DTCMachiningTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private DesignGuidancePage designGuidancePage;
-
-    private String filePath = new Scanner(DTCMachiningTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public DTCMachiningTests() {
         super();
@@ -34,12 +32,12 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Keyseat Mill")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCKeyseat() {
+    public void testDTCKeyseat() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", filePath, "Machining-DTC_Issue_KeyseatMillAccessibility.CATPart")
+        explorePage.uploadFile("Initial", new FileResourceReader().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -54,12 +52,12 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Curved Surface")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCCurvedSurface() {
+    public void testDTCCurvedSurface() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", filePath, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart")
+        explorePage.uploadFile("Initial", new FileResourceReader().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -74,12 +72,12 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Sharp Corner")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCSharpCorner() {
+    public void testDTCSharpCorner() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", filePath, "Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart")
+        explorePage.uploadFile("Initial", new FileResourceReader().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -94,12 +92,12 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Side Milling")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCSideMilling() {
+    public void testDTCSideMilling() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", filePath, "Machining-DTC_Issue_SideMillingLengthDia.SLDPRT")
+        explorePage.uploadFile("Initial", new FileResourceReader().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -114,12 +112,12 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Missing Setups")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCMissingSetup() {
+    public void testDTCMissingSetup() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", filePath, "Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart")
+        explorePage.uploadFile("Initial", new FileResourceReader().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -134,12 +132,12 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Planar Face")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCPlanarFace() {
+    public void testDTCPlanarFace() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", filePath, "Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart")
+        explorePage.uploadFile("Initial", new FileResourceReader().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();

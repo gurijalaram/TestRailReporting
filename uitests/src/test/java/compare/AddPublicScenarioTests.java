@@ -12,17 +12,16 @@ import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class AddPublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private String filePath = new Scanner(AddPublicScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public AddPublicScenarioTests() {
         super();
@@ -31,12 +30,12 @@ public class AddPublicScenarioTests extends TestBase {
     @Test
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
     @Severity(SeverityLevel.CRITICAL)
-    public void filterAddPublicScenario() {
+    public void filterAddPublicScenario() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Standard Anneal", filePath, "Casting.prt")
+        explorePage.uploadFile("Standard Anneal", new FileResourceReader().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario()

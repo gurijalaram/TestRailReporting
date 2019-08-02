@@ -13,18 +13,15 @@ import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
-import test.java.evaluate.DeletePrivateScenarioTests;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class EditPublicComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(DeletePrivateScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public EditPublicComparisonTests() {
         super();
@@ -33,12 +30,12 @@ public class EditPublicComparisonTests extends TestBase {
     @Test
     @Description("Test publishing a comparison shows the comparison in the comparison table")
     @Severity(SeverityLevel.NORMAL)
-    public void testEditPublicComparisonPublish() {
+    public void testEditPublicComparisonPublish() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparisonTests", filePath, "casting.prt")
+        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceReader().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")
@@ -52,12 +49,12 @@ public class EditPublicComparisonTests extends TestBase {
     @Test
     @Description("Test editing a published comparison shows the comparison view")
     @Severity(SeverityLevel.NORMAL)
-    public void testEditPublicComparison() {
+    public void testEditPublicComparison() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparisonTests", filePath, "casting.prt")
+        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceReader().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")

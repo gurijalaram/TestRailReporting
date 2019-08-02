@@ -18,6 +18,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 /**
  * @author kpatel
  */
@@ -97,13 +99,12 @@ public class GenericHeader extends PageHeader {
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
-     * @param fileName     - name of the file
      * @return current page object
      */
-    public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
+    public EvaluatePage uploadFile(String scenarioName, File filePath) {
         newFileDropdown.click();
         componentButton.click();
-        return new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
+        return new FileUploadPage(driver).uploadFile(scenarioName, filePath);
     }
 
     /**

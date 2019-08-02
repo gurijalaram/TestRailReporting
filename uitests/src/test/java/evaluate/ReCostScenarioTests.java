@@ -15,16 +15,15 @@ import main.java.enums.WorkspaceEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class ReCostScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private String filePath = new Scanner(ReCostScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public ReCostScenarioTests() {
         super();
@@ -35,12 +34,12 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Gear Making")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostGearMaking() {
+    public void testRecostGearMaking() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Gear Making", filePath, "Case_001_-_Rockwell_2075-0243G.stp")
+        explorePage.uploadFile("Gear Making", new FileResourceReader().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Gear Making", "Case_001_-_Rockwell_2075-0243G")
@@ -55,12 +54,12 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Machining Contouring")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostMachiningContouring() {
+    public void testRecostMachiningContouring() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Machining Contouring", filePath, "case_002_00400016-003M10_A.STP")
+        explorePage.uploadFile("Machining Contouring", new FileResourceReader().getResourceFile("case_002_00400016-003M10_A.STP"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Machining Contouring", "case_002_00400016-003M10_A")
@@ -75,12 +74,12 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Partially Automated Machining")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostPartiallyAutomatedMachining() {
+    public void testRecostPartiallyAutomatedMachining() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Partially Automated Machining", filePath, "14100640.stp")
+        explorePage.uploadFile("Partially Automated Machining", new FileResourceReader().getResourceFile("14100640.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Partially Automated Machining", "14100640")
@@ -95,12 +94,12 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Pocket Recognition")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostPocketRecognition() {
+    public void testRecostPocketRecognition() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Pocket Recognition", filePath, "03229_0032_002_A.stp")
+        explorePage.uploadFile("Pocket Recognition", new FileResourceReader().getResourceFile("03229_0032_002_A.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Pocket Recognition", "03229_0032_002_A")
@@ -115,12 +114,12 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Shared Walls")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostSharedWalls() {
+    public void testRecostSharedWalls() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Shared Walls", filePath, "case_066_SpaceX_00128711-001_A.stp")
+        explorePage.uploadFile("Shared Walls", new FileResourceReader().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Shared Walls", "case_066_SpaceX_00128711-001_A")
@@ -135,12 +134,12 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Slot Examples")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostSlotExamples() {
+    public void testRecostSlotExamples() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Slot Examples", filePath, "case_007_SpaceX_00088481-001_C.stp")
+        explorePage.uploadFile("Slot Examples", new FileResourceReader().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Slot Examples", "case_007_SpaceX_00088481-001_C")

@@ -13,17 +13,15 @@ import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class PublishPublicComparison extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(PublishPublicComparison.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public PublishPublicComparison() {
         super();
@@ -32,12 +30,12 @@ public class PublishPublicComparison extends TestBase {
     @Test
     @Description("Test a public comparison can be published")
     @Severity(SeverityLevel.NORMAL)
-    public void testPublishPublicComparison() {
+    public void testPublishPublicComparison() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Publish Public Comparison", filePath, "casting.prt")
+        explorePage.uploadFile("Publish Public Comparison", new FileResourceReader().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario()

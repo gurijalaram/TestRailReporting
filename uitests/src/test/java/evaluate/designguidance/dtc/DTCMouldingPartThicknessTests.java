@@ -14,18 +14,16 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class DTCMouldingPartThicknessTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private DesignGuidancePage designGuidancePage;
-
-    private String filePath = new Scanner(DTCMouldingPartThicknessTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public DTCMouldingPartThicknessTests() {
         super();
@@ -34,12 +32,12 @@ public class DTCMouldingPartThicknessTests extends TestBase {
     @Test
     @Description("Testing DTC Moulding Thickness Minimum")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCMouldingThicknessMin() {
+    public void testDTCMouldingThicknessMin() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioMinThickness", filePath, "Plastic moulded cap thinPart.SLDPRT")
+        explorePage.uploadFile("ScenarioMinThickness", new FileResourceReader().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -54,12 +52,12 @@ public class DTCMouldingPartThicknessTests extends TestBase {
     @Test
     @Description("Testing DTC Moulding Thickness Maximum")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCMouldingThicknessMax() {
+    public void testDTCMouldingThicknessMax() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioMaxThickness", filePath, "Plastic moulded cap thinPart.SLDPRT")
+        explorePage.uploadFile("ScenarioMaxThickness", new FileResourceReader().getResourceFile("Plastic moulded cap thickPart.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();

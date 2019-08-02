@@ -12,9 +12,10 @@ import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class SecondaryProcessTests extends TestBase {
 
@@ -23,9 +24,6 @@ public class SecondaryProcessTests extends TestBase {
     private EvaluatePage evaluatePage;
     private final String COSTING_SUCCESS = "Success";
 
-    private String filePath = new Scanner(SecondaryProcessTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
-
     public SecondaryProcessTests() {
         super();
     }
@@ -33,12 +31,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process leak test")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessLeakTest() {
+    public void secondaryProcessLeakTest() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("LeakTest", filePath, "PlasticMoulding.CATPart")
+        evaluatePage = explorePage.uploadFile("LeakTest", new FileResourceReader().getResourceFile("PlasticMoulding.CATPart"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
@@ -55,12 +53,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process xray")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessXray() {
+    public void secondaryProcessXray() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Xray Inspection", filePath, "PlasticMoulding.CATPart")
+        evaluatePage = explorePage.uploadFile("Xray Inspection", new FileResourceReader().getResourceFile("PlasticMoulding.CATPart"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
@@ -77,12 +75,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Carburize")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessCarburize() {
+    public void secondaryProcessCarburize() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Carburize", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Carburize", new FileResourceReader().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -99,12 +97,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Atmosphere Oil Harden")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessAtmosphereOilHarden() {
+    public void secondaryProcessAtmosphereOilHarden() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Atmosphere Oil Harden", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Atmosphere Oil Harden", new FileResourceReader().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -121,12 +119,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Standard Anneal")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessStandardAnneal() {
+    public void secondaryProcessStandardAnneal() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Standard Anneal", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Standard Anneal", new FileResourceReader().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -143,12 +141,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Vacuum Temper")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessVacuumTemper() {
+    public void secondaryProcessVacuumTemper() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Vacuum Temper", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Vacuum Temper", new FileResourceReader().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -165,12 +163,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Stress Relief")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessStressRelief() {
+    public void secondaryProcessStressRelief() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Stress Relief", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Stress Relief", new FileResourceReader().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -187,12 +185,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Anodize")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessAnodize() {
+    public void secondaryProcessAnodize() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Anodize", filePath, "Casting.prt")
+        evaluatePage = explorePage.uploadFile("Anodize", new FileResourceReader().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -209,12 +207,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Paint")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessCertification() {
+    public void secondaryProcessCertification() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Certification", filePath, "SheetMetal.prt")
+        evaluatePage = explorePage.uploadFile("Certification", new FileResourceReader().getResourceFile("SheetMetal.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -231,12 +229,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Paint")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessPaint() {
+    public void secondaryProcessPaint() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Paint", filePath, "SheetMetal.prt")
+        evaluatePage = explorePage.uploadFile("Paint", new FileResourceReader().getResourceFile("SheetMetal.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -253,12 +251,12 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Passivation")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessPassivation() {
+    public void secondaryProcessPassivation() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Passivation", filePath, "SheetMetal.prt")
+        evaluatePage = explorePage.uploadFile("Passivation", new FileResourceReader().getResourceFile("SheetMetal.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()

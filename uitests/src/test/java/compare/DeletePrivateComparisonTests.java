@@ -14,15 +14,10 @@ import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import org.junit.Test;
 
-import java.util.Scanner;
-
 public class DeletePrivateComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(DeletePrivateComparisonTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public DeletePrivateComparisonTests() {
         super();

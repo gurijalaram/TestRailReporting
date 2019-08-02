@@ -12,17 +12,15 @@ import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class DeleteScenarioIterationsTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(DeleteScenarioIterationsTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public DeleteScenarioIterationsTests() {
         super();
@@ -31,12 +29,12 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @Test
     @Description("Test a public scenario can be deleted from the component table")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeletePublicScenarioIteration() {
+    public void testDeletePublicScenarioIteration() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePublicScenarioIteration", filePath, "casting.prt")
+        explorePage.uploadFile("DeletePublicScenarioIteration", new FileResourceReader().getResourceFile("casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -54,12 +52,12 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @Test
     @Description("Test a public scenario can be deleted from the component table")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeletePrivateScenarioIteration() {
+    public void testDeletePrivateScenarioIteration() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateScenarioIteration", filePath, "casting.prt")
+        explorePage.uploadFile("DeletePrivateScenarioIteration", new FileResourceReader().getResourceFile("casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())

@@ -10,17 +10,15 @@ import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.properties.reader.FileResourceReader;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class PreviewPanelTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(FileUploadTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public PreviewPanelTests() {
         super();
@@ -29,10 +27,10 @@ public class PreviewPanelTests extends TestBase {
     @Test
     @Description("Test preview panel data is displayed")
     @Severity(SeverityLevel.NORMAL)
-    public void testLogin() {
+    public void testLogin() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("Preview Panel", filePath, "Casting.prt")
+            .uploadFile("Preview Panel", new FileResourceReader().getResourceFile("Casting.prt"))
             .selectExploreButton()
             .highlightScenario("Preview Panel", "Casting");
 
