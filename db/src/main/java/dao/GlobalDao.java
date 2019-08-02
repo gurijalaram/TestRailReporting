@@ -1,9 +1,13 @@
 package dao;
 
+import entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.persistence.Query;
+import org.hibernate.Query;
+import org.hibernate.type.StringType;
+import org.hibernate.type.TimestampType;
+
 import java.util.List;
 
 public abstract class GlobalDao<T> {
@@ -17,7 +21,7 @@ public abstract class GlobalDao<T> {
 
     public List<T> getAllObjects(Class<?> dbObject) {
         Query query = session.createQuery("FROM " + dbObject.getName());
-        List<T> dbListObjects = query.getResultList();
+        List<T> dbListObjects = query.list();
         return dbListObjects;
     }
 

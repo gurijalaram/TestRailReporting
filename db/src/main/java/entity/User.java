@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
-@Table(name = "fbc_user")
+ @Entity
+ @Table(name = "fbc_user")
 public class User implements Serializable {
 
     private static final Long serialVersionUID = -231312312L;
@@ -39,7 +39,7 @@ public class User implements Serializable {
     private String location;
     @Column(name = "department")
     private String department;
-    @Column(name = "function")
+    @Column(name = "\"function\"")  // because "function" is reserved word in SQL, we have to put backslash before column name
     private String function;
     @Column(name = "manager")
     private String manager;
@@ -69,7 +69,6 @@ public class User implements Serializable {
     private String energyUnitSymbol;
     @Column(name = "currencyCode")
     private String currencyCode;
-
     @Column(name = "userDataXML")
     private String userDataXML;
     @Column(name = "defaultRole")
@@ -460,5 +459,4 @@ public class User implements Serializable {
         this.extra10 = extra10;
         return this;
     }
-
 }

@@ -16,7 +16,7 @@ public class UserTest {
              - mssql
              - oracle
         */
-        new PropertiesHendler().setDBProperties("mysql");
+        new PropertiesHendler().setDBProperties("mssql");
     }
 
     @Test
@@ -28,19 +28,15 @@ public class UserTest {
         }
     }
 
-
     @Test
     public void testCreateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
-        List<User> userForDelete = new ArrayList<User>();
+        List<User> userForCreate = new ArrayList<User>();
 
         /* Users Examples */
         User user = new User().setFullName("aPriori Default User").setRawLoginID("adu");
-        User salvaUser = new User().setFullName("Salvador Sakho").setRawLoginID("ssakho");
-
-        userForDelete.add(user);
-        userForDelete.add(salvaUser);
-        userDao.create(userForDelete);
+        userForCreate.add(user);
+        userDao.create(userForCreate);
     }
 
     @Test
@@ -49,29 +45,22 @@ public class UserTest {
         List<User> userForDelete = new ArrayList<User>();
 
         /* Users Examples */
-        User user = new User().setFullName("aPriori User");
-        User salvaUser = new User().setFullName("Salva");
-
+        User user = new User().setFullName("aPriori Default User");
         /* Currently didn't find another way, of how to update multiple entities.
         getByFullName - returns entity which should be updated. */
-
-        userForDelete.add(userDao.getByFullName(user).setFullName("aPriori Default User"));
-        userForDelete.add(userDao.getByFullName(salvaUser).setFullName("Salvador Sakho"));
+        userForDelete.add(userDao.getByFullName(user).setFullName("aPriori Test User"));
         userDao.update(userForDelete);
-
     }
 
     @Test
     public void testDeleteUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
         List<User> userForDelete = new ArrayList<User>();
-        /* Users Examples */
 
+        /* Users Examples */
         User user = new User().setFullName("aPriori Default User").setRawLoginID("adu");
-        User salvaUser = new User().setFullName("Salvador Sakho").setRawLoginID("ssakho");
 
         userForDelete.add(user);
-        userForDelete.add(salvaUser);
         userDao.delete(userDao.getAllObjects(userForDelete.get(0).getClass()));
     }
 

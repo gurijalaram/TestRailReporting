@@ -1,4 +1,3 @@
-import com.apriori.testutil.testdata.DataLoader;
 import org.junit.Test;
 import utils.DBDataImporter;
 import utils.DatabaseDumpCreator;
@@ -39,7 +38,8 @@ public class DBworkTests {
     @Test
     public void importIntoDB(){
         DBDataImporter dbDataImporter = new DBDataImporter();
-        String [] partPath = new String [] {"C:\\Users\\ssakho.FBC\\Desktop\\testData\\Smoke Test Data"}; /* Path could be to share.point folder */
+        String [] partPath = new String [] {"C:\\Users\\ssakho.FBC\\Desktop\\test1"}; /* Path could be to share.point folder */
         dbDataImporter.imporFilesIntoDB(partPath);
+        System.out.println("Data was successfully imported");
     }
 }
