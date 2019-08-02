@@ -11,7 +11,7 @@ import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -30,7 +30,7 @@ public class ListOfVPETests extends TestBase {
     public void getVPEsList() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("VPEList", new FileResourceReader().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
+            .uploadFile("VPEList", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
 
         assertThat(evaluatePage.getListOfVPEs(), hasItems(VPEEnum.getNames()));
     }

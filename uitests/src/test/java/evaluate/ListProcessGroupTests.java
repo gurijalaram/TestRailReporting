@@ -11,7 +11,7 @@ import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -31,7 +31,7 @@ public class ListProcessGroupTests extends TestBase {
     public void getProcessGroupList() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("ProcessGroupList", new FileResourceReader().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
+            .uploadFile("ProcessGroupList", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
     }

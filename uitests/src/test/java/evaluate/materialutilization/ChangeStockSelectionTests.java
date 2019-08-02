@@ -14,7 +14,7 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.materialutilization.stock.StockPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -36,7 +36,7 @@ public class ChangeStockSelectionTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ChangeScenarioStockSelection", new FileResourceReader().getResourceFile("bracket_basic.prt"))
+        explorePage.uploadFile("ChangeScenarioStockSelection", new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openMaterialComposition()

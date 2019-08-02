@@ -11,7 +11,7 @@ import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -33,7 +33,7 @@ public class DeletePublicScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePublicScenario", new FileResourceReader().getResourceFile("casting.prt"))
+        explorePage.uploadFile("DeletePublicScenario", new FileResourceUtil().getResourceFile("casting.prt"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario("DeletePublicScenario", "casting");

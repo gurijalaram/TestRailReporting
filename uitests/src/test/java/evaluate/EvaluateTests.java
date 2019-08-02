@@ -6,7 +6,7 @@ import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -27,7 +27,7 @@ public class EvaluateTests extends TestBase {
     public void testCostScenario() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("Scenario A", new FileResourceReader().getResourceFile("testpart-4.prt"));
+            .uploadFile("Scenario A", new FileResourceUtil().getResourceFile("testpart-4.prt"));
         evaluatePage = new EvaluatePage(driver);
     }
 
@@ -38,7 +38,7 @@ public class EvaluateTests extends TestBase {
     public void testPublishScenario() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("Scenario A", new FileResourceReader().getResourceFile("testpart-4.prt"));
+            .uploadFile("Scenario A", new FileResourceUtil().getResourceFile("testpart-4.prt"));
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario(null)
             .publishScenario();
@@ -51,7 +51,7 @@ public class EvaluateTests extends TestBase {
     public void testCostVPE() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("Scenario A", new FileResourceReader().getResourceFile("testpart-4.prt"));
+            .uploadFile("Scenario A", new FileResourceUtil().getResourceFile("testpart-4.prt"));
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())

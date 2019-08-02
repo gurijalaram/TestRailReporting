@@ -13,7 +13,7 @@ import main.java.enums.WorkspaceEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -34,7 +34,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        new ExplorePage(driver).uploadFile("scenario name", new FileResourceReader().getResourceFile("partbody_2.stp"));
+        new ExplorePage(driver).uploadFile("scenario name", new FileResourceUtil().getResourceFile("partbody_2.stp"));
 
         explorePage = new ExplorePage(driver);
         explorePage.createNewScenario()
@@ -52,7 +52,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("publish scenario name", new FileResourceReader().getResourceFile("partbody_2.stp"))
+        explorePage.uploadFile("publish scenario name", new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .createNewScenario()

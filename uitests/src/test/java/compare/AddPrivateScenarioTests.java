@@ -12,7 +12,7 @@ import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class AddPrivateScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Standard Anneal", new FileResourceReader().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
+        explorePage.uploadFile("Standard Anneal", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 

@@ -14,7 +14,7 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -37,7 +37,7 @@ public class DTCMouldingPartThicknessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioMinThickness", new FileResourceReader().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
+        explorePage.uploadFile("ScenarioMinThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -57,7 +57,7 @@ public class DTCMouldingPartThicknessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioMaxThickness", new FileResourceReader().getResourceFile("Plastic moulded cap thickPart.SLDPRT"))
+        explorePage.uploadFile("ScenarioMaxThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thickPart.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();

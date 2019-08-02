@@ -10,7 +10,7 @@ import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -30,7 +30,7 @@ public class PreviewPanelTests extends TestBase {
     public void testLogin() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("Preview Panel", new FileResourceReader().getResourceFile("Casting.prt"))
+            .uploadFile("Preview Panel", new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectExploreButton()
             .highlightScenario("Preview Panel", "Casting");
 

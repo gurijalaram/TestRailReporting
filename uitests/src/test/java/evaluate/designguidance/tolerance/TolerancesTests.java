@@ -21,7 +21,7 @@ import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -48,7 +48,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -68,7 +68,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -94,7 +94,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -127,7 +127,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -152,7 +152,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -177,7 +177,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -206,7 +206,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -237,7 +237,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -261,7 +261,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -285,7 +285,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario();
@@ -307,7 +307,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.CATPart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -347,7 +347,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openSettings()
@@ -370,7 +370,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openSettings()
@@ -393,7 +393,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -430,7 +430,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -451,7 +451,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -472,7 +472,7 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceReader().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();

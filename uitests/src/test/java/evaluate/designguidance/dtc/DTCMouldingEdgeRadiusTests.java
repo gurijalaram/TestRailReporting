@@ -14,7 +14,7 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -37,7 +37,7 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioEdgeRadiusInternal", new FileResourceReader().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
+        explorePage.uploadFile("ScenarioEdgeRadiusInternal", new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -57,7 +57,7 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioEdgeRadiusExternal", new FileResourceReader().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
+        explorePage.uploadFile("ScenarioEdgeRadiusExternal", new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();

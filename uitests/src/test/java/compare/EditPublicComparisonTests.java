@@ -13,7 +13,7 @@ import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -35,7 +35,7 @@ public class EditPublicComparisonTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceReader().getResourceFile("Casting.prt"))
+        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")
@@ -54,7 +54,7 @@ public class EditPublicComparisonTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceReader().getResourceFile("Casting.prt"))
+        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")

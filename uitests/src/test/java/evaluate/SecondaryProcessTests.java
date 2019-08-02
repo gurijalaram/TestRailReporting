@@ -12,7 +12,7 @@ import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -36,7 +36,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("LeakTest", new FileResourceReader().getResourceFile("PlasticMoulding.CATPart"))
+        evaluatePage = explorePage.uploadFile("LeakTest", new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
@@ -58,7 +58,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Xray Inspection", new FileResourceReader().getResourceFile("PlasticMoulding.CATPart"))
+        evaluatePage = explorePage.uploadFile("Xray Inspection", new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
@@ -80,7 +80,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Carburize", new FileResourceReader().getResourceFile("Casting.prt"))
+        evaluatePage = explorePage.uploadFile("Carburize", new FileResourceUtil().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -102,7 +102,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Atmosphere Oil Harden", new FileResourceReader().getResourceFile("Casting.prt"))
+        evaluatePage = explorePage.uploadFile("Atmosphere Oil Harden", new FileResourceUtil().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -124,7 +124,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Standard Anneal", new FileResourceReader().getResourceFile("Casting.prt"))
+        evaluatePage = explorePage.uploadFile("Standard Anneal", new FileResourceUtil().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -146,7 +146,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Vacuum Temper", new FileResourceReader().getResourceFile("Casting.prt"))
+        evaluatePage = explorePage.uploadFile("Vacuum Temper", new FileResourceUtil().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -168,7 +168,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Stress Relief", new FileResourceReader().getResourceFile("Casting.prt"))
+        evaluatePage = explorePage.uploadFile("Stress Relief", new FileResourceUtil().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -190,7 +190,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Anodize", new FileResourceReader().getResourceFile("Casting.prt"))
+        evaluatePage = explorePage.uploadFile("Anodize", new FileResourceUtil().getResourceFile("Casting.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
@@ -212,7 +212,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Certification", new FileResourceReader().getResourceFile("SheetMetal.prt"))
+        evaluatePage = explorePage.uploadFile("Certification", new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -234,7 +234,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Paint", new FileResourceReader().getResourceFile("SheetMetal.prt"))
+        evaluatePage = explorePage.uploadFile("Paint", new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -256,7 +256,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Passivation", new FileResourceReader().getResourceFile("SheetMetal.prt"))
+        evaluatePage = explorePage.uploadFile("Passivation", new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()

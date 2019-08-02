@@ -15,7 +15,7 @@ import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -37,7 +37,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("RevertSavedScenario", new FileResourceReader().getResourceFile("testpart-4.prt"))
+        explorePage.uploadFile("RevertSavedScenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
@@ -57,7 +57,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("RevertUnsavedScenario", new FileResourceReader().getResourceFile("testpart-4.prt"))
+        explorePage.uploadFile("RevertUnsavedScenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())

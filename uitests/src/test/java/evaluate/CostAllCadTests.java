@@ -13,7 +13,7 @@ import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -36,7 +36,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD Forging", new FileResourceReader().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD Forging", new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -51,7 +51,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD par", new FileResourceReader().getResourceFile("26136.par"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD par", new FileResourceUtil().getResourceFile("26136.par"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -66,7 +66,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD CATPart", new FileResourceReader().getResourceFile("Plastic moulded cap DFM.CATPart"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD CATPart", new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -81,7 +81,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD prt 4", new FileResourceReader().getResourceFile("turning.prt.4"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD prt 4", new FileResourceUtil().getResourceFile("turning.prt.4"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -96,7 +96,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD Creo", new FileResourceReader().getResourceFile("turning.prt.4"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD Creo", new FileResourceUtil().getResourceFile("turning.prt.4"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -111,7 +111,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD NX", new FileResourceReader().getResourceFile("Locker_bottom_panel.prt"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD NX", new FileResourceUtil().getResourceFile("Locker_bottom_panel.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -126,7 +126,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD Inventor", new FileResourceReader().getResourceFile("VERTICAL PLATE.ipt"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD Inventor", new FileResourceUtil().getResourceFile("VERTICAL PLATE.ipt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -141,7 +141,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD STEP", new FileResourceReader().getResourceFile("partbody_2.stp"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD STEP", new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -156,7 +156,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD Parasolid", new FileResourceReader().getResourceFile("bracket_basic_steel_PMI.x_t"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD Parasolid", new FileResourceUtil().getResourceFile("bracket_basic_steel_PMI.x_t"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
@@ -171,7 +171,7 @@ public class CostAllCadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("CostAllCAD ACIS", new FileResourceReader().getResourceFile("Plastic moulded cap thinPart.SAT"))
+        evaluatePage = explorePage.uploadFile("CostAllCAD ACIS", new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SAT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 

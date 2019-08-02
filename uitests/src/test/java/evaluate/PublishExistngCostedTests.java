@@ -14,7 +14,7 @@ import main.java.enums.WorkspaceEnum;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -36,7 +36,7 @@ public class PublishExistngCostedTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Publish Existing Costed Scenario", new FileResourceReader().getResourceFile("testpart-4.prt"))
+        explorePage.uploadFile("Publish Existing Costed Scenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario()

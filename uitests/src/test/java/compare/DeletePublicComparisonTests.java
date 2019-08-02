@@ -13,7 +13,7 @@ import main.java.enums.WorkspaceEnum;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.properties.reader.FileResourceReader;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -35,7 +35,7 @@ public class DeletePublicComparisonTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("PublicComparisonDelete", new FileResourceReader().getResourceFile("Casting.prt"))
+        explorePage.uploadFile("PublicComparisonDelete", new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .createNewComparison()
