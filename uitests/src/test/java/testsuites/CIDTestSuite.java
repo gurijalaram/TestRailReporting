@@ -17,7 +17,7 @@ import test.java.evaluate.EvaluateTests;
 import test.java.evaluate.ListOfVPETests;
 import test.java.evaluate.NewScenarioNameTests;
 import test.java.evaluate.ProcessGroupsTests;
-import test.java.evaluate.PublishExistngCostedTests;
+import test.java.evaluate.PublishExistingCostedTests;
 import test.java.evaluate.PublishNewCostedTests;
 import test.java.evaluate.ReCostScenarioTests;
 import test.java.evaluate.RevertScenarioTests;
@@ -56,7 +56,7 @@ import test.java.login.LoginTests;
     DeletePublicComparisonTests.class,
     EditPublicComparisonTests.class,
     NewScenarioNameTests.class,
-    PublishExistngCostedTests.class,
+    PublishExistingCostedTests.class,
     PublishNewCostedTests.class,
     PublishPublicComparison.class,
     ReCostScenarioTests.class,

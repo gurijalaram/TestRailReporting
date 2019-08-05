@@ -17,12 +17,12 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-public class PublishExistngCostedTests extends TestBase {
+public class PublishExistingCostedTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
 
-    public PublishExistngCostedTests() {
+    public PublishExistingCostedTests() {
         super();
     }
 
