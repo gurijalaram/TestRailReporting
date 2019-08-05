@@ -1,10 +1,15 @@
 package main.java.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 public class FileResourceUtil {
+
+    private final Logger logger = LoggerFactory.getLogger(FileResourceUtil.class);
 
     /**
      * @param fileName the name of the file
