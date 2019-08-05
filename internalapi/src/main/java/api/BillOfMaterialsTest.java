@@ -7,11 +7,17 @@ import main.java.http.builder.common.response.common.BillOfMaterialsWrapper;
 import main.java.http.builder.common.response.common.BillOfSingleMaterialWrapper;
 import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Random;
 
 public class BillOfMaterialsTest extends BaseTestData {
+
+    @BeforeClass
+    public static void test() {
+        BaseTestData.initBillOfMaterials("cfrith@apriori.com","TestEvent2018");
+    }
 
     @Test
     @Description("Get list bill of materials")
