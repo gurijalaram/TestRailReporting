@@ -49,8 +49,8 @@ public class EvaluateHeader extends GenericHeader {
      * @return current page object
      */
     public EvaluatePage costScenario(String costText) {
-        costButton.click();
-        pageUtils.waitForElementToAppear(dialogCostButton).click();
+        pageUtils.waitForElementAndClick(costButton);
+        pageUtils.waitForElementAndClick(dialogCostButton);
         costText = costText == "Success" ? COST_UP_TO_DATE : costText;
         getCostLabel();
         checkCostLabel(costText);
