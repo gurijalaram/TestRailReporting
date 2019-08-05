@@ -17,8 +17,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class DTCMouldingDraftTests extends TestBase {
 
     private LoginPage loginPage;
@@ -32,7 +30,7 @@ public class DTCMouldingDraftTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Moulding Draft")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCMouldingDraft() throws UnsupportedEncodingException {
+    public void testDTCMouldingDraft() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

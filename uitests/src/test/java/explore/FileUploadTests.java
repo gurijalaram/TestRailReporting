@@ -7,8 +7,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class FileUploadTests extends TestBase {
 
     private LoginPage loginPage;
@@ -19,7 +17,7 @@ public class FileUploadTests extends TestBase {
 
     @Test
     @Description("Test file upload")
-    public void testFileUpload() throws UnsupportedEncodingException {
+    public void testFileUpload() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", new FileResourceUtil().getResourceFile("bracket_basic.prt"));

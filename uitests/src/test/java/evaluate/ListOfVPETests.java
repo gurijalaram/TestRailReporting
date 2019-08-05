@@ -14,8 +14,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class ListOfVPETests extends TestBase {
     private LoginPage loginPage;
     private EvaluatePage evaluatePage;
@@ -27,7 +25,7 @@ public class ListOfVPETests extends TestBase {
     @Test
     @Description("Get List of VPEs")
     @Severity(SeverityLevel.CRITICAL)
-    public void getVPEsList() throws UnsupportedEncodingException {
+    public void getVPEsList() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("VPEList", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));

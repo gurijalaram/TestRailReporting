@@ -17,8 +17,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class DTCMouldingEdgeRadiusTests extends TestBase {
 
     private LoginPage loginPage;
@@ -32,7 +30,7 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
     @Test
     @Description("Testing DTC Plastic Moulding Edge Radius Internal")
     @Severity(SeverityLevel.NORMAL)
-    public void testMouldingEdgeInternal() throws UnsupportedEncodingException {
+    public void testMouldingEdgeInternal() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -52,7 +50,7 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
     @Test
     @Description("Testing DTC Plastic Moulding Edge Radius External")
     @Severity(SeverityLevel.NORMAL)
-    public void testMouldingEdgeExternal() throws UnsupportedEncodingException {
+    public void testMouldingEdgeExternal() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

@@ -18,8 +18,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class ReCostScenarioTests extends TestBase {
 
     private LoginPage loginPage;
@@ -34,7 +32,7 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Gear Making")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostGearMaking() throws UnsupportedEncodingException {
+    public void testRecostGearMaking() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -54,7 +52,7 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Machining Contouring")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostMachiningContouring() throws UnsupportedEncodingException {
+    public void testRecostMachiningContouring() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -74,7 +72,7 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Partially Automated Machining")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostPartiallyAutomatedMachining() throws UnsupportedEncodingException {
+    public void testRecostPartiallyAutomatedMachining() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -94,7 +92,7 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Pocket Recognition")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostPocketRecognition() throws UnsupportedEncodingException {
+    public void testRecostPocketRecognition() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -114,7 +112,7 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Shared Walls")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostSharedWalls() throws UnsupportedEncodingException {
+    public void testRecostSharedWalls() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -134,7 +132,7 @@ public class ReCostScenarioTests extends TestBase {
     @Test
     @Description("Test recosting a cad file - Slot Examples")
     @Severity(SeverityLevel.NORMAL)
-    public void testRecostSlotExamples() throws UnsupportedEncodingException {
+    public void testRecostSlotExamples() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

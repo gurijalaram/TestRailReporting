@@ -14,8 +14,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class ListProcessGroupTests extends TestBase {
 
     private LoginPage loginPage;
@@ -28,7 +26,7 @@ public class ListProcessGroupTests extends TestBase {
     @Test
     @Description("Get List of Process Groups")
     @Severity(SeverityLevel.CRITICAL)
-    public void getProcessGroupList() throws UnsupportedEncodingException {
+    public void getProcessGroupList() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("ProcessGroupList", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));

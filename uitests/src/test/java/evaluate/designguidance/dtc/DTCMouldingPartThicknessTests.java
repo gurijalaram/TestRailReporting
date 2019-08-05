@@ -17,8 +17,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class DTCMouldingPartThicknessTests extends TestBase {
 
     private LoginPage loginPage;
@@ -32,7 +30,7 @@ public class DTCMouldingPartThicknessTests extends TestBase {
     @Test
     @Description("Testing DTC Moulding Thickness Minimum")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCMouldingThicknessMin() throws UnsupportedEncodingException {
+    public void testDTCMouldingThicknessMin() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -52,7 +50,7 @@ public class DTCMouldingPartThicknessTests extends TestBase {
     @Test
     @Description("Testing DTC Moulding Thickness Maximum")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCMouldingThicknessMax() throws UnsupportedEncodingException {
+    public void testDTCMouldingThicknessMax() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

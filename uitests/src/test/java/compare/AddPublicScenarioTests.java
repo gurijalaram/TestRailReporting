@@ -16,8 +16,6 @@ import main.java.utils.FileResourceUtil;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class AddPublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
@@ -30,7 +28,7 @@ public class AddPublicScenarioTests extends TestBase {
     @Test
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
     @Severity(SeverityLevel.CRITICAL)
-    public void filterAddPublicScenario() throws UnsupportedEncodingException {
+    public void filterAddPublicScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

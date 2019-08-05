@@ -25,8 +25,6 @@ import main.java.utils.FileResourceUtil;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class TolerancesTests extends TestBase {
 
     private LoginPage loginPage;
@@ -43,7 +41,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to check edit thread button is disabled")
     @Severity(SeverityLevel.CRITICAL)
-    public void threadButtonDisabled() throws UnsupportedEncodingException {
+    public void threadButtonDisabled() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -63,7 +61,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to check thread length persist")
     @Severity(SeverityLevel.CRITICAL)
-    public void editThread() throws UnsupportedEncodingException {
+    public void editThread() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -89,7 +87,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to verify costed thread")
     @Severity(SeverityLevel.CRITICAL)
-    public void verifyCostedThread() throws UnsupportedEncodingException {
+    public void verifyCostedThread() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -122,7 +120,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to set dropdown value to no")
     @Severity(SeverityLevel.CRITICAL)
-    public void setDropdownValueNo() throws UnsupportedEncodingException {
+    public void setDropdownValueNo() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -147,7 +145,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Test to set dropdown value to yes")
     @Severity(SeverityLevel.CRITICAL)
-    public void setDropdownValueYes() throws UnsupportedEncodingException {
+    public void setDropdownValueYes() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -172,7 +170,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing warning message displayed when thread length is removed")
     @Severity(SeverityLevel.CRITICAL)
-    public void costedThreadLengthRemoved() throws UnsupportedEncodingException {
+    public void costedThreadLengthRemoved() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -201,7 +199,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     @Severity(SeverityLevel.CRITICAL)
-    public void changeThreadValueCancel() throws UnsupportedEncodingException {
+    public void changeThreadValueCancel() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -232,7 +230,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing that adding text values in the thread length shows a warning message")
     @Severity(SeverityLevel.CRITICAL)
-    public void junkValuesCharTest() throws UnsupportedEncodingException {
+    public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -256,7 +254,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing that adding no value in the thread shows a warning message")
     @Severity(SeverityLevel.CRITICAL)
-    public void junkValueTest() throws UnsupportedEncodingException {
+    public void junkValueTest() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -280,7 +278,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing a public thread cannot be edited")
     @Severity(SeverityLevel.CRITICAL)
-    public void cannotEditPublicThread() throws UnsupportedEncodingException {
+    public void cannotEditPublicThread() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -302,7 +300,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing thread length persist when attributes are changed")
     @Severity(SeverityLevel.CRITICAL)
-    public void maintainingThreadChangeAttributes() throws UnsupportedEncodingException {
+    public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -342,7 +340,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing thread units persist when changed to inches")
     @Severity(SeverityLevel.CRITICAL)
-    public void validateThreadUnitsInches() throws UnsupportedEncodingException {
+    public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -365,7 +363,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing thread units persist when changed to millimetres")
     @Severity(SeverityLevel.CRITICAL)
-    public void validateThreadUnitsMM() throws UnsupportedEncodingException {
+    public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -388,7 +386,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing threading persist when secondary process is added")
     @Severity(SeverityLevel.CRITICAL)
-    public void maintainingThreadSecondaryProcessGroup() throws UnsupportedEncodingException {
+    public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -425,7 +423,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing compatible thread length for DTC files")
     @Severity(SeverityLevel.CRITICAL)
-    public void threadsCompatibleCadDTC() throws UnsupportedEncodingException {
+    public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -446,7 +444,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing compatible thread length for NX files")
     @Severity(SeverityLevel.CRITICAL)
-    public void threadsCompatibleCadNX() throws UnsupportedEncodingException {
+    public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -467,7 +465,7 @@ public class TolerancesTests extends TestBase {
     @Test
     @Description("Testing compatible thread length for Creo files")
     @Severity(SeverityLevel.CRITICAL)
-    public void threadsCompatibleCadCreo() throws UnsupportedEncodingException {
+    public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

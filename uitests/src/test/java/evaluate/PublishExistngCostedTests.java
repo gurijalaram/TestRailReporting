@@ -17,8 +17,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class PublishExistngCostedTests extends TestBase {
 
     private LoginPage loginPage;
@@ -31,7 +29,7 @@ public class PublishExistngCostedTests extends TestBase {
     @Test
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     @Severity(SeverityLevel.NORMAL)
-    public void testPublishExistingCostedScenario() throws UnsupportedEncodingException {
+    public void testPublishExistingCostedScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

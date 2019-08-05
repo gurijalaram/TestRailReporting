@@ -9,8 +9,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class EvaluateTests extends TestBase {
 
     private LoginPage loginPage;
@@ -24,7 +22,7 @@ public class EvaluateTests extends TestBase {
      * Test successfully costing a scenario
      */
     @Test
-    public void testCostScenario() throws UnsupportedEncodingException {
+    public void testCostScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", new FileResourceUtil().getResourceFile("testpart-4.prt"));
@@ -35,7 +33,7 @@ public class EvaluateTests extends TestBase {
      * Test successfully costing and publishing a scenario
      */
     @Test
-    public void testPublishScenario() throws UnsupportedEncodingException {
+    public void testPublishScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", new FileResourceUtil().getResourceFile("testpart-4.prt"));
@@ -48,7 +46,7 @@ public class EvaluateTests extends TestBase {
      * Test successful costing, change vpe and process group
      */
     @Test
-    public void testCostVPE() throws UnsupportedEncodingException {
+    public void testCostVPE() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", new FileResourceUtil().getResourceFile("testpart-4.prt"));

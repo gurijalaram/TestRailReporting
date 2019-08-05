@@ -16,8 +16,6 @@ import main.java.utils.FileResourceUtil;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class AddPrivateScenarioTests extends TestBase {
 
     private LoginPage loginPage;
@@ -30,7 +28,7 @@ public class AddPrivateScenarioTests extends TestBase {
     @Test
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     @Severity(SeverityLevel.CRITICAL)
-    public void filterAddPrivateScenario() throws UnsupportedEncodingException {
+    public void filterAddPrivateScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

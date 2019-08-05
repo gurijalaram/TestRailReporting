@@ -17,8 +17,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class DTCMachiningTests extends TestBase {
 
     private LoginPage loginPage;
@@ -32,7 +30,7 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Keyseat Mill")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCKeyseat() throws UnsupportedEncodingException {
+    public void testDTCKeyseat() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -52,7 +50,7 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Curved Surface")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCCurvedSurface() throws UnsupportedEncodingException {
+    public void testDTCCurvedSurface() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -72,7 +70,7 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Sharp Corner")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCSharpCorner() throws UnsupportedEncodingException {
+    public void testDTCSharpCorner() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -92,7 +90,7 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Side Milling")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCSideMilling() throws UnsupportedEncodingException {
+    public void testDTCSideMilling() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -112,7 +110,7 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Missing Setups")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCMissingSetup() throws UnsupportedEncodingException {
+    public void testDTCMissingSetup() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -132,7 +130,7 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Planar Face")
     @Severity(SeverityLevel.NORMAL)
-    public void testDTCPlanarFace() throws UnsupportedEncodingException {
+    public void testDTCPlanarFace() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

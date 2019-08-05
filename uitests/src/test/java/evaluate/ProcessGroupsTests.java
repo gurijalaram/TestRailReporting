@@ -17,8 +17,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class ProcessGroupsTests extends TestBase {
 
     private LoginPage loginPage;
@@ -32,7 +30,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Forging")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupForging() throws UnsupportedEncodingException {
+    public void testProcessGroupForging() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -53,7 +51,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Stock Machining")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupStockMachining() throws UnsupportedEncodingException {
+    public void testProcessGroupStockMachining() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -74,7 +72,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Bar and Tube")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupBarTube() throws UnsupportedEncodingException {
+    public void testProcessGroupBarTube() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -95,7 +93,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Casting")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupCasting() throws UnsupportedEncodingException {
+    public void testProcessGroupCasting() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -116,7 +114,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Extrusion")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupExtrusion() throws UnsupportedEncodingException {
+    public void testProcessGroupExtrusion() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -137,7 +135,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Filleting")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupFilleting() throws UnsupportedEncodingException {
+    public void testProcessGroupFilleting() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -158,7 +156,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Gear Making")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupGearMaking() throws UnsupportedEncodingException {
+    public void testProcessGroupGearMaking() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -179,7 +177,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Machining-Contouring")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupMachiningContouring() throws UnsupportedEncodingException {
+    public void testProcessGroupMachiningContouring() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -200,7 +198,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Machining-Gage Parts")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupMachiningGageParts() throws UnsupportedEncodingException {
+    public void testProcessGroupMachiningGageParts() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -221,7 +219,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Machining-Milling-4 Axis Mill")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupMachining4AxisMill() throws UnsupportedEncodingException {
+    public void testProcessGroupMachining4AxisMill() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -242,7 +240,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Machining-Milling-5 Axis Mill")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupMachining5AxisMill() throws UnsupportedEncodingException {
+    public void testProcessGroupMachining5AxisMill() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -263,7 +261,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Machining-Milling-Mill Turn")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupMachiningMillTurn() throws UnsupportedEncodingException {
+    public void testProcessGroupMachiningMillTurn() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -284,7 +282,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Partially Automated Machining")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupPartiallyAutomatedMachining() throws UnsupportedEncodingException {
+    public void testProcessGroupPartiallyAutomatedMachining() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -305,7 +303,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Perimeter Milling")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupPerimeterMilling() throws UnsupportedEncodingException {
+    public void testProcessGroupPerimeterMilling() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -326,7 +324,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Pocket Recognition")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupPocketRecognition() throws UnsupportedEncodingException {
+    public void testProcessGroupPocketRecognition() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -347,7 +345,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Pocket Recognition - shared walls")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupPocketRecognitionSharedWalls() throws UnsupportedEncodingException {
+    public void testProcessGroupPocketRecognitionSharedWalls() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -368,7 +366,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Rough Milling")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupRoughMilling() throws UnsupportedEncodingException {
+    public void testProcessGroupRoughMilling() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -389,7 +387,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Slot Examples")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupSlotExamples() throws UnsupportedEncodingException {
+    public void testProcessGroupSlotExamples() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -410,7 +408,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Turning")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupTurning() throws UnsupportedEncodingException {
+    public void testProcessGroupTurning() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -431,7 +429,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Blow Molding")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupBlowMolding() throws UnsupportedEncodingException {
+    public void testProcessGroupBlowMolding() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -452,7 +450,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group PMI")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupPMI() throws UnsupportedEncodingException {
+    public void testProcessGroupPMI() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -473,7 +471,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Powder Metal")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupPowderMetal() throws UnsupportedEncodingException {
+    public void testProcessGroupPowderMetal() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -494,7 +492,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Roll Bending")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupRollBending() throws UnsupportedEncodingException {
+    public void testProcessGroupRollBending() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -515,7 +513,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Sheet Metal-Transfer Die")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupTransferDie() throws UnsupportedEncodingException {
+    public void testProcessGroupTransferDie() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

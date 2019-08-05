@@ -16,8 +16,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class NewScenarioNameTests extends TestBase {
 
     private LoginPage loginPage;
@@ -30,7 +28,7 @@ public class NewScenarioNameTests extends TestBase {
     @Test
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     @Severity(SeverityLevel.NORMAL)
-    public void testEnterNewScenarioName() throws UnsupportedEncodingException {
+    public void testEnterNewScenarioName() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -47,7 +45,7 @@ public class NewScenarioNameTests extends TestBase {
     @Test
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     @Severity(SeverityLevel.NORMAL)
-    public void testPublishEnterNewScenarioName() throws UnsupportedEncodingException {
+    public void testPublishEnterNewScenarioName() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

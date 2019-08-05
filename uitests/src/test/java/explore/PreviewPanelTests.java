@@ -13,8 +13,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class PreviewPanelTests extends TestBase {
 
     private LoginPage loginPage;
@@ -27,7 +25,7 @@ public class PreviewPanelTests extends TestBase {
     @Test
     @Description("Test preview panel data is displayed")
     @Severity(SeverityLevel.NORMAL)
-    public void testLogin() throws UnsupportedEncodingException {
+    public void testLogin() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Preview Panel", new FileResourceUtil().getResourceFile("Casting.prt"))

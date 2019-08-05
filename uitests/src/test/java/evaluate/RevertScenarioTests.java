@@ -18,8 +18,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class RevertScenarioTests extends TestBase {
 
     private LoginPage loginPage;
@@ -32,7 +30,7 @@ public class RevertScenarioTests extends TestBase {
     @Test
     @Description("Test revert saved scenario")
     @Severity(SeverityLevel.NORMAL)
-    public void testRevertSavedScenario() throws UnsupportedEncodingException {
+    public void testRevertSavedScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -52,7 +50,7 @@ public class RevertScenarioTests extends TestBase {
     @Test
     @Description("Test revert unsaved scenario")
     @Severity(SeverityLevel.NORMAL)
-    public void testRevertUnsavedScenario() throws UnsupportedEncodingException {
+    public void testRevertUnsavedScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

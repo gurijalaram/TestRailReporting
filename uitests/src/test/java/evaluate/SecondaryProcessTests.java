@@ -52,7 +52,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process xray")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessXray() throws UnsupportedEncodingException {
+    public void secondaryProcessXray() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -73,7 +73,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Carburize")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessCarburize() throws UnsupportedEncodingException {
+    public void secondaryProcessCarburize() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -94,7 +94,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Atmosphere Oil Harden")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessAtmosphereOilHarden() throws UnsupportedEncodingException {
+    public void secondaryProcessAtmosphereOilHarden() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -115,7 +115,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Standard Anneal")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessStandardAnneal() throws UnsupportedEncodingException {
+    public void secondaryProcessStandardAnneal() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -136,7 +136,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Vacuum Temper")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessVacuumTemper() throws UnsupportedEncodingException {
+    public void secondaryProcessVacuumTemper() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -157,7 +157,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Stress Relief")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessStressRelief() throws UnsupportedEncodingException {
+    public void secondaryProcessStressRelief() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -178,7 +178,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Anodize")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessAnodize() throws UnsupportedEncodingException {
+    public void secondaryProcessAnodize() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -199,7 +199,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Paint")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessCertification() throws UnsupportedEncodingException {
+    public void secondaryProcessCertification() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -220,7 +220,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Paint")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessPaint() throws UnsupportedEncodingException {
+    public void secondaryProcessPaint() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -241,7 +241,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Passivation")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessPassivation() throws UnsupportedEncodingException {
+    public void secondaryProcessPassivation() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

@@ -16,8 +16,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class DeletePublicComparisonTests extends TestBase {
 
     private LoginPage loginPage;
@@ -30,7 +28,7 @@ public class DeletePublicComparisonTests extends TestBase {
     @Test
     @Description("Test deleting a public comparison from the comparison table is not visible")
     @Severity(SeverityLevel.CRITICAL)
-    public void testPublicComparisonDelete() throws UnsupportedEncodingException {
+    public void testPublicComparisonDelete() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

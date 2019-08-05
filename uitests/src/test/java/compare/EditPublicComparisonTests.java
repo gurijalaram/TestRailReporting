@@ -16,8 +16,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class EditPublicComparisonTests extends TestBase {
 
     private LoginPage loginPage;
@@ -30,7 +28,7 @@ public class EditPublicComparisonTests extends TestBase {
     @Test
     @Description("Test publishing a comparison shows the comparison in the comparison table")
     @Severity(SeverityLevel.NORMAL)
-    public void testEditPublicComparisonPublish() throws UnsupportedEncodingException {
+    public void testEditPublicComparisonPublish() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -49,7 +47,7 @@ public class EditPublicComparisonTests extends TestBase {
     @Test
     @Description("Test editing a published comparison shows the comparison view")
     @Severity(SeverityLevel.NORMAL)
-    public void testEditPublicComparison() throws UnsupportedEncodingException {
+    public void testEditPublicComparison() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
