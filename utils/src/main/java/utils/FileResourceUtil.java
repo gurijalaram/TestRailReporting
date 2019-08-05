@@ -11,7 +11,6 @@ public class FileResourceUtil {
 
     private final Logger logger = LoggerFactory.getLogger(FileResourceUtil.class);
 
-
     /**
      * @param fileName the name of the file
      * @return file object
