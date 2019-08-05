@@ -37,7 +37,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("LeakTest", new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
@@ -59,7 +58,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Xray Inspection", new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
@@ -81,7 +79,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Carburize", new FileResourceUtil().getResourceFile("Casting.prt"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
@@ -103,7 +100,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Atmosphere Oil Harden", new FileResourceUtil().getResourceFile("Casting.prt"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
@@ -125,7 +121,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Standard Anneal", new FileResourceUtil().getResourceFile("Casting.prt"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
@@ -147,7 +142,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Vacuum Temper", new FileResourceUtil().getResourceFile("Casting.prt"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
@@ -169,7 +163,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Stress Relief", new FileResourceUtil().getResourceFile("Casting.prt"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ASTM A148 Grade 105-85")
@@ -191,7 +184,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Anodize", new FileResourceUtil().getResourceFile("Casting.prt"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -213,7 +205,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Certification", new FileResourceUtil().getResourceFile("SheetMetal.prt"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -235,7 +226,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Paint", new FileResourceUtil().getResourceFile("SheetMetal.prt"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -257,7 +247,6 @@ public class SecondaryProcessTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("Passivation", new FileResourceUtil().getResourceFile("SheetMetal.prt"))
-            .costScenario(COSTING_SUCCESS)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")

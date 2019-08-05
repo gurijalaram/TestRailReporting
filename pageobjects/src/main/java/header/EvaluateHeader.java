@@ -11,6 +11,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 /**
  * @author kpatel
  */
@@ -24,6 +26,9 @@ public class EvaluateHeader extends GenericHeader {
 
     @FindBy(css = ".bottom .popover-content .gwt-HTML")
     private WebElement costLabelPopover;
+
+    @FindBy(css = ".bottom .popover-content .gwt-HTML")
+    private List<WebElement> costLabelPopoverElement;
 
     @FindBy(css = "li[data-ap-comp='costButton']")
     private WebElement costLabel;
@@ -62,9 +67,9 @@ public class EvaluateHeader extends GenericHeader {
      * @param costText - the cost label text
      * @return true or false
      */
-    public boolean checkCostLabel(String costText) {
+    /*public boolean checkCostLabel(String costText) {
         return costLabelPopover(costText);
-    }
+    }*/
 
     /**
      * Publish the scenario
@@ -90,8 +95,9 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return boolean true/false
      */
-    public boolean costLabelPopover(String costText) {
-        return pageUtils.waitForElementToAppear(costLabelPopover).getText().equalsIgnoreCase(costText);
+    public boolean checkCostLabel(String costText) {
+        pageUtils.checkElementVisibleByBoolean(costLabelPopoverElement);
+        return costLabelPopover.getText().equalsIgnoreCase(costText);
     }
 
     /**
