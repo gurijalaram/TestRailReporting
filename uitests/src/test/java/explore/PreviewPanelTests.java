@@ -10,17 +10,13 @@ import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
-
-import java.util.Scanner;
 
 public class PreviewPanelTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(FileUploadTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public PreviewPanelTests() {
         super();
@@ -32,7 +28,7 @@ public class PreviewPanelTests extends TestBase {
     public void testLogin() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("Preview Panel", filePath, "Casting.prt")
+            .uploadFile("Preview Panel", new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectExploreButton()
             .highlightScenario("Preview Panel", "Casting");
 

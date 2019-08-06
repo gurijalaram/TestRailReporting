@@ -15,16 +15,13 @@ import main.java.enums.WorkspaceEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
-
-import java.util.Scanner;
 
 public class ReCostScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private String filePath = new Scanner(ReCostScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public ReCostScenarioTests() {
         super();
@@ -40,7 +37,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Gear Making", filePath, "Case_001_-_Rockwell_2075-0243G.stp")
+        explorePage.uploadFile("Gear Making", new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Gear Making", "Case_001_-_Rockwell_2075-0243G")
@@ -60,7 +57,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Machining Contouring", filePath, "case_002_00400016-003M10_A.STP")
+        explorePage.uploadFile("Machining Contouring", new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Machining Contouring", "case_002_00400016-003M10_A")
@@ -80,7 +77,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Partially Automated Machining", filePath, "14100640.stp")
+        explorePage.uploadFile("Partially Automated Machining", new FileResourceUtil().getResourceFile("14100640.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Partially Automated Machining", "14100640")
@@ -100,7 +97,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Pocket Recognition", filePath, "03229_0032_002_A.stp")
+        explorePage.uploadFile("Pocket Recognition", new FileResourceUtil().getResourceFile("03229_0032_002_A.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Pocket Recognition", "03229_0032_002_A")
@@ -120,7 +117,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Shared Walls", filePath, "case_066_SpaceX_00128711-001_A.stp")
+        explorePage.uploadFile("Shared Walls", new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Shared Walls", "case_066_SpaceX_00128711-001_A")
@@ -140,7 +137,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Slot Examples", filePath, "case_007_SpaceX_00088481-001_C.stp")
+        explorePage.uploadFile("Slot Examples", new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Slot Examples", "case_007_SpaceX_00088481-001_C")

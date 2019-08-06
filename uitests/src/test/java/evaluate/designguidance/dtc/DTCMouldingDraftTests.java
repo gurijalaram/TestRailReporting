@@ -14,18 +14,14 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
-
-import java.util.Scanner;
 
 public class DTCMouldingDraftTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private DesignGuidancePage designGuidancePage;
-
-    private String filePath = new Scanner(DTCMouldingDraftTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public DTCMouldingDraftTests() {
         super();
@@ -39,7 +35,7 @@ public class DTCMouldingDraftTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioNoDraft", filePath, "Plastic moulded cap noDraft.CATPart")
+        explorePage.uploadFile("ScenarioNoDraft", new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();

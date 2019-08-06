@@ -12,17 +12,13 @@ import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
-
-import java.util.Scanner;
 
 public class PublishNewCostedTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(PublishNewCostedTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public PublishNewCostedTests() {
         super();
@@ -36,7 +32,7 @@ public class PublishNewCostedTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Publish Existing Costed Scenario", filePath, "testpart-4.prt")
+        explorePage.uploadFile("Publish Existing Costed Scenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario();

@@ -15,17 +15,13 @@ import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
-
-import java.util.Scanner;
 
 public class RevertScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(RevertScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public RevertScenarioTests() {
         super();
@@ -39,7 +35,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("RevertSavedScenario", filePath, "testpart-4.prt")
+        explorePage.uploadFile("RevertSavedScenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
@@ -59,7 +55,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("RevertUnsavedScenario", filePath, "testpart-4.prt")
+        explorePage.uploadFile("RevertUnsavedScenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())

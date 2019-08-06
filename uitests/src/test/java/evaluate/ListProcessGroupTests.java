@@ -11,16 +11,13 @@ import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
-
-import java.util.Scanner;
 
 public class ListProcessGroupTests extends TestBase {
 
     private LoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private String filePath = new Scanner(ListProcessGroupTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public ListProcessGroupTests() {
         super();
@@ -32,7 +29,7 @@ public class ListProcessGroupTests extends TestBase {
     public void getProcessGroupList() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("ProcessGroupList", filePath, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+            .uploadFile("ProcessGroupList", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
     }

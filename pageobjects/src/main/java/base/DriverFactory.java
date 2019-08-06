@@ -72,7 +72,7 @@ public class DriverFactory {
                     if (testType.equals(TestType.EXPORT)) {
                         driver = getQADriver(server, browser, proxy, downloadPath, remoteDownloadPath, locale);
                     } else {
-                        driver = getQADriver(server, browser, proxy, null, null, locale);
+                        driver = getQADriver(server.concat("/wd/hub"), browser, proxy, null, null, locale);
                     }
                     break;
                 case EXPORT:
@@ -116,11 +116,11 @@ public class DriverFactory {
                 fp.setPreference("browser.download.manager.showWhenStarting", false);
                 fp.setPreference("browser.download.dir", downloadPath);
                 fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/msword, application/csv, "
-                        + "application/vnd.ms-powerpoint, application/ris, text/csv, image/png, application/pdf, "
-                        + "text/html, text/plain, application/zip, application/x-zip, application/x-zip-compressed, "
-                        + "application/download, application/octet-stream, application/xls, application/vnd.ms-excel, "
-                        + "application/x-xls, application/x-ms-excel, application/msexcel, application/x-msexcel, "
-                        + "application/x-excel");
+                    + "application/vnd.ms-powerpoint, application/ris, text/csv, image/png, application/pdf, "
+                    + "text/html, text/plain, application/zip, application/x-zip, application/x-zip-compressed, "
+                    + "application/download, application/octet-stream, application/xls, application/vnd.ms-excel, "
+                    + "application/x-xls, application/x-ms-excel, application/msexcel, application/x-msexcel, "
+                    + "application/x-excel");
 
                 if (StringUtils.isNotEmpty(locale)) {
                     fp.setPreference("intl.accept_languages", locale);

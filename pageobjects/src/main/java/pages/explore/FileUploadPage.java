@@ -58,14 +58,14 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Uploads a file
+     //* @param fileName - file name
      * @param scenarioName - scenario name
      * @param filePath - file path
-     * @param fileName - file name
      * @return current page object
      */
-    public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
+    public EvaluatePage uploadFile(String scenarioName, File filePath) {
         inputScenarioName(scenarioName)
-            .uploadFileDetails(filePath, fileName);
+            .uploadFileDetails(filePath);
         selectOkButton();
         return new EvaluatePage(driver);
     }
@@ -85,15 +85,11 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     /**
      * Gets details of file for upload
      * @param filePath - the file path
-     * @param fileName - the file name
      * @return current page object
      */
-    private FileUploadPage uploadFileDetails(String filePath, String fileName) {
-        String filePathAndName = filePath + fileName;
-        fileInput.sendKeys(filePathAndName);
-        File file = new File(filePathAndName);
-        String path = file.getAbsolutePath();
-        fileInput.sendKeys(path);
+    private FileUploadPage uploadFileDetails(File filePath) {
+        fileInput.sendKeys(filePath.getAbsolutePath());
+        fileInput.sendKeys(filePath.getAbsolutePath());
         return this;
     }
 

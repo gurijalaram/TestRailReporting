@@ -13,18 +13,13 @@ import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
-import test.java.evaluate.DeletePrivateScenarioTests;
-
-import java.util.Scanner;
 
 public class EditPublicComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(DeletePrivateScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public EditPublicComparisonTests() {
         super();
@@ -38,7 +33,7 @@ public class EditPublicComparisonTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparisonTests", filePath, "casting.prt")
+        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")
@@ -57,7 +52,7 @@ public class EditPublicComparisonTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparisonTests", filePath, "casting.prt")
+        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")

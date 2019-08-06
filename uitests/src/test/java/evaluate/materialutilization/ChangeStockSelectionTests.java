@@ -14,17 +14,15 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.materialutilization.stock.StockPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class ChangeStockSelectionTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(ChangeStockSelectionTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public ChangeStockSelectionTests() {
         super();
@@ -33,12 +31,12 @@ public class ChangeStockSelectionTests extends TestBase {
     @Test
     @Description("Test making changes to the Material Stock, the change is respected and the scenario can be re-cost")
     @Severity(SeverityLevel.NORMAL)
-    public void changeStockSelectionTest() {
+    public void changeStockSelectionTest() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ChangeScenarioStockSelection", filePath, "bracket_basic.prt")
+        explorePage.uploadFile("ChangeScenarioStockSelection", new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openMaterialComposition()

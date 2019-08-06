@@ -11,17 +11,15 @@ import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
 
 public class DeletePublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-
-    private String filePath = new Scanner(DeletePublicScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public DeletePublicScenarioTests() {
         super();
@@ -30,12 +28,12 @@ public class DeletePublicScenarioTests extends TestBase {
     @Test
     @Description("Test a public scenario can be deleted from the component table")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeletePrivateScenario() {
+    public void testDeletePrivateScenario() throws UnsupportedEncodingException {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePublicScenario", filePath, "casting.prt")
+        explorePage.uploadFile("DeletePublicScenario", new FileResourceUtil().getResourceFile("casting.prt"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario("DeletePublicScenario", "casting");

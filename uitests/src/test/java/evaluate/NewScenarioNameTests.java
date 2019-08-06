@@ -13,17 +13,13 @@ import main.java.enums.WorkspaceEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
-import test.java.compare.AddPublicScenarioTests;
-
-import java.util.Scanner;
 
 public class NewScenarioNameTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private String filePath = new Scanner(AddPublicScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
 
     public NewScenarioNameTests() {
         super();
@@ -36,7 +32,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        new ExplorePage(driver).uploadFile("scenario name", filePath, "Lug.SLDPRT");
+        new ExplorePage(driver).uploadFile("scenario name", new FileResourceUtil().getResourceFile("partbody_2.stp"));
 
         explorePage = new ExplorePage(driver);
         explorePage.createNewScenario()
@@ -54,7 +50,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("publish scenario name", filePath, "Lug.SLDPRT")
+        explorePage.uploadFile("publish scenario name", new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .createNewScenario()
