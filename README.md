@@ -21,3 +21,7 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 	* Select the module where the test is as the base directory
 	* Enter the following goals `clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=LOCAL -DthreadCount=3`. To run more tests in parallel, change `-DthreadCount=10` number
 	* To see supported browsers, check `DriverFactory.java`
+
+## Run Sonarqube static code analysis
+1. Make sure you have .sonar directory in your home directory
+2. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard 
