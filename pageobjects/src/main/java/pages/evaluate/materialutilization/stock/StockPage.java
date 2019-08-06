@@ -41,11 +41,11 @@ public class StockPage extends LoadableComponent<StockPage> {
     }
 
     /**
-     * Gets details of the stock table
+     * Gets details of the stock table.
      * @return stock details as string
      */
-    public String getTableDetails() {
-        return stockTable.getText();
+    public Boolean checkTableDetails(String stock) {
+        return pageUtils.checkElementContains(stockTable, stock);
     }
 
     /**

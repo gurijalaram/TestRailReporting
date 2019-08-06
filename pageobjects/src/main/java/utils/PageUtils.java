@@ -3,6 +3,8 @@ package main.java.utils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
@@ -17,10 +19,12 @@ import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,21 +61,16 @@ public class PageUtils {
     public boolean isAlertPresent(String alertText) {
         try {
             Alert alert = driver.switchTo().alert();
-            if (alert.getText().equalsIgnoreCase(alertText)) {
-                return true;
-            } else {
-                return false;
-            }
+            return alert.getText().equalsIgnoreCase(alertText);
         } catch (NoAlertPresentException e) {
             return false;
         }
     }
 
     /**
-     * 
      * Check if the element is present in the DOM or not. Important: this is not a wait method, it
      * only shows the current status of the element.
-     * 
+     *
      * @param by By object
      * @return boolean whether element is present or not
      */
@@ -97,7 +96,7 @@ public class PageUtils {
     /**
      * Check if the element is displayed or not. Important: this is not a wait method, it only shows
      * the current status of the element.
-     * 
+     *
      * @param by - By object
      * @return returns whether element is visible or not
      */
@@ -112,7 +111,7 @@ public class PageUtils {
     /**
      * Check if the element is displayed or not. Important: this is not a wait method, it only shows
      * the current status of the element.
-     * 
+     *
      * @param element - WebElement
      * @return - returns whether element is displayed or not
      */
@@ -127,9 +126,9 @@ public class PageUtils {
     /**
      * Check if the sub element is displayed or not. Important: this is not a wait method, it only
      * shows the current status of the element.
-     * 
+     *
      * @param parent - parent element
-     * @param by - by
+     * @param by     - by
      * @return boolean whether sub-eleent id displayed or not
      */
     public boolean isSubElementDisplayed(WebElement parent, By by) {
@@ -176,6 +175,7 @@ public class PageUtils {
 
     /**
      * Sets the value attribute to empty string
+     *
      * @param targetElement - web element
      */
     public void clearInput(WebElement targetElement) {
@@ -188,8 +188,8 @@ public class PageUtils {
 
     /**
      * @param scrollDown - true scrolls down and the element is visible on top of the page - false
-     * scroll to the top of the page (try to scroll as high that the given element is in the bottom
-     * of the screen)
+     *                   scroll to the top of the page (try to scroll as high that the given element is in the bottom
+     *                   of the screen)
      */
     public WebElement scrollWithJavaScript(WebElement element, boolean scrollDown) {
         steps_logger.debug("Scroll down");
@@ -201,7 +201,7 @@ public class PageUtils {
     /**
      * Internal wait implementation for the function waitForElementToStop() It waits for the
      * elements to stop moving also checking if it is displayed and is it on top.
-     * 
+     *
      * @param locator
      * @param onTop
      * @return
@@ -247,18 +247,18 @@ public class PageUtils {
 
     /**
      * Helper function which checks if the element is on Top
-     * 
+     *
      * @param element
      * @return
      */
     private boolean isOnTop(WebElement element) {
 
-        return (boolean)((JavascriptExecutor)driver).executeScript(
+        return (boolean) ((JavascriptExecutor) driver).executeScript(
             "var elm = arguments[0];" +
                 "var doc = elm.ownerDocument || document;" +
                 "var rect = elm.getBoundingClientRect();" +
                 "return elm === doc.elementFromPoint(rect.left + (rect.width / 2), rect.top + (rect.height / 2));",
-                element);
+            element);
     }
 
     /**
@@ -399,9 +399,7 @@ public class PageUtils {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
-            } catch (TimeoutException e) {
-                count = count + 1;
-            } catch (NoSuchElementException e) {
+            } catch (TimeoutException | NoSuchElementException e) {
                 count = count + 1;
             }
         }
@@ -409,25 +407,164 @@ public class PageUtils {
     }
 
     /**
-     * Finds element in a table.  If the element is not visible then the method will scroll to the element.
+     * Finds element in a table by scrolling.
+     *
      * @param scenario - the locator for the scenario
      * @param scroller - the scroller to scroll the element into view
      * @return - the element as a webelement
      */
     public WebElement scrollToElement(By scenario, WebElement scroller) {
         long startTime = System.currentTimeMillis() / 1000;
+        int count = 0;
 
-        if (scroller.isDisplayed()) {
-            do {
-                scroller.sendKeys(Keys.DOWN);
-            } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+        while (count < 12) {
+            try {
+                if (scroller.isDisplayed()) {
+                    do {
+                        scroller.sendKeys(Keys.DOWN);
+                    } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
 
-            Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
-            processCoordinates.inViewPort();
+                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+                    processCoordinates.inViewPort();
 
-            return driver.findElement(scenario);
-        } else {
-            return driver.findElement(scenario);
+                    return driver.findElement(scenario);
+                } else {
+                    return driver.findElement(scenario);
+                }
+            } catch (ElementNotInteractableException e) {
+                logger.debug("Trying to recover from an element not interactable exception");
+                count = count + 1;
+            } catch (NoSuchElementException e) {
+                logger.debug("Trying to recover from no such element exception");
+                count = count + 1;
+            } catch (StaleElementReferenceException e) {
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            }
         }
+        return driver.findElement(scenario);
+    }
+
+    /**
+     * Finds elements in a table by scrolling.
+     *
+     * @param scenario - the locator for the scenario
+     * @param scroller - the scroller to scroll the element into view
+     * @return - the element as a webelement
+     */
+    public List<WebElement> scrollToElements(By scenario, WebElement scroller) {
+        long startTime = System.currentTimeMillis() / 1000;
+        int count = 0;
+
+        while (count < 12) {
+            try {
+                if (scroller.isDisplayed()) {
+                    do {
+                        scroller.sendKeys(Keys.DOWN);
+                    } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+
+                    return driver.findElements(scenario);
+                } else {
+                    return driver.findElements(scenario);
+                }
+            } catch (ElementNotInteractableException e) {
+                logger.debug("Trying to recover from an element not interactable exception");
+                count = count + 1;
+            } catch (StaleElementReferenceException e) {
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            }
+        }
+        return driver.findElements(scenario);
+    }
+
+    /**
+     * Checks the element's size on the page is less than 1 and returns true/false
+     *
+     * @param locator - the element as list
+     * @return true/false
+     */
+    public <T> Boolean checkElementsNotVisibleByBoolean(List<T> locator) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 6);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() < 1);
+    }
+
+    /**
+     * Selects the correct option in the dropdown.  Conditional statement is included because the system
+     * tends to revert to previous selection.
+     *
+     * @param locator        - the locator of the element
+     * @param dropdownOption - the dropdown option
+     */
+    public void selectDropdownOption(WebElement locator, String dropdownOption) {
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+            .ignoring(StaleElementReferenceException.class)
+            .until((WebDriver driver) -> {
+                new Select(locator).selectByVisibleText(dropdownOption);
+                if (!new Select(locator).getFirstSelectedOption().equals(dropdownOption)) {
+                    new Select(locator).selectByVisibleText(dropdownOption);
+                }
+                return true;
+            });
+    }
+
+    /**
+     * Waits for the element to become enabled
+     *
+     * @param locator - the locator of the element
+     */
+    public void waitForElementEnabled(WebElement locator) {
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+            .ignoring(StaleElementReferenceException.class)
+            .until((WebDriver driver) -> {
+                locator.isEnabled();
+                return true;
+            });
+    }
+
+    /**
+     * Checks for string to be present in element text and returns true/false
+     * @param locator
+     * @param text
+     * @return
+     */
+    public Boolean checkElementContains(WebElement locator, String text) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+    }
+
+    /**
+     * Ignores exceptions and waits for the element to be clickable
+     * @param locator - the locator of the element
+     */
+    public void waitForElementAndClick(WebElement locator) {
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class, StaleElementReferenceException.class))
+            .until((WebDriver webDriver) -> {
+                locator.click();
+                return true;
+            });
+    }
+
+    /**
+     * Waits for the element and check attribute is empty
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public Boolean checkElementAttribute(WebElement locator, String attribute) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
+    }
+
+    /**
+     * Checks the element's size on the page is greater than 0 and returns true/false
+     *
+     * @param locator - the element as list
+     * @return true/false
+     */
+    public <T> Boolean checkElementVisibleByBoolean(List<T> locator) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
     }
 }

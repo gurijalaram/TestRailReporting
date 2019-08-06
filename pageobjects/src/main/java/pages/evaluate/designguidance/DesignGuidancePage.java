@@ -11,12 +11,19 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     private final Logger logger = LoggerFactory.getLogger(DesignGuidancePage.class);
 
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;
+
+    @FindBy(css = "a[href='#failuresAndWarningsTab']")
+    private WebElement failuresTab;
 
     @FindBy(css = "button[data-ap-comp='expandPanelButton']")
     private WebElement chevronButton;
@@ -39,6 +46,9 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     @FindBy(css = "a[href='#geometryTab")
     private WebElement geometryTab;
 
+    @FindBy(css = ".panel .glyphicon-remove")
+    private WebElement closePanelButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -57,8 +67,8 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToBeClickable(failuresTab);
         pageUtils.waitForElementToAppear(panelDetails);
-        pageUtils.waitForElementToAppear(closeButton);
     }
 
     /**
@@ -66,7 +76,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public GuidancePage openGuidanceTab() {
-        guidanceTab.click();
+        pageUtils.waitForElementToBeClickable(guidanceTab).click();
         return new GuidancePage(driver);
     }
 
@@ -95,5 +105,14 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     public GeometryPage openGeometryTab() {
         geometryTab.click();
         return new GeometryPage(driver);
+    }
+
+    /**
+     * Closes the design guidance
+     * @return current page object
+     */
+    public DesignGuidancePage closeDesignGuidance() {
+        pageUtils.waitForElementAndClick(closePanelButton);
+        return this;
     }
 }

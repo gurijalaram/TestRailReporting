@@ -10,6 +10,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     private final Logger logger = LoggerFactory.getLogger(TolerancePage.class);
@@ -65,7 +69,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @return the tolerance as webelement
      */
     private WebElement selectToleranceType(String toleranceType) {
-        By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]");
+        By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr");
         return pageUtils.scrollToElement(tolerance,toleranceScroller);
     }
 
@@ -75,7 +79,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @return the gcd as webelement
      */
     private WebElement selectGCD(String gcdType) {
-        By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']");
+        By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']/ancestor::tr");
         return pageUtils.scrollToElement(gcd, detailsScroller);
     }
 

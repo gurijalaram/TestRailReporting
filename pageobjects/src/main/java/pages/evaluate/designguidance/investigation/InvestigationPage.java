@@ -7,9 +7,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+/**
+ * @author cfrith
+ */
 
 public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
@@ -26,6 +29,9 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     @FindBy(css = "div[data-ap-comp='dtcTableExtArea'] div.v-grid-scroller-vertical")
     private WebElement threadScroller;
+
+    @FindBy(css = "div[data-ap-comp='dtcInvestigationTableExt'] .v-grid-header")
+    private WebElement threadHeader;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -51,7 +57,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     public ThreadingPage editThread(String gcdType, String gcd) {
         selectGCDType(gcdType).click();
         selectGCD(gcd).click();
-        edit();
+        selectEditButton();
         return new ThreadingPage(driver);
     }
 
@@ -82,7 +88,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return the gcd as webelement
      */
     private WebElement selectGCD(String gcd) {
-        By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]");
+        By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]/ancestor::td[@class]");
         return pageUtils.scrollToElement(gcdElement, threadScroller);
     }
 
@@ -92,16 +98,32 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return current page object
      */
     public InvestigationPage selectThreadableGCD(String option)  {
-        new Select(threadableDropdown).selectByVisibleText(option);
+        pageUtils.selectDropdownOption(threadableDropdown,option);
         return this;
     }
 
     /**
-     * Selects the edit button
+     * Selects the selectEditButton button
      * @return new page object
      */
-    private ThreadingPage edit() {
-        editButton.click();
+    public ThreadingPage selectEditButton() {
+        pageUtils.waitForElementAndClick(editButton);
         return new ThreadingPage(driver);
+    }
+
+    /**
+     * Gets the button as a webelement
+     * @return the button as webelement
+     */
+    public WebElement getEditButton() {
+        return editButton;
+    }
+
+    /**
+     * Gets the thread header information
+     * @return details as web
+     */
+    public String getThreadHeader() {
+        return threadHeader.getText();
     }
 }

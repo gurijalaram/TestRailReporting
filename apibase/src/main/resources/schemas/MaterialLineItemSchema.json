@@ -1,0 +1,229 @@
+{
+  "definitions": {},
+  "$schema": "schema#",
+  "$id": "root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "title": "The Response Schema",
+      "required": [
+        "isFirstPage",
+        "isLastPage",
+        "pageNumber",
+        "pageSize",
+        "pageItemCount",
+        "totalItemCount",
+        "totalPageCount",
+        "hasNextPage",
+        "hasPreviousPage",
+        "items"
+      ],
+      "properties": {
+        "isFirstPage": {
+          "$id": "#/properties/response/properties/isFirstPage",
+          "type": "boolean",
+          "title": "The Isfirstpage Schema",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "isLastPage": {
+          "$id": "#/properties/response/properties/isLastPage",
+          "type": "boolean",
+          "title": "The Islastpage Schema",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "pageNumber": {
+          "$id": "#/properties/response/properties/pageNumber",
+          "type": "integer",
+          "title": "The Pagenumber Schema",
+          "default": 0,
+          "examples": [
+            1
+          ]
+        },
+        "pageSize": {
+          "$id": "#/properties/response/properties/pageSize",
+          "type": "integer",
+          "title": "The Pagesize Schema",
+          "default": 0,
+          "examples": [
+            10
+          ]
+        },
+        "pageItemCount": {
+          "$id": "#/properties/response/properties/pageItemCount",
+          "type": "integer",
+          "title": "The Pageitemcount Schema",
+          "default": 0,
+          "examples": [
+            8
+          ]
+        },
+        "totalItemCount": {
+          "$id": "#/properties/response/properties/totalItemCount",
+          "type": "integer",
+          "title": "The Totalitemcount Schema",
+          "default": 0,
+          "examples": [
+            8
+          ]
+        },
+        "totalPageCount": {
+          "$id": "#/properties/response/properties/totalPageCount",
+          "type": "integer",
+          "title": "The Totalpagecount Schema",
+          "default": 0,
+          "examples": [
+            1
+          ]
+        },
+        "hasNextPage": {
+          "$id": "#/properties/response/properties/hasNextPage",
+          "type": "boolean",
+          "title": "The Hasnextpage Schema",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "hasPreviousPage": {
+          "$id": "#/properties/response/properties/hasPreviousPage",
+          "type": "boolean",
+          "title": "The Haspreviouspage Schema",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "items": {
+          "$id": "#/properties/response/properties/items",
+          "type": "array",
+          "title": "The Items Schema",
+          "items": {
+            "$id": "#/properties/response/properties/items/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "identity",
+              "createdAt",
+              "createdBy",
+              "costingStatus",
+              "level",
+              "customerPartNumber",
+              "quantity",
+              "manufacturerPartNumber",
+              "manufacturer",
+              "parts"
+            ],
+            "properties": {
+              "identity": {
+                "$id": "#/properties/response/properties/items/items/properties/identity",
+                "type": "string",
+                "title": "The Identity Schema",
+                "default": "",
+                "examples": [
+                  "-797MGN059BF"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "createdAt": {
+                "$id": "#/properties/response/properties/items/items/properties/createdAt",
+                "type": "string",
+                "title": "The Createdat Schema",
+                "default": "",
+                "examples": [
+                  "2019-07-15T13:09:10.000+0000"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "createdBy": {
+                "$id": "#/properties/response/properties/items/items/properties/createdBy",
+                "type": "string",
+                "title": "The Createdby Schema",
+                "default": "",
+                "examples": [
+                  "HIIE6GI5H764"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "costingStatus": {
+                "$id": "#/properties/response/properties/items/items/properties/costingStatus",
+                "type": "string",
+                "title": "The Costingstatus Schema",
+                "default": "",
+                "examples": [
+                  "Cannot Cost"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "level": {
+                "$id": "#/properties/response/properties/items/items/properties/level",
+                "type": "integer",
+                "title": "The Level Schema",
+                "default": 0,
+                "examples": [
+                  1
+                ]
+              },
+              "customerPartNumber": {
+                "$id": "#/properties/response/properties/items/items/properties/customerPartNumber",
+                "type": "string",
+                "title": "The Customerpartnumber Schema",
+                "default": "",
+                "examples": [
+                  "Test"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "quantity": {
+                "$id": "#/properties/response/properties/items/items/properties/quantity",
+                "type": "integer",
+                "title": "The Quantity Schema",
+                "default": 0,
+                "examples": [
+                  1
+                ]
+              },
+              "manufacturerPartNumber": {
+                "$id": "#/properties/response/properties/items/items/properties/manufacturerPartNumber",
+                "type": "string",
+                "title": "The Manufacturerpartnumber Schema",
+                "default": "",
+                "examples": [
+                  ""
+                ],
+                "pattern": "^(.*)$"
+              },
+              "manufacturer": {
+                "$id": "#/properties/response/properties/items/items/properties/manufacturer",
+                "type": "string",
+                "title": "The Manufacturer Schema",
+                "default": "",
+                "examples": [
+                  ""
+                ],
+                "pattern": "^(.*)$"
+              },
+              "parts": {
+                "$id": "#/properties/response/properties/items/items/properties/parts",
+                "type": "array",
+                "title": "The Parts Schema"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

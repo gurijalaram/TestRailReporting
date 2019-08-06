@@ -1,5 +1,7 @@
 package main.java.pages.explore;
 
+import main.java.header.ExploreHeader;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
@@ -7,40 +9,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class ExplorePage extends LoadableComponent<ExplorePage> {
+/**
+ * @author cfrith
+ */
+
+public class ExplorePage extends ExploreHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
-
-    @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
-    private WebElement newFileDropdown;
-
-    @FindBy(css = "button[data-ap-comp='newComponentButton']")
-    private WebElement componentButton;
-
-    @FindBy(css = "button[data-ap-comp='saveAsButton']")
-    private WebElement scenarioButton;
-
-    @FindBy(css = "button[data-ap-comp='newComparisonButton']")
-    private WebElement comparisonButton;
-
-    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
-    private WebElement publishButton;
-
-    @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
-    private WebElement revertButton;
-
-    @FindBy(css = "span.delete-button")
-    private WebElement deleteButton;
-
-    @FindBy(css = "span.glyphicons-settings")
-    private WebElement actionsDropdown;
 
     @FindBy(css = "select[data-ap-field='filter'] option")
     private List<WebElement> workspaceDropdownList;
@@ -60,13 +42,23 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     @FindBy(css = "button[data-ap-comp='togglePreviewButton']")
     private WebElement previewButton;
 
+    @FindBy(css = "[data-ap-comp='closePreviewButton'] .glyphicon-remove")
+    private WebElement closePreviewButton;
+
+    @FindBy(css = "[data-ap-comp='previewPanel']")
+    private WebElement previewPanelData;
+
     @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
     private WebElement componentScroller;
+
+    @FindBy(css = ".v-grid-header")
+    private WebElement columnHeaders;
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
     public ExplorePage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -80,79 +72,17 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(deleteButton);
         pageUtils.waitForElementsToAppear(workspaceDropdownList);
     }
 
     /**
-     * Checks delete button is displayed
-     * @return visibility of button
-     */
-    public boolean isDeleteButtonPresent() {
-        return deleteButton.isDisplayed();
-    }
-
-    /**
-     * Collective method to upload a file
-     * @param scenarioName - the name of the scenario
-     * @param filePath - location of the file
-     * @param fileName - name of the file
-     * @return current page object
-     */
-    public ExplorePage uploadFile(String scenarioName, String filePath, String fileName) {
-        newFileDropdown.click();
-        componentButton.click();
-        new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
-        return this;
-    }
-
-    /**
-     * Filter criteria for private selection
-     * @param type - type of selection whether private or public
-     * @param attribute - the attribute
-     * @param condition - specified condition
-     * @param value - the value
-     * @return current page object
-     */
-    public ExplorePage filterPrivateCriteria(String type, String attribute, String condition, String value) {
-        filterButton.click();
-        new FilterCriteriaPage(driver).clearAllCheckBoxes()
-            .setPrivateWorkSpace()
-            .setScenarioType(type)
-            .selectAttribute(attribute)
-            .selectCondition(condition)
-            .setTypeOfValue(value)
-            .apply();
-        return new ExplorePage(driver);
-    }
-
-    /**
-     * Filter criteria for public selection
-     * @param type - type of selection whether private or public
-     * @param attribute - the attribute
-     * @param condition - specified condition
-     * @param value - the value
-     * @return current page object
-     */
-    public ExplorePage filterPublicCriteria(String type, String attribute, String condition, String value) {
-        filterButton.click();
-        new FilterCriteriaPage(driver).clearAllCheckBoxes()
-            .setPublicWorkspace()
-            .setScenarioType(type)
-            .selectAttribute(attribute)
-            .selectCondition(condition)
-            .setTypeOfValue(value)
-            .apply();
-        return new ExplorePage(driver);
-    }
-
-    /**
      * Selects the workspace from the dropdown
+     *
      * @param workspace - workspace dropdown
      * @return current page object
      */
     public ExplorePage selectWorkSpace(String workspace) {
-        new Select(workspaceDropdown).selectByVisibleText(workspace);
+        pageUtils.selectDropdownOption(workspaceDropdown, workspace);
         return this;
     }
 
@@ -162,9 +92,61 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @param scenarioName - scenario name
      * @return the part as webelement
      */
-    public WebElement findScenario(String partName, String scenarioName) {
-        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName + "," + scenarioName + "']");
+    public WebElement findScenario(String scenarioName, String partName) {
+        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
         return pageUtils.scrollToElement(scenario, componentScroller);
+    }
+
+    /**
+     * Highlights the scenario in the table
+     * @param scenarioName - scenario name
+     * @param partName - name of the part
+     */
+    public void highlightScenario(String scenarioName, String partName) {
+        By scenario = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
+        pageUtils.scrollToElement(scenario, componentScroller).click();
+    }
+
+    /**
+     * Gets the number of elements present on the page
+     * @param scenarioName - scenario name
+     * @param partName - part name
+     * @return size of the element as int
+     */
+    public int getListOfScenarios(String scenarioName, String partName) {
+        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
+        return pageUtils.scrollToElements(scenario, componentScroller).size();
+    }
+
+    /**
+     * Find specific scenario in the table
+     * @param comparisonName - name of the scenario
+     * @return the scenario as webelement
+     */
+    public WebElement findComparison(String comparisonName) {
+        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        return pageUtils.scrollToElement(comparison, componentScroller);
+    }
+
+    /**
+     * Highlights the comparison in the table
+     * @param comparisonName - the comparison name
+     * @return the scenarion as webelement
+     */
+    public ExplorePage highlightComparison(String comparisonName) {
+        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
+        pageUtils.scrollToElement(comparison, componentScroller);
+        return this;
+    }
+
+    /**
+     * Gets the number of elements present on the page
+     * @param comparisonName - scenario name
+     * @return size of the element as int
+     */
+    public int getListOfComparisons(String comparisonName) {
+        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        return pageUtils.scrollToElements(comparison, componentScroller).size();
     }
 
     /**
@@ -173,8 +155,64 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      * @param scenarioName - scenario name
      * @return a new page object
      */
-    public EvaluatePage openScenario(String partName, String scenarioName) {
-        findScenario(partName, scenarioName).click();
+    public EvaluatePage openScenario(String scenarioName, String partName) {
+        findScenario(scenarioName, partName).click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Opens the comparison
+     * @param comparisonName - the comparison name
+     * @return new page object
+     */
+    public ComparePage openComparison(String comparisonName) {
+        findComparison(comparisonName).click();
+        return new ComparePage(driver);
+    }
+
+    /**
+     * Selects filter criteria button
+     * @return new page object
+     */
+    public FilterCriteriaPage filterCriteria() {
+        pageUtils.waitForElementToAppear(filterButton).click();
+        return new FilterCriteriaPage(driver);
+    }
+
+    /**
+     * Selects the table column button
+     * @return new page object
+     */
+    public TableColumnsPage openColumnsTable() {
+        pageUtils.waitForElementToAppear(columnsButton).click();
+        return new TableColumnsPage(driver);
+    }
+
+    /**
+     * Opens the preview panel
+     * @return new page object
+     */
+    public ExplorePage openPreviewPanel() {
+        if (pageUtils.isElementDisplayed(closePreviewButton)) {
+            closePreviewButton.click();
+        }
+        pageUtils.waitForElementToAppear(previewButton).click();
+        return this;
+    }
+
+    /**
+     * Gets the data in the preview panel
+     * @return current page object
+     */
+    public boolean viewPreviewPanelData() {
+        return previewPanelData.isDisplayed();
+    }
+
+    /**
+     * Gets all column headers in the table
+     * @return column headers as string
+     */
+    public List<String> getColumnHeaderNames() {
+        return Arrays.stream(columnHeaders.getText().split("\n")).collect(Collectors.toList());
     }
 }

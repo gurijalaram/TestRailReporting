@@ -2,11 +2,11 @@ package main.java.enums;
 
 public enum CostingLabelEnum {
 
-    COSTING_FAILURE("Costing Failure"),
-    COSTING_INCOMPLETE("Costing Incomplete"),
-    COSTING_UP_TO_DATE("Costing up to Date"),
+    COSTING_FAILURE("Cost Failure"),
+    COSTING_INCOMPLETE("Cost Incomplete"),
+    COSTING_UP_TO_DATE("Cost up to\n" + "Date"),
     READY_TO_COST("Ready to Cost"),
-    UNCOSTED_CHANGES("Uncosted Changes");
+    UNCOSTED_CHANGES("Uncosted\n" + "Changes");
 
     private final String costingLabel;
 

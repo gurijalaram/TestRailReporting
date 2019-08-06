@@ -7,7 +7,9 @@ package main.java.enums;
 
 public enum UsersEnum {
 
-    CID_TE_USER("cfrith@apriori.com", "TestEvent2018");
+    CIE_TE_USER("cfrith@apriori.com", "TestEvent2018"),
+    CID_TE_USER("cfrith@apriori.com", "TestEvent2018"),
+    ADMIN_DEFAULT_USER("admin@apriori.com", "admin");
 
     private final String username;
     private final String password;

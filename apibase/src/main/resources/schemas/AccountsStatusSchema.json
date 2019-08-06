@@ -1,0 +1,74 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "title": "The Response Schema",
+      "required": [
+        "identity",
+        "licenseStart",
+        "licenseEnd",
+        "totalRequests",
+        "requestsUsed"
+      ],
+      "properties": {
+        "identity": {
+          "$id": "#/properties/response/properties/identity",
+          "type": "string",
+          "title": "The Identity Schema",
+          "default": "",
+          "examples": [
+            "4M5CE27LFIC0"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "licenseStart": {
+          "$id": "#/properties/response/properties/licenseStart",
+          "type": "string",
+          "title": "The Licensestart Schema",
+          "default": "",
+          "examples": [
+            "2018-09-18T00:00:00.000+0000"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "licenseEnd": {
+          "$id": "#/properties/response/properties/licenseEnd",
+          "type": "string",
+          "title": "The Licenseend Schema",
+          "default": "",
+          "examples": [
+            "2019-12-31T00:00:00.000+0000"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "totalRequests": {
+          "$id": "#/properties/response/properties/totalRequests",
+          "type": "integer",
+          "title": "The Totalrequests Schema",
+          "default": 0,
+          "examples": [
+            10000
+          ]
+        },
+        "requestsUsed": {
+          "$id": "#/properties/response/properties/requestsUsed",
+          "type": "integer",
+          "title": "The Requestsused Schema",
+          "default": 0,
+          "examples": [
+            598
+          ]
+        }
+      }
+    }
+  }
+}

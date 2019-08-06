@@ -10,6 +10,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage> {
 
     private final Logger logger = LoggerFactory.getLogger(SecondaryProcessPage.class);
@@ -35,10 +39,10 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     @FindBy(css = "select[data-ap-field='platingMethod.modeValues.platingMethod.storedListValue']")
     private WebElement platingMethodSelect;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-default")
+    @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
 
     private WebDriver driver;
@@ -69,8 +73,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      * @return current page object
      */
     public SecondaryProcessPage selectSecondaryProcess(String processType, String processName) {
-        selectProcessType(processType)
-            .selectProcessName(processName).click();
+        selectProcessType(processType);
+        selectProcessName(processName).click();
         return this;
     }
 
@@ -83,8 +87,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
         String[] processTypes = processType.split(",");
 
         for (String process : processTypes) {
-            By pro = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//span[@class='fa fa-caret-right']");
-            pageUtils.scrollToElement(pro, processScroller).click();
+            By secondaryProcess = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//span[@class='fa fa-caret-right']");
+            pageUtils.scrollToElement(secondaryProcess, processScroller).click();
         }
         return this;
     }
@@ -105,7 +109,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      *
      * @return new page object
      */
-    protected EvaluatePage apply() {
+    public EvaluatePage apply() {
         applyButton.click();
         return new EvaluatePage(driver);
     }
@@ -115,7 +119,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      *
      * @return new page object
      */
-    protected EvaluatePage cancel() {
+    public EvaluatePage cancel() {
         cancelButton.click();
         return new EvaluatePage(driver);
     }

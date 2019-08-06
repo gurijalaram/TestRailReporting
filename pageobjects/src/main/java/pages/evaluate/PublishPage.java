@@ -1,5 +1,6 @@
 package main.java.pages.evaluate;
 
+import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -11,11 +12,15 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class PublishPage extends LoadableComponent<PublishPage> {
 
     private final Logger logger = LoggerFactory.getLogger(PublishPage.class);
 
-    @FindBy(css = "h3.modal-title")
+    @FindBy(css = "[data-ap-scope='publishDialog'] h3.modal-title")
     private WebElement modalDialog;
 
     @FindBy(css = "select[data-ap-field='status']")
@@ -30,7 +35,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "input[data-ap-field='assignee']")
     private WebElement lockCheckBox;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(css = "button.gwt-SubmitButton")
     private WebElement publishButton;
 
     @FindBy(css = "button.gwt-Button.btn.btn-default")
@@ -63,7 +68,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @param status - dropdown status
      * @return current page object
      */
-    protected PublishPage selectStatus(String status) {
+    public PublishPage selectStatus(String status) {
         new Select(statusDropdown).selectByVisibleText(status);
         return this;
     }
@@ -73,7 +78,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @param costMaturity - cost maturity dropdown
      * @return current page object
      */
-    protected PublishPage selectCostMaturity(String costMaturity) {
+    public PublishPage selectCostMaturity(String costMaturity) {
         new Select(costMaturityDropdown).selectByVisibleText(costMaturity);
         return this;
     }
@@ -83,7 +88,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @param assignee - assignee dropdown
      * @return current page object
      */
-    protected PublishPage selectAssignee(String assignee) {
+    public PublishPage selectAssignee(String assignee) {
         new Select(assigneeDropdown).selectByVisibleText(assignee);
         return this;
     }
@@ -92,16 +97,16 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * Selects the publish button
      * @return new page object
      */
-    protected ExplorePage selectPublishButton() {
+    public ExplorePage selectPublishButton() {
         publishButton.click();
-        return new ExplorePage(driver);
+        return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
     }
 
     /**
      * Selects the cancel button
      * @return new page object
      */
-    protected ExplorePage selectCancelButton() {
+    public ExplorePage selectCancelButton() {
         cancelButton.click();
         return new ExplorePage(driver);
     }

@@ -1,5 +1,7 @@
 package main.java.enums;
 
+import java.util.stream.Stream;
+
 public enum VPEEnum {
 
     APRIORI_BRAZIL("aPriori Brazil"),
@@ -10,7 +12,9 @@ public enum VPEEnum {
     APRIORI_MEXICO("aPriori Mexico"),
     APRIORI_UNITED_KINGDOM("aPriori United Kingdom"),
     APRIORI_USA("aPriori USA"),
-    APRIORI_WESTERN_EUROPE("aPriori Western Europe");
+    APRIORI_WESTERN_EUROPE("aPriori Western Europe"),
+    FLEX_GUADALAJARA("Flex - Guadalajara"),
+    FLEX_COST_MODEL_TEMPLATE("Flex Cost Model Template");
 
     private final String vpe;
 
@@ -20,5 +24,9 @@ public enum VPEEnum {
 
     public String getVpe() {
         return this.vpe;
+    }
+
+    public static String[] getNames() {
+        return Stream.of(VPEEnum.values()).map(VPEEnum::getVpe).toArray(String[]::new);
     }
 }
