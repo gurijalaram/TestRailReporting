@@ -10,7 +10,6 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -21,7 +20,7 @@ public class DTCMouldingPartThicknessTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private DesignGuidancePage designGuidancePage;
+    private GuidancePage guidancePage;
 
     public DTCMouldingPartThicknessTests() {
         super();
@@ -35,16 +34,14 @@ public class DTCMouldingPartThicknessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioMinThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
+        guidancePage = explorePage.uploadFile("ScenarioMinThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
 
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issues", "Minimum Wall Thickness", "Component:1");
-
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
     }
 
     @Test
@@ -55,15 +52,13 @@ public class DTCMouldingPartThicknessTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioMaxThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thickPart.SLDPRT"))
+        guidancePage = explorePage.uploadFile("ScenarioMaxThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thickPart.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
 
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issues", "Maximum Wall Thickness", "Component:1");
-
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
     }
 }
