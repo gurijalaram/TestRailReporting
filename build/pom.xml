@@ -669,7 +669,7 @@
 
 	<build>
 		<directory>target</directory>
-		<sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -696,6 +696,12 @@
 					<groupId>org.sonarsource.scanner.maven</groupId>
 					<artifactId>sonar-maven-plugin</artifactId>
 					<version>3.6.0.1398</version>
+					<configuration>
+						<properties>
+							<sonar.sources>src/main</sonar.sources>
+							<sonar.tests>src/test</sonar.tests>
+						</properties>
+					</configuration>
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
