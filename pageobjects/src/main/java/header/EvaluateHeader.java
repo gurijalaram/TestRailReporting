@@ -75,7 +75,7 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return webelement
      */
-    public WebElement getCostLabel() {
-        return pageUtils.waitForElementToAppear(costLabel);
+    public String getCostLabel() {
+        return pageUtils.waitForElementToAppear(costLabel).getText();
     }
 }
