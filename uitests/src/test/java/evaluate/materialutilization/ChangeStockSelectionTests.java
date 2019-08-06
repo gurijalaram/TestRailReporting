@@ -17,8 +17,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class ChangeStockSelectionTests extends TestBase {
 
     private LoginPage loginPage;
@@ -31,7 +29,7 @@ public class ChangeStockSelectionTests extends TestBase {
     @Test
     @Description("Test making changes to the Material Stock, the change is respected and the scenario can be re-cost")
     @Severity(SeverityLevel.NORMAL)
-    public void changeStockSelectionTest() throws UnsupportedEncodingException {
+    public void changeStockSelectionTest() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
