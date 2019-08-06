@@ -89,7 +89,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      */
     public ThreadingPage removeThreadLength() {
         pageUtils.waitForElementToAppear(lengthInput).click();
-        pageUtils.clearInput(lengthInput);
+        lengthInput.clear();
         return this;
     }
 
