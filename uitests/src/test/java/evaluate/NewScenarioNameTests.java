@@ -20,6 +20,7 @@ public class NewScenarioNameTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private EvaluatePage evaluatePage;
 
     public NewScenarioNameTests() {
         super();
@@ -35,11 +36,11 @@ public class NewScenarioNameTests extends TestBase {
         new ExplorePage(driver).uploadFile("scenario name", new FileResourceUtil().getResourceFile("partbody_2.stp"));
 
         explorePage = new ExplorePage(driver);
-        explorePage.createNewScenario()
+        evaluatePage = explorePage.createNewScenario()
             .enterScenarioName("new scenario name")
             .save();
 
-        assertThat(new EvaluatePage(driver).getCurrentScenarioName(), is(equalTo("new scenario name")));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo("new scenario name")));
     }
 
     @Test
@@ -50,13 +51,13 @@ public class NewScenarioNameTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("publish scenario name", new FileResourceUtil().getResourceFile("partbody_2.stp"))
+        evaluatePage = explorePage.uploadFile("publish scenario name", new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .createNewScenario()
             .enterScenarioName("publish new scenario name")
             .save();
 
-        assertThat(new EvaluatePage(driver).getCurrentScenarioName(), is(equalTo("publish new scenario name")));
+        assertThat(evaluatePage = new EvaluatePage(driver).getCurrentScenarioName(), is(equalTo("publish new scenario name")));
     }
 }
