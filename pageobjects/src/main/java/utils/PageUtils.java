@@ -270,7 +270,7 @@ public class PageUtils {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e1) {
-            logger.info("InterruptedException");
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -501,9 +501,6 @@ public class PageUtils {
             .ignoring(StaleElementReferenceException.class)
             .until((WebDriver driver) -> {
                 new Select(locator).selectByVisibleText(dropdownOption);
-                if (!new Select(locator).getFirstSelectedOption().equals(dropdownOption)) {
-                    new Select(locator).selectByVisibleText(dropdownOption);
-                }
                 return true;
             });
     }

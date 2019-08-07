@@ -19,5 +19,8 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 2. Running multiple test in parallel using maven build(configuration):  NOTE: not working yet
 	* Building the project is required first. See section below
 	* Select the module where the test is as the base directory
-	* Enter the following goals `clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=LOCAL -DthreadCount=3`. To run more tests in parallel, change `-DthreadCoun=t` number
+	* Enter the following goals `clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=LOCAL -DthreadCount=3`. To run more tests in parallel, change `-DthreadCount=10` number
 	* To see supported browsers, check `DriverFactory.java`
+
+## Run Sonarqube static code analysis
+1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard 
