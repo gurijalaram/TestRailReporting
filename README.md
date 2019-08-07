@@ -24,7 +24,7 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 3. Running test on docker (and zalenium if required):
     * Install docker
     * Pull docker images for selenium hub, chrome and firefox (dosel/zalenium if required)
-    * In the terminal enter `docker-compose up`. For zalenium enter `docker run --rm -ti --name zalenium -p 4444:4444 -p 5555:5555 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos dosel/zalenium start`
+    * In the terminal enter `docker-compose up -d`. For zalenium enter `docker run --rm -ti --name zalenium -p 4444:4444 -p 5555:5555 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos dosel/zalenium start`
     * In the terminal go to the base directory (eg. C:\automation-qa\apriori-qa\uitests) and enter the following goals `mvn clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=QA
 
 ## Run Sonarqube static code analysis
