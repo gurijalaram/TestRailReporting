@@ -102,6 +102,7 @@
 				<sonar.scm.provider>git</sonar.scm.provider>
 				<sonar.language>java</sonar.language>
 				<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+				<sonar.test.inclusions>src/test/java/*</sonar.test.inclusions>
 			</properties>
 			<modules>
 				<module>../uitests</module>
@@ -670,7 +671,7 @@
 
 	<build>
 		<directory>target</directory>
-		<sourceDirectory>src/main/java</sourceDirectory>
+		<sourceDirectory>src</sourceDirectory>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
