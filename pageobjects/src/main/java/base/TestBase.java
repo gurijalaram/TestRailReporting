@@ -113,7 +113,7 @@ public class TestBase {
     }
 
     private TestMode getTestMode(String testMode) {
-        TestMode result = null;
+        TestMode result;
 
         if (testMode == null || testMode.isEmpty()) {
             logger.info("Test mode was null. Setting LOCAL mode.");
@@ -131,7 +131,7 @@ public class TestBase {
                 result = TestMode.EXPORT;
                 break;
             default:
-                break;
+                throw new IllegalStateException("testMode could not be identified");
         }
 
         logger.info("Test mode set to: " + result.toString());

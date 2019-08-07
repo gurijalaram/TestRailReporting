@@ -65,7 +65,8 @@ public class Util {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
-            logger.debug("InterruptedException", e);
+            Thread.currentThread().interrupt();
+            logger.debug("Failed to highlight element");
         }
         js.executeScript("arguments[0].setAttribute('style', '" + originalStyle + "');", element);
     }

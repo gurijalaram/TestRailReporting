@@ -32,7 +32,7 @@ class ParallelScheduler implements RunnerScheduler {
         try {
             executor.awaitTermination(500, TimeUnit.MINUTES);
         } catch (InterruptedException exc) {
-            throw new RuntimeException(exc);
+            Thread.currentThread().interrupt();
         }
         logger.debug("ThreadPoolScheduler finished end");
     }
