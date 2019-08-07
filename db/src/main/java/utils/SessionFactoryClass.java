@@ -13,7 +13,7 @@ public class SessionFactoryClass<T> {
     public Session getSession() {
         try {
            return new Configuration()
-                    .setProperties(new PropertiesHendler().getDBProperties())
+                    .setProperties(new PropertiesHandler().getDBProperties())
                     .addAnnotatedClass(entity)
                     .buildSessionFactory().openSession();
         } catch (Exception e) {

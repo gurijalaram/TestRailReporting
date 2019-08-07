@@ -1,7 +1,8 @@
 # standart stuff to ignore
 .idea/*
-setings/*
+.settings/*
 *.iml
+target
 
 # ignore dumps which were created from java code
 *.sql

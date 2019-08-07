@@ -13,7 +13,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.2.Final</version>
+            <version>3.6.10.Final</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -32,21 +32,54 @@
         </dependency>
 
         <dependency>
-            <groupId>com.smattme</groupId>
-            <artifactId>mysql-backup4j</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-
-
-        <dependency>
             <groupId>com.apriori</groupId>
             <artifactId>apriori-commons-testutil</artifactId>
             <version>19.1.1.1</version>
         </dependency>
 
+       <dependency>
+  			<groupId>com.fbc</groupId>
+  			<artifactId>fbc-datamodel</artifactId>
+  			<version>19.1.1.0</version>
+  			<classifier>hibernate</classifier>
+  			<type>zip</type>
+		</dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>3.6.10.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>c3p0</groupId>
+                    <artifactId>c3p0</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>1.0.0.Final</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.6.10.Final</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-commons-annotations</artifactId>
+            <version>3.2.0.Final</version>
+        </dependency>
+
+
     </dependencies>
-
-
-
 
 </project>

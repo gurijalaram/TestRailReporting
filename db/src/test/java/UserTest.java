@@ -1,7 +1,7 @@
 import daoImpl.UserDao;
 import entity.User;
 import org.junit.Test;
-import utils.PropertiesHendler;
+import utils.PropertiesHandler;
 import utils.SessionFactoryClass;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class UserTest {
              - mssql
              - oracle
         */
-        new PropertiesHendler().setDBProperties("mssql");
+        new PropertiesHandler().setDBProperties("mssql");
     }
 
     @Test
