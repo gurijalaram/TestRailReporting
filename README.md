@@ -23,5 +23,4 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 	* To see supported browsers, check `DriverFactory.java`
 
 ## Run Sonarqube static code analysis
-1. Make sure you have .sonar directory in your home directory
-2. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard 
+1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard 
