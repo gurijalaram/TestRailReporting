@@ -1,0 +1,8 @@
+# standart stuff to ignore
+.idea/*
+setings/*
+*.iml
+
+# ignore dumps which were created from java code
+*.sql
+*.bak
