@@ -13,6 +13,8 @@ services:
     environment:
       HUB_HOST: hub
       HUB_PORT: 4444
+      NODE_MAX_INSTANCES: 5
+      NODE_MAX_SESSION: 5
 
   firefox:
     image: selenium/node-firefox:3.141.59-titanium
@@ -21,3 +23,5 @@ services:
     environment:
       HUB_HOST: hub
       HUB_PORT: 4444
+      NODE_MAX_INSTANCES: 5
+      NODE_MAX_SESSION: 5

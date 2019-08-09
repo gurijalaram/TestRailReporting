@@ -10,7 +10,6 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -21,7 +20,7 @@ public class DTCMachiningTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private DesignGuidancePage designGuidancePage;
+    private GuidancePage guidancePage;
 
     public DTCMachiningTests() {
         super();
@@ -35,16 +34,14 @@ public class DTCMachiningTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
+        guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
+            .openDesignGuidance()
+            .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues", "Keyseat Mill Accessibility", "Slot:3");
 
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("There is no available Groove milling tool that can fit inside the Slot."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("There is no available Groove milling tool that can fit inside the Slot."));
     }
 
     @Test
@@ -55,16 +52,14 @@ public class DTCMachiningTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
+        guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
+            .openDesignGuidance()
+            .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "CurvedSurface", "CurvedSurface:1");
 
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Feature contains a sharp corner"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Feature contains a sharp corner"));
     }
 
     @Test
@@ -75,16 +70,14 @@ public class DTCMachiningTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart"))
+        guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
+            .openDesignGuidance()
+            .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues", "Sharp Corner", "PlanarFace:5");
 
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Feature contains a sharp corner"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Feature contains a sharp corner"));
     }
 
     @Test
@@ -95,16 +88,14 @@ public class DTCMachiningTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT"))
+        guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
+            .openDesignGuidance()
+            .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues", "Side Milling L/D", "CurvedWall:3");
 
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Required tool exceeds the max L/D Ratio"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Required tool exceeds the max L/D Ratio"));
     }
 
     @Test
@@ -115,16 +106,14 @@ public class DTCMachiningTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart"))
+        guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
+            .openDesignGuidance()
+            .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues", "Missing Setups", "PlanarFace:6");
 
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Setup Axis was not automatically assigned"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Setup Axis was not automatically assigned"));
     }
 
     @Test
@@ -135,15 +124,13 @@ public class DTCMachiningTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart"))
+        guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
+            .openDesignGuidance()
+            .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "PlanarFace", "PlanarFace:9");
 
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Feature is obstructed"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Feature is obstructed"));
     }
 }

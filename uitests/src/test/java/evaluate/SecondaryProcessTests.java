@@ -15,8 +15,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class SecondaryProcessTests extends TestBase {
 
     private LoginPage loginPage;
@@ -31,7 +29,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process leak test")
     @Severity(SeverityLevel.NORMAL)
-    public void secondaryProcessLeakTest() throws UnsupportedEncodingException {
+    public void secondaryProcessLeakTest() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 

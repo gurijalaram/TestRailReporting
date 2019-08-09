@@ -1,5 +1,6 @@
 package test.java.evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -16,8 +17,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class CostAllCadTests extends TestBase {
 
     private LoginPage loginPage;
@@ -31,7 +30,7 @@ public class CostAllCadTests extends TestBase {
     @Test
     @Description("CAD file from all supported CAD formats - SLDPRT")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatSLDPRT() throws UnsupportedEncodingException {
+    public void testCADFormatSLDPRT() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -40,13 +39,13 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
     @Description("CAD file from all supported CAD formats - par")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatPar() throws UnsupportedEncodingException {
+    public void testCADFormatPar() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -55,13 +54,13 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
     @Description("CAD file from all supported CAD formats - CATPart")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatCATPart() throws UnsupportedEncodingException {
+    public void testCADFormatCATPart() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -70,13 +69,13 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
     @Description("CAD file from all supported CAD formats - prt.4")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatPRT4() throws UnsupportedEncodingException {
+    public void testCADFormatPRT4() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -85,13 +84,13 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
     @Description("CAD file from all supported CAD formats - Creo")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatCreo() throws UnsupportedEncodingException {
+    public void testCADFormatCreo() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -100,13 +99,13 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
     @Description("CAD file from all supported CAD formats - NX")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatNX() throws UnsupportedEncodingException {
+    public void testCADFormatNX() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -115,13 +114,13 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
     @Description("CAD file from all supported CAD formats - Inventor")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatInventor() throws UnsupportedEncodingException {
+    public void testCADFormatInventor() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -130,13 +129,13 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
     @Description("CAD file from all supported CAD formats - STEP")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatSTEP() throws UnsupportedEncodingException {
+    public void testCADFormatSTEP() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -145,13 +144,13 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
     @Description("CAD file from all supported CAD formats - Parasolid")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatParasolid() throws UnsupportedEncodingException {
+    public void testCADFormatParasolid() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -160,13 +159,13 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
     @Description("CAD file from all supported CAD formats - ACIS")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCADFormatParaACIS() throws UnsupportedEncodingException {
+    public void testCADFormatParaACIS() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
@@ -175,6 +174,6 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 }

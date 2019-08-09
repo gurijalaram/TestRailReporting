@@ -10,7 +10,6 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -21,7 +20,7 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private DesignGuidancePage designGuidancePage;
+    private GuidancePage guidancePage;
 
     public DTCMouldingEdgeRadiusTests() {
         super();
@@ -35,16 +34,14 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioEdgeRadiusInternal", new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
+        guidancePage = explorePage.uploadFile("ScenarioEdgeRadiusInternal", new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Radii Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
 
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii  Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
-
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Internal Edge Radius is less than the minimum limit"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Internal Edge Radius is less than the minimum limit"));
     }
 
     @Test
@@ -58,12 +55,10 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
         explorePage.uploadFile("ScenarioEdgeRadiusExternal", new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Radii Issue", "Minimum External Edge Radius", "SharpEdge:9");
 
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii  Issue", "Minimum External Edge Radius", "SharpEdge:9");
-
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("External Edge Radius is less than the minimum limit"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("External Edge Radius is less than the minimum limit"));
     }
 }
