@@ -78,7 +78,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      * @return routing name as webelement
      */
     public RoutingsPage selectRouting(String routingName) {
-        By routing = By.xpath("//div[@data-ap-comp='artifactProperties']//td[contains(text(),'" + routingName + "')]/ancestor::tr");
+        By routing = By.xpath("//div[@data-ap-comp='routingSelectionTable']//td[contains(text(),'" + routingName + "')]/ancestor::tr");
         pageUtils.scrollToElement(routing, routingScroller).click();
         return this;
     }

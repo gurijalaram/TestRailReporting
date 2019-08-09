@@ -17,6 +17,7 @@ import test.java.evaluate.EvaluateTests;
 import test.java.evaluate.ListOfVPETests;
 import test.java.evaluate.NewScenarioNameTests;
 import test.java.evaluate.ProcessGroupsTests;
+import test.java.evaluate.ProcessRoutingTests;
 import test.java.evaluate.PublishExistingCostedTests;
 import test.java.evaluate.PublishNewCostedTests;
 import test.java.evaluate.ReCostScenarioTests;
@@ -64,7 +65,8 @@ import test.java.login.LoginTests;
     PreviewPanelTests.class,
     ListOfVPETests.class,
     ProcessGroupsTests.class,
-    TableHeadersTests.class
+    TableHeadersTests.class,
+    ProcessRoutingTests.class
 })
 public class CIDTestSuite {
 }
