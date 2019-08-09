@@ -27,6 +27,12 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @FindBy(css = "select[data-ap-field='chartSelectionField']")
     private WebElement contributionsDropdown;
 
+    @FindBy(css = "button[data-ap-comp='alternateRoutingsButton']")
+    private WebElement alternateRoutingsButton;
+
+    @FindBy(css = "button[data-ap-comp='secondaryTreatmentsButton']")
+    private WebElement secTreatementsButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -64,5 +70,10 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     public ProcessPage selectContribution(String contribution) {
         new Select(contributionsDropdown).selectByVisibleText(contribution);
         return this;
+    }
+
+    public RoutingsPage selectRoutingsButton() {
+        pageUtils.waitForElementToAppear(alternateRoutingsButton).click();
+        return new RoutingsPage(driver);
     }
 }
