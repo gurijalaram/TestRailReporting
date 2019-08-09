@@ -63,7 +63,9 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      * @return current page object
      */
     public ComparisonTablePage selectComparison(String scenarioName, String partName) {
-        findComparison(scenarioName, partName).click();
+        findComparison(scenarioName, partName);
+        WebElement comparison = driver.findElement(By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]"));
+        pageUtils.waitForElementAndClick(comparison);
         return this;
     }
 

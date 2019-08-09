@@ -22,6 +22,7 @@ public class ReCostScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private EvaluatePage evaluatePage;
 
     public ReCostScenarioTests() {
         super();
@@ -37,7 +38,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Gear Making", new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
+        evaluatePage = explorePage.uploadFile("Gear Making", new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Gear Making", "Case_001_-_Rockwell_2075-0243G")
@@ -46,7 +47,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -57,7 +58,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Machining Contouring", new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
+        evaluatePage = explorePage.uploadFile("Machining Contouring", new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Machining Contouring", "case_002_00400016-003M10_A")
@@ -66,7 +67,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -77,7 +78,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Partially Automated Machining", new FileResourceUtil().getResourceFile("14100640.stp"))
+        evaluatePage = explorePage.uploadFile("Partially Automated Machining", new FileResourceUtil().getResourceFile("14100640.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Partially Automated Machining", "14100640")
@@ -86,7 +87,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -97,7 +98,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Pocket Recognition", new FileResourceUtil().getResourceFile("03229_0032_002_A.stp"))
+        evaluatePage = explorePage.uploadFile("Pocket Recognition", new FileResourceUtil().getResourceFile("03229_0032_002_A.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Pocket Recognition", "03229_0032_002_A")
@@ -106,7 +107,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -117,7 +118,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Shared Walls", new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
+        evaluatePage = explorePage.uploadFile("Shared Walls", new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Shared Walls", "case_066_SpaceX_00128711-001_A")
@@ -126,7 +127,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -137,7 +138,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Slot Examples", new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
+        evaluatePage = explorePage.uploadFile("Slot Examples", new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario("Slot Examples", "case_007_SpaceX_00088481-001_C")
@@ -146,6 +147,6 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
 
-        assertThat(new EvaluatePage(driver).getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 }

@@ -21,6 +21,11 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 	* Select the module where the test is as the base directory
 	* Enter the following goals `clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=LOCAL -DthreadCount=3`. To run more tests in parallel, change `-DthreadCount=10` number
 	* To see supported browsers, check `DriverFactory.java`
+3. Running test on docker (and zalenium if required):
+    * Install docker
+    * Pull docker images for selenium hub, chrome and firefox (dosel/zalenium if required)
+    * In the terminal enter `docker-compose up -d`. For zalenium enter `docker run --rm -ti --name zalenium -p 4444:4444 -p 5555:5555 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos dosel/zalenium start`
+    * In the terminal go to the base directory (eg. C:\automation-qa\apriori-qa\uitests) and enter the following goals `mvn clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=QA`
 
 ## Run Sonarqube static code analysis
-1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard 
+1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard

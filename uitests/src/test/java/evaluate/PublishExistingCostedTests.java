@@ -21,6 +21,7 @@ public class PublishExistingCostedTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private ComparisonTablePage comparisonTablePage;
 
     public PublishExistingCostedTests() {
         super();
@@ -34,7 +35,7 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Publish Existing Costed Scenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
+        comparisonTablePage = explorePage.uploadFile("Publish Existing Costed Scenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario()
@@ -48,6 +49,6 @@ public class PublishExistingCostedTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class);
 
-        assertThat(new ComparisonTablePage(driver).findComparison("Publish Existing Costed Scenario", "testpart-4").isDisplayed(), is(true));
+        assertThat(comparisonTablePage.findComparison("Publish Existing Costed Scenario", "testpart-4").isDisplayed(), is(true));
     }
 }

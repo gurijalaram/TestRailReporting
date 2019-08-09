@@ -14,8 +14,6 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class DeletePublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
@@ -28,7 +26,7 @@ public class DeletePublicScenarioTests extends TestBase {
     @Test
     @Description("Test a public scenario can be deleted from the component table")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeletePrivateScenario() throws UnsupportedEncodingException {
+    public void testDeletePrivateScenario() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
