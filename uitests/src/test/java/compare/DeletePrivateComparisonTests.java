@@ -32,7 +32,7 @@ public class DeletePrivateComparisonTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.createNewComparison()
-            .enterComparisonName("DeletePrivateComparison11")
+            .enterComparisonName("DeletePrivateComparison")
             .save()
             .addScenario()
             .filterCriteria()
@@ -43,7 +43,7 @@ public class DeletePrivateComparisonTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.delete()
-            .deleteScenario()
+            .deleteComparison()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
         assertThat(explorePage.getListOfComparisons("DeletePrivateComparison11") < 1, is(true));

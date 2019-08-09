@@ -20,6 +20,8 @@ public class EditPublicComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private EvaluatePage evaluatePage;
+    private ComparePage comparePage;
 
     public EditPublicComparisonTests() {
         super();
@@ -39,9 +41,10 @@ public class EditPublicComparisonTests extends TestBase {
             .enterComparisonName("DeletePrivateComparison10")
             .save();
 
-        new EvaluatePage(driver).publishScenario();
+        evaluatePage = new EvaluatePage(driver);
+        explorePage = evaluatePage.publishScenario();
 
-        assertThat(new ExplorePage(driver).findComparison("DeletePrivateComparison10").isDisplayed(), is(true));
+        assertThat(explorePage.findComparison("DeletePrivateComparison10").isDisplayed(), is(true));
     }
 
     @Test
@@ -58,9 +61,10 @@ public class EditPublicComparisonTests extends TestBase {
             .enterComparisonName("DeletePrivateComparison10")
             .save();
 
-        new EvaluatePage(driver).publishScenario()
+        evaluatePage = new EvaluatePage(driver);
+        comparePage = evaluatePage.publishScenario()
             .openComparison("DeletePrivateComparison10");
 
-        assertThat(new ComparePage(driver).getDescriptionText(), containsString("DeletePrivateComparison10"));
+        assertThat(comparePage.getDescriptionText(), containsString("DeletePrivateComparison10"));
     }
 }

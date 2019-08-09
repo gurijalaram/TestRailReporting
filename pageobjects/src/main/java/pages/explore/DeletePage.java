@@ -80,6 +80,15 @@ public class DeletePage extends LoadableComponent<DeletePage> {
     }
 
     /**
+     * Delete the comparison
+     * @return new page object
+     */
+    public ExplorePage deleteComparison() {
+        deleteButton.click();
+        return new ExplorePage(driver);
+    }
+
+    /**
      * Selects the cancel button
      * @return new page object
      */

@@ -1,8 +1,6 @@
 package main.java.header;
 
 import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.evaluate.PublishPage;
-import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -63,34 +61,6 @@ public class EvaluateHeader extends GenericHeader {
     }
 
     /**
-     * Checks the text in the cost label
-     * @param costText - the cost label text
-     * @return true or false
-     */
-    /*public boolean checkCostLabel(String costText) {
-        return costLabelPopover(costText);
-    }*/
-
-    /**
-     * Publish the scenario
-     * @return new page object
-     */
-    public ExplorePage publishScenario() {
-        return publishScenario();
-    }
-
-    /**
-     * Publish the scenario
-     * @param status - the status dropdown
-     * @param costMaturity - the cost maturity dropdown
-     * @param assignee - the assignee
-     * @return new page object
-     */
-    public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        return publishScenario(status, costMaturity, assignee);
-    }
-
-    /**
      * Wait for cost label popover
      *
      * @return boolean true/false
@@ -105,7 +75,7 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return webelement
      */
-    public WebElement getCostLabel() {
-        return pageUtils.waitForElementToAppear(costLabel);
+    public String getCostLabel() {
+        return pageUtils.waitForElementToAppear(costLabel).getText();
     }
 }

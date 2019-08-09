@@ -22,6 +22,7 @@ public class RevertScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private EvaluatePage evaluatePage;
 
     public RevertScenarioTests() {
         super();
@@ -35,7 +36,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("RevertSavedScenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
+        evaluatePage = explorePage.uploadFile("RevertSavedScenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
@@ -44,7 +45,7 @@ public class RevertScenarioTests extends TestBase {
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(new EvaluatePage(driver).getProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
+        assertThat(evaluatePage.getProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
     }
 
     @Test
@@ -55,7 +56,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("RevertUnsavedScenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
+        evaluatePage = explorePage.uploadFile("RevertUnsavedScenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
@@ -63,6 +64,6 @@ public class RevertScenarioTests extends TestBase {
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(new EvaluatePage(driver).getProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
+        assertThat(evaluatePage.getProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
     }
 }
