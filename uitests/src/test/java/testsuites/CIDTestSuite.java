@@ -27,7 +27,7 @@ import test.java.evaluate.designguidance.dtc.DTCMachiningTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingDraftTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
-import test.java.evaluate.designguidance.tolerance.TolerancesTests;
+import test.java.evaluate.designguidance.thread.ThreadTests;
 import test.java.evaluate.materialutilization.ChangeStockSelectionTests;
 import test.java.explore.FilterCriteriaTests;
 import test.java.explore.PreviewPanelTests;
@@ -42,7 +42,7 @@ import test.java.login.LoginTests;
     DTCMouldingDraftTests.class,
     DTCMouldingEdgeRadiusTests.class,
     DTCMouldingPartThicknessTests.class,
-    TolerancesTests.class,
+    ThreadTests.class,
     EvaluateTests.class,
     SecondaryProcessTests.class,
     FilterCriteriaTests.class,
