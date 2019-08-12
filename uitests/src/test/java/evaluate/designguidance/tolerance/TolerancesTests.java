@@ -299,8 +299,6 @@ public class TolerancesTests extends TestBase {
         assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
-
-
     @Test
     @Description("Testing a public thread cannot be edited")
     @Severity(SeverityLevel.CRITICAL)
