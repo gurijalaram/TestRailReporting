@@ -39,7 +39,7 @@ public class EditPublicComparisonTests extends TestBase {
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")
-            .save();
+            .save(ComparePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         explorePage = evaluatePage.publishScenario();
@@ -59,7 +59,7 @@ public class EditPublicComparisonTests extends TestBase {
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")
-            .save();
+            .save(ComparePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         comparePage = evaluatePage.publishScenario()

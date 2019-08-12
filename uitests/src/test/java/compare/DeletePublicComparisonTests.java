@@ -10,6 +10,7 @@ import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -38,7 +39,7 @@ public class DeletePublicComparisonTests extends TestBase {
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("PublicComparisonDelete1")
-            .save()
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "DTCCASTINGISSUES")

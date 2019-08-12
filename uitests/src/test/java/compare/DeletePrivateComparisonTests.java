@@ -9,6 +9,7 @@ import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -33,7 +34,7 @@ public class DeletePrivateComparisonTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.createNewComparison()
             .enterComparisonName("DeletePrivateComparison")
-            .save()
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "DTCCASTINGISSUES")

@@ -9,6 +9,7 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -39,7 +40,7 @@ public class AddPrivateScenarioTests extends TestBase {
 
         explorePage.createNewComparison()
             .enterComparisonName("Private Comparison")
-            .save()
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", "PlasticMoulding")
