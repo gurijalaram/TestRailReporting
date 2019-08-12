@@ -133,7 +133,7 @@ public class TolerancesTests extends TestBase {
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:22")
+            .editThread("Simple Holes", "SimpleHole:1")
             .selectThreadDropdown("No")
             .apply(InvestigationPage.class);
 
