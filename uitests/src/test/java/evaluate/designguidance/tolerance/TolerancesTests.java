@@ -46,8 +46,8 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
@@ -66,15 +66,15 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:20")
+            .editThread("Simple Holes", "SimpleHole:1")
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.28")
             .apply(InvestigationPage.class);
@@ -92,15 +92,15 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:21")
+            .editThread("Curved Walls", "CurvedWall:1")
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.28")
             .apply(InvestigationPage.class);
@@ -112,7 +112,7 @@ public class TolerancesTests extends TestBase {
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:10");
+            .editThread("Curved Walls", "CurvedWall:1");
 
         assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("0.28")));
     }
@@ -126,7 +126,7 @@ public class TolerancesTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
@@ -150,15 +150,15 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+        explorePage.uploadFile("Scenario 7", new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:23")
+            .editThread("Curved Walls", "CurvedWall:1")
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.64")
             .apply(InvestigationPage.class)
@@ -176,7 +176,7 @@ public class TolerancesTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
@@ -205,16 +205,16 @@ public class TolerancesTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:25")
+            .editThread("Simple Holes", "SimpleHole:1")
             .selectThreadDropdown("Yes")
-            .enterThreadLength("3.50")
+            .enterThreadLength("0.26")
             .apply(InvestigationPage.class);
 
         investigationPage = new InvestigationPage(driver);
@@ -224,7 +224,7 @@ public class TolerancesTests extends TestBase {
 
         new InvestigationPage(driver).selectEditButton();
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("3.50")));
+        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("0.26")));
     }
 
     @Test
@@ -235,15 +235,15 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:25")
+            .editThread("Curved Walls", "CurvedWall:1")
             .selectThreadDropdown("Yes")
             .enterThreadLength("apriori")
             .apply(WarningPage.class);
@@ -259,18 +259,42 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:25")
+            .editThread("Curved Walls", "CurvedWall:1")
             .selectThreadDropdown("Yes")
             .enterThreadLength("")
             .apply(WarningPage.class);
+
+        assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
+    }
+
+    @Test
+    @Description("Testing that adding a value of 0 in the thread shows a warning message")
+    @Severity(SeverityLevel.CRITICAL)
+    public void zeroValueTest() {
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile("zero value test", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+                .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+                .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+                .openDesignGuidance();
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:25")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("0")
+                .apply(WarningPage.class);
 
         assertThat(new WarningPage(driver).getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
@@ -283,13 +307,13 @@ public class TolerancesTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Auto Test", new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .publishScenario();
 
         explorePage = new ExplorePage(driver);
-        explorePage.openScenario("Scenario b", "DTCCastingIssues")
+        explorePage.openScenario("Auto Test", "CurvedWall")
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading");
