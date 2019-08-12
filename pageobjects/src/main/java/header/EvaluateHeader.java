@@ -36,7 +36,6 @@ public class EvaluateHeader extends GenericHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private static final String COST_UP_TO_DATE = "Cost up to\n" + "Date";
 
     public EvaluateHeader(WebDriver driver) {
         super(driver);
