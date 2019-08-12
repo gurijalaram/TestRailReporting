@@ -3,7 +3,6 @@ package test.java.evaluate.designguidance.thread;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -79,7 +78,7 @@ public class ThreadTests extends TestBase {
 
         new InvestigationPage(driver).selectEditButton();
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("0.28")));
+        assertThat(new ThreadingPage(driver).getThreadLength("0.28"), is(true));
     }
 
     @Test
@@ -112,7 +111,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:10");
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("0.28")));
+        assertThat(new ThreadingPage(driver).getThreadLength("0.28"), is(true));
     }
 
     @Test
@@ -137,7 +136,7 @@ public class ThreadTests extends TestBase {
 
         new InvestigationPage(driver).selectEditButton();
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("")));
+        assertThat(new ThreadingPage(driver).getThreadLength(""), is(true));
     }
 
     @Test
@@ -162,7 +161,7 @@ public class ThreadTests extends TestBase {
             .apply(InvestigationPage.class)
             .selectEditButton();
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), Matchers.is(equalTo("0.64")));
+        assertThat(new ThreadingPage(driver).getThreadLength("0.64"), is(true));
     }
 
     @Test
@@ -222,7 +221,7 @@ public class ThreadTests extends TestBase {
 
         new InvestigationPage(driver).selectEditButton();
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("3.50")));
+        assertThat(new ThreadingPage(driver).getThreadLength("3.50"), is(true));
     }
 
     @Test
@@ -332,7 +331,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:26");
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), equalTo("4.85"));
+        assertThat(new ThreadingPage(driver).getThreadLength("4.85"), is(true));
     }
 
     @Test
@@ -415,7 +414,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:27");
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
+        assertThat(new ThreadingPage(driver).getThreadLength("4.85"), is(true));
     }
 
     @Test
@@ -436,7 +435,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:28");
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
+        assertThat(new ThreadingPage(driver).getThreadLength("4.85"), is(true));
     }
 
     @Test
@@ -457,7 +456,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:29");
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
+        assertThat(new ThreadingPage(driver).getThreadLength("4.85"), is(true));
     }
 
     @Test
@@ -478,6 +477,6 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:30");
 
-        assertThat(new ThreadingPage(driver).getThreadLength(), is(equalTo("4.85")));
+        assertThat(new ThreadingPage(driver).getThreadLength("4.85"), is(true));
     }
 }
