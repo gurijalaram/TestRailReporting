@@ -47,7 +47,7 @@ public class EvaluateHeader extends GenericHeader {
     }
 
     /**
-     * Cost the scenario. Enter 'null' if the cost label is expected to be default label
+     * Cost the scenario
      * @return current page object
      */
     public EvaluatePage costScenario() {
