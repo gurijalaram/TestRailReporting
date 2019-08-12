@@ -38,7 +38,7 @@ public class EvaluateTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Scenario A", new FileResourceUtil().getResourceFile("testpart-4.prt"));
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(null)
+        evaluatePage.costScenario()
             .publishScenario();
     }
 
@@ -53,6 +53,6 @@ public class EvaluateTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
-            .costScenario(null);
+            .costScenario();
     }
 }

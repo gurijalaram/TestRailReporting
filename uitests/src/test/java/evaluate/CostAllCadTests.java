@@ -37,7 +37,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD Forging", new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
@@ -52,7 +52,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD par", new FileResourceUtil().getResourceFile("26136.par"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
@@ -67,7 +67,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD CATPart", new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
@@ -82,7 +82,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD prt 4", new FileResourceUtil().getResourceFile("turning.prt.4"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
@@ -97,7 +97,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD Creo", new FileResourceUtil().getResourceFile("turning.prt.4"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
@@ -112,7 +112,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD NX", new FileResourceUtil().getResourceFile("Locker_bottom_panel.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
@@ -127,7 +127,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD Inventor", new FileResourceUtil().getResourceFile("VERTICAL PLATE.ipt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
@@ -142,7 +142,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD STEP", new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
@@ -157,7 +157,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD Parasolid", new FileResourceUtil().getResourceFile("bracket_basic_steel_PMI.x_t"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
@@ -172,7 +172,7 @@ public class CostAllCadTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile("CostAllCAD ACIS", new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SAT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }

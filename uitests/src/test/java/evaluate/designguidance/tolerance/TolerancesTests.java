@@ -9,7 +9,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
@@ -48,7 +47,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -68,7 +67,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -94,7 +93,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -108,7 +107,7 @@ public class TolerancesTests extends TestBase {
         new DesignGuidancePage(driver).closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+        evaluatePage.costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
@@ -127,7 +126,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -152,7 +151,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario 7", new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -177,7 +176,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -206,7 +205,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -237,7 +236,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -261,7 +260,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -285,7 +284,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("zero value test", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
                 .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
-                .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+                .costScenario()
                 .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -309,7 +308,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Auto Test", new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .publishScenario();
 
         explorePage = new ExplorePage(driver);
@@ -331,7 +330,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -350,7 +349,7 @@ public class TolerancesTests extends TestBase {
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
             .apply()
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -371,7 +370,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openSettings()
             .changeDisplayUnits("English")
             .save(EvaluatePage.class);
@@ -394,7 +393,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openSettings()
             .changeDisplayUnits("System")
             .save(EvaluatePage.class);
@@ -417,7 +416,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -434,7 +433,7 @@ public class TolerancesTests extends TestBase {
         evaluatePage.openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
@@ -454,7 +453,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -475,7 +474,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -496,7 +495,7 @@ public class TolerancesTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);

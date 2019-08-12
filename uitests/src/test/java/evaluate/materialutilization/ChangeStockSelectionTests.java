@@ -8,7 +8,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
@@ -39,7 +38,7 @@ public class ChangeStockSelectionTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("ChangeScenarioStockSelection", new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openMaterialComposition()
             .goToStockTab()
             .editStock()
@@ -47,7 +46,7 @@ public class ChangeStockSelectionTests extends TestBase {
             .apply();
 
         assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
-        new EvaluatePage(driver).costScenario((CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()));
+        new EvaluatePage(driver).costScenario();
         assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
     }
 
@@ -61,7 +60,7 @@ public class ChangeStockSelectionTests extends TestBase {
         explorePage = new ExplorePage(driver);
         selectStockPage = explorePage.uploadFile("InappropriateStockSelection", new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openMaterialComposition()
             .goToStockTab()
             .editStock();

@@ -7,7 +7,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
@@ -36,7 +35,7 @@ public class DTCMachiningTests extends TestBase {
         explorePage = new ExplorePage(driver);
         guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues", "Keyseat Mill Accessibility", "Slot:3");
@@ -54,7 +53,7 @@ public class DTCMachiningTests extends TestBase {
         explorePage = new ExplorePage(driver);
         guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "CurvedSurface", "CurvedSurface:1");
@@ -72,7 +71,7 @@ public class DTCMachiningTests extends TestBase {
         explorePage = new ExplorePage(driver);
         guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues", "Sharp Corner", "PlanarFace:5");
@@ -90,7 +89,7 @@ public class DTCMachiningTests extends TestBase {
         explorePage = new ExplorePage(driver);
         guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues", "Side Milling L/D", "CurvedWall:3");
@@ -108,7 +107,7 @@ public class DTCMachiningTests extends TestBase {
         explorePage = new ExplorePage(driver);
         guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues", "Missing Setups", "PlanarFace:6");
@@ -126,7 +125,7 @@ public class DTCMachiningTests extends TestBase {
         explorePage = new ExplorePage(driver);
         guidancePage = explorePage.uploadFile("Initial", new FileResourceUtil().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "PlanarFace", "PlanarFace:9");

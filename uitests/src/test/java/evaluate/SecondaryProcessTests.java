@@ -20,7 +20,6 @@ public class SecondaryProcessTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private final String COSTING_SUCCESS = "Success";
 
     public SecondaryProcessTests() {
         super();
@@ -42,7 +41,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Hydrostatic Leak Testing"), is(true));
     }
@@ -63,7 +62,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Xray Inspection"), is(true));
     }
@@ -84,7 +83,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carburize")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Carburize"), is(true));
     }
@@ -105,7 +104,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Atmosphere Oil Harden")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Atmosphere Oil Harden"), is(true));
     }
@@ -126,7 +125,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Standard Anneal")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Standard Anneal"), is(true));
     }
@@ -147,7 +146,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Vacuum Temper"), is(true));
     }
@@ -168,7 +167,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes", "Stress Relief")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Stress Relief"), is(true));
     }
@@ -189,7 +188,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Anodize"), is(true));
     }
@@ -210,7 +209,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Heat Treatment", "Certification")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Certification"), is(true));
     }
@@ -231,7 +230,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Powder Coat Cart"), is(true));
     }
@@ -252,7 +251,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment", "Passivation")
             .apply()
-            .costScenario(COSTING_SUCCESS);
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Passivation"), is(true));
     }

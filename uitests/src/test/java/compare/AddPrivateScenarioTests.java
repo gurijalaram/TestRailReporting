@@ -6,7 +6,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparisonTablePage;
@@ -35,7 +34,7 @@ public class AddPrivateScenarioTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("Standard Anneal", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
         explorePage.createNewComparison()
             .enterComparisonName("Private Comparison")

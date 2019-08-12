@@ -7,7 +7,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
@@ -36,7 +35,7 @@ public class DTCMouldingPartThicknessTests extends TestBase {
         explorePage = new ExplorePage(driver);
         guidancePage = explorePage.uploadFile("ScenarioMinThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
@@ -54,7 +53,7 @@ public class DTCMouldingPartThicknessTests extends TestBase {
         explorePage = new ExplorePage(driver);
         guidancePage = explorePage.uploadFile("ScenarioMaxThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thickPart.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");

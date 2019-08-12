@@ -1,5 +1,6 @@
 package test.java.evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -43,9 +44,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -64,9 +65,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -85,9 +86,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -106,9 +107,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -127,9 +128,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -148,9 +149,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -169,9 +170,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -190,9 +191,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -211,9 +212,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -232,9 +233,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -253,9 +254,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -274,9 +275,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -295,9 +296,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -316,9 +317,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -337,9 +338,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -358,9 +359,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -379,9 +380,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -400,9 +401,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -421,9 +422,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -442,9 +443,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -463,9 +464,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -484,9 +485,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -505,9 +506,9 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 
     @Test
@@ -526,8 +527,8 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+            .costScenario();
 
-        assertThat(evaluatePage.checkCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(),is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
     }
 }
