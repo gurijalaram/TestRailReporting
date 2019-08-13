@@ -10,15 +10,17 @@ import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class DTCMouldingPartThicknessTests extends TestBase {
 
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
+
     private LoginPage loginPage;
-    private ExplorePage explorePage;
     private GuidancePage guidancePage;
 
     public DTCMouldingPartThicknessTests() {
@@ -30,10 +32,8 @@ public class DTCMouldingPartThicknessTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void testDTCMouldingThicknessMin() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        guidancePage = explorePage.uploadFile("ScenarioMinThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -48,10 +48,8 @@ public class DTCMouldingPartThicknessTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void testDTCMouldingThicknessMax() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        guidancePage = explorePage.uploadFile("ScenarioMaxThickness", new FileResourceUtil().getResourceFile("Plastic moulded cap thickPart.CATPart"))
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap thickPart.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
