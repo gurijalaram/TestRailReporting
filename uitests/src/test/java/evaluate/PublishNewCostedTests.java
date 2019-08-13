@@ -14,7 +14,11 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class PublishNewCostedTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -27,15 +31,16 @@ public class PublishNewCostedTests extends TestBase {
     @Description("Edit & publish an existing unlocked scenario from the Public Workspace back to the Public Workspace")
     @Severity(SeverityLevel.NORMAL)
     public void testPublishNewCostedScenario() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Publish Existing Costed Scenario", new FileResourceUtil().getResourceFile("testpart-4.prt"))
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario();
 
-        assertThat(explorePage.findComparison("Publish Existing Costed Scenario").isDisplayed(), is(true));
+        assertThat(explorePage.findComparison(testScenarioName).isDisplayed(), is(true));
     }
 }

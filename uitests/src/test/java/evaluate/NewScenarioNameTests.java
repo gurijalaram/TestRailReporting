@@ -16,7 +16,11 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class NewScenarioNameTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -30,34 +34,40 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     @Severity(SeverityLevel.NORMAL)
     public void testEnterNewScenarioName() {
+
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        new ExplorePage(driver).uploadFile("scenario name", new FileResourceUtil().getResourceFile("partbody_2.stp"));
+        new ExplorePage(driver).uploadFile(scenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.createNewScenario()
-            .enterScenarioName("new scenario name")
+            .enterScenarioName(testScenarioName)
             .save();
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo("new scenario name")));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(testScenarioName)));
     }
 
     @Test
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     @Severity(SeverityLevel.NORMAL)
     public void testPublishEnterNewScenarioName() {
+
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("publish scenario name", new FileResourceUtil().getResourceFile("partbody_2.stp"))
+        evaluatePage = explorePage.uploadFile(scenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .createNewScenario()
-            .enterScenarioName("publish new scenario name")
+            .enterScenarioName(testScenarioName)
             .save();
 
-        assertThat(evaluatePage = new EvaluatePage(driver).getCurrentScenarioName(), is(equalTo("publish new scenario name")));
+        assertThat(evaluatePage = new EvaluatePage(driver).getCurrentScenarioName(), is(equalTo(testScenarioName)));
     }
 }

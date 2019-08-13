@@ -18,7 +18,11 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class ReCostScenarioTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -34,14 +38,15 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Gear Making")
     @Severity(SeverityLevel.NORMAL)
     public void testRecostGearMaking() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Gear Making", new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario("Gear Making", "Case_001_-_Rockwell_2075-0243G")
+            .openScenario(testScenarioName, "Case_001_-_Rockwell_2075-0243G")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -54,14 +59,15 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Machining Contouring")
     @Severity(SeverityLevel.NORMAL)
     public void testRecostMachiningContouring() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Machining Contouring", new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario("Machining Contouring", "case_002_00400016-003M10_A")
+            .openScenario(testScenarioName, "case_002_00400016-003M10_A")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -74,14 +80,17 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Partially Automated Machining")
     @Severity(SeverityLevel.NORMAL)
     public void testRecostPartiallyAutomatedMachining() {
+
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Partially Automated Machining", new FileResourceUtil().getResourceFile("14100640.stp"))
+        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("14100640.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario("Partially Automated Machining", "14100640")
+            .openScenario(testScenarioName, "14100640")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -94,14 +103,15 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Pocket Recognition")
     @Severity(SeverityLevel.NORMAL)
     public void testRecostPocketRecognition() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Pocket Recognition", new FileResourceUtil().getResourceFile("03229_0032_002_A.stp"))
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("03229_0032_002_A.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario("Pocket Recognition", "03229_0032_002_A")
+            .openScenario(testScenarioName, "03229_0032_002_A")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -114,14 +124,15 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Shared Walls")
     @Severity(SeverityLevel.NORMAL)
     public void testRecostSharedWalls() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Shared Walls", new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario("Shared Walls", "case_066_SpaceX_00128711-001_A")
+            .openScenario(testScenarioName, "case_066_SpaceX_00128711-001_A")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -134,14 +145,15 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Slot Examples")
     @Severity(SeverityLevel.NORMAL)
     public void testRecostSlotExamples() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile("Slot Examples", new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario("Slot Examples", "case_007_SpaceX_00088481-001_C")
+            .openScenario(testScenarioName, "case_007_SpaceX_00088481-001_C")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
