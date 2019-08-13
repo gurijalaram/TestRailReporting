@@ -66,7 +66,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
      * @return current page object
      */
     public TableColumnsPage addColumn(String column) {
-        new Select(addColumnButton).selectByValue(column);
+        new Select(availableList).selectByValue(column);
         selectRightArrow();
         return this;
     }
@@ -77,7 +77,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
      * @return current page object
      */
     public TableColumnsPage removeColumn(String column) {
-        new Select(removeColumnButton).selectByValue(column);
+        new Select(includedList).selectByValue(column);
         selectLeftArrow();
         return this;
     }
@@ -87,7 +87,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
      * @return current page object
      */
     private TableColumnsPage selectRightArrow() {
-        addColumnButton.click();
+        pageUtils.waitForElementAndClick(addColumnButton);
         return this;
     }
 
@@ -96,7 +96,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
      * @return current page object
      */
     private TableColumnsPage selectLeftArrow() {
-        removeColumnButton.click();
+        pageUtils.waitForElementAndClick(removeColumnButton);
         return this;
     }
 

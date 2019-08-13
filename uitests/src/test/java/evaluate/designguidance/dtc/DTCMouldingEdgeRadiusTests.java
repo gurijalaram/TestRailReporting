@@ -7,19 +7,20 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class DTCMouldingEdgeRadiusTests extends TestBase {
 
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
+
     private LoginPage loginPage;
-    private ExplorePage explorePage;
     private GuidancePage guidancePage;
 
     public DTCMouldingEdgeRadiusTests() {
@@ -31,12 +32,10 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void testMouldingEdgeInternal() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        guidancePage = explorePage.uploadFile("ScenarioEdgeRadiusInternal", new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Radii Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
@@ -49,12 +48,10 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void testMouldingEdgeExternal() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioEdgeRadiusExternal", new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Radii Issue", "Minimum External Edge Radius", "SharpEdge:9");

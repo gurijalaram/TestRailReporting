@@ -17,10 +17,15 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class DeletePublicComparisonTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private ComparePage comparePage;
 
     public DeletePublicComparisonTests() {
         super();
@@ -31,14 +36,12 @@ public class DeletePublicComparisonTests extends TestBase {
     @Severity(SeverityLevel.CRITICAL)
     public void testPublicComparisonDelete() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("PublicComparisonDelete", new FileResourceUtil().getResourceFile("Casting.prt"))
+        comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("PublicComparisonDelete1")
+            .enterComparisonName("PublicComparisonDelete")
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -49,10 +52,10 @@ public class DeletePublicComparisonTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison("PublicComparisonDelete1")
+            .highlightComparison("PublicComparisonDelete")
             .delete()
             .deleteScenario();
 
-        assertThat(explorePage.getListOfComparisons("PublicComparisonDelete1") < 1, is(true));
+        assertThat(explorePage.getListOfComparisons("PublicComparisonDelete") < 1, is(true));
     }
 }

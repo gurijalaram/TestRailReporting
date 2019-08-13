@@ -14,7 +14,11 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class DeletePublicScenarioTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -27,18 +31,21 @@ public class DeletePublicScenarioTests extends TestBase {
     @Description("Test a public scenario can be deleted from the component table")
     @Severity(SeverityLevel.NORMAL)
     public void testDeletePrivateScenario() {
+
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePublicScenario", new FileResourceUtil().getResourceFile("casting.prt"))
+        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("DeletePublicScenario", "casting");
+            .highlightScenario(testScenarioName, "casting");
 
         new ExplorePage(driver).delete()
             .deleteScenario();
 
-        assertThat(explorePage.getListOfScenarios("DeletePublicScenario", "casting") < 1, is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
     }
 }

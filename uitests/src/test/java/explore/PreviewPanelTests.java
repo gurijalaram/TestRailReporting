@@ -13,7 +13,11 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class PreviewPanelTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -28,7 +32,7 @@ public class PreviewPanelTests extends TestBase {
     public void testLogin() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("Preview Panel", new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectExploreButton()
             .highlightScenario("Preview Panel", "Casting");
 

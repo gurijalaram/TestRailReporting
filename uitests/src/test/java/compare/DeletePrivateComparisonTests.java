@@ -19,6 +19,7 @@ public class DeletePrivateComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private ComparePage comparePage;
 
     public DeletePrivateComparisonTests() {
         super();
@@ -28,11 +29,10 @@ public class DeletePrivateComparisonTests extends TestBase {
     @Description("Test a private comparison can be deleted from the comparison page")
     @Severity(SeverityLevel.NORMAL)
     public void testDeletePrivateScenario() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        explorePage.createNewComparison()
+        loginPage = new LoginPage(driver);
+        comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .createNewComparison()
             .enterComparisonName("DeletePrivateComparison")
             .save(ComparePage.class)
             .addScenario()

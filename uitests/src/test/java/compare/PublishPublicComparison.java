@@ -7,7 +7,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparePage;
@@ -17,10 +16,14 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class PublishPublicComparison extends TestBase {
 
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
+
     private LoginPage loginPage;
-    private ExplorePage explorePage;
+    private ComparePage comparePage;
 
     public PublishPublicComparison() {
         super();
@@ -30,23 +33,24 @@ public class PublishPublicComparison extends TestBase {
     @Description("Test a public comparison can be published")
     @Severity(SeverityLevel.NORMAL)
     public void testPublishPublicComparison() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Publish Public Comparison", new FileResourceUtil().getResourceFile("Casting.prt"))
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("Publish Public Comparison")
+            .enterComparisonName(testScenarioName)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "DTCCASTINGISSUES")
+            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class)
             .apply();
 
-        assertThat(new ExplorePage(driver).findComparison("Publish Public Comparison").isDisplayed(), is(true));
+        assertThat(new ExplorePage(driver).findComparison(testScenarioName).isDisplayed(), is(true));
     }
 }

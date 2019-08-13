@@ -15,7 +15,11 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class DeleteScenarioIterationsTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -28,15 +32,17 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @Description("Test a public scenario can be deleted from the component table")
     @Severity(SeverityLevel.NORMAL)
     public void testDeletePublicScenarioIteration() {
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePublicScenarioIteration", new FileResourceUtil().getResourceFile("casting.prt"))
+        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("DeletePublicScenarioIteration", "casting");
+            .highlightScenario(testScenarioName, "casting");
 
         explorePage = new ExplorePage(driver);
         explorePage.editScenario()
@@ -44,22 +50,24 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
 
-        assertThat(explorePage.getListOfScenarios("DeletePublicScenarioIteration", "casting") < 1, is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
     }
 
     @Test
     @Description("Test a public scenario can be deleted from the component table")
     @Severity(SeverityLevel.NORMAL)
     public void testDeletePrivateScenarioIteration() {
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateScenarioIteration", new FileResourceUtil().getResourceFile("casting.prt"))
+        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario("DeletePrivateScenarioIteration", "casting");
+            .highlightScenario(testScenarioName, "casting");
 
         explorePage = new ExplorePage(driver);
         explorePage.editScenario()
@@ -67,6 +75,6 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
 
-        assertThat(explorePage.getListOfScenarios("DeletePrivateScenarioIteration", "casting") < 1, is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
     }
 }

@@ -7,7 +7,11 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class FileUploadTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
 
@@ -20,6 +24,6 @@ public class FileUploadTests extends TestBase {
     public void testFileUpload() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile("Scenario A", new FileResourceUtil().getResourceFile("bracket_basic.prt"));
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"));
     }
 }

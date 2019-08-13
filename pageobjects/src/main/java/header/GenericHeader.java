@@ -125,7 +125,7 @@ public class GenericHeader extends PageHeader {
      */
     public ComparisonPage createNewComparison() {
         newFileDropdown.click();
-        comparisonButton.click();
+        pageUtils.waitForElementAndClick(comparisonButton);
         return new ComparisonPage(driver);
     }
 
@@ -205,7 +205,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public DeletePage delete() {
-        pageUtils.checkElementAttribute(deleteButton,"title");
+        pageUtils.checkElementAttributeEmpty(deleteButton,"title");
         pageUtils.waitForElementAndClick(deleteButton);
         return new DeletePage(driver);
     }
