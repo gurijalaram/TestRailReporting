@@ -16,7 +16,11 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class EditPublicComparisonTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -32,19 +36,17 @@ public class EditPublicComparisonTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void testEditPublicComparisonPublish() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceUtil().getResourceFile("Casting.prt"))
+        comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison10")
+            .enterComparisonName("DeletePrivateComparison2")
             .save();
 
         evaluatePage = new EvaluatePage(driver);
         explorePage = evaluatePage.publishScenario();
 
-        assertThat(explorePage.findComparison("DeletePrivateComparison10").isDisplayed(), is(true));
+        assertThat(explorePage.findComparison("DeletePrivateComparison2").isDisplayed(), is(true));
     }
 
     @Test
@@ -52,19 +54,17 @@ public class EditPublicComparisonTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void testEditPublicComparison() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("DeletePrivateComparisonTests", new FileResourceUtil().getResourceFile("Casting.prt"))
+        comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison10")
+            .enterComparisonName("DeletePrivateComparison3")
             .save();
 
         evaluatePage = new EvaluatePage(driver);
         comparePage = evaluatePage.publishScenario()
-            .openComparison("DeletePrivateComparison10");
+            .openComparison("DeletePrivateComparison3");
 
-        assertThat(comparePage.getDescriptionText(), containsString("DeletePrivateComparison10"));
+        assertThat(comparePage.getDescriptionText(), containsString("DeletePrivateComparison3"));
     }
 }

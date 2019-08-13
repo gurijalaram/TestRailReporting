@@ -8,7 +8,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
@@ -19,11 +18,16 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class ChangeStockSelectionTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private SelectStockPage selectStockPage;
+    private StockPage stockPage;
 
     public ChangeStockSelectionTests() {
         super();
@@ -34,20 +38,18 @@ public class ChangeStockSelectionTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void changeStockSelectionTest() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ChangeScenarioStockSelection", new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+        stockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openMaterialComposition()
             .goToStockTab()
             .editStock()
             .selectStock("4.00  mm x 1500 mm x 3000 mm")
             .apply();
 
-        assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
-        new EvaluatePage(driver).costScenario((CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()));
+        assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
+        new EvaluatePage(driver).costScenario();
         assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
     }
 
@@ -56,12 +58,10 @@ public class ChangeStockSelectionTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void inappropriateStockSelectionTest() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        selectStockPage = explorePage.uploadFile("InappropriateStockSelection", new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+        selectStockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openMaterialComposition()
             .goToStockTab()
             .editStock();

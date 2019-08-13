@@ -36,7 +36,6 @@ public class EvaluateHeader extends GenericHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private static final String COST_UP_TO_DATE = "Cost up to\n" + "Date";
 
     public EvaluateHeader(WebDriver driver) {
         super(driver);
@@ -47,16 +46,13 @@ public class EvaluateHeader extends GenericHeader {
     }
 
     /**
-     * Cost the scenario. Enter 'null' if the cost label is expected to be default label
-     * @param costText - the text for the cost label
+     * Cost the scenario
      * @return current page object
      */
-    public EvaluatePage costScenario(String costText) {
+    public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
         pageUtils.waitForElementAndClick(dialogCostButton);
-        costText = costText.equalsIgnoreCase("Success") ? COST_UP_TO_DATE : costText;
-        getCostLabel();
-        checkCostLabel(costText);
+        checkCostLabelAppears();
         return new EvaluatePage(driver);
     }
 
@@ -65,9 +61,8 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return boolean true/false
      */
-    public boolean checkCostLabel(String costText) {
-        pageUtils.checkElementVisibleByBoolean(costLabelPopoverElement);
-        return costLabelPopover.getText().equalsIgnoreCase(costText);
+    public boolean checkCostLabelAppears() {
+        return pageUtils.checkElementVisibleByBoolean(costLabelPopoverElement);
     }
 
     /**
