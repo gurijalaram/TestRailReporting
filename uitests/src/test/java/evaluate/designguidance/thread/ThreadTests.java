@@ -281,7 +281,7 @@ public class ThreadTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile("zero value test", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-                .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+                .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
                 .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
                 .openDesignGuidance();
 
@@ -326,7 +326,7 @@ public class ThreadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart"))
+        explorePage.uploadFile("Thread tests", new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -342,12 +342,12 @@ public class ThreadTests extends TestBase {
         new DesignGuidancePage(driver).closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+        evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
             .apply()
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario(CostingLabelEnum.COSTING_INCOMPLETE.getCostingLabel())
             .openDesignGuidance();
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -366,9 +366,9 @@ public class ThreadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+        explorePage.uploadFile("Units Test", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario(CostingLabelEnum.COSTING_INCOMPLETE.getCostingLabel())
             .openSettings()
             .changeDisplayUnits("English")
             .save(EvaluatePage.class);
@@ -449,7 +449,7 @@ public class ThreadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Catia Threads", new FileResourceUtil().getResourceFile("CatiaPMIThreads.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -457,7 +457,7 @@ public class ThreadTests extends TestBase {
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:28");
+            .editThread("Simple Holes", "SimpleHole:1");
 
         assertThat(new ThreadingPage(driver).getThreadLength("4.85"), is(true));
     }
@@ -470,7 +470,7 @@ public class ThreadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("NX Thread Test", new FileResourceUtil().getResourceFile("100plusThreads.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -478,7 +478,7 @@ public class ThreadTests extends TestBase {
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:29");
+            .editThread("Simple Holes", "SimpleHole:15");
 
         assertThat(new ThreadingPage(driver).getThreadLength("4.85"), is(true));
     }
@@ -491,7 +491,7 @@ public class ThreadTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Scenario b", new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+        explorePage.uploadFile("Creo Thread Tests", new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
             .openDesignGuidance();
@@ -499,7 +499,7 @@ public class ThreadTests extends TestBase {
         designGuidancePage = new DesignGuidancePage(driver);
         designGuidancePage.openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:30");
+            .editThread("Simple Holes", "SimpleHole:13");
 
         assertThat(new ThreadingPage(driver).getThreadLength("4.85"), is(true));
     }
