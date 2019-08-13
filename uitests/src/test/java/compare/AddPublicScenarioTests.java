@@ -9,16 +9,19 @@ import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparisonTablePage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class AddPublicScenarioTests extends TestBase {
 
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
+
     private LoginPage loginPage;
-    private ExplorePage explorePage;
+    private ComparisonTablePage comparisonTablePage;
 
     public AddPublicScenarioTests() {
         super();
@@ -28,11 +31,12 @@ public class AddPublicScenarioTests extends TestBase {
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
     @Severity(SeverityLevel.CRITICAL)
     public void filterAddPublicScenario() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Standard Anneal", new FileResourceUtil().getResourceFile("Casting.prt"))
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        comparisonTablePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
             .publishScenario()
@@ -41,9 +45,9 @@ public class AddPublicScenarioTests extends TestBase {
             .save()
             .addScenario()
             .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "HoleProximityTest")
+            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class);
 
-        assertThat(new ComparisonTablePage(driver).findComparison("Initial", "HoleProximityTest").isDisplayed(), Matchers.is(true));
+        assertThat(comparisonTablePage.findComparison(testScenarioName, "Casting").isDisplayed(), Matchers.is(true));
     }
 }
