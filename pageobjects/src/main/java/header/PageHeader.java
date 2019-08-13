@@ -33,7 +33,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "a[data-ap-comp='jobQueue']")
     private WebElement jobQueueButton;
 
-    @FindBy(css = "a span.glyphicon-cog']")
+    @FindBy(css = "a span.glyphicon-cog")
     private WebElement settingsButton;
 
     @FindBy(css = "a.navbar-help")

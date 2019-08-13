@@ -174,7 +174,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public DesignGuidancePage openDesignGuidance() {
-        pageUtils.waitForElementToAppear(guidanceDetails).click();
+        pageUtils.waitForElementAndClick(guidanceDetails);
         return new DesignGuidancePage(driver);
     }
 
