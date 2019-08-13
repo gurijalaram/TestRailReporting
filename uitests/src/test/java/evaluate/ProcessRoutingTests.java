@@ -7,7 +7,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.process.ProcessPage;
@@ -32,14 +31,14 @@ public class ProcessRoutingTests extends TestBase {
         loginPage = new LoginPage(driver);
         processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile("Alternate Routing", new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("3 Axis Mill")
             .apply();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
+        evaluatePage.costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("3 Axis Mill"), is(true));
     }

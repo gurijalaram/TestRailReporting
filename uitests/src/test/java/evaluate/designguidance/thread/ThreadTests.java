@@ -21,6 +21,9 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
+
 public class ThreadTests extends TestBase {
 
     private final String scenarioName = "AutoScenario" + LocalDateTime.now();
