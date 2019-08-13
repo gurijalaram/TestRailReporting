@@ -238,7 +238,7 @@ public class TolerancesTests extends TestBase {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
@@ -292,7 +292,7 @@ public class TolerancesTests extends TestBase {
         new DesignGuidancePage(driver).closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
-        threadingPage = evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+        evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
@@ -313,7 +313,7 @@ public class TolerancesTests extends TestBase {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
             .changeDisplayUnits("English")
@@ -383,13 +383,13 @@ public class TolerancesTests extends TestBase {
     public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("CatiaPMIThreads.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:28");
+            .editThread("Simple Holes", "SimpleHole:1");
 
         assertThat(threadingPage.getThreadLength("4.85"), is(true));
     }
@@ -400,13 +400,13 @@ public class TolerancesTests extends TestBase {
     public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("100plusThreads.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:29");
+            .editThread("Simple Holes", "SimpleHole:15");
 
         assertThat(threadingPage.getThreadLength("4.85"), is(true));
     }
@@ -417,13 +417,13 @@ public class TolerancesTests extends TestBase {
     public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:30");
+            .editThread("Simple Holes", "SimpleHole:13");
 
         assertThat(threadingPage.getThreadLength("4.85"), is(true));
     }
