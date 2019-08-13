@@ -42,7 +42,7 @@ public class DeletePublicComparisonTests extends TestBase {
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("PublicComparisonDelete")
-            .save()
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "DTCCASTINGISSUES")

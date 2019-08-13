@@ -34,7 +34,7 @@ public class DeletePrivateComparisonTests extends TestBase {
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison")
-            .save()
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "DTCCASTINGISSUES")

@@ -8,6 +8,7 @@ import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
@@ -42,7 +43,7 @@ public class AddPublicScenarioTests extends TestBase {
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("Public Comparison")
-            .save()
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")

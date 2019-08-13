@@ -1,4 +1,4 @@
-package test.java.evaluate.designguidance.tolerance;
+package test.java.evaluate.designguidance.thread;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -23,7 +23,8 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
-public class TolerancesTests extends TestBase {
+
+public class ThreadTests extends TestBase {
 
     private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
@@ -34,7 +35,7 @@ public class TolerancesTests extends TestBase {
     private ThreadingPage threadingPage;
     private WarningPage warningPage;
 
-    public TolerancesTests() {
+    public ThreadTests() {
         super();
     }
 
@@ -392,7 +393,7 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getThreadLength(), is(equalTo("4.85")));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("10.00")));
     }
 
     @Test
@@ -409,7 +410,7 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Simple Holes", "SimpleHole:15");
 
-        assertThat(threadingPage.getThreadLength(), is(equalTo("4.85")));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("15.00")));
     }
 
     @Test
@@ -426,6 +427,6 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Simple Holes", "SimpleHole:13");
 
-        assertThat(threadingPage.getThreadLength(), is(equalTo("4.85")));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("4.06")));
     }
 }

@@ -8,6 +8,7 @@ import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
@@ -41,7 +42,7 @@ public class AddPrivateScenarioTests extends TestBase {
             .costScenario()
             .createNewComparison()
             .enterComparisonName("Private Comparison")
-            .save()
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface")

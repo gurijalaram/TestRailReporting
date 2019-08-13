@@ -44,7 +44,7 @@ public class PublishPublicComparison extends TestBase {
             .publishScenario()
             .createNewComparison()
             .enterComparisonName(testScenarioName)
-            .save()
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")

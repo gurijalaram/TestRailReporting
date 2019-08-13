@@ -40,13 +40,13 @@ public class EditPublicComparisonTests extends TestBase {
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison2")
-            .save();
+            .enterComparisonName("DeletePrivateComparison10")
+            .save(ComparePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         explorePage = evaluatePage.publishScenario();
 
-        assertThat(explorePage.findComparison("DeletePrivateComparison2").isDisplayed(), is(true));
+        assertThat(explorePage.findComparison("DeletePrivateComparison10").isDisplayed(), is(true));
     }
 
     @Test
@@ -58,8 +58,8 @@ public class EditPublicComparisonTests extends TestBase {
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison3")
-            .save();
+            .enterComparisonName("DeletePrivateComparison10")
+            .save(ComparePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         comparePage = evaluatePage.publishScenario()
