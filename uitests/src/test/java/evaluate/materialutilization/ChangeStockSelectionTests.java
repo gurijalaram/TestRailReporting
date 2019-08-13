@@ -18,11 +18,16 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class ChangeStockSelectionTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private SelectStockPage selectStockPage;
+    private StockPage stockPage;
 
     public ChangeStockSelectionTests() {
         super();
@@ -33,10 +38,8 @@ public class ChangeStockSelectionTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void changeStockSelectionTest() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ChangeScenarioStockSelection", new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+        stockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialComposition()
@@ -45,7 +48,7 @@ public class ChangeStockSelectionTests extends TestBase {
             .selectStock("4.00  mm x 1500 mm x 3000 mm")
             .apply();
 
-        assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
+        assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
         new EvaluatePage(driver).costScenario();
         assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
     }
@@ -55,10 +58,8 @@ public class ChangeStockSelectionTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void inappropriateStockSelectionTest() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        selectStockPage = explorePage.uploadFile("InappropriateStockSelection", new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+        selectStockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialComposition()

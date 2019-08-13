@@ -98,8 +98,8 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      *
      * @return - the thread length
      */
-    public String getThreadLength() {
-        return pageUtils.waitForElementToAppear(lengthInput).getAttribute("value");
+    public boolean getThreadLength(String text) {
+        return pageUtils.checkElementAttribute(lengthInput, "value").contains(text);
     }
 
     /**

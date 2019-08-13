@@ -205,7 +205,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public DeletePage delete() {
-        pageUtils.checkElementAttribute(deleteButton,"title");
+        pageUtils.checkElementAttributeEmpty(deleteButton,"title");
         pageUtils.waitForElementAndClick(deleteButton);
         return new DeletePage(driver);
     }

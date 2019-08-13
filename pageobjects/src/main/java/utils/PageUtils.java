@@ -549,7 +549,7 @@ public class PageUtils {
      * @param locator - the locator of the element
      * @return
      */
-    public Boolean checkElementAttribute(WebElement locator, String attribute) {
+    public Boolean checkElementAttributeEmpty(WebElement locator, String attribute) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
     }
@@ -563,5 +563,16 @@ public class PageUtils {
     public <T> Boolean checkElementVisibleByBoolean(List<T> locator) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2);
         return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
+    }
+
+    /**
+     * Waits for the element and checks for attribute
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public String checkElementAttribute(WebElement locator, String attribute) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
+        return wait.until((ExpectedCondition<String>) element -> (locator).getAttribute(attribute));
     }
 }
