@@ -1,5 +1,6 @@
 package test.java.evaluate.designguidance.tolerance;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -71,7 +72,7 @@ public class TolerancesTests extends TestBase {
             .apply(InvestigationPage.class)
             .selectEditButton();
 
-        assertThat(threadingPage.getThreadLength("0.28"), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("0.28")));
     }
 
     @Test
@@ -100,7 +101,7 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:1");
 
-        assertThat(threadingPage.getThreadLength("0.28"), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("0.28")));
     }
 
     @Test
@@ -120,7 +121,7 @@ public class TolerancesTests extends TestBase {
             .apply(InvestigationPage.class)
             .selectEditButton();
 
-        assertThat(threadingPage.getThreadLength(""), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("")));
     }
 
     @Test
@@ -141,7 +142,7 @@ public class TolerancesTests extends TestBase {
             .apply(InvestigationPage.class)
             .selectEditButton();
 
-        assertThat(threadingPage.getThreadLength("0.64"), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("0.64")));
     }
 
     @Test
@@ -188,7 +189,7 @@ public class TolerancesTests extends TestBase {
             .cancel()
             .selectEditButton();
 
-        assertThat(threadingPage.getThreadLength("0.26"), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("0.26")));
     }
 
     @Test
@@ -303,7 +304,7 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:26");
 
-        assertThat(threadingPage.getThreadLength("4.85"), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("4.85")));
     }
 
     @Test
@@ -374,7 +375,7 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:27");
 
-        assertThat(threadingPage.getThreadLength("4.85"), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("4.85")));
     }
 
     @Test
@@ -391,7 +392,7 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getThreadLength("4.85"), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("4.85")));
     }
 
     @Test
@@ -408,7 +409,7 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Simple Holes", "SimpleHole:15");
 
-        assertThat(threadingPage.getThreadLength("4.85"), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("4.85")));
     }
 
     @Test
@@ -425,6 +426,6 @@ public class TolerancesTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Simple Holes", "SimpleHole:13");
 
-        assertThat(threadingPage.getThreadLength("4.85"), is(true));
+        assertThat(threadingPage.getThreadLength(), is(equalTo("4.85")));
     }
 }
