@@ -10,6 +10,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author cfrith
  */
@@ -22,7 +25,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     private WebElement routingTable;
 
     @FindBy(css = ".highcharts-xaxis-labels tspan")
-    private WebElement routingLabels;
+    private List<WebElement> routingLabels;
 
     @FindBy(css = "select[data-ap-field='chartSelectionField']")
     private WebElement contributionsDropdown;
@@ -57,10 +60,10 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     /**
      * Gets the routing labels
      * @return string
-     */
+     *//*
     public String getRoutingLabels() {
         return routingLabels.getText();
-    }
+    }*/
 
     /**
      * Selects the contribution dropdown
@@ -72,8 +75,20 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
         return this;
     }
 
+    /**
+     * Selects the routing button
+     * @return current page object
+     */
     public RoutingsPage selectRoutingsButton() {
         pageUtils.waitForElementToAppear(alternateRoutingsButton).click();
         return new RoutingsPage(driver);
+    }
+
+    /**
+     * Gets list of routing labels
+     * @return list as string
+     */
+    public List<String> getRoutingLabels() {
+        return routingLabels.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 }
