@@ -36,6 +36,9 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @FindBy(css = "button[data-ap-comp='secondaryTreatmentsButton']")
     private WebElement secTreatementsButton;
 
+    @FindBy(css = "[data-ap-scope='processSelection'] .table")
+    private WebElement processSelectionTable;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -86,9 +89,17 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Gets list of routing labels
-     * @return list as string
+     * @return list of strings
      */
     public List<String> getRoutingLabels() {
         return routingLabels.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets details of process selection table
+     * @return list as string
+     */
+    public String getSelectionTableDetails() {
+        return pageUtils.waitForElementToAppear(processSelectionTable).getText();
     }
 }
