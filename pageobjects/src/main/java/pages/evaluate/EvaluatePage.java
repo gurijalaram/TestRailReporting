@@ -69,6 +69,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "a[data-ap-nav-viewport='showMaterialDetails']")
     private WebElement materialsDetails;
 
+    @FindBy(css = "input[data-ap-field='materialNameOverride']")
+    private WebElement materialsInfo;
+
     @FindBy(css = "button[data-ap-comp='materialSelectionButton']")
     private WebElement materialsButton;
 
@@ -236,5 +239,13 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public List<String> getListOfProcessGroups() {
         return processGroupList.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets material info
+     * @return material info as string
+     */
+    public String getMaterialInfo() {
+        return pageUtils.checkElementAttribute(materialsInfo, "value");
     }
 }
