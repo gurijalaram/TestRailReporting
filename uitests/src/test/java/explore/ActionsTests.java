@@ -1,0 +1,69 @@
+package test.java.explore;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import main.java.base.TestBase;
+import main.java.enums.ProcessGroupEnum;
+import main.java.enums.UsersEnum;
+import main.java.enums.WorkspaceEnum;
+import main.java.pages.explore.ExplorePage;
+import main.java.pages.explore.ScenarioNotesPage;
+import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
+import org.junit.Test;
+
+import java.time.LocalDateTime;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+public class ActionsTests extends TestBase {
+
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
+    private LoginPage loginPage;
+    private ExplorePage explorePage;
+    private ScenarioNotesPage scenarioNotesPage;
+
+
+    @Test
+    @Description("Validate user can add notes to a scenario")
+    @Severity(SeverityLevel.NORMAL)
+    public void addScenarioNotes() {
+
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+                .uploadFile("asdfasdfasdf", new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
+                .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+                .costScenario()
+                .publishScenario()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario("asdfasdfasdf", "M3CapScrew");
+
+        explorePage = new ExplorePage(driver);
+        explorePage.selectScenarioInfoNotes()
+                .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes")
+                .save()
+                .highlightScenario("asdfasdfasdf", "M3CapScrew");
+
+        explorePage = new ExplorePage(driver);
+        scenarioNotesPage = explorePage.selectScenarioInfoNotes();
+
+        //Assertion Required
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+}
