@@ -101,6 +101,6 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
      * @return material table info as string
      */
     public String getMaterialTableInfo() {
-        return materialTableInfo.getText();
+        return pageUtils.waitForElementToAppear(materialTableInfo).getText();
     }
 }
