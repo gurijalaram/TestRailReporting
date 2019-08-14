@@ -4,6 +4,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
+import main.java.enums.ColumnsEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
@@ -52,6 +53,35 @@ public class ActionsTests extends TestBase {
         scenarioNotesPage = explorePage.selectScenarioInfoNotes();
 
         //Assertion Required
+    }
+
+    @Test
+    @Description("Validate status and cost maturity columns can be added")
+    @Severity(SeverityLevel.NORMAL)
+    public void addStatusColumn(){
+
+        String testScenarioName = scenarioName;
+
+           loginPage = new LoginPage(driver);
+            loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+                    .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
+                    .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+                    .costScenario()
+                    .publishScenario()
+                    .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                    .highlightScenario(testScenarioName, "M3CapScrew");
+
+        explorePage = new ExplorePage(driver);
+            explorePage.selectScenarioInfoNotes()
+                    .enterScenarioInfoNotes("Analysis", "Waiting", "Qa Description", "Adding QA notes")
+                    .save()
+                    .openColumnsTable()
+                    .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
+                    .addColumn(ColumnsEnum.STATUS.getColumns())
+                    .selectSaveButton();
+
+
+        }
 
 
 
@@ -66,4 +96,4 @@ public class ActionsTests extends TestBase {
 
     }
 
-}
+
