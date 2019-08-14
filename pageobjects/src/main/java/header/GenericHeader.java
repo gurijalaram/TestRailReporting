@@ -168,7 +168,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ExplorePage publishScenario() {
-        publishButton.click();
+        pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectPublishButton();
         return new ExplorePage(driver);
     }
