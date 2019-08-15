@@ -46,8 +46,13 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("C645 View detailed information about costed process")
     @Severity(SeverityLevel.CRITICAL)
-    public void viewProcessDetails(){
+    public void testViewProcessDetails(){
         loginPage = new LoginPage(driver);
+        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+                .uploadFile("Process Details", new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
+                .costScenario()
+                .openProcessDetails();
+
         
     }
 
