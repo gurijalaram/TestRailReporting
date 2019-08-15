@@ -18,7 +18,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ScenarioNotesPage.class);
 
-    @FindBy(css = "h3.modal-title")
+    @FindBy(css = "[data-ap-scope='scenarioSelection'] .modal-content")
     private WebElement modalDialog;
 
     @FindBy(css = "select[data-ap-field='status']")
