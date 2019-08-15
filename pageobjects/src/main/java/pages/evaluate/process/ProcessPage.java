@@ -1,5 +1,6 @@
 package main.java.pages.evaluate.process;
 
+import main.java.pages.evaluate.SecondaryProcessPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,7 +34,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @FindBy(css = "button[data-ap-comp='alternateRoutingsButton']")
     private WebElement alternateRoutingsButton;
 
-    @FindBy(css = "button[data-ap-comp='secondaryTreatmentsButton']")
+    @FindBy(css = "[data-ap-comp='processCycleTime'] button[data-ap-comp='secondaryTreatmentsButton']")
     private WebElement secTreatementsButton;
 
     @FindBy(css = "[data-ap-scope='processSelection'] .table")
@@ -61,14 +62,6 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     }
 
     /**
-     * Gets the routing labels
-     * @return string
-     *//*
-    public String getRoutingLabels() {
-        return routingLabels.getText();
-    }*/
-
-    /**
      * Selects the contribution dropdown
      * @param contribution - the contribution
      * @return current page object
@@ -85,6 +78,15 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     public RoutingsPage selectRoutingsButton() {
         pageUtils.waitForElementToAppear(alternateRoutingsButton).click();
         return new RoutingsPage(driver);
+    }
+
+    /**
+     * Select the secondary process button
+     * @return new page object
+     */
+    public SecondaryProcessPage selectSecondaryProcessButton() {
+        pageUtils.waitForElementToAppear(secTreatementsButton).click();
+        return new SecondaryProcessPage(driver);
     }
 
     /**
