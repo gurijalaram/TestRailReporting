@@ -124,7 +124,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return new page object
      */
     public ExplorePage save() {
-        saveButton.click();
+        pageUtils.waitForElementAndClick(saveButton);
         return new ExplorePage(driver);
     }
 
