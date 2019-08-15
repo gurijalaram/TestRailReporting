@@ -1,13 +1,13 @@
 package test.java.evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
+import main.java.enums.CurrencyEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
@@ -18,7 +18,9 @@ import main.java.pages.settings.SettingsPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.util.Currency;
 
 public class ProcessRoutingTests extends TestBase {
 
@@ -57,24 +59,34 @@ public class ProcessRoutingTests extends TestBase {
     @Severity(SeverityLevel.CRITICAL)
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
-
-
         processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
                 .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
-                //.openSettings()
-                //.save(EvaluatePage.class)
+                .openSettings()
+                .changeCurrency(CurrencyEnum.USD.getCurrency())
+                .save(EvaluatePage.class)
                 .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
                 .selectVPE(VPEEnum.APRIORI_USA.getVpe())
                 .costScenario()
                 .openProcessDetails();
 
-        System.out.println(processPage.getSelectionTableDetails());
         assertThat(processPage.getSelectionTableDetails(), containsString("Cycle Time (s): 29.67\n" +
-                "Piece Part Cost (HKD): 3.44\n" +
-                "Fully Burdened Cost (HKD): 6.48\n" +
-                "Total Capital Investments (HKD): 83,617.49"));
-
-
+                "Piece Part Cost (USD): 0.44\n" +
+                "Fully Burdened Cost (USD): 0.83\n" +
+                "Total Capital Investments (USD): 10,709.39"));
     }
 
+    @Test
+    @Description("C646 View individual process steps")
+    @Severity(SeverityLevel.NORMAL)
+    public void testViewProcessSteps() {
+        loginPage = new LoginPage(driver);
+        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+                .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+                .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .openProcessDetails();
+
+        assertThat(processPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
+    }
 }
