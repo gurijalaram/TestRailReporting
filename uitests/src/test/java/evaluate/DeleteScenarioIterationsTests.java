@@ -10,6 +10,7 @@ import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
@@ -45,7 +46,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .highlightScenario(testScenarioName, "casting");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        explorePage.editScenario(EvaluatePage.class)
             .delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
@@ -70,7 +71,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .highlightScenario(testScenarioName, "casting");
 
         explorePage = new ExplorePage(driver);
-        explorePage.editScenario()
+        explorePage.editScenario(EvaluatePage.class)
             .delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
