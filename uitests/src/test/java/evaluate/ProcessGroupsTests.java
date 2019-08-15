@@ -49,7 +49,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_001_006-8613190_2");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
@@ -73,7 +73,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "42x1021_ref");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -97,7 +97,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "350611");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario();
 
@@ -121,7 +121,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_012_009-0020647_hinge_2");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario();
 
@@ -145,7 +145,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_012_009-700-33770-01_A0");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -169,7 +169,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_005_flat end mill contouring");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -193,7 +193,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "Case_001_-_Rockwell_2075-0243G");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -217,7 +217,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_002_00400016-003M10_A");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -241,7 +241,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "GagePart_Case_011_gundrillgagepart-01");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario();
 
@@ -265,7 +265,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "prt0001");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -289,7 +289,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "7021021-2_rib");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -313,7 +313,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "ms16555-627_1");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -337,7 +337,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "14100640");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -361,7 +361,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "14100640");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -385,7 +385,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "03229_0032_002_A");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -409,7 +409,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_066_SpaceX_00128711-001_A");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -433,7 +433,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "16-340053-00-04");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -457,7 +457,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_007_SpaceX_00088481-001_C");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -481,7 +481,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_002_006-8611543_prt");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -505,7 +505,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "225_gasket-1-solid1");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -529,7 +529,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_04_gtoldtc");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -553,7 +553,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_31_test_part_6_small");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario();
 
@@ -577,7 +577,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "AGCO _ 71421375");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
@@ -601,7 +601,7 @@ public class ProcessGroupsTests extends TestBase {
             .highlightScenario(testScenarioName, "case_011_CENA-009-A1-LH-Rear-Body-Mount");
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario()
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
