@@ -42,4 +42,13 @@ public class ProcessRoutingTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails("3 Axis Mill"), is(true));
     }
+
+    @Test
+    @Description("C645 View detailed information about costed process")
+    @Severity(SeverityLevel.CRITICAL)
+    public void viewProcessDetails(){
+        loginPage = new LoginPage(driver);
+        
+    }
+
 }
