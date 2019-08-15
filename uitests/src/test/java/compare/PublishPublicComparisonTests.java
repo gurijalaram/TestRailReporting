@@ -18,14 +18,14 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
-public class PublishPublicComparison extends TestBase {
+public class PublishPublicComparisonTests extends TestBase {
 
     private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ComparePage comparePage;
 
-    public PublishPublicComparison() {
+    public PublishPublicComparisonTests() {
         super();
     }
 

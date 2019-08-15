@@ -1,5 +1,6 @@
 package main.java.header;
 
+import main.java.pages.evaluate.CostingJobPage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -51,7 +52,7 @@ public class EvaluateHeader extends GenericHeader {
      */
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
-        pageUtils.waitForElementAndClick(dialogCostButton);
+        new CostingJobPage(driver).selectCost();
         checkCostLabelAppears();
         return new EvaluatePage(driver);
     }
