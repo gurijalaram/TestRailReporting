@@ -86,7 +86,7 @@ public class EditWarningPage extends LoadableComponent<EditWarningPage> {
      *
      * @return new page object
      */
-    public EvaluatePage selectCost() {
+    public EvaluatePage selectContinue() {
         pageUtils.waitForElementAndClick(continueButton);
         return new EvaluatePage(driver);
     }
