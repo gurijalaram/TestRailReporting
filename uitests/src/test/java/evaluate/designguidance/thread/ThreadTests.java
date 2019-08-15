@@ -10,6 +10,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
+import main.java.enums.UnitsEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
@@ -318,7 +319,7 @@ public class ThreadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
-            .changeDisplayUnits("English")
+            .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
             .save(EvaluatePage.class)
             .openDesignGuidance()
             .openInvestigationTab()
@@ -337,7 +338,7 @@ public class ThreadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openSettings()
-            .changeDisplayUnits("System")
+            .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
             .save(EvaluatePage.class)
             .openDesignGuidance()
             .openInvestigationTab()

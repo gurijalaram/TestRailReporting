@@ -72,7 +72,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return current page object
      */
     public ExplorePage selectExploreButton() {
-        pageUtils.waitForElementToBeClickable(exploreTab).click();
+        pageUtils.waitForElementAndClick(exploreTab);
         return new ExplorePage(driver);
     }
 
@@ -82,7 +82,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return current page object
      */
     public EvaluatePage selectEvaluateButton() {
-        pageUtils.waitForElementToBeClickable(exploreTab).click();
+        pageUtils.waitForElementAndClick(evaluateTab);
         return new EvaluatePage(driver);
     }
 
@@ -92,7 +92,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return current page object
      */
     public ComparePage selectCompareButton() {
-        pageUtils.waitForElementToBeClickable(exploreTab).click();
+        pageUtils.waitForElementAndClick(compareTab);
         return new ComparePage(driver);
     }
 
@@ -102,7 +102,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new page object
      */
     public SettingsPage openSettings() {
-        pageUtils.waitForElementToAppear(settingsButton).click();
+        pageUtils.waitForElementAndClick(settingsButton);
         return new SettingsPage(driver);
     }
 
@@ -112,7 +112,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new page object
      */
     public PageHeader openJobQueue() {
-        pageUtils.waitForElementToAppear(jobQueueButton).click();
+        pageUtils.waitForElementAndClick(jobQueueButton);
         return this;
     }
 
@@ -122,7 +122,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @retun new page object
      */
     public PageHeader openHelp() {
-        pageUtils.waitForElementToAppear(helpButton).click();
+        pageUtils.waitForElementAndClick(helpButton);
         return this;
     }
 
@@ -132,7 +132,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new page object
      */
     public PageHeader openLogOut() {
-        pageUtils.waitForElementToAppear(logoutButton).click();
+        pageUtils.waitForElementAndClick(logoutButton);
         return this;
     }
 }
