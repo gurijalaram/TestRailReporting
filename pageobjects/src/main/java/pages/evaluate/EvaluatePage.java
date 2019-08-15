@@ -5,6 +5,7 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
+import main.java.pages.explore.ScenarioNotesPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -68,6 +69,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "a[data-ap-nav-viewport='showMaterialDetails']")
     private WebElement materialsDetails;
+
+    @FindBy(css = "input[data-ap-field='materialNameOverride']")
+    private WebElement materialsInfo;
 
     @FindBy(css = "button[data-ap-comp='materialSelectionButton']")
     private WebElement materialsButton;
@@ -236,5 +240,22 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public List<String> getListOfProcessGroups() {
         return processGroupList.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets material info
+     * @return material info as string
+     */
+    public String getMaterialInfo() {
+        return pageUtils.checkElementAttribute(materialsInfo, "value");
+    }
+
+    /**
+     * Selects info and notes link
+     * @return new page object
+     */
+    public ScenarioNotesPage selectInfoNotes() {
+        pageUtils.waitForElementToAppear(infoNotes).click();
+        return new ScenarioNotesPage(driver);
     }
 }
