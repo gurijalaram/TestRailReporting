@@ -65,7 +65,7 @@ public class DeletePrivateComparisonTests extends TestBase {
     }
 
     @Test
-    @Description("Test a private comparison can be deleted from the comparison page")
+    @Description("C430 Test a private comparison can be deleted from the comparison page")
     @Severity(SeverityLevel.NORMAL)
     public void deletePrivateComparison() {
 

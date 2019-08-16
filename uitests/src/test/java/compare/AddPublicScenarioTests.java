@@ -57,7 +57,7 @@ public class AddPublicScenarioTests extends TestBase {
     }
 
     @Test
-    @Description("Test warning message appears when the user does not enter a scenario name for a comparison")
+    @Description("C462 Test warning message appears when the user does not enter a scenario name for a comparison")
     @Severity(SeverityLevel.CRITICAL)
     public void comparisonNoScenarioName() {
         loginPage = new LoginPage(driver);
