@@ -29,7 +29,7 @@ public class AddPrivateScenarioTests extends TestBase {
     }
 
     @Test
-    @Description("Test filtering and adding a private scenario then searching component table for the scenario")
+    @Description("C412 Test filtering and adding a private scenario then searching component table for the scenario")
     @Severity(SeverityLevel.CRITICAL)
     public void filterAddPrivateScenario() {
 
