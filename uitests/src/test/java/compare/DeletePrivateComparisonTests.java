@@ -59,7 +59,7 @@ public class DeletePrivateComparisonTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison("DeletePrivateComparison1")
             .delete()
-            .deleteScenario();
+            .deleteExploreComparison();
 
         assertThat(explorePage.getListOfComparisons("DeletePrivateComparison1") < 1, is(true));
     }
