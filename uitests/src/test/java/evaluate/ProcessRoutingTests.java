@@ -15,8 +15,10 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.process.ProcessPage;
 import main.java.pages.login.LoginPage;
 import main.java.pages.settings.SettingsPage;
+import main.java.pages.settings.ToleranceSettingsPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
@@ -30,6 +32,7 @@ public class ProcessRoutingTests extends TestBase {
     private ProcessPage processPage;
     private EvaluatePage evaluatePage;
     private SettingsPage settingsPage;
+    private ToleranceSettingsPage toleranceSettingsPage;
 
     public ProcessRoutingTests() {
         super();
@@ -59,11 +62,15 @@ public class ProcessRoutingTests extends TestBase {
     @Severity(SeverityLevel.CRITICAL)
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
-        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
                 .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
                 .openSettings()
                 .changeCurrency(CurrencyEnum.USD.getCurrency())
-                .save(EvaluatePage.class)
+                .openTolerancesTab()
+                .selectAssumeTolerance();
+
+         settingsPage = new SettingsPage(driver);
+         processPage = settingsPage.save(EvaluatePage.class)
                 .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
                 .selectVPE(VPEEnum.APRIORI_USA.getVpe())
                 .costScenario()
@@ -80,13 +87,20 @@ public class ProcessRoutingTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void testViewProcessSteps() {
         loginPage = new LoginPage(driver);
-        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
                 .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+                .openSettings()
+                .openTolerancesTab()
+                .selectAssumeTolerance();
+
+        settingsPage = new SettingsPage(driver);
+        processPage = settingsPage.save(EvaluatePage.class)
                 .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
                 .selectVPE(VPEEnum.APRIORI_USA.getVpe())
                 .costScenario()
                 .openProcessDetails();
 
+        System.out.println(processPage.getRoutingLabels());
         assertThat(processPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
     }
 }
