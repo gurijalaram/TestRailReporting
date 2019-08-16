@@ -1,7 +1,9 @@
 package test.java.evaluate;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -18,11 +20,8 @@ import main.java.pages.settings.SettingsPage;
 import main.java.pages.settings.ToleranceSettingsPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
-import java.util.Currency;
 
 public class ProcessRoutingTests extends TestBase {
 
@@ -44,12 +43,12 @@ public class ProcessRoutingTests extends TestBase {
     public void testAlternateRoutingSelection() {
         loginPage = new LoginPage(driver);
         processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
-            .costScenario()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("3 Axis Mill")
-            .apply();
+                .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
+                .costScenario()
+                .openProcessDetails()
+                .selectRoutingsButton()
+                .selectRouting("3 Axis Mill")
+                .apply();
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
@@ -69,8 +68,8 @@ public class ProcessRoutingTests extends TestBase {
                 .openTolerancesTab()
                 .selectAssumeTolerance();
 
-         settingsPage = new SettingsPage(driver);
-         processPage = settingsPage.save(EvaluatePage.class)
+        settingsPage = new SettingsPage(driver);
+        processPage = settingsPage.save(EvaluatePage.class)
                 .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
                 .selectVPE(VPEEnum.APRIORI_USA.getVpe())
                 .costScenario()
@@ -100,7 +99,6 @@ public class ProcessRoutingTests extends TestBase {
                 .costScenario()
                 .openProcessDetails();
 
-        System.out.println(processPage.getRoutingLabels());
         assertThat(processPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
     }
 }
