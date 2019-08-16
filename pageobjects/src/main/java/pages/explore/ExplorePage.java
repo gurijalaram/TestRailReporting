@@ -134,8 +134,8 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenarion as webelement
      */
     public ExplorePage highlightComparison(String comparisonName) {
-        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
-        pageUtils.scrollToElement(comparison, componentScroller);
+        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr");
+        pageUtils.scrollToElement(comparison, componentScroller).click();
         return this;
     }
 
