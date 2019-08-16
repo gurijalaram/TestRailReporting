@@ -26,6 +26,9 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     @FindBy(css = "select[data-ap-field='unitSystem']")
     private WebElement unitsDropdown;
 
+    @FindBy(css = "select[data-ap-field='currency']")
+    private WebElement currencyDropdown;
+
     @FindBy(css = ".btn.btn-primary")
     private WebElement saveButton;
 
@@ -56,6 +59,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
 
     /**
      * Opens tolerances tab
+     *
      * @return new page object
      */
     public ToleranceSettingsPage openTolerancesTab() {
@@ -63,15 +67,32 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
         return new ToleranceSettingsPage(driver);
     }
 
+    /**
+     * Changes system units
+     *
+     * @param units - the units
+     * @return current page object
+     */
     public SettingsPage changeDisplayUnits(String units) {
-        pageUtils.selectDropdownOption(unitsDropdown, units.toUpperCase());
+        pageUtils.selectDropdownOption(unitsDropdown, units);
+        return this;
+    }
+
+    /**
+     * Changes system currency
+     * @param currency - the currency
+     * @return current page object
+     */
+    public SettingsPage changeCurrency(String currency) {
+        pageUtils.selectDropdownOption(currencyDropdown, currency);
         return this;
     }
 
     /**
      * Selects the save button
+     *
      * @param className - the class the method should return
-     * @param <T> - the return type
+     * @param <T>       - the return type
      * @return generic page object
      */
     public <T> T save(Class<T> className) {
@@ -81,8 +102,9 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
 
     /**
      * Selects the cancel button
+     *
      * @param className - the class the method should return
-     * @param <T> - the return type
+     * @param <T>       - the return type
      * @return generic page object
      */
     public <T> T cancel(Class<T> className) {

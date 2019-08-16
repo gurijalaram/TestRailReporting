@@ -8,7 +8,7 @@ import test.java.compare.AddPublicScenarioTests;
 import test.java.compare.DeletePrivateComparisonTests;
 import test.java.compare.DeletePublicComparisonTests;
 import test.java.compare.EditPublicComparisonTests;
-import test.java.compare.PublishPublicComparison;
+import test.java.compare.PublishPublicComparisonTests;
 import test.java.evaluate.CostAllCadTests;
 import test.java.evaluate.DeletePrivateScenarioTests;
 import test.java.evaluate.DeletePublicScenarioTests;
@@ -60,7 +60,7 @@ import test.java.login.LoginTests;
     NewScenarioNameTests.class,
     PublishExistingCostedTests.class,
     PublishNewCostedTests.class,
-    PublishPublicComparison.class,
+    PublishPublicComparisonTests.class,
     ReCostScenarioTests.class,
     RevertScenarioTests.class,
     PreviewPanelTests.class,
