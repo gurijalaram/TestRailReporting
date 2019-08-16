@@ -11,6 +11,7 @@ import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.enums.VPEEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
@@ -32,8 +33,6 @@ public class ReCostScenarioTests extends TestBase {
         super();
     }
 
-    // TODO: 18/07/2019 the select process groups step in this whole class need revised. setting process group, costing then setting to same and costing again doesn't make sense
-
     @Test
     @Description("Test recosting a cad file - Gear Making")
     @Severity(SeverityLevel.NORMAL)
@@ -49,7 +48,7 @@ public class ReCostScenarioTests extends TestBase {
             .openScenario(testScenarioName, "Case_001_-_Rockwell_2075-0243G")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
@@ -70,7 +69,7 @@ public class ReCostScenarioTests extends TestBase {
             .openScenario(testScenarioName, "case_002_00400016-003M10_A")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
@@ -93,7 +92,7 @@ public class ReCostScenarioTests extends TestBase {
             .openScenario(testScenarioName, "14100640")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
@@ -114,7 +113,7 @@ public class ReCostScenarioTests extends TestBase {
             .openScenario(testScenarioName, "03229_0032_002_A")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
@@ -135,7 +134,7 @@ public class ReCostScenarioTests extends TestBase {
             .openScenario(testScenarioName, "case_066_SpaceX_00128711-001_A")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
@@ -156,7 +155,7 @@ public class ReCostScenarioTests extends TestBase {
             .openScenario(testScenarioName, "case_007_SpaceX_00088481-001_C")
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
