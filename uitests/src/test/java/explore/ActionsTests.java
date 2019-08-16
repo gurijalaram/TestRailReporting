@@ -1,5 +1,9 @@
 package test.java.explore;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -16,16 +20,12 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 public class ActionsTests extends TestBase {
 
     private final String scenarioName = "AutoScenario" + LocalDateTime.now();
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private ScenarioNotesPage scenarioNotesPage;
-
 
     @Test
     @Description("Validate user can add notes to a scenario")
@@ -36,64 +36,51 @@ public class ActionsTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-                .uploadFile("asdfasdfasdf", new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
-                .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-                .costScenario()
-                .publishScenario()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario("asdfasdfasdf", "M3CapScrew");
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .publishScenario()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "M3CapScrew");
 
         explorePage = new ExplorePage(driver);
         explorePage.selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes")
-                .save()
-                .highlightScenario("asdfasdfasdf", "M3CapScrew");
+            .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes")
+            .save()
+            .highlightScenario(testScenarioName, "M3CapScrew");
 
         explorePage = new ExplorePage(driver);
         scenarioNotesPage = explorePage.selectScenarioInfoNotes();
 
-        //Assertion Required
+        assertThat(scenarioNotesPage.getCostMaturity(), containsString("Low"));
+        assertThat(scenarioNotesPage.getStatus(), containsString("New"));
     }
 
     @Test
     @Description("Validate status and cost maturity columns can be added")
     @Severity(SeverityLevel.NORMAL)
-    public void addStatusColumn(){
+    public void addStatusColumn() {
 
         String testScenarioName = scenarioName;
 
-           loginPage = new LoginPage(driver);
-            loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-                    .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
-                    .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-                    .costScenario()
-                    .publishScenario()
-                    .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                    .highlightScenario(testScenarioName, "M3CapScrew");
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .publishScenario()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "M3CapScrew");
 
         explorePage = new ExplorePage(driver);
-            explorePage.selectScenarioInfoNotes()
-                    .enterScenarioInfoNotes("Analysis", "Waiting", "Qa Description", "Adding QA notes")
-                    .save()
-                    .openColumnsTable()
-                    .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
-                    .addColumn(ColumnsEnum.STATUS.getColumns())
-                    .selectSaveButton();
+        explorePage.selectScenarioInfoNotes()
+            .enterScenarioInfoNotes("Analysis", "Medium", "Qa Description", "Adding QA notes")
+            .save()
+            .openColumnsTable()
+            .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
+            .addColumn(ColumnsEnum.STATUS.getColumns())
+            .selectSaveButton();
 
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
+        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.STATUS.getColumns(), ColumnsEnum.COST_MATURITY.getColumns()));
     }
-
-
+}

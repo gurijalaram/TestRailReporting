@@ -310,7 +310,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("Testing thread units persist when changed to inches")
+    @Description("C267, C268 Testing thread units persist when changed to inches")
     @Severity(SeverityLevel.CRITICAL)
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
