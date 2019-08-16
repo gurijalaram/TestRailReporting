@@ -55,7 +55,6 @@ public class ActionsTests extends TestBase {
 
         assertThat(scenarioNotesPage.getCostMaturity(), containsString("Low"));
         assertThat(scenarioNotesPage.getStatus(), containsString("New"));
-
     }
 
     @Test
@@ -85,8 +84,4 @@ public class ActionsTests extends TestBase {
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.STATUS.getColumns(), ColumnsEnum.COST_MATURITY.getColumns()));
     }
-
-
 }
-
-

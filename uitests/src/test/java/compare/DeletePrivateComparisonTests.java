@@ -86,6 +86,5 @@ public class DeletePrivateComparisonTests extends TestBase {
         explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
         assertThat(explorePage.getListOfComparisons("comparisonScenarioName") < 1, is(true));
-
     }
 }
