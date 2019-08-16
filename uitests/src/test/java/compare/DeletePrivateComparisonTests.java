@@ -12,7 +12,6 @@ import main.java.enums.WorkspaceEnum;
 import main.java.header.GenericHeader;
 import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
-import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
@@ -26,8 +25,6 @@ public class DeletePrivateComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
-    private EvaluatePage evaluatePage;
-
 
     private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
@@ -58,12 +55,11 @@ public class DeletePrivateComparisonTests extends TestBase {
             .apply();
 
         genericHeader = new GenericHeader(driver);
-        genericHeader.selectExploreButton();
-
-        explorePage = new ExplorePage(driver);
-        explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+        explorePage = genericHeader.selectExploreButton()
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison("DeletePrivateComparison1")
-            .delete();
+            .delete()
+            .deleteScenario();
 
         assertThat(explorePage.getListOfComparisons("DeletePrivateComparison1") < 1, is(true));
     }
