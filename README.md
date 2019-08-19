@@ -29,3 +29,7 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 
 ## Run Sonarqube static code analysis
 1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard
+
+## Add TestRail testCaseIDs to test methods
+Annotate method that needs testRailID using following format. Tags is optional so if you don't add, its ok
+`@TestRail(testCaseId = "C717", tags = {"smoke"})`
