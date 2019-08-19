@@ -19,6 +19,7 @@ import main.java.pages.login.LoginPage;
 import main.java.pages.settings.SettingsPage;
 import main.java.pages.settings.ToleranceSettingsPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -57,7 +58,8 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Description("C645 View detailed information about costed process")
+    @TestRail(testCaseId = {"C645"}, tags = {"high"})
+    @Description("View detailed information about costed process")
     @Severity(SeverityLevel.CRITICAL)
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
@@ -82,7 +84,8 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Description("C646 View individual process steps")
+    @TestRail(testCaseId = {"C646"}, tags = {"medium"})
+    @Description("View individual process steps")
     @Severity(SeverityLevel.NORMAL)
     public void testViewProcessSteps() {
         loginPage = new LoginPage(driver);

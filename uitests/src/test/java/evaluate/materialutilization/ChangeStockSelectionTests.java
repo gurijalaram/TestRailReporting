@@ -16,6 +16,7 @@ import main.java.pages.evaluate.materialutilization.stock.StockPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -34,6 +35,7 @@ public class ChangeStockSelectionTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C960"}, tags = {"smoke"})
     @Description("Test making changes to the Material Stock, the change is respected and the scenario can be re-cost")
     @Severity(SeverityLevel.NORMAL)
     public void changeStockSelectionTest() {
@@ -54,6 +56,7 @@ public class ChangeStockSelectionTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C983"}, tags = {"high"})
     @Description("Test inappropriate stock cannot be selected")
     @Severity(SeverityLevel.NORMAL)
     public void inappropriateStockSelectionTest() {
