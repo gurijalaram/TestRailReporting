@@ -497,6 +497,7 @@ public class PageUtils {
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
+        waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
             .ignoring(StaleElementReferenceException.class)
             .until((WebDriver driver) -> {

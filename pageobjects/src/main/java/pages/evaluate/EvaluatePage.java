@@ -116,6 +116,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Selects the pg dropdown
+     *
      * @param processGroup - the process group
      * @return current page object
      */
@@ -126,6 +127,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Selects the vpe dropdown
+     *
      * @param vpe - the vpe
      * @return current page object
      */
@@ -136,6 +138,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Enters the annual volume
+     *
      * @param annualVolume - the annual volume
      * @return current page object
      */
@@ -147,6 +150,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Enters the years of annual volume
+     *
      * @param years - the years
      * @return current page object
      */
@@ -158,6 +162,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Opens the process tab
+     *
      * @return new page object
      */
     public ProcessPage openProcessDetails() {
@@ -167,6 +172,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the process routing details
+     *
      * @return the details as string
      */
     public boolean getProcessRoutingDetails(String text) {
@@ -175,6 +181,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Opens the design guidance dialog
+     *
      * @return new page object
      */
     public DesignGuidancePage openDesignGuidance() {
@@ -184,6 +191,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Opens the secondary process dialog
+     *
      * @return new page object
      */
     public SecondaryProcessPage openSecondaryProcess() {
@@ -193,6 +201,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Opens the material composition dialog
+     *
      * @return new page object
      */
     public MaterialPage openMaterialComposition() {
@@ -202,6 +211,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Opens the material composition table
+     *
      * @return new page object
      */
     public MaterialCompositionPage openMaterialCompositionTable() {
@@ -211,6 +221,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the scenario name
+     *
      * @return current page object
      */
     public EvaluatePage getCurrentScenarioName() {
@@ -220,6 +231,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the process group details
+     *
      * @return group details as string
      */
     public String getProcessGroup() {
@@ -228,6 +240,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets list of vpe's
+     *
      * @return list as string
      */
     public List<String> getListOfVPEs() {
@@ -236,6 +249,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets list of process groups
+     *
      * @return list as string
      */
     public List<String> getListOfProcessGroups() {
@@ -244,6 +258,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets material info
+     *
      * @return material info as string
      */
     public String getMaterialInfo() {
@@ -252,6 +267,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Selects info and notes link
+     *
      * @return new page object
      */
     public ScenarioNotesPage selectInfoNotes() {
