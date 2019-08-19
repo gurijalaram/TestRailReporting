@@ -234,7 +234,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "C717", tags = {"smoke"})
+    @TestRail(testCaseId = {"C717"}, tags = {"smoke"})
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     @Severity(SeverityLevel.CRITICAL)
     public void zeroValueTest() {
