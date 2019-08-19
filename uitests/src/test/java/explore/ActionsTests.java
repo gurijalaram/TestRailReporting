@@ -5,8 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ColumnsEnum;
 import main.java.enums.ProcessGroupEnum;
@@ -29,7 +27,6 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Description("Validate user can add notes to a scenario")
-    @Severity(SeverityLevel.NORMAL)
     public void addScenarioNotes() {
 
         String testScenarioName = scenarioName;
@@ -58,7 +55,6 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Description("Validate status and cost maturity columns can be added")
-    @Severity(SeverityLevel.NORMAL)
     public void addStatusColumn() {
 
         String testScenarioName = scenarioName;

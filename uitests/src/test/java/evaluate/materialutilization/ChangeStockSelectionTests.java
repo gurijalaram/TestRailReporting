@@ -5,8 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -35,7 +33,6 @@ public class ChangeStockSelectionTests extends TestBase {
 
     @Test
     @Description("Test making changes to the Material Stock, the change is respected and the scenario can be re-cost")
-    @Severity(SeverityLevel.NORMAL)
     public void changeStockSelectionTest() {
         loginPage = new LoginPage(driver);
         stockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -55,7 +52,6 @@ public class ChangeStockSelectionTests extends TestBase {
 
     @Test
     @Description("Test inappropriate stock cannot be selected")
-    @Severity(SeverityLevel.NORMAL)
     public void inappropriateStockSelectionTest() {
         loginPage = new LoginPage(driver);
         selectStockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

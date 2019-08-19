@@ -29,7 +29,6 @@ public class DTCMouldingDraftTests extends TestBase {
 
     @Test
     @Description("Testing DTC Machining Moulding Draft")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCMouldingDraft() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

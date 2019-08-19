@@ -5,8 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparePage;
@@ -33,7 +31,6 @@ public class EditPublicComparisonTests extends TestBase {
 
     @Test
     @Description("Test publishing a comparison shows the comparison in the comparison table")
-    @Severity(SeverityLevel.NORMAL)
     public void testEditPublicComparisonPublish() {
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -51,7 +48,6 @@ public class EditPublicComparisonTests extends TestBase {
 
     @Test
     @Description("Test editing a published comparison shows the comparison view")
-    @Severity(SeverityLevel.NORMAL)
     public void testEditPublicComparison() {
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

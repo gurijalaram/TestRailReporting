@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
@@ -35,7 +33,6 @@ public class ReCostScenarioTests extends TestBase {
 
     @Test
     @Description("Test recosting a cad file - Gear Making")
-    @Severity(SeverityLevel.NORMAL)
     public void testRecostGearMaking() {
 
         String testScenarioName = scenarioName;
@@ -56,7 +53,6 @@ public class ReCostScenarioTests extends TestBase {
 
     @Test
     @Description("Test recosting a cad file - Machining Contouring")
-    @Severity(SeverityLevel.NORMAL)
     public void testRecostMachiningContouring() {
 
         String testScenarioName = scenarioName;
@@ -77,7 +73,6 @@ public class ReCostScenarioTests extends TestBase {
 
     @Test
     @Description("Test recosting a cad file - Partially Automated Machining")
-    @Severity(SeverityLevel.NORMAL)
     public void testRecostPartiallyAutomatedMachining() {
 
         String testScenarioName = scenarioName;
@@ -100,7 +95,6 @@ public class ReCostScenarioTests extends TestBase {
 
     @Test
     @Description("Test recosting a cad file - Pocket Recognition")
-    @Severity(SeverityLevel.NORMAL)
     public void testRecostPocketRecognition() {
 
         String testScenarioName = scenarioName;
@@ -121,7 +115,6 @@ public class ReCostScenarioTests extends TestBase {
 
     @Test
     @Description("Test recosting a cad file - Shared Walls")
-    @Severity(SeverityLevel.NORMAL)
     public void testRecostSharedWalls() {
 
         String testScenarioName = scenarioName;
@@ -142,7 +135,6 @@ public class ReCostScenarioTests extends TestBase {
 
     @Test
     @Description("Test recosting a cad file - Slot Examples")
-    @Severity(SeverityLevel.NORMAL)
     public void testRecostSlotExamples() {
 
         String testScenarioName = scenarioName;

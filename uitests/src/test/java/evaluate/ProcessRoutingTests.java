@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
@@ -26,7 +24,6 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Description("Validate the user can Change the process routing in CI Design")
-    @Severity(SeverityLevel.CRITICAL)
     public void testAlternateRoutingSelection() {
         loginPage = new LoginPage(driver);
         processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

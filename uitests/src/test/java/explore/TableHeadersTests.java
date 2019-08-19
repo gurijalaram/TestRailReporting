@@ -4,8 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ColumnsEnum;
 import main.java.enums.UsersEnum;
@@ -25,7 +23,6 @@ public class TableHeadersTests extends TestBase {
 
     @Test
     @Description("Test default list of column headers in the private workspace")
-    @Severity(SeverityLevel.MINOR)
     public void testPrivateDefaultColumnHeaders() {
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -37,7 +34,6 @@ public class TableHeadersTests extends TestBase {
 
     @Test
     @Description("Test default list of column headers in the public workspace")
-    @Severity(SeverityLevel.MINOR)
     public void testPublicDefaultColumnHeaders() {
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -49,7 +45,6 @@ public class TableHeadersTests extends TestBase {
 
     @Test
     @Description("Test added columns are displayed in the public workspace")
-    @Severity(SeverityLevel.MINOR)
     public void testPublicAddColumnHeaders() {
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -63,7 +58,6 @@ public class TableHeadersTests extends TestBase {
 
     @Test
     @Description("Test added columns are displayed in the private workspace")
-    @Severity(SeverityLevel.MINOR)
     public void testPrivateAddColumnHeaders() {
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

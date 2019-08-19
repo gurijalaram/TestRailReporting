@@ -3,8 +3,6 @@ package test.java.compare;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -30,7 +28,6 @@ public class AddPrivateScenarioTests extends TestBase {
 
     @Test
     @Description("C412 Test filtering and adding a private scenario then searching component table for the scenario")
-    @Severity(SeverityLevel.CRITICAL)
     public void filterAddPrivateScenario() {
 
         String testScenarioName = scenarioName;

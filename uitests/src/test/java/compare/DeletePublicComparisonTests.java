@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -33,7 +31,6 @@ public class DeletePublicComparisonTests extends TestBase {
 
     @Test
     @Description("Test deleting a public comparison from the comparison table is not visible")
-    @Severity(SeverityLevel.CRITICAL)
     public void testPublicComparisonDelete() {
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

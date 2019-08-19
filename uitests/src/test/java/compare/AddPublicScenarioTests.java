@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -34,7 +32,6 @@ public class AddPublicScenarioTests extends TestBase {
 
     @Test
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
-    @Severity(SeverityLevel.CRITICAL)
     public void filterAddPublicScenario() {
 
         String testScenarioName = scenarioName;
@@ -58,7 +55,6 @@ public class AddPublicScenarioTests extends TestBase {
 
     @Test
     @Description("Test warning message appears when the user does not enter a scenario name for a comparison")
-    @Severity(SeverityLevel.CRITICAL)
     public void comparisonNoScenarioName() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

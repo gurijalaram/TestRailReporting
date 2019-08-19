@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -33,7 +31,6 @@ public class RevertScenarioTests extends TestBase {
 
     @Test
     @Description("Test revert saved scenario")
-    @Severity(SeverityLevel.NORMAL)
     public void testRevertSavedScenario() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -51,7 +48,6 @@ public class RevertScenarioTests extends TestBase {
 
     @Test
     @Description("Test revert unsaved scenario")
-    @Severity(SeverityLevel.NORMAL)
     public void testRevertUnsavedScenario() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

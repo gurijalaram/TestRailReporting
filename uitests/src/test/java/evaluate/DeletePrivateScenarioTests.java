@@ -28,7 +28,6 @@ public class DeletePrivateScenarioTests extends TestBase {
 
     @Test
     @Description("Test a private scenario can be deleted from the component table")
-    @Severity(SeverityLevel.NORMAL)
     public void testDeletePrivateScenario() {
 
         String testScenarioName = scenarioName;

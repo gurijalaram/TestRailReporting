@@ -42,7 +42,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Test to check edit thread button is disabled")
-    @Severity(SeverityLevel.CRITICAL)
     public void threadButtonDisabled() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -58,7 +57,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Test to check thread length persist")
-    @Severity(SeverityLevel.CRITICAL)
     public void editThread() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -79,7 +77,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Test to verify costed thread")
-    @Severity(SeverityLevel.CRITICAL)
     public void verifyCostedThread() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -108,7 +105,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Test to set dropdown value to no")
-    @Severity(SeverityLevel.CRITICAL)
     public void setDropdownValueNo() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -128,7 +124,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Test to set dropdown value to yes")
-    @Severity(SeverityLevel.CRITICAL)
     public void setDropdownValueYes() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -149,7 +144,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing warning message displayed when thread length is removed")
-    @Severity(SeverityLevel.CRITICAL)
     public void costedThreadLengthRemoved() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -172,7 +166,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
-    @Severity(SeverityLevel.CRITICAL)
     public void changeThreadValueCancel() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -196,7 +189,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing that adding text values in the thread length shows a warning message")
-    @Severity(SeverityLevel.CRITICAL)
     public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -216,7 +208,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing that adding no value in the thread shows a warning message")
-    @Severity(SeverityLevel.CRITICAL)
     public void junkValueTest() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -236,7 +227,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
-    @Severity(SeverityLevel.CRITICAL)
     public void zeroValueTest() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -256,7 +246,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing a public thread cannot be edited")
-    @Severity(SeverityLevel.CRITICAL)
     public void cannotEditPublicThread() {
 
         String testScenarioName = scenarioName;
@@ -277,7 +266,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing thread length persist when attributes are changed")
-    @Severity(SeverityLevel.CRITICAL)
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -311,7 +299,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("C267, C268 Testing thread units persist when changed to inches")
-    @Severity(SeverityLevel.CRITICAL)
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -330,7 +317,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing thread units persist when changed to millimetres")
-    @Severity(SeverityLevel.CRITICAL)
     public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -349,7 +335,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing threading persist when secondary process is added")
-    @Severity(SeverityLevel.CRITICAL)
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -382,7 +367,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing compatible thread length for DTC files")
-    @Severity(SeverityLevel.CRITICAL)
     public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -399,7 +383,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing compatible thread length for NX files")
-    @Severity(SeverityLevel.CRITICAL)
     public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -416,7 +399,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing compatible thread length for Creo files")
-    @Severity(SeverityLevel.CRITICAL)
     public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
