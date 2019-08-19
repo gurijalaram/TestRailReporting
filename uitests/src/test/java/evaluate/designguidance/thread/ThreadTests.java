@@ -6,8 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UnitsEnum;
@@ -20,8 +18,8 @@ import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
-import org.junit.Test;
 import main.java.utils.TestRail;
+import org.junit.Test;
 
 import java.time.LocalDateTime;
 
