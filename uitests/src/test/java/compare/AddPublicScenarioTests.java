@@ -15,6 +15,7 @@ import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -57,6 +58,7 @@ public class AddPublicScenarioTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C462"}, tags = {"smoke"})
     @Description("Test warning message appears when the user does not enter a scenario name for a comparison")
     @Severity(SeverityLevel.CRITICAL)
     public void comparisonNoScenarioName() {

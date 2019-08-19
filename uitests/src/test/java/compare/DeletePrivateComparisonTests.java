@@ -15,6 +15,7 @@ import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -45,7 +46,7 @@ public class DeletePrivateComparisonTests extends TestBase {
             .costScenario()
             .selectExploreButton()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison1")
+            .enterComparisonName("DeletePrivateComparisonA")
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -57,14 +58,15 @@ public class DeletePrivateComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison("DeletePrivateComparison1")
+            .highlightComparison("DeletePrivateComparisonA")
             .delete()
             .deleteExploreComparison();
 
-        assertThat(explorePage.getListOfComparisons("DeletePrivateComparison1") < 1, is(true));
+        assertThat(explorePage.getListOfComparisons("DeletePrivateComparisonA") < 1, is(true));
     }
 
     @Test
+    @TestRail(testCaseId = {"C430"}, tags = {"smoke"})
     @Description("Test a private comparison can be deleted from the comparison page")
     @Severity(SeverityLevel.NORMAL)
     public void deletePrivateComparison() {

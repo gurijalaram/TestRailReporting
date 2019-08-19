@@ -16,6 +16,7 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class ReCostScenarioTests extends TestBase {
     // TODO: 18/07/2019 the select process groups step in this whole class need revised. setting process group, costing then setting to same and costing again doesn't make sense
 
     @Test
+    @TestRail(testCaseId = {"C386, C388"}, tags = {"smoke"})
     @Description("Test recosting a cad file - Gear Making")
     @Severity(SeverityLevel.NORMAL)
     public void testRecostGearMaking() {

@@ -124,7 +124,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ComparisonPage createNewComparison() {
-        newFileDropdown.click();
+        pageUtils.waitForElementAndClick(newFileDropdown);
         pageUtils.waitForElementAndClick(comparisonButton);
         return new ComparisonPage(driver);
     }
@@ -182,7 +182,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        publishScenario();
+        pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
             .selectAssignee(assignee);
