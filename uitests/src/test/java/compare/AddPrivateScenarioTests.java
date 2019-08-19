@@ -53,7 +53,7 @@ public class AddPrivateScenarioTests extends TestBase {
     }
 
     @Test
-    @Description("Testing the user can update comparisons")
+    @Description("C387 Testing the user can update comparisons")
     @Severity(SeverityLevel.CRITICAL)
     public void updatePrivateComparison() {
 

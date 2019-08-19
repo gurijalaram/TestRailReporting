@@ -43,4 +43,22 @@ public class PublishNewCostedTests extends TestBase {
 
         assertThat(explorePage.findComparison(testScenarioName).isDisplayed(), is(true));
     }
+
+    @Test
+    @Description("C400 C401 C402 Publish a part and add an assignee, cost maturity and status")
+    @Severity(SeverityLevel.NORMAL)
+    public void testPublishWithStatus() {
+
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .publishScenario("Analysis", "Low", "Abe Chaves")
+            .selectPublishButton();
+
+        assertThat(explorePage.findComparison(testScenarioName).isDisplayed(), is(true));
+    }
 }

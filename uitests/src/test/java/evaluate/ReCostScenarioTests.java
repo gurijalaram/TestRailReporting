@@ -35,7 +35,7 @@ public class ReCostScenarioTests extends TestBase {
     // TODO: 18/07/2019 the select process groups step in this whole class need revised. setting process group, costing then setting to same and costing again doesn't make sense
 
     @Test
-    @Description("Test recosting a cad file - Gear Making")
+    @Description("C386 C388 Test recosting a cad file - Gear Making")
     @Severity(SeverityLevel.NORMAL)
     public void testRecostGearMaking() {
 
