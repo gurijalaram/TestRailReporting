@@ -13,6 +13,7 @@ import main.java.enums.WorkspaceEnum;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "C389", tags = {"smoke"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     @Severity(SeverityLevel.NORMAL)
     public void testPublishExistingCostedScenario() {

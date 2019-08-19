@@ -12,6 +12,7 @@ import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -45,7 +46,8 @@ public class PublishNewCostedTests extends TestBase {
     }
 
     @Test
-    @Description("C400 C401 C402 Publish a part and add an assignee, cost maturity and status")
+    @TestRail(testCaseId = "C400, C401, C402", tags = {"smoke"})
+    @Description("Publish a part and add an assignee, cost maturity and status")
     @Severity(SeverityLevel.NORMAL)
     public void testPublishWithStatus() {
 

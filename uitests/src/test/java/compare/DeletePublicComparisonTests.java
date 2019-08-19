@@ -17,6 +17,7 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -36,7 +37,8 @@ public class DeletePublicComparisonTests extends TestBase {
     }
 
     @Test
-    @Description("C430 C442 Test deleting a public comparison from explore tab")
+    @TestRail(testCaseId = "C430, C442", tags = {"smoke"})
+    @Description("Test deleting a public comparison from explore tab")
     @Severity(SeverityLevel.CRITICAL)
     public void testPublicComparisonDelete() {
         String testScenarioName = scenarioName;
@@ -67,7 +69,8 @@ public class DeletePublicComparisonTests extends TestBase {
     }
 
     @Test
-    @Description("C443 Delete a public comparison from comparison page")
+    @TestRail(testCaseId = "443", tags = {"smoke"})
+    @Description("Delete a public comparison from comparison page")
     @Severity(SeverityLevel.NORMAL)
     public void deletePublicComparisonPage() {
 

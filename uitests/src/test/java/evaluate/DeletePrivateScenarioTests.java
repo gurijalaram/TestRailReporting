@@ -11,6 +11,7 @@ import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -27,7 +28,8 @@ public class DeletePrivateScenarioTests extends TestBase {
     }
 
     @Test
-    @Description("C393 Test a private scenario can be deleted from the component table")
+    @TestRail(testCaseId = "C393", tags = {"smoke"})
+    @Description("Test a private scenario can be deleted from the component table")
     @Severity(SeverityLevel.NORMAL)
     public void testDeletePrivateScenario() {
 

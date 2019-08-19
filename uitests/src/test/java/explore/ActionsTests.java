@@ -16,6 +16,7 @@ import main.java.pages.explore.ExplorePage;
 import main.java.pages.explore.ScenarioNotesPage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -28,7 +29,8 @@ public class ActionsTests extends TestBase {
     private ScenarioNotesPage scenarioNotesPage;
 
     @Test
-    @Description("C545 Validate user can add notes to a scenario")
+    @TestRail(testCaseId = "C545", tags = {"smoke"})
+    @Description("Validate user can add notes to a scenario")
     @Severity(SeverityLevel.NORMAL)
     public void addScenarioNotes() {
 

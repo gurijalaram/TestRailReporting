@@ -57,6 +57,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "C28", tags = {"smoke"})
     @Description("C28 Test to check thread length persist")
     @Severity(SeverityLevel.CRITICAL)
     public void editThread() {
@@ -107,7 +108,8 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("C29 Test to set dropdown value to no")
+    @TestRail(testCaseId = "C29", tags = {"smoke"})
+    @Description("Test to set dropdown value to no")
     @Severity(SeverityLevel.CRITICAL)
     public void setDropdownValueNo() {
         loginPage = new LoginPage(driver);
@@ -171,7 +173,8 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("C32 Testing changing the thread value and cancelling doesn't remove the value")
+    @TestRail(testCaseId = "C32, C33", tags = {"smoke"})
+    @Description("Testing changing the thread value and cancelling doesn't remove the value")
     @Severity(SeverityLevel.CRITICAL)
     public void changeThreadValueCancel() {
         loginPage = new LoginPage(driver);
@@ -195,7 +198,8 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("C34 Testing that adding text values in the thread length shows a warning message")
+    @TestRail(testCaseId = "C32, C34", tags = {"smoke"})
+    @Description("Testing that adding text values in the thread length shows a warning message")
     @Severity(SeverityLevel.CRITICAL)
     public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
@@ -256,7 +260,8 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("C30 Testing a public thread cannot be edited")
+    @TestRail(testCaseId = "C30", tags = {"smoke"})
+    @Description("Testing a public thread cannot be edited")
     @Severity(SeverityLevel.CRITICAL)
     public void cannotEditPublicThread() {
 
@@ -277,7 +282,8 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("C38 C40 Testing thread length persist when attributes are changed")
+    @TestRail(testCaseId = "C38, C40", tags = {"smoke"})
+    @Description("Testing thread length persist when attributes are changed")
     @Severity(SeverityLevel.CRITICAL)
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
@@ -311,7 +317,8 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("C267, C268 Testing thread units persist when changed to inches")
+    @TestRail(testCaseId = "C267, C268", tags = {"High"})
+    @Description("Testing thread units persist when changed to inches")
     @Severity(SeverityLevel.CRITICAL)
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
