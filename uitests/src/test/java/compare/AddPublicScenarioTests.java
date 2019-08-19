@@ -58,7 +58,7 @@ public class AddPublicScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "C462", tags = {"smoke"})
+    @TestRail(testCaseId = {"C462"}, tags = {"smoke"})
     @Description("Test warning message appears when the user does not enter a scenario name for a comparison")
     @Severity(SeverityLevel.CRITICAL)
     public void comparisonNoScenarioName() {

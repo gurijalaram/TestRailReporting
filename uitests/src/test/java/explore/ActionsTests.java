@@ -29,7 +29,7 @@ public class ActionsTests extends TestBase {
     private ScenarioNotesPage scenarioNotesPage;
 
     @Test
-    @TestRail(testCaseId = "C545", tags = {"smoke"})
+    @TestRail(testCaseId = {"C545"}, tags = {"smoke"})
     @Description("Validate user can add notes to a scenario")
     @Severity(SeverityLevel.NORMAL)
     public void addScenarioNotes() {

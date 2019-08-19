@@ -66,7 +66,7 @@ public class DeletePrivateComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "C430", tags = {"smoke"})
+    @TestRail(testCaseId = {"C430"}, tags = {"smoke"})
     @Description("Test a private comparison can be deleted from the comparison page")
     @Severity(SeverityLevel.NORMAL)
     public void deletePrivateComparison() {
