@@ -21,9 +21,9 @@ import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
+import main.java.utils.TestRail;
 
 import java.time.LocalDateTime;
-
 
 public class ThreadTests extends TestBase {
 
@@ -226,6 +226,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C717"}, tags = {"smoke"})
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     public void zeroValueTest() {
         loginPage = new LoginPage(driver);
