@@ -145,7 +145,7 @@ public class ExplorePage extends ExploreHeader {
      * @return size of the element as int
      */
     public int getListOfComparisons(String comparisonName) {
-        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//div[@title='" + comparisonName.toUpperCase() + "']");
         return pageUtils.scrollToElements(comparison, componentScroller).size();
     }
 

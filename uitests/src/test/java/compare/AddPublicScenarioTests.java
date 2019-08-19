@@ -50,7 +50,7 @@ public class AddPublicScenarioTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class);
 
-        assertThat(comparisonTablePage.findComparison(testScenarioName, "Casting").isDisplayed(), Matchers.is(true));
+        assertThat(comparisonTablePage.findScenario(testScenarioName, "Casting").isDisplayed(), Matchers.is(true));
     }
 
     @Test

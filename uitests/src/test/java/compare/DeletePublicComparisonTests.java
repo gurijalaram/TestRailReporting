@@ -44,7 +44,7 @@ public class DeletePublicComparisonTests extends TestBase {
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "DTCCASTINGISSUES")
             .apply(ComparisonTablePage.class)
-            .selectComparison("Scenario b", "DTCCASTINGISSUES")
+            .selectScenario("Scenario b", "DTCCASTINGISSUES")
             .apply();
 
         explorePage = new ExplorePage(driver);

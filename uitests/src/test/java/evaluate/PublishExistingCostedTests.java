@@ -48,6 +48,6 @@ public class PublishExistingCostedTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class);
 
-        assertThat(comparisonTablePage.findComparison(testScenarioName, "testpart-4").isDisplayed(), is(true));
+        assertThat(comparisonTablePage.findScenario(testScenarioName, "testpart-4").isDisplayed(), is(true));
     }
 }
