@@ -32,4 +32,4 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 
 ## Add TestRail testCaseIDs to test methods
 Annotate method that needs testRailID using following format. Tags is optional so if you don't add, its ok
-`@TestRail(testCaseId = "C717", tags = {"smoke"})`
+`@TestRail(testCaseId = {"C717"}, tags = {"smoke"})`
