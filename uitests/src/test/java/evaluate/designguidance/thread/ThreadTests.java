@@ -56,7 +56,8 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("Test to check thread length persist")
+    @TestRail(testCaseId = {"C28"}, tags = {"smoke"})
+    @Description("C28 Test to check thread length persist")
     public void editThread() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -77,7 +78,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Test to verify costed thread")
-    public void verifyCostedThread() {
+    public void selectScenario() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
@@ -104,6 +105,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C29"}, tags = {"smoke"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
         loginPage = new LoginPage(driver);
@@ -165,6 +167,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C32, C33"}, tags = {"smoke"})
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     public void changeThreadValueCancel() {
         loginPage = new LoginPage(driver);
@@ -188,6 +191,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C32, C34"}, tags = {"smoke"})
     @Description("Testing that adding text values in the thread length shows a warning message")
     public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
@@ -246,6 +250,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C30"}, tags = {"smoke"})
     @Description("Testing a public thread cannot be edited")
     public void cannotEditPublicThread() {
 
@@ -266,6 +271,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C38, C40"}, tags = {"smoke"})
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
@@ -299,7 +305,8 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("C267, C268 Testing thread units persist when changed to inches")
+    @TestRail(testCaseId = {"C267, C268"}, tags = {"High"})
+    @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

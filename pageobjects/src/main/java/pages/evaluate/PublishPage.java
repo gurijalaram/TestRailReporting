@@ -29,10 +29,10 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "select[data-ap-field='costMaturity']")
     private WebElement costMaturityDropdown;
 
-    @FindBy(css = "select[data-ap-field='locked']")
+    @FindBy(css = "select[data-ap-field='assignee']")
     private WebElement assigneeDropdown;
 
-    @FindBy(css = "input[data-ap-field='assignee']")
+    @FindBy(css = "input[data-ap-field='locked']")
     private WebElement lockCheckBox;
 
     @FindBy(css = "button.gwt-SubmitButton")

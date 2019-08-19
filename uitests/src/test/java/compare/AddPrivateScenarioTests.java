@@ -3,6 +3,8 @@ package test.java.compare;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -10,6 +12,7 @@ import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -21,13 +24,15 @@ public class AddPrivateScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
+    private ComparePage comparePage;
 
     public AddPrivateScenarioTests() {
         super();
     }
 
     @Test
-    @Description("C412 Test filtering and adding a private scenario then searching component table for the scenario")
+    @TestRail(testCaseId = {"C412"}, tags = {"smoke"})
+    @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
 
         String testScenarioName = scenarioName;
