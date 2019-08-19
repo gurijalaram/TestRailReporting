@@ -57,7 +57,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("Test to check thread length persist")
+    @Description("C28 Test to check thread length persist")
     @Severity(SeverityLevel.CRITICAL)
     public void editThread() {
         loginPage = new LoginPage(driver);
@@ -107,7 +107,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("Test to set dropdown value to no")
+    @Description("C29 Test to set dropdown value to no")
     @Severity(SeverityLevel.CRITICAL)
     public void setDropdownValueNo() {
         loginPage = new LoginPage(driver);
@@ -171,7 +171,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("Testing changing the thread value and cancelling doesn't remove the value")
+    @Description("C32 Testing changing the thread value and cancelling doesn't remove the value")
     @Severity(SeverityLevel.CRITICAL)
     public void changeThreadValueCancel() {
         loginPage = new LoginPage(driver);
@@ -195,7 +195,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("Testing that adding text values in the thread length shows a warning message")
+    @Description("C34 Testing that adding text values in the thread length shows a warning message")
     @Severity(SeverityLevel.CRITICAL)
     public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
@@ -255,7 +255,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("Testing a public thread cannot be edited")
+    @Description("C30 Testing a public thread cannot be edited")
     @Severity(SeverityLevel.CRITICAL)
     public void cannotEditPublicThread() {
 
@@ -276,7 +276,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Description("Testing thread length persist when attributes are changed")
+    @Description("C38 C40 Testing thread length persist when attributes are changed")
     @Severity(SeverityLevel.CRITICAL)
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);

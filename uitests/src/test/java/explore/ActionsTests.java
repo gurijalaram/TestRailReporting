@@ -28,7 +28,7 @@ public class ActionsTests extends TestBase {
     private ScenarioNotesPage scenarioNotesPage;
 
     @Test
-    @Description("Validate user can add notes to a scenario")
+    @Description("C545 Validate user can add notes to a scenario")
     @Severity(SeverityLevel.NORMAL)
     public void addScenarioNotes() {
 
