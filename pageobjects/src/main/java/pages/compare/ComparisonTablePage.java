@@ -64,20 +64,21 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      */
     public ComparisonTablePage selectScenario(String scenarioName, String partName) {
         findScenario(scenarioName, partName);
-        WebElement scenario = driver.findElement(By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td"));
-        pageUtils.waitForElementAndClick(scenario);
+        WebElement comparison = driver.findElement(By.xpath("//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]"));
+        pageUtils.waitForElementAndClick(comparison);
         return this;
     }
 
     /**
-     * Find specific element in the table
-     * @param partName - name of the part
+     * Find and select the comparison in the table
+     *
+     * @param partName     - name of the part
      * @param scenarioName - scenario name
-     * @return the part as webelement
+     * @return comparison as webelement
      */
     public WebElement findScenario(String scenarioName, String partName) {
-        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElement(scenario, comparisonScroller);
+        By comparison = By.xpath("//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]");
+        return pageUtils.scrollToElement(comparison, comparisonScroller);
     }
 
     /**
