@@ -44,12 +44,12 @@ public class ProcessRoutingTests extends TestBase {
     public void testAlternateRoutingSelection() {
         loginPage = new LoginPage(driver);
         processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-                .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
-                .costScenario()
-                .openProcessDetails()
-                .selectRoutingsButton()
-                .selectRouting("3 Axis Mill")
-                .apply();
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("3 Axis Mill")
+            .apply();
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
@@ -64,23 +64,23 @@ public class ProcessRoutingTests extends TestBase {
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-                .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
-                .openSettings()
-                .changeCurrency(CurrencyEnum.USD.getCurrency())
-                .openTolerancesTab()
-                .selectAssumeTolerance();
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
+            .openSettings()
+            .changeCurrency(CurrencyEnum.USD.getCurrency())
+            .openTolerancesTab()
+            .selectAssumeTolerance();
 
         settingsPage = new SettingsPage(driver);
         processPage = settingsPage.save(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-                .costScenario()
-                .openProcessDetails();
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails();
 
         assertThat(processPage.getSelectionTableDetails(), containsString("Cycle Time (s): 29.67\n" +
-                "Piece Part Cost (USD): 0.44\n" +
-                "Fully Burdened Cost (USD): 0.83\n" +
-                "Total Capital Investments (USD): 10,709.39"));
+            "Piece Part Cost (USD): 0.44\n" +
+            "Fully Burdened Cost (USD): 0.83\n" +
+            "Total Capital Investments (USD): 10,709.39"));
     }
 
     @Test
@@ -90,17 +90,17 @@ public class ProcessRoutingTests extends TestBase {
     public void testViewProcessSteps() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-                .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
-                .openSettings()
-                .openTolerancesTab()
-                .selectAssumeTolerance();
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .openSettings()
+            .openTolerancesTab()
+            .selectAssumeTolerance();
 
         settingsPage = new SettingsPage(driver);
         processPage = settingsPage.save(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-                .costScenario()
-                .openProcessDetails();
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails();
 
         assertThat(processPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
     }

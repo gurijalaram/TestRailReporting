@@ -53,5 +53,4 @@ public class PublishPublicComparisonTests extends TestBase {
 
         assertThat(new ExplorePage(driver).findComparison(testScenarioName).isDisplayed(), is(true));
     }
-
 }
