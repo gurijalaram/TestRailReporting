@@ -45,7 +45,7 @@ public class DeletePrivateComparisonTests extends TestBase {
             .costScenario()
             .selectExploreButton()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison1")
+            .enterComparisonName("DeletePrivateComparisonA")
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -57,11 +57,11 @@ public class DeletePrivateComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison("DeletePrivateComparison1")
+            .highlightComparison("DeletePrivateComparisonA")
             .delete()
             .deleteExploreComparison();
 
-        assertThat(explorePage.getListOfComparisons("DeletePrivateComparison1") < 1, is(true));
+        assertThat(explorePage.getListOfComparisons("DeletePrivateComparisonA") < 1, is(true));
     }
 
     @Test
