@@ -124,7 +124,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ComparisonPage createNewComparison() {
-        newFileDropdown.click();
+        pageUtils.waitForElementAndClick(newFileDropdown);
         pageUtils.waitForElementAndClick(comparisonButton);
         return new ComparisonPage(driver);
     }
