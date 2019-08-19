@@ -43,7 +43,7 @@ public class RevertScenarioTests extends TestBase {
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(evaluatePage.getProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
+        assertThat(evaluatePage.getSelectedProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
     }
 
     @Test
@@ -59,6 +59,6 @@ public class RevertScenarioTests extends TestBase {
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(evaluatePage.getProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
+        assertThat(evaluatePage.getSelectedProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
     }
 }
