@@ -182,7 +182,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        publishScenario();
+        pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
             .selectAssignee(assignee);
