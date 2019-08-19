@@ -10,6 +10,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
