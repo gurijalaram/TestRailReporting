@@ -13,6 +13,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface TestRail {
-    String testCaseId() default "";
+    String[] testCaseId() default "";
     String[] tags() default "";
 }
