@@ -16,6 +16,7 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
     @Description("Testing process group Forging")
     @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupForging() {
@@ -44,12 +46,6 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_001_006-8613190_2.prt.2"))
-            .publishScenario()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_001_006-8613190_2");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
@@ -57,6 +53,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
     @Description("Testing process group Stock Machining")
     @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupStockMachining() {
@@ -81,6 +78,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
     @Description("Testing process group Bar and Tube")
     @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupBarTube() {
@@ -105,6 +103,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
     @Description("Testing process group Casting")
     @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupCasting() {
@@ -129,9 +128,10 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
-    @Description("Testing process group Extrusion")
+    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
+    @Description("Testing process group Plastic Moulding")
     @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupExtrusion() {
+    public void testProcessGroupPlasticMoulding() {
 
         String testScenarioName = scenarioName;
 

@@ -20,8 +20,8 @@ import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
-import org.junit.Test;
 import main.java.utils.TestRail;
+import org.junit.Test;
 
 import java.time.LocalDateTime;
 
