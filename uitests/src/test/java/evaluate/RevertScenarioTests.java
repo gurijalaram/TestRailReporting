@@ -34,11 +34,10 @@ public class RevertScenarioTests extends TestBase {
     public void testRevertSavedScenario() {
 
         String testScenarioName = scenarioName;
-        String partName = "testpart-4";
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
@@ -56,11 +55,10 @@ public class RevertScenarioTests extends TestBase {
     public void testRevertUnsavedScenario() {
 
         String testScenarioName = scenarioName;
-        String partName = "testpart-4";
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
