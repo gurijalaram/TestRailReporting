@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
@@ -30,7 +28,6 @@ public class PreviewPanelTests extends TestBase {
     @Test
     @Description("Test preview panel data is displayed")
     @TestRail(testCaseId = ("{C1102}, {C1103}"))
-    @Severity(SeverityLevel.NORMAL)
     public void testPreviewPanelDisplay() {
 
         String testScenarioName = scenarioName;
