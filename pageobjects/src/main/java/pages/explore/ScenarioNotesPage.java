@@ -156,6 +156,24 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     }
 
     /**
+     * Removes the description
+     * @return current page object
+     */
+    public ScenarioNotesPage deleteDescription() {
+        descriptionInput.clear();
+        return this;
+    }
+
+    /**
+     * Removes the notes
+     * @return current page object
+     */
+    public ScenarioNotesPage deleteNotes() {
+        scenarioNotesInput.clear();
+        return this;
+    }
+
+    /**
      * Selects the apply button
      *
      * @return new page object
