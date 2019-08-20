@@ -65,7 +65,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
      * @return current page object
      */
     public ToleranceSettingsPage selectAssumeTolerance() {
-        assumeDefaultCheckbox.click();
+        pageUtils.waitForElementAndClick(assumeDefaultCheckbox);
         return this;
     }
 

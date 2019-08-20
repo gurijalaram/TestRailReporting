@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -29,7 +27,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process leak test")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessLeakTest() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -48,7 +45,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process xray")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessXray() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -67,7 +63,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process Carburize")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessCarburize() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -86,7 +81,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process Atmosphere Oil Harden")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessAtmosphereOilHarden() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -105,7 +99,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process Standard Anneal")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessStandardAnneal() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -124,7 +117,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process Vacuum Temper")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessVacuumTemper() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -143,7 +135,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process Stress Relief")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessStressRelief() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -162,7 +153,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process Anodize")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessAnodize() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -181,7 +171,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process Paint")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessCertification() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -200,7 +189,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process Paint")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessPaint() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -219,7 +207,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Description("Test secondary process Passivation")
-    @Severity(SeverityLevel.NORMAL)
     public void secondaryProcessPassivation() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

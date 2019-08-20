@@ -11,6 +11,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class SelectStockPage extends LoadableComponent<SelectStockPage> {
 
     private final Logger logger = LoggerFactory.getLogger(SelectStockPage.class);

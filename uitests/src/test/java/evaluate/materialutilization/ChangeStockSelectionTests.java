@@ -5,8 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -16,6 +14,7 @@ import main.java.pages.evaluate.materialutilization.stock.StockPage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -34,8 +33,8 @@ public class ChangeStockSelectionTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C960"}, tags = {"smoke"})
     @Description("Test making changes to the Material Stock, the change is respected and the scenario can be re-cost")
-    @Severity(SeverityLevel.NORMAL)
     public void changeStockSelectionTest() {
         loginPage = new LoginPage(driver);
         stockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -54,8 +53,8 @@ public class ChangeStockSelectionTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C983"}, tags = {"high"})
     @Description("Test inappropriate stock cannot be selected")
-    @Severity(SeverityLevel.NORMAL)
     public void inappropriateStockSelectionTest() {
         loginPage = new LoginPage(driver);
         selectStockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

@@ -93,7 +93,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the part as webelement
      */
     public WebElement findScenario(String scenarioName, String partName) {
-        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
+        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
         return pageUtils.scrollToElement(scenario, componentScroller);
     }
 
@@ -103,7 +103,7 @@ public class ExplorePage extends ExploreHeader {
      * @param partName - name of the part
      */
     public void highlightScenario(String scenarioName, String partName) {
-        By scenario = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
+        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller).click();
     }
 
@@ -114,7 +114,7 @@ public class ExplorePage extends ExploreHeader {
      * @return size of the element as int
      */
     public int getListOfScenarios(String scenarioName, String partName) {
-        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
+        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
         return pageUtils.scrollToElements(scenario, componentScroller).size();
     }
 
@@ -124,7 +124,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenario as webelement
      */
     public WebElement findComparison(String comparisonName) {
-        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        By comparison = By.cssSelector("a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
         return pageUtils.scrollToElement(comparison, componentScroller);
     }
 
@@ -134,7 +134,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenarion as webelement
      */
     public ExplorePage highlightComparison(String comparisonName) {
-        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr");
+        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr");
         pageUtils.scrollToElement(comparison, componentScroller).click();
         return this;
     }
@@ -145,7 +145,7 @@ public class ExplorePage extends ExploreHeader {
      * @return size of the element as int
      */
     public int getListOfComparisons(String comparisonName) {
-        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        By comparison = By.xpath("//div[@title='" + comparisonName.toUpperCase() + "']");
         return pageUtils.scrollToElements(comparison, componentScroller).size();
     }
 
