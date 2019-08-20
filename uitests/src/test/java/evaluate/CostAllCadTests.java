@@ -81,6 +81,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C574"}, tags = {"smoke"})
     @Description("CAD file from all supported CAD formats - Creo")
     public void testCADFormatCreo() {
         loginPage = new LoginPage(driver);
@@ -93,6 +94,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C574"}, tags = {"smoke"})
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
         loginPage = new LoginPage(driver);
@@ -105,6 +107,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C574"}, tags = {"smoke"})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
         loginPage = new LoginPage(driver);
@@ -117,6 +120,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C574"}, tags = {"smoke"})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
         loginPage = new LoginPage(driver);
@@ -129,6 +133,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C574"}, tags = {"smoke"})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParasolid() {
         loginPage = new LoginPage(driver);
@@ -141,12 +146,13 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C574"}, tags = {"smoke"})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SAT"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
