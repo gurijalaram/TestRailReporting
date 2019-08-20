@@ -12,6 +12,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class MaterialCompositionPage extends LoadableComponent<MaterialCompositionPage> {
 
     private final Logger logger = LoggerFactory.getLogger(MaterialCompositionPage.class);

@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -32,7 +30,6 @@ public class PublishExistingCostedTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"C389"}, tags = {"smoke"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
-    @Severity(SeverityLevel.NORMAL)
     public void testPublishExistingCostedScenario() {
 
         String testScenarioName = scenarioName;
@@ -53,6 +50,6 @@ public class PublishExistingCostedTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class);
 
-        assertThat(comparisonTablePage.findComparison(testScenarioName, "testpart-4").isDisplayed(), is(true));
+        assertThat(comparisonTablePage.findScenario(testScenarioName, "testpart-4").isDisplayed(), is(true));
     }
 }

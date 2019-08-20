@@ -39,7 +39,6 @@ public class DeletePublicComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"C430, C442"}, tags = {"smoke"})
     @Description("Test deleting a public comparison from explore tab")
-    @Severity(SeverityLevel.CRITICAL)
     public void testPublicComparisonDelete() {
         String testScenarioName = scenarioName;
 
@@ -55,7 +54,7 @@ public class DeletePublicComparisonTests extends TestBase {
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
-            .selectComparison(testScenarioName, "Machined Box AMERICAS")
+            .selectScenario(testScenarioName, "Machined Box AMERICAS")
             .apply();
 
         genericHeader = new GenericHeader(driver);
@@ -88,7 +87,7 @@ public class DeletePublicComparisonTests extends TestBase {
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class)
-            .selectComparison(testScenarioName, "testpart-4")
+            .selectScenario(testScenarioName, "testpart-4")
             .apply();
 
         genericHeader = new GenericHeader(driver);

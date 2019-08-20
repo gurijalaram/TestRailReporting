@@ -4,8 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -31,7 +29,6 @@ public class PublishPublicComparisonTests extends TestBase {
 
     @Test
     @Description("Test a public comparison can be published")
-    @Severity(SeverityLevel.NORMAL)
     public void testPublishPublicComparison() {
 
         String testScenarioName = scenarioName;

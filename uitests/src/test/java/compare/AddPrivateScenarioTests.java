@@ -33,7 +33,6 @@ public class AddPrivateScenarioTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"C412"}, tags = {"smoke"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
-    @Severity(SeverityLevel.CRITICAL)
     public void filterAddPrivateScenario() {
 
         String testScenarioName = scenarioName;
@@ -51,6 +50,6 @@ public class AddPrivateScenarioTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface")
             .apply(ComparisonTablePage.class);
 
-        assertThat(comparisonTablePage.findComparison(testScenarioName, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface").isDisplayed(), Matchers.is(true));
+        assertThat(comparisonTablePage.findScenario(testScenarioName, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface").isDisplayed(), Matchers.is(true));
     }
 }

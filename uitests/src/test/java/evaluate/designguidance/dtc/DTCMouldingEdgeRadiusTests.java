@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -29,7 +27,6 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
 
     @Test
     @Description("Testing DTC Plastic Moulding Edge Radius Internal")
-    @Severity(SeverityLevel.NORMAL)
     public void testMouldingEdgeInternal() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -45,7 +42,6 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
 
     @Test
     @Description("Testing DTC Plastic Moulding Edge Radius External")
-    @Severity(SeverityLevel.NORMAL)
     public void testMouldingEdgeExternal() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

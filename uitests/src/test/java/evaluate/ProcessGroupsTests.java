@@ -5,8 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
@@ -16,7 +14,6 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -34,9 +31,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
     @Description("Testing process group Forging")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupForging() {
 
         String testScenarioName = scenarioName;
@@ -46,6 +41,12 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_001_006-8613190_2.prt.2"))
+            .publishScenario()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "case_001_006-8613190_2");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
@@ -53,9 +54,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
     @Description("Testing process group Stock Machining")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupStockMachining() {
 
         String testScenarioName = scenarioName;
@@ -78,9 +77,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
     @Description("Testing process group Bar and Tube")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupBarTube() {
 
         String testScenarioName = scenarioName;
@@ -103,9 +100,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
     @Description("Testing process group Casting")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupCasting() {
 
         String testScenarioName = scenarioName;
@@ -128,10 +123,8 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1591"}, tags = {"smoke"})
-    @Description("Testing process group Plastic Moulding")
-    @Severity(SeverityLevel.CRITICAL)
-    public void testProcessGroupPlasticMoulding() {
+    @Description("Testing process group Extrusion")
+    public void testProcessGroupExtrusion() {
 
         String testScenarioName = scenarioName;
 
@@ -154,7 +147,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Filleting")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupFilleting() {
 
         String testScenarioName = scenarioName;
@@ -178,7 +170,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Gear Making")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupGearMaking() {
 
         String testScenarioName = scenarioName;
@@ -202,7 +193,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Machining-Contouring")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupMachiningContouring() {
 
         String testScenarioName = scenarioName;
@@ -226,7 +216,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Machining-Gage Parts")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupMachiningGageParts() {
 
         String testScenarioName = scenarioName;
@@ -250,7 +239,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Machining-Milling-4 Axis Mill")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupMachining4AxisMill() {
 
         String testScenarioName = scenarioName;
@@ -274,7 +262,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Machining-Milling-5 Axis Mill")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupMachining5AxisMill() {
 
         String testScenarioName = scenarioName;
@@ -298,7 +285,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Machining-Milling-Mill Turn")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupMachiningMillTurn() {
 
         String testScenarioName = scenarioName;
@@ -322,7 +308,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Partially Automated Machining")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupPartiallyAutomatedMachining() {
 
         String testScenarioName = scenarioName;
@@ -346,7 +331,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Perimeter Milling")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupPerimeterMilling() {
 
         String testScenarioName = scenarioName;
@@ -370,7 +354,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Pocket Recognition")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupPocketRecognition() {
 
         String testScenarioName = scenarioName;
@@ -394,7 +377,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Pocket Recognition - shared walls")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupPocketRecognitionSharedWalls() {
 
         String testScenarioName = scenarioName;
@@ -418,7 +400,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Rough Milling")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupRoughMilling() {
 
         String testScenarioName = scenarioName;
@@ -442,7 +423,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Slot Examples")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupSlotExamples() {
 
         String testScenarioName = scenarioName;
@@ -466,7 +446,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Turning")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupTurning() {
 
         String testScenarioName = scenarioName;
@@ -490,7 +469,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Blow Molding")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupBlowMolding() {
 
         String testScenarioName = scenarioName;
@@ -514,7 +492,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group PMI")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupPMI() {
 
         String testScenarioName = scenarioName;
@@ -538,7 +515,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Powder Metal")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupPowderMetal() {
 
         String testScenarioName = scenarioName;
@@ -562,7 +538,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Roll Bending")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupRollBending() {
 
         String testScenarioName = scenarioName;
@@ -586,7 +561,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Sheet Metal-Transfer Die")
-    @Severity(SeverityLevel.CRITICAL)
     public void testProcessGroupTransferDie() {
 
         String testScenarioName = scenarioName;

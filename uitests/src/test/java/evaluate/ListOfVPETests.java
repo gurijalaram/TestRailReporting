@@ -29,7 +29,6 @@ public class ListOfVPETests extends TestBase {
 
     @Test
     @Description("Get List of VPEs")
-    @Severity(SeverityLevel.CRITICAL)
     public void getVPEsList() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

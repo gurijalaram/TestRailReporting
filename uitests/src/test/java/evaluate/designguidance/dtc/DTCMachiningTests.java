@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -29,7 +27,6 @@ public class DTCMachiningTests extends TestBase {
 
     @Test
     @Description("Testing DTC Machining Keyseat Mill")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCKeyseat() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -45,7 +42,6 @@ public class DTCMachiningTests extends TestBase {
 
     @Test
     @Description("Testing DTC Machining Curved Surface")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCCurvedSurface() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -61,7 +57,6 @@ public class DTCMachiningTests extends TestBase {
 
     @Test
     @Description("Testing DTC Machining Sharp Corner")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCSharpCorner() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -77,7 +72,6 @@ public class DTCMachiningTests extends TestBase {
 
     @Test
     @Description("Testing DTC Machining Side Milling")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCSideMilling() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -93,7 +87,6 @@ public class DTCMachiningTests extends TestBase {
 
     @Test
     @Description("Testing DTC Machining Missing Setups")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCMissingSetup() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -109,7 +102,6 @@ public class DTCMachiningTests extends TestBase {
 
     @Test
     @Description("Testing DTC Machining Planar Face")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCPlanarFace() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
