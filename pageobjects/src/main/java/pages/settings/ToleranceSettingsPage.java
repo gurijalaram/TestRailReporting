@@ -92,7 +92,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
      * @return current page object
      */
     public ToleranceSettingsPage selectUseCADModel() {
-        cadModelCheckbox.click();
+        pageUtils.waitForElementAndClick(cadModelCheckbox);
         return this;
     }
 
