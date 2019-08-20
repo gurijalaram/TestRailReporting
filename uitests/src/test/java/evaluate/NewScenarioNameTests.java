@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
@@ -32,7 +30,6 @@ public class NewScenarioNameTests extends TestBase {
 
     @Test
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
-    @Severity(SeverityLevel.NORMAL)
     public void testEnterNewScenarioName() {
 
         String testScenarioName = scenarioName;
@@ -52,7 +49,6 @@ public class NewScenarioNameTests extends TestBase {
 
     @Test
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
-    @Severity(SeverityLevel.NORMAL)
     public void testPublishEnterNewScenarioName() {
 
         String testScenarioName = scenarioName;

@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class StockPage extends LoadableComponent<StockPage> {
 
     private final Logger logger = LoggerFactory.getLogger(StockPage.class);

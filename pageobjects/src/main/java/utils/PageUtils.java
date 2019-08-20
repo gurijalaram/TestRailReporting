@@ -497,10 +497,14 @@ public class PageUtils {
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
+        waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
             .ignoring(StaleElementReferenceException.class)
             .until((WebDriver driver) -> {
                 new Select(locator).selectByVisibleText(dropdownOption);
+                if (!new Select(locator).getFirstSelectedOption().equals(dropdownOption)) {
+                    new Select(locator).selectByVisibleText(dropdownOption);
+                }
                 return true;
             });
     }
@@ -535,6 +539,7 @@ public class PageUtils {
      * @param locator - the locator of the element
      */
     public void waitForElementAndClick(WebElement locator) {
+        waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
             .ignoreAll(Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class, StaleElementReferenceException.class, ElementNotInteractableException.class))
             .until((WebDriver webDriver) -> {

@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -31,7 +29,6 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
     @Test
     @Description("Test a public scenario can be deleted from the component table")
-    @Severity(SeverityLevel.NORMAL)
     public void testDeletePublicScenarioIteration() {
         String testScenarioName = scenarioName;
 
@@ -56,7 +53,6 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
     @Test
     @Description("Test a public scenario can be deleted from the component table")
-    @Severity(SeverityLevel.NORMAL)
     public void testDeletePrivateScenarioIteration() {
         String testScenarioName = scenarioName;
 

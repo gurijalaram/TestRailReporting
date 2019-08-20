@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
@@ -35,7 +33,6 @@ public class DeletePrivateComparisonTests extends TestBase {
 
     @Test
     @Description("Test a private comparison can be deleted from the explore page")
-    @Severity(SeverityLevel.NORMAL)
     public void testDeletePrivateScenario() {
 
         String testScenarioName = scenarioName;
@@ -52,7 +49,7 @@ public class DeletePrivateComparisonTests extends TestBase {
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
-            .selectComparison(testScenarioName, "Machined Box AMERICAS")
+            .selectScenario(testScenarioName, "Machined Box AMERICAS")
             .apply();
 
         genericHeader = new GenericHeader(driver);
@@ -68,7 +65,6 @@ public class DeletePrivateComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"C430"}, tags = {"smoke"})
     @Description("Test a private comparison can be deleted from the comparison page")
-    @Severity(SeverityLevel.NORMAL)
     public void deletePrivateComparison() {
 
         loginPage = new LoginPage(driver);

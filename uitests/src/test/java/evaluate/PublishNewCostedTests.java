@@ -30,7 +30,6 @@ public class PublishNewCostedTests extends TestBase {
 
     @Test
     @Description("Edit & publish an existing unlocked scenario from the Public Workspace back to the Public Workspace")
-    @Severity(SeverityLevel.NORMAL)
     public void testPublishNewCostedScenario() {
 
         String testScenarioName = scenarioName;
