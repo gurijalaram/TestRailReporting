@@ -50,7 +50,7 @@ public class DTCMachiningTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "CurvedSurface", "CurvedSurface:1");
+            .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Curved Surfaces", "CurvedSurface:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Feature contains a sharp corner"));
     }
@@ -110,7 +110,7 @@ public class DTCMachiningTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "PlanarFace", "PlanarFace:9");
+            .selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "Planar Faces", "PlanarFace:9");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Feature is obstructed"));
     }
