@@ -33,8 +33,6 @@ public class RevertScenarioTests extends TestBase {
     @TestRail(testCaseId = ("{C585}"))
     public void testRevertSavedScenario() {
 
-        String testScenarioName = scenarioName;
-
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
@@ -53,8 +51,6 @@ public class RevertScenarioTests extends TestBase {
     @Description("Test revert unsaved scenario")
     @TestRail(testCaseId = ("{C586}"))
     public void testRevertUnsavedScenario() {
-
-        String testScenarioName = scenarioName;
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
