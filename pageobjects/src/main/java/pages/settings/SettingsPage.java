@@ -63,7 +63,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
      * @return new page object
      */
     public ToleranceSettingsPage openTolerancesTab() {
-        tolerancesButton.click();
+        pageUtils.waitForElementAndClick(tolerancesButton);
         return new ToleranceSettingsPage(driver);
     }
 

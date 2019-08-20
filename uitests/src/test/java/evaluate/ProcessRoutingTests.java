@@ -57,7 +57,6 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"C645"}, tags = {"high"})
     @Description("View detailed information about costed process")
-    @Severity(SeverityLevel.CRITICAL)
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -83,7 +82,6 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"C646"}, tags = {"medium"})
     @Description("View individual process steps")
-    @Severity(SeverityLevel.NORMAL)
     public void testViewProcessSteps() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

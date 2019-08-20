@@ -102,8 +102,8 @@ public class GenericHeader extends PageHeader {
      * @return current page object
      */
     public EvaluatePage uploadFile(String scenarioName, File filePath) {
-        newFileDropdown.click();
-        componentButton.click();
+        pageUtils.waitForElementAndClick(newFileDropdown);
+        pageUtils.waitForElementAndClick(componentButton);
         return new FileUploadPage(driver).uploadFile(scenarioName, filePath);
     }
 
