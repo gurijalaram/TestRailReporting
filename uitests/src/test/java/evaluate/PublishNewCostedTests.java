@@ -45,7 +45,7 @@ public class PublishNewCostedTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C400, C401, C402"})
+    @TestRail(testCaseId = {"C400, C401, C402, C404"})
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
 
