@@ -87,7 +87,6 @@ public class SecondaryProcessTests extends TestBase {
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .openMaterialCompositionTable()
-            .type("All")
             .selectMaterialComposition("ASTM A148 Grade 105-85")
             .apply()
             .openSecondaryProcess()
