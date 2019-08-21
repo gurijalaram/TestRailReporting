@@ -118,16 +118,4 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     public String getSelectionTableDetails() {
         return pageUtils.waitForElementToAppear(processSelectionTable).getText();
     }
-
-    public ProcessPage selectProcessChart(String process) {
-        cycleTimeCharts.forEach(cycle -> pageUtils.actionClick(cycle));
-
-        for (WebElement cycleTimeChart : cycleTimeCharts) {
-            pageUtils.actionClick(cycleTimeChart);
-            if (processStep.getText().equalsIgnoreCase(process)) {
-                break;
-            }
-        }
-        return this;
-    }
 }
