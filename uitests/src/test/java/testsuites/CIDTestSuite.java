@@ -22,6 +22,7 @@ import test.java.evaluate.PublishNewCostedTests;
 import test.java.evaluate.ReCostScenarioTests;
 import test.java.evaluate.RevertScenarioTests;
 import test.java.evaluate.SecondaryProcessTests;
+import test.java.evaluate.designguidance.dtc.DTCCastingTests;
 import test.java.evaluate.designguidance.dtc.DTCMachiningTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingDraftTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
@@ -66,7 +67,8 @@ import test.java.login.LoginTests;
     ProcessGroupsTests.class,
     TableHeadersTests.class,
     ProcessRoutingTests.class,
-    ActionsTests.class
+    ActionsTests.class,
+    DTCCastingTests.class,
 })
 public class CIDTestSuite {
 }
