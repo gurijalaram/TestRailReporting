@@ -32,7 +32,7 @@ public class PublishNewCostedTests extends TestBase {
     public void testPublishNewCostedScenario() {
 
         String testScenarioName = scenarioName;
-        String partName = partName;
+        String partName = "Testpart-4";
 
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -45,20 +45,21 @@ public class PublishNewCostedTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C400, C401, C402"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"C400, C401, C402"})
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
 
         String testScenarioName = scenarioName;
+        String partName = "Testpart-4";
 
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario("Analysis", "Low", "Abe Chaves")
             .selectPublishButton();
 
-        assertThat(explorePage.findComparison(testScenarioName).isDisplayed(), is(true));
+        assertThat(explorePage.findScenario(testScenarioName, partName).isDisplayed(), is(true));
     }
 }
