@@ -27,7 +27,6 @@ public class FilterCriteriaTests extends TestBase {
         super();
     }
 
-    @SuppressWarnings("checkstyle:MethodParamPad")
     @Test
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
@@ -107,12 +106,21 @@ public class FilterCriteriaTests extends TestBase {
     @Test
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "15136")
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .costScenario()
+            .publishScenario();
+
+        explorePage = new ExplorePage(driver);
+        explorePage.filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "Push Pin")
             .apply(ExplorePage.class);
-        //Assert.assertFalse();
+
+        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin") > 0, is(true));
     }
 
     @Test
