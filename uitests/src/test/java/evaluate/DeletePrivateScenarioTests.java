@@ -38,6 +38,9 @@ public class DeletePrivateScenarioTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
             .selectExploreButton()
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
         explorePage = new ExplorePage(driver);
