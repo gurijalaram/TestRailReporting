@@ -13,7 +13,6 @@ import test.java.evaluate.CostAllCadTests;
 import test.java.evaluate.DeletePrivateScenarioTests;
 import test.java.evaluate.DeletePublicScenarioTests;
 import test.java.evaluate.DeleteScenarioIterationsTests;
-import test.java.evaluate.EvaluateTests;
 import test.java.evaluate.ListOfVPETests;
 import test.java.evaluate.NewScenarioNameTests;
 import test.java.evaluate.ProcessGroupsTests;
@@ -44,7 +43,6 @@ import test.java.login.LoginTests;
     DTCMouldingEdgeRadiusTests.class,
     DTCMouldingPartThicknessTests.class,
     ThreadTests.class,
-    EvaluateTests.class,
     SecondaryProcessTests.class,
     FilterCriteriaTests.class,
     LoginTests.class,

@@ -171,7 +171,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Description("Test secondary process Paint")
+    @Description("Test secondary process Certification")
     public void secondaryProcessCertification() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
