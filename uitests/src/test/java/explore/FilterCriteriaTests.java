@@ -10,6 +10,7 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,6 +29,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C2276"}, tags = {"smoke"})
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
 
@@ -104,6 +106,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C2277"}, tags = {"smoke"})
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
         String testScenarioName = scenarioName;
