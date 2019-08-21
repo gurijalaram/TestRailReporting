@@ -84,7 +84,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("03229_0032_002_A.stp"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("case_010_lam_15-435508-00.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
