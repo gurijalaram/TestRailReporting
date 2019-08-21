@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
@@ -28,7 +26,7 @@ public class DeletePrivateScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C393"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"C393, C587"}, tags = {"smoke"})
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
 
