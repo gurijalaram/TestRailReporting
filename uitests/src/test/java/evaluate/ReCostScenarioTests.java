@@ -94,7 +94,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-
+    @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
 
@@ -110,6 +110,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
 
