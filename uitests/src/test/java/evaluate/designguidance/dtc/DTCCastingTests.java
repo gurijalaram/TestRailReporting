@@ -71,4 +71,22 @@ public class DTCCastingTests extends TestBase {
         guidancePage.selectIssueTypeAndGCD("Machining Issues", "Obstructed Surfaces", "PlanarFace:4");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Facing: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry."));
     }
+
+    @Test
+    @TestRail(testCaseId = {"C1044"}, tags = {"smoke"})
+    @Description("Validate Tolerance counts are correct for DTC Casting")
+    public void tolCountCastingDTC() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario();
+        //assertThat(evaluatePage);
+    }
 }
