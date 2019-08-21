@@ -90,7 +90,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterialComposition("ASTM A148 Grade 105-85")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Atmosphere Oil Harden")
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden")
             .apply()
             .costScenario();
 
@@ -170,7 +170,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Description("Test secondary process Paint")
+    @Description("Test secondary process Certification")
     public void secondaryProcessCertification() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

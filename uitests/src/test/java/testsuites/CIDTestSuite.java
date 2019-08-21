@@ -13,7 +13,6 @@ import test.java.evaluate.CostAllCadTests;
 import test.java.evaluate.DeletePrivateScenarioTests;
 import test.java.evaluate.DeletePublicScenarioTests;
 import test.java.evaluate.DeleteScenarioIterationsTests;
-import test.java.evaluate.EvaluateTests;
 import test.java.evaluate.ListOfVPETests;
 import test.java.evaluate.NewScenarioNameTests;
 import test.java.evaluate.ProcessGroupsTests;
@@ -23,6 +22,7 @@ import test.java.evaluate.PublishNewCostedTests;
 import test.java.evaluate.ReCostScenarioTests;
 import test.java.evaluate.RevertScenarioTests;
 import test.java.evaluate.SecondaryProcessTests;
+import test.java.evaluate.designguidance.dtc.DTCCastingTests;
 import test.java.evaluate.designguidance.dtc.DTCMachiningTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingDraftTests;
 import test.java.evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
@@ -44,7 +44,6 @@ import test.java.login.LoginTests;
     DTCMouldingEdgeRadiusTests.class,
     DTCMouldingPartThicknessTests.class,
     ThreadTests.class,
-    EvaluateTests.class,
     SecondaryProcessTests.class,
     FilterCriteriaTests.class,
     LoginTests.class,
@@ -68,7 +67,8 @@ import test.java.login.LoginTests;
     ProcessGroupsTests.class,
     TableHeadersTests.class,
     ProcessRoutingTests.class,
-    ActionsTests.class
+    ActionsTests.class,
+    DTCCastingTests.class,
 })
 public class CIDTestSuite {
 }
