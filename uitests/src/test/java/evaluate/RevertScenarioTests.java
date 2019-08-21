@@ -10,9 +10,9 @@ import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -22,7 +22,6 @@ public class RevertScenarioTests extends TestBase {
     private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
-    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
 
     public RevertScenarioTests() {
@@ -31,7 +30,9 @@ public class RevertScenarioTests extends TestBase {
 
     @Test
     @Description("Test revert saved scenario")
+    @TestRail(testCaseId = ("{C585}"))
     public void testRevertSavedScenario() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
@@ -48,7 +49,9 @@ public class RevertScenarioTests extends TestBase {
 
     @Test
     @Description("Test revert unsaved scenario")
+    @TestRail(testCaseId = ("{C586}"))
     public void testRevertUnsavedScenario() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))

@@ -9,6 +9,7 @@ import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -26,12 +27,17 @@ public class PreviewPanelTests extends TestBase {
 
     @Test
     @Description("Test preview panel data is displayed")
-    public void testLogin() {
+    @TestRail(testCaseId = ("{C1102}, {C1103}"))
+    public void testPreviewPanelDisplay() {
+
+        String testScenarioName = scenarioName;
+        String partName = "Casting";
+
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectExploreButton()
-            .highlightScenario("Preview Panel", "Casting");
+            .highlightScenario(scenarioName, partName);
 
         explorePage = new ExplorePage(driver);
         explorePage.openPreviewPanel();
