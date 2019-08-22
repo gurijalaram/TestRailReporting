@@ -40,6 +40,15 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @FindBy(css = "[data-ap-scope='processSelection'] .table")
     private WebElement processSelectionTable;
 
+    @FindBy(css = "g.highcharts-series rect")
+    private List<WebElement> cycleTimeCharts;
+
+    @FindBy(css = "g.highcharts-label .highcharts-text-outline")
+    private List<WebElement> chartValues;
+
+    @FindBy(css = "label[data-ap-field='processStep']")
+    private WebElement processStep;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -63,6 +72,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Selects the contribution dropdown
+     *
      * @param contribution - the contribution
      * @return current page object
      */
@@ -73,6 +83,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Selects the routing button
+     *
      * @return current page object
      */
     public RoutingsPage selectRoutingsButton() {
@@ -82,6 +93,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Select the secondary process button
+     *
      * @return new page object
      */
     public SecondaryProcessPage selectSecondaryProcessButton() {
@@ -91,6 +103,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Gets list of routing labels
+     *
      * @return list of strings
      */
     public List<String> getRoutingLabels() {
@@ -99,6 +112,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Gets details of process selection table
+     *
      * @return list as string
      */
     public String getSelectionTableDetails() {

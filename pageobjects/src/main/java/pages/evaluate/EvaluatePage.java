@@ -122,6 +122,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
+        pageUtils.waitForElementToBeClickable(processGroupDropdown);
         pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
         return this;
     }

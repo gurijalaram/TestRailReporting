@@ -66,7 +66,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
      * @return current page object
      */
     public MaterialCompositionPage type(String type) {
-        new Select(typeDropdown).selectByVisibleText(type);
+        pageUtils.selectDropdownOption(typeDropdown, type);
         return this;
     }
 
@@ -81,11 +81,14 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
         return this;
     }
 
-    /** Selects the material name
+    /**
+     * Selects the material name
+     *
      * @param materialName - the material name
      * @return current page object
      */
     public MaterialCompositionPage selectMaterialComposition(String materialName) {
+        setCompositionTableTopOfPage();
         By material = By.xpath("//div[@data-ap-comp='materialSelectionTable']//tbody//td[.='" + materialName + "']");
         pageUtils.scrollToElement(material, materialScroller).click();
         return this;
@@ -109,5 +112,15 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
     public EvaluatePage cancel() {
         cancelButton.click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Sets the scroll the scrollbar to the top of the page by selecting the first option in the dropdown
+     */
+    private void setCompositionTableTopOfPage() {
+        new Select(typeDropdown).getOptions()
+            .stream()
+            .filter(option -> option.getText().equalsIgnoreCase("All"))
+            .forEach(WebElement::click);
     }
 }
