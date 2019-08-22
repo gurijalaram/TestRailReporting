@@ -118,4 +118,27 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     public String getSelectionTableDetails() {
         return pageUtils.waitForElementToAppear(processSelectionTable).getText();
     }
+
+    /**
+     * Selects process chart based on the process tab info
+     * @param process - the process
+     * @return current page object
+     */
+    public ProcessPage selectProcessChart(String process) {
+        for (WebElement cycleTimeChart : cycleTimeCharts) {
+            pageUtils.waitForElementAndClick(cycleTimeChart);
+            if (processStep.getText().equalsIgnoreCase(process)) {
+                break;
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Gets the process percentage value
+     * @return chart values as string list
+     */
+    public List<String> getProcessPercentage() {
+        return chartValues.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
 }
