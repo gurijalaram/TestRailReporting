@@ -10,6 +10,7 @@ import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -26,8 +27,9 @@ public class DeletePublicScenarioTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C587"}, tags = {"smoke"})
     @Description("Test a public scenario can be deleted from the component table")
-    public void testDeletePrivateScenario() {
+    public void testDeletePublicScenario() {
 
         String testScenarioName = scenarioName;
 
