@@ -497,7 +497,6 @@ public class PageUtils {
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
-        waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
             .ignoring(StaleElementReferenceException.class)
             .until((WebDriver driver) -> {
@@ -567,6 +566,17 @@ public class PageUtils {
      */
     public <T> Boolean checkElementVisibleByBoolean(List<T> locator) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
+    }
+
+    /**
+     * Checks the element's size on the page is greater than 0 and returns true/false
+     *
+     * @param locator - the element as list
+     * @return true/false
+     */
+    public <T> Boolean checkElementVisibleByBoolean(List<T> locator, int timeOut) {
+        WebDriverWait wait = new WebDriverWait(driver, timeOut);
         return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
     }
 

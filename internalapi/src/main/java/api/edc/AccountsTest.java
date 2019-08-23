@@ -1,0 +1,198 @@
+package main.java.api.edc;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import main.java.api.edc.util.UserDataEDC;
+import main.java.api.edc.util.UserTestDataUtil;
+import main.java.http.builder.common.response.common.AccountStatus;
+import main.java.http.builder.common.response.common.Accounts;
+import main.java.http.builder.common.response.common.AccountsStatusWrapper;
+import main.java.http.builder.service.HTTPRequest;
+import main.java.http.enums.common.api.AccountEndpointEnum;
+import org.apache.http.HttpStatus;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+public class AccountsTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(AccountStatus.class);
+
+    private static UserDataEDC userData;
+
+    @BeforeClass
+    public static void setUp() {
+        userData = new UserTestDataUtil().initEmptyUser();
+
+        final AccountStatus accountStatus = getActiveAccount();
+
+        userData.setIdentity(accountStatus.getIdentity());
+        userData.setAccountId(accountStatus.getAccountId());
+    }
+
+    @Test
+    @Description("Test get accounts")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetAccounts() {
+        new HTTPRequest().unauthorized()
+                .customizeRequest()
+                .setHeaders(userData.getAuthorizationHeaders())
+                .setEndpoint(AccountEndpointEnum.GET_ACCOUNTS)
+                .setReturnType(Accounts.class)
+                .commitChanges()
+                .connect()
+                .get();
+    }
+
+    @Test
+    @Description("Test update account")
+    @Severity(SeverityLevel.NORMAL)
+    public void testUpdateAccount() {
+        final AccountStatus accountStatus = createAndActivateNewAccount("TestNameForUpd", "TestSecretForUpd");
+
+        try {
+            final String newName = "NEW NAME FOR UPDATE";
+
+            updateAccount(accountStatus.getIdentity(),
+                          accountStatus.setName(newName)
+            );
+
+            Assert.assertEquals("The user name, should be updated",
+                                getActiveAccount().getName(),
+                                newName);
+
+        } catch (Exception e) {
+            activateDefaultUserAndDeleteAnotherByIdentity(accountStatus.getIdentity());
+        }
+    }
+
+    @Test
+    @Description("Test get account status by identity")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetAccountByIdentity() {
+        final AccountStatus receivedAccountsStatus = getAccountByIdentity(userData.getIdentity());
+
+        Assert.assertEquals("Search identity and received identity, should be the same",
+                userData.getIdentity(),
+                receivedAccountsStatus.getIdentity());
+    }
+
+    @Test
+    @Description("Test create, activate and delete new account")
+    @Severity(SeverityLevel.NORMAL)
+    public void testCreateActivateAndDeleteNewAccount() {
+        AccountStatus createdAccount = createAndActivateNewAccount("TestNameForActive", "ActiveSecret");
+
+        activateDefaultUserAndDeleteAnotherByIdentity(createdAccount.getIdentity());
+    }
+
+    @Test
+    @Description("Test get account status")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetAccountActive() {
+        getActiveAccount();
+    }
+
+    private AccountStatus createAndActivateNewAccount(String name, String secret) {
+        return activateAccount(
+                createNewAccount(name, secret).getIdentity()
+        );
+    }
+
+    private void activateDefaultUserAndDeleteAnotherByIdentity(String identity) {
+        activateAccount(userData.getIdentity());
+        deleteAccountByIdentity(identity);
+    }
+
+    private static AccountStatus getActiveAccount() {
+        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+                .customizeRequest()
+                .setHeaders(userData.getAuthorizationHeaders())
+                .setEndpoint(AccountEndpointEnum.GET_ACTIVE_USER)
+                .setReturnType(AccountsStatusWrapper.class)
+                .commitChanges()
+                .connect()
+                .get();
+
+        return accountsStatusWrapper.getAccountStatus();
+    }
+
+    private AccountStatus getAccountByIdentity(String identity) {
+        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+                .customizeRequest()
+                .setHeaders(userData.getAuthorizationHeaders())
+                .setEndpoint(AccountEndpointEnum.GET_ACCOUNTS_BY_IDENTITY)
+                .setInlineVariables(identity)
+                .setReturnType(AccountsStatusWrapper.class)
+                .commitChanges()
+                .connect()
+                .get();
+
+        return accountsStatusWrapper.getAccountStatus();
+    }
+
+    private AccountStatus activateAccount(String identity) {
+        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+                .customizeRequest()
+                .setHeaders(userData.getAuthorizationHeaders())
+                .setEndpoint(AccountEndpointEnum.ACTIVATE_ACCOUNTS_BY_IDENTITY)
+                .setInlineVariables(identity)
+                .setReturnType(AccountsStatusWrapper.class)
+                .setStatusCode(HttpStatus.SC_OK)
+                .commitChanges()
+                .connect()
+                .post();
+
+        return accountsStatusWrapper.getAccountStatus();
+    }
+
+    private AccountStatus updateAccount(final String identity, final AccountStatus accountStatus) {
+        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+                .customizeRequest()
+                .setHeaders(userData.getAuthorizationHeaders())
+                .setEndpoint(AccountEndpointEnum.UPDATE_ACCOUNTS_BY_IDENTITY)
+                .setInlineVariables(identity)
+                .setBody(accountStatus)
+                .setReturnType(AccountsStatusWrapper.class)
+                .commitChanges()
+                .connect()
+                .patch();
+
+        return accountsStatusWrapper.getAccountStatus();
+    }
+
+    private AccountStatus createNewAccount(String testNameForActive, String activeSecret) {
+        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+                .customizeRequest()
+                .setHeaders(userData.getAuthorizationHeaders())
+                .setEndpoint(AccountEndpointEnum.POST_ACCOUNTS)
+                .setBody(new AccountStatus()
+                        .setAccountId("Apriori")
+                        .setType("Silicon Expert")
+                        .setName(testNameForActive)
+                        .setAccountSecret(activeSecret))
+                .setReturnType(AccountsStatusWrapper.class)
+                .setStatusCode(HttpStatus.SC_CREATED)
+                .commitChanges()
+                .connect()
+                .post();
+
+        return accountsStatusWrapper.getAccountStatus();
+    }
+
+    private void deleteAccountByIdentity(String identity) {
+        new HTTPRequest().unauthorized()
+                .customizeRequest()
+                .setHeaders(userData.getAuthorizationHeaders())
+                .setEndpoint(AccountEndpointEnum.DELETE_ACCOUNTS_BY_IDENTITY)
+                .setInlineVariables(identity)
+                .setStatusCode(HttpStatus.SC_NO_CONTENT)
+                .commitChanges()
+                .connect()
+                .delete();
+    }
+}

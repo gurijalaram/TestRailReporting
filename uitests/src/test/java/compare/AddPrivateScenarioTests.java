@@ -3,9 +3,8 @@ package test.java.compare;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparePage;
@@ -16,11 +15,7 @@ import main.java.utils.TestRail;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class AddPrivateScenarioTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
@@ -35,7 +30,7 @@ public class AddPrivateScenarioTests extends TestBase {
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         comparisonTablePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

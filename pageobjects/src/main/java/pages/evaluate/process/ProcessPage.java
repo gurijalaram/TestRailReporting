@@ -2,6 +2,7 @@ package main.java.pages.evaluate.process;
 
 import main.java.pages.evaluate.SecondaryProcessPage;
 import main.java.utils.PageUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author cfrith
@@ -40,6 +42,18 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @FindBy(css = "[data-ap-scope='processSelection'] .table")
     private WebElement processSelectionTable;
 
+    @FindBy(css = "g.highcharts-series rect")
+    private List<WebElement> cycleTimeCharts;
+
+    @FindBy(css = "g.highcharts-label .highcharts-text-outline")
+    private List<WebElement> chartValues;
+
+    @FindBy(css = "g.highcharts-label .highcharts-text-outline")
+    private WebElement chartValue;
+
+    @FindBy(css = "label[data-ap-field='processStep']")
+    private WebElement processStep;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -63,6 +77,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Selects the contribution dropdown
+     *
      * @param contribution - the contribution
      * @return current page object
      */
@@ -73,6 +88,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Selects the routing button
+     *
      * @return current page object
      */
     public RoutingsPage selectRoutingsButton() {
@@ -82,6 +98,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Select the secondary process button
+     *
      * @return new page object
      */
     public SecondaryProcessPage selectSecondaryProcessButton() {
@@ -91,6 +108,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Gets list of routing labels
+     *
      * @return list of strings
      */
     public List<String> getRoutingLabels() {
@@ -99,9 +117,38 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     /**
      * Gets details of process selection table
+     *
      * @return list as string
      */
     public String getSelectionTableDetails() {
         return pageUtils.waitForElementToAppear(processSelectionTable).getText();
+    }
+
+    /**
+     * Gets the index position of the chart label and selects the chart based on this index
+     *
+     * @param process - the process
+     * @return current page object
+     */
+    public ProcessPage selectProcessChart(String process) {
+        pageUtils.waitForElementToAppear(chartValue);
+
+        int position = IntStream.range(0, routingLabels.size())
+            .filter(label -> routingLabels.get(label).getText().equals(process))
+            .findFirst().getAsInt() + 1;
+
+        WebElement chart = driver.findElement(By.cssSelector("g.highcharts-series rect:nth-of-type(\n" + position));
+        pageUtils.actionClick(chart);
+        return this;
+    }
+
+    /**
+     * Gets the process percentage value
+     *
+     * @return chart values as string list
+     */
+    public List<String> getProcessPercentage() {
+        pageUtils.waitForElementToAppear(chartValue);
+        return chartValues.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 }

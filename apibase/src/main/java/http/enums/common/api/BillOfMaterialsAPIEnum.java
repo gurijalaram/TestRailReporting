@@ -4,7 +4,7 @@ import main.java.http.enums.common.EdcQaAPI;
 
 public enum BillOfMaterialsAPIEnum implements EdcQaAPI {
 
-    GET_ACCOUNTS_STATUS("accounts/status"),
+    GET_ACCOUNTS_STATUS("accounts/active"),
     GET_BILL_OF_METERIALS("bill-of-materials"),
     POST_BILL_OF_METERIALS("bill-of-materials"),
     DELETE_BILL_OF_METERIALS_IDENTITY("bill-of-materials/%s"),

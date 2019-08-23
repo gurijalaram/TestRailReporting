@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.header.GenericHeader;
@@ -16,8 +17,6 @@ import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class DeletePrivateComparisonTests extends TestBase {
 
     private LoginPage loginPage;
@@ -25,17 +24,16 @@ public class DeletePrivateComparisonTests extends TestBase {
     private ComparePage comparePage;
     private GenericHeader genericHeader;
 
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
-
     public DeletePrivateComparisonTests() {
         super();
     }
 
     @Test
+    @TestRail(testCaseId = {"C433"}, tags = {"high"})
     @Description("Test a private comparison can be deleted from the explore page")
     public void testDeletePrivateScenario() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
