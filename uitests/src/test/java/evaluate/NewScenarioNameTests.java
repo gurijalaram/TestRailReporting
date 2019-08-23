@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.pages.evaluate.EvaluatePage;
@@ -14,11 +15,7 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class NewScenarioNameTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -32,12 +29,12 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        new ExplorePage(driver).uploadFile(scenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
+        new ExplorePage(driver).uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.createNewScenario()
@@ -51,13 +48,13 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile(scenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+        evaluatePage = explorePage.uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .createNewScenario()

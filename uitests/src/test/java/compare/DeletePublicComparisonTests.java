@@ -7,7 +7,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.ProcessGroupEnum;
+import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.header.GenericHeader;
@@ -20,11 +20,7 @@ import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class DeletePublicComparisonTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -40,7 +36,7 @@ public class DeletePublicComparisonTests extends TestBase {
     @TestRail(testCaseId = {"C430, C442"}, tags = {"smoke"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDelete() {
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -73,7 +69,7 @@ public class DeletePublicComparisonTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     public void deletePublicComparisonPage() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

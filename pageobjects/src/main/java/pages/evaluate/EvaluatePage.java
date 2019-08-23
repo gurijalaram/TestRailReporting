@@ -122,6 +122,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
+        pageUtils.waitForElementToBeClickable(processGroupDropdown);
         pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
         return this;
     }
@@ -177,6 +178,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return the details as string
      */
     public boolean getProcessRoutingDetails(String text) {
+        pageUtils.waitForElementToAppear(processRoutingName);
         return pageUtils.checkElementContains(processRoutingName, text);
     }
 

@@ -7,6 +7,7 @@ import static org.hamcrest.core.StringContains.containsString;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.CurrencyEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -20,11 +21,7 @@ import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class ProcessRoutingTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ProcessPage processPage;
@@ -41,7 +38,7 @@ public class ProcessRoutingTests extends TestBase {
     public void testAlternateRoutingSelection() {
         loginPage = new LoginPage(driver);
         processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
@@ -60,7 +57,7 @@ public class ProcessRoutingTests extends TestBase {
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .openSettings()
             .changeCurrency(CurrencyEnum.USD.getCurrency())
             .openTolerancesTab()
@@ -85,7 +82,7 @@ public class ProcessRoutingTests extends TestBase {
     public void testViewProcessSteps() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .openSettings()
             .openTolerancesTab()
             .selectAssumeTolerance();

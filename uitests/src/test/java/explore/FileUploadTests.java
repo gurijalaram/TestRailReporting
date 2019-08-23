@@ -2,16 +2,13 @@ package test.java.explore;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class FileUploadTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
 
@@ -24,6 +21,6 @@ public class FileUploadTests extends TestBase {
     public void testFileUpload() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"));
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"));
     }
 }

@@ -66,6 +66,16 @@ public class EvaluateHeader extends GenericHeader {
         return pageUtils.checkElementVisibleByBoolean(costLabelPopoverElement);
     }
 
+
+    /**
+     * Wait for cost label popover
+     * @param timeOut - timeout in milliseconds
+     * @return
+     */
+    public boolean checkCostLabelAppears(int timeOut) {
+        return pageUtils.checkElementVisibleByBoolean(costLabelPopoverElement, timeOut);
+    }
+
     /**
      * Gets cost label
      *

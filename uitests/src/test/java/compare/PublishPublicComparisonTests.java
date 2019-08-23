@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparePage;
@@ -14,11 +15,7 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class PublishPublicComparisonTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ComparePage comparePage;
@@ -31,7 +28,7 @@ public class PublishPublicComparisonTests extends TestBase {
     @Description("Test a public comparison can be published")
     public void testPublishPublicComparison() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasItems;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.ColumnsEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -17,11 +18,7 @@ import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class ActionsTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private ScenarioNotesPage scenarioNotesPage;
@@ -31,7 +28,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -59,7 +56,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
