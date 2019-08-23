@@ -45,11 +45,11 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @FindBy(css = "g.highcharts-series rect")
     private List<WebElement> cycleTimeCharts;
 
-    @FindBy(css = "g.highcharts-series rect")
-    private WebElement cycleTimeChart;
-
     @FindBy(css = "g.highcharts-label .highcharts-text-outline")
     private List<WebElement> chartValues;
+
+    @FindBy(css = "g.highcharts-label .highcharts-text-outline")
+    private WebElement chartValue;
 
     @FindBy(css = "label[data-ap-field='processStep']")
     private WebElement processStep;
@@ -131,10 +131,10 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @return current page object
      */
     public ProcessPage selectProcessChart(String process) {
-        pageUtils.waitForElementToAppear(cycleTimeChart);
+        pageUtils.waitForElementToAppear(chartValue);
 
         int position = IntStream.range(0, routingLabels.size())
-            .filter(userInd -> routingLabels.get(userInd).getText().equals(process))
+            .filter(label -> routingLabels.get(label).getText().equals(process))
             .findFirst().getAsInt() + 1;
 
         WebElement chart = driver.findElement(By.cssSelector("g.highcharts-series rect:nth-of-type(\n" + position));
@@ -148,9 +148,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @return chart values as string list
      */
     public List<String> getProcessPercentage() {
-        for (WebElement chartValue : chartValues) {
-            pageUtils.waitForElementToAppear(chartValue);
-        }
+        pageUtils.waitForElementToAppear(chartValue);
         return chartValues.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 }
