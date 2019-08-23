@@ -2,6 +2,7 @@ package main.java.pages.evaluate.process;
 
 import main.java.pages.evaluate.SecondaryProcessPage;
 import main.java.utils.PageUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author cfrith
@@ -42,6 +44,9 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
 
     @FindBy(css = "g.highcharts-series rect")
     private List<WebElement> cycleTimeCharts;
+
+    @FindBy(css = "g.highcharts-series rect")
+    private WebElement cycleTimeChart;
 
     @FindBy(css = "g.highcharts-label .highcharts-text-outline")
     private List<WebElement> chartValues;
@@ -120,25 +125,32 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     }
 
     /**
-     * Selects process chart based on the process tab info
+     * Gets the index position of the chart label and selects the chart based on this index
+     *
      * @param process - the process
      * @return current page object
      */
     public ProcessPage selectProcessChart(String process) {
-        for (WebElement cycleTimeChart : cycleTimeCharts) {
-            pageUtils.waitForElementAndClick(cycleTimeChart);
-            if (processStep.getText().equalsIgnoreCase(process)) {
-                break;
-            }
-        }
+        pageUtils.waitForElementToAppear(cycleTimeChart);
+
+        int position = IntStream.range(0, routingLabels.size())
+            .filter(userInd -> routingLabels.get(userInd).getText().equals(process))
+            .findFirst().getAsInt() + 1;
+
+        WebElement chart = driver.findElement(By.cssSelector("g.highcharts-series rect:nth-of-type(\n" + position));
+        pageUtils.actionClick(chart);
         return this;
     }
 
     /**
      * Gets the process percentage value
+     *
      * @return chart values as string list
      */
     public List<String> getProcessPercentage() {
+        for (WebElement chartValue : chartValues) {
+            pageUtils.waitForElementToAppear(chartValue);
+        }
         return chartValues.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 }
