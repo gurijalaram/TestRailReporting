@@ -1,20 +1,30 @@
 package main.java.api.edc.util;
 
-import main.java.http.builder.common.response.common.*;
+import main.java.http.builder.common.response.common.BillOfMaterial;
+import main.java.http.builder.common.response.common.BillOfMaterialsWrapper;
+import main.java.http.builder.common.response.common.MaterialLineItem;
+import main.java.http.builder.common.response.common.MaterialsLineItemsWrapper;
 import main.java.http.builder.service.HTTPRequest;
 import main.java.http.enums.common.api.BillOfMaterialsAPIEnum;
 import main.java.http.enums.common.api.PartsAPIEnum;
 import main.java.utils.MultiPartFiles;
 import main.java.utils.WebDriverUtils;
-import org.junit.Assert;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.*;
-import java.util.concurrent.*;
-
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class UserTestDataUtil {
 
@@ -64,7 +74,7 @@ public class UserTestDataUtil {
         }
     }
 
-    public UserDataEDC initBillOfMaterials() {
+    public UserDataEDC initEmptyUser() {
         List<String> userNamePass = getUserCredentials();
 
         UserDataEDC userDataEDC = new UserDataEDC(userNamePass.get(0), userNamePass.get(1));
@@ -75,6 +85,12 @@ public class UserTestDataUtil {
                                 userNamePass.get(1)
                         )
         );
+
+        return userDataEDC;
+    }
+
+    public UserDataEDC initBillOfMaterials() {
+        UserDataEDC userDataEDC = initEmptyUser();
 
         uploadTestData(userDataEDC);
 

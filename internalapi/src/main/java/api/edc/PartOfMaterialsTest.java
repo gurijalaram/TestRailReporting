@@ -29,7 +29,7 @@ public class PartOfMaterialsTest {
     }
 
     @AfterClass
-    public static void clearTestData(){
+    public static void clearTestData() {
         userTestDataUtil.clearTestData(userData);
     }
 

@@ -14,29 +14,9 @@ import org.slf4j.LoggerFactory;
 
 public class WebDriverUtils {
 
-
-//    private  WebDriver driver = null;
-//    private static WebDriver driver = new DriverFactory(TestMode.LOCAL,
-//            TestType.UI,
-//            "chrome",
-//            null,
-//            "../",
-//            null,
-//            null).getDriver();
-
-//    private  WebDriverWait wait = null;
-//    private static WebDriverWait wait = new WebDriverWait(driver, 10);
     private static final Logger logger = LoggerFactory.getLogger(WebDriverUtils.class);
 
     public String getToken(final String email, final String password) {
-
-        System.setProperty("webdriver.chrome.driver", "E:\\workspace\\aPriori\\apriori-qa\\pageobjects\\src\\main\\resources\\chromedriver.exe");
-        ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("--disable-extensions");
-        chromeOptions.addArguments("--disable-gpu");
-        chromeOptions.addArguments("--no-sandbox");
-
         WebDriver driver = new DriverFactory(TestMode.LOCAL,
             TestType.UI,
             "chrome",
@@ -56,8 +36,8 @@ public class WebDriverUtils {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//h2[text() ='Upload new Bill of Materials']")));
 
             token = ((ChromeDriver) driver).getLocalStorage().getItem("ID_TOKEN");
-        }catch (Exception e) {
-
+        } catch (Exception e) {
+            logger.error(String.format("Can't login as valid user. User credentials: email %s, password %s", email, password));
             throw new IllegalArgumentException();
         } finally {
             driver.quit();

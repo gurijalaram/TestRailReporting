@@ -10,6 +10,9 @@ import java.util.Map;
 
 public class UserDataEDC {
 
+    private String identity;
+    private String accountId;
+
     private String username;
     private String password;
     private String token;
@@ -63,9 +66,9 @@ public class UserDataEDC {
         this.token = token;
 
         this.authorizationHeaders = new HashMap<String, String>() {{
-            put("Authorization", "Bearer " + token);
-            put("ap-cloud-context", "EDC");
-        }};
+                put("Authorization", "Bearer " + token);
+                put("ap-cloud-context", "EDC");
+            }};
 
         return this;
     }
@@ -103,6 +106,29 @@ public class UserDataEDC {
 
     public UserDataEDC setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public UserDataEDC setIdentity(String identity) {
+        this.identity = identity;
+        return this;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public UserDataEDC setAccountId(String accountId) {
+        this.accountId = accountId;
+        return this;
+    }
+
+    public UserDataEDC setToken(String token) {
+        this.token = token;
         return this;
     }
 }

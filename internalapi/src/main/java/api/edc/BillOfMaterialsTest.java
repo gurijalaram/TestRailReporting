@@ -28,7 +28,7 @@ public class BillOfMaterialsTest {
     }
 
     @AfterClass
-    public static void clearTestData(){
+    public static void clearTestData() {
         userTestDataUtil.clearTestData(userData);
     }
 

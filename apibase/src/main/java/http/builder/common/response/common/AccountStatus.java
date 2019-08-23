@@ -5,10 +5,10 @@ import main.java.http.enums.Schema;
 
 
 @Schema(location = "AccountsStatusSchema.json")
-public class AccountsStatus extends CommonResponse {
+public class AccountStatus {
 
     @JsonProperty
-    private Boolean isValid;
+    private boolean isValid;
 
     @JsonProperty
     private Boolean isActive;
@@ -44,7 +44,7 @@ public class AccountsStatus extends CommonResponse {
         return isValid;
     }
 
-    public AccountsStatus setValid(Boolean valid) {
+    public AccountStatus setValid(Boolean valid) {
         isValid = valid;
         return this;
     }
@@ -53,7 +53,7 @@ public class AccountsStatus extends CommonResponse {
         return isActive;
     }
 
-    public AccountsStatus setActive(Boolean active) {
+    public AccountStatus setActive(Boolean active) {
         isActive = active;
         return this;
     }
@@ -62,7 +62,7 @@ public class AccountsStatus extends CommonResponse {
         return identity;
     }
 
-    public AccountsStatus setIdentity(String identity) {
+    public AccountStatus setIdentity(String identity) {
         this.identity = identity;
         return this;
     }
@@ -71,7 +71,7 @@ public class AccountsStatus extends CommonResponse {
         return name;
     }
 
-    public AccountsStatus setName(String name) {
+    public AccountStatus setName(String name) {
         this.name = name;
         return this;
     }
@@ -80,7 +80,7 @@ public class AccountsStatus extends CommonResponse {
         return type;
     }
 
-    public AccountsStatus setType(String type) {
+    public AccountStatus setType(String type) {
         this.type = type;
         return this;
     }
@@ -89,7 +89,7 @@ public class AccountsStatus extends CommonResponse {
         return accountId;
     }
 
-    public AccountsStatus setAccountId(String accountId) {
+    public AccountStatus setAccountId(String accountId) {
         this.accountId = accountId;
         return this;
     }
@@ -98,7 +98,7 @@ public class AccountsStatus extends CommonResponse {
         return accountSecret;
     }
 
-    public AccountsStatus setAccountSecret(String accountSecret) {
+    public AccountStatus setAccountSecret(String accountSecret) {
         this.accountSecret = accountSecret;
         return this;
     }
@@ -107,7 +107,7 @@ public class AccountsStatus extends CommonResponse {
         return licenseLimit;
     }
 
-    public AccountsStatus setLicenseLimit(Integer licenseLimit) {
+    public AccountStatus setLicenseLimit(Integer licenseLimit) {
         this.licenseLimit = licenseLimit;
         return this;
     }
@@ -116,7 +116,7 @@ public class AccountsStatus extends CommonResponse {
         return licenseUsage;
     }
 
-    public AccountsStatus setLicenseUsage(Integer licenseUsage) {
+    public AccountStatus setLicenseUsage(Integer licenseUsage) {
         this.licenseUsage = licenseUsage;
         return this;
     }
@@ -125,7 +125,7 @@ public class AccountsStatus extends CommonResponse {
         return validFrom;
     }
 
-    public AccountsStatus setValidFrom(String validFrom) {
+    public AccountStatus setValidFrom(String validFrom) {
         this.validFrom = validFrom;
         return this;
     }
@@ -134,8 +134,17 @@ public class AccountsStatus extends CommonResponse {
         return validTo;
     }
 
-    public AccountsStatus setValidTo(String validTo) {
+    public AccountStatus setValidTo(String validTo) {
         this.validTo = validTo;
+        return this;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public AccountStatus setValid(boolean valid) {
+        isValid = valid;
         return this;
     }
 }
