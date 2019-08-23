@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -17,11 +18,7 @@ import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class ProcessGroupsTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -36,7 +33,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -52,7 +49,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Stock Machining")
     public void testProcessGroupStockMachining() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -67,7 +64,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Bar and Tube")
     public void testProcessGroupBarTube() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -90,7 +87,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Casting")
     public void testProcessGroupCasting() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -113,7 +110,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Extrusion")
     public void testProcessGroupExtrusion() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -136,7 +133,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Filleting")
     public void testProcessGroupFilleting() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -159,7 +156,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Gear Making")
     public void testProcessGroupGearMaking() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -182,7 +179,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Machining-Contouring")
     public void testProcessGroupMachiningContouring() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -205,7 +202,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Machining-Gage Parts")
     public void testProcessGroupMachiningGageParts() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -228,7 +225,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Machining-Milling-4 Axis Mill")
     public void testProcessGroupMachining4AxisMill() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -251,7 +248,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Machining-Milling-5 Axis Mill")
     public void testProcessGroupMachining5AxisMill() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -274,7 +271,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Machining-Milling-Mill Turn")
     public void testProcessGroupMachiningMillTurn() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -297,7 +294,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Partially Automated Machining")
     public void testProcessGroupPartiallyAutomatedMachining() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -320,7 +317,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Perimeter Milling")
     public void testProcessGroupPerimeterMilling() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -343,7 +340,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Pocket Recognition")
     public void testProcessGroupPocketRecognition() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -366,7 +363,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Pocket Recognition - shared walls")
     public void testProcessGroupPocketRecognitionSharedWalls() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -389,7 +386,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Rough Milling")
     public void testProcessGroupRoughMilling() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -412,7 +409,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Slot Examples")
     public void testProcessGroupSlotExamples() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -435,7 +432,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Turning")
     public void testProcessGroupTurning() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -458,7 +455,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Blow Molding")
     public void testProcessGroupBlowMolding() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -481,7 +478,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group PMI")
     public void testProcessGroupPMI() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -504,7 +501,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Powder Metal")
     public void testProcessGroupPowderMetal() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -527,7 +524,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Roll Bending")
     public void testProcessGroupRollBending() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -550,7 +547,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Sheet Metal-Transfer Die")
     public void testProcessGroupTransferDie() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());

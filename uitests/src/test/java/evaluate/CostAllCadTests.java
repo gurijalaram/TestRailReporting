@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -15,11 +16,7 @@ import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class CostAllCadTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private EvaluatePage evaluatePage;
@@ -34,7 +31,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatSLDPRT() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -47,7 +44,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatPar() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("26136.par"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("26136.par"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -60,7 +57,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatCATPart() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -73,7 +70,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatPRT4() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("turning.prt.4"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("turning.prt.4"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -86,7 +83,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatCreo() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("turning.prt.4"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("turning.prt.4"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -99,7 +96,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatNX() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Locker_bottom_panel.prt"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Locker_bottom_panel.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -112,7 +109,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatInventor() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("VERTICAL PLATE.ipt"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("VERTICAL PLATE.ipt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -125,7 +122,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatSTEP() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -138,7 +135,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatParasolid() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic_steel_PMI.x_t"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("bracket_basic_steel_PMI.x_t"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -151,7 +148,7 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatParaACIS() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SAT"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SAT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
