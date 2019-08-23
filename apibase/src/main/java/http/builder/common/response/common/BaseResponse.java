@@ -5,5 +5,5 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 @JsonTypeName(value = "response")
-public class CommonResponse {
+public class BaseResponse {
 }

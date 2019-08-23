@@ -1,4 +1,4 @@
-package main.java.api;
+package main.java.api.edc;
 
 import io.qameta.allure.Description;
 import main.java.enums.UsersEnum;
@@ -10,8 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class APILoginTest {
-
-
 
     @Test
     @Description("Test auto login functionality")
@@ -50,8 +48,6 @@ public class APILoginTest {
                 .connect()
                 .post();
 
-        Assert.assertNotNull("Access token should be present", authenticateJSON.getAccessToken());
-        Assert.assertNotNull("Access token should be present", authenticateJSON.getExpiresIn());
     }
 
 
