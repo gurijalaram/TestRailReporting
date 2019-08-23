@@ -40,6 +40,9 @@ public class DeletePublicScenarioTests extends TestBase {
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .filterCriteria()
+            .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
         new ExplorePage(driver).delete()
