@@ -32,7 +32,7 @@ public class DTCMouldingDraftTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft Issue", "Draft Angle", "CurvedWall:1");
+            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("The minimum and maximum draft angle are below the recommended draft angle."));
     }

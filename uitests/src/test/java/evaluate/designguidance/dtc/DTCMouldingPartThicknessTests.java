@@ -32,7 +32,7 @@ public class DTCMouldingPartThicknessTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
+            .selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
     }
@@ -47,7 +47,7 @@ public class DTCMouldingPartThicknessTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
+            .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
     }

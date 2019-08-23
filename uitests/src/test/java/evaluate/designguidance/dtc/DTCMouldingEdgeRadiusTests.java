@@ -32,7 +32,7 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
+            .selectIssueTypeAndGCD("Radii  Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Internal Edge Radius is less than the minimum limit"));
     }
@@ -47,7 +47,7 @@ public class DTCMouldingEdgeRadiusTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii Issue", "Minimum External Edge Radius", "SharpEdge:9");
+            .selectIssueTypeAndGCD("Radii  Issue", "Minimum External Edge Radius", "SharpEdge:9");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("External Edge Radius is less than the minimum limit"));
     }
