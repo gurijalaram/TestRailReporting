@@ -1,29 +1,53 @@
 package test.java.explore;
 
+import static org.hamcrest.Matchers.is;
+
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.time.LocalDateTime;
 
 public class FilterCriteriaTests extends TestBase {
 
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
+
     private LoginPage loginPage;
+    private EvaluatePage evaluatePage;
+    private ExplorePage explorePage;
 
     public FilterCriteriaTests() {
         super();
     }
 
     @Test
+    @TestRail(testCaseId = {"C2276"}, tags = {"smoke"})
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
+
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "15136")
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("SheetMetal.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton();
+
+        explorePage = new ExplorePage(driver);
+        explorePage.filterCriteria()
+            .filterPrivateCriteria("Part", "Part Name", "Contains", "SheetMetal")
             .apply(ExplorePage.class);
-        //Assert.assertTrue();
+
+        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "SheetMetal") > 0, is(true));
     }
 
     @Test
@@ -82,14 +106,24 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C2277"}, tags = {"smoke"})
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "15136")
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .costScenario()
+            .publishScenario();
+
+        explorePage = new ExplorePage(driver);
+        explorePage.filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "Push Pin")
             .apply(ExplorePage.class);
-        //Assert.assertFalse();
+
+        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin") > 0, is(true));
     }
 
     @Test
