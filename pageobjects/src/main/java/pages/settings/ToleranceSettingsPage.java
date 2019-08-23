@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
@@ -61,7 +65,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
      * @return current page object
      */
     public ToleranceSettingsPage selectAssumeTolerance() {
-        assumeDefaultCheckbox.click();
+        pageUtils.waitForElementAndClick(assumeDefaultCheckbox);
         return this;
     }
 
@@ -88,7 +92,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
      * @return current page object
      */
     public ToleranceSettingsPage selectUseCADModel() {
-        cadModelCheckbox.click();
+        pageUtils.waitForElementAndClick(cadModelCheckbox);
         return this;
     }
 

@@ -1,37 +1,57 @@
 package test.java.explore;
 
+import static org.hamcrest.Matchers.is;
+
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
+import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.time.LocalDateTime;
 
 public class FilterCriteriaTests extends TestBase {
 
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
+
     private LoginPage loginPage;
+    private EvaluatePage evaluatePage;
+    private ExplorePage explorePage;
 
     public FilterCriteriaTests() {
         super();
     }
 
     @Test
+    @TestRail(testCaseId = {"C2276"}, tags = {"smoke"})
     @Description("Test private criteria part")
-    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaPart() {
+
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "15136")
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("SheetMetal.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton();
+
+        explorePage = new ExplorePage(driver);
+        explorePage.filterCriteria()
+            .filterPrivateCriteria("Part", "Part Name", "Contains", "SheetMetal")
             .apply(ExplorePage.class);
-        //Assert.assertTrue();
+
+        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "SheetMetal") > 0, is(true));
     }
 
     @Test
     @Description("Test private criteria attribute")
-    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaAttribute() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -43,7 +63,6 @@ public class FilterCriteriaTests extends TestBase {
 
     @Test
     @Description("Test private criteria part contains")
-    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaContains() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -55,7 +74,6 @@ public class FilterCriteriaTests extends TestBase {
 
     @Test
     @Description("Test private criteria value option")
-    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaPartValue() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -67,7 +85,6 @@ public class FilterCriteriaTests extends TestBase {
 
     @Test
     @Description("Test private criteria assembly")
-    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaAssembly() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -79,7 +96,6 @@ public class FilterCriteriaTests extends TestBase {
 
     @Test
     @Description("Test private criteria assembly status")
-    @Severity(SeverityLevel.MINOR)
     public void testPrivateCriteriaAssemblyStatus() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -90,20 +106,28 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C2277"}, tags = {"smoke"})
     @Description("Test public criteria part")
-    @Severity(SeverityLevel.MINOR)
     public void testPublicCriteriaPart() {
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "15136")
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .costScenario()
+            .publishScenario();
+
+        explorePage = new ExplorePage(driver);
+        explorePage.filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "Push Pin")
             .apply(ExplorePage.class);
-        //Assert.assertFalse();
+
+        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin") > 0, is(true));
     }
 
     @Test
     @Description("Test public criteria assembly description")
-    @Severity(SeverityLevel.MINOR)
     public void testPublicCriteriaAssemblyDesc() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -115,7 +139,6 @@ public class FilterCriteriaTests extends TestBase {
 
     @Test
     @Description("Test public criteria comparison")
-    @Severity(SeverityLevel.MINOR)
     public void testPublicCriteriaComparison() {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

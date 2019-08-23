@@ -27,7 +27,7 @@
 		<joda.version>2.10.1</joda.version>
 		<fge.json.schema.core.version>1.2.5</fge.json.schema.core.version>
 		<restassured.version>3.2.0</restassured.version>
-		<com.fasterxml.jackson.version>2.9.9.1</com.fasterxml.jackson.version>
+		<com.fasterxml.jackson.version>2.9.9.2</com.fasterxml.jackson.version>
 		<com.github.fge.jackson.version>1.8</com.github.fge.jackson.version>
 		<skyscreamer.jsonassert>1.2.3</skyscreamer.jsonassert>
 		<json.version>20090211</json.version>
@@ -42,7 +42,7 @@
 		<!-- Miscellaneous dependencies/plugins -->
 		<jetty.stop.port>1234</jetty.stop.port>
 		<plugin.checkstyle-maven-plugin.version>3.0.0</plugin.checkstyle-maven-plugin.version>
-        <puppycrawl.checkstyle>8.22</puppycrawl.checkstyle>
+		<puppycrawl.checkstyle>8.22</puppycrawl.checkstyle>
 		<logback.classic.version>1.2.3</logback.classic.version>
 		<sl4j.version>1.7.25</sl4j.version>
 		<xmlbeans.version>2.6.0</xmlbeans.version>
@@ -65,6 +65,7 @@
 		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
 		<maven.compiler.version>3.6.0</maven.compiler.version>
 		<maven-assembly-plugin.version>2.3</maven-assembly-plugin.version>
+		<sonarqube.version>3.6.0.1398</sonarqube.version>
 
 		<equalsverifier.version>1.4.1</equalsverifier.version>
 		<hamcrest-library.version>1.3</hamcrest-library.version>
@@ -95,7 +96,24 @@
 	
 	<profiles>
 		<profile>
-			<id>default</id>
+			<id>sonar</id>
+			<properties>
+				<sonar.host.url>https://sonarqube.apriori.com</sonar.host.url>
+				<sonar.scm.provider>git</sonar.scm.provider>
+				<sonar.language>java</sonar.language>
+				<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+				<sonar.test.inclusions>src/test/java/*</sonar.test.inclusions>
+			</properties>
+			<modules>
+				<module>../uitests</module>
+				<module>../utils</module>
+				<module>../apibase</module>
+				<module>../internalapi</module>
+				<module>../pageobjects</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>build</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
@@ -675,6 +693,11 @@
 						<source>${java.version}</source>
 						<target>${java.version}</target>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>${sonarqube.version}</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>

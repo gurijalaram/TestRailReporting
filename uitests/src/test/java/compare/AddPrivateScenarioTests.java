@@ -6,48 +6,50 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public class AddPrivateScenarioTests extends TestBase {
 
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
+
     private LoginPage loginPage;
-    private ExplorePage explorePage;
-    private String filePath = new Scanner(AddPrivateScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
+    private ComparisonTablePage comparisonTablePage;
+    private ComparePage comparePage;
 
     public AddPrivateScenarioTests() {
         super();
     }
 
     @Test
+    @TestRail(testCaseId = {"C412"}, tags = {"smoke"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
-    @Severity(SeverityLevel.CRITICAL)
     public void filterAddPrivateScenario() {
+
+        String testScenarioName = scenarioName;
+
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("Standard Anneal", filePath, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart")
+        comparisonTablePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel());
-
-        explorePage.createNewComparison()
+            .costScenario()
+            .createNewComparison()
             .enterComparisonName("Private Comparison")
-            .save()
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "PlasticMoulding")
+            .filterPrivateCriteria("Part", "Part Name", "Contains", "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface")
             .apply(ComparisonTablePage.class);
 
-        assertThat(new ComparisonTablePage(driver).findComparison("LeakTest", "PlasticMoulding").isDisplayed(), Matchers.is(true));
+        assertThat(comparisonTablePage.findScenario(testScenarioName, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface").isDisplayed(), Matchers.is(true));
     }
 }

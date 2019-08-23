@@ -5,15 +5,22 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
+import main.java.pages.explore.ScenarioNotesPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author cfrith
+ */
 
 public class EvaluatePage extends EvaluateHeader {
 
@@ -43,8 +50,14 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "select[data-ap-field='processGroupSelection']")
     private WebElement processGroupDropdown;
 
+    @FindBy(css = "select[data-ap-field='processGroupSelection'] option")
+    private List<WebElement> processGroupList;
+
     @FindBy(css = "select[data-ap-field='primaryVpeName']")
     private WebElement vpeDropdown;
+
+    @FindBy(css = "select[data-ap-field='primaryVpeName'] option")
+    private List<WebElement> vpeList;
 
     @FindBy(css = "button[data-ap-comp='secondaryTreatmentsButton']")
     private WebElement secondaryProcessButton;
@@ -57,6 +70,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "a[data-ap-nav-viewport='showMaterialDetails']")
     private WebElement materialsDetails;
+
+    @FindBy(css = "input[data-ap-field='materialNameOverride']")
+    private WebElement materialsInfo;
 
     @FindBy(css = "button[data-ap-comp='materialSelectionButton']")
     private WebElement materialsButton;
@@ -101,16 +117,19 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Selects the pg dropdown
+     *
      * @param processGroup - the process group
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
+        pageUtils.waitForElementToBeClickable(processGroupDropdown);
         pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
         return this;
     }
 
     /**
      * Selects the vpe dropdown
+     *
      * @param vpe - the vpe
      * @return current page object
      */
@@ -121,6 +140,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Enters the annual volume
+     *
      * @param annualVolume - the annual volume
      * @return current page object
      */
@@ -132,6 +152,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Enters the years of annual volume
+     *
      * @param years - the years
      * @return current page object
      */
@@ -143,6 +164,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Opens the process tab
+     *
      * @return new page object
      */
     public ProcessPage openProcessDetails() {
@@ -152,23 +174,27 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the process routing details
+     *
      * @return the details as string
      */
     public boolean getProcessRoutingDetails(String text) {
+        pageUtils.waitForElementToAppear(processRoutingName);
         return pageUtils.checkElementContains(processRoutingName, text);
     }
 
     /**
      * Opens the design guidance dialog
+     *
      * @return new page object
      */
     public DesignGuidancePage openDesignGuidance() {
-        pageUtils.waitForElementToAppear(guidanceDetails).click();
+        pageUtils.waitForElementAndClick(guidanceDetails);
         return new DesignGuidancePage(driver);
     }
 
     /**
      * Opens the secondary process dialog
+     *
      * @return new page object
      */
     public SecondaryProcessPage openSecondaryProcess() {
@@ -178,6 +204,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Opens the material composition dialog
+     *
      * @return new page object
      */
     public MaterialPage openMaterialComposition() {
@@ -187,6 +214,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Opens the material composition table
+     *
      * @return new page object
      */
     public MaterialCompositionPage openMaterialCompositionTable() {
@@ -196,6 +224,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the scenario name
+     *
      * @return current page object
      */
     public EvaluatePage getCurrentScenarioName() {
@@ -204,10 +233,48 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets the process group details
+     * Gets the selected process group details
+     *
      * @return group details as string
      */
-    public String getProcessGroup() {
-        return processGroupDropdown.getText();
+    public String getSelectedProcessGroup() {
+        return new Select(processGroupDropdown).getFirstSelectedOption().getText();
+    }
+
+    /**
+     * Gets list of vpe's
+     *
+     * @return list as string
+     */
+    public List<String> getListOfVPEs() {
+        return vpeList.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets list of process groups
+     *
+     * @return list as string
+     */
+    public List<String> getListOfProcessGroups() {
+        return processGroupList.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets material info
+     *
+     * @return material info as string
+     */
+    public String getMaterialInfo() {
+        return pageUtils.checkElementAttribute(materialsInfo, "value");
+    }
+
+    /**
+     * Selects info and notes link
+     *
+     * @return new page object
+     */
+    public ScenarioNotesPage selectInfoNotes() {
+        pageUtils.waitForElementToAppear(infoNotes).click();
+        return new ScenarioNotesPage(driver);
     }
 }

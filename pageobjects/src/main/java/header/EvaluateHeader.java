@@ -1,8 +1,7 @@
 package main.java.header;
 
+import main.java.pages.evaluate.CostingJobPage;
 import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.evaluate.PublishPage;
-import main.java.pages.explore.ExplorePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * @author kpatel
@@ -25,6 +26,9 @@ public class EvaluateHeader extends GenericHeader {
     @FindBy(css = ".bottom .popover-content .gwt-HTML")
     private WebElement costLabelPopover;
 
+    @FindBy(css = ".bottom .popover-content .gwt-HTML")
+    private List<WebElement> costLabelPopoverElement;
+
     @FindBy(css = "li[data-ap-comp='costButton']")
     private WebElement costLabel;
 
@@ -33,7 +37,6 @@ public class EvaluateHeader extends GenericHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private static final String COST_UP_TO_DATE = "Cost up to\n" + "Date";
 
     public EvaluateHeader(WebDriver driver) {
         super(driver);
@@ -41,68 +44,26 @@ public class EvaluateHeader extends GenericHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-
     }
 
     /**
-     * Cost the scenario. Enter 'null' if the cost label is expected to be default label
-     * @param costText - the text for the cost label
+     * Cost the scenario
      * @return current page object
      */
-    public EvaluatePage costScenario(String costText) {
-        costButton.click();
-        dialogCostButton.click();
-        costText = costText == "Success" ? COST_UP_TO_DATE : costText;
-        getCostLabel();
-        checkCostLabel(costText);
+    public EvaluatePage costScenario() {
+        pageUtils.waitForElementAndClick(costButton);
+        new CostingJobPage(driver).selectCost();
+        checkCostLabelAppears();
         return new EvaluatePage(driver);
-    }
-
-    /**
-     * Checks the text in the cost label
-     * @param costText - the cost label text
-     * @return true or false
-     */
-    public boolean checkCostLabel(String costText) {
-        return costLabelPopover(costText);
-    }
-
-    /**
-     * Publish the scenario
-     * @return new page object
-     */
-    public ExplorePage publishScenario() {
-        return publishScenario();
-    }
-
-    /**
-     * Publish the scenario
-     * @param status - the status dropdown
-     * @param costMaturity - the cost maturity dropdown
-     * @param assignee - the assignee
-     * @return new page object
-     */
-    public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        return publishScenario(status, costMaturity, assignee);
     }
 
     /**
      * Wait for cost label popover
      *
-     * @return current page object
+     * @return boolean true/false
      */
-    public boolean costLabelPopover(String costText) {
-        return pageUtils.waitForElementToAppear(costLabelPopover).getText().equalsIgnoreCase(costText);
+    public boolean checkCostLabelAppears() {
+        return pageUtils.checkElementVisibleByBoolean(costLabelPopoverElement);
     }
 
     /**
@@ -110,7 +71,7 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return webelement
      */
-    public WebElement getCostLabel() {
-        return pageUtils.waitForElementToAppear(costLabel);
+    public String getCostLabel() {
+        return pageUtils.waitForElementToAppear(costLabel).getText();
     }
 }

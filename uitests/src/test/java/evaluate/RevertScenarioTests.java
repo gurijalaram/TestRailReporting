@@ -5,27 +5,24 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public class RevertScenarioTests extends TestBase {
 
-    private LoginPage loginPage;
-    private ExplorePage explorePage;
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
-    private String filePath = new Scanner(RevertScenarioTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
+    private LoginPage loginPage;
+    private EvaluatePage evaluatePage;
 
     public RevertScenarioTests() {
         super();
@@ -33,40 +30,38 @@ public class RevertScenarioTests extends TestBase {
 
     @Test
     @Description("Test revert saved scenario")
-    @Severity(SeverityLevel.NORMAL)
+    @TestRail(testCaseId = ("{C585}"))
     public void testRevertSavedScenario() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("RevertSavedScenario", filePath, "testpart-4.prt")
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(new EvaluatePage(driver).getProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
+        assertThat(evaluatePage.getSelectedProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
     }
 
     @Test
     @Description("Test revert unsaved scenario")
-    @Severity(SeverityLevel.NORMAL)
+    @TestRail(testCaseId = ("{C586}"))
     public void testRevertUnsavedScenario() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("RevertUnsavedScenario", filePath, "testpart-4.prt")
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectProcessGroup(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
+            .costScenario()
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(new EvaluatePage(driver).getProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
+        assertThat(evaluatePage.getSelectedProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
     }
 }

@@ -9,6 +9,12 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
+/**
+ * @author cfrith
+ */
+
 public class DeletePage extends LoadableComponent<DeletePage> {
 
     private final Logger logger = LoggerFactory.getLogger(DeletePage.class);
@@ -24,6 +30,9 @@ public class DeletePage extends LoadableComponent<DeletePage> {
 
     @FindBy(css = "button.gwt-SubmitButton.btn.btn-primary")
     private WebElement deleteButton;
+
+    @FindBy(css = ".popover-content .gwt-HTML")
+    private List<WebElement> notificationPopover;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -66,6 +75,26 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      */
     public ExplorePage deleteScenario() {
         deleteButton.click();
+        notificationPopoverNotDisplayed();
+        return new ExplorePage(driver);
+    }
+
+    /**
+     * Deletes the comparison from the comparison page
+     * @return new page object
+     */
+    public ExplorePage deleteComparison() {
+        deleteButton.click();
+        return new ExplorePage(driver);
+    }
+
+    /**
+     * Deletes the comparison from the explore page
+     * @return new page object
+     */
+    public ExplorePage deleteExploreComparison() {
+        deleteButton.click();
+        notificationPopoverNotDisplayed();
         return new ExplorePage(driver);
     }
 
@@ -76,6 +105,14 @@ public class DeletePage extends LoadableComponent<DeletePage> {
     public ExplorePage cancel() {
         cancelButton.click();
         return new ExplorePage(driver);
+    }
+
+    /**
+     * waits until notification popover displayed then no longer displayed
+     */
+    public void notificationPopoverNotDisplayed() {
+        pageUtils.checkElementVisibleByBoolean(notificationPopover);
+        pageUtils.checkElementsNotVisibleByBoolean(notificationPopover);
     }
 
 }

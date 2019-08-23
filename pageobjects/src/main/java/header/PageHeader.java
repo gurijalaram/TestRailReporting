@@ -1,5 +1,8 @@
 package main.java.header;
 
+import main.java.pages.compare.ComparePage;
+import main.java.pages.evaluate.EvaluatePage;
+import main.java.pages.explore.ExplorePage;
 import main.java.pages.settings.SettingsPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -30,7 +33,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "a[data-ap-comp='jobQueue']")
     private WebElement jobQueueButton;
 
-    @FindBy(css = "a span.glyphicon-cog']")
+    @FindBy(css = "a span.glyphicon-cog")
     private WebElement settingsButton;
 
     @FindBy(css = "a.navbar-help")
@@ -50,7 +53,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
     }
 
     @Override
@@ -69,9 +71,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return current page object
      */
-    public PageHeader selectExploreButton() {
-        pageUtils.waitForElementToBeClickable(exploreTab).click();
-        return this;
+    public ExplorePage selectExploreButton() {
+        pageUtils.waitForElementAndClick(exploreTab);
+        return new ExplorePage(driver);
     }
 
     /**
@@ -79,9 +81,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return current page object
      */
-    public PageHeader selectEvaluateButton() {
-        pageUtils.waitForElementToBeClickable(exploreTab).click();
-        return this;
+    public EvaluatePage selectEvaluateButton() {
+        pageUtils.waitForElementAndClick(evaluateTab);
+        return new EvaluatePage(driver);
     }
 
     /**
@@ -89,9 +91,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return current page object
      */
-    public PageHeader selectCompareButton() {
-        pageUtils.waitForElementToBeClickable(exploreTab).click();
-        return this;
+    public ComparePage selectCompareButton() {
+        pageUtils.waitForElementAndClick(compareTab);
+        return new ComparePage(driver);
     }
 
     /**
@@ -100,7 +102,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new page object
      */
     public SettingsPage openSettings() {
-        pageUtils.waitForElementToAppear(settingsButton).click();
+        pageUtils.waitForElementAndClick(settingsButton);
         return new SettingsPage(driver);
     }
 
@@ -110,7 +112,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new page object
      */
     public PageHeader openJobQueue() {
-        pageUtils.waitForElementToAppear(jobQueueButton).click();
+        pageUtils.waitForElementAndClick(jobQueueButton);
         return this;
     }
 
@@ -120,7 +122,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @retun new page object
      */
     public PageHeader openHelp() {
-        pageUtils.waitForElementToAppear(helpButton).click();
+        pageUtils.waitForElementAndClick(helpButton);
         return this;
     }
 
@@ -130,7 +132,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new page object
      */
     public PageHeader openLogOut() {
-        pageUtils.waitForElementToAppear(logoutButton).click();
+        pageUtils.waitForElementAndClick(logoutButton);
         return this;
     }
 }

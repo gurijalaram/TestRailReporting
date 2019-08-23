@@ -1,8 +1,6 @@
 package main.java.api.edc;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.enums.UsersEnum;
 import main.java.http.builder.common.entity.UserAuthenticationEntity;
 import main.java.http.builder.common.response.common.AuthenticateJSON;
@@ -13,11 +11,8 @@ import org.junit.Test;
 
 public class APILoginTest {
 
-
-
     @Test
     @Description("Test auto login functionality")
-    @Severity(SeverityLevel.NORMAL)
     public void testTokenAutoLoginFiledIfIncorrectLoginProcess() {
         new HTTPRequest().defaultFormAuthorization(UsersEnum.ADMIN_DEFAULT_USER)
                 .customizeRequest()
@@ -29,7 +24,6 @@ public class APILoginTest {
 
     @Test
     @Description("Test default login to environment")
-    @Severity(SeverityLevel.NORMAL)
     public void testDefaultLoginFiledIfIncorrectLoginProcess() {
         new HTTPRequest().defaultFormAuthorization(UsersEnum.ADMIN_DEFAULT_USER)
                 .customizeRequest()
@@ -43,7 +37,6 @@ public class APILoginTest {
 
     @Test
     @Description("Test common login to environment")
-    @Severity(SeverityLevel.NORMAL)
     public void testLoginFiledIfIncorrectUserData() {
         AuthenticateJSON authenticateJSON = (AuthenticateJSON)
                 new HTTPRequest().customFormAuthorization(this.initUserConnectionData("admin@apriori.com", "admin"))

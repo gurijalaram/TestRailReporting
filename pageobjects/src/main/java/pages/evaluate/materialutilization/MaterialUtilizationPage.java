@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizationPage> {
 
     private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
@@ -24,6 +28,9 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @FindBy(css = "input[data-ap-field='utilizationOverride']")
     private WebElement utilizationInput;
+
+    @FindBy(css = "div[id='materialTable']")
+    private WebElement materialTableInfo;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -49,6 +56,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     /**
      * Selects info check box
+     *
      * @return current page object
      */
     public MaterialUtilizationPage selectInfoCheckBox() {
@@ -58,6 +66,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     /**
      * Enter basic override value
+     *
      * @param value - the value as string
      * @return current page object
      */
@@ -70,6 +79,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     /**
      * Select utilization check box
+     *
      * @return current page object
      */
     public MaterialUtilizationPage selectUtilizationCheckBox() {
@@ -79,6 +89,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     /**
      * Enter utilization override value
+     *
      * @param value - the value as string
      * @return current page object
      */
@@ -87,5 +98,13 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
         pageUtils.clearInput(utilizationInput);
         utilizationInput.sendKeys(value);
         return this;
+    }
+
+    /**
+     * Gets the info in the material table
+     * @return material table info as string
+     */
+    public String getMaterialTableInfo() {
+        return pageUtils.waitForElementToAppear(materialTableInfo).getText();
     }
 }

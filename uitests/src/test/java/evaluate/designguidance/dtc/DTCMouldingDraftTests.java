@@ -7,25 +7,21 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public class DTCMouldingDraftTests extends TestBase {
 
-    private LoginPage loginPage;
-    private ExplorePage explorePage;
-    private DesignGuidancePage designGuidancePage;
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
-    private String filePath = new Scanner(DTCMouldingDraftTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
+    private LoginPage loginPage;
+    private GuidancePage guidancePage;
 
     public DTCMouldingDraftTests() {
         super();
@@ -33,21 +29,16 @@ public class DTCMouldingDraftTests extends TestBase {
 
     @Test
     @Description("Testing DTC Machining Moulding Draft")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCMouldingDraft() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioNoDraft", filePath, "Plastic moulded cap noDraft.CATPart")
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
+            .costScenario()
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:1");
 
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft Issue", "Draft Angle", "CurvedWall:1");
-
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("The minimum and maximum draft angle are below the recommended draft angle."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("The minimum and maximum draft angle are below the recommended draft angle."));
     }
 }

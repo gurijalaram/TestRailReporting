@@ -1,7 +1,6 @@
 package main.java.pages.explore;
 
 import main.java.header.CompareHeader;
-import main.java.pages.compare.ComparePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,6 +8,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+/**
+ * @author cfrith
+ */
 
 public class ComparisonPage extends CompareHeader {
 
@@ -53,6 +56,7 @@ public class ComparisonPage extends CompareHeader {
 
     /**
      * Enters the comparison name
+     *
      * @param comparisonName - the comparison name
      * @return current page object
      */
@@ -63,6 +67,7 @@ public class ComparisonPage extends CompareHeader {
 
     /**
      * Enters the comparison description
+     *
      * @param comparisonDescription - the comparison description
      * @return current page object
      */
@@ -72,13 +77,15 @@ public class ComparisonPage extends CompareHeader {
     }
 
     /**
-     * Selects the apply button
+     * Selects the save button
      *
+     * @param className - the class the method should return
+     * @param <T>       - the return type
      * @return new page object
      */
-    public ComparePage save() {
+    public <T> T save(Class<T> className) {
         saveButton.click();
-        return new ComparePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

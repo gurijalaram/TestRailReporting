@@ -12,7 +12,13 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author cfrith
+ */
 
 public class ExplorePage extends ExploreHeader {
 
@@ -36,8 +42,17 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "button[data-ap-comp='togglePreviewButton']")
     private WebElement previewButton;
 
+    @FindBy(css = "[data-ap-comp='closePreviewButton'] .glyphicon-remove")
+    private WebElement closePreviewButton;
+
+    @FindBy(css = "[data-ap-comp='previewPanel']")
+    private WebElement previewPanelData;
+
     @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
     private WebElement componentScroller;
+
+    @FindBy(css = ".v-grid-header")
+    private WebElement columnHeaders;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -78,7 +93,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the part as webelement
      */
     public WebElement findScenario(String scenarioName, String partName) {
-        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
+        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
         return pageUtils.scrollToElement(scenario, componentScroller);
     }
 
@@ -88,7 +103,7 @@ public class ExplorePage extends ExploreHeader {
      * @param partName - name of the part
      */
     public void highlightScenario(String scenarioName, String partName) {
-        By scenario = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
+        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller).click();
     }
 
@@ -99,7 +114,7 @@ public class ExplorePage extends ExploreHeader {
      * @return size of the element as int
      */
     public int getListOfScenarios(String scenarioName, String partName) {
-        By scenario = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
+        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
         return pageUtils.scrollToElements(scenario, componentScroller).size();
     }
 
@@ -109,7 +124,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenario as webelement
      */
     public WebElement findComparison(String comparisonName) {
-        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        By comparison = By.cssSelector("a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
         return pageUtils.scrollToElement(comparison, componentScroller);
     }
 
@@ -119,8 +134,8 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenarion as webelement
      */
     public ExplorePage highlightComparison(String comparisonName) {
-        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
-        pageUtils.scrollToElement(comparison, componentScroller);
+        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr");
+        pageUtils.scrollToElement(comparison, componentScroller).click();
         return this;
     }
 
@@ -130,7 +145,7 @@ public class ExplorePage extends ExploreHeader {
      * @return size of the element as int
      */
     public int getListOfComparisons(String comparisonName) {
-        By comparison = By.cssSelector("div[data-ap-comp='componentTable'] a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        By comparison = By.xpath("//div[@title='" + comparisonName.toUpperCase() + "']");
         return pageUtils.scrollToElements(comparison, componentScroller).size();
     }
 
@@ -171,5 +186,33 @@ public class ExplorePage extends ExploreHeader {
     public TableColumnsPage openColumnsTable() {
         pageUtils.waitForElementToAppear(columnsButton).click();
         return new TableColumnsPage(driver);
+    }
+
+    /**
+     * Opens the preview panel
+     * @return new page object
+     */
+    public ExplorePage openPreviewPanel() {
+        if (pageUtils.isElementDisplayed(closePreviewButton)) {
+            closePreviewButton.click();
+        }
+        pageUtils.waitForElementToAppear(previewButton).click();
+        return this;
+    }
+
+    /**
+     * Gets the data in the preview panel
+     * @return current page object
+     */
+    public boolean viewPreviewPanelData() {
+        return previewPanelData.isDisplayed();
+    }
+
+    /**
+     * Gets all column headers in the table
+     * @return column headers as string
+     */
+    public List<String> getColumnHeaderNames() {
+        return Arrays.stream(columnHeaders.getText().split("\n")).collect(Collectors.toList());
     }
 }

@@ -11,6 +11,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class SelectStockPage extends LoadableComponent<SelectStockPage> {
 
     private final Logger logger = LoggerFactory.getLogger(SelectStockPage.class);
@@ -57,6 +61,7 @@ public class SelectStockPage extends LoadableComponent<SelectStockPage> {
 
     /**
      * Selects the mode
+     *
      * @param option - the option to select
      * @return current page object
      */
@@ -67,17 +72,35 @@ public class SelectStockPage extends LoadableComponent<SelectStockPage> {
 
     /**
      * Selects the stock
+     *
      * @param stockName - the stock
      * @return current page object
      */
     public SelectStockPage selectStock(String stockName) {
-        By stock = By.xpath("//div[@data-ap-comp='stockSelectionTable']//td[contains(text(),'" + stockName + "')]");
-        pageUtils.scrollToElement(stock, stockScroller).click();
+        findStock(stockName).click();
         return this;
     }
 
     /**
+     * @param stockName - the stock
+     * @return element attribute as string
+     */
+    public String getStockStatus(String stockName) {
+        return findStock(stockName).getAttribute("class");
+    }
+
+    /**
+     * @param stockName - the stock
+     * @return the stock as a webelement
+     */
+    private WebElement findStock(String stockName) {
+        By stock = By.xpath("//div[@data-ap-comp='stockSelectionTable']//td[contains(text(),'" + stockName + "')]");
+        return pageUtils.scrollToElement(stock, stockScroller);
+    }
+
+    /**
      * Selects the apply button
+     *
      * @return new page object
      */
     public StockPage apply() {
@@ -87,6 +110,7 @@ public class SelectStockPage extends LoadableComponent<SelectStockPage> {
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public StockPage cancel() {

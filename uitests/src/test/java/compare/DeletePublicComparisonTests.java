@@ -10,51 +10,97 @@ import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
+import main.java.header.GenericHeader;
+import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public class DeletePublicComparisonTests extends TestBase {
 
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
+
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private String filePath = new Scanner(DeletePublicComparisonTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
+    private ComparePage comparePage;
+    private GenericHeader genericHeader;
+    private EvaluatePage evaluatePage;
 
     public DeletePublicComparisonTests() {
         super();
     }
 
     @Test
-    @Description("Test deleting a public comparison from the comparison table is not visible")
-    @Severity(SeverityLevel.CRITICAL)
+    @TestRail(testCaseId = {"C430, C442"}, tags = {"smoke"})
+    @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDelete() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+        String testScenarioName = scenarioName;
 
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("PublicComparisonDelete", filePath, "casting.prt")
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+        loginPage = new LoginPage(driver);
+        comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+            .costScenario()
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("PublicComparisonDelete1")
-            .save()
+            .enterComparisonName("DeletePublicComparison1")
+            .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "DTCCASTINGISSUES")
+            .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
-            .selectComparison("Scenario b", "DTCCASTINGISSUES")
+            .selectScenario(testScenarioName, "Machined Box AMERICAS")
             .apply();
 
-        explorePage = new ExplorePage(driver);
-        explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison("PublicComparisonDelete1")
+        genericHeader = new GenericHeader(driver);
+        explorePage = genericHeader.publishScenario()
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+            .highlightComparison("DeletePublicComparison1")
             .delete()
-            .deleteScenario();
+            .deleteExploreComparison();
 
-        assertThat(explorePage.getListOfComparisons("PublicComparisonDelete1") < 1, is(true));
+        assertThat(explorePage.getListOfComparisons("DeletePublicComparison1") < 1, is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"C443"}, tags = {"smoke"})
+    @Description("Delete a public comparison from comparison page")
+    @Severity(SeverityLevel.NORMAL)
+    public void deletePublicComparisonPage() {
+
+        String testScenarioName = scenarioName;
+
+        loginPage = new LoginPage(driver);
+        comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
+            .costScenario()
+            .publishScenario()
+            .createNewComparison()
+            .enterComparisonName("DeletePublicComparisonTest")
+            .save(ComparePage.class)
+            .addScenario()
+            .filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
+            .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName, "testpart-4")
+            .apply();
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.publishScenario()
+            .filterCriteria()
+            .filterPublicCriteria("Comparison", "Part Name", "Contains", "DeletePublicComparisonTest")
+            .apply(ExplorePage.class)
+            .openComparison("DeletePublicComparisonTest");
+
+        genericHeader = new GenericHeader(driver);
+        explorePage = genericHeader.delete().deleteComparison()
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+
+        assertThat(explorePage.getListOfComparisons("DeletePublicComparisonTest") < 1, is(true));
     }
 }

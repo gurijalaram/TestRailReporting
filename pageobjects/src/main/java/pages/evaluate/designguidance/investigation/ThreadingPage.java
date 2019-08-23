@@ -10,6 +10,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class ThreadingPage extends LoadableComponent<ThreadingPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ThreadingPage.class);
@@ -85,7 +89,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      */
     public ThreadingPage removeThreadLength() {
         pageUtils.waitForElementToAppear(lengthInput).click();
-        pageUtils.clearInput(lengthInput);
+        lengthInput.clear();
         return this;
     }
 
@@ -95,7 +99,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      * @return - the thread length
      */
     public String getThreadLength() {
-        return pageUtils.waitForElementToAppear(lengthInput).getAttribute("value");
+        return pageUtils.checkElementAttribute(lengthInput, "value");
     }
 
     /**

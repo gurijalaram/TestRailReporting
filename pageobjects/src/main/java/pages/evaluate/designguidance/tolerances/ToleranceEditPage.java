@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ToleranceEditPage.class);

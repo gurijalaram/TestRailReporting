@@ -10,11 +10,15 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ScenarioNotesPage.class);
 
-    @FindBy(css = "h3.modal-title")
+    @FindBy(css = "[data-ap-scope='scenarioSelection'] .modal-content")
     private WebElement modalDialog;
 
     @FindBy(css = "select[data-ap-field='status']")
@@ -58,10 +62,11 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     /**
      * Collective method to enter scenario information and notes
-     * @param status - the status
+     *
+     * @param status       - the status
      * @param costMaturity - the cost maturity
-     * @param description - the description
-     * @param notes - the notes
+     * @param description  - the description
+     * @param notes        - the notes
      * @return current page object
      */
     public ScenarioNotesPage enterScenarioInfoNotes(String status, String costMaturity, String description, String notes) {
@@ -74,6 +79,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     /**
      * Selects the status
+     *
      * @param status - the status
      * @return current page object
      */
@@ -84,6 +90,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     /**
      * Selects cost maturity
+     *
      * @param costMaturity - the cost maturity
      * @return current page object
      */
@@ -94,6 +101,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     /**
      * Enter the description
+     *
      * @param description - the description
      * @return current page object
      */
@@ -105,6 +113,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     /**
      * Enter the scenario notes
+     *
      * @param notes - the scenario notes
      * @return current page object
      */
@@ -115,12 +124,62 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     }
 
     /**
+     * Get the status dropdown
+     * @return option as string
+     */
+    public String getStatus() {
+        return new Select(statusDropdown).getFirstSelectedOption().getText();
+    }
+
+    /**
+     * Gets the cost maturity dropdown
+     * @return option as string
+     */
+    public String getCostMaturity() {
+        return new Select(maturityDropdown).getFirstSelectedOption().getText();
+    }
+
+    /**
+     * Get the description
+     * @return the description as string
+     */
+    public String getDescription() {
+        return pageUtils.checkElementAttribute(descriptionInput, "value");
+    }
+
+    /**
+     * Gets the scenario notes
+     * @return the scenario notes as string
+     */
+    public String getScenarioNotes() {
+        return pageUtils.checkElementAttribute(scenarioNotesInput, "value");
+    }
+
+    /**
+     * Removes the description
+     * @return current page object
+     */
+    public ScenarioNotesPage deleteDescription() {
+        descriptionInput.clear();
+        return this;
+    }
+
+    /**
+     * Removes the notes
+     * @return current page object
+     */
+    public ScenarioNotesPage deleteNotes() {
+        scenarioNotesInput.clear();
+        return this;
+    }
+
+    /**
      * Selects the apply button
      *
      * @return new page object
      */
     public ExplorePage save() {
-        saveButton.click();
+        pageUtils.waitForElementAndClick(saveButton);
         return new ExplorePage(driver);
     }
 

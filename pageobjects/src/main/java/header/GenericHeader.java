@@ -18,6 +18,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 /**
  * @author kpatel
  */
@@ -35,7 +37,7 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
     private WebElement revertButton;
 
-    @FindBy(css = "span.delete-button")
+    @FindBy(css = "button[data-ap-comp='deleteScenarioButton']")
     private WebElement deleteButton;
 
     @FindBy(css = "span.glyphicons-settings")
@@ -80,16 +82,6 @@ public class GenericHeader extends PageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(deleteButton);
     }
 
     /**
@@ -98,6 +90,7 @@ public class GenericHeader extends PageHeader {
      * @return visibility of button
      */
     public boolean isDeleteButtonPresent() {
+        pageUtils.waitForElementAndClick(newFileDropdown);
         return deleteButton.isDisplayed();
     }
 
@@ -106,13 +99,12 @@ public class GenericHeader extends PageHeader {
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
-     * @param fileName     - name of the file
      * @return current page object
      */
-    public EvaluatePage uploadFile(String scenarioName, String filePath, String fileName) {
-        newFileDropdown.click();
-        componentButton.click();
-        return new FileUploadPage(driver).uploadFile(scenarioName, filePath, fileName);
+    public EvaluatePage uploadFile(String scenarioName, File filePath) {
+        pageUtils.waitForElementAndClick(newFileDropdown);
+        pageUtils.waitForElementAndClick(componentButton);
+        return new FileUploadPage(driver).uploadFile(scenarioName, filePath);
     }
 
     /**
@@ -132,8 +124,8 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ComparisonPage createNewComparison() {
-        newFileDropdown.click();
-        comparisonButton.click();
+        pageUtils.waitForElementAndClick(newFileDropdown);
+        pageUtils.waitForElementAndClick(comparisonButton);
         return new ComparisonPage(driver);
     }
 
@@ -172,23 +164,25 @@ public class GenericHeader extends PageHeader {
 
     /**
      * Publish the scenario
+     *
      * @return new page object
      */
     public ExplorePage publishScenario() {
-        publishButton.click();
+        pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectPublishButton();
         return new ExplorePage(driver);
     }
 
     /**
      * Publish the scenario
-     * @param status - the status dropdown
+     *
+     * @param status       - the status dropdown
      * @param costMaturity - the cost maturity dropdown
-     * @param assignee - the assignee
+     * @param assignee     - the assignee
      * @return new page object
      */
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        publishScenario();
+        pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
             .selectAssignee(assignee);
@@ -197,11 +191,12 @@ public class GenericHeader extends PageHeader {
 
     /**
      * Edits the scenario
+     *
      * @return new page object
      */
-    public EvaluatePage editScenario() {
+    public <T> T editScenario(Class<T> className) {
         pageUtils.waitForElementToAppear(editButton).click();
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -210,7 +205,8 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public DeletePage delete() {
-        deleteButton.click();
+        pageUtils.checkElementAttributeEmpty(deleteButton,"title");
+        pageUtils.waitForElementAndClick(deleteButton);
         return new DeletePage(driver);
     }
 

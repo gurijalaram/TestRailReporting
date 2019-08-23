@@ -270,7 +270,7 @@ public class PageUtils {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e1) {
-            logger.info("InterruptedException");
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -434,6 +434,9 @@ public class PageUtils {
             } catch (ElementNotInteractableException e) {
                 logger.debug("Trying to recover from an element not interactable exception");
                 count = count + 1;
+            } catch (NoSuchElementException e) {
+                logger.debug("Trying to recover from no such element exception");
+                count = count + 1;
             } catch (StaleElementReferenceException e) {
                 logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
@@ -460,9 +463,6 @@ public class PageUtils {
                         scroller.sendKeys(Keys.DOWN);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
 
-                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
-                    processCoordinates.inViewPort();
-
                     return driver.findElements(scenario);
                 } else {
                     return driver.findElements(scenario);
@@ -479,7 +479,7 @@ public class PageUtils {
     }
 
     /**
-     * Checks the element's size on the page is less than 1 and return true/false
+     * Checks the element's size on the page is less than 1 and returns true/false
      *
      * @param locator - the element as list
      * @return true/false
@@ -492,7 +492,8 @@ public class PageUtils {
     /**
      * Selects the correct option in the dropdown.  Conditional statement is included because the system
      * tends to revert to previous selection.
-     * @param locator - the locator of the element
+     *
+     * @param locator        - the locator of the element
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
@@ -523,9 +524,9 @@ public class PageUtils {
 
     /**
      * Checks for string to be present in element text and returns true/false
-     * @param locator - the element locator
-     * @param text - the text to check
-     * @return true/false
+     * @param locator
+     * @param text
+     * @return
      */
     public Boolean checkElementContains(WebElement locator, String text) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
@@ -537,11 +538,45 @@ public class PageUtils {
      * @param locator - the locator of the element
      */
     public void waitForElementAndClick(WebElement locator) {
+        waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .ignoreAll(Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class, StaleElementReferenceException.class))
+            .ignoreAll(Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class, StaleElementReferenceException.class, ElementNotInteractableException.class))
             .until((WebDriver webDriver) -> {
                 locator.click();
                 return true;
             });
+    }
+
+    /**
+     * Waits for the element and check attribute is empty
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public Boolean checkElementAttributeEmpty(WebElement locator, String attribute) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
+    }
+
+    /**
+     * Checks the element's size on the page is greater than 0 and returns true/false
+     *
+     * @param locator - the element as list
+     * @return true/false
+     */
+    public <T> Boolean checkElementVisibleByBoolean(List<T> locator) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
+    }
+
+    /**
+     * Waits for the element and checks for attribute
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public String checkElementAttribute(WebElement locator, String attribute) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
+        return wait.until((ExpectedCondition<String>) element -> (locator).getAttribute(attribute));
     }
 }

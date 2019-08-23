@@ -4,28 +4,22 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
-import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
+import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public class DTCMouldingPartThicknessTests extends TestBase {
 
-    private LoginPage loginPage;
-    private ExplorePage explorePage;
-    private DesignGuidancePage designGuidancePage;
+    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
-    private String filePath = new Scanner(DTCMouldingPartThicknessTests.class.getClassLoader()
-        .getResourceAsStream("filepath.txt"), "UTF-8").useDelimiter("\\A").next();
+    private LoginPage loginPage;
+    private GuidancePage guidancePage;
 
     public DTCMouldingPartThicknessTests() {
         super();
@@ -33,41 +27,31 @@ public class DTCMouldingPartThicknessTests extends TestBase {
 
     @Test
     @Description("Testing DTC Moulding Thickness Minimum")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCMouldingThicknessMin() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioMinThickness", filePath, "Plastic moulded cap thinPart.SLDPRT")
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
+            .costScenario()
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
 
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issues", "Minimum Wall Thickness", "Component:1");
-
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
     }
 
     @Test
     @Description("Testing DTC Moulding Thickness Maximum")
-    @Severity(SeverityLevel.NORMAL)
     public void testDTCMouldingThicknessMax() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile("ScenarioMaxThickness", filePath, "Plastic moulded cap thinPart.SLDPRT")
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap thickPart.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())
-            .openDesignGuidance();
+            .costScenario()
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
 
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issues", "Maximum Wall Thickness", "Component:1");
-
-        assertThat(new GuidancePage(driver).getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
     }
 }

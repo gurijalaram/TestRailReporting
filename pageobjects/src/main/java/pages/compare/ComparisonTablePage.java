@@ -11,6 +11,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> {
 
     private final Logger logger = LoggerFactory.getLogger(ComparisonTablePage.class);
@@ -58,8 +62,10 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    public ComparisonTablePage selectComparison(String scenarioName, String partName) {
-        findComparison(scenarioName, partName).click();
+    public ComparisonTablePage selectScenario(String scenarioName, String partName) {
+        findScenario(scenarioName, partName);
+        WebElement comparison = driver.findElement(By.xpath("//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]"));
+        pageUtils.waitForElementAndClick(comparison);
         return this;
     }
 
@@ -70,8 +76,8 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      * @param scenarioName - scenario name
      * @return comparison as webelement
      */
-    public WebElement findComparison(String scenarioName, String partName) {
-        By comparison = By.xpath("//div[@data-ap-comp='componentTable']//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]");
+    public WebElement findScenario(String scenarioName, String partName) {
+        By comparison = By.xpath("//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]");
         return pageUtils.scrollToElement(comparison, comparisonScroller);
     }
 

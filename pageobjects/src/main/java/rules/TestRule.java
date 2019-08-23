@@ -186,7 +186,7 @@ public class TestRule implements MethodRule {
         try {
             return toByteArray(screenshotUrl);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug(e.getMessage());
         }
         return new byte[0];
     }
