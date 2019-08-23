@@ -12,7 +12,6 @@ import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.materialutilization.stock.SelectStockPage;
 import main.java.pages.evaluate.materialutilization.stock.StockPage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
@@ -21,7 +20,6 @@ import org.junit.Test;
 public class ChangeStockSelectionTests extends TestBase {
 
     private LoginPage loginPage;
-    private ExplorePage explorePage;
     private SelectStockPage selectStockPage;
     private StockPage stockPage;
 

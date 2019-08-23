@@ -27,7 +27,6 @@ public class PreviewPanelTests extends TestBase {
     @TestRail(testCaseId = ("{C1102}, {C1103}"))
     public void testPreviewPanelDisplay() {
 
-        String testScenarioName = Constants.scenarioName;
         String partName = "Casting";
 
         loginPage = new LoginPage(driver);

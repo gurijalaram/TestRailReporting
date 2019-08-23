@@ -33,11 +33,9 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
 
-        String testScenarioName = Constants.scenarioName;
-
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_001_006-8613190_2.prt.2"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("case_001_006-8613190_2.prt.2"))
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
@@ -49,11 +47,9 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Stock Machining")
     public void testProcessGroupStockMachining() {
 
-        String testScenarioName = Constants.scenarioName;
-
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("42x1021_ref.prt.1"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("42x1021_ref.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 

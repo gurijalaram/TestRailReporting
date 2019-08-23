@@ -10,7 +10,6 @@ import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.enums.WorkspaceEnum;
-import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -21,7 +20,6 @@ import org.junit.Test;
 public class PublishExistingCostedTests extends TestBase {
 
     private LoginPage loginPage;
-    private ComparisonTablePage comparisonTablePage;
     private ExplorePage explorePage;
 
     public PublishExistingCostedTests() {
