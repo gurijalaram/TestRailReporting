@@ -570,6 +570,17 @@ public class PageUtils {
     }
 
     /**
+     * Checks the element's size on the page is greater than 0 and returns true/false
+     *
+     * @param locator - the element as list
+     * @return true/false
+     */
+    public <T> Boolean checkElementVisibleByBoolean(List<T> locator, int timeOut) {
+        WebDriverWait wait = new WebDriverWait(driver, timeOut);
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
+    }
+
+    /**
      * Waits for the element and checks for attribute
      *
      * @param locator - the locator of the element

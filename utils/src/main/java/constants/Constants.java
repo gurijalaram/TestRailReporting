@@ -2,8 +2,7 @@ package main.java.constants;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 
 public class Constants {
@@ -17,4 +16,5 @@ public class Constants {
     public static final String internalApiURL = Constants.defaultCidURL + "ws";
     public static final String GRID_SERVER_URL = "http://localhost:4444/wd/hub";
 
+    public static final String scenarioName = ("AutoScenario" + LocalDateTime.now()).replace(".", ":");
 }

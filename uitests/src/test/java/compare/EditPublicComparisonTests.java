@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
@@ -14,11 +15,7 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class EditPublicComparisonTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -34,7 +31,7 @@ public class EditPublicComparisonTests extends TestBase {
     public void testEditPublicComparisonPublish() {
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")
@@ -51,7 +48,7 @@ public class EditPublicComparisonTests extends TestBase {
     public void testEditPublicComparison() {
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
             .enterComparisonName("DeletePrivateComparison10")

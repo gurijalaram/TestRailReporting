@@ -5,11 +5,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.enums.WorkspaceEnum;
-import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -17,14 +17,9 @@ import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class PublishExistingCostedTests extends TestBase {
 
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
-
     private LoginPage loginPage;
-    private ComparisonTablePage comparisonTablePage;
     private ExplorePage explorePage;
 
     public PublishExistingCostedTests() {
@@ -36,7 +31,7 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 
-        String testScenarioName = scenarioName;
+        String testScenarioName = Constants.scenarioName;
         String partName = "testpart-4";
 
         loginPage = new LoginPage(driver);
