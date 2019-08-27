@@ -78,8 +78,6 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
 
-        String testScenarioName = Constants.scenarioName;
-
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("case_010_lam_15-435508-00.prt.1"))
