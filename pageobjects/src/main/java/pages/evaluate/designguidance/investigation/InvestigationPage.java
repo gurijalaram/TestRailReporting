@@ -124,6 +124,6 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return details as web
      */
     public String getThreadHeader() {
-        return threadHeader.getText();
+        return pageUtils.checkElementAttribute(threadHeader, "outerText");
     }
 }

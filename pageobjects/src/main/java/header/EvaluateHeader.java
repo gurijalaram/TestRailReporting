@@ -74,9 +74,9 @@ public class EvaluateHeader extends GenericHeader {
     /**
      * Gets cost label
      *
-     * @return webelement
+     * @return true/false
      */
-    public String getCostLabel() {
-        return pageUtils.waitForElementToAppear(costLabel).getText();
+    public Boolean getCostLabel(String text) {
+        return pageUtils.checkElementContains(costLabel, text);
     }
 }
