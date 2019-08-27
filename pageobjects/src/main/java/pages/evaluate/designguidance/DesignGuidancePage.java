@@ -85,7 +85,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public InvestigationPage openInvestigationTab() {
-        investigationTab.click();
+        pageUtils.waitForElementAndClick(investigationTab);
         return new InvestigationPage(driver);
     }
 
