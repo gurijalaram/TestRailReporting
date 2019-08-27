@@ -35,6 +35,9 @@ public class EvaluateHeader extends GenericHeader {
     @FindBy(css = "button.gwt-Button.btn.btn-primary")
     private WebElement dialogCostButton;
 
+    @FindBy(css = "select[data-ap-field='processGroupSelection']")
+    private WebElement processGroupDropdown;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -48,32 +51,24 @@ public class EvaluateHeader extends GenericHeader {
 
     /**
      * Cost the scenario
+     *
      * @return current page object
      */
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCost();
-        checkCostLabelAppears();
+        waitForDropdownEnabled();
         return new EvaluatePage(driver);
     }
 
     /**
-     * Wait for cost label popover
+     * Wait for dropdown enabled
      *
-     * @return boolean true/false
+     * @return webElement
      */
-    public boolean checkCostLabelAppears() {
-        return pageUtils.checkElementVisibleByBoolean(costLabelPopoverElement);
-    }
-
-
-    /**
-     * Wait for cost label popover
-     * @param timeOut - timeout in milliseconds
-     * @return
-     */
-    public boolean checkCostLabelAppears(int timeOut) {
-        return pageUtils.checkElementVisibleByBoolean(costLabelPopoverElement, timeOut);
+    public WebElement waitForDropdownEnabled() {
+        pageUtils.waitForElementDisabled(processGroupDropdown);
+        return pageUtils.waitForElementToBeClickable(processGroupDropdown);
     }
 
     /**

@@ -406,6 +406,23 @@ public class PageUtils {
         throw new AssertionError("Element did not appear: " + childLocator);
     }
 
+    public WebElement waitForElementToBeClickable(WebElement element, int timeOut) {
+        int count = 0;
+        while (count < 12) {
+            try {
+                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeOut);
+                return wait.until(ExpectedConditions.elementToBeClickable(element));
+            } catch (StaleElementReferenceException e) {
+                // e.toString();
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            } catch (TimeoutException e) {
+                count = count + 1;
+            }
+        }
+        throw new AssertionError("Element is not clickable: " + element);
+    }
+
     /**
      * Finds element in a table by scrolling.
      *
@@ -509,21 +526,20 @@ public class PageUtils {
     }
 
     /**
-     * Waits for the element to become enabled
+     * Waits for the element to become disabled
      *
      * @param locator - the locator of the element
+     * @return
      */
-    public void waitForElementEnabled(WebElement locator) {
-        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
-            .ignoring(StaleElementReferenceException.class)
-            .until((WebDriver driver) -> {
-                locator.isEnabled();
-                return true;
-            });
+    public Boolean waitForElementDisabled(WebElement locator) {
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class, StaleElementReferenceException.class, ElementNotInteractableException.class))
+            .until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(locator)));
     }
 
     /**
      * Checks for string to be present in element text and returns true/false
+     *
      * @param locator
      * @param text
      * @return
@@ -535,6 +551,7 @@ public class PageUtils {
 
     /**
      * Ignores exceptions and waits for the element to be clickable
+     *
      * @param locator - the locator of the element
      */
     public void waitForElementAndClick(WebElement locator) {
@@ -566,17 +583,6 @@ public class PageUtils {
      */
     public <T> Boolean checkElementVisibleByBoolean(List<T> locator) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2);
-        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
-    }
-
-    /**
-     * Checks the element's size on the page is greater than 0 and returns true/false
-     *
-     * @param locator - the element as list
-     * @return true/false
-     */
-    public <T> Boolean checkElementVisibleByBoolean(List<T> locator, int timeOut) {
-        WebDriverWait wait = new WebDriverWait(driver, timeOut);
         return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
     }
 
