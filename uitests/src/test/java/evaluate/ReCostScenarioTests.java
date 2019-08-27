@@ -1,7 +1,6 @@
 package test.java.evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
@@ -39,7 +38,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()),is(true));
     }
 
     @Test
@@ -55,7 +54,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -71,7 +70,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -89,7 +88,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -105,7 +104,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 
     @Test
@@ -121,6 +120,6 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(), is(equalTo(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel())));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
     }
 }
