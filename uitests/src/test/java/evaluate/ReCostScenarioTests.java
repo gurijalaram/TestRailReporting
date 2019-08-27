@@ -31,8 +31,6 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Gear Making")
     public void testRecostGearMaking() {
 
-        String testScenarioName = Constants.scenarioName;
-
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Case_011_-_Team_350385.prt.1"))
@@ -49,8 +47,6 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
 
-        String testScenarioName = Constants.scenarioName;
-
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
@@ -66,8 +62,6 @@ public class ReCostScenarioTests extends TestBase {
     @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
-
-        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -103,8 +97,6 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
 
-        String testScenarioName = Constants.scenarioName;
-
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
@@ -120,8 +112,6 @@ public class ReCostScenarioTests extends TestBase {
     @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
-
-        String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
