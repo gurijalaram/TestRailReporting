@@ -609,7 +609,7 @@ public class PageUtils {
      */
     public Boolean checkElementAttributeBoolean(WebElement locator, String attribute, String text) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS);
-        return wait.ignoring(StaleElementReferenceException.class)
+        return wait.ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver webDriver) -> locator.getAttribute(attribute)).equals(text);
     }
 }
