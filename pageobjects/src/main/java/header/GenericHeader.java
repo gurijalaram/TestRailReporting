@@ -157,8 +157,8 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ScenarioNotesPage selectScenarioInfoNotes() {
-        actionsDropdown.click();
-        scenarioNotesButton.click();
+        pageUtils.waitForElementAndClick(actionsDropdown);
+        pageUtils.waitForElementAndClick(scenarioNotesButton);
         return new ScenarioNotesPage(driver);
     }
 
