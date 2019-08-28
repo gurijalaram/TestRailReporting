@@ -1,6 +1,6 @@
 package test.java.explore;
 
-import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
@@ -48,8 +48,8 @@ public class ActionsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         scenarioNotesPage = explorePage.selectScenarioInfoNotes();
 
-        assertThat(scenarioNotesPage.getCostMaturity(), containsString("Low"));
-        assertThat(scenarioNotesPage.getStatus(), containsString("New"));
+        assertThat(scenarioNotesPage.getStatus("New"), is(true));
+        assertThat(scenarioNotesPage.getCostMaturity("Low"), is(true));
     }
 
     @Test

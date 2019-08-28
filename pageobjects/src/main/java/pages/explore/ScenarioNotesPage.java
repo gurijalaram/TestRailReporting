@@ -127,16 +127,16 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * Get the status dropdown
      * @return option as string
      */
-    public String getStatus() {
-        return new Select(statusDropdown).getFirstSelectedOption().getText();
+    public boolean getStatus(String text) {
+        return pageUtils.checkElementAttributeBoolean(new Select(statusDropdown).getFirstSelectedOption(), "value", text);
     }
 
     /**
      * Gets the cost maturity dropdown
      * @return option as string
      */
-    public String getCostMaturity() {
-        return new Select(maturityDropdown).getFirstSelectedOption().getText();
+    public boolean getCostMaturity(String text) {
+        return pageUtils.checkElementAttributeBoolean(new Select(maturityDropdown).getFirstSelectedOption(), "value", text);
     }
 
     /**

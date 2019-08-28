@@ -60,7 +60,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      * @return current page object
      */
     public DeletePage selectIterationsCheckbox() {
-        iterationsCheckbox.click();
+        pageUtils.waitForElementToAppear(iterationsCheckbox).click();
         return this;
     }
 
@@ -74,7 +74,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      * @return new page object
      */
     public ExplorePage deleteScenario() {
-        deleteButton.click();
+        pageUtils.waitForElementToAppear(deleteButton).click();
         notificationPopoverNotDisplayed();
         return new ExplorePage(driver);
     }
@@ -84,7 +84,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      * @return new page object
      */
     public ExplorePage deleteComparison() {
-        deleteButton.click();
+        pageUtils.waitForElementToAppear(deleteButton).click();
         return new ExplorePage(driver);
     }
 
@@ -93,7 +93,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      * @return new page object
      */
     public ExplorePage deleteExploreComparison() {
-        deleteButton.click();
+        pageUtils.waitForElementToAppear(deleteButton).click();
         notificationPopoverNotDisplayed();
         return new ExplorePage(driver);
     }
@@ -103,7 +103,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      * @return new page object
      */
     public ExplorePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementToAppear(cancelButton).click();
         return new ExplorePage(driver);
     }
 

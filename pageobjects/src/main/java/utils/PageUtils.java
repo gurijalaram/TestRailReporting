@@ -13,6 +13,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Coordinates;
@@ -34,6 +35,8 @@ public class PageUtils {
 
     private WebDriver driver;
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
+    private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
+        StaleElementReferenceException.class, ElementNotInteractableException.class);
 
     static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
     protected static final Logger steps_logger = LoggerFactory.getLogger("steps_logger");
@@ -533,20 +536,21 @@ public class PageUtils {
      */
     public Boolean waitForElementDisabled(WebElement locator) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .ignoreAll(Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class, StaleElementReferenceException.class, ElementNotInteractableException.class))
+            .ignoreAll(ignoredWebDriverExceptions)
             .until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(locator)));
     }
 
     /**
      * Checks for string to be present in element text and returns true/false
      *
-     * @param locator
+     * @param locator - the locator of the element
      * @param text
      * @return
      */
     public Boolean checkElementContains(WebElement locator, String text) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
-        return wait.until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+        return wait.ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
     }
 
     /**
@@ -557,7 +561,7 @@ public class PageUtils {
     public void waitForElementAndClick(WebElement locator) {
         waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .ignoreAll(Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class, StaleElementReferenceException.class, ElementNotInteractableException.class))
+            .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver webDriver) -> {
                 locator.click();
                 return true;
@@ -595,5 +599,17 @@ public class PageUtils {
     public String checkElementAttribute(WebElement locator, String attribute) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.until((ExpectedCondition<String>) element -> (locator).getAttribute(attribute));
+    }
+
+    /**
+     * Waits for the element and checks for attribute
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public Boolean checkElementAttributeBoolean(WebElement locator, String attribute, String text) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS);
+        return wait.ignoreAll(ignoredWebDriverExceptions)
+            .until((WebDriver webDriver) -> locator.getAttribute(attribute)).equals(text);
     }
 }
