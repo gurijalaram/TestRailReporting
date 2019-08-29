@@ -86,11 +86,32 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "label[data-ap-field='processRoutingName'] div")
     private WebElement processRoutingName;
 
-    @FindBy(css = "label.dirty")
-    private List<WebElement> processRoutingState;
-
     @FindBy(css = "a[data-ap-nav-viewport='showCostResultDetails']")
     private WebElement resultsDetails;
+
+    @FindBy(css = "td[data-ap-field='failuresWarningsCount']")
+    private WebElement warningsCount;
+
+    @FindBy(css = "td[data-ap-field='dtcMessagesCount']")
+    private WebElement guidanceIssuesCount;
+
+    @FindBy(css = "td[data-ap-field='gcdWithTolerancesCount']")
+    private WebElement gcdTolerancesCount;
+
+    @FindBy(css = "td[data-ap-field='cycleTime']")
+    private WebElement cycleTimeCount;
+
+    @FindBy(css = "td[data-ap-field='materialCost']")
+    private WebElement materialCost;
+
+    @FindBy(css = "td[data-ap-field='totalCost']")
+    private WebElement pPartCost;
+
+    @FindBy(css = "td[data-ap-field='fullyBurdenedCost']")
+    private WebElement burdenedCost;
+
+    @FindBy(css = "td[data-ap-field='capitalInvestment']")
+    private WebElement capitalInvestments;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -276,5 +297,68 @@ public class EvaluatePage extends EvaluateHeader {
     public ScenarioNotesPage selectInfoNotes() {
         pageUtils.waitForElementToAppear(infoNotes).click();
         return new ScenarioNotesPage(driver);
+    }
+
+    /**
+     * @return
+     */
+    public String getWarningsCount() {
+        return pageUtils.waitForElementToAppear(warningsCount).getText();
+    }
+
+    /**
+     * Gets guidance issues count
+     * @return string
+     */
+    public String getGuidanceIssuesCount() {
+        return pageUtils.waitForElementToAppear(guidanceIssuesCount).getText();
+    }
+
+    /**
+     * Gets gcd tolerances count
+     * @return string
+     */
+    public String getGcdTolerancesCount() {
+        return pageUtils.waitForElementToAppear(gcdTolerancesCount).getText();
+    }
+
+    /**
+     * Gets cycle time count
+     * @return string
+     */
+    public String getCycleTimeCount() {
+        return pageUtils.waitForElementToAppear(cycleTimeCount).getText();
+    }
+
+    /**
+     * Gets the material cost
+     * @return string
+     */
+    public String getMaterialCost() {
+        return pageUtils.waitForElementToAppear(materialCost).getText();
+    }
+
+    /**
+     * Gets the piece part cost
+     * @return string
+     */
+    public String getPartCost() {
+        return pageUtils.waitForElementToAppear(pPartCost).getText();
+    }
+
+    /**
+     * Gets the fully burdened cost
+     * @return string
+     */
+    public String getBurdenedCost() {
+        return pageUtils.waitForElementToAppear(burdenedCost).getText();
+    }
+
+    /**
+     * Gets the capital investment
+     * @return string
+     */
+    public String getCapitalInvestment() {
+        return pageUtils.waitForElementToAppear(capitalInvestments).getText();
     }
 }
