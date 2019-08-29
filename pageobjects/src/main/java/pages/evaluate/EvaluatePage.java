@@ -38,8 +38,11 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "a[data-ap-comp='updateInfoLink']")
     private WebElement infoNotes;
 
-    @FindBy(css = "span.gwt-InlineHTML.glyphicon.glyphicon-chevron-right")
-    private WebElement infoNotesChevron;
+    @FindBy(css = "th[data-ap-comp='comparisonSectionVisibilityButton']")
+    private WebElement referenceChevron;
+
+    @FindBy(css = ".gwt-InlineHTML.glyphicon.glyphicon-chevron-left")
+    private WebElement chevron;
 
     @FindBy(css = ".pull-left .filter-option-text")
     private WebElement scenarioDropdown;
@@ -243,6 +246,13 @@ public class EvaluatePage extends EvaluateHeader {
         return new MaterialCompositionPage(driver);
     }
 
+    public ReferenceComparePage openReferenceCompare() {
+        if (!pageUtils.isElementDisplayed(chevron)) {
+            pageUtils.waitForElementAndClick(referenceChevron);
+        }
+        return new ReferenceComparePage(driver);
+    }
+
     /**
      * Gets the scenario name
      *
@@ -308,6 +318,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets guidance issues count
+     *
      * @return string
      */
     public String getGuidanceIssuesCount() {
@@ -316,6 +327,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets gcd tolerances count
+     *
      * @return string
      */
     public String getGcdTolerancesCount() {
@@ -324,6 +336,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets cycle time count
+     *
      * @return string
      */
     public String getCycleTimeCount() {
@@ -332,6 +345,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the material cost
+     *
      * @return string
      */
     public String getMaterialCost() {
@@ -340,6 +354,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the piece part cost
+     *
      * @return string
      */
     public String getPartCost() {
@@ -348,6 +363,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the fully burdened cost
+     *
      * @return string
      */
     public String getBurdenedCost() {
@@ -356,6 +372,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the capital investment
+     *
      * @return string
      */
     public String getCapitalInvestment() {
