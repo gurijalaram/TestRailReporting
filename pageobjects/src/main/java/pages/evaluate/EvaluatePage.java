@@ -246,6 +246,10 @@ public class EvaluatePage extends EvaluateHeader {
         return new MaterialCompositionPage(driver);
     }
 
+    /**
+     * Opens the reference compare page
+     * @return new page object
+     */
     public ReferenceComparePage openReferenceCompare() {
         if (!pageUtils.isElementDisplayed(chevron)) {
             pageUtils.waitForElementAndClick(referenceChevron);
