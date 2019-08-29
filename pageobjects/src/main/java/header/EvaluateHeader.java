@@ -57,7 +57,7 @@ public class EvaluateHeader extends GenericHeader {
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCost();
-        waitForDropdownEnabled();
+        waitForDropdownEnabledAndEvaluatePageSteadyState();
         return new EvaluatePage(driver);
     }
 
@@ -66,9 +66,11 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return webElement
      */
-    public WebElement waitForDropdownEnabled() {
+    public EvaluateHeader waitForDropdownEnabledAndEvaluatePageSteadyState() {
         pageUtils.waitForElementDisabled(processGroupDropdown);
-        return pageUtils.waitForElementToBeClickable(processGroupDropdown, 2);
+        pageUtils.waitForElementToBeClickable(processGroupDropdown, 2);
+        new EvaluatePage(driver).isLoaded();
+        return this;
     }
 
     /**
