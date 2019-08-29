@@ -409,11 +409,11 @@ public class PageUtils {
         throw new AssertionError("Element did not appear: " + childLocator);
     }
 
-    public WebElement waitForElementToBeClickable(WebElement element, int timeOut) {
+    public WebElement waitForElementToBeClickable(WebElement element, int timeOutInMinutes) {
         int count = 0;
         while (count < 12) {
             try {
-                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeOut);
+                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeOutInMinutes);
                 return wait.until(ExpectedConditions.elementToBeClickable(element));
             } catch (StaleElementReferenceException e) {
                 // e.toString();

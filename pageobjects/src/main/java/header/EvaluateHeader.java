@@ -68,7 +68,7 @@ public class EvaluateHeader extends GenericHeader {
      */
     public WebElement waitForDropdownEnabled() {
         pageUtils.waitForElementDisabled(processGroupDropdown);
-        return pageUtils.waitForElementToBeClickable(processGroupDropdown);
+        return pageUtils.waitForElementToBeClickable(processGroupDropdown, 2);
     }
 
     /**
