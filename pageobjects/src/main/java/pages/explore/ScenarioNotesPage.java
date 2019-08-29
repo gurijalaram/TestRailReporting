@@ -128,7 +128,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return option as string
      */
     public boolean getStatus(String text) {
-        return pageUtils.checkElementAttributeBoolean(new Select(statusDropdown).getFirstSelectedOption(), "value", text);
+        return pageUtils.checkElementFirstOption(statusDropdown, text);
     }
 
     /**
@@ -136,7 +136,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return option as string
      */
     public boolean getCostMaturity(String text) {
-        return pageUtils.checkElementAttributeBoolean(new Select(maturityDropdown).getFirstSelectedOption(), "value", text);
+        return pageUtils.checkElementFirstOption(maturityDropdown, text);
     }
 
     /**
