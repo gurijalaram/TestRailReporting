@@ -109,7 +109,7 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     @Override
-    public void isLoaded() throws Error {
+    protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(leftPanel);
         pageUtils.waitForElementToAppear(viewerCanvas);
         pageUtils.waitForElementToAppear(controlToolbars);
