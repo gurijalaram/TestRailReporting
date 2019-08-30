@@ -48,8 +48,8 @@ public class ActionsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         scenarioNotesPage = explorePage.selectScenarioInfoNotes();
 
-        assertThat(scenarioNotesPage.getStatus("New"), is(true));
-        assertThat(scenarioNotesPage.getCostMaturity("Low"), is(true));
+        assertThat(scenarioNotesPage.isStatusSelected("New"), is(true));
+        assertThat(scenarioNotesPage.isCostMaturitySelected("Low"), is(true));
     }
 
     @Test

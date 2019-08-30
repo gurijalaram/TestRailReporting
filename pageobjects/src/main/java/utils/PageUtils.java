@@ -607,9 +607,9 @@ public class PageUtils {
      * @param locator - the locator of the element
      * @return
      */
-    public Boolean checkElementAttributeBoolean(WebElement locator, String attribute, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS);
+    public Boolean checkElementFirstOption(WebElement locator, String text) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.ignoreAll(ignoredWebDriverExceptions)
-            .until((WebDriver webDriver) -> locator.getAttribute(attribute)).equals(text);
+            .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
     }
 }
