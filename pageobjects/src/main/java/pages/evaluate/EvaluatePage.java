@@ -232,11 +232,11 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets the selected process group details
+     * Checks the selected process group details
      *
      * @return group details as string
      */
-    public Boolean getSelectedProcessGroup(String text) {
+    public Boolean isProcessGroupSelected(String text) {
         return pageUtils.checkElementFirstOption(processGroupDropdown, text);
     }
 

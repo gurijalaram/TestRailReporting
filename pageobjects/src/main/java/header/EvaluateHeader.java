@@ -54,6 +54,7 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return current page object
      */
+    // FIXME: 30/08/2019 some modifications needed as workaround to cost seems a little dirty
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCost();

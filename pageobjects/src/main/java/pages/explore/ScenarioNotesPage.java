@@ -124,18 +124,18 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     }
 
     /**
-     * Get the status dropdown
+     * Checks the status dropdown
      * @return option as string
      */
-    public boolean getStatus(String text) {
+    public boolean isStatusSelected(String text) {
         return pageUtils.checkElementFirstOption(statusDropdown, text);
     }
 
     /**
-     * Gets the cost maturity dropdown
+     * Checks the cost maturity dropdown
      * @return option as string
      */
-    public boolean getCostMaturity(String text) {
+    public boolean isCostMaturitySelected(String text) {
         return pageUtils.checkElementFirstOption(maturityDropdown, text);
     }
 

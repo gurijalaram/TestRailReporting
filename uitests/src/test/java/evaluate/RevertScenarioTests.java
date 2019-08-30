@@ -40,7 +40,7 @@ public class RevertScenarioTests extends TestBase {
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(evaluatePage.getSelectedProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));
+        assertThat(evaluatePage.isProcessGroupSelected(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));
     }
 
     @Test
@@ -58,6 +58,6 @@ public class RevertScenarioTests extends TestBase {
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(evaluatePage.getSelectedProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));
+        assertThat(evaluatePage.isProcessGroupSelected(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));
     }
 }
