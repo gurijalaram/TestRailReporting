@@ -54,6 +54,7 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return current page object
      */
+    // FIXME: 30/08/2019 some modifications needed as workaround to cost seems a little dirty
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCost();
@@ -66,9 +67,10 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return webElement
      */
-    public WebElement waitForDropdownEnabled() {
+    public EvaluateHeader waitForDropdownEnabled() {
         pageUtils.waitForElementDisabled(processGroupDropdown);
-        return pageUtils.waitForElementToBeClickable(processGroupDropdown, 2);
+        pageUtils.waitForElementToBeClickable(processGroupDropdown, 2);
+        return this;
     }
 
     /**

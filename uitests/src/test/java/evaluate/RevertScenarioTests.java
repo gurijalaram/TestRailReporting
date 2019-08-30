@@ -1,7 +1,6 @@
 package test.java.evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
@@ -41,7 +40,7 @@ public class RevertScenarioTests extends TestBase {
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(evaluatePage.getSelectedProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
+        assertThat(evaluatePage.isProcessGroupSelected(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));
     }
 
     @Test
@@ -59,6 +58,6 @@ public class RevertScenarioTests extends TestBase {
             .revert()
             .revertScenario(EvaluatePage.class);
 
-        assertThat(evaluatePage.getSelectedProcessGroup(), is(equalTo(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())));
+        assertThat(evaluatePage.isProcessGroupSelected(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));
     }
 }

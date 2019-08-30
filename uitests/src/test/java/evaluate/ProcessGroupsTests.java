@@ -108,13 +108,13 @@ public class ProcessGroupsTests extends TestBase {
         String testScenarioName = Constants.scenarioName;
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("700-33770-01_A0.stp"))
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_012_009-700-33770-01_A0");
+            .highlightScenario(testScenarioName, "700-33770-01_A0");
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
