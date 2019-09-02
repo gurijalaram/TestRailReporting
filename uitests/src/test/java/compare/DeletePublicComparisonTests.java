@@ -33,7 +33,7 @@ public class DeletePublicComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C430, C442"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"430", "442"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDelete() {
         String testScenarioName = Constants.scenarioName;
@@ -64,7 +64,7 @@ public class DeletePublicComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C443"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
     @Severity(SeverityLevel.NORMAL)
     public void deletePublicComparisonPage() {

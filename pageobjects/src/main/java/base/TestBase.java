@@ -1,6 +1,7 @@
 package main.java.base;
 
 import main.java.constants.Constants;
+import main.java.rules.TestRailRule;
 import main.java.rules.TestRule;
 import main.java.runner.ConcurrentTestRunner;
 import main.java.utils.ConsoleLogHandler;
@@ -35,6 +36,8 @@ public class TestBase {
     public MyTestWatcher watchman = new MyTestWatcher();
     @Rule
     public TestRule testRule = new TestRule();
+    @Rule
+    public TestRailRule testRailRule = new TestRailRule();
 
     protected String browser;
     protected TestMode mode;

@@ -52,7 +52,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C645"}, tags = {"high"})
+    @TestRail(testCaseId = {"645"})
     @Description("View detailed information about costed process")
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
@@ -77,7 +77,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C646"}, tags = {"medium"})
+    @TestRail(testCaseId = {"646"})
     @Description("View individual process steps")
     public void testViewProcessSteps() {
         loginPage = new LoginPage(driver);

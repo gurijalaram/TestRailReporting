@@ -23,7 +23,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1096"})
+    @TestRail(testCaseId = {"1096"})
     @Description("Test default list of column headers in the private workspace")
     public void testPrivateDefaultColumnHeaders() {
         loginPage = new LoginPage(driver);
@@ -35,7 +35,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1096"})
+    @TestRail(testCaseId = {"1096"})
     @Description("Test default list of column headers in the public workspace")
     public void testPublicDefaultColumnHeaders() {
         loginPage = new LoginPage(driver);
@@ -47,7 +47,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1095"})
+    @TestRail(testCaseId = {"1095"})
     @Description("Test added columns are displayed in the public workspace")
     public void testPublicAddColumnHeaders() {
         loginPage = new LoginPage(driver);
@@ -62,7 +62,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1095"})
+    @TestRail(testCaseId = {"1095"})
     @Description("Test added columns are displayed in the private workspace")
     public void testPrivateAddColumnHeaders() {
         loginPage = new LoginPage(driver);

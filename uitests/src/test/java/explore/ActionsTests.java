@@ -24,7 +24,7 @@ public class ActionsTests extends TestBase {
     private ScenarioNotesPage scenarioNotesPage;
 
     @Test
-    @TestRail(testCaseId = {"C545"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"545"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
 

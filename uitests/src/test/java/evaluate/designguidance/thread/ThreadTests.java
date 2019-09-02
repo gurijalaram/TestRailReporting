@@ -18,8 +18,10 @@ import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
 import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
+import main.java.rules.TestRailRule;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import org.junit.Rule;
 import org.junit.Test;
 
 public class ThreadTests extends TestBase {
@@ -51,7 +53,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C28"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"28"})
     @Description("C28 Test to check thread length persist")
     public void editThread() {
         loginPage = new LoginPage(driver);
@@ -100,7 +102,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C29"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
         loginPage = new LoginPage(driver);
@@ -162,7 +164,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C32, C33"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"32", "33"})
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     public void changeThreadValueCancel() {
         loginPage = new LoginPage(driver);
@@ -186,7 +188,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C32, C34"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"32", "34"})
     @Description("Testing that adding text values in the thread length shows a warning message")
     public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
@@ -225,7 +227,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C717"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"717"})
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     public void zeroValueTest() {
         loginPage = new LoginPage(driver);
@@ -245,7 +247,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C30"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"30"})
     @Description("Testing a public thread cannot be edited")
     public void cannotEditPublicThread() {
 
@@ -266,7 +268,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C38, C40"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"38", "40"})
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
@@ -300,7 +302,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C267, C268"}, tags = {"High"})
+    @TestRail(testCaseId = {"267", "268"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);

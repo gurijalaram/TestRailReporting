@@ -26,7 +26,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"578", "584","598"})
     @Description("Test recosting a cad file - Gear Making")
     public void testRecostGearMaking() {
 
@@ -42,7 +42,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
 
@@ -58,7 +58,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
 
@@ -74,7 +74,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
 
@@ -90,7 +90,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
 
@@ -106,7 +106,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C578, C584,C598"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
 

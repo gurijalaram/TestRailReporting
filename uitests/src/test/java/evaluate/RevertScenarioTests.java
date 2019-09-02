@@ -26,7 +26,7 @@ public class RevertScenarioTests extends TestBase {
 
     @Test
     @Description("Test revert saved scenario")
-    @TestRail(testCaseId = ("{C585}"))
+    @TestRail(testCaseId = {"585"})
     public void testRevertSavedScenario() {
 
         loginPage = new LoginPage(driver);
@@ -45,7 +45,7 @@ public class RevertScenarioTests extends TestBase {
 
     @Test
     @Description("Test revert unsaved scenario")
-    @TestRail(testCaseId = ("{C586}"))
+    @TestRail(testCaseId = {"586"})
     public void testRevertUnsavedScenario() {
 
         loginPage = new LoginPage(driver);

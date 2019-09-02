@@ -28,7 +28,7 @@ public class ChangeStockSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C960"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"960"})
     @Description("Test making changes to the Material Stock, the change is respected and the scenario can be re-cost")
     public void changeStockSelectionTest() {
         loginPage = new LoginPage(driver);
@@ -48,7 +48,7 @@ public class ChangeStockSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C983"}, tags = {"high"})
+    @TestRail(testCaseId = {"983"})
     @Description("Test inappropriate stock cannot be selected")
     public void inappropriateStockSelectionTest() {
         loginPage = new LoginPage(driver);
