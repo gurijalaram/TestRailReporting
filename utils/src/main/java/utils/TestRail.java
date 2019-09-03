@@ -14,5 +14,4 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface TestRail {
     String[] testCaseId() default "";
-    String[] tags() default "";
 }

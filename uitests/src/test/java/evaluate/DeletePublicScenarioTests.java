@@ -24,7 +24,7 @@ public class DeletePublicScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C587"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"587"})
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
 

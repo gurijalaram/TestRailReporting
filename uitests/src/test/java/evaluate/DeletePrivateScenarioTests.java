@@ -23,7 +23,7 @@ public class DeletePrivateScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C393, C587"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"393", "587"})
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
 

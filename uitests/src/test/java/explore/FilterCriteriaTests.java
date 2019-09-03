@@ -29,7 +29,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C2276"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"2276"})
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
 
@@ -106,7 +106,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C2277"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"2277"})
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
         String testScenarioName = scenarioName;

@@ -26,7 +26,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C588"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"588"})
     @Description("Test a public scenario can be deleted from the evaluate page")
     public void testDeletePublicScenarioIteration() {
         String testScenarioName = Constants.scenarioName;
@@ -57,7 +57,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C588"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"588"})
     @Description("Test a private scenario can be deleted from the evaluate page")
     public void testDeletePrivateScenarioIteration() {
         String testScenarioName = Constants.scenarioName;

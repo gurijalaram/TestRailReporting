@@ -25,7 +25,7 @@ public class PublishNewCostedTests extends TestBase {
 
     @Test
     @Description("Publish a new scenario from the Private Workspace to the Public Workspace")
-    @TestRail(testCaseId = {"C386, C388"})
+    @TestRail(testCaseId = {"386", "388"})
     public void testPublishNewCostedScenario() {
 
         String testScenarioName = Constants.scenarioName;
@@ -42,7 +42,7 @@ public class PublishNewCostedTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C400, C401, C402, C404"})
+    @TestRail(testCaseId = {"400", "401", "402", "404"})
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
 

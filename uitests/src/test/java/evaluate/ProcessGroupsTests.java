@@ -28,7 +28,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C598"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"598"})
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
 
@@ -42,7 +42,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C598"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"598"})
     @Description("Testing process group Stock Machining")
     public void testProcessGroupStockMachining() {
 

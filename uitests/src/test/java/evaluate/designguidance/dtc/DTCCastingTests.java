@@ -36,7 +36,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C1045, C1050, C1054, C1056, C1058, C1049"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
         loginPage = new LoginPage(driver);

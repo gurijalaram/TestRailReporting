@@ -24,7 +24,7 @@ public class PreviewPanelTests extends TestBase {
 
     @Test
     @Description("Test preview panel data is displayed")
-    @TestRail(testCaseId = ("{C1102}, {C1103}"))
+    @TestRail(testCaseId = {"1102", "1103"})
     public void testPreviewPanelDisplay() {
 
         String partName = "Casting";
