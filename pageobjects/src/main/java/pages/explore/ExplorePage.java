@@ -131,7 +131,7 @@ public class ExplorePage extends ExploreHeader {
     /**
      * Highlights the comparison in the table
      * @param comparisonName - the comparison name
-     * @return the scenarion as webelement
+     * @return the scenario as webelement
      */
     public ExplorePage highlightComparison(String comparisonName) {
         By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr");

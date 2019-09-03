@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage> {
 
     private final Logger logger = LoggerFactory.getLogger(ReferenceComparePage.class);
@@ -16,47 +20,20 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     @FindBy(css = "[data-ap-comp='baselineScenarioSelection']")
     private WebElement filterDropdown;
 
-    @FindBy(css = "td[data-ap-field='dtcMessagesCount.percentDifference']")
-    private WebElement dtcPercentDifference;
+    @FindBy(css = "div[data-ap-region='inputsTile']")
+    private WebElement inputsTile;
 
-    @FindBy(css = "td[data-ap-field='dtcMessagesCount.baseline']")
-    private WebElement dtcBaseLine;
+    @FindBy(css = "div[data-ap-region='materialTile']")
+    private WebElement materialUtilizationTile;
 
-    @FindBy(css = "td[data-ap-field='failuresWarningsCount.baseline']")
-    private WebElement failuresBaseline;
+    @FindBy(css = "div[data-ap-region='costDriversGuidanceTile']")
+    private WebElement designGuidanceTile;
 
-    @FindBy(css = "td[data-ap-field='gcdWithTolerancesCount.baseline']")
-    private WebElement gcdBaseline;
+    @FindBy(css = "div[data-ap-region='cycleTimeTile']")
+    private WebElement processTile;
 
-    @FindBy(css = "td[data-ap-field='cycleTime.percentDifference']")
-    private WebElement cycleTimePercentage;
-
-    @FindBy(css = "td[data-ap-field='cycleTime.baseline']")
-    private WebElement cycleBaseLine;
-
-    @FindBy(css = "td[data-ap-field='materialCost.percentDifference']")
-    private WebElement materialDifference;
-
-    @FindBy(css = "td[data-ap-field='materialCost.baseline']")
-    private WebElement materialBaseline;
-
-    @FindBy(css = "td[data-ap-field='totalCost.percentDifference']")
-    private WebElement totalPercentDifference;
-
-    @FindBy(css = "td[data-ap-field='totalCost.baseline']")
-    private WebElement totalBaseline;
-
-    @FindBy(css = "td[data-ap-field='fullyBurdenedCost.percentDifference']")
-    private WebElement burdenedDifference;
-
-    @FindBy(css = "td[data-ap-field='fullyBurdenedCost.baseline']")
-    private WebElement burdenedBaseline;
-
-    @FindBy(css = "td[data-ap-field='capitalInvestment.percentDifference']")
-    private WebElement capitalDifference;
-
-    @FindBy(css = "td[data-ap-field='capitalInvestment.baseline']")
-    private WebElement capitalBaseline;
+    @FindBy(css = "div[data-ap-region='costResultsTile']")
+    private WebElement costResultsTile;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -80,114 +57,42 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     }
 
     /**
-     * Gets dtc percentage difference
-     * @return string
+     * Gets input tile info
+     * @return input as string
      */
-    public String getDTCPercentDifference() {
-        return pageUtils.waitForElementToAppear(dtcPercentDifference).getText();
+    public List<String> getInputsTile() {
+        return Arrays.stream(inputsTile.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
-     * Gets dtc baseline
-     * @return string
+     * Gets material utilization info
+     * @return material utilization as string
      */
-    public String getDTCBaseLine() {
-        return pageUtils.waitForElementToAppear(dtcBaseLine).getText();
+    public List<String> getMaterialsUtilizationTile() {
+        return Arrays.stream(materialUtilizationTile.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
-     * Gets failures baseline
-     * @return string
+     * Gets design guidance info
+     * @return design guidance as string
      */
-    public String getFailuresBaseline() {
-        return pageUtils.waitForElementToAppear(failuresBaseline).getText();
+    public List<String> getDesignGuidanceTile() {
+        return Arrays.stream(designGuidanceTile.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
-     * Gets gcd baseline
-     * @return string
+     * Gets process tile info
+     * @return process tile as string
      */
-    public String getGCDBaseline() {
-        return pageUtils.waitForElementToAppear(gcdBaseline).getText();
+    public List<String> getProcessesTile() {
+        return Arrays.stream(processTile.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
-     * Gets cycle percentage difference
-     * @return string
+     * Gets cost result info
+     * @return cost result as string
      */
-    public String getCycleTimePercentage() {
-        return pageUtils.waitForElementToAppear(cycleTimePercentage).getText();
-    }
-
-    /**
-     * Gets cycle baseline
-     * @return string
-     */
-    public String getCycleBaseLine() {
-        return pageUtils.waitForElementToAppear(cycleBaseLine).getText();
-    }
-
-    /**
-     * Gets material difference
-     * @return string
-     */
-    public String getMaterialDifference() {
-        return pageUtils.waitForElementToAppear(materialDifference).getText();
-    }
-
-    /**
-     * Gets material baseline
-     * @return string
-     */
-    public String getMaterialBaseline() {
-        return pageUtils.waitForElementToAppear(materialBaseline).getText();
-    }
-
-    /**
-     * Gets total percentage difference
-     * @return string
-     */
-    public String getTotalPercentDifference() {
-        return pageUtils.waitForElementToAppear(totalPercentDifference).getText();
-    }
-
-    /**
-     * Gets total baseline
-     * @return string
-     */
-    public String getTotalBaseline() {
-        return pageUtils.waitForElementToAppear(totalBaseline).getText();
-    }
-
-    /**
-     * Gets burdened difference
-     * @return string
-     */
-    public String getBurdenedDifference() {
-        return pageUtils.waitForElementToAppear(burdenedDifference).getText();
-    }
-
-    /**
-     * Gets burdened baseline
-     * @return string
-     */
-    public String getBurdenedBaseline() {
-        return pageUtils.waitForElementToAppear(burdenedBaseline).getText();
-    }
-
-    /**
-     * Gets capital difference
-     * @return string
-     */
-    public String getCapitalDifference() {
-        return pageUtils.waitForElementToAppear(capitalDifference).getText();
-    }
-
-    /**
-     * Gets capital baseline
-     * @return string
-     */
-    public String getCapitalBaseline() {
-        return pageUtils.waitForElementToAppear(capitalBaseline).getText();
+    public List<String> getCostResultsTile() {
+        return Arrays.stream(costResultsTile.getText().split("\n")).collect(Collectors.toList());
     }
 }

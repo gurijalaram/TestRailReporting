@@ -43,7 +43,7 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = ".gwt-InlineHTML.glyphicon.glyphicon-chevron-left")
     private WebElement chevron;
 
-    @FindBy(css = ".pull-left .filter-option-text")
+    @FindBy(css = "[data-ap-comp='scenarioKey'] .pull-left .filter-option-text")
     private WebElement scenarioDropdown;
 
     @FindBy(css = "a[data-ap-nav-viewport='showInputDetails']")
@@ -262,7 +262,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public EvaluatePage getCurrentScenarioName() {
-        scenarioDropdown.getText();
+        pageUtils.waitForElementToAppear(scenarioDropdown).getText();
         return this;
     }
 
