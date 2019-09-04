@@ -15,14 +15,10 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
-import java.util.Random;
-
 public class PublishPublicComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ComparePage comparePage;
-
-    int random = new Random().nextInt(1000);
 
     public PublishPublicComparisonTests() {
         super();
@@ -33,7 +29,7 @@ public class PublishPublicComparisonTests extends TestBase {
     public void testPublishPublicComparison() {
 
         String testScenarioName = Constants.scenarioName;
-        int comparisonInt = random;
+        String testComparisonName = Constants.comparisonName;
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -42,7 +38,7 @@ public class PublishPublicComparisonTests extends TestBase {
             .costScenario()
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName(testScenarioName + comparisonInt)
+            .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -50,6 +46,6 @@ public class PublishPublicComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .apply();
 
-        assertThat(new ExplorePage(driver).findComparison(testScenarioName + comparisonInt).isDisplayed(), is(true));
+        assertThat(new ExplorePage(driver).findComparison(testComparisonName).isDisplayed(), is(true));
     }
 }

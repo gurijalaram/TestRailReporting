@@ -17,4 +17,5 @@ public class Constants {
 
 
     public static final String scenarioName = "AutoScenario" + System.nanoTime();
+    public static final String comparisonName = "AutoComparison" + System.nanoTime();
 }

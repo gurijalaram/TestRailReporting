@@ -15,14 +15,10 @@ import main.java.utils.TestRail;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.util.Random;
-
 public class AddPrivateScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
-
-    int random = new Random().nextInt(1000);
 
     public AddPrivateScenarioTests() {
         super();
@@ -41,7 +37,7 @@ public class AddPrivateScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
             .createNewComparison()
-            .enterComparisonName("Private Comparison" + random)
+            .enterComparisonName(Constants.comparisonName)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()

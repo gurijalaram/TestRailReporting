@@ -18,15 +18,11 @@ import main.java.utils.TestRail;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.util.Random;
-
 public class AddPublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
     private WarningPage warningPage;
-
-    int random = new Random().nextInt(1000);
 
     public AddPublicScenarioTests() {
         super();
@@ -45,7 +41,7 @@ public class AddPublicScenarioTests extends TestBase {
             .costScenario()
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("Public Comparison" + random)
+            .enterComparisonName(Constants.comparisonName)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
