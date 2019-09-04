@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.EvaluatePage;
@@ -15,6 +14,7 @@ import main.java.pages.evaluate.materialutilization.stock.StockPage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class ChangeStockSelectionTests extends TestBase {
@@ -33,7 +33,7 @@ public class ChangeStockSelectionTests extends TestBase {
     public void changeStockSelectionTest() {
         loginPage = new LoginPage(driver);
         stockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialComposition()
@@ -53,7 +53,7 @@ public class ChangeStockSelectionTests extends TestBase {
     public void inappropriateStockSelectionTest() {
         loginPage = new LoginPage(driver);
         selectStockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialComposition()

@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.header.GenericHeader;
@@ -15,6 +14,7 @@ import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class DeletePrivateComparisonTests extends TestBase {
@@ -33,7 +33,8 @@ public class DeletePrivateComparisonTests extends TestBase {
     @Description("Test a private comparison can be deleted from the explore page")
     public void testDeletePrivateScenario() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
+        String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -41,7 +42,7 @@ public class DeletePrivateComparisonTests extends TestBase {
             .costScenario()
             .selectExploreButton()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparisonA")
+            .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -53,11 +54,11 @@ public class DeletePrivateComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison("DeletePrivateComparisonA")
+            .highlightComparison(testComparisonName)
             .delete()
             .deleteExploreComparison();
 
-        assertThat(explorePage.getListOfComparisons("DeletePrivateComparisonA") < 1, is(true));
+        assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
     }
 
     @Test
@@ -65,10 +66,12 @@ public class DeletePrivateComparisonTests extends TestBase {
     @Description("Test a private comparison can be deleted from the comparison page")
     public void deletePrivateComparison() {
 
+        String testComparisonName = new Util().getComparisonName();
+
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .createNewComparison()
-            .enterComparisonName("comparisonScenarioName")
+            .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
@@ -77,6 +80,6 @@ public class DeletePrivateComparisonTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
-        assertThat(explorePage.getListOfComparisons("comparisonScenarioName") < 1, is(true));
+        assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
     }
 }

@@ -5,12 +5,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class DTCMachiningTests extends TestBase {
@@ -27,7 +27,7 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCKeyseat() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -42,7 +42,7 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCCurvedSurface() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -57,7 +57,7 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCSharpCorner() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -72,7 +72,7 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCSideMilling() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -87,7 +87,7 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCMissingSetup() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -102,7 +102,7 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCPlanarFace() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()

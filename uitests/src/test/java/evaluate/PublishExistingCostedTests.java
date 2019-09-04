@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
@@ -15,6 +14,7 @@ import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class PublishExistingCostedTests extends TestBase {
@@ -31,7 +31,7 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
         String partName = "testpart-4";
 
         loginPage = new LoginPage(driver);

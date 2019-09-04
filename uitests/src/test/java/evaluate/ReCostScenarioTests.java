@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.CostingLabelEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -14,6 +13,7 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class ReCostScenarioTests extends TestBase {
@@ -32,7 +32,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Case_011_-_Team_350385.prt.1"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Case_011_-_Team_350385.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -48,7 +48,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -64,7 +64,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("14100640.stp"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("14100640.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -80,7 +80,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("case_010_lam_15-435508-00.prt.1"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_010_lam_15-435508-00.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -96,7 +96,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -112,7 +112,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())

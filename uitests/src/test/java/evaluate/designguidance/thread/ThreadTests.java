@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.containsString;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UnitsEnum;
 import main.java.enums.UsersEnum;
@@ -18,10 +17,9 @@ import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
 import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
-import main.java.rules.TestRailRule;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
-import org.junit.Rule;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class ThreadTests extends TestBase {
@@ -42,7 +40,7 @@ public class ThreadTests extends TestBase {
     public void threadButtonDisabled() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -58,7 +56,7 @@ public class ThreadTests extends TestBase {
     public void editThread() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -78,7 +76,7 @@ public class ThreadTests extends TestBase {
     public void selectScenario() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -107,7 +105,7 @@ public class ThreadTests extends TestBase {
     public void setDropdownValueNo() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -126,7 +124,7 @@ public class ThreadTests extends TestBase {
     public void setDropdownValueYes() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -146,7 +144,7 @@ public class ThreadTests extends TestBase {
     public void costedThreadLengthRemoved() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -169,7 +167,7 @@ public class ThreadTests extends TestBase {
     public void changeThreadValueCancel() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -193,7 +191,7 @@ public class ThreadTests extends TestBase {
     public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -212,7 +210,7 @@ public class ThreadTests extends TestBase {
     public void junkValueTest() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -232,7 +230,7 @@ public class ThreadTests extends TestBase {
     public void zeroValueTest() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -251,7 +249,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing a public thread cannot be edited")
     public void cannotEditPublicThread() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -273,7 +271,7 @@ public class ThreadTests extends TestBase {
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -307,11 +305,11 @@ public class ThreadTests extends TestBase {
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
-            .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
+            .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
             .save(EvaluatePage.class)
             .openDesignGuidance()
             .openInvestigationTab()
@@ -325,7 +323,7 @@ public class ThreadTests extends TestBase {
     public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openSettings()
@@ -343,7 +341,7 @@ public class ThreadTests extends TestBase {
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -375,7 +373,7 @@ public class ThreadTests extends TestBase {
     public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("CatiaPMIThreads.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CatiaPMIThreads.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -391,7 +389,7 @@ public class ThreadTests extends TestBase {
     public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("100plusThreads.prt"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("100plusThreads.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -407,7 +405,7 @@ public class ThreadTests extends TestBase {
     public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()

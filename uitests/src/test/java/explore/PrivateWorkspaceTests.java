@@ -2,10 +2,10 @@ package test.java.explore;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.pages.login.LoginPage;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class PrivateWorkspaceTests extends TestBase {
@@ -22,6 +22,6 @@ public class PrivateWorkspaceTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(Constants.scenarioName, "Casting");
+            .openScenario(new Util().getScenarioName(), "Casting");
     }
 }

@@ -120,8 +120,8 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      *
      * @return list as string
      */
-    public String getSelectionTableDetails() {
-        return pageUtils.waitForElementToAppear(processSelectionTable).getText();
+    public String[] getSelectionTableDetails() {
+        return pageUtils.waitForElementToAppear(processSelectionTable).getText().split("\n");
     }
 
     /**

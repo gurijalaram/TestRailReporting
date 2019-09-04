@@ -5,12 +5,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class DTCMouldingDraftTests extends TestBase {
@@ -27,7 +27,7 @@ public class DTCMouldingDraftTests extends TestBase {
     public void testDTCMouldingDraft() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
