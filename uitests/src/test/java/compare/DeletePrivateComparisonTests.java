@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.header.GenericHeader;
@@ -15,6 +14,7 @@ import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class DeletePrivateComparisonTests extends TestBase {
@@ -33,8 +33,8 @@ public class DeletePrivateComparisonTests extends TestBase {
     @Description("Test a private comparison can be deleted from the explore page")
     public void testDeletePrivateScenario() {
 
-        String testScenarioName = Constants.scenarioName;
-        String testComparisonName = Constants.comparisonName;
+        String testScenarioName = new Util().getScenarioName();
+        String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -66,7 +66,7 @@ public class DeletePrivateComparisonTests extends TestBase {
     @Description("Test a private comparison can be deleted from the comparison page")
     public void deletePrivateComparison() {
 
-        String testComparisonName = Constants.comparisonName;
+        String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

@@ -5,13 +5,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class PublishNewCostedTests extends TestBase {
@@ -28,7 +28,7 @@ public class PublishNewCostedTests extends TestBase {
     @TestRail(testCaseId = {"386", "388"})
     public void testPublishNewCostedScenario() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
         String partName = "Testpart-4";
 
         loginPage = new LoginPage(driver);
@@ -46,7 +46,7 @@ public class PublishNewCostedTests extends TestBase {
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
         String partName = "Testpart-4";
 
         loginPage = new LoginPage(driver);

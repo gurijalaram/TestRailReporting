@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparePage;
@@ -15,6 +14,7 @@ import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class AddPublicScenarioTests extends TestBase {
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
     public void filterAddPublicScenario() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         comparisonTablePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -41,7 +41,7 @@ public class AddPublicScenarioTests extends TestBase {
             .costScenario()
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName(Constants.comparisonName)
+            .enterComparisonName(new Util().getComparisonName())
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()

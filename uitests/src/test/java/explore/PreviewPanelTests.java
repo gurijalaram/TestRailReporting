@@ -5,12 +5,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class PreviewPanelTests extends TestBase {
@@ -31,9 +31,9 @@ public class PreviewPanelTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectExploreButton()
-            .highlightScenario(Constants.scenarioName, partName);
+            .highlightScenario(new Util().getScenarioName(), partName);
 
         explorePage = new ExplorePage(driver);
         explorePage.openPreviewPanel();
