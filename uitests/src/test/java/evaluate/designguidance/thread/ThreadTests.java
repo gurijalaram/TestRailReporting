@@ -18,10 +18,8 @@ import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
 import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
-import main.java.rules.TestRailRule;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
-import org.junit.Rule;
 import org.junit.Test;
 
 public class ThreadTests extends TestBase {
@@ -311,7 +309,7 @@ public class ThreadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
-            .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
+            .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
             .save(EvaluatePage.class)
             .openDesignGuidance()
             .openInvestigationTab()

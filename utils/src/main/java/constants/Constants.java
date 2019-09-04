@@ -16,5 +16,5 @@ public class Constants {
     public static final String GRID_SERVER_URL = "http://localhost:4444/wd/hub";
 
 
-    public static final String scenarioName = ("AutoScenario" + System.nanoTime()).replace(".", ":");
+    public static final String scenarioName = "AutoScenario" + System.nanoTime();
 }
