@@ -13,12 +13,13 @@ import main.java.enums.WorkspaceEnum;
 import main.java.header.GenericHeader;
 import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
-import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import org.junit.Test;
+
+import java.util.Random;
 
 public class DeletePublicComparisonTests extends TestBase {
 
@@ -26,7 +27,8 @@ public class DeletePublicComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
-    private EvaluatePage evaluatePage;
+
+    int random = new Random().nextInt(1000);
 
     public DeletePublicComparisonTests() {
         super();
@@ -36,7 +38,9 @@ public class DeletePublicComparisonTests extends TestBase {
     @TestRail(testCaseId = {"430", "442"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDelete() {
+
         String testScenarioName = Constants.scenarioName;
+        int comparisonInt = random;
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -44,7 +48,7 @@ public class DeletePublicComparisonTests extends TestBase {
             .costScenario()
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePublicComparison1")
+            .enterComparisonName("DeletePublicComparison" + comparisonInt)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -56,11 +60,11 @@ public class DeletePublicComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.publishScenario()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison("DeletePublicComparison1")
+            .highlightComparison("DeletePublicComparison" + comparisonInt)
             .delete()
             .deleteExploreComparison();
 
-        assertThat(explorePage.getListOfComparisons("DeletePublicComparison1") < 1, is(true));
+        assertThat(explorePage.getListOfComparisons("DeletePublicComparison" + comparisonInt) < 1, is(true));
     }
 
     @Test
@@ -70,6 +74,7 @@ public class DeletePublicComparisonTests extends TestBase {
     public void deletePublicComparisonPage() {
 
         String testScenarioName = Constants.scenarioName;
+        int comparisonInt = random;
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -77,7 +82,7 @@ public class DeletePublicComparisonTests extends TestBase {
             .costScenario()
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePublicComparisonTest")
+            .enterComparisonName("DeletePublicComparisonTest" + comparisonInt)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -89,14 +94,14 @@ public class DeletePublicComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario()
             .filterCriteria()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", "DeletePublicComparisonTest")
+            .filterPublicCriteria("Comparison", "Part Name", "Contains", "DeletePublicComparisonTest" + comparisonInt)
             .apply(ExplorePage.class)
-            .openComparison("DeletePublicComparisonTest");
+            .openComparison("DeletePublicComparisonTest" + comparisonInt);
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.delete().deleteComparison()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
-        assertThat(explorePage.getListOfComparisons("DeletePublicComparisonTest") < 1, is(true));
+        assertThat(explorePage.getListOfComparisons("DeletePublicComparisonTest" + comparisonInt) < 1, is(true));
     }
 }

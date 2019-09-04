@@ -17,12 +17,16 @@ import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import org.junit.Test;
 
+import java.util.Random;
+
 public class DeletePrivateComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+
+    int random = new Random().nextInt(1000);
 
     public DeletePrivateComparisonTests() {
         super();
@@ -34,6 +38,7 @@ public class DeletePrivateComparisonTests extends TestBase {
     public void testDeletePrivateScenario() {
 
         String testScenarioName = Constants.scenarioName;
+        int comparisonInt = random;
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -41,7 +46,7 @@ public class DeletePrivateComparisonTests extends TestBase {
             .costScenario()
             .selectExploreButton()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparisonA")
+            .enterComparisonName("DeletePrivateComparison" + comparisonInt)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -53,7 +58,7 @@ public class DeletePrivateComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison("DeletePrivateComparisonA")
+            .highlightComparison("DeletePrivateComparison" + comparisonInt)
             .delete()
             .deleteExploreComparison();
 
@@ -65,10 +70,12 @@ public class DeletePrivateComparisonTests extends TestBase {
     @Description("Test a private comparison can be deleted from the comparison page")
     public void deletePrivateComparison() {
 
+        int comparisonInt = random;
+
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .createNewComparison()
-            .enterComparisonName("comparisonScenarioName")
+            .enterComparisonName("comparisonScenarioName" + comparisonInt)
             .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
@@ -77,6 +84,6 @@ public class DeletePrivateComparisonTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
-        assertThat(explorePage.getListOfComparisons("comparisonScenarioName") < 1, is(true));
+        assertThat(explorePage.getListOfComparisons("comparisonScenarioName" + comparisonInt) < 1, is(true));
     }
 }

@@ -15,12 +15,16 @@ import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import org.junit.Test;
 
+import java.util.Random;
+
 public class EditPublicComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private ComparePage comparePage;
+
+    int random = new Random().nextInt(1000);
 
     public EditPublicComparisonTests() {
         super();
@@ -29,35 +33,41 @@ public class EditPublicComparisonTests extends TestBase {
     @Test
     @Description("Test publishing a comparison shows the comparison in the comparison table")
     public void testEditPublicComparisonPublish() {
+
+        int comparisonInt = random;
+
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison10")
+            .enterComparisonName("DeletePrivateComparison" + comparisonInt)
             .save(ComparePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         explorePage = evaluatePage.publishScenario();
 
-        assertThat(explorePage.findComparison("DeletePrivateComparison10").isDisplayed(), is(true));
+        assertThat(explorePage.findComparison("DeletePrivateComparison" + comparisonInt).isDisplayed(), is(true));
     }
 
     @Test
     @Description("Test editing a published comparison shows the comparison view")
     public void testEditPublicComparison() {
+
+        int comparisonInt = random;
+
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison10")
+            .enterComparisonName("DeletePrivateComparison" + comparisonInt)
             .save(ComparePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         comparePage = evaluatePage.publishScenario()
-            .openComparison("DeletePrivateComparison3");
+            .openComparison("DeletePrivateComparison" + comparisonInt);
 
-        assertThat(comparePage.getDescriptionText(), containsString("DeletePrivateComparison3"));
+        assertThat(comparePage.getDescriptionText(), containsString("DeletePrivateComparison" + comparisonInt));
     }
 }

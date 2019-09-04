@@ -18,11 +18,15 @@ import main.java.utils.TestRail;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import java.util.Random;
+
 public class AddPublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
     private WarningPage warningPage;
+
+    int random = new Random().nextInt(1000);
 
     public AddPublicScenarioTests() {
         super();
@@ -41,7 +45,7 @@ public class AddPublicScenarioTests extends TestBase {
             .costScenario()
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("Public Comparison")
+            .enterComparisonName("Public Comparison" + random)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -57,8 +61,8 @@ public class AddPublicScenarioTests extends TestBase {
     public void comparisonNoScenarioName() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-                .createNewComparison()
-                .save(WarningPage.class);
+            .createNewComparison()
+            .save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));
     }
