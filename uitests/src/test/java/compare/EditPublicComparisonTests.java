@@ -43,7 +43,7 @@ public class EditPublicComparisonTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         explorePage = evaluatePage.publishScenario();
 
-        assertThat(explorePage.findComparison(testComparisonName).isDisplayed(), is(true));
+        assertThat(explorePage.getListOfComparisons(testComparisonName) > 0, is(true));
     }
 
     @Test

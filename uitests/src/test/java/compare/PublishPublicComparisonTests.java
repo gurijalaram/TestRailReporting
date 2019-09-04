@@ -8,6 +8,8 @@ import main.java.base.TestBase;
 import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.enums.WorkspaceEnum;
+import main.java.header.PageHeader;
 import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
@@ -19,6 +21,8 @@ public class PublishPublicComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ComparePage comparePage;
+    private PageHeader pageHeader;
+    private ExplorePage explorePage;
 
     public PublishPublicComparisonTests() {
         super();
@@ -46,6 +50,10 @@ public class PublishPublicComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .apply();
 
-        assertThat(new ExplorePage(driver).findComparison(testComparisonName).isDisplayed(), is(true));
+        pageHeader = new PageHeader(driver);
+        explorePage = pageHeader.selectExploreButton()
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+
+        assertThat(explorePage.getListOfComparisons(testComparisonName) > 0, is(true));
     }
 }
