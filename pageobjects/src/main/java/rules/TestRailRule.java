@@ -47,7 +47,12 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void failed(Throwable t, Description description) {
-        if (testRail.testCaseId() == null) {
+        // FIXME: 04/09/2019 tests that have no testCaseId throw a npe. try not ideal, will need further attention
+        try {
+            if (testRail.testCaseId() == null) {
+                return;
+            }
+        } catch (NullPointerException e) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
@@ -71,7 +76,12 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void succeeded(Description description) {
-        if (testRail.testCaseId() == null) {
+        // FIXME: 04/09/2019 tests that have no testCaseId throw a npe. try not ideal, will need further attention
+        try {
+            if (testRail.testCaseId() == null) {
+                return;
+            }
+        } catch (NullPointerException e) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
