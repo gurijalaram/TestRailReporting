@@ -569,6 +569,21 @@ public class PageUtils {
     }
 
     /**
+     * Ignores exceptions and waits for the element to be clickable
+     *
+     * @param locator - the locator of the element
+     */
+    public void waitForElementAndClick(By locator) {
+        waitForElementToBeClickable(locator);
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((WebDriver webDriver) -> {
+                driver.findElement(locator).click();
+                return true;
+            });
+    }
+
+    /**
      * Waits for the element and check attribute is empty
      *
      * @param locator - the locator of the element
