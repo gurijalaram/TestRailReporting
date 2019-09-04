@@ -3,7 +3,7 @@ package test.java.evaluate;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.StringContains.containsString;
+import static org.hamcrest.Matchers.arrayContaining;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
@@ -70,10 +70,8 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processPage.getSelectionTableDetails(), containsString("Cycle Time (s): 29.67\n" +
-            "Piece Part Cost (USD): 0.44\n" +
-            "Fully Burdened Cost (USD): 0.83\n" +
-            "Total Capital Investments (USD): 10,709.39"));
+        assertThat(processPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 29.67", "Piece Part Cost (USD): 0.43",
+            "Fully Burdened Cost (USD): 0.82", "Total Capital Investments (USD): 10,732.01"));
     }
 
     @Test
