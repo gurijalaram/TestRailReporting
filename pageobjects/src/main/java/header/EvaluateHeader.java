@@ -1,5 +1,6 @@
 package main.java.header;
 
+import main.java.enums.CostingLabelEnum;
 import main.java.pages.evaluate.CostingJobPage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
@@ -54,23 +55,12 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return current page object
      */
-    // FIXME: 30/08/2019 some modifications needed as workaround to cost seems a little dirty
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCost();
-        waitForDropdownEnabled();
+        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingLabel());
+        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingLabel());
         return new EvaluatePage(driver);
-    }
-
-    /**
-     * Wait for dropdown enabled
-     *
-     * @return webElement
-     */
-    public EvaluateHeader waitForDropdownEnabled() {
-        pageUtils.waitForElementDisabled(processGroupDropdown);
-        pageUtils.waitForElementToBeClickable(processGroupDropdown, 2);
-        return this;
     }
 
     /**
