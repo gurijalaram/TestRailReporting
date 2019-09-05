@@ -113,8 +113,8 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ScenarioPage createNewScenario() {
-        newFileDropdown.click();
-        scenarioButton.click();
+        pageUtils.waitForElementAndClick(newFileDropdown);
+        pageUtils.waitForElementAndClick(scenarioButton);
         return new ScenarioPage(driver);
     }
 
