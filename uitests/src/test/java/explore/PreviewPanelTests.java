@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
+import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
@@ -28,12 +29,14 @@ public class PreviewPanelTests extends TestBase {
     public void testPreviewPanelDisplay() {
 
         String partName = "Casting";
+        String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile(partName + ".prt"))
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectExploreButton()
-            .highlightScenario(new Util().getScenarioName(), partName);
+            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+            .highlightScenario(testScenarioName, partName);
 
         explorePage = new ExplorePage(driver);
         explorePage.openPreviewPanel();
