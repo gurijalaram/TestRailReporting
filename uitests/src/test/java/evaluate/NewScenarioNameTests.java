@@ -1,7 +1,6 @@
 package test.java.evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
@@ -32,16 +31,13 @@ public class NewScenarioNameTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("partbody_2.stp"));
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.createNewScenario()
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("partbody_2.stp"))
+            .createNewScenario()
             .enterScenarioName(testScenarioName)
             .save();
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(testScenarioName)));
+        assertThat(evaluatePage.getCurrentScenarioName(testScenarioName), is(true));
     }
 
     @Test
@@ -61,6 +57,6 @@ public class NewScenarioNameTests extends TestBase {
             .enterScenarioName(testScenarioName)
             .save();
 
-        assertThat(evaluatePage = new EvaluatePage(driver).getCurrentScenarioName(), is(equalTo(testScenarioName)));
+        assertThat(evaluatePage.getCurrentScenarioName(testScenarioName), is(true));
     }
 }

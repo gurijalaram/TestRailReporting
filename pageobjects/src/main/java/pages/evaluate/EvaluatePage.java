@@ -261,9 +261,8 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return current page object
      */
-    public EvaluatePage getCurrentScenarioName() {
-        pageUtils.waitForElementToAppear(scenarioDropdown).getText();
-        return this;
+    public Boolean getCurrentScenarioName(String text) {
+        return pageUtils.checkElementContains(scenarioDropdown, text);
     }
 
     /**
