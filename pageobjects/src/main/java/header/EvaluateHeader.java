@@ -57,7 +57,7 @@ public class EvaluateHeader extends GenericHeader {
      */
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
-        new CostingJobPage(driver).selectCost();
+        new CostingJobPage(driver).selectCostButton();
         pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingLabel());
         pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingLabel());
         return new EvaluatePage(driver);
