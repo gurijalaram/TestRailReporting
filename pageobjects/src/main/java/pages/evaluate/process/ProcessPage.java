@@ -96,7 +96,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @return current page object
      */
     public RoutingsPage selectRoutingsButton() {
-        pageUtils.waitForElementToAppear(alternateRoutingsButton).click();
+        pageUtils.waitForElementAndClick(alternateRoutingsButton);
         return new RoutingsPage(driver);
     }
 
