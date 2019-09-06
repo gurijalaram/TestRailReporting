@@ -293,6 +293,10 @@ public class PageUtils {
         return waitForAppear(ExpectedConditions.visibilityOf(element), message);
     }
 
+    public WebElement waitForElementToAppear(WebElement locator, int timeoutInMinutes) {
+        return waitForAppear(ExpectedConditions.visibilityOf(locator), "Element did not appear", timeoutInMinutes);
+    }
+
     public List<WebElement> waitForElementsToAppear(List<WebElement> elements) {
         return waitForAppear(ExpectedConditions.visibilityOfAllElements(elements), "Elements did not appear");
     }
@@ -302,6 +306,23 @@ public class PageUtils {
         while (count < 12) {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
+                return wait.until(condition);
+            } catch (StaleElementReferenceException e) {
+                // e.toString();
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            } catch (TimeoutException e) {
+                count = count + 1;
+            }
+        }
+        throw new AssertionError(message + ": " + condition);
+    }
+
+    private <T> T waitForAppear(ExpectedCondition<T> condition, String message, int timeoutInMinutes) {
+        int count = 0;
+        while (count < 12) {
+            try {
+                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes);
                 return wait.until(condition);
             } catch (StaleElementReferenceException e) {
                 // e.toString();
