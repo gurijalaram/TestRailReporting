@@ -355,13 +355,12 @@ public class ThreadTests extends TestBase {
         new DesignGuidancePage(driver).closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.openSecondaryProcess()
+        threadingPage = evaluatePage.openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
-            .costScenario();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        threadingPage = designGuidancePage.openInvestigationTab()
+            .costScenario()
+            .openDesignGuidance()
+            .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:27");
 

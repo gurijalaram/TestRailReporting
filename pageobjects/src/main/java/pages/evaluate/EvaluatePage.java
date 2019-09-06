@@ -145,7 +145,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
-        pageUtils.waitForElementToBeClickable(processGroupDropdown, 2);
+        pageUtils.waitForElementToBeClickable(processGroupDropdown);
         pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
         return this;
     }
@@ -261,9 +261,8 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return current page object
      */
-    public EvaluatePage getCurrentScenarioName() {
-        pageUtils.waitForElementToAppear(scenarioDropdown).getText();
-        return this;
+    public Boolean getCurrentScenarioName(String text) {
+        return pageUtils.checkElementContains(scenarioDropdown, text);
     }
 
     /**

@@ -1,5 +1,7 @@
 package main.java.utils;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.not;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -558,7 +560,7 @@ public class PageUtils {
     public Boolean waitForElementDisabled(WebElement locator) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(locator)));
+            .until(not(ExpectedConditions.elementToBeClickable(locator)));
     }
 
     /**
@@ -566,12 +568,25 @@ public class PageUtils {
      *
      * @param locator - the locator of the element
      * @param text
-     * @return
+     * @return true/false
      */
     public Boolean checkElementContains(WebElement locator, String text) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+    }
+
+    /**
+     * Checks for string to not be present in element text and returns true/false
+     *
+     * @param locator - the locator of the element
+     * @param text
+     * @return true/false
+     */
+    public Boolean checkElementNotContain(WebElement locator, String text) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2);
+        return wait.ignoreAll(ignoredWebDriverExceptions)
+            .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
     }
 
     /**
