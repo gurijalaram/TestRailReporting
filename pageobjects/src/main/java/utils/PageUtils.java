@@ -648,4 +648,16 @@ public class PageUtils {
         return wait.ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
     }
+
+    /**
+     * Moves the scroller up
+     * @param locator - the locator of the element
+     * @param timeLimit - the time limit in seconds to wait
+     */
+    public void scrollUp(WebElement locator, int timeLimit) {
+        long startTime = System.currentTimeMillis() / 1000;
+        do {
+            locator.sendKeys(Keys.UP);
+        } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimit);
+    }
 }

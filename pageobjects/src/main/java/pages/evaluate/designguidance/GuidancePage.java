@@ -54,19 +54,22 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     /**
      * Selects both issue type and gcd details
+     *
      * @param issueTypeDropdown - the issue type parent
-     * @param gcd - the gcd
+     * @param gcd               - the gcd
      * @return current page object
      */
     public GuidancePage selectIssueTypeAndGCD(String issueTypeDropdown, String issueType, String gcd) {
         selectIssue(issueTypeDropdown);
         selectIssueType(issueType).click();
         selectGCD(gcd).click();
+        pageUtils.scrollUp(guidanceTableScroller, 1);
         return this;
     }
 
     /**
      * Selects the issue type dropdown
+     *
      * @param issueTypeDropdown - the issue type dropdown
      * @return issue type as webelement
      */
@@ -87,16 +90,18 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     /**
      * Selects the issue type
+     *
      * @param issueType - the issue type
      * @return
      */
     private WebElement selectIssueType(String issueType) {
         By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]");
-        return pageUtils.scrollToElement(issue,guidanceTableScroller);
+        return pageUtils.scrollToElement(issue, guidanceTableScroller);
     }
 
     /**
      * Selects the gcd
+     *
      * @param gcdType - the gcd
      * @return gcd as a webelement
      */
@@ -107,6 +112,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     /**
      * Gets the displayed guidance message
+     *
      * @return guidance message
      */
     public String getGuidanceMessage() {
