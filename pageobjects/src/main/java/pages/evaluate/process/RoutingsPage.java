@@ -106,4 +106,14 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
         cancelButton.click();
         return new ProcessPage(driver);
     }
+
+    /**
+     * Selects the check box
+     *
+     * @return new page object
+     */
+    public RoutingsPage checkRoutingBox() {
+        routingCheckBox.click();
+        return new RoutingsPage(driver);
+    }
 }

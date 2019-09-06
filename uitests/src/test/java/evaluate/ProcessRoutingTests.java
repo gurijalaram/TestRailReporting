@@ -1,5 +1,6 @@
 package test.java.evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,6 +14,7 @@ import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.process.ProcessPage;
+import main.java.pages.evaluate.process.RoutingsPage;
 import main.java.pages.login.LoginPage;
 import main.java.pages.settings.SettingsPage;
 import main.java.pages.settings.ToleranceSettingsPage;
@@ -28,6 +30,7 @@ public class ProcessRoutingTests extends TestBase {
     private EvaluatePage evaluatePage;
     private SettingsPage settingsPage;
     private ToleranceSettingsPage toleranceSettingsPage;
+    private RoutingsPage routingsPage;
 
     public ProcessRoutingTests() {
         super();
@@ -93,5 +96,63 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails();
 
         assertThat(processPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1667"})
+    @Description("Validate the Use selected for future costing checkbox works correctly")
+    public void testRoutingCheckBox() {
+        loginPage = new LoginPage(driver);
+        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Structural Foam Mold")
+            .apply()
+            .closeProcessPanel();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .checkRoutingBox()
+            .apply()
+            .closeProcessPanel();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.costScenario();
+
+        assertThat(evaluatePage.getProcessRoutingDetails("Injection Molding"), is(true));
+    }
+
+
+    @Test
+    @TestRail(testCaseId = {"1665", "1666"})
+    @Description("Validate the information updates in the routing modal box")
+    public void testlastRouting() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CastedPart.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getCostedRouting(), containsString("Die Casting"));
+
+        routingsPage.selectRouting("Sand Casting")
+            .apply()
+            .closeProcessPanel();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+        assertThat(routingsPage.getCostedRouting(), containsString("Sand Casting"));
+        assertThat(routingsPage.getSelectedRouting(), containsString("Sand Casting"));
     }
 }

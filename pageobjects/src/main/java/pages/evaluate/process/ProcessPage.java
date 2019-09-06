@@ -54,6 +54,9 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @FindBy(css = "label[data-ap-field='processStep']")
     private WebElement processStep;
 
+    @FindBy(css = ".panel .glyphicon-remove")
+    private WebElement closePanelButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -150,5 +153,15 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     public List<String> getProcessPercentage() {
         pageUtils.waitForElementToAppear(chartValue);
         return chartValues.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Closes the design guidance
+     *
+     * @return current page object
+     */
+    public ProcessPage closeProcessPanel() {
+        pageUtils.waitForElementAndClick(closePanelButton);
+        return this;
     }
 }
