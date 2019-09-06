@@ -94,4 +94,28 @@ public class ProcessRoutingTests extends TestBase {
 
         assertThat(processPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
     }
+
+    @Test
+    @TestRail(testCaseId = {"1649", "1656"})
+    @Description("Validate the user can Change the process routing")
+    public void changeRouting() {
+        loginPage = new LoginPage(driver);
+        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Polyurethane, Polymeric MDI")
+            .apply()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Reaction Injection Mold")
+            .apply();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.costScenario();
+
+        assertThat(evaluatePage.getProcessRoutingDetails("Reaction Injection Molding"), is(true));
+    }
 }
