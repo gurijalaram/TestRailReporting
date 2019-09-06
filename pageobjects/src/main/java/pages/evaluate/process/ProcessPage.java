@@ -156,7 +156,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     }
 
     /**
-     * Closes the design guidance
+     * Closes the processes panel
      *
      * @return current page object
      */
