@@ -5,16 +5,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
-import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.pages.settings.SettingsPage;
 import main.java.pages.settings.ToleranceSettingsPage;
-import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
-import main.java.utils.Util;
 import org.junit.Test;
 
 public class DTCCastingTests extends TestBase {
@@ -33,8 +29,9 @@ public class DTCCastingTests extends TestBase {
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .openSettings()
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openScenario("AutoScenario151-4013884999600","DTCCASTINGISSUES")
+            /*.openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
 
@@ -42,17 +39,17 @@ public class DTCCastingTests extends TestBase {
         guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario()
+            .costScenario()*/
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:1");
+            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:18");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
-        guidancePage.selectIssueTypeAndGCD("Radius  Issue", "Minimum Wall Thickness", "Component:1");
+        guidancePage.selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Material  Issue", "Minimum Internal Edge Radius", "SharpEdge:25");
+        guidancePage.selectIssueTypeAndGCD("Radius  Issue", "Minimum Internal Edge Radius", "SharpEdge:25");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
 
         guidancePage.selectIssueTypeAndGCD("Hole  Issue", "Minimum Hole Diameter", "SimpleHole:10");
