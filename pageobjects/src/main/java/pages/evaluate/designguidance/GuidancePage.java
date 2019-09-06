@@ -64,7 +64,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
         selectIssue(issueTypeDropdown);
         selectIssueType(issueType).click();
         selectGCD(gcd).click();
-        pageUtils.scrollUp(guidanceTableScroller, 1);
+        pageUtils.scrollUp(guidanceTableScroller, 2);
         return this;
     }
 
