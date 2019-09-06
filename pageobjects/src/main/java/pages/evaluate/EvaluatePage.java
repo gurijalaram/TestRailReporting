@@ -134,7 +134,7 @@ public class EvaluatePage extends EvaluateHeader {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(leftPanel);
-        pageUtils.waitForElementToAppear(viewerCanvas, 5);
+        pageUtils.waitForElementToAppear(viewerCanvas, 1);
         pageUtils.waitForElementToAppear(controlToolbars);
     }
 
@@ -191,7 +191,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public ProcessPage openProcessDetails() {
-        pageUtils.waitForElementToAppear(processDetails).click();
+        pageUtils.waitForElementAndClick(processDetails);
         return new ProcessPage(driver);
     }
 
@@ -221,7 +221,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public SecondaryProcessPage openSecondaryProcess() {
-        pageUtils.waitForElementToAppear(secondaryProcessButton).click();
+        pageUtils.waitForElementAndClick(secondaryProcessButton);
         return new SecondaryProcessPage(driver);
     }
 
@@ -231,7 +231,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public MaterialPage openMaterialComposition() {
-        pageUtils.waitForElementToAppear(materialsDetails).click();
+        pageUtils.waitForElementAndClick(materialsDetails);
         return new MaterialPage(driver);
     }
 
@@ -241,7 +241,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public MaterialCompositionPage openMaterialCompositionTable() {
-        pageUtils.waitForElementToBeClickable(materialsButton).click();
+        pageUtils.waitForElementAndClick(materialsButton);
         return new MaterialCompositionPage(driver);
     }
 

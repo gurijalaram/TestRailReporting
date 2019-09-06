@@ -38,7 +38,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()),is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()),is(true));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -118,6 +118,6 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 }
