@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.arrayContaining;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.enums.CostingLabelEnum;
 import main.java.enums.CurrencyEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -103,7 +104,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testRoutingCheckBox() {
         loginPage = new LoginPage(driver);
-        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -154,5 +155,28 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton();
         assertThat(routingsPage.getCostedRouting(), containsString("Sand Casting"));
         assertThat(routingsPage.getSelectedRouting(), containsString("Sand Casting"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1670"})
+    @Description("Validate behaviour when forcing a material that will fail costing within CID")
+    public void failCostingRouting() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CastedPart.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Vat Photopolymerization")
+            .apply()
+            .closeProcessPanel()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Aluminum AlSi10Mg")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingLabel()), is(true));
     }
 }

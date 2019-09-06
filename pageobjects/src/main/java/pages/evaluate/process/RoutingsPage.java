@@ -114,6 +114,6 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      */
     public RoutingsPage checkRoutingBox() {
         routingCheckBox.click();
-        return new RoutingsPage(driver);
+        return this;
     }
 }
