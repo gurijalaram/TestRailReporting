@@ -5,12 +5,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
+import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.designguidance.GuidancePage;
+import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.pages.settings.SettingsPage;
 import main.java.pages.settings.ToleranceSettingsPage;
+import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class DTCCastingTests extends TestBase {
@@ -29,9 +33,8 @@ public class DTCCastingTests extends TestBase {
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
         loginPage = new LoginPage(driver);
-        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .openScenario("AutoScenario151-4013884999600","DTCCASTINGISSUES")
-            /*.openSettings()
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
 
@@ -39,7 +42,7 @@ public class DTCCastingTests extends TestBase {
         guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario()*/
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:18");
