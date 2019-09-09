@@ -36,8 +36,8 @@ public class EvaluateHeader extends GenericHeader {
     @FindBy(css = "button.gwt-Button.btn.btn-primary")
     private WebElement dialogCostButton;
 
-    @FindBy(css = "select[data-ap-field='processGroupSelection']")
-    private WebElement processGroupDropdown;
+    @FindBy(css = ".panel.panel-default.spacer .panel-body")
+    private WebElement loadingImage;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -58,8 +58,10 @@ public class EvaluateHeader extends GenericHeader {
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCostButton();
-        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingLabel());
-        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingLabel());
+        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.isElementDisplayed(loadingImage);
+        pageUtils.waitForElementNotDisplayed(loadingImage);
         return new EvaluatePage(driver);
     }
 
