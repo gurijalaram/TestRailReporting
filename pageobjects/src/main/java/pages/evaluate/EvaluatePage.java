@@ -205,6 +205,11 @@ public class EvaluatePage extends EvaluateHeader {
         return pageUtils.checkElementContains(processRoutingName, text);
     }
 
+    public String getProcessRoutingDetailsas() {
+        pageUtils.waitForElementToAppear(processRoutingName);
+        return pageUtils.checkElementAttribute(processRoutingName, "title");
+    }
+
     /**
      * Opens the design guidance dialog
      *
@@ -367,9 +372,10 @@ public class EvaluatePage extends EvaluateHeader {
      * Gets the fully burdened cost
      *
      * @return string
+     * @param text
      */
-    public String getBurdenedCost() {
-        return pageUtils.waitForElementToAppear(burdenedCost).getText();
+    public Boolean getBurdenedCost(String text) {
+        return pageUtils.checkElementContains(burdenedCost, text);
     }
 
     /**
