@@ -102,6 +102,30 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"1649", "1656"})
+    @Description("Validate the user can Change the process routing")
+    public void changeRouting() {
+        loginPage = new LoginPage(driver);
+        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Polyurethane, Polymeric MDI")
+            .apply()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Reaction Injection Mold")
+            .apply();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.costScenario();
+
+        assertThat(evaluatePage.getProcessRoutingDetails("Reaction Injection Molding"), is(true));
+    }
+
+    @Test
     @TestRail(testCaseId = {"1667", "1668"})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testRoutingCheckBox() {
@@ -178,7 +202,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingLabel()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
     }
 
     @Test
