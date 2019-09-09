@@ -45,6 +45,7 @@ public class ProcessRoutingTests extends TestBase {
         loginPage = new LoginPage(driver);
         processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
@@ -294,37 +295,6 @@ public class ProcessRoutingTests extends TestBase {
         processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Structural Foam Mold")
-            .apply()
-            .closeProcessPanel()
-            .costScenario()
-            .openSecondaryProcess()
-            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
-            .apply()
-            .costScenario()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Injection Mold")
-            .apply()
-            .closeProcessPanel()
-            .costScenario()
-            .openProcessDetails();
-
-        assertThat(processPage.getRoutingLabels(), hasItems("Carton Forming", "Pack & Load", "Carton Sealing"));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"1652"})
-    @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
-    public void routingPSO() {
-        loginPage = new LoginPage(driver);
-        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openProcessDetails()
