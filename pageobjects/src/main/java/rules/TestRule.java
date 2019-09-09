@@ -173,7 +173,7 @@ public class TestRule implements MethodRule {
             } else {
                 screenshot = ((TakesScreenshot) testBase.getDriver()).getScreenshotAs(OutputType.FILE);
             }
-            filename = "." + File.separator + "screenshots" + File.separator + "screenshot-" + className + "-" + testName + "-" + testBase.getBrowser() + errorNumber + ".png";
+            filename = "." + File.separator + "target" + File.separator + "screenshots" + File.separator + "screenshot-" + className + "-" + testName + "-" + testBase.getBrowser() + errorNumber + ".png";
             filePath = new File(filename).getCanonicalPath();
             FileUtils.copyFile(screenshot, new File(filename));
         } catch (Exception e) {

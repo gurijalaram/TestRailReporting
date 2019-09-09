@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -73,6 +74,7 @@ public class Util {
 
     /**
      * Shuffles the provided stream
+     *
      * @return Stream
      */
     public static <T> Collector<T, ?, Stream<T>> toShuffledStream() {
@@ -85,12 +87,28 @@ public class Util {
     //TODO z: just to contain all process with default authorization form in one place and make it comfortable to use
     public static Map<String, String> getDefaultAuthorizationForm(final String username, final String password) {
         return new HashMap<String, String>() {{
-                put("grant_type", "password");
-                put("client_id", "apriori-web-cost");
-                put("client_secret", "donotusethiskey");
-                put("scope", "tenantGroup%3Ddefault%20tenant%3Ddefault");
-                put("username", username);
-                put("password", password);
-            }};
+            put("grant_type", "password");
+            put("client_id", "apriori-web-cost");
+            put("client_secret", "donotusethiskey");
+            put("scope", "tenantGroup%3Ddefault%20tenant%3Ddefault");
+            put("username", username);
+            put("password", password);
+        }};
+    }
+
+    /**
+     * Generates the scenario name and adds random number and nano time
+     * @return string
+     */
+    public String getScenarioName() {
+        return "AutoScenario" + new Random().nextInt(1000) + "-" + System.nanoTime();
+    }
+
+    /**
+     * Generates the comparison name and adds random number and nano time
+     * @return string
+     */
+    public String getComparisonName() {
+        return "AutoComparison" + new Random().nextInt(1000) + "-" + System.nanoTime();
     }
 }

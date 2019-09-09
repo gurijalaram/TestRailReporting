@@ -51,7 +51,7 @@ public class CostingJobPage extends LoadableComponent<CostingJobPage> {
      * Selects the cost button
      * @return current page object
      */
-    public CostingJobPage selectCost() {
+    public CostingJobPage selectCostButton() {
         pageUtils.waitForElementAndClick(dialogCostButton);
         return this;
     }

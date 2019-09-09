@@ -1,5 +1,6 @@
 package main.java.header;
 
+import main.java.enums.CostingLabelEnum;
 import main.java.pages.evaluate.CostingJobPage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
@@ -35,8 +36,8 @@ public class EvaluateHeader extends GenericHeader {
     @FindBy(css = "button.gwt-Button.btn.btn-primary")
     private WebElement dialogCostButton;
 
-    @FindBy(css = "select[data-ap-field='processGroupSelection']")
-    private WebElement processGroupDropdown;
+    @FindBy(css = ".panel.panel-default.spacer .panel-body")
+    private WebElement loadingImage;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -54,23 +55,14 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return current page object
      */
-    // FIXME: 30/08/2019 some modifications needed as workaround to cost seems a little dirty
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
-        new CostingJobPage(driver).selectCost();
-        waitForDropdownEnabled();
+        new CostingJobPage(driver).selectCostButton();
+        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.isElementDisplayed(loadingImage);
+        pageUtils.waitForElementNotDisplayed(loadingImage);
         return new EvaluatePage(driver);
-    }
-
-    /**
-     * Wait for dropdown enabled
-     *
-     * @return webElement
-     */
-    public EvaluateHeader waitForDropdownEnabled() {
-        pageUtils.waitForElementDisabled(processGroupDropdown);
-        pageUtils.waitForElementToBeClickable(processGroupDropdown, 2);
-        return this;
     }
 
     /**

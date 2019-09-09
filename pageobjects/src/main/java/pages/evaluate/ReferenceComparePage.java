@@ -14,6 +14,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author cfrith
+ */
+
 public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage> {
 
     private final Logger logger = LoggerFactory.getLogger(ReferenceComparePage.class);

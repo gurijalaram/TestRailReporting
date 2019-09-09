@@ -1,5 +1,7 @@
 package main.java.utils;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.not;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -293,6 +295,10 @@ public class PageUtils {
         return waitForAppear(ExpectedConditions.visibilityOf(element), message);
     }
 
+    public WebElement waitForElementToAppear(WebElement locator, int timeoutInMinutes) {
+        return waitForAppear(ExpectedConditions.visibilityOf(locator), "Element did not appear", timeoutInMinutes);
+    }
+
     public List<WebElement> waitForElementsToAppear(List<WebElement> elements) {
         return waitForAppear(ExpectedConditions.visibilityOfAllElements(elements), "Elements did not appear");
     }
@@ -302,6 +308,23 @@ public class PageUtils {
         while (count < 12) {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
+                return wait.until(condition);
+            } catch (StaleElementReferenceException e) {
+                // e.toString();
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            } catch (TimeoutException e) {
+                count = count + 1;
+            }
+        }
+        throw new AssertionError(message + ": " + condition);
+    }
+
+    private <T> T waitForAppear(ExpectedCondition<T> condition, String message, int timeoutInMinutes) {
+        int count = 0;
+        while (count < 12) {
+            try {
+                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes);
                 return wait.until(condition);
             } catch (StaleElementReferenceException e) {
                 // e.toString();
@@ -534,10 +557,10 @@ public class PageUtils {
      * @param locator - the locator of the element
      * @return
      */
-    public Boolean waitForElementDisabled(WebElement locator) {
+    public Boolean waitForElementNotDisplayed(WebElement locator) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(locator)));
+            .until(ExpectedConditions.invisibilityOf(locator));
     }
 
     /**
@@ -545,12 +568,25 @@ public class PageUtils {
      *
      * @param locator - the locator of the element
      * @param text
-     * @return
+     * @return true/false
      */
     public Boolean checkElementContains(WebElement locator, String text) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+    }
+
+    /**
+     * Checks for string to not be present in element text and returns true/false
+     *
+     * @param locator - the locator of the element
+     * @param text
+     * @return true/false
+     */
+    public Boolean checkElementNotContain(WebElement locator, String text) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2);
+        return wait.ignoreAll(ignoredWebDriverExceptions)
+            .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
     }
 
     /**
@@ -564,6 +600,21 @@ public class PageUtils {
             .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver webDriver) -> {
                 locator.click();
+                return true;
+            });
+    }
+
+    /**
+     * Ignores exceptions and waits for the element to be clickable
+     *
+     * @param locator - the locator of the element
+     */
+    public void waitForElementAndClick(By locator) {
+        waitForElementToBeClickable(locator);
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((WebDriver webDriver) -> {
+                driver.findElement(locator).click();
                 return true;
             });
     }
@@ -611,5 +662,17 @@ public class PageUtils {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
+    }
+
+    /**
+     * Moves the scroller up
+     * @param locator - the locator of the element
+     * @param timeLimit - the time limit in seconds to wait
+     */
+    public void scrollUp(WebElement locator, int timeLimit) {
+        long startTime = System.currentTimeMillis() / 1000;
+        do {
+            locator.sendKeys(Keys.UP);
+        } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimit);
     }
 }

@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.hasItems;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.ColumnsEnum;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
@@ -16,6 +15,7 @@ import main.java.pages.explore.ScenarioNotesPage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class ActionsTests extends TestBase {
@@ -24,11 +24,11 @@ public class ActionsTests extends TestBase {
     private ScenarioNotesPage scenarioNotesPage;
 
     @Test
-    @TestRail(testCaseId = {"C545"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"545"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -56,7 +56,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

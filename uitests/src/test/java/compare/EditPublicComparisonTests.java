@@ -6,13 +6,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class EditPublicComparisonTests extends TestBase {
@@ -29,35 +29,41 @@ public class EditPublicComparisonTests extends TestBase {
     @Test
     @Description("Test publishing a comparison shows the comparison in the comparison table")
     public void testEditPublicComparisonPublish() {
+
+        String testComparisonName = new Util().getComparisonName();
+
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison10")
+            .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         explorePage = evaluatePage.publishScenario();
 
-        assertThat(explorePage.findComparison("DeletePrivateComparison10").isDisplayed(), is(true));
+        assertThat(explorePage.getListOfComparisons(testComparisonName) > 0, is(true));
     }
 
     @Test
     @Description("Test editing a published comparison shows the comparison view")
     public void testEditPublicComparison() {
+
+        String testComparisonName = new Util().getComparisonName();
+
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(Constants.scenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .publishScenario()
             .createNewComparison()
-            .enterComparisonName("DeletePrivateComparison10")
+            .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         comparePage = evaluatePage.publishScenario()
-            .openComparison("DeletePrivateComparison3");
+            .openComparison(testComparisonName);
 
-        assertThat(comparePage.getDescriptionText(), containsString("DeletePrivateComparison3"));
+        assertThat(comparePage.getDescriptionText(), containsString(testComparisonName));
     }
 }

@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.compare.ComparePage;
@@ -12,6 +11,7 @@ import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -19,18 +19,17 @@ public class AddPrivateScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
-    private ComparePage comparePage;
 
     public AddPrivateScenarioTests() {
         super();
     }
 
     @Test
-    @TestRail(testCaseId = {"C412"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"412"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         comparisonTablePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -38,7 +37,7 @@ public class AddPrivateScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
             .createNewComparison()
-            .enterComparisonName("Private Comparison")
+            .enterComparisonName(new Util().getComparisonName())
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()

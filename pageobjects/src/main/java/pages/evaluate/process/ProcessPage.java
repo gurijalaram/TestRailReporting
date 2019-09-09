@@ -1,5 +1,6 @@
 package main.java.pages.evaluate.process;
 
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.SecondaryProcessPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
@@ -54,6 +55,9 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @FindBy(css = "label[data-ap-field='processStep']")
     private WebElement processStep;
 
+    @FindBy(css = ".panel .glyphicon-remove")
+    private WebElement closePanelButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -92,7 +96,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @return current page object
      */
     public RoutingsPage selectRoutingsButton() {
-        pageUtils.waitForElementToAppear(alternateRoutingsButton).click();
+        pageUtils.waitForElementAndClick(alternateRoutingsButton);
         return new RoutingsPage(driver);
     }
 
@@ -120,8 +124,8 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      *
      * @return list as string
      */
-    public String getSelectionTableDetails() {
-        return pageUtils.waitForElementToAppear(processSelectionTable).getText();
+    public String[] getSelectionTableDetails() {
+        return pageUtils.waitForElementToAppear(processSelectionTable).getText().split("\n");
     }
 
     /**
@@ -150,5 +154,15 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     public List<String> getProcessPercentage() {
         pageUtils.waitForElementToAppear(chartValue);
         return chartValues.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Closes the processes panel
+     *
+     * @return current page object
+     */
+    public EvaluatePage closeProcessPanel() {
+        pageUtils.waitForElementAndClick(closePanelButton);
+        return new EvaluatePage(driver);
     }
 }

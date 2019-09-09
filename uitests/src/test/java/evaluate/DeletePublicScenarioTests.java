@@ -5,13 +5,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
-import main.java.constants.Constants;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
+import main.java.utils.Util;
 import org.junit.Test;
 
 public class DeletePublicScenarioTests extends TestBase {
@@ -24,11 +24,11 @@ public class DeletePublicScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C587"}, tags = {"smoke"})
+    @TestRail(testCaseId = {"587"})
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
 
-        String testScenarioName = Constants.scenarioName;
+        String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
