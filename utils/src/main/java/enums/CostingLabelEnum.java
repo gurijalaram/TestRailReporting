@@ -9,13 +9,13 @@ public enum CostingLabelEnum {
     UNCOSTED_CHANGES("Uncosted\n" + "Changes"),
     COSTING_IN_PROGRESS("Costing in\n" + "Progress");
 
-    private final String costingLabel;
+    private final String costingText;
 
     CostingLabelEnum(String costingLabel) {
-        this.costingLabel = costingLabel;
+        this.costingText = costingLabel;
     }
 
-    public String getCostingLabel() {
-        return this.costingLabel;
+    public String getCostingText() {
+        return this.costingText;
     }
 }

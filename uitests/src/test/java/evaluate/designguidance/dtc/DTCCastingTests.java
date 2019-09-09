@@ -45,14 +45,14 @@ public class DTCCastingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:1");
+            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:18");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
-        guidancePage.selectIssueTypeAndGCD("Radius  Issue", "Minimum Wall Thickness", "Component:1");
+        guidancePage.selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Material  Issue", "Minimum Internal Edge Radius", "SharpEdge:25");
+        guidancePage.selectIssueTypeAndGCD("Radius  Issue", "Minimum Internal Edge Radius", "SharpEdge:25");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
 
         guidancePage.selectIssueTypeAndGCD("Hole  Issue", "Minimum Hole Diameter", "SimpleHole:10");

@@ -69,6 +69,7 @@ import test.java.login.LoginTests;
     ProcessRoutingTests.class,
     ActionsTests.class,
     DTCCastingTests.class,
+    ProcessRoutingTests.class
 })
 public class CIDTestSuite {
 }

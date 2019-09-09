@@ -60,10 +60,22 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      * @return current page object
      */
     public GuidancePage selectIssueTypeAndGCD(String issueTypeDropdown, String issueType, String gcd) {
+        collapseIssueDropdown();
         selectIssue(issueTypeDropdown);
         selectIssueType(issueType).click();
         selectGCD(gcd).click();
-        pageUtils.scrollUp(guidanceTableScroller, 1);
+        pageUtils.scrollUp(guidanceTableScroller, 2);
+        return this;
+    }
+
+    /**
+     * Collapses the dropdowns so the correct can be selected
+     * @return current page object
+     */
+    private GuidancePage collapseIssueDropdown() {
+        By dropdown = By.cssSelector(".fa.fa-caret-down");
+        pageUtils.scrollToElement(dropdown, guidanceTableScroller);
+        pageUtils.waitForElementToAppear(dropdown).click();
         return this;
     }
 
