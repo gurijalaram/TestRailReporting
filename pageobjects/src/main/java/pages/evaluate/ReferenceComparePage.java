@@ -1,6 +1,7 @@
 package main.java.pages.evaluate;
 
 import main.java.utils.PageUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -61,7 +62,29 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     }
 
     /**
+     * Selects the dropdown
+     * @return current page object
+     */
+    public ReferenceComparePage selectDropdown() {
+        pageUtils.waitForElementAndClick(filterDropdown);
+        return this;
+    }
+
+    /**
+     * Selects the scenario in the dropdown
+     * @param workspaceType - the workspace
+     * @param scenarioName - the scenario
+     * @return current page object
+     */
+    public ReferenceComparePage selectDropdownScenario(String workspaceType, String scenarioName) {
+        List<WebElement> scenario = driver.findElements(By.xpath("//a[contains(@data-normalized-text,'" + workspaceType.toLowerCase() + "-workspace')]//span[contains(text(),'" + scenarioName + "')]"));
+        scenario.stream().filter(dropdown -> dropdown.getText().equalsIgnoreCase(scenarioName)).forEach(WebElement::click);
+        return this;
+    }
+
+    /**
      * Gets input tile info
+     *
      * @return input as string
      */
     public List<String> getInputsTile() {
@@ -70,6 +93,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
 
     /**
      * Gets material utilization info
+     *
      * @return material utilization as string
      */
     public List<String> getMaterialsUtilizationTile() {
@@ -78,6 +102,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
 
     /**
      * Gets design guidance info
+     *
      * @return design guidance as string
      */
     public List<String> getDesignGuidanceTile() {
@@ -86,6 +111,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
 
     /**
      * Gets process tile info
+     *
      * @return process tile as string
      */
     public List<String> getProcessesTile() {
@@ -94,6 +120,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
 
     /**
      * Gets cost result info
+     *
      * @return cost result as string
      */
     public List<String> getCostResultsTile() {
