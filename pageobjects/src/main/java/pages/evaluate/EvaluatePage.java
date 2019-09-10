@@ -200,12 +200,7 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return the details as string
      */
-    public boolean getProcessRoutingDetails(String text) {
-        pageUtils.waitForElementToAppear(processRoutingName);
-        return pageUtils.checkElementContains(processRoutingName, text);
-    }
-
-    public String getProcessRoutingDetailsas() {
+    public String getProcessRoutingDetails() {
         pageUtils.waitForElementToAppear(processRoutingName);
         return pageUtils.checkElementAttribute(processRoutingName, "title");
     }

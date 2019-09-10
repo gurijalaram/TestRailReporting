@@ -55,7 +55,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("3 Axis Mill"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Reaction Injection Molding"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Reaction Injection Molding"));
     }
 
     @Test
@@ -153,7 +153,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Injection Molding"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Injection Molding"));
     }
 
     @Test
@@ -248,7 +248,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openMaterialCompositionTable();
 
-        // Assert that no metal is shown in the material composition list
+        // Assert that no metal is shown in the material composition list  Steel, Cold Worked, AISI 1020
     }
 
     @Test
@@ -271,7 +271,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Printing / Breakoff"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Printing / Breakoff"));
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
@@ -284,7 +284,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetailsas(), containsString("Stress Relief / Ultrasonic Cleaning"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stress Relief / Ultrasonic Cleaning"));
     }
 
     @Test

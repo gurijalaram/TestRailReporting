@@ -1,6 +1,6 @@
 package test.java.evaluate;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
@@ -37,7 +37,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Hydrostatic Leak Testing"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Hydrostatic Leak Testing"));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Xray Inspection"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Xray Inspection"));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Carburize"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Carburize"));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Atmosphere Oil Harden"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Atmosphere Oil Harden"));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Standard Anneal"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Standard Anneal"));
     }
 
     @Test
@@ -127,7 +127,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Vacuum Temper"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Vacuum Temper"));
     }
 
     @Test
@@ -145,7 +145,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Stress Relief"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stress Relief"));
     }
 
     @Test
@@ -163,7 +163,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Anodize"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize"));
     }
 
     @Test
@@ -181,7 +181,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Certification"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Certification"));
     }
 
     @Test
@@ -199,7 +199,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Powder Coat Cart"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Coat Cart"));
     }
 
     @Test
@@ -217,6 +217,6 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Passivation"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation"));
     }
 }
