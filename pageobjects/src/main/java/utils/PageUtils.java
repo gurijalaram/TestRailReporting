@@ -590,6 +590,19 @@ public class PageUtils {
     }
 
     /**
+     * Checks for string to not be present in element text and returns true/false
+     *
+     * @param locator - the locator of the element
+     * @param text
+     * @return true/false
+     */
+    public Boolean checkElementNotContain(WebElement locator, String text, int timeoutInMinutes) {
+        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes);
+        return wait.ignoreAll(ignoredWebDriverExceptions)
+            .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
+    }
+
+    /**
      * Ignores exceptions and waits for the element to be clickable
      *
      * @param locator - the locator of the element

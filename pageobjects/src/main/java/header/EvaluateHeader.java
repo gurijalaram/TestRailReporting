@@ -64,6 +64,19 @@ public class EvaluateHeader extends GenericHeader {
     }
 
     /**
+     * Cost the scenario
+     *
+     * @return current page object
+     */
+    public EvaluatePage costScenario(int timeoutInMinutes) {
+        pageUtils.waitForElementAndClick(costButton);
+        new CostingJobPage(driver).selectCostButton();
+        checkForCostLabel(timeoutInMinutes);
+        checkForImage();
+        return new EvaluatePage(driver);
+    }
+
+    /**
      * Gets cost label
      *
      * @return true/false
@@ -86,5 +99,13 @@ public class EvaluateHeader extends GenericHeader {
     private void checkForCostLabel() {
         pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
         pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+    }
+
+    /**
+     * Method to check cost label contains/doesn't contain text
+     */
+    private void checkForCostLabel(int timeoutInMinutes) {
+        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
     }
 }
