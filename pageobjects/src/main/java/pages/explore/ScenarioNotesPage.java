@@ -143,16 +143,16 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * Get the description
      * @return the description as string
      */
-    public String getDescription() {
-        return pageUtils.checkElementAttribute(descriptionInput, "value");
+    public Boolean getDescription(String text) {
+        return pageUtils.checkElementAttribute(descriptionInput, "value", text);
     }
 
     /**
      * Gets the scenario notes
      * @return the scenario notes as string
      */
-    public String getScenarioNotes() {
-        return pageUtils.checkElementAttribute(scenarioNotesInput, "value");
+    public Boolean getScenarioNotes(String text) {
+        return pageUtils.checkElementAttribute(scenarioNotesInput, "value", text);
     }
 
     /**

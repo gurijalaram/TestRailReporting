@@ -123,7 +123,7 @@ public class PageUtils {
     public boolean isElementDisplayed(WebElement element) {
         try {
             return element.isDisplayed();
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
             return false;
         }
     }
@@ -647,9 +647,9 @@ public class PageUtils {
      * @param locator - the locator of the element
      * @return
      */
-    public String checkElementAttribute(WebElement locator, String attribute) {
+    public Boolean checkElementAttribute(WebElement locator, String attribute, String text) {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
-        return wait.until((ExpectedCondition<String>) element -> (locator).getAttribute(attribute));
+        return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
     }
 
     /**

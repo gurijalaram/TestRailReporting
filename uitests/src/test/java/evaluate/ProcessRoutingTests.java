@@ -1,6 +1,5 @@
 package test.java.evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -55,7 +54,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
+        assertThat(evaluatePage.getProcessRoutingDetails("3 Axis Mill"), is(true));
     }
 
     @Test
@@ -123,7 +122,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Reaction Injection Molding"));
+        assertThat(evaluatePage.getProcessRoutingDetails("Reaction Injection Molding"), is(true));
     }
 
     @Test
@@ -153,7 +152,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Injection Molding"));
+        assertThat(evaluatePage.getProcessRoutingDetails("Injection Molding"), is(true));
     }
 
     @Test
@@ -271,7 +270,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Printing / Breakoff"));
+        assertThat(evaluatePage.getProcessRoutingDetails("Printing / Breakoff"), is(true));
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
@@ -284,7 +283,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stress Relief / Ultrasonic Cleaning"));
+        assertThat(evaluatePage.getProcessRoutingDetails("Stress Relief / Ultrasonic Cleaning"), is(true));
     }
 
     @Test

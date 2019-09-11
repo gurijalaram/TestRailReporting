@@ -123,7 +123,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * Gets the thread header information
      * @return details as web
      */
-    public String getThreadHeader() {
-        return pageUtils.checkElementAttribute(threadHeader, "outerText");
+    public Boolean getThreadHeader(String text) {
+        return pageUtils.checkElementAttribute(threadHeader, "outerText", text);
     }
 }
