@@ -87,6 +87,28 @@ public class ExplorePage extends ExploreHeader {
     }
 
     /**
+     * Opens the scenario
+     * @param partName - name of the part
+     * @param scenarioName - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openScenario(String scenarioName, String partName) {
+        pageUtils.waitForElementToAppear(findScenario(scenarioName, partName));
+        findScenario(scenarioName, partName).click();
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Opens the comparison
+     * @param comparisonName - the comparison name
+     * @return new page object
+     */
+    public ComparePage openComparison(String comparisonName) {
+        findComparison(comparisonName).click();
+        return new ComparePage(driver);
+    }
+
+    /**
      * Find specific element in the table
      * @param partName - name of the part
      * @param scenarioName - scenario name
@@ -148,27 +170,6 @@ public class ExplorePage extends ExploreHeader {
     public int getListOfComparisons(String comparisonName) {
         By comparison = By.xpath("//div[@title='" + comparisonName.toUpperCase() + "']");
         return pageUtils.scrollToElements(comparison, componentScroller).size();
-    }
-
-    /**
-     * Opens the scenario
-     * @param partName - name of the part
-     * @param scenarioName - scenario name
-     * @return a new page object
-     */
-    public EvaluatePage openScenario(String scenarioName, String partName) {
-        findScenario(scenarioName, partName).click();
-        return new EvaluatePage(driver);
-    }
-
-    /**
-     * Opens the comparison
-     * @param comparisonName - the comparison name
-     * @return new page object
-     */
-    public ComparePage openComparison(String comparisonName) {
-        findComparison(comparisonName).click();
-        return new ComparePage(driver);
     }
 
     /**
