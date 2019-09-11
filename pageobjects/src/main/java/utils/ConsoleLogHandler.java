@@ -28,6 +28,8 @@ public class ConsoleLogHandler implements WebDriverEventListener {
         "pbs.twimg.com",
         "doubleclick.net",
         "chrome-extension://invalid/",
+        "bootstrap.min.js",
+        "secure.gravatar.com",
         "cid-te.awsdev.apriori.com/apriori/cost/session/ws/userbean"
     );
 
