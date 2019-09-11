@@ -58,10 +58,21 @@ public class EvaluateHeader extends GenericHeader {
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCostButton();
-        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
-        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
-        pageUtils.isElementDisplayed(loadingImage);
-        pageUtils.waitForElementNotDisplayed(loadingImage);
+        checkForCostLabel();
+        checkForImage();
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Cost the scenario
+     *
+     * @return current page object
+     */
+    public EvaluatePage costScenario(int timeoutInMinutes) {
+        pageUtils.waitForElementAndClick(costButton);
+        new CostingJobPage(driver).selectCostButton();
+        checkForCostLabel(timeoutInMinutes);
+        checkForImage();
         return new EvaluatePage(driver);
     }
 
@@ -72,5 +83,29 @@ public class EvaluateHeader extends GenericHeader {
      */
     public Boolean getCostLabel(String text) {
         return pageUtils.checkElementContains(costLabel, text);
+    }
+
+    /**
+     * Method to check for the loading image displayed/not displayed
+     */
+    private void checkForImage() {
+        pageUtils.isElementDisplayed(loadingImage);
+        pageUtils.waitForElementNotDisplayed(loadingImage);
+    }
+
+    /**
+     * Method to check cost label contains/doesn't contain text
+     */
+    private void checkForCostLabel() {
+        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+    }
+
+    /**
+     * Method to check cost label contains/doesn't contain text
+     */
+    private void checkForCostLabel(int timeoutInMinutes) {
+        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
     }
 }

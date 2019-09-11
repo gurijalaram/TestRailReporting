@@ -63,17 +63,19 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
     /**
      * Gets the costed routing text
      * @return text as string
+     * @param text
      */
-    public String getCostedRouting() {
-        return costedRouting.getText().trim();
+    public Boolean getCostedRouting(String text) {
+        return pageUtils.checkElementContains(costedRouting, text);
     }
 
     /**
      * Gets the selected routing text
      * @return text as string
+     * @param text
      */
-    public String getSelectedRouting() {
-        return selectedRouting.getText().trim();
+    public Boolean getSelectedRouting(String text) {
+        return pageUtils.checkElementContains(selectedRouting, text);
     }
 
     /**

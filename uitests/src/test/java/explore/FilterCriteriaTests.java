@@ -108,7 +108,7 @@ public class FilterCriteriaTests extends TestBase {
     @TestRail(testCaseId = {"2277"})
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
-        String testScenarioName = scenarioName;
+        String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

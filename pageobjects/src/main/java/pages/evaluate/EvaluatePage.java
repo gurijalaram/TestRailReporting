@@ -200,9 +200,9 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return the details as string
      */
-    public boolean getProcessRoutingDetails(String text) {
+    public Boolean getProcessRoutingDetails(String text) {
         pageUtils.waitForElementToAppear(processRoutingName);
-        return pageUtils.checkElementContains(processRoutingName, text);
+        return pageUtils.checkElementAttribute(processRoutingName, "title", text);
     }
 
     /**
@@ -297,8 +297,8 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return material info as string
      */
-    public String getMaterialInfo() {
-        return pageUtils.checkElementAttribute(materialsInfo, "value");
+    public Boolean getMaterialInfo(String text) {
+        return pageUtils.checkElementAttribute(materialsInfo, "value", text);
     }
 
     /**
@@ -367,9 +367,10 @@ public class EvaluatePage extends EvaluateHeader {
      * Gets the fully burdened cost
      *
      * @return string
+     * @param text
      */
-    public String getBurdenedCost() {
-        return pageUtils.waitForElementToAppear(burdenedCost).getText();
+    public Boolean getBurdenedCost(String text) {
+        return pageUtils.checkElementContains(burdenedCost, text);
     }
 
     /**
