@@ -27,7 +27,8 @@ public class ConsoleLogHandler implements WebDriverEventListener {
     private List<String> blacklistedURLs = Arrays.asList(
         "pbs.twimg.com",
         "doubleclick.net",
-        "chrome-extension://invalid/"
+        "chrome-extension://invalid/",
+        "cid-te.awsdev.apriori.com/apriori/cost/session/ws/userbean"
     );
 
     /**
