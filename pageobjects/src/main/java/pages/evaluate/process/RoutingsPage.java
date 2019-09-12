@@ -84,9 +84,28 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      * @return routing name as webelement
      */
     public RoutingsPage selectRouting(String routingName) {
-        By routing = By.xpath("//div[@data-ap-comp='routingSelectionTable']//td[contains(text(),'" + routingName + "')]/ancestor::tr");
-        pageUtils.scrollToElement(routing, routingScroller).click();
+        findRouting(routingName).click();
         return this;
+    }
+
+    /**
+     * Gets the routing details
+     * @param routingName - the routing
+     * @return current page object
+     */
+    public RoutingsPage getRouting(String routingName) {
+        findRouting(routingName).getText();
+        return this;
+    }
+
+    /**
+     * Finds the routing in the table
+     * @param routingName - the routing
+     * @return webelement
+     */
+    public WebElement findRouting(String routingName) {
+        By routing = By.xpath("//div[@data-ap-comp='routingSelectionTable']//td[contains(text(),'" + routingName + "')]/ancestor::tr");
+        return pageUtils.scrollToElement(routing, routingScroller);
     }
 
     /**

@@ -139,18 +139,14 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario()
+            .closeProcessPanel()
+            .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
             .checkRoutingBox()
             .apply()
-            .closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario();
+            .closeProcessPanel()
+            .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails("Injection Molding"), is(true));
     }
@@ -175,9 +171,10 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario()
+        routingsPage = evaluatePage.costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
+
         assertThat(routingsPage.getCostedRouting("Sand Casting"), is(true));
         assertThat(routingsPage.getSelectedRouting("Sand Casting"), is(true));
     }
