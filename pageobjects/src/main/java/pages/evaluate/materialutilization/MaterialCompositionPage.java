@@ -12,6 +12,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 /**
  * @author cfrith
  */
@@ -92,6 +95,14 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
         By material = By.xpath("//div[@data-ap-comp='materialSelectionTable']//tbody//td[.='" + materialName + "']");
         pageUtils.scrollToElement(material, materialScroller).click();
         return this;
+    }
+
+    /**
+     * Gets the list of material types from the dropdown
+     * @return hashset as duplicates need to be removed
+     */
+    public HashSet<String> getListOfMaterialTypes() {
+        return new HashSet<>(Arrays.asList(pageUtils.waitForElementToAppear(typeDropdown, typeDropdown.getAttribute("innerText")).getText().split("\n")));
     }
 
     /**
