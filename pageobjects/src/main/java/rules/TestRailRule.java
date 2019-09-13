@@ -3,7 +3,6 @@ package main.java.rules;
 import main.java.utils.TestRail;
 import main.java.utils.gurock.testrail.APIClient;
 import main.java.utils.gurock.testrail.APIException;
-import org.apache.commons.lang3.ArrayUtils;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
@@ -48,7 +47,11 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void failed(Throwable t, Description description) {
-        if (ArrayUtils.isEmpty(testRail.testCaseId())) {
+        try {
+            if (testRail.testCaseId() == null) {
+                return;
+            }
+        } catch (NullPointerException e) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
@@ -72,7 +75,11 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void succeeded(Description description) {
-        if (ArrayUtils.isEmpty(testRail.testCaseId())) {
+        try {
+            if (testRail.testCaseId() == null) {
+                return;
+            }
+        } catch (NullPointerException e) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
