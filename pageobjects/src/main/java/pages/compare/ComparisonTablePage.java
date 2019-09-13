@@ -87,7 +87,7 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
-        filterButton.click();
+        pageUtils.waitForElementAndClick(filterButton);
         return new FilterCriteriaPage(driver);
     }
 
