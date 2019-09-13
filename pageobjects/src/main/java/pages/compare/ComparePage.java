@@ -20,7 +20,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "table.comparison-table-header-widget-table")
     private WebElement scenarioTable;
 
-    @FindBy(css = "textarea.gwt-Label.comparison-table-header-part-number")
+    @FindBy(css = "div.gwt-Label.comparison-table-header-part-number")
     private WebElement comparisonName;
 
     @FindBy(css = "textarea.gwt-TextArea.full-width")

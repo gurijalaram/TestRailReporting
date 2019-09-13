@@ -73,6 +73,6 @@ public class EditPublicComparisonTests extends TestBase {
         comparePage = genericHeader.editScenario(ComparePage.class);
 
 
-        assertThat(comparePage.getComparisonName(), containsString(testComparisonName));
+        assertThat(comparePage.getComparisonName(), containsString(testComparisonName.toUpperCase()));
     }
 }
