@@ -47,6 +47,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void failed(Throwable t, Description description) {
+        // FIXME: 13/09/2019 tests that have no testCaseId throw a npe. try not ideal, will need better fix
         try {
             if (testRail.testCaseId() == null) {
                 return;
@@ -75,6 +76,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void succeeded(Description description) {
+        // FIXME: 13/09/2019 tests that have no testCaseId throw a npe. try not ideal, will need better fix
         try {
             if (testRail.testCaseId() == null) {
                 return;
