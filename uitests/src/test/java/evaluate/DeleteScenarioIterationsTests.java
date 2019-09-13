@@ -57,7 +57,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"588"})
+    @TestRail(testCaseId = {"588", "572"})
     @Description("Test a private scenario can be deleted from the evaluate page")
     public void testDeletePrivateScenarioIteration() {
         String testScenarioName = new Util().getScenarioName();
