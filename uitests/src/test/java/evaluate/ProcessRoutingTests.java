@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
@@ -244,7 +245,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openMaterialCompositionTable();
 
-        // Assert that no metal is shown in the material composition list  Steel, Cold Worked, AISI 1020
+        assertThat(materialCompositionPage.getListOfMaterialTypes(), containsInAnyOrder("All", "ABS", "Acetal", "Nylon", "PET", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane"));
     }
 
     @Test
