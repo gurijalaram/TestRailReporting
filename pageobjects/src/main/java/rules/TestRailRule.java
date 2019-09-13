@@ -3,6 +3,7 @@ package main.java.rules;
 import main.java.utils.TestRail;
 import main.java.utils.gurock.testrail.APIClient;
 import main.java.utils.gurock.testrail.APIException;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
@@ -47,12 +48,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void failed(Throwable t, Description description) {
-        // FIXME: 04/09/2019 tests that have no testCaseId throw a npe. try not ideal, will need further attention
-        try {
-            if (testRail.testCaseId() == null) {
-                return;
-            }
-        } catch (NullPointerException e) {
+        if (ArrayUtils.isEmpty(testRail.testCaseId())) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
@@ -76,12 +72,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void succeeded(Description description) {
-        // FIXME: 04/09/2019 tests that have no testCaseId throw a npe. try not ideal, will need further attention
-        try {
-            if (testRail.testCaseId() == null) {
-                return;
-            }
-        } catch (NullPointerException e) {
+        if (ArrayUtils.isEmpty(testRail.testCaseId())) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
@@ -109,9 +100,8 @@ public class TestRailRule extends TestWatcher {
         client.setUser(USERNAME);
         client.setPassword(PASSWORD);
         String[] values = testRail.testCaseId();
-        for (int noOfTCs = 0; noOfTCs < values.length; noOfTCs++) {
-            client.sendPost("add_result_for_case/" + RUN_ID + "/"
-                + values[noOfTCs] + "", parameterData);
+        for (String value : values) {
+            client.sendPost("add_result_for_case/" + RUN_ID + "/" + value + "", parameterData);
         }
     }
 }
