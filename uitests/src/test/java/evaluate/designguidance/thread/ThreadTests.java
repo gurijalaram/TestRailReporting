@@ -16,6 +16,7 @@ import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
 import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
+import main.java.pages.settings.SettingsPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import main.java.utils.Util;
@@ -29,6 +30,7 @@ public class ThreadTests extends TestBase {
     private InvestigationPage investigationPage;
     private ThreadingPage threadingPage;
     private WarningPage warningPage;
+    private SettingsPage settingsPag;
 
     public ThreadTests() {
         super();
@@ -315,6 +317,11 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading");
 
         assertThat(investigationPage.getThreadHeader("(in)"), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.openSettings()
+            .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
+            .save(EvaluatePage.class);
     }
 
     @Test
