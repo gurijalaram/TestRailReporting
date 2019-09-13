@@ -7,11 +7,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
+import main.java.enums.WorkspaceEnum;
+import main.java.header.GenericHeader;
 import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
-import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import main.java.utils.Util;
 import org.junit.Test;
 
@@ -21,32 +23,35 @@ public class EditPublicComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private ComparePage comparePage;
+    private GenericHeader genericHeader;
 
     public EditPublicComparisonTests() {
         super();
     }
 
     @Test
+    @TestRail(testCaseId = {"421"})
     @Description("Test publishing a comparison shows the comparison in the comparison table")
-    public void testEditPublicComparisonPublish() {
+    public void testPublishComparison() {
 
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
-            .publishScenario()
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
 
-        evaluatePage = new EvaluatePage(driver);
-        explorePage = evaluatePage.publishScenario();
+        genericHeader = new GenericHeader(driver);
 
-        assertThat(explorePage.getListOfComparisons(testComparisonName) > 0, is(true));
+        explorePage = genericHeader.publishScenario()
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+
+        assertThat(explorePage.findComparison(testComparisonName).isDisplayed(), is(true));
     }
 
     @Test
+    @TestRail(testCaseId = {"427"})
     @Description("Test editing a published comparison shows the comparison view")
     public void testEditPublicComparison() {
 
@@ -54,16 +59,20 @@ public class EditPublicComparisonTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
-            .publishScenario()
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
 
-        evaluatePage = new EvaluatePage(driver);
-        comparePage = evaluatePage.publishScenario()
-            .openComparison(testComparisonName);
+        genericHeader = new GenericHeader(driver);
 
-        assertThat(comparePage.getDescriptionText(), containsString(testComparisonName));
+        explorePage = genericHeader.publishScenario()
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+            .highlightComparison(testComparisonName);
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.editScenario(ComparePage.class);
+
+
+        assertThat(comparePage.getComparisonName(), containsString(testComparisonName));
     }
 }

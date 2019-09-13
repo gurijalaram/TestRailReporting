@@ -20,6 +20,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "table.comparison-table-header-widget-table")
     private WebElement scenarioTable;
 
+    @FindBy(css = "textarea.gwt-Label.comparison-table-header-part-number")
+    private WebElement comparisonName;
+
     @FindBy(css = "textarea.gwt-TextArea.full-width")
     private WebElement descriptionText;
 
@@ -62,5 +65,13 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      */
     public String getDescriptionText() {
         return descriptionText.getText();
+    }
+
+    /**
+     * Gets the comparison name text
+     * @return the text as String
+     */
+    public String getComparisonName() {
+        return comparisonName.getText();
     }
 }
