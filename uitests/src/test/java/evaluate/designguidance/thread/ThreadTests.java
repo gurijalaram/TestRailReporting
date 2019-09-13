@@ -226,7 +226,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"717"})
+    @TestRail(testCaseId = {"35"})
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     public void zeroValueTest() {
         loginPage = new LoginPage(driver);
@@ -267,7 +267,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"38", "40"})
+    @TestRail(testCaseId = {"38", "40", "43"})
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
@@ -301,7 +301,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"267", "268"})
+    @TestRail(testCaseId = {"267", "268", "39", "294"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
@@ -374,6 +374,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"44"})
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
@@ -390,6 +391,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"44"})
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
@@ -406,6 +408,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"44"})
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);

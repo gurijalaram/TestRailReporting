@@ -59,7 +59,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"645"})
+    @TestRail(testCaseId = {"645", "269"})
     @Description("View detailed information about costed process")
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
@@ -100,6 +100,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails();
 
         assertThat(processPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
+
     }
 
     @Test
@@ -181,7 +182,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1670"})
+    @TestRail(testCaseId = {"1670", "568", "570"})
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
         loginPage = new LoginPage(driver);
@@ -201,6 +202,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.failedCostedIcon.isDisplayed(), is(true));
     }
 
     @Test
@@ -313,5 +315,21 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails();
 
         assertThat(processPage.getRoutingLabels(), hasItems("Carton Forming", "Pack & Load", "Carton Sealing"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1674"})
+    @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
+    public void routingPGs() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getListOfAvailableRoutings(), arrayContaining("Injection Mold", "Reaction Injection Mold", "Structural Foam Mold"));
     }
 }
