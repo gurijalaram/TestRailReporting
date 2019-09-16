@@ -29,7 +29,7 @@ public class DeletePublicComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"430", "442"})
+    @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDelete() {
 
