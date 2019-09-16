@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class TestRailRule extends TestWatcher {
 
-    private TestRail testRail;
+    private TestRail testRail = null;
     private static final String STATUS_ID = "status_id";
     private static final String COMMENT = "comment";
     private static final Integer FAILED_STATUS = 5;
@@ -47,12 +47,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void failed(Throwable t, Description description) {
-        // FIXME: 13/09/2019 tests that have no testCaseId throw a npe. try not ideal, will need better fix
-        try {
-            if (testRail.testCaseId() == null) {
-                return;
-            }
-        } catch (NullPointerException e) {
+        if (testRail == null) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
@@ -76,12 +71,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void succeeded(Description description) {
-        // FIXME: 13/09/2019 tests that have no testCaseId throw a npe. try not ideal, will need better fix
-        try {
-            if (testRail.testCaseId() == null) {
-                return;
-            }
-        } catch (NullPointerException e) {
+        if (testRail == null) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
