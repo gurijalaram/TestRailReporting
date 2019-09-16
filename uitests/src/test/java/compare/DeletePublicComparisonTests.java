@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import main.java.base.TestBase;
 import main.java.enums.UsersEnum;
 import main.java.enums.WorkspaceEnum;
@@ -66,7 +64,6 @@ public class DeletePublicComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
-    @Severity(SeverityLevel.NORMAL)
     public void deletePublicComparisonPage() {
 
         String testScenarioName = new Util().getScenarioName();

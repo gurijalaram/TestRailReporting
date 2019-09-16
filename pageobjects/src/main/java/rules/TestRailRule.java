@@ -3,7 +3,6 @@ package main.java.rules;
 import main.java.utils.TestRail;
 import main.java.utils.gurock.testrail.APIClient;
 import main.java.utils.gurock.testrail.APIException;
-import org.apache.commons.lang3.ArrayUtils;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
@@ -18,7 +17,7 @@ import java.util.Map;
  */
 public class TestRailRule extends TestWatcher {
 
-    private TestRail testRail;
+    private TestRail testRail = null;
     private static final String STATUS_ID = "status_id";
     private static final String COMMENT = "comment";
     private static final Integer FAILED_STATUS = 5;
@@ -48,7 +47,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void failed(Throwable t, Description description) {
-        if (ArrayUtils.isEmpty(testRail.testCaseId())) {
+        if (testRail == null) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
@@ -72,7 +71,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void succeeded(Description description) {
-        if (ArrayUtils.isEmpty(testRail.testCaseId())) {
+        if (testRail == null) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
