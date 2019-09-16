@@ -66,6 +66,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
      * @return current page object
      */
     public TableColumnsPage addColumn(String column) {
+        pageUtils.waitForElementToAppear(availableList);
         new Select(availableList).selectByValue(column);
         selectRightArrow();
         return this;
@@ -77,6 +78,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
      * @return current page object
      */
     public TableColumnsPage removeColumn(String column) {
+        pageUtils.waitForElementToAppear(includedList);
         new Select(includedList).selectByValue(column);
         selectLeftArrow();
         return this;
