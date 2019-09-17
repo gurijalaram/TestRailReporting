@@ -115,6 +115,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "td[data-ap-field='capitalInvestment']")
     private WebElement capitalInvestments;
 
+    @FindBy(css = ".color-failure")
+    public WebElement failedCostedIcon;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 

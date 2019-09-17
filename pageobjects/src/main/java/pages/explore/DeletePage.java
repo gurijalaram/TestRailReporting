@@ -75,7 +75,6 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      */
     public ExplorePage deleteScenario() {
         pageUtils.waitForElementToAppear(deleteButton).click();
-        notificationPopoverNotDisplayed();
         return new ExplorePage(driver);
     }
 
