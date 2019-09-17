@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItem;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
@@ -24,6 +25,7 @@ import main.java.pages.settings.ToleranceSettingsPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import main.java.utils.Util;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class ProcessRoutingTests extends TestBase {
@@ -332,8 +334,8 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        //assertThat(routingsPage.getRoutings(), Matchers.not(hasItem("Die Casting")));
-        //assertThat(routingsPage.getRoutings(), Matchers.not(hasItem("MillTurn Routing")));
+        assertThat(routingsPage.getRoutings(), Matchers.not(hasItem("Die Casting")));
+        assertThat(routingsPage.getRoutings(), Matchers.not(hasItem("MillTurn Routing")));
     }
 
     @Test
