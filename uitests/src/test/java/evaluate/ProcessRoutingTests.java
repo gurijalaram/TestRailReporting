@@ -14,6 +14,7 @@ import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
+import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.process.ProcessPage;
 import main.java.pages.evaluate.process.RoutingsPage;
@@ -34,6 +35,7 @@ public class ProcessRoutingTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private RoutingsPage routingsPage;
     private MaterialCompositionPage materialCompositionPage;
+    private InvestigationPage investigationPage;
 
     public ProcessRoutingTests() {
         super();
@@ -318,7 +320,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1674"})
+    @TestRail(testCaseId = {"1674", "1675"})
     @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
     public void routingPGs() {
         loginPage = new LoginPage(driver);
@@ -330,6 +332,40 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getListOfAvailableRoutings(), arrayContaining("Injection Mold", "Reaction Injection Mold", "Structural Foam Mold"));
+        //assertThat(routingsPage.getRoutings(), Matchers.not(hasItem("Die Casting")));
+        //assertThat(routingsPage.getRoutings(), Matchers.not(hasItem("MillTurn Routing")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1673"})
+    @Description("Validate behaviour when Adding/Editing threads that may require additional machining.")
+    public void threadsRouting() {
+        loginPage = new LoginPage(driver);
+        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Simple Holes", "SimpleHole:1")
+            .selectThreadDropdown("Yes")
+            .enterThreadLength("3.00")
+            .apply(InvestigationPage.class);
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.costScenario();
+
+        assertThat(evaluatePage.getProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 2 Axis Lathe"), is(true));
+
+        evaluatePage.openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Gravity Die Cast")
+            .apply()
+            .closeProcessPanel()
+            .costScenario();
+
+        assertThat(evaluatePage.getProcessRoutingDetails("Melting / Gravity Die Casting / Cleaning / Trim / Finishing / Visual Inspection / 2 Axis Lathe"), is(true));
     }
 }
