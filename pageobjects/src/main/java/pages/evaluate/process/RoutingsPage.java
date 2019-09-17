@@ -10,6 +10,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author cfrith
  */
@@ -19,7 +22,10 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
     private final Logger logger = LoggerFactory.getLogger(RoutingsPage.class);
 
     @FindBy(css = "div[data-ap-comp='routingSelectionTable'] td")
-    private WebElement routingTableCells;
+    private WebElement routingTableCell;
+
+    @FindBy(css = "div[data-ap-comp='routingSelectionTable'] td")
+    private List<WebElement> routingTableCells;
 
     @FindBy(css = "label[data-ap-field='lastCostedLabel']")
     private WebElement costedRouting;
@@ -57,7 +63,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(routingTableCells);
+        pageUtils.waitForElementToAppear(routingTableCell);
     }
 
     /**
@@ -96,6 +102,14 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
     public RoutingsPage getRouting(String routingName) {
         findRouting(routingName).getText();
         return this;
+    }
+
+    /**
+     * Gets routings in the table
+     * @return list of routings
+     */
+    public List<String> getRoutings() {
+        return routingTableCells.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     /**
