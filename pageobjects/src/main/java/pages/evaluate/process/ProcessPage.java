@@ -77,6 +77,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(routingTable);
+        pageUtils.waitForElementsToAppear(cycleTimeCharts);
     }
 
     /**
