@@ -25,7 +25,7 @@ public class AddPrivateScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"412"})
+    @TestRail(testCaseId = {"412", "1171"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
 

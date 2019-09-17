@@ -11,6 +11,7 @@ import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
+import main.java.utils.TestRail;
 import main.java.utils.Util;
 import org.junit.Test;
 
@@ -25,6 +26,7 @@ public class NewScenarioNameTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"577"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
 

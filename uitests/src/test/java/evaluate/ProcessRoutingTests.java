@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItem;
 
 import io.qameta.allure.Description;
 import main.java.base.TestBase;
@@ -13,6 +15,7 @@ import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
+import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.process.ProcessPage;
 import main.java.pages.evaluate.process.RoutingsPage;
@@ -22,6 +25,7 @@ import main.java.pages.settings.ToleranceSettingsPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import main.java.utils.Util;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class ProcessRoutingTests extends TestBase {
@@ -33,6 +37,7 @@ public class ProcessRoutingTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private RoutingsPage routingsPage;
     private MaterialCompositionPage materialCompositionPage;
+    private InvestigationPage investigationPage;
 
     public ProcessRoutingTests() {
         super();
@@ -58,7 +63,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"645"})
+    @TestRail(testCaseId = {"645", "269"})
     @Description("View detailed information about costed process")
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
@@ -180,7 +185,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1670"})
+    @TestRail(testCaseId = {"1670", "568", "570"})
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
         loginPage = new LoginPage(driver);
@@ -200,6 +205,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.failedCostedIcon.isDisplayed(), is(true));
     }
 
     @Test
@@ -244,7 +250,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openMaterialCompositionTable();
 
-        // Assert that no metal is shown in the material composition list  Steel, Cold Worked, AISI 1020
+        assertThat(materialCompositionPage.getListOfMaterialTypes(), containsInAnyOrder("All", "ABS", "Acetal", "Nylon", "PET", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane"));
     }
 
     @Test
@@ -312,5 +318,55 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails();
 
         assertThat(processPage.getRoutingLabels(), hasItems("Carton Forming", "Pack & Load", "Carton Sealing"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1674", "1675"})
+    @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
+    public void routingPGs() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), Matchers.not(hasItem("Die Casting")));
+        assertThat(routingsPage.getRoutings(), Matchers.not(hasItem("MillTurn Routing")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1673"})
+    @Description("Validate behaviour when Adding/Editing threads that may require additional machining.")
+    public void threadsRouting() {
+        loginPage = new LoginPage(driver);
+        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .editThread("Simple Holes", "SimpleHole:1")
+            .selectThreadDropdown("Yes")
+            .enterThreadLength("3.00")
+            .apply(InvestigationPage.class);
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.costScenario();
+
+        assertThat(evaluatePage.getProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 2 Axis Lathe"), is(true));
+
+        evaluatePage.openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Gravity Die Cast")
+            .apply()
+            .closeProcessPanel()
+            .costScenario();
+
+        assertThat(evaluatePage.getProcessRoutingDetails("Melting / Gravity Die Casting / Cleaning / Trim / Finishing / Visual Inspection / 2 Axis Lathe"), is(true));
     }
 }

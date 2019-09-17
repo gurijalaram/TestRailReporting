@@ -7,6 +7,7 @@ import io.qameta.allure.Description;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UsersEnum;
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.explore.ExplorePage;
 import main.java.pages.login.LoginPage;
@@ -23,13 +24,14 @@ public class DTCCastingTests extends TestBase {
     private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
+    private EvaluatePage evaluatePage;
 
     public DTCCastingTests() {
         super();
     }
 
     @Test
-    @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049"})
+    @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
         loginPage = new LoginPage(driver);
@@ -63,5 +65,11 @@ public class DTCCastingTests extends TestBase {
 
         guidancePage.selectIssueTypeAndGCD("Machining Issues", "Obstructed Surfaces", "PlanarFace:4");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Facing: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry."));
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.openSettings()
+            .openTolerancesTab()
+            .selectAssumeTolerance();
     }
+
 }

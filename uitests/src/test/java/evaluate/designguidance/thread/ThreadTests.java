@@ -16,6 +16,7 @@ import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
 import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
 import main.java.pages.login.LoginPage;
+import main.java.pages.settings.SettingsPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import main.java.utils.Util;
@@ -29,6 +30,7 @@ public class ThreadTests extends TestBase {
     private InvestigationPage investigationPage;
     private ThreadingPage threadingPage;
     private WarningPage warningPage;
+    private SettingsPage settingsPag;
 
     public ThreadTests() {
         super();
@@ -224,7 +226,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"717"})
+    @TestRail(testCaseId = {"35"})
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     public void zeroValueTest() {
         loginPage = new LoginPage(driver);
@@ -265,7 +267,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"38", "40"})
+    @TestRail(testCaseId = {"38", "40", "43", "584", "598"})
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
@@ -299,7 +301,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"267", "268"})
+    @TestRail(testCaseId = {"267", "268", "39", "294"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
@@ -315,6 +317,11 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading");
 
         assertThat(investigationPage.getThreadHeader("(in)"), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.openSettings()
+            .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
+            .save(EvaluatePage.class);
     }
 
     @Test
@@ -367,6 +374,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"44"})
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
@@ -383,6 +391,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"44"})
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
@@ -399,6 +408,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"44"})
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);
