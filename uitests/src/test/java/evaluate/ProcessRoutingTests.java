@@ -104,7 +104,6 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails();
 
         assertThat(processPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
-
     }
 
     @Test
