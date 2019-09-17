@@ -267,7 +267,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"38", "40", "43"})
+    @TestRail(testCaseId = {"38", "40", "43", "584", "598"})
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
