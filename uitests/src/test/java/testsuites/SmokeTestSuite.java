@@ -1,13 +1,15 @@
 package test.java.testsuites;
 
-import main.java.runner.ConcurrentSuiteRunner;
+import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import test.java.evaluate.designguidance.tolerance.ToleranceTests;
+import test.java.evaluate.NewScenarioNameTests;
+import test.java.testsuites.suiteinterface.SmokeTests;
 
-@RunWith(ConcurrentSuiteRunner.class)
+@RunWith(Categories.class)
+@Categories.IncludeCategory(SmokeTests.class)
 @Suite.SuiteClasses({
-    ToleranceTests.class
+    NewScenarioNameTests.class
 })
 public class SmokeTestSuite {
 }
