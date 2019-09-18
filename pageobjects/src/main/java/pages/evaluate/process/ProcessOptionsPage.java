@@ -88,7 +88,8 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @return
+     * Select default value
+     * @return current page object
      */
     public ProcessOptionsPage selectDefaultValue() {
         pageUtils.waitForElementToAppear(defaultValueRadioButton).click();
@@ -96,7 +97,8 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @return
+     * Select default cavities
+     * @return current page object
      */
     public ProcessOptionsPage selectDefaultCavities() {
         pageUtils.waitForElementToAppear(defaultCavitiesRadioButton).click();
@@ -104,7 +106,8 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @return
+     * Selects annual volume
+     * @return current page object
      */
     public ProcessOptionsPage selectAnnualVolume() {
         pageUtils.waitForElementToAppear(annVolumeRadioButton).click();
@@ -112,7 +115,8 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @return
+     * Selects optimize button
+     * @return current page object
      */
     public ProcessOptionsPage selectOptimizeButton() {
         pageUtils.waitForElementToAppear(optimizeRadioButton).click();
@@ -120,15 +124,8 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @return
-     */
-    public ProcessOptionsPage selectDefinedValueButton() {
-        pageUtils.waitForElementToAppear(definedValueRadioButton).click();
-        return this;
-    }
-
-    /**
-     * @return
+     * Selects defined value dropdown
+     * @return current page object
      */
     public ProcessOptionsPage selectDefinedValueDropdown() {
         pageUtils.waitForElementToAppear(definedValueDropdown).click();
@@ -136,7 +133,8 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @return
+     * Selects material dropdown
+     * @return current page object
      */
     public ProcessOptionsPage selectMaterialDropdown() {
         pageUtils.waitForElementToAppear(moldMaterialDropdown).click();
@@ -144,17 +142,19 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @param cavities
-     * @return
+     * Sets number of cavities
+     * @param value - the value
+     * @return current page object
      */
-    public ProcessOptionsPage setNumberCavities(String cavities) {
+    public ProcessOptionsPage setNumberCavities(String value) {
         numberCavitiesInput.clear();
-        numberCavitiesInput.sendKeys(cavities);
+        numberCavitiesInput.sendKeys(value);
         return this;
     }
 
     /**
-     * @return
+     * Selects derived button
+     * @return current page object
      */
     public ProcessOptionsPage selectDerivedButton() {
         pageUtils.waitForElementToAppear(derivedRadioButton).click();
@@ -162,23 +162,29 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @return
+     * Selects override nominal
+     * @return current page object
      */
     public ProcessOptionsPage selectOverrideNominalButton() {
         pageUtils.waitForElementToAppear(overrideNominalRadioButton).click();
         return this;
     }
 
+
     /**
-     * @return
+     * Sets the override value
+     * @param value - the value
+     * @return current page object
      */
-    public ProcessOptionsPage setOverride() {
-        pageUtils.waitForElementToAppear(overrideInput).click();
+    public ProcessOptionsPage setOverride(String value) {
+        overrideInput.clear();
+        overrideInput.sendKeys(value);
         return this;
     }
 
     /**
-     * @return
+     * Selects no colorant
+     * @return current page object
      */
     public ProcessOptionsPage selectNoColorantButton() {
         pageUtils.waitForElementToAppear(noColorantRadioButton).click();
@@ -186,7 +192,8 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @return
+     * Select add colorant
+     * @return current page object
      */
     public ProcessOptionsPage selectAddColorantButton() {
         pageUtils.waitForElementToAppear(addColorantRadioButton).click();
@@ -194,7 +201,8 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @return
+     * Selects defined colour
+     * @return current page object
      */
     public ProcessOptionsPage selectDefinedColorButton() {
         pageUtils.waitForElementToAppear(definedColorRadioButton).click();
@@ -202,25 +210,27 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @param text
-     * @return
+     * Sets the defined input
+     * @param value - the value
+     * @return current page object
      */
-    public ProcessOptionsPage setDefinedInput(String text) {
+    public ProcessOptionsPage setDefinedInput(String value) {
         definedInput.clear();
-        definedInput.sendKeys(text);
+        definedInput.sendKeys(value);
         return this;
     }
 
     /**
-     * @return
+     * Select material regrind
+     * @return current page object
      */
     public ProcessOptionsPage selectMaterialRegrindButton() {
         pageUtils.waitForElementToAppear(materialRegrindRadioButton).click();
         return this;
     }
 
-    /**
-     * @return
+    /** Selects material defined
+     * @return current page object
      */
     public ProcessOptionsPage selectMaterialDefinedButton() {
         pageUtils.waitForElementToAppear(materialDefinedRadioButton).click();
@@ -228,12 +238,13 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * @param text
-     * @return
+     * Sets the material regrign
+     * @param value - the value
+     * @return current page object
      */
-    public ProcessOptionsPage setMaterialRegrindInput(String text) {
+    public ProcessOptionsPage setMaterialRegrindInput(String value) {
         materialRegrindInput.clear();
-        materialRegrindInput.sendKeys(text);
+        materialRegrindInput.sendKeys(value);
         return this;
     }
 }
