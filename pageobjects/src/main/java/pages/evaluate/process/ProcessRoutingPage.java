@@ -58,6 +58,9 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     @FindBy(css = ".panel .glyphicon-remove")
     private WebElement closePanelButton;
 
+    @FindBy(xpath = "//label[.='Options']")
+    private WebElement optionsTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -165,5 +168,14 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     public EvaluatePage closeProcessPanel() {
         pageUtils.waitForElementAndClick(closePanelButton);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Selects the option tab
+     * @return new page object
+     */
+    public ProcessOptionsPage selectOptions() {
+        pageUtils.waitForElementAndClick(optionsTab);
+        return new ProcessOptionsPage(driver);
     }
 }

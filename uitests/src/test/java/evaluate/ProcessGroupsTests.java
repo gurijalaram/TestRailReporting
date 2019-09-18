@@ -257,7 +257,7 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+            .costScenario(5);
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -349,7 +349,7 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+            .costScenario(5);
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
