@@ -16,6 +16,9 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     @FindBy(css = "input[data-ap-comp='numberOfCavities.radioButtons.default']")
     private WebElement defaultValueRadioButton;
 
+    @FindBy(css = "input[data-ap-comp='numberOfCavities.radioButtons.defaultNumCavMode']")
+    private WebElement defaultCavitiesRadioButton;
+
     @FindBy(css = "input[data-ap-comp='numberOfCavities.radioButtons.annualVolume']")
     private WebElement annVolumeRadioButton;
 
@@ -27,6 +30,12 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     @FindBy(css = "select[data-ap-field='numberOfCavities.modeValues.user.storedListValue']")
     private WebElement definedValueDropdown;
+
+    @FindBy(css = "select[data-ap-field='moldMaterial.modeValues.defaultMoldMaterial.storedListValue']")
+    private WebElement moldMaterialDropdown;
+
+    @FindBy(css = "input[data-ap-field='numberOfCavities.modeValues.user.value']")
+    private WebElement numberCavitiesInput;
 
     @FindBy(css = "input[data-ap-comp='nominalWallThickness.radioButtons.deriveFromPart']")
     private WebElement derivedRadioButton;
@@ -76,5 +85,155 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     @Override
     protected void isLoaded() throws Error {
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectDefaultValue() {
+        pageUtils.waitForElementToAppear(defaultValueRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectDefaultCavities() {
+        pageUtils.waitForElementToAppear(defaultCavitiesRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectAnnualVolume() {
+        pageUtils.waitForElementToAppear(annVolumeRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectOptimizeButton() {
+        pageUtils.waitForElementToAppear(optimizeRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectDefinedValueButton() {
+        pageUtils.waitForElementToAppear(definedValueRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectDefinedValueDropdown() {
+        pageUtils.waitForElementToAppear(definedValueDropdown).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectMaterialDropdown() {
+        pageUtils.waitForElementToAppear(moldMaterialDropdown).click();
+        return this;
+    }
+
+    /**
+     * @param cavities
+     * @return
+     */
+    public ProcessOptionsPage setNumberCavities(String cavities) {
+        numberCavitiesInput.clear();
+        numberCavitiesInput.sendKeys(cavities);
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectDerivedButton() {
+        pageUtils.waitForElementToAppear(derivedRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectOverrideNominalButton() {
+        pageUtils.waitForElementToAppear(overrideNominalRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage setOverride() {
+        pageUtils.waitForElementToAppear(overrideInput).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectNoColorantButton() {
+        pageUtils.waitForElementToAppear(noColorantRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectAddColorantButton() {
+        pageUtils.waitForElementToAppear(addColorantRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectDefinedColorButton() {
+        pageUtils.waitForElementToAppear(definedColorRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @param text
+     * @return
+     */
+    public ProcessOptionsPage setDefinedInput(String text) {
+        definedInput.clear();
+        definedInput.sendKeys(text);
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectMaterialRegrindButton() {
+        pageUtils.waitForElementToAppear(materialRegrindRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    public ProcessOptionsPage selectMaterialDefinedButton() {
+        pageUtils.waitForElementToAppear(materialDefinedRadioButton).click();
+        return this;
+    }
+
+    /**
+     * @param text
+     * @return
+     */
+    public ProcessOptionsPage setMaterialRegrindInput(String text) {
+        materialRegrindInput.clear();
+        materialRegrindInput.sendKeys(text);
+        return this;
     }
 }
