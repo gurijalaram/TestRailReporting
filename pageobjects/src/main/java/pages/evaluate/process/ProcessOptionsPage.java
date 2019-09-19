@@ -156,8 +156,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
      * @return current page object
      */
     public ProcessOptionsPage setNumberCavities(String value) {
-        numberCavitiesInput.clear();
-        numberCavitiesInput.sendKeys(value);
+        setInput(numberCavitiesInput, value);
         return this;
     }
 
@@ -199,8 +198,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
      * @return current page object
      */
     public ProcessOptionsPage setOverride(String value) {
-        overrideInput.clear();
-        overrideInput.sendKeys(value);
+        setInput(overrideInput, value);
         return this;
     }
 
@@ -251,8 +249,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
      * @return current page object
      */
     public ProcessOptionsPage setDefinedInput(String value) {
-        definedInput.clear();
-        definedInput.sendKeys(value);
+        setInput(definedInput, value);
         return this;
     }
 
@@ -293,8 +290,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
      * @return current page object
      */
     public ProcessOptionsPage setMaterialRegrindInput(String value) {
-        materialRegrindInput.clear();
-        materialRegrindInput.sendKeys(value);
+        setInput(materialRegrindInput, value);
         return this;
     }
 
@@ -306,6 +302,11 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
      */
     public Boolean isMaterialRegrind(String text) {
         return checkAttribute(materialRegrindInput, text);
+    }
+
+    private void setInput(WebElement locator, String value) {
+        pageUtils.waitForElementToAppear(locator).clear();
+        locator.sendKeys(value);
     }
 
     private Boolean checkAttribute(WebElement locator, String text) {
