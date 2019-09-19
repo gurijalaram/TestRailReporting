@@ -200,11 +200,11 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets the process routing details
+     * Checks the process routing details
      *
      * @return the details as string
      */
-    public Boolean getProcessRoutingDetails(String text) {
+    public Boolean isProcessRoutingDetails(String text) {
         pageUtils.waitForElementToAppear(processRoutingName);
         return pageUtils.checkElementAttribute(processRoutingName, "title", text);
     }
@@ -297,11 +297,11 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets material info
+     * Checks material info
      *
      * @return material info as string
      */
-    public Boolean getMaterialInfo(String text) {
+    public Boolean isMaterialInfo(String text) {
         return pageUtils.checkElementAttribute(materialsInfo, "value", text);
     }
 
