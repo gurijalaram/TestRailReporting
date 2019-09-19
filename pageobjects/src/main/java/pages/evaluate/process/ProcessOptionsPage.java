@@ -125,19 +125,21 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Selects defined value dropdown
+     * @param option - the option
      * @return current page object
      */
-    public ProcessOptionsPage selectDefinedValueDropdown() {
-        pageUtils.waitForElementToAppear(definedValueDropdown).click();
+    public ProcessOptionsPage selectDefinedValueDropdown(String option) {
+        pageUtils.selectDropdownOption(definedValueDropdown, option);
         return this;
     }
 
     /**
      * Selects material dropdown
+     * @param option - the option
      * @return current page object
      */
-    public ProcessOptionsPage selectMaterialDropdown() {
-        pageUtils.waitForElementToAppear(moldMaterialDropdown).click();
+    public ProcessOptionsPage selectMaterialDropdown(String option) {
+        pageUtils.selectDropdownOption(moldMaterialDropdown, option);
         return this;
     }
 
@@ -150,6 +152,15 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
         numberCavitiesInput.clear();
         numberCavitiesInput.sendKeys(value);
         return this;
+    }
+
+    /**
+     * Gets number of cavities
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean getNumberCavities(String value) {
+        return pageUtils.checkElementAttribute(numberCavitiesInput, "value", value);
     }
 
     /**
@@ -180,6 +191,15 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
         overrideInput.clear();
         overrideInput.sendKeys(value);
         return this;
+    }
+
+    /**
+     * Gets the override value
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean getOverride(String value) {
+        return pageUtils.checkElementAttribute(overrideInput, "value", value);
     }
 
     /**
@@ -221,6 +241,15 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
+     * Gets the defined value
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean getDefinedInput(String value) {
+        return pageUtils.checkElementAttribute(definedInput, "value", value);
+    }
+
+    /**
      * Select material regrind
      * @return current page object
      */
@@ -238,7 +267,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Sets the material regrign
+     * Sets the material regrind
      * @param value - the value
      * @return current page object
      */
@@ -246,5 +275,14 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
         materialRegrindInput.clear();
         materialRegrindInput.sendKeys(value);
         return this;
+    }
+
+    /**
+     * Gets material regrind value
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean getMaterialRegrind(String value) {
+        return pageUtils.checkElementAttribute(materialRegrindInput, "value", value);
     }
 }
