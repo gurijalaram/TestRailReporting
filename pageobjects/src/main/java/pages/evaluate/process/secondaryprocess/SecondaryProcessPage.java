@@ -1,5 +1,6 @@
-package main.java.pages.evaluate;
+package main.java.pages.evaluate.process.secondaryprocess;
 
+import main.java.pages.evaluate.EvaluatePage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -26,18 +27,6 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
 
     @FindBy(css = "div[data-ap-comp='secondaryTreatmentsTable'] div.v-grid-scroller-vertical")
     private WebElement processScroller;
-
-    @FindBy(css = "input[data-ap-comp='plateThickness.radioButtons.standard")
-    private WebElement standardRadioButton;
-
-    @FindBy(css = "input[data-ap-comp='plateThickness.radioButtons.user']")
-    private WebElement desiredRadioButton;
-
-    @FindBy(css = "input[data-ap-field='plateThickness.modeValues.user.value']")
-    private WebElement thicknessInput;
-
-    @FindBy(css = "select[data-ap-field='platingMethod.modeValues.platingMethod.storedListValue']")
-    private WebElement platingMethodSelect;
 
     @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
@@ -102,6 +91,12 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     private WebElement selectProcessName(String processName) {
         By processBox = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName + "']/ancestor::tr//input[@class='gwt-SimpleCheckBox']");
         return pageUtils.scrollToElement(processBox, processScroller);
+    }
+
+    public SecondaryProcessOptions highlightSecondaryProcess(String processType, String processName) {
+        selectSecondaryProcess(processType, processName);
+        driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']/ancestor::tr")).click();
+        return new SecondaryProcessOptions(driver);
     }
 
     /**

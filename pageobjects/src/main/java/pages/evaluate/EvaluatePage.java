@@ -5,6 +5,7 @@ import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
 import main.java.pages.evaluate.process.ProcessPage;
+import main.java.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import main.java.pages.explore.ScenarioNotesPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
