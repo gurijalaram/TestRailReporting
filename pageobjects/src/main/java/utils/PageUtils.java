@@ -541,7 +541,7 @@ public class PageUtils {
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
-            .ignoring(StaleElementReferenceException.class)
+            .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver driver) -> {
                 new Select(locator).selectByVisibleText(dropdownOption);
                 if (!new Select(locator).getFirstSelectedOption().equals(dropdownOption)) {
