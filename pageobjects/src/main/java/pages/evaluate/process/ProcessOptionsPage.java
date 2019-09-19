@@ -155,11 +155,11 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Gets number of cavities
+     * Checks number of cavities
      * @param value - the value
      * @return true/false
      */
-    public Boolean getNumberCavities(String value) {
+    public Boolean isNumberOfCavities(String value) {
         return pageUtils.checkElementAttribute(numberCavitiesInput, "value", value);
     }
 
@@ -194,11 +194,11 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Gets the override value
+     * Checks the override value
      * @param value - the value
      * @return true/false
      */
-    public Boolean getOverride(String value) {
+    public Boolean isNominalOverride(String value) {
         return pageUtils.checkElementAttribute(overrideInput, "value", value);
     }
 
@@ -241,11 +241,11 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Gets the defined value
+     * Checks the defined value
      * @param value - the value
      * @return true/false
      */
-    public Boolean getDefinedInput(String value) {
+    public Boolean isDefinedInput(String value) {
         return pageUtils.checkElementAttribute(definedInput, "value", value);
     }
 
@@ -278,11 +278,11 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Gets material regrind value
+     * Checks material regrind value
      * @param value - the value
      * @return true/false
      */
-    public Boolean getMaterialRegrind(String value) {
+    public Boolean isMaterialRegrind(String value) {
         return pageUtils.checkElementAttribute(materialRegrindInput, "value", value);
     }
 }
