@@ -58,7 +58,7 @@ public class SecondaryProcessOptions extends SecondaryProcessPage {
      * Selects calculated value
      * @return current page object
      */
-    public SecondaryProcessPage selectCalculatedValue() {
+    public SecondaryProcessOptions selectCalculatedValue() {
         pageUtils.waitForElementToAppear(calculatedValueRadioButton).click();
         return this;
     }
@@ -67,7 +67,7 @@ public class SecondaryProcessOptions extends SecondaryProcessPage {
      * Selects override button
      * @return current page object
      */
-    public SecondaryProcessPage selectOverrideButton() {
+    public SecondaryProcessOptions selectOverrideButton() {
         pageUtils.waitForElementToAppear(overrideRadioButton).click();
         return this;
     }
@@ -77,18 +77,18 @@ public class SecondaryProcessOptions extends SecondaryProcessPage {
      * @param value - the value
      * @return current page object
      */
-    public SecondaryProcessPage setPartThickness(String value) {
+    public SecondaryProcessOptions setPartThickness(String value) {
         pageUtils.waitForElementToAppear(partThicknessInput).clear();
         partThicknessInput.sendKeys(value);
         return this;
     }
 
     /**
-     * Gets part thickness value
+     * Checks part thickness value
      * @param value - the value
      * @return true/false
      */
-    public Boolean getPartThickness(String value) {
+    public Boolean isPartThickness(String value) {
         return pageUtils.checkElementAttribute(partThicknessInput, "value", value);
     }
 }
