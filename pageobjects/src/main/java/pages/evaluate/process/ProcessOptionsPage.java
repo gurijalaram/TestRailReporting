@@ -89,6 +89,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Select default value
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectDefaultValue() {
@@ -98,6 +99,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Select default cavities
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectDefaultCavities() {
@@ -107,6 +109,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Selects annual volume
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectAnnualVolume() {
@@ -116,6 +119,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Selects optimize button
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectOptimizeButton() {
@@ -125,6 +129,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Selects defined value dropdown
+     *
      * @param option - the option
      * @return current page object
      */
@@ -135,6 +140,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Selects material dropdown
+     *
      * @param option - the option
      * @return current page object
      */
@@ -145,6 +151,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Sets number of cavities
+     *
      * @param value - the value
      * @return current page object
      */
@@ -156,15 +163,17 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Checks number of cavities
-     * @param value - the value
+     *
+     * @param text - the value
      * @return true/false
      */
-    public Boolean isNumberOfCavities(String value) {
-        return pageUtils.checkElementAttribute(numberCavitiesInput, "value", value);
+    public Boolean isNumberOfCavities(String text) {
+        return checkAttribute(numberCavitiesInput, text);
     }
 
     /**
      * Selects derived button
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectDerivedButton() {
@@ -174,6 +183,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Selects override nominal
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectOverrideNominalButton() {
@@ -184,6 +194,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Sets the override value
+     *
      * @param value - the value
      * @return current page object
      */
@@ -195,15 +206,17 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Checks the override value
-     * @param value - the value
+     *
+     * @param text - the value
      * @return true/false
      */
-    public Boolean isNominalOverride(String value) {
-        return pageUtils.checkElementAttribute(overrideInput, "value", value);
+    public Boolean isNominalOverride(String text) {
+        return checkAttribute(overrideInput, text);
     }
 
     /**
      * Selects no colorant
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectNoColorantButton() {
@@ -213,6 +226,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Select add colorant
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectAddColorantButton() {
@@ -222,6 +236,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Selects defined colour
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectDefinedColorButton() {
@@ -231,6 +246,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Sets the defined input
+     *
      * @param value - the value
      * @return current page object
      */
@@ -242,15 +258,17 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Checks the defined value
-     * @param value - the value
+     *
+     * @param text - the value
      * @return true/false
      */
-    public Boolean isDefinedInput(String value) {
-        return pageUtils.checkElementAttribute(definedInput, "value", value);
+    public Boolean isDefinedInput(String text) {
+        return checkAttribute(definedInput, text);
     }
 
     /**
      * Select material regrind
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectMaterialRegrindButton() {
@@ -258,7 +276,9 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
         return this;
     }
 
-    /** Selects material defined
+    /**
+     * Selects material defined
+     *
      * @return current page object
      */
     public ProcessOptionsPage selectMaterialDefinedButton() {
@@ -268,6 +288,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Sets the material regrind
+     *
      * @param value - the value
      * @return current page object
      */
@@ -279,10 +300,15 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     /**
      * Checks material regrind value
-     * @param value - the value
+     *
+     * @param text - the value
      * @return true/false
      */
-    public Boolean isMaterialRegrind(String value) {
-        return pageUtils.checkElementAttribute(materialRegrindInput, "value", value);
+    public Boolean isMaterialRegrind(String text) {
+        return checkAttribute(materialRegrindInput, text);
+    }
+
+    private Boolean checkAttribute(WebElement locator, String text) {
+        return pageUtils.checkElementAttribute(locator, "value", text);
     }
 }
