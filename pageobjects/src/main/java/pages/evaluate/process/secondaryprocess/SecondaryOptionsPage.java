@@ -8,9 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SecondaryProcessOptions extends SecondaryProcessPage {
+public class SecondaryOptionsPage extends SecondaryProcessPage {
 
-    private final Logger logger = LoggerFactory.getLogger(SecondaryProcessOptions.class);
+    private final Logger logger = LoggerFactory.getLogger(SecondaryOptionsPage.class);
 
     @FindBy(css = "input[data-ap-comp='plateThickness.radioButtons.standard")
     private WebElement standardRadioButton;
@@ -36,7 +36,7 @@ public class SecondaryProcessOptions extends SecondaryProcessPage {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public SecondaryProcessOptions(WebDriver driver) {
+    public SecondaryOptionsPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -58,7 +58,7 @@ public class SecondaryProcessOptions extends SecondaryProcessPage {
      * Selects calculated value
      * @return current page object
      */
-    public SecondaryProcessOptions selectCalculatedValue() {
+    public SecondaryOptionsPage selectCalculatedValue() {
         pageUtils.waitForElementToAppear(calculatedValueRadioButton).click();
         return this;
     }
@@ -67,7 +67,7 @@ public class SecondaryProcessOptions extends SecondaryProcessPage {
      * Selects override button
      * @return current page object
      */
-    public SecondaryProcessOptions selectOverrideButton() {
+    public SecondaryOptionsPage selectOverrideButton() {
         pageUtils.waitForElementToAppear(overrideRadioButton).click();
         return this;
     }
@@ -77,7 +77,7 @@ public class SecondaryProcessOptions extends SecondaryProcessPage {
      * @param value - the value
      * @return current page object
      */
-    public SecondaryProcessOptions setPartThickness(String value) {
+    public SecondaryOptionsPage setPartThickness(String value) {
         pageUtils.waitForElementToAppear(partThicknessInput).clear();
         partThicknessInput.sendKeys(value);
         return this;

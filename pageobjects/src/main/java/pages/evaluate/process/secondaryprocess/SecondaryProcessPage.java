@@ -93,10 +93,10 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
         return pageUtils.scrollToElement(processBox, processScroller);
     }
 
-    public SecondaryProcessOptions highlightSecondaryProcess(String processType, String processName) {
+    public SecondaryOptionsPage highlightSecondaryProcess(String processType, String processName) {
         selectSecondaryProcess(processType, processName);
         driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']/ancestor::tr")).click();
-        return new SecondaryProcessOptions(driver);
+        return new SecondaryOptionsPage(driver);
     }
 
     /**
