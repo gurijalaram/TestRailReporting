@@ -194,9 +194,9 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return new page object
      */
-    public ProcessPage openProcessDetails() {
+    public ProcessRoutingPage openProcessDetails() {
         pageUtils.waitForElementAndClick(processDetails);
-        return new ProcessPage(driver);
+        return new ProcessRoutingPage(driver);
     }
 
     /**

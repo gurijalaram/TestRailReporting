@@ -1,19 +1,29 @@
 package main.java.pages.evaluate.process;
 
 import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
+import main.java.pages.evaluate.SecondaryProcessPage;
 import main.java.utils.PageUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ProcessPage extends LoadableComponent<ProcessPage> {
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-    private final Logger logger = LoggerFactory.getLogger(ProcessPage.class);
+/**
+ * @author cfrith
+ */
+
+public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
+
+    private final Logger logger = LoggerFactory.getLogger(ProcessRoutingPage.class);
 
     @FindBy(css = "div[data-ap-comp='processCycleTime']")
     private WebElement routingTable;
@@ -45,19 +55,16 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     @FindBy(css = "label[data-ap-field='processStep']")
     private WebElement processStep;
 
-    @FindBy(css = "div[data-ap-field='machineVisible']")
-    private WebElement processInfo;
-
-    @FindBy(css = "div[data-ap-comp='costingResult']")
-    private WebElement processContributions;
-
     @FindBy(css = ".panel .glyphicon-remove")
     private WebElement closePanelButton;
+
+    @FindBy(xpath = "//label[.='Options']")
+    private WebElement optionsTab;
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public ProcessPage(WebDriver driver) {
+    public ProcessRoutingPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -82,7 +89,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @param contribution - the contribution
      * @return current page object
      */
-    public ProcessPage selectContribution(String contribution) {
+    public ProcessRoutingPage selectContribution(String contribution) {
         new Select(contributionsDropdown).selectByVisibleText(contribution);
         return this;
     }
@@ -131,7 +138,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @param process - the process
      * @return current page object
      */
-    public ProcessPage selectProcessChart(String process) {
+    public ProcessRoutingPage selectProcessChart(String process) {
         pageUtils.waitForElementToAppear(chartValue);
 
         int position = IntStream.range(0, routingLabels.size())
@@ -164,20 +171,11 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
     }
 
     /**
-     * Gets the process info
-     * @param text - the text
-     * @return true/false
+     * Selects the option tab
+     * @return new page object
      */
-    public Boolean getProcessInfo(String text) {
-        return pageUtils.checkElementAttribute(processInfo, "innerText", text);
-    }
-
-    /**
-     * Gets the process contribution
-     * @param text - the text
-     * @return true/false
-     */
-    public Boolean getProcessContributions(String text) {
-        return pageUtils.checkElementAttribute(processContributions, "innerText", text);
+    public ProcessOptionsPage selectOptions() {
+        pageUtils.waitForElementAndClick(optionsTab);
+        return new ProcessOptionsPage(driver);
     }
 }

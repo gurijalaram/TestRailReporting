@@ -127,9 +127,9 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      *
      * @return new page object
      */
-    public ProcessPage apply() {
+    public ProcessRoutingPage apply() {
         applyButton.click();
-        return new ProcessPage(driver);
+        return new ProcessRoutingPage(driver);
     }
 
     /**
@@ -137,9 +137,9 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      *
      * @return new page object
      */
-    public ProcessPage cancel() {
+    public ProcessRoutingPage cancel() {
         cancelButton.click();
-        return new ProcessPage(driver);
+        return new ProcessRoutingPage(driver);
     }
 
     /**
