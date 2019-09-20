@@ -354,6 +354,24 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
     }
 
     /**
+     * Selects no masking default
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectNoDefaultMaskingButton() {
+        pageUtils.waitForElementToAppear(noDefaultMaskingRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Selects number of mask
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectNumMaskedFeaturesButton() {
+        pageUtils.waitForElementToAppear(maskFeatureRadioButton).click();
+        return this;
+    }
+
+    /**
      * Set masked features
      * @param text - the text
      * @return current page object
