@@ -33,6 +33,12 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
     @FindBy(css = "input[data-ap-field='partThickness.modeValues.user.value']")
     private WebElement partThicknessInput;
 
+    @FindBy(css = "input[data-ap-comp='fractionPainted.radioButtons.wholePart']")
+    private WebElement wholeRadioButton;
+
+    @FindBy(css = "input[data-ap-comp='fractionPainted.radioButtons.user']")
+    private WebElement fractionRadioButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -78,17 +84,43 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
      * @return current page object
      */
     public SecondaryOptionsPage setPartThickness(String value) {
-        pageUtils.waitForElementToAppear(partThicknessInput).clear();
-        partThicknessInput.sendKeys(value);
+        setInput(partThicknessInput, value);
         return this;
     }
 
     /**
      * Checks part thickness value
-     * @param value - the value
+     * @param text - the value
      * @return true/false
      */
-    public Boolean isPartThickness(String value) {
-        return pageUtils.checkElementAttribute(partThicknessInput, "value", value);
+    public Boolean isPartThickness(String text) {
+        return checkAttribute(partThicknessInput, text);
+    }
+
+    /**
+     * Selects whole part/assembly
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectWholePartButton() {
+        pageUtils.waitForElementToAppear(wholeRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Selects fraction painted
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectFractionButton() {
+        pageUtils.waitForElementToAppear(fractionRadioButton).click();
+        return this;
+    }
+
+    private void setInput(WebElement locator, String value) {
+        pageUtils.waitForElementToAppear(locator).clear();
+        locator.sendKeys(value);
+    }
+
+    private Boolean checkAttribute(WebElement locator, String text) {
+        return pageUtils.checkElementAttribute(locator, "value", text);
     }
 }
