@@ -4,7 +4,7 @@ import main.java.header.EvaluateHeader;
 import main.java.pages.evaluate.designguidance.DesignGuidancePage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
 import main.java.pages.evaluate.materialutilization.MaterialPage;
-import main.java.pages.evaluate.process.ProcessPage;
+import main.java.pages.evaluate.process.ProcessRoutingPage;
 import main.java.pages.explore.ScenarioNotesPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -193,9 +193,9 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return new page object
      */
-    public ProcessPage openProcessDetails() {
+    public ProcessRoutingPage openProcessDetails() {
         pageUtils.waitForElementAndClick(processDetails);
-        return new ProcessPage(driver);
+        return new ProcessRoutingPage(driver);
     }
 
     /**

@@ -113,5 +113,4 @@ public class DeletePage extends LoadableComponent<DeletePage> {
         pageUtils.checkElementVisibleByBoolean(notificationPopover);
         pageUtils.checkElementsNotVisibleByBoolean(notificationPopover);
     }
-
 }

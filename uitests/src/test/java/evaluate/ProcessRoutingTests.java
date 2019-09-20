@@ -17,7 +17,7 @@ import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
 import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
-import main.java.pages.evaluate.process.ProcessPage;
+import main.java.pages.evaluate.process.ProcessRoutingPage;
 import main.java.pages.evaluate.process.RoutingsPage;
 import main.java.pages.login.LoginPage;
 import main.java.pages.settings.SettingsPage;
@@ -31,7 +31,7 @@ import org.junit.Test;
 public class ProcessRoutingTests extends TestBase {
 
     private LoginPage loginPage;
-    private ProcessPage processPage;
+    private ProcessRoutingPage processRoutingPage;
     private EvaluatePage evaluatePage;
     private SettingsPage settingsPage;
     private ToleranceSettingsPage toleranceSettingsPage;
@@ -47,7 +47,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate the user can Change the process routing in CI Design")
     public void testAlternateRoutingSelection() {
         loginPage = new LoginPage(driver);
-        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processRoutingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -75,13 +75,13 @@ public class ProcessRoutingTests extends TestBase {
             .selectAssumeTolerance();
 
         settingsPage = new SettingsPage(driver);
-        processPage = settingsPage.save(EvaluatePage.class)
+        processRoutingPage = settingsPage.save(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 29.67", "Piece Part Cost (USD): 0.43",
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 29.67", "Piece Part Cost (USD): 0.43",
             "Fully Burdened Cost (USD): 0.82", "Total Capital Investments (USD): 10,732.01"));
     }
 
@@ -97,13 +97,13 @@ public class ProcessRoutingTests extends TestBase {
             .selectAssumeTolerance();
 
         settingsPage = new SettingsPage(driver);
-        processPage = settingsPage.save(EvaluatePage.class)
+        processRoutingPage = settingsPage.save(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
+        assertThat(processRoutingPage.getRoutingLabels(), hasItems("Material Stock", "Turret Press", "Bend Brake"));
     }
 
     @Test
@@ -111,7 +111,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate the user can Change the process routing")
     public void changeRouting() {
         loginPage = new LoginPage(driver);
-        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processRoutingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -294,7 +294,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate a variety of secondary processes can be added for newly selected routings")
     public void secondaryProcessesRoutings() {
         loginPage = new LoginPage(driver);
-        processPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processRoutingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -317,7 +317,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processPage.getRoutingLabels(), hasItems("Carton Forming", "Pack & Load", "Carton Sealing"));
+        assertThat(processRoutingPage.getRoutingLabels(), hasItems("Carton Forming", "Pack & Load", "Carton Sealing"));
     }
 
     @Test
