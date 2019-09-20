@@ -39,6 +39,42 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
     @FindBy(css = "input[data-ap-comp='fractionPainted.radioButtons.user']")
     private WebElement fractionRadioButton;
 
+    @FindBy(css = "input[data-ap-field='fractionPainted.modeValues.user.value']")
+    private WebElement fractionPaintedInput;
+
+    @FindBy(css = "input[data-ap-comp='numMaskedFeatures.radioButtons.threadedHoles']")
+    private WebElement threadRadioButton;
+
+    @FindBy(css = "input[data-ap-comp='numMaskedFeatures.radioButtons.none']")
+    private WebElement noMaskingRadioButton;
+
+    @FindBy(css = "'input[data-ap-comp='numMaskedFeatures.radioButtons.user']")
+    private WebElement maskFeaturesRadioButton;
+
+    @FindBy(css = "input[data-ap-field='numMaskedFeatures.modeValues.user.value']")
+    private WebElement maskFeaturesInput;
+
+    @FindBy(css = "input[data-ap-field='paintedBatchSize.radioButtons.productionBatchSize']")
+    private WebElement proBatchRadioButton;
+
+    @FindBy(css = "label[data-ap-field='paintedBatchSize.modeValues.productionBatchSize.value']")
+    private WebElement proBatchValue;
+
+    @FindBy(css = "input[data-ap-comp='paintedBatchSize.radioButtons.user']")
+    private WebElement specifyRadioButton;
+
+    @FindBy(css = "input[data-ap-field='paintedBatchSize.modeValues.user.value']")
+    private WebElement specifyPaintedInput;
+
+    @FindBy(css = "input[data-ap-comp='partsPerCart.radioButtons.auto']")
+    private WebElement computedRadioButton;
+
+    @FindBy(css = "input[data-ap-comp='partsPerCart.radioButtons.user']")
+    private WebElement partsRadioButton;
+
+    @FindBy(css = "input[data-ap-field='partsPerCart.modeValues.user.value']")
+    private WebElement userSpecifiedInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -113,6 +149,153 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
     public SecondaryOptionsPage selectFractionButton() {
         pageUtils.waitForElementToAppear(fractionRadioButton).click();
         return this;
+    }
+
+    /**
+     * Enters the fraction painted value
+     * @param text - the text
+     * @return current page object
+     */
+    public SecondaryOptionsPage setFractionPainted(String text) {
+        setInput(fractionPaintedInput, text);
+        return this;
+    }
+
+    /**
+     * Checks the fraction painted
+     * @param text - the text
+     * @return true/false
+     */
+    public Boolean isFractionPainted(String text) {
+        return checkAttribute(fractionPaintedInput, text);
+    }
+
+    /**
+     * Select thread button
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectThreadButton() {
+        pageUtils.waitForElementToAppear(threadRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Select no masking
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectNoMaskingButton() {
+        pageUtils.waitForElementToAppear(noMaskingRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Select masked feature
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectMaskedFeaturesButton() {
+        pageUtils.waitForElementToAppear(maskFeaturesRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Sets mask features
+     * @param text - the text
+     * @return current page object
+     */
+    public SecondaryOptionsPage setMaskFeatures(String text) {
+        setInput(maskFeaturesInput, text);
+        return this;
+    }
+
+    /**
+     * Checks mask feature input
+     * @param text - the text
+     * @return current page object
+     */
+    public Boolean isMaskFeatures(String text) {
+        return checkAttribute(maskFeaturesInput, text);
+    }
+
+    /**
+     * Selects production batch
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectProductionBatch() {
+        pageUtils.waitForElementToAppear(proBatchRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Gets production batch size
+     * @return string
+     */
+    public String getProductionSize()  {
+        return pageUtils.waitForElementToAppear(proBatchValue).getText();
+    }
+
+    /**
+     * Selects specify painted batch size
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectSpecify() {
+        pageUtils.waitForElementToAppear(specifyRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Sets specify painted batch size
+     * @param text - the text
+     * @return current page object
+     */
+    public SecondaryOptionsPage setSpecifyPainted(String text) {
+        setInput(specifyPaintedInput, text);
+        return this;
+    }
+
+    /**
+     * Checks specify painted batch size
+     * @param text - the text
+     * @return true/false
+     */
+    public Boolean isSpecifyPainted(String text) {
+        return checkAttribute(specifyPaintedInput, text);
+    }
+
+    /**
+     * Select auto computed
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectComputedButton() {
+        pageUtils.waitForElementToAppear(computedRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Select user specified
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectUserSpecifiedRadioButton() {
+        pageUtils.waitForElementToAppear(partsRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Set spcified input
+     * @param text - the text
+     * @return current page object
+     */
+    public SecondaryOptionsPage setSpecifiedInput(String text) {
+        setInput(userSpecifiedInput, text);
+        return this;
+    }
+
+    /**
+     * Checks specified input
+     * @param text - the text
+     * @return true false
+     */
+    public Boolean isSpecified(String text) {
+        return checkAttribute(userSpecifiedInput, text);
     }
 
     private void setInput(WebElement locator, String value) {
