@@ -93,7 +93,6 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
     @FindBy(css = "input[data-ap-comp='numMasks.radioButtons.userOverride']")
     private WebElement maskFeatureRadioButton;
 
-
     private WebDriver driver;
     private PageUtils pageUtils;
 
