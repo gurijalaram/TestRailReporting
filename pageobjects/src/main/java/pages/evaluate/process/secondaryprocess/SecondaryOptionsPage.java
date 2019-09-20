@@ -75,6 +75,25 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
     @FindBy(css = "input[data-ap-field='partsPerCart.modeValues.user.value']")
     private WebElement userSpecifiedInput;
 
+    @FindBy(css = "input[data-ap-comp='caseDepth.radioButtons.default']")
+    private WebElement caseDefaultRadioButton;
+
+    @FindBy(css = "input[data-ap-comp='caseDepth.radioButtons.userOverride']")
+    private WebElement caseOverrideRadioButton;
+
+    @FindBy(css = "input[data-ap-field='caseDepth.modeValues.userOverride.value']")
+    private WebElement caseOverrideInput;
+
+    @FindBy(css = "input[data-ap-field='numMasks.modeValues.userOverride.value']")
+    private WebElement maskModeInput;
+
+    @FindBy(css = "input[data-ap-comp='numMasks.radioButtons.defaultNoMasking']")
+    private WebElement noDefaultMaskingRadioButton;
+
+    @FindBy(css = "input[data-ap-comp='numMasks.radioButtons.userOverride']")
+    private WebElement maskFeatureRadioButton;
+
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -280,7 +299,7 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
     }
 
     /**
-     * Set spcified input
+     * Set specified input
      * @param text - the text
      * @return current page object
      */
@@ -296,6 +315,62 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
      */
     public Boolean isSpecified(String text) {
         return checkAttribute(userSpecifiedInput, text);
+    }
+
+    /**
+     * Selects default value
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectCaseDefaultButton() {
+        pageUtils.waitForElementToAppear(caseDefaultRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Selects case override
+     * @return current page object
+     */
+    public SecondaryOptionsPage selectCaseOverrideButton() {
+        pageUtils.waitForElementToAppear(caseOverrideRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Set case override
+     * @param text - the text
+     * @return current page object
+     */
+    public SecondaryOptionsPage setCaseOverrideInput(String text) {
+        setInput(caseOverrideInput, text);
+        return this;
+    }
+
+    /**
+     * Checks case override
+     * @param text - the text
+     * @return true false
+     */
+    public Boolean isCaseOverride(String text) {
+        return checkAttribute(caseOverrideInput, text);
+    }
+
+    /**
+     * Set masked features
+     * @param text - the text
+     * @return current page object
+     */
+    public SecondaryOptionsPage setMaksedFeaturesInput(String text) {
+        setInput(maskModeInput, text);
+        return this;
+    }
+
+    /**
+     * Checks masked features
+     * @param text - the text
+     * @return true false
+     */
+    public Boolean isMaskedFeatures(String text) {
+        return checkAttribute(maskModeInput, text);
     }
 
     private void setInput(WebElement locator, String value) {
