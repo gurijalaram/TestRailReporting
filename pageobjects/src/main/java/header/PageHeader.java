@@ -3,6 +3,7 @@ package main.java.header;
 import main.java.pages.compare.ComparePage;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.explore.ExplorePage;
+import main.java.pages.jobqueue.JobQueuePage;
 import main.java.pages.settings.SettingsPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
@@ -111,9 +112,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return new page object
      */
-    public PageHeader openJobQueue() {
+    public JobQueuePage openJobQueue() {
         pageUtils.waitForElementAndClick(jobQueueButton);
-        return this;
+        return new JobQueuePage(driver);
     }
 
     /**
