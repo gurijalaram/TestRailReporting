@@ -96,7 +96,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setCircularity(String value) {
+    public ToleranceEditPage setCircularity(String value) {
         return clearInputAndSendKeys(circularityInput, value);
     }
 
@@ -104,7 +104,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setConcentricity(String value) {
+    public ToleranceEditPage setConcentricity(String value) {
         return clearInputAndSendKeys(concentricityInput, value);
     }
 
@@ -112,7 +112,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setCylindricity(String value) {
+    public ToleranceEditPage setCylindricity(String value) {
         return clearInputAndSendKeys(cylindricityInput, value);
     }
 
@@ -120,7 +120,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setDiamTolerance(String value) {
+    public ToleranceEditPage setDiamTolerance(String value) {
         return clearInputAndSendKeys(diamToleranceInput, value);
     }
 
@@ -128,7 +128,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setParallelism(String value) {
+    public ToleranceEditPage setParallelism(String value) {
         return clearInputAndSendKeys(parallelismInput, value);
     }
 
@@ -136,7 +136,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setPerpendicularity(String value) {
+    public ToleranceEditPage setPerpendicularity(String value) {
         return clearInputAndSendKeys(perpendicularityInput, value);
     }
 
@@ -144,7 +144,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setTruePosition(String value) {
+    public ToleranceEditPage setTruePosition(String value) {
         return clearInputAndSendKeys(truePositionInput, value);
     }
 
@@ -152,11 +152,15 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setProfileSurface(String value) {
+    public ToleranceEditPage setProfileSurface(String value) {
         return clearInputAndSendKeys(profileSurfaceInput, value);
     }
 
-    private ToleranceEditPage setRoughnessRa(String value) {
+    /**
+     * @param value
+     * @return current page object
+     */
+    public ToleranceEditPage setRoughnessRa(String value) {
         return clearInputAndSendKeys(roughnessInput, value);
     }
 
@@ -164,7 +168,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setRoughnessRz(String value) {
+    public ToleranceEditPage setRoughnessRz(String value) {
         return clearInputAndSendKeys(roughnessRzInput, value);
     }
 
@@ -172,7 +176,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setRunout(String value) {
+    public ToleranceEditPage setRunout(String value) {
         return clearInputAndSendKeys(runoutInput, value);
     }
 
@@ -180,7 +184,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setStraightness(String value) {
+    public ToleranceEditPage setStraightness(String value) {
         return clearInputAndSendKeys(straightnessInput, value);
     }
 
@@ -188,7 +192,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setSymmetry(String value) {
+    public ToleranceEditPage setSymmetry(String value) {
         return clearInputAndSendKeys(symmetryInput, value);
     }
 
@@ -196,7 +200,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param value
      * @return current page object
      */
-    private ToleranceEditPage setToleranceCoor(String value) {
+    public ToleranceEditPage setToleranceCoor(String value) {
         return clearInputAndSendKeys(toleranceInput, value);
     }
 
@@ -206,6 +210,66 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      */
     public ToleranceEditPage setTotalRunout(String value) {
         return clearInputAndSendKeys(totalRunoutInput, value);
+    }
+
+    public Boolean isCircularityInput(String text) {
+        return pageUtils.checkElementAttribute(circularityInput, "value", text);
+    }
+
+    public Boolean isConcentricityInput() {
+        return concentricityInput;
+    }
+
+    public Boolean isCylindricityInput() {
+        return cylindricityInput;
+    }
+
+    public Boolean isDiamToleranceInput() {
+        return diamToleranceInput;
+    }
+
+    public Boolean isParallelismInput() {
+        return parallelismInput;
+    }
+
+    public Boolean isPerpendicularityInput() {
+        return perpendicularityInput;
+    }
+
+    public Boolean isTruePositionInput() {
+        return truePositionInput;
+    }
+
+    public Boolean isProfileSurfaceInput() {
+        return profileSurfaceInput;
+    }
+
+    public Boolean isRoughnessInput() {
+        return roughnessInput;
+    }
+
+    public Boolean isRoughnessRzInput() {
+        return roughnessRzInput;
+    }
+
+    public Boolean isRunoutInput() {
+        return runoutInput;
+    }
+
+    public Boolean isStraightnessInput() {
+        return straightnessInput;
+    }
+
+    public Boolean isSymmetryInput() {
+        return symmetryInput;
+    }
+
+    public Boolean isToleranceInput() {
+        return toleranceInput;
+    }
+
+    public Boolean isTotalRunoutInput() {
+        return totalRunoutInput;
     }
 
     /**
@@ -226,7 +290,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return new page object
      */
     public TolerancePage apply() {
-        applyButton.click();
+        pageUtils.waitForElementAndClick(applyButton);
         return new TolerancePage(driver);
     }
 
@@ -235,7 +299,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return new page object
      */
     public TolerancePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new TolerancePage(driver);
     }
 }
