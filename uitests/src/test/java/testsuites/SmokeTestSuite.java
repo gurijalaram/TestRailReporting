@@ -4,12 +4,14 @@ import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import test.java.evaluate.NewScenarioNameTests;
+import test.java.evaluate.designguidance.thread.ThreadTests;
 import test.java.testsuites.suiteinterface.SmokeTests;
 
 @RunWith(Categories.class)
 @Categories.IncludeCategory(SmokeTests.class)
 @Suite.SuiteClasses({
-    NewScenarioNameTests.class
+    NewScenarioNameTests.class,
+    ThreadTests.class
 })
 public class SmokeTestSuite {
 }

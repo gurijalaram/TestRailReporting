@@ -21,6 +21,8 @@ import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
 import main.java.utils.Util;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import test.java.testsuites.suiteinterface.SmokeTests;
 
 public class ThreadTests extends TestBase {
 
@@ -51,8 +53,9 @@ public class ThreadTests extends TestBase {
         assertThat(investigationPage.getEditButton().isEnabled(), is(false));
     }
 
+    @Category(SmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"28"})
+    @TestRail(testCaseId = {"28", "1631"})
     @Description("C28 Test to check thread length persist")
     public void editThread() {
         loginPage = new LoginPage(driver);
