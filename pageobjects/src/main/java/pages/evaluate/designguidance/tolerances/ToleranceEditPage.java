@@ -168,11 +168,13 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     /**
      * Selects the apply button
      *
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T>       - the return type
+     * @return generic page object
      */
-    public TolerancePage apply() {
-        pageUtils.waitForElementAndClick(applyButton);
-        return new TolerancePage(driver);
+    public <T> T apply(Class<T> className) {
+        pageUtils.javaScriptClick(applyButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
