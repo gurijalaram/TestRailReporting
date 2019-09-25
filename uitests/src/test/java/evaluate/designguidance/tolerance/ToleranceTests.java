@@ -9,7 +9,6 @@ import main.java.enums.ProcessGroupEnum;
 import main.java.enums.ToleranceEnum;
 import main.java.enums.UsersEnum;
 import main.java.pages.evaluate.designguidance.tolerances.ToleranceEditPage;
-import main.java.pages.evaluate.designguidance.tolerances.TolerancePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
@@ -19,7 +18,6 @@ import org.junit.Test;
 public class ToleranceTests extends TestBase {
 
     private LoginPage loginPage;
-    private TolerancePage tolerancePage;
     private ToleranceEditPage toleranceEditPage;
 
     public ToleranceTests() {
