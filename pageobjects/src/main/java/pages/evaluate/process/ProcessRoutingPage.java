@@ -1,7 +1,7 @@
 package main.java.pages.evaluate.process;
 
 import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.evaluate.SecondaryProcessPage;
+import main.java.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import main.java.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
