@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,6 +54,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
 
     /**
      * Selects the assignee dropdown
+     *
      * @param assignee - the assignee
      * @return current page object
      */

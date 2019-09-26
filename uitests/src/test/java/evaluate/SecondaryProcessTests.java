@@ -39,7 +39,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Hydrostatic Leak Testing"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Hydrostatic Leak Testing"), is(true));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Xray Inspection"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Xray Inspection"), is(true));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Carburize"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Carburize"), is(true));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Atmosphere Oil Harden"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Atmosphere Oil Harden"), is(true));
     }
 
     @Test
@@ -111,7 +111,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Standard Anneal"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Standard Anneal"), is(true));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Vacuum Temper"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Vacuum Temper"), is(true));
     }
 
     @Test
@@ -147,7 +147,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Stress Relief"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Stress Relief"), is(true));
     }
 
     @Test
@@ -165,7 +165,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Anodize"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Anodize"), is(true));
     }
 
     @Test
@@ -183,7 +183,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Certification"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Certification"), is(true));
     }
 
     @Test
@@ -201,7 +201,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Powder Coat Cart"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Powder Coat Cart"), is(true));
     }
 
     @Test
@@ -219,6 +219,6 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Passivation"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Passivation"), is(true));
     }
 }

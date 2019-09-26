@@ -1,8 +1,9 @@
 package com.apriori.pageobjects.pages.evaluate.process;
 
-import com.apriori.pageobjects.pages.evaluate.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -172,6 +173,7 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
 
     /**
      * Selects the option tab
+     *
      * @return new page object
      */
     public ProcessOptionsPage selectOptions() {

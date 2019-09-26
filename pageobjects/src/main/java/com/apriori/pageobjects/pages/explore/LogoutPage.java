@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,6 +54,7 @@ public class LogoutPage extends LoadableComponent<LogoutPage> {
 
     /**
      * Gets the user name details
+     *
      * @return the user name as a string
      */
     public String getUserName() {

@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.compare;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,6 +53,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Adds a new scenario
+     *
      * @return new page object
      */
     public ComparisonTablePage addScenario() {
@@ -61,6 +63,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Gets the comparison description text
+     *
      * @return the text as String
      */
     public String getDescriptionText() {
@@ -69,6 +72,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Gets the comparison name text
+     *
      * @return the text as String
      */
     public String getComparisonName() {

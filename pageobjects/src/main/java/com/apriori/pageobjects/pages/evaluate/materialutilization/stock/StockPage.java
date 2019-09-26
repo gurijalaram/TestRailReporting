@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.materialutilization.stock;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,6 +47,7 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     /**
      * Gets details of the stock table.
+     *
      * @return stock details as string
      */
     public Boolean checkTableDetails(String stock) {
@@ -54,6 +56,7 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     /**
      * Selects the edit button
+     *
      * @return new page object
      */
     public SelectStockPage editStock() {

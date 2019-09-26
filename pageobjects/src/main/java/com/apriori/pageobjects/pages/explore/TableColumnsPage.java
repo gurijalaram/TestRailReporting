@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -62,6 +63,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
     /**
      * Adds a column
+     *
      * @param column - the enum column name
      * @return current page object
      */
@@ -74,6 +76,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
     /**
      * Removes a column
+     *
      * @param column - the enum column name
      * @return current page object
      */
@@ -86,6 +89,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
     /**
      * Selects the right arrow to add a column
+     *
      * @return current page object
      */
     private TableColumnsPage selectRightArrow() {
@@ -95,6 +99,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
     /**
      * Selects the left arrow to remove a column
+     *
      * @return current page object
      */
     private TableColumnsPage selectLeftArrow() {
@@ -104,6 +109,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
     /**
      * Selects the ok button
+     *
      * @return new page object
      */
     public ExplorePage selectSaveButton() {
@@ -113,6 +119,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public ExplorePage selectCancelButton() {

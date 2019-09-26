@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.materialutilization;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -102,6 +103,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     /**
      * Gets the info in the material table
+     *
      * @return material table info as string
      */
     public String getMaterialTableInfo() {

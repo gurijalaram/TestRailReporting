@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -50,8 +51,9 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
 
     /**
      * Selects both gcd and gcd property
-     * @param gcdParent - the gcd dropdown
-     * @param gcdChild - the gcd type
+     *
+     * @param gcdParent   - the gcd dropdown
+     * @param gcdChild    - the gcd type
      * @param gcdProperty - the gcd property
      * @return current page object
      */
@@ -63,8 +65,9 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
 
     /**
      * Selects the gcd type
+     *
      * @param gcdParent - the gcd parent type
-     * @param gcdChild - the gcd type
+     * @param gcdChild  - the gcd type
      * @return gcd type as webelement
      */
     private GeometryPage selectGCDType(String gcdParent, String gcdChild) {
@@ -78,6 +81,7 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
 
     /**
      * Selects the gcd property
+     *
      * @param gcdProperty - the gcd property
      * @return gcd property as webelement
      */

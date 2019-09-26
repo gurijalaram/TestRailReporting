@@ -1,8 +1,9 @@
 package com.apriori.pageobjects.pages.login;
 
-import com.apriori.utils.constants.Constants;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -78,7 +79,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     /**
      * Login to cid
-     * @param email - the email
+     *
+     * @param email    - the email
      * @param password - the password
      * @return new page object
      */
@@ -89,7 +91,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     /**
      * Failed login to cid
-     * @param email - the email
+     *
+     * @param email    - the email
      * @param password - the password
      * @return the current page object
      */
@@ -101,7 +104,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     /**
      * Execute actions to login
-     * @param email - the email
+     *
+     * @param email    - the email
      * @param password - the password
      */
     private void executeLogin(String email, String password) {
@@ -112,6 +116,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     /**
      * Enters the email details
+     *
      * @param emailAddress - the email address
      */
     private void enterEmail(String emailAddress) {
@@ -122,6 +127,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     /**
      * Enters the password
+     *
      * @param password - the password
      */
     private void enterPassword(String password) {
@@ -139,6 +145,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     /**
      * Gets the login error message
+     *
      * @return login error message
      */
     public String getLoginErrorMessage() {

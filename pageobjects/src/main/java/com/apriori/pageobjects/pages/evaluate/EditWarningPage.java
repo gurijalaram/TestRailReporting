@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -58,6 +59,7 @@ public class EditWarningPage extends LoadableComponent<EditWarningPage> {
 
     /**
      * Selects overwrite radio button
+     *
      * @return current page object
      */
     public EditWarningPage selectOverwrite() {
@@ -67,6 +69,7 @@ public class EditWarningPage extends LoadableComponent<EditWarningPage> {
 
     /**
      * Selects save as new scenario radio button
+     *
      * @return current page object
      */
     public EditWarningPage selectSaveAsNew() {
@@ -76,6 +79,7 @@ public class EditWarningPage extends LoadableComponent<EditWarningPage> {
 
     /**
      * Enters new scenario name
+     *
      * @param scenarioName - the scenario name
      * @return current page object
      */

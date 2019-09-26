@@ -1,10 +1,11 @@
 package com.apriori.pageobjects.header;
 
 import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

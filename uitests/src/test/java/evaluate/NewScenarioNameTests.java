@@ -3,8 +3,6 @@ package test.java.evaluate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import test.java.testsuites.suiteinterface.SmokeTests;
-
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -19,6 +17,8 @@ import io.qameta.allure.Description;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+
+import test.java.testsuites.suiteinterface.SmokeTests;
 
 public class NewScenarioNameTests extends TestBase {
 

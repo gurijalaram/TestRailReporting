@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.settings;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -80,6 +81,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
 
     /**
      * Changes system currency
+     *
      * @param currency - the currency
      * @return current page object
      */

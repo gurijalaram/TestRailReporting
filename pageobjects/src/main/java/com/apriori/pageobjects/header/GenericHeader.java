@@ -1,16 +1,17 @@
 package com.apriori.pageobjects.header;
 
-import com.apriori.pageobjects.pages.evaluate.PublishPage;
-import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.RevertPage;
 import com.apriori.pageobjects.pages.explore.AssignPage;
 import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.explore.DeletePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.pages.explore.ScenarioPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -195,7 +196,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public <T> T editScenario(Class<T> className) {
-        pageUtils.waitForElementToAppear(editButton).click();
+        pageUtils.waitForElementAndClick(editButton);
         return PageFactory.initElements(driver, className);
     }
 
@@ -205,13 +206,14 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public DeletePage delete() {
-        pageUtils.checkElementAttributeEmpty(deleteButton,"title");
+        pageUtils.checkElementAttributeEmpty(deleteButton, "title");
         pageUtils.waitForElementAndClick(deleteButton);
         return new DeletePage(driver);
     }
 
     /**
      * Selects the revert button
+     *
      * @return new page object
      */
     public RevertPage revert() {

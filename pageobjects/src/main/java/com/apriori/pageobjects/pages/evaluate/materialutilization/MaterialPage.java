@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate.materialutilization;
 
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,6 +58,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     /**
      * Opens the material & utilization tab
+     *
      * @return new page object
      */
     public MaterialUtilizationPage goToMaterialUtilizationTab() {
@@ -66,6 +68,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     /**
      * Opens the stock tab
+     *
      * @return new page object
      */
     public StockPage goToStockTab() {

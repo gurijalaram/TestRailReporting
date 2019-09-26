@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.compare;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,7 +21,7 @@ public class SaveAsPage extends LoadableComponent<SaveAsPage> {
     @FindBy(css = "input[data-ap-field='name']")
     private WebElement nameInput;
 
-    @FindBy (css = "textarea[data-ap-field='description']")
+    @FindBy(css = "textarea[data-ap-field='description']")
     private WebElement descriptionInput;
 
     @FindBy(css = "button.btn.btn-primary")
@@ -52,6 +53,7 @@ public class SaveAsPage extends LoadableComponent<SaveAsPage> {
 
     /**
      * Enters the name
+     *
      * @param name - the name
      * @return current page object
      */
@@ -63,6 +65,7 @@ public class SaveAsPage extends LoadableComponent<SaveAsPage> {
 
     /**
      * Enters the description
+     *
      * @param description - the description
      * @return current page object
      */
@@ -74,6 +77,7 @@ public class SaveAsPage extends LoadableComponent<SaveAsPage> {
 
     /**
      * Selects the create button
+     *
      * @return new page object
      */
     public ComparePage selectCreateButton() {
@@ -83,6 +87,7 @@ public class SaveAsPage extends LoadableComponent<SaveAsPage> {
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public ComparePage selectCancelButton() {

@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -58,9 +59,10 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Uploads a file
-     //* @param fileName - file name
+     * //* @param fileName - file name
+     *
      * @param scenarioName - scenario name
-     * @param filePath - file path
+     * @param filePath     - file path
      * @return current page object
      */
     public EvaluatePage uploadFile(String scenarioName, File filePath) {
@@ -72,6 +74,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Input scenario name
+     *
      * @param scenarioName - the scenario name
      * @return current page object
      */
@@ -84,6 +87,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Gets details of file for upload
+     *
      * @param filePath - the file path
      * @return current page object
      */
@@ -95,6 +99,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Selects the ok button
+     *
      * @return new page object
      */
     private EvaluatePage selectOkButton() {
@@ -104,6 +109,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Select the cancel button
+     *
      * @return current page object
      */
     private ExplorePage selectCancelButton() {

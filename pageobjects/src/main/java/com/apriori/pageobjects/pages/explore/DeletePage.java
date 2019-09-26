@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,6 +58,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
 
     /**
      * Select delete iterations checkbox
+     *
      * @return current page object
      */
     public DeletePage selectIterationsCheckbox() {
@@ -71,6 +73,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
 
     /**
      * Selects the delete button
+     *
      * @return new page object
      */
     public ExplorePage deleteScenario() {
@@ -80,6 +83,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
 
     /**
      * Deletes the comparison from the comparison page
+     *
      * @return new page object
      */
     public ExplorePage deleteComparison() {
@@ -89,6 +93,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
 
     /**
      * Deletes the comparison from the explore page
+     *
      * @return new page object
      */
     public ExplorePage deleteExploreComparison() {
@@ -99,6 +104,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public ExplorePage cancel() {

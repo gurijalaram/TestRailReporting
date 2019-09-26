@@ -2,8 +2,9 @@ package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.header.ExploreHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -88,7 +89,8 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Opens the scenario
-     * @param partName - name of the part
+     *
+     * @param partName     - name of the part
      * @param scenarioName - scenario name
      * @return a new page object
      */
@@ -100,6 +102,7 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Opens the comparison
+     *
      * @param comparisonName - the comparison name
      * @return new page object
      */
@@ -110,7 +113,8 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Find specific element in the table
-     * @param partName - name of the part
+     *
+     * @param partName     - name of the part
      * @param scenarioName - scenario name
      * @return the part as webelement
      */
@@ -121,8 +125,9 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Highlights the scenario in the table
+     *
      * @param scenarioName - scenario name
-     * @param partName - name of the part
+     * @param partName     - name of the part
      */
     public void highlightScenario(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
@@ -132,8 +137,9 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Gets the number of elements present on the page
+     *
      * @param scenarioName - scenario name
-     * @param partName - part name
+     * @param partName     - part name
      * @return size of the element as int
      */
     public int getListOfScenarios(String scenarioName, String partName) {
@@ -143,6 +149,7 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Find specific scenario in the table
+     *
      * @param comparisonName - name of the scenario
      * @return the scenario as webelement
      */
@@ -153,6 +160,7 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Highlights the comparison in the table
+     *
      * @param comparisonName - the comparison name
      * @return the scenario as webelement
      */
@@ -164,6 +172,7 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Gets the number of elements present on the page
+     *
      * @param comparisonName - scenario name
      * @return size of the element as int
      */
@@ -174,15 +183,17 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Selects filter criteria button
+     *
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
-        pageUtils.waitForElementToAppear(filterButton).click();
+        pageUtils.waitForElementAndClick(filterButton);
         return new FilterCriteriaPage(driver);
     }
 
     /**
      * Selects the table column button
+     *
      * @return new page object
      */
     public TableColumnsPage openColumnsTable() {
@@ -192,6 +203,7 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Opens the preview panel
+     *
      * @return new page object
      */
     public ExplorePage openPreviewPanel() {
@@ -204,6 +216,7 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Gets the data in the preview panel
+     *
      * @return current page object
      */
     public boolean viewPreviewPanelData() {
@@ -212,6 +225,7 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Gets all column headers in the table
+     *
      * @return column headers as string
      */
     public List<String> getColumnHeaderNames() {

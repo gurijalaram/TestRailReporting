@@ -1,9 +1,10 @@
 package com.apriori.pageobjects.header;
 
 import com.apriori.pageobjects.pages.evaluate.CostingJobPage;
-import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.enums.CostingLabelEnum;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

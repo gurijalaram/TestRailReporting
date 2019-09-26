@@ -1,6 +1,8 @@
-package com.apriori.pageobjects.pages.evaluate.designguidance.investigation;
+package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
+import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -94,11 +96,11 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     }
 
     /**
-     * Gets the thread length
+     * Checks the thread length
      *
      * @return - the thread length
      */
-    public Boolean getThreadLength(String text) {
+    public Boolean isThreadLength(String text) {
         return pageUtils.checkElementAttribute(lengthInput, "value", text);
     }
 

@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,6 +53,7 @@ public class RevertPage extends LoadableComponent<RevertPage> {
 
     /**
      * Gets the info in the revert dialog
+     *
      * @return revert info as string
      */
     public String getRevertInfo() {
@@ -60,8 +62,9 @@ public class RevertPage extends LoadableComponent<RevertPage> {
 
     /**
      * Selects the revert button
+     *
      * @param className - the class the method should return
-     * @param <T> - the return type
+     * @param <T>       - the return type
      * @return generic page object
      */
     public <T> T revertScenario(Class<T> className) {
@@ -71,8 +74,9 @@ public class RevertPage extends LoadableComponent<RevertPage> {
 
     /**
      * Selects the cancel button
+     *
      * @param className - the class the method should return
-     * @param <T> - the return type
+     * @param <T>       - the return type
      * @return generic page object
      */
     public <T> T cancel(Class<T> className) {

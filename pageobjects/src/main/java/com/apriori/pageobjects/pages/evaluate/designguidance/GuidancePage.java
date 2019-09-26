@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -70,6 +71,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     /**
      * Collapses the dropdowns so the correct can be selected
+     *
      * @return current page object
      */
     private GuidancePage collapseIssueDropdown() {

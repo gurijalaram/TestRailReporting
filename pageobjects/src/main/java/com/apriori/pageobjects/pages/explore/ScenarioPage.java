@@ -1,7 +1,8 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,6 +54,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
 
     /**
      * Enter scenario name
+     *
      * @param scenarioName - the scenario name
      * @return curent page object
      */

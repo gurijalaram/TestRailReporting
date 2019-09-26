@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.settings;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -62,6 +63,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
 
     /**
      * Selects assume tolerance checkbox
+     *
      * @return current page object
      */
     public ToleranceSettingsPage selectAssumeTolerance() {
@@ -71,6 +73,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
 
     /**
      * Select specified default values
+     *
      * @return current page object
      */
     public ToleranceSettingsPage selectSpecificDefaultValues() {
@@ -80,6 +83,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
 
     /**
      * Select edit values button
+     *
      * @return new page object
      */
     public ToleranceValuesPage editValues() {
@@ -89,6 +93,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
 
     /**
      * Select use cad model checkbox
+     *
      * @return current page object
      */
     public ToleranceSettingsPage selectUseCADModel() {
@@ -98,7 +103,8 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
 
     /**
      * Set cad values
-     * @param minCADValue - the minimum cad value
+     *
+     * @param minCADValue         - the minimum cad value
      * @param cadReplacementValue - the replacement cad value
      * @return current page object
      */

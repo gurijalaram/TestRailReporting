@@ -12,7 +12,7 @@ public class MyTestWatcher extends TestWatcher {
 
     @Override
     protected void failed(Throwable e, Description description) {
-        MDC.put("methodName", description.getTestClass().getSimpleName() + "."  + description.getMethodName());
+        MDC.put("methodName", description.getTestClass().getSimpleName() + "." + description.getMethodName());
         super.failed(e, description);
         logger.info("Test {} failed.", description.getMethodName());
         MDC.remove("methodName");

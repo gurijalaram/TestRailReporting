@@ -2,6 +2,7 @@ package com.apriori.pageobjects.header;
 
 import com.apriori.pageobjects.pages.compare.SaveAsPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,7 +18,7 @@ public class CompareHeader extends GenericHeader {
 
     private static Logger logger = LoggerFactory.getLogger(CompareHeader.class);
 
-    @FindBy (css = "button[data-ap-comp='saveComparisonAsButton']")
+    @FindBy(css = "button[data-ap-comp='saveComparisonAsButton']")
     private WebElement saveAs;
 
     private WebDriver driver;
@@ -33,6 +34,7 @@ public class CompareHeader extends GenericHeader {
 
     /**
      * Saves the comparison
+     *
      * @return new page object
      */
     public SaveAsPage saveAs() {

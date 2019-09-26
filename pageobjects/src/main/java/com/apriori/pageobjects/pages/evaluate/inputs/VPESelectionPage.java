@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -59,6 +60,7 @@ public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
 
     /**
      * Select the vpe box
+     *
      * @return current page object
      */
     public VPESelectionPage selectVPEBox() {
@@ -68,6 +70,7 @@ public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
 
     /**
      * Selects forging
+     *
      * @param vpe - the vpe
      * @return current page object
      */
@@ -78,6 +81,7 @@ public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
 
     /**
      * Selects machining
+     *
      * @param vpe - the vpe
      * @return current page object
      */
@@ -88,6 +92,7 @@ public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
 
     /**
      * Selects the save changes button
+     *
      * @return new page object
      */
     protected MoreInputsPage saveChanges() {
@@ -97,6 +102,7 @@ public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
 
     /**
      * Selects the close button
+     *
      * @return new page object
      */
     protected MoreInputsPage close() {

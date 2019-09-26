@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate.materialutilization;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -99,6 +100,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
 
     /**
      * Gets the list of material types from the dropdown
+     *
      * @return hashset as duplicates need to be removed
      */
     public HashSet<String> getListOfMaterialTypes() {

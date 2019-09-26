@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -85,10 +86,11 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Filter criteria for private selection
-     * @param type - type of selection whether private or public
+     *
+     * @param type      - type of selection whether private or public
      * @param attribute - the attribute
      * @param condition - specified condition
-     * @param value - the value
+     * @param value     - the value
      * @return current page object
      */
     public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
@@ -103,10 +105,11 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Filter criteria for public selection
-     * @param type - type of selection whether private or public
+     *
+     * @param type      - type of selection whether private or public
      * @param attribute - the attribute
      * @param condition - specified condition
-     * @param value - the value
+     * @param value     - the value
      * @return current page object
      */
     public FilterCriteriaPage filterPublicCriteria(String type, String attribute, String condition, String value) {
@@ -121,6 +124,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Clears all listed checkboxes
+     *
      * @return current page object
      */
     private FilterCriteriaPage clearAllCheckBoxes() {
@@ -130,6 +134,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets the scenario type
+     *
      * @param type - scenario type
      * @return current page object
      */
@@ -152,6 +157,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the checkbox
+     *
      * @return current page object
      */
     private FilterCriteriaPage setPrivateWorkSpace() {
@@ -161,6 +167,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the checkbox
+     *
      * @return current page object
      */
     private FilterCriteriaPage setPublicWorkspace() {
@@ -170,6 +177,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the attribute
+     *
      * @param attribute - the attribute
      * @return current page object
      */
@@ -181,6 +189,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the condition
+     *
      * @param condition - the condition
      * @return current page object
      */
@@ -191,6 +200,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets the value as input
+     *
      * @param input - the input value
      * @return current page object
      */
@@ -203,6 +213,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the value as a dropdown
+     *
      * @param input - the input value
      * @return current page object
      */
@@ -214,8 +225,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the apply button
+     *
      * @param className - the class the method should return
-     * @param <T> - the generic declaration type
+     * @param <T>       - the generic declaration type
      * @return generic page object
      */
     public <T> T apply(Class<T> className) {
@@ -225,8 +237,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the cancel button
+     *
      * @param className - the class the method should return
-     * @param <T> - the generic declaration type
+     * @param <T>       - the generic declaration type
      * @return generic page object
      */
     public <T> T cancel(Class<T> className) {
@@ -260,6 +273,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Choose how data is entered either via input or dropdown based on enum
+     *
      * @param value - enum value
      * @return current page object
      */

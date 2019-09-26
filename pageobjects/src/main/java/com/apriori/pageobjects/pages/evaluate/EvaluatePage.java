@@ -5,8 +5,10 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
+import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -199,11 +201,11 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets the process routing details
+     * Checks the process routing details
      *
      * @return the details as string
      */
-    public Boolean getProcessRoutingDetails(String text) {
+    public Boolean isProcessRoutingDetails(String text) {
         pageUtils.waitForElementToAppear(processRoutingName);
         return pageUtils.checkElementAttribute(processRoutingName, "title", text);
     }
@@ -250,6 +252,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Opens the reference compare page
+     *
      * @return new page object
      */
     public ReferenceComparePage openReferenceCompare() {
@@ -296,11 +299,11 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets material info
+     * Checks material info
      *
      * @return material info as string
      */
-    public Boolean getMaterialInfo(String text) {
+    public Boolean isMaterialInfo(String text) {
         return pageUtils.checkElementAttribute(materialsInfo, "value", text);
     }
 
@@ -369,8 +372,8 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the fully burdened cost
      *
-     * @return string
      * @param text
+     * @return string
      */
     public Boolean getBurdenedCost(String text) {
         return pageUtils.checkElementContains(burdenedCost, text);

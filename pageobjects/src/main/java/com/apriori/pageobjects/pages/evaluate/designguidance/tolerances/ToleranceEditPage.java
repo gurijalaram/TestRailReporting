@@ -1,6 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.enums.ToleranceEnum;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author cfrith
@@ -34,6 +39,9 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     @FindBy(css = "input[data-ap-field='parallelism.current']")
     private WebElement parallelismInput;
+
+    @FindBy(css = "input[data-ap-field='flatness.current']")
+    private WebElement flatnessInput;
 
     @FindBy(css = "input[data-ap-field='perpendicularity.current']")
     private WebElement perpendicularityInput;
@@ -73,6 +81,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private Map<String, WebElement> map = new HashMap<>();
 
     public ToleranceEditPage(WebDriver driver) {
         this.driver = driver;
@@ -93,149 +102,90 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     }
 
     /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setCircularity(String value) {
-        return clearInputAndSendKeys(circularityInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setConcentricity(String value) {
-        return clearInputAndSendKeys(concentricityInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setCylindricity(String value) {
-        return clearInputAndSendKeys(cylindricityInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setDiamTolerance(String value) {
-        return clearInputAndSendKeys(diamToleranceInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setParallelism(String value) {
-        return clearInputAndSendKeys(parallelismInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setPerpendicularity(String value) {
-        return clearInputAndSendKeys(perpendicularityInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setTruePosition(String value) {
-        return clearInputAndSendKeys(truePositionInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setProfileSurface(String value) {
-        return clearInputAndSendKeys(profileSurfaceInput, value);
-    }
-
-    private ToleranceEditPage setRoughnessRa(String value) {
-        return clearInputAndSendKeys(roughnessInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setRoughnessRz(String value) {
-        return clearInputAndSendKeys(roughnessRzInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setRunout(String value) {
-        return clearInputAndSendKeys(runoutInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setStraightness(String value) {
-        return clearInputAndSendKeys(straightnessInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setSymmetry(String value) {
-        return clearInputAndSendKeys(symmetryInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    private ToleranceEditPage setToleranceCoor(String value) {
-        return clearInputAndSendKeys(toleranceInput, value);
-    }
-
-    /**
-     * @param value
-     * @return current page object
-     */
-    public ToleranceEditPage setTotalRunout(String value) {
-        return clearInputAndSendKeys(totalRunoutInput, value);
-    }
-
-    /**
-     * Private helper method used to clear input box and sendkeys
+     * Checks the value is correct
      *
-     * @param element - the webelement
-     * @param value   - the value
-     * @return current page object
+     * @param tolerance - the tolerance
+     * @param text      - the string value
+     * @return true/false
      */
-    ToleranceEditPage clearInputAndSendKeys(WebElement element, String value) {
-        pageUtils.clearInput(element);
-        element.sendKeys(value);
+    public Boolean isTolerance(String tolerance, String text) {
+        return pageUtils.checkElementAttribute(getLocatorFromMap(tolerance), "value", text);
+    }
+
+    /**
+     * Removes the tolerance
+     *
+     * @param text - the string value
+     * @return
+     */
+    public ToleranceEditPage removeTolerance(String text) {
+        getLocatorFromMap(text).clear();
         return this;
     }
 
     /**
+     * Sets the tolerance
+     *
+     * @param tolerance - the tolerance
+     * @param text      - the string value
+     * @return
+     */
+    public ToleranceEditPage setTolerance(String tolerance, String text) {
+        pageUtils.clearInput(getLocatorFromMap(tolerance));
+        getLocatorFromMap(tolerance).sendKeys(text);
+        return this;
+    }
+
+    private Map<String, WebElement> buildMap() {
+
+        map.put(ToleranceEnum.CIRCULARITY.getTolerance(), circularityInput);
+        map.put(ToleranceEnum.PARALLELISM.getTolerance(), parallelismInput);
+        map.put(ToleranceEnum.CONCENTRICITY.getTolerance(), concentricityInput);
+        map.put(ToleranceEnum.CYLINDRICITY.getTolerance(), cylindricityInput);
+        map.put(ToleranceEnum.DIAMTOLERANCE.getTolerance(), diamToleranceInput);
+        map.put(ToleranceEnum.FLATNESS.getTolerance(), flatnessInput);
+        map.put(ToleranceEnum.PERPENDICULARITY.getTolerance(), perpendicularityInput);
+        map.put(ToleranceEnum.TRUEPOSITION.getTolerance(), truePositionInput);
+        map.put(ToleranceEnum.PROFILESURFACE.getTolerance(), profileSurfaceInput);
+        map.put(ToleranceEnum.ROUGHNESSRA.getTolerance(), roughnessInput);
+        map.put(ToleranceEnum.ROUGHNESSRZ.getTolerance(), roughnessRzInput);
+        map.put(ToleranceEnum.RUNOUT.getTolerance(), runoutInput);
+        map.put(ToleranceEnum.STRAIGHTNESS.getTolerance(), straightnessInput);
+        map.put(ToleranceEnum.SYMMETRY.getTolerance(), symmetryInput);
+        map.put(ToleranceEnum.TOLERANCE.getTolerance(), toleranceInput);
+        map.put(ToleranceEnum.TOTALRUNOUT.getTolerance(), totalRunoutInput);
+
+        return map;
+    }
+
+    private Map<String, WebElement> getMap() {
+        if (map.isEmpty()) {
+            map = buildMap();
+        }
+        return map;
+    }
+
+    private WebElement getLocatorFromMap(String toleranceName) {
+        return getMap().get(toleranceName);
+    }
+
+    /**
      * Selects the apply button
+     *
      * @return new page object
      */
     public TolerancePage apply() {
-        applyButton.click();
+        pageUtils.waitForElementAndClick(applyButton);
         return new TolerancePage(driver);
     }
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public TolerancePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new TolerancePage(driver);
     }
 }

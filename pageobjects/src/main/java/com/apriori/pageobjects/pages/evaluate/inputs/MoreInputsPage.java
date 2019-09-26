@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -74,6 +75,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Gets name of cad file
+     *
      * @return the cad file name as a string
      */
     public String getCadFileName() {
@@ -82,6 +84,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Selects the batch size checkbox
+     *
      * @return the current page object
      */
     public MoreInputsPage selectBatchBox() {
@@ -91,6 +94,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Input batch size
+     *
      * @param batchSize - the batch size
      * @return current page object
      */
@@ -102,6 +106,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Selects vpe button
+     *
      * @return new page object
      */
     public VPESelectionPage selectVPEButton() {
@@ -111,6 +116,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Selects the machined/not machined checkbox
+     *
      * @param option - true/false
      * @return current page object
      */
@@ -125,6 +131,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Enter test string
+     *
      * @param testString - the test string
      * @return current page object
      */
@@ -136,6 +143,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Enter test number
+     *
      * @param testNumber - the test number
      * @return current page object
      */
@@ -147,6 +155,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Enter test date
+     *
      * @param testDate - the test date
      * @return current page object
      */
@@ -158,6 +167,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Selects the user
+     *
      * @param testUser - the user
      * @return current page object
      */

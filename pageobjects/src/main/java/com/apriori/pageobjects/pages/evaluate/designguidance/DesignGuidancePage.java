@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.designguidance;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -73,6 +74,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     /**
      * Opens the guidance tab
+     *
      * @return new page object
      */
     public GuidancePage openGuidanceTab() {
@@ -82,6 +84,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     /**
      * Opens the investigation tab
+     *
      * @return new page object
      */
     public InvestigationPage openInvestigationTab() {
@@ -91,6 +94,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     /**
      * Opens the tolerances tab
+     *
      * @return new page object
      */
     public TolerancePage openTolerancesTab() {
@@ -100,6 +104,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     /**
      * Opens the geometry tab
+     *
      * @return new page object
      */
     public GeometryPage openGeometryTab() {
@@ -109,6 +114,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     /**
      * Closes the design guidance
+     *
      * @return current page object
      */
     public DesignGuidancePage closeDesignGuidance() {

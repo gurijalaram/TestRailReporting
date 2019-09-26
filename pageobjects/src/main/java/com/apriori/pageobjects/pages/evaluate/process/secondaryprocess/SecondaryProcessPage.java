@@ -1,6 +1,8 @@
-package com.apriori.pageobjects.pages.evaluate;
+package com.apriori.pageobjects.pages.evaluate.process.secondaryprocess;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +15,6 @@ import org.slf4j.LoggerFactory;
 /**
  * @author cfrith
  */
-
 public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage> {
 
     private final Logger logger = LoggerFactory.getLogger(SecondaryProcessPage.class);
@@ -26,18 +27,6 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
 
     @FindBy(css = "div[data-ap-comp='secondaryTreatmentsTable'] div.v-grid-scroller-vertical")
     private WebElement processScroller;
-
-    @FindBy(css = "input[data-ap-comp='plateThickness.radioButtons.standard")
-    private WebElement standardRadioButton;
-
-    @FindBy(css = "input[data-ap-comp='plateThickness.radioButtons.user']")
-    private WebElement desiredRadioButton;
-
-    @FindBy(css = "input[data-ap-field='plateThickness.modeValues.user.value']")
-    private WebElement thicknessInput;
-
-    @FindBy(css = "select[data-ap-field='platingMethod.modeValues.platingMethod.storedListValue']")
-    private WebElement platingMethodSelect;
 
     @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
@@ -68,6 +57,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
 
     /**
      * Selects both the process type and process name of the secondary process
+     *
      * @param processType - accepts a comma separated list of type string
      * @param processName - the process name
      * @return current page object
@@ -80,6 +70,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
 
     /**
      * Selects the secondary types dropdowns in the process tree
+     *
      * @param processType - the secondary process type
      * @return current page object
      */
@@ -102,6 +93,12 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     private WebElement selectProcessName(String processName) {
         By processBox = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName + "']/ancestor::tr//input[@class='gwt-SimpleCheckBox']");
         return pageUtils.scrollToElement(processBox, processScroller);
+    }
+
+    public SecondaryOptionsPage highlightSecondaryProcess(String processType, String processName) {
+        selectSecondaryProcess(processType, processName);
+        driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']/ancestor::tr")).click();
+        return new SecondaryOptionsPage(driver);
     }
 
     /**

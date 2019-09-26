@@ -1,8 +1,9 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.enums.WorkspaceEnum;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -65,6 +66,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     /**
      * Selects status dropdown
+     *
      * @param status - dropdown status
      * @return current page object
      */
@@ -75,6 +77,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     /**
      * Selects the cost maturity dropdown
+     *
      * @param costMaturity - cost maturity dropdown
      * @return current page object
      */
@@ -85,6 +88,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     /**
      * Selects the assignee dropdown
+     *
      * @param assignee - assignee dropdown
      * @return current page object
      */
@@ -95,6 +99,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     /**
      * Selects the publish button
+     *
      * @return new page object
      */
     public ExplorePage selectPublishButton() {
@@ -104,6 +109,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public ExplorePage selectCancelButton() {

@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -125,6 +126,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     /**
      * Checks the status dropdown
+     *
      * @return option as string
      */
     public boolean isStatusSelected(String text) {
@@ -133,6 +135,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     /**
      * Checks the cost maturity dropdown
+     *
      * @return option as string
      */
     public boolean isCostMaturitySelected(String text) {
@@ -140,23 +143,26 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     }
 
     /**
-     * Get the description
+     * Checks the description
+     *
      * @return the description as string
      */
-    public Boolean getDescription(String text) {
+    public Boolean isDescription(String text) {
         return pageUtils.checkElementAttribute(descriptionInput, "value", text);
     }
 
     /**
-     * Gets the scenario notes
+     * Checks the scenario notes
+     *
      * @return the scenario notes as string
      */
-    public Boolean getScenarioNotes(String text) {
+    public Boolean isScenarioNotes(String text) {
         return pageUtils.checkElementAttribute(scenarioNotesInput, "value", text);
     }
 
     /**
      * Removes the description
+     *
      * @return current page object
      */
     public ScenarioNotesPage deleteDescription() {
@@ -166,6 +172,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
     /**
      * Removes the notes
+     *
      * @return current page object
      */
     public ScenarioNotesPage deleteNotes() {

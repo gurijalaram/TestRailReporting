@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -53,8 +54,9 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     /**
      * Selects both tolerance and gcd
+     *
      * @param toleranceType - the tolerance type
-     * @param gcdType - the gcd type
+     * @param gcdType       - the gcd type
      * @return current page object
      */
     public TolerancePage selectToleranceTypeAndGCD(String toleranceType, String gcdType) {
@@ -65,16 +67,18 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     /**
      * Selects the tolerance type.  Selection is based on exact match so unit must be specified eg. Flatness (mm)
+     *
      * @param toleranceType - the tolerance type
      * @return the tolerance as webelement
      */
     private WebElement selectToleranceType(String toleranceType) {
         By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr");
-        return pageUtils.scrollToElement(tolerance,toleranceScroller);
+        return pageUtils.scrollToElement(tolerance, toleranceScroller);
     }
 
     /**
      * Selects the gcd.  Selection is based on exact match
+     *
      * @param gcdType - the gcd type
      * @return the gcd as webelement
      */
@@ -85,9 +89,10 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     /**
      * Selects the edit button
+     *
      * @return current page object
      */
-    private ToleranceEditPage editTolerance() {
+    public ToleranceEditPage editTolerance() {
         editToleranceButton.click();
         return new ToleranceEditPage(driver);
     }

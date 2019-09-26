@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.settings;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -94,6 +95,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set tolerance value
+     *
      * @param tolerance - the tolerance value
      * @return current page object
      */
@@ -103,6 +105,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set roughness ra
+     *
      * @param roughnessRa - the roughness ra
      * @return current page object
      */
@@ -112,6 +115,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set roughness rz
+     *
      * @param roughnessRz - the roughness rz
      * @return current page object
      */
@@ -121,6 +125,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set diam tolerance
+     *
      * @param diamTolerance - the diam tolerance
      * @return current page object
      */
@@ -130,6 +135,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set true position
+     *
      * @param truePosition - the true position
      * @return current page object
      */
@@ -139,6 +145,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set bend angle
+     *
      * @param bendAngle - the bend angle
      * @return current page object
      */
@@ -148,6 +155,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set circularity
+     *
      * @param circularity - the circularity
      * @return current page object
      */
@@ -157,6 +165,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set concentricity
+     *
      * @param concentricity - the concentricity
      * @return current page object
      */
@@ -166,6 +175,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set cylindricity
+     *
      * @param cylindricity - the cylindricity
      * @return current page object
      */
@@ -175,6 +185,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set flatness
+     *
      * @param flatness - the flatness
      * @return current page object
      */
@@ -184,6 +195,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set parallelism
+     *
      * @param parallelism - the parallelism
      * @return current page object
      */
@@ -193,6 +205,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set perpendicularity
+     *
      * @param perpendicularity - the perpendicularity
      * @return current page object
      */
@@ -202,6 +215,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set profile surface
+     *
      * @param profileSurface - the profile surface
      * @return current page object
      */
@@ -211,6 +225,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set runout
+     *
      * @param runout - the runout
      * @return current page object
      */
@@ -220,6 +235,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set total runout
+     *
      * @param totalRunout - the total runout
      * @return current page object
      */
@@ -229,6 +245,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set straightness
+     *
      * @param straightness - the straightness
      * @return current page object
      */
@@ -238,6 +255,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
 
     /**
      * Set symmetry
+     *
      * @param symmetry - the symmetry
      * @return current page object
      */

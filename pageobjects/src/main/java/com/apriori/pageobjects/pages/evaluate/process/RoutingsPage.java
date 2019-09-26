@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.process;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -68,8 +69,9 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
     /**
      * Gets the costed routing text
-     * @return text as string
+     *
      * @param text
+     * @return text as string
      */
     public Boolean getCostedRouting(String text) {
         return pageUtils.checkElementContains(costedRouting, text);
@@ -77,8 +79,9 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
     /**
      * Gets the selected routing text
-     * @return text as string
+     *
      * @param text
+     * @return text as string
      */
     public Boolean getSelectedRouting(String text) {
         return pageUtils.checkElementContains(selectedRouting, text);
@@ -86,6 +89,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
     /**
      * Selects the routing in the table
+     *
      * @param routingName - the routing
      * @return routing name as webelement
      */
@@ -96,6 +100,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
     /**
      * Gets the routing details
+     *
      * @param routingName - the routing
      * @return current page object
      */
@@ -106,6 +111,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
     /**
      * Gets routings in the table
+     *
      * @return list of routings
      */
     public List<String> getRoutings() {
@@ -114,6 +120,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
     /**
      * Finds the routing in the table
+     *
      * @param routingName - the routing
      * @return webelement
      */

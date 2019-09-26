@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -49,6 +50,7 @@ public class WarningPage extends LoadableComponent<WarningPage> {
 
     /**
      * Gets the text in the warning dialog
+     *
      * @return webelement as string
      */
     public String getWarningText() {
@@ -57,6 +59,7 @@ public class WarningPage extends LoadableComponent<WarningPage> {
 
     /**
      * Selects the ok button
+     *
      * @return new page object
      */
     public <T> T ok(Class<T> className) {

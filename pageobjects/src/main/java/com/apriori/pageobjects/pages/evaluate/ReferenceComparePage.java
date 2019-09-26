@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -63,6 +64,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
 
     /**
      * Selects the dropdown
+     *
      * @return current page object
      */
     public ReferenceComparePage selectDropdown() {
@@ -72,8 +74,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
 
     /**
      * Selects the scenario in the dropdown
+     *
      * @param workspaceType - the workspace
-     * @param scenarioName - the scenario
+     * @param scenarioName  - the scenario
      * @return current page object
      */
     public ReferenceComparePage selectDropdownScenario(String workspaceType, String scenarioName) {

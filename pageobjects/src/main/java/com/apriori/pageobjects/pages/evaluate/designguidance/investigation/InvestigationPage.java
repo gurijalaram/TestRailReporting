@@ -1,6 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.investigation;
 
+import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -63,6 +65,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     /**
      * Selects investigation topic
+     *
      * @param topic - the investigation topic
      * @return current page object
      */
@@ -74,6 +77,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     /**
      * Selects the gcd type
+     *
      * @param gcdType - the gcd type
      * @return the gcd type as a webelement
      */
@@ -84,7 +88,8 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     /**
      * Selects the gcd
-     * @param gcd  - the gcd
+     *
+     * @param gcd - the gcd
      * @return the gcd as webelement
      */
     private WebElement findGCD(String gcd) {
@@ -94,16 +99,18 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     /**
      * Selects the threadable dropdown
+     *
      * @param option - the dropdown in the option
      * @return current page object
      */
-    public InvestigationPage selectThreadableGCD(String option)  {
-        pageUtils.selectDropdownOption(threadableDropdown,option);
+    public InvestigationPage selectThreadableGCD(String option) {
+        pageUtils.selectDropdownOption(threadableDropdown, option);
         return this;
     }
 
     /**
      * Selects the selectEditButton button
+     *
      * @return new page object
      */
     public ThreadingPage selectEditButton() {
@@ -113,6 +120,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     /**
      * Gets the button as a webelement
+     *
      * @return the button as webelement
      */
     public WebElement getEditButton() {
@@ -121,6 +129,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     /**
      * Gets the thread header information
+     *
      * @return details as web
      */
     public Boolean getThreadHeader(String text) {

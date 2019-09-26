@@ -6,7 +6,7 @@ import com.apriori.apibase.http.enums.EndpointType;
 import com.apriori.apibase.http.enums.common.ExternalEndpointEnum;
 import com.apriori.apibase.http.enums.common.InternalEndpointEnum;
 import com.apriori.apibase.utils.MultiPartFiles;
-import com.apriori.utils.utils.Util;
+import com.apriori.utils.Util;
 
 import org.apache.http.HttpStatus;
 import org.openqa.selenium.WebDriver;

@@ -61,7 +61,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("3 Axis Mill"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("3 Axis Mill"), is(true));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Reaction Injection Molding"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Reaction Injection Molding"), is(true));
     }
 
     @Test
@@ -155,7 +155,7 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Injection Molding"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Injection Molding"), is(true));
     }
 
     @Test
@@ -275,7 +275,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Printing / Breakoff"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Printing / Breakoff"), is(true));
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
@@ -288,7 +288,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Stress Relief / Ultrasonic Cleaning"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Stress Relief / Ultrasonic Cleaning"), is(true));
     }
 
     @Test
@@ -360,7 +360,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 2 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 2 Axis Lathe"), is(true));
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
@@ -369,6 +369,6 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails("Melting / Gravity Die Casting / Cleaning / Trim / Finishing / Visual Inspection / 2 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Melting / Gravity Die Casting / Cleaning / Trim / Finishing / Visual Inspection / 2 Axis Lathe"), is(true));
     }
 }

@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -49,6 +50,7 @@ public class CostingJobPage extends LoadableComponent<CostingJobPage> {
 
     /**
      * Selects the cost button
+     *
      * @return current page object
      */
     public CostingJobPage selectCostButton() {
@@ -58,6 +60,7 @@ public class CostingJobPage extends LoadableComponent<CostingJobPage> {
 
     /**
      * Selects the cancel button
+     *
      * @return new page object
      */
     public EvaluatePage cancel() {
