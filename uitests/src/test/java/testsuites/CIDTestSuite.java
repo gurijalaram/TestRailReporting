@@ -1,8 +1,5 @@
 package test.java.testsuites;
 
-import main.java.runner.ConcurrentSuiteRunner;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import test.java.compare.AddPrivateScenarioTests;
 import test.java.compare.AddPublicScenarioTests;
 import test.java.compare.DeletePrivateComparisonTests;
@@ -35,8 +32,13 @@ import test.java.explore.PreviewPanelTests;
 import test.java.explore.TableHeadersTests;
 import test.java.login.LoginTests;
 
+import com.apriori.utils.runner.ConcurrentSuiteRunner;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
 @RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite.SuiteClasses( {
     AddPrivateScenarioTests.class,
     AddPublicScenarioTests.class,
     DTCMachiningTests.class,

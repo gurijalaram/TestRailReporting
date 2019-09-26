@@ -3,18 +3,20 @@ package test.java.compare;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.header.GenericHeader;
+import com.apriori.pageobjects.pages.compare.ComparePage;
+import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.UsersEnum;
-import main.java.enums.WorkspaceEnum;
-import main.java.header.GenericHeader;
-import main.java.pages.compare.ComparePage;
-import main.java.pages.compare.ComparisonTablePage;
-import main.java.pages.explore.ExplorePage;
-import main.java.pages.login.LoginPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
+
 import org.junit.Test;
 
 public class DeletePublicComparisonTests extends TestBase {

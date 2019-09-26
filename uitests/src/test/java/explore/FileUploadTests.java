@@ -1,11 +1,13 @@
 package test.java.explore;
 
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.UsersEnum;
-import main.java.pages.login.LoginPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.Util;
+
 import org.junit.Test;
 
 public class FileUploadTests extends TestBase {

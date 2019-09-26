@@ -118,6 +118,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
+				<module>../uitests</module>
+
 				<module>../utils</module>
 				<module>../apibase</module>
 				<module>../internalapi</module>
@@ -671,7 +673,7 @@
 
 	<build>
 		<directory>target</directory>
-		<sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

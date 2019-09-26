@@ -1,6 +1,6 @@
 package test.java.evaluate.designguidance.tolerance;
 
-import main.java.base.TestBase;
+import com.apriori.utils.web.driver.TestBase;
 
 public class ToleranceTests extends TestBase {
 
