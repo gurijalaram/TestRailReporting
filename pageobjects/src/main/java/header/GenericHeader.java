@@ -195,7 +195,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public <T> T editScenario(Class<T> className) {
-        pageUtils.waitForElementToAppear(editButton).click();
+        pageUtils.waitForElementAndClick(editButton);
         return PageFactory.initElements(driver, className);
     }
 

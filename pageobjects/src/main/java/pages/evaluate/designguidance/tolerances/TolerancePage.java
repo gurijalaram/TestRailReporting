@@ -87,7 +87,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * Selects the edit button
      * @return current page object
      */
-    private ToleranceEditPage editTolerance() {
+    public ToleranceEditPage editTolerance() {
         editToleranceButton.click();
         return new ToleranceEditPage(driver);
     }
