@@ -1,8 +1,10 @@
 package test.java.testsuites;
 
-import main.java.runner.ConcurrentSuiteRunner;
+import com.apriori.utils.runner.ConcurrentSuiteRunner;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+
 import test.java.compare.AddPrivateScenarioTests;
 import test.java.compare.AddPublicScenarioTests;
 import test.java.compare.DeletePrivateComparisonTests;
