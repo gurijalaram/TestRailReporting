@@ -1,6 +1,7 @@
-package main.java.pages.jobqueue;
+package pages.jobqueue;
 
-import main.java.utils.PageUtils;
+import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

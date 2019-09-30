@@ -1,4 +1,4 @@
-package test.java.evaluate;
+package evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -14,11 +14,10 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
-import test.java.testsuites.suiteinterface.SmokeTests;
 
 public class NewScenarioNameTests extends TestBase {
 

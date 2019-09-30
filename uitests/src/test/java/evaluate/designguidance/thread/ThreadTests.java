@@ -1,4 +1,4 @@
-package test.java.evaluate.designguidance.thread;
+package evaluate.designguidance.thread;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,23 +21,7 @@ import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import io.qameta.allure.Issue;
-import main.java.base.TestBase;
-import main.java.enums.ProcessGroupEnum;
-import main.java.enums.UnitsEnum;
-import main.java.enums.UsersEnum;
-import main.java.enums.VPEEnum;
-import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.evaluate.designguidance.DesignGuidancePage;
-import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
-import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
-import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
-import main.java.pages.login.LoginPage;
-import main.java.pages.settings.SettingsPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
 import org.junit.Test;
 
 public class ThreadTests extends TestBase {

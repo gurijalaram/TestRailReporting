@@ -1,4 +1,4 @@
-package test.java.compare;
+package compare;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,19 +16,8 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.UsersEnum;
-import main.java.enums.WorkspaceEnum;
-import main.java.header.GenericHeader;
-import main.java.pages.compare.ComparePage;
-import main.java.pages.compare.ComparisonTablePage;
-import main.java.pages.explore.ExplorePage;
-import main.java.pages.jobqueue.JobQueuePage;
-import main.java.pages.login.LoginPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
 import org.junit.Test;
+import pages.jobqueue.JobQueuePage;
 
 public class DeletePrivateComparisonTests extends TestBase {
 
