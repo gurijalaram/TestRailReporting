@@ -4,22 +4,24 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.settings.SettingsPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.UnitsEnum;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.ProcessGroupEnum;
-import main.java.enums.UnitsEnum;
-import main.java.enums.UsersEnum;
-import main.java.enums.VPEEnum;
-import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.evaluate.designguidance.DesignGuidancePage;
-import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
-import main.java.pages.evaluate.designguidance.investigation.ThreadingPage;
-import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
-import main.java.pages.login.LoginPage;
-import main.java.pages.settings.SettingsPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import test.java.testsuites.suiteinterface.CustomerSmokeTests;
@@ -72,7 +74,7 @@ public class ThreadTests extends TestBase {
             .apply(InvestigationPage.class)
             .selectEditButton();
 
-        assertThat(threadingPage.getThreadLength("0.28"), is(true));
+        assertThat(threadingPage.isThreadLength("0.28"), is(true));
     }
 
     @Test
@@ -100,7 +102,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:1");
 
-        assertThat(threadingPage.getThreadLength("0.28"), is(true));
+        assertThat(threadingPage.isThreadLength("0.28"), is(true));
     }
 
     @Test
@@ -120,7 +122,7 @@ public class ThreadTests extends TestBase {
             .apply(InvestigationPage.class)
             .selectEditButton();
 
-        assertThat(threadingPage.getThreadLength(""), is(true));
+        assertThat(threadingPage.isThreadLength(""), is(true));
     }
 
     @Test
@@ -140,7 +142,7 @@ public class ThreadTests extends TestBase {
             .apply(InvestigationPage.class)
             .selectEditButton();
 
-        assertThat(threadingPage.getThreadLength("0.64"), is(true));
+        assertThat(threadingPage.isThreadLength("0.64"), is(true));
     }
 
     @Test
@@ -186,7 +188,7 @@ public class ThreadTests extends TestBase {
             .cancel()
             .selectEditButton();
 
-        assertThat(threadingPage.getThreadLength("0.26"), is(true));
+        assertThat(threadingPage.isThreadLength("0.26"), is(true));
     }
 
     @Test
@@ -300,7 +302,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:26");
 
-        assertThat(threadingPage.getThreadLength("4.85"), is(true));
+        assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }
 
     @Test
@@ -373,7 +375,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:27");
 
-        assertThat(threadingPage.getThreadLength("4.85"), is(true));
+        assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }
 
     @Category(CustomerSmokeTests.class)
@@ -391,7 +393,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getThreadLength("10.00"), is(true));
+        assertThat(threadingPage.isThreadLength("10.00"), is(true));
     }
 
     @Category(CustomerSmokeTests.class)
@@ -409,7 +411,7 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Simple Holes", "SimpleHole:15");
 
-        assertThat(threadingPage.getThreadLength("15.00"), is(true));
+        assertThat(threadingPage.isThreadLength("15.00"), is(true));
     }
 
     @Category(CustomerSmokeTests.class)
@@ -427,6 +429,6 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading")
             .editThread("Simple Holes", "SimpleHole:13");
 
-        assertThat(threadingPage.getThreadLength("4.06"), is(true));
+        assertThat(threadingPage.isThreadLength("4.06"), is(true));
     }
 }
