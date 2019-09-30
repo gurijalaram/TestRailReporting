@@ -15,7 +15,7 @@ import main.java.utils.TestRail;
 import main.java.utils.Util;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import test.java.testsuites.suiteinterface.SmokeTests;
+import test.java.testsuites.suiteinterface.CustomerSmokeTests;
 
 public class NewScenarioNameTests extends TestBase {
 
@@ -27,7 +27,7 @@ public class NewScenarioNameTests extends TestBase {
         super();
     }
 
-    @Category(SmokeTests.class)
+    @Category(CustomerSmokeTests.class)
     @Test
     @TestRail(testCaseId = {"577"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")

@@ -1,4 +1,4 @@
 package test.java.testsuites.suiteinterface;
 
-public interface SmokeTests {
+public interface CustomerSmokeTests {
 }

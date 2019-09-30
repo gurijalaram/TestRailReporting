@@ -5,13 +5,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import test.java.evaluate.NewScenarioNameTests;
 import test.java.evaluate.designguidance.thread.ThreadTests;
-import test.java.testsuites.suiteinterface.SmokeTests;
+import test.java.testsuites.suiteinterface.CustomerSmokeTests;
 
 @RunWith(Categories.class)
-@Categories.IncludeCategory(SmokeTests.class)
+@Categories.IncludeCategory(CustomerSmokeTests.class)
 @Suite.SuiteClasses({
     NewScenarioNameTests.class,
     ThreadTests.class
 })
-public class SmokeTestSuite {
+public class CustomerSmokeTestSuite {
 }

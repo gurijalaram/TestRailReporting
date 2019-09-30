@@ -22,7 +22,7 @@ import main.java.utils.TestRail;
 import main.java.utils.Util;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import test.java.testsuites.suiteinterface.SmokeTests;
+import test.java.testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ThreadTests extends TestBase {
 
@@ -53,7 +53,7 @@ public class ThreadTests extends TestBase {
         assertThat(investigationPage.getEditButton().isEnabled(), is(false));
     }
 
-    @Category(SmokeTests.class)
+    @Category(CustomerSmokeTests.class)
     @Test
     @TestRail(testCaseId = {"28", "1631"})
     @Description("C28 Test to check thread length persist")
@@ -352,7 +352,7 @@ public class ThreadTests extends TestBase {
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
+            .costScenario(3)
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
@@ -367,7 +367,7 @@ public class ThreadTests extends TestBase {
         threadingPage = evaluatePage.openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
-            .costScenario()
+            .costScenario(3)
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
@@ -376,8 +376,9 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.getThreadLength("4.85"), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"44"})
+    @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
@@ -393,8 +394,9 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.getThreadLength("10.00"), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"44"})
+    @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
@@ -410,8 +412,9 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.getThreadLength("15.00"), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"44"})
+    @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);
