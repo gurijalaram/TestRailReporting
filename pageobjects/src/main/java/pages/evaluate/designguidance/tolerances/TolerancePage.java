@@ -53,40 +53,46 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     /**
      * Selects both tolerance and gcd
+     *
      * @param toleranceType - the tolerance type
-     * @param gcdType - the gcd type
+     * @param gcdType       - the gcd type
      * @return current page object
      */
     public TolerancePage selectToleranceTypeAndGCD(String toleranceType, String gcdType) {
-        findToleranceType(toleranceType).click();
-        findGCD(gcdType).click();
+        pageUtils.waitForElementAndClick(findToleranceType(toleranceType));
+        pageUtils.waitForElementAndClick(findGCD(gcdType));
         return this;
     }
 
     /**
      * Selects the tolerance type.  Selection is based on exact match so unit must be specified eg. Flatness (mm)
+     *
      * @param toleranceType - the tolerance type
      * @return the tolerance as webelement
      */
     private WebElement findToleranceType(String toleranceType) {
         By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr");
-        return pageUtils.scrollToElement(tolerance,toleranceScroller);
+        pageUtils.waitForElementToAppear(tolerance);
+        return pageUtils.scrollToElement(tolerance, toleranceScroller);
     }
 
     /**
      * Selects the gcd.  Selection is based on exact match
+     *
      * @param gcdType - the gcd type
      * @return the gcd as webelement
      */
     private WebElement findGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']/ancestor::tr");
+        pageUtils.waitForElementToAppear(gcd);
         return pageUtils.scrollToElement(gcd, detailsScroller);
     }
 
     /**
      * Checks the tolerance count
+     *
      * @param toleranceType - the tolerance type
-     * @param text - the text
+     * @param text          - the text
      * @return true/false
      */
     public Boolean isToleranceCount(String toleranceType, String text) {
@@ -96,15 +102,17 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     /**
      * Selects the edit button
+     *
      * @return current page object
      */
-    public ToleranceEditPage editTolerance() {
-        editToleranceButton.click();
+    public ToleranceEditPage selectEditButton() {
+        pageUtils.waitForElementAndClick(editToleranceButton);
         return new ToleranceEditPage(driver);
     }
 
     /**
      * Gets the button as a webelement
+     *
      * @return the button as webelement
      */
     public WebElement getEditButton() {

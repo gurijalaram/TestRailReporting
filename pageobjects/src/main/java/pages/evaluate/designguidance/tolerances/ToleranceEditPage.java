@@ -72,7 +72,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = "input[data-ap-field='totalRunout.current']")
     private WebElement totalRunoutInput;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
 
     @FindBy(css = "button.gwt-Button.btn.btn-default")
@@ -116,7 +116,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return
      */
     public ToleranceEditPage removeTolerance(String text) {
-        getLocatorFromMap(text).clear();
+        pageUtils.waitForElementToAppear(getLocatorFromMap(text)).clear();
         return this;
     }
 

@@ -59,7 +59,7 @@ public class ToleranceTests extends TestBase {
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
-            .editTolerance()
+            .selectEditButton()
             .setTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0.23")
             .apply(TolerancePage.class);
 
@@ -71,7 +71,7 @@ public class ToleranceTests extends TestBase {
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
-            .editTolerance();
+            .selectEditButton();
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0.23"), is(true));
     }
@@ -94,10 +94,10 @@ public class ToleranceTests extends TestBase {
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
-            .editTolerance()
+            .selectEditButton()
             .removeTolerance(ToleranceEnum.FLATNESS.getTolerance())
             .apply(TolerancePage.class)
-            .editTolerance();
+            .selectEditButton();
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getTolerance(), ""), is(true));
     }
@@ -114,7 +114,7 @@ public class ToleranceTests extends TestBase {
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
-            .editTolerance()
+            .selectEditButton()
             .setTolerance(ToleranceEnum.FLATNESS.getTolerance(), "abcd")
             .apply(WarningPage.class);
 
@@ -133,7 +133,7 @@ public class ToleranceTests extends TestBase {
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
-            .editTolerance()
+            .selectEditButton()
             .setTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0")
             .apply(WarningPage.class);
 
