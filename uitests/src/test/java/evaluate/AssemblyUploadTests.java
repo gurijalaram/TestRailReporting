@@ -30,7 +30,7 @@ public class AssemblyUploadTests extends TestBase {
     public void testAssemblyFormatSTEP() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Piston_Assembly.STEP"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
             .selectProcessGroup(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
 
