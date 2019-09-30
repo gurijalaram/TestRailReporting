@@ -11,6 +11,7 @@ import main.java.header.GenericHeader;
 import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
+import main.java.pages.jobqueue.JobQueuePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
@@ -23,6 +24,7 @@ public class DeletePublicComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private JobQueuePage jobQueuePage;
 
     public DeletePublicComparisonTests() {
         super();
@@ -52,13 +54,15 @@ public class DeletePublicComparisonTests extends TestBase {
             .apply();
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.publishScenario()
+        jobQueuePage = genericHeader.publishScenario()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName)
             .delete()
-            .deleteExploreComparison();
+            .deleteExploreComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
 
-        assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
+        assertThat(new ExplorePage(driver).getListOfComparisons(testComparisonName) < 1, is(true));
     }
 
     @Test
@@ -92,8 +96,13 @@ public class DeletePublicComparisonTests extends TestBase {
             .openComparison(testComparisonName);
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.delete().deleteComparison()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+        jobQueuePage = genericHeader.delete()
+            .deleteComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
+
+        explorePage = new ExplorePage(driver);
+        explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
         assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
     }

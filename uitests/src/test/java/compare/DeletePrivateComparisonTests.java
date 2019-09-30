@@ -11,6 +11,7 @@ import main.java.header.GenericHeader;
 import main.java.pages.compare.ComparePage;
 import main.java.pages.compare.ComparisonTablePage;
 import main.java.pages.explore.ExplorePage;
+import main.java.pages.jobqueue.JobQueuePage;
 import main.java.pages.login.LoginPage;
 import main.java.utils.FileResourceUtil;
 import main.java.utils.TestRail;
@@ -23,6 +24,7 @@ public class DeletePrivateComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private JobQueuePage jobQueuePage;
 
     public DeletePrivateComparisonTests() {
         super();
@@ -52,13 +54,15 @@ public class DeletePrivateComparisonTests extends TestBase {
             .apply();
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
+        jobQueuePage = genericHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName)
             .delete()
-            .deleteExploreComparison();
+            .deleteExploreComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
 
-        assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
+        assertThat(new ExplorePage(driver).getListOfComparisons(testComparisonName) < 1, is(true));
     }
 
     @Test
@@ -75,7 +79,10 @@ public class DeletePrivateComparisonTests extends TestBase {
             .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
-        genericHeader.delete().deleteComparison();
+        genericHeader.delete()
+            .deleteComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testComparisonName, "Delete");
 
         explorePage = new ExplorePage(driver);
         explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());

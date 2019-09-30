@@ -42,7 +42,9 @@ public class DeletePrivateScenarioTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.delete()
-            .deleteScenario();
+            .deleteScenario()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
     }
