@@ -2,6 +2,7 @@ package test.java.testsuites;
 
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import evaluate.PsoEditTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -71,7 +72,8 @@ import test.java.login.LoginTests;
     ProcessRoutingTests.class,
     ActionsTests.class,
     DTCCastingTests.class,
-    ProcessRoutingTests.class
+    ProcessRoutingTests.class,
+    PsoEditTests.class
 })
 public class CIDTestSuite {
 }
