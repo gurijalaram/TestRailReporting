@@ -25,7 +25,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5628"})
+    @TestRail(testCaseId = {"2628"})
     @Description("Assembly File Upload - STEP")
     public void testAssemblyFormatSTEP() {
         loginPage = new LoginPage(driver);

@@ -2,6 +2,7 @@ package test.java.testsuites;
 
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import evaluate.AssemblyUploadTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -51,6 +52,7 @@ import test.java.login.LoginTests;
     LoginTests.class,
     ChangeStockSelectionTests.class,
     ProcessGroupsTests.class,
+    AssemblyUploadTests.class,
     CostAllCadTests.class,
     DeletePrivateScenarioTests.class,
     DeletePublicScenarioTests.class,
