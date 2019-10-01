@@ -89,7 +89,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Select default value
+     * Select use default value for number of cavities
      *
      * @return current page object
      */
@@ -109,7 +109,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Selects annual volume
+     * Selects base on annual volume for number of cavities
      *
      * @return current page object
      */
@@ -119,7 +119,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Selects optimize button
+     * Selects optimize for minimum cost button
      *
      * @return current page object
      */
@@ -129,12 +129,23 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Selects defined value dropdown
+     * Selects user defined value dropdown for number of cavities
      *
      * @param option - the option
      * @return current page object
      */
     public ProcessOptionsPage selectDefinedValueDropdown(String option) {
+        pageUtils.selectDropdownOption(definedValueDropdown, option);
+        return this;
+    }
+
+    /**
+     * Checks the user defined value dropdown for number of cavities
+     *
+     * @param option - the option
+     * @return current page object
+     */
+    public ProcessOptionsPage getDefinedValueDropdown(String option) {
         pageUtils.selectDropdownOption(definedValueDropdown, option);
         return this;
     }
@@ -182,7 +193,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Selects override nominal
+     * Selects override nominal wall thickness
      *
      * @return current page object
      */
@@ -193,7 +204,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
 
     /**
-     * Sets the override value
+     * Sets the override value for nominalWallThickness
      *
      * @param value - the value
      * @return current page object
@@ -204,7 +215,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Checks the override value
+     * Checks the user override value for nominalWallThickness
      *
      * @param text - the value
      * @return true/false
@@ -224,7 +235,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Select add colorant
+     * Selects add colorant at standard rate button
      *
      * @return current page object
      */
@@ -234,7 +245,16 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Selects defined colour
+     * Check Add colorant at standard rate is selected
+     *
+     * @return current page object
+     */
+    public String isAddColorantSelected(String attribute) {
+        return pageUtils.waitForElementToAppear(addColorantRadioButton).getAttribute(attribute);
+    }
+
+    /**
+     * Selects defined colour charge button
      *
      * @return current page object
      */
@@ -244,7 +264,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Sets the defined input
+     * Sets the defined input for color charge
      *
      * @param value - the value
      * @return current page object
@@ -255,7 +275,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Checks the defined value
+     * Checks the defined value for color charge
      *
      * @param text - the value
      * @return true/false
@@ -265,7 +285,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Select material regrind
+     * Select material regrind allowance button
      *
      * @return current page object
      */
@@ -275,7 +295,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Selects material defined
+     * Selects material defined value button
      *
      * @return current page object
      */
@@ -285,7 +305,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Sets the material regrind
+     * Sets the material regrind user defined value
      *
      * @param value - the value
      * @return current page object
@@ -296,7 +316,7 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Checks material regrind value
+     * Checks material regrind user defined value
      *
      * @param text - the value
      * @return true/false

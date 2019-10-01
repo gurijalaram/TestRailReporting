@@ -2,6 +2,7 @@ package testsuites;
 
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import evaluate.PsoEditTests;
 import compare.AddPrivateScenarioTests;
 import compare.AddPublicScenarioTests;
 import compare.DeletePrivateComparisonTests;
@@ -72,7 +73,8 @@ import org.junit.runners.Suite;
     ProcessRoutingTests.class,
     ActionsTests.class,
     DTCCastingTests.class,
-    ProcessRoutingTests.class
+    ProcessRoutingTests.class,
+    PsoEditTests.class
 })
 public class CIDTestSuite {
 }
