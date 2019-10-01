@@ -1,4 +1,4 @@
-package test.java.evaluate;
+package evaluate;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -44,8 +44,11 @@ public class DeletePublicScenarioTests extends TestBase {
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
-        new ExplorePage(driver).delete()
-            .deleteScenario();
+        explorePage = new ExplorePage(driver);
+        explorePage.delete()
+            .deleteScenario()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
     }

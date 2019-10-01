@@ -1,4 +1,4 @@
-package test.java.testsuites.suiteinterface;
+package testsuites.suiteinterface;
 
 public interface CustomerSmokeTests {
 }

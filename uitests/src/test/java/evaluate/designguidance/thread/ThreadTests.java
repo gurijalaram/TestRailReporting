@@ -1,4 +1,4 @@
-package test.java.evaluate.designguidance.thread;
+package evaluate.designguidance.thread;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,7 +21,7 @@ import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import test.java.testsuites.suiteinterface.CustomerSmokeTests;
@@ -273,6 +273,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"38", "40", "43", "584", "598"})
+    @Issue("AP-56325")
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
@@ -330,6 +331,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56325")
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
@@ -348,6 +350,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56325")
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);

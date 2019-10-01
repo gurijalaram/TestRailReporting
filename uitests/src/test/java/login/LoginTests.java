@@ -1,4 +1,4 @@
-package test.java.login;
+package login;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
