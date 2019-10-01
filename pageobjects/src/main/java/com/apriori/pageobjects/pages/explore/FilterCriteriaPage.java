@@ -53,10 +53,10 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
     private WebElement valueInputDropdown;
 
-    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.gwt-Button.btn.btn-primary")
+    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.gwt-Button.btn.btn-default")
+    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.btn.btn-default")
     private WebElement cancelButton;
 
     @FindBy(css = "div[data-ap-comp='additionalSearchCriteria'] input")

@@ -1,4 +1,4 @@
-package test.java.compare;
+package compare;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
