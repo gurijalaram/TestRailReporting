@@ -17,6 +17,7 @@ import java.util.Map;
 public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPage> {
 
     private final Logger logger = LoggerFactory.getLogger(SelectionSettingsPage.class);
+    private final String colourLocator = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled']";
 
     @FindBy(css = "div[data-ap-field='selectionColor'] input")
     private WebElement selectedColour;
@@ -24,67 +25,67 @@ public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPa
     @FindBy(css = ".sp-dd")
     private WebElement colourDropdown;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#ff0000']")
+    @FindBy(css = colourLocator + " span[title='#ff0000']")
     private WebElement red;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#ffff00']")
+    @FindBy(css = colourLocator + " span[title='#ffff00']")
     private WebElement yellow;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#00ff00']")
+    @FindBy(css = colourLocator + " span[title='#00ff00']")
     private WebElement lime;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#00ffff']")
+    @FindBy(css = colourLocator + " span[title='#00ffff']")
     private WebElement aqua;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#0000ff']")
+    @FindBy(css = colourLocator + " span[title='#0000ff']")
     private WebElement blue;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#ff00ff']")
+    @FindBy(css = colourLocator + " span[title='#ff00ff']")
     private WebElement fuchsia;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#ffffff']")
+    @FindBy(css = colourLocator + " span[title='#ffffff']")
     private WebElement white;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#ff0099']")
+    @FindBy(css = colourLocator + " span[title='#ff0099']")
     private WebElement hollywoodCerise;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#ff9900']")
+    @FindBy(css = colourLocator + " span[title='#ff9900']")
     private WebElement orangePeel;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#99ff00']")
+    @FindBy(css = colourLocator + " span[title='#99ff00']")
     private WebElement springBud;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#00ff99']")
+    @FindBy(css = colourLocator + " span[title='#00ff99']")
     private WebElement mediumSpringGreen;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#0099ff']")
+    @FindBy(css = colourLocator + " span[title='#0099ff']")
     private WebElement dodgerBlue;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#9900ff']")
+    @FindBy(css = colourLocator + " span[title='#9900ff']")
     private WebElement electricPurple;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#999999']")
+    @FindBy(css = colourLocator + " span[title='#999999']")
     private WebElement nobel;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#990066']")
+    @FindBy(css = colourLocator + " span[title='#990066']")
     private WebElement eggplant;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#996600']")
+    @FindBy(css = colourLocator + " span[title='#996600']")
     private WebElement goldenBrown;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#669900']")
+    @FindBy(css = colourLocator + " span[title='#669900']")
     private WebElement christi;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#009966']")
+    @FindBy(css = colourLocator + " span[title='#009966']")
     private WebElement shamrockGreen;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#006699']")
+    @FindBy(css = colourLocator + " span[title='#006699']")
     private WebElement cerulean;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#660099']")
+    @FindBy(css = colourLocator + " span[title='#660099']")
     private WebElement indigo;
 
-    @FindBy(css = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled'] span[title='#000000']")
+    @FindBy(css = colourLocator + " span[title='#000000']")
     private WebElement black;
 
     private WebDriver driver;
