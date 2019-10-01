@@ -1,42 +1,42 @@
-package test.java.testsuites;
+package testsuites;
 
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import evaluate.PsoEditTests;
+import compare.AddPrivateScenarioTests;
+import compare.AddPublicScenarioTests;
+import compare.DeletePrivateComparisonTests;
+import compare.DeletePublicComparisonTests;
+import compare.EditPublicComparisonTests;
+import compare.PublishPublicComparisonTests;
+import evaluate.AssemblyUploadTests;
+import evaluate.CostAllCadTests;
+import evaluate.DeletePrivateScenarioTests;
+import evaluate.DeletePublicScenarioTests;
+import evaluate.DeleteScenarioIterationsTests;
+import evaluate.ListOfVPETests;
+import evaluate.NewScenarioNameTests;
+import evaluate.ProcessGroupsTests;
+import evaluate.ProcessRoutingTests;
+import evaluate.PublishExistingCostedTests;
+import evaluate.PublishNewCostedTests;
+import evaluate.ReCostScenarioTests;
+import evaluate.RevertScenarioTests;
+import evaluate.SecondaryProcessTests;
+import evaluate.designguidance.dtc.DTCCastingTests;
+import evaluate.designguidance.dtc.DTCMachiningTests;
+import evaluate.designguidance.dtc.DTCMouldingDraftTests;
+import evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
+import evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
+import evaluate.designguidance.thread.ThreadTests;
+import evaluate.materialutilization.ChangeStockSelectionTests;
+import explore.ActionsTests;
+import explore.FilterCriteriaTests;
+import explore.PreviewPanelTests;
+import explore.TableHeadersTests;
+import login.LoginTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-
-import test.java.compare.AddPrivateScenarioTests;
-import test.java.compare.AddPublicScenarioTests;
-import test.java.compare.DeletePrivateComparisonTests;
-import test.java.compare.DeletePublicComparisonTests;
-import test.java.compare.EditPublicComparisonTests;
-import test.java.compare.PublishPublicComparisonTests;
-import test.java.evaluate.CostAllCadTests;
-import test.java.evaluate.DeletePrivateScenarioTests;
-import test.java.evaluate.DeletePublicScenarioTests;
-import test.java.evaluate.DeleteScenarioIterationsTests;
-import test.java.evaluate.ListOfVPETests;
-import test.java.evaluate.NewScenarioNameTests;
-import test.java.evaluate.ProcessGroupsTests;
-import test.java.evaluate.ProcessRoutingTests;
-import test.java.evaluate.PublishExistingCostedTests;
-import test.java.evaluate.PublishNewCostedTests;
-import test.java.evaluate.ReCostScenarioTests;
-import test.java.evaluate.RevertScenarioTests;
-import test.java.evaluate.SecondaryProcessTests;
-import test.java.evaluate.designguidance.dtc.DTCCastingTests;
-import test.java.evaluate.designguidance.dtc.DTCMachiningTests;
-import test.java.evaluate.designguidance.dtc.DTCMouldingDraftTests;
-import test.java.evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
-import test.java.evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
-import test.java.evaluate.designguidance.thread.ThreadTests;
-import test.java.evaluate.materialutilization.ChangeStockSelectionTests;
-import test.java.explore.ActionsTests;
-import test.java.explore.FilterCriteriaTests;
-import test.java.explore.PreviewPanelTests;
-import test.java.explore.TableHeadersTests;
-import test.java.login.LoginTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
@@ -52,6 +52,7 @@ import test.java.login.LoginTests;
     LoginTests.class,
     ChangeStockSelectionTests.class,
     ProcessGroupsTests.class,
+    AssemblyUploadTests.class,
     CostAllCadTests.class,
     DeletePrivateScenarioTests.class,
     DeletePublicScenarioTests.class,

@@ -1,4 +1,4 @@
-package test.java.compare;
+package compare;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,8 +16,8 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.junit.Test;
+import pages.jobqueue.JobQueuePage;
 
 public class DeletePublicComparisonTests extends TestBase {
 
@@ -25,6 +25,7 @@ public class DeletePublicComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private JobQueuePage jobQueuePage;
 
     public DeletePublicComparisonTests() {
         super();
@@ -54,13 +55,15 @@ public class DeletePublicComparisonTests extends TestBase {
             .apply();
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.publishScenario()
+        jobQueuePage = genericHeader.publishScenario()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName)
             .delete()
-            .deleteExploreComparison();
+            .deleteExploreComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
 
-        assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
+        assertThat(new ExplorePage(driver).getListOfComparisons(testComparisonName) < 1, is(true));
     }
 
     @Test
@@ -94,8 +97,13 @@ public class DeletePublicComparisonTests extends TestBase {
             .openComparison(testComparisonName);
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.delete().deleteComparison()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+        jobQueuePage = genericHeader.delete()
+            .deleteComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
+
+        explorePage = new ExplorePage(driver);
+        explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
         assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
     }

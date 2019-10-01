@@ -1,4 +1,4 @@
-package test.java.compare;
+package compare;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,8 +16,8 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.junit.Test;
+import pages.jobqueue.JobQueuePage;
 
 public class DeletePrivateComparisonTests extends TestBase {
 
@@ -25,6 +25,7 @@ public class DeletePrivateComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private JobQueuePage jobQueuePage;
 
     public DeletePrivateComparisonTests() {
         super();
@@ -54,13 +55,15 @@ public class DeletePrivateComparisonTests extends TestBase {
             .apply();
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
+        jobQueuePage = genericHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName)
             .delete()
-            .deleteExploreComparison();
+            .deleteExploreComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
 
-        assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
+        assertThat(new ExplorePage(driver).getListOfComparisons(testComparisonName) < 1, is(true));
     }
 
     @Test
@@ -77,7 +80,10 @@ public class DeletePrivateComparisonTests extends TestBase {
             .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
-        genericHeader.delete().deleteComparison();
+        genericHeader.delete()
+            .deleteComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testComparisonName, "Delete");
 
         explorePage = new ExplorePage(driver);
         explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
