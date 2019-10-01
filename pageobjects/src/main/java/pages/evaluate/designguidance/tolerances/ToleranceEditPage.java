@@ -24,6 +24,9 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
 
+    @FindBy(css = "div[data-ap-comp='artifactTolerancesTable'] .v-grid-cell.tolerance-input-column")
+    private WebElement toleranceCell;
+
     @FindBy(css = "input[data-ap-field='circularity.current']")
     private WebElement circularityInput;
 
@@ -97,7 +100,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(dialogTitle);
+        pageUtils.waitForElementToAppear(toleranceCell);
     }
 
     /**

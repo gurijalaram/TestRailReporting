@@ -42,9 +42,9 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "")
-    @Description("Validate Tolerances can be edited")
-    public void testEditTolerance() {
+    @TestRail(testCaseId = "707")
+    @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
+    public void testEditTolerances() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .openSettings()
@@ -53,14 +53,17 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            /*.uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
+            .costScenario()*/
+
+            .openScenario("AutoScenario30-6110986313400", "DTCCASTINGISSUES")
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
+            .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getTolerance(), "PlanarFace:74")
             .selectEditButton()
-            .setTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0.23")
+            .setTolerance(ToleranceEnum.PROFILESURFACE.getTolerance(), "0.23")
+            .setTolerance(ToleranceEnum.PROFILESURFACE.getTolerance(), "0.16")
             .apply(TolerancePage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -70,15 +73,25 @@ public class ToleranceTests extends TestBase {
         evaluatePage.costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
+            .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getTolerance(), "PlanarFace:74")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0.23"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getTolerance(), "0.23"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getTolerance(), "0.16"), is(true));
+
+        toleranceEditPage.cancel();
+
+        evaluatePage = new EvaluatePage(driver);
+        toleranceSettingsPage = evaluatePage.openSettings()
+            .openTolerancesTab()
+            .selectAssumeTolerance();
+
+        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
-    @TestRail(testCaseId = "")
-    @Description("Tolerance can be edited")
+    @TestRail(testCaseId = "708")
+    @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -100,11 +113,20 @@ public class ToleranceTests extends TestBase {
             .selectEditButton();
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getTolerance(), ""), is(true));
+
+        toleranceEditPage.cancel();
+
+        evaluatePage = new EvaluatePage(driver);
+        toleranceSettingsPage = evaluatePage.openSettings()
+            .openTolerancesTab()
+            .selectAssumeTolerance();
+
+        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
-    @TestRail(testCaseId = "")
-    @Description("Tolerance can be edited")
+    @TestRail(testCaseId = "716")
+    @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerancea() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -122,8 +144,8 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "")
-    @Description("Tolerance can be edited")
+    @TestRail(testCaseId = "717")
+    @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -171,18 +193,51 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "")
-    @Description("Tolerance can be edited")
+    @TestRail(testCaseId = "726")
+    @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
         loginPage = new LoginPage(driver);
-        tolerancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        tolerancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario()
             .openDesignGuidance()
-            .openTolerancesTab();
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getTolerance(), "PlanarFace:78")
+            .selectEditButton()
+            .setTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0.44")
+            .apply(TolerancePage.class);
 
-        assertThat(tolerancePage.isToleranceCount(ToleranceEnum.FLATNESS.getTolerance(), "18"), is(true));
+        designGuidancePage = new DesignGuidancePage(driver);
+        designGuidancePage.closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        evaluatePage.openMaterialCompositionTable()
+            .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
+            .apply()
+            .costScenario()
+            .openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getTolerance(), "PlanarFace:78")
+            .selectEditButton();
+
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0.44"), is(true));
+
+        toleranceEditPage.cancel();
+
+        evaluatePage = new EvaluatePage(driver);
+        toleranceSettingsPage = evaluatePage.openSettings()
+            .openTolerancesTab()
+            .selectAssumeTolerance();
+
+        new SettingsPage(driver).save(EvaluatePage.class);
+
     }
 
     @Test
