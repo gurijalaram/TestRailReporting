@@ -24,7 +24,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import test.java.testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ThreadTests extends TestBase {
 
