@@ -8,6 +8,7 @@ import compare.DeletePrivateComparisonTests;
 import compare.DeletePublicComparisonTests;
 import compare.EditPublicComparisonTests;
 import compare.PublishPublicComparisonTests;
+import evaluate.AssemblyUploadTests;
 import evaluate.CostAllCadTests;
 import evaluate.DeletePrivateScenarioTests;
 import evaluate.DeletePublicScenarioTests;
@@ -50,6 +51,7 @@ import org.junit.runners.Suite;
     LoginTests.class,
     ChangeStockSelectionTests.class,
     ProcessGroupsTests.class,
+    AssemblyUploadTests.class,
     CostAllCadTests.class,
     DeletePrivateScenarioTests.class,
     DeletePublicScenarioTests.class,
