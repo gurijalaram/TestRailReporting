@@ -64,4 +64,12 @@ public class LoginTests extends TestBase {
         loginPage = loginPage.failedLoginAs("jacky348@apriori.com", "fakePassword");
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
+
+    @Test
+    @Description("Valid user account must be an email")
+    public void testEmailIncorrect() {
+        loginPage = new LoginPage(driver);
+        loginPage = loginPage.failedLoginAs("mparker", "fakePassword");
+        assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
+    }
 }
