@@ -13,6 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pages.jobqueue.JobQueuePage;
 
 /**
  * @author cfrith
@@ -112,9 +113,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return new page object
      */
-    public PageHeader openJobQueue() {
+    public JobQueuePage openJobQueue() {
         pageUtils.waitForElementAndClick(jobQueueButton);
-        return this;
+        return new JobQueuePage(driver);
     }
 
     /**
