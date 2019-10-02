@@ -32,6 +32,7 @@ public class RequestEntity {
 
 
     private EndpointEnum endpoint;
+    private String customEndpoint;
     private Map<String, String> headers = new HashMap<>();
     private Integer[] statusCode = {HttpStatus.SC_OK};
     private boolean useCookie = false;
@@ -134,6 +135,11 @@ public class RequestEntity {
 
     public EndpointEnum getEndpoint() {
         return endpoint;
+    }
+
+    public RequestEntity setEndpoint(String endpoint) {
+        this.customEndpoint = endpoint;
+        return this;
     }
 
     public RequestEntity setEndpoint(EndpointEnum endpoint) {
@@ -323,10 +329,11 @@ public class RequestEntity {
     }
 
     public String buildEndpoint() {
-        if (inlineVariables != null) {
-            return endpoint.getEndpoint(inlineVariables);
-        } else {
-            return endpoint.getEndpoint();
+
+        if (this.customEndpoint != null) {
+            return this.customEndpoint;
         }
+
+        return this.inlineVariables != null ? endpoint.getEndpoint(inlineVariables) : endpoint.getEndpoint();
     }
 }

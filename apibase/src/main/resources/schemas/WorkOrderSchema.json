@@ -1,0 +1,178 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "version",
+    "id",
+    "status",
+    "searchKey",
+    "command"
+  ],
+  "properties": {
+    "version": {
+      "$id": "#/properties/version",
+      "type": "integer",
+      "title": "The Version Schema",
+      "default": 0,
+      "examples": [
+        3
+      ]
+    },
+    "id": {
+      "$id": "#/properties/id",
+      "type": "string",
+      "title": "The Id Schema",
+      "default": "",
+      "examples": [
+        "3d5957dd-c6c9-4aac-ba31-15d2322ad5e1"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "status": {
+      "$id": "#/properties/status",
+      "type": "string",
+      "title": "The Status Schema",
+      "default": "",
+      "examples": [
+        "PROCESSING"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "searchKey": {
+      "$id": "#/properties/searchKey",
+      "type": "string",
+      "title": "The Searchkey Schema",
+      "default": "",
+      "examples": [
+        "Part-DTCCASTINGISSUES.AutoScenario342-4326230417200(51)"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "command": {
+      "$id": "#/properties/command",
+      "type": "object",
+      "title": "The Command Schema",
+      "required": [
+        "commandType",
+        "inputs"
+      ],
+      "properties": {
+        "commandType": {
+          "$id": "#/properties/command/properties/commandType",
+          "type": "string",
+          "title": "The Commandtype Schema",
+          "default": "",
+          "examples": [
+            "COSTING"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "inputs": {
+          "$id": "#/properties/command/properties/inputs",
+          "type": "object",
+          "title": "The Inputs Schema",
+          "required": [
+            "scenarioIterationKey",
+            "inputSetId"
+          ],
+          "properties": {
+            "scenarioIterationKey": {
+              "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey",
+              "type": "object",
+              "title": "The Scenarioiterationkey Schema",
+              "required": [
+                "scenarioKey",
+                "iteration"
+              ],
+              "properties": {
+                "scenarioKey": {
+                  "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey",
+                  "type": "object",
+                  "title": "The Scenariokey Schema",
+                  "required": [
+                    "workspaceID",
+                    "stateName",
+                    "masterName",
+                    "typeName"
+                  ],
+                  "properties": {
+                    "workspaceID": {
+                      "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/workspaceID",
+                      "type": "integer",
+                      "title": "The Workspaceid Schema",
+                      "default": 0,
+                      "examples": [
+                        51
+                      ]
+                    },
+                    "stateName": {
+                      "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/stateName",
+                      "type": "string",
+                      "title": "The Statename Schema",
+                      "default": "",
+                      "examples": [
+                        "AutoScenario342-4326230417200"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "masterName": {
+                      "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/masterName",
+                      "type": "string",
+                      "title": "The Mastername Schema",
+                      "default": "",
+                      "examples": [
+                        "DTCCASTINGISSUES"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "typeName": {
+                      "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/typeName",
+                      "type": "string",
+                      "title": "The Typename Schema",
+                      "default": "",
+                      "examples": [
+                        "partState"
+                      ],
+                      "pattern": "^(.*)$"
+                    }
+                  }
+                },
+                "iteration": {
+                  "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/iteration",
+                  "type": "integer",
+                  "title": "The Iteration Schema",
+                  "default": 0,
+                  "examples": [
+                    1485
+                  ]
+                }
+              }
+            },
+            "inputSetId": {
+              "$id": "#/properties/command/properties/inputs/properties/inputSetId",
+              "type": "integer",
+              "title": "The Inputsetid Schema",
+              "default": 0,
+              "examples": [
+                486
+              ]
+            }
+          }
+        }
+      }
+    },
+    "dateSubmitted": {
+      "$id": "#/properties/dateSubmitted",
+      "type": "string",
+      "title": "The Datesubmitted Schema",
+      "default": "",
+      "examples": [
+        "2019-10-01T11:35:55Z"
+      ],
+      "pattern": "^(.*)$"
+    }
+  }
+}

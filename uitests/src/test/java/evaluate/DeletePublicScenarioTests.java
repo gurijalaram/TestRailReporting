@@ -3,6 +3,7 @@ package test.java.evaluate;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.actions.ScenarioAction;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -48,5 +49,27 @@ public class DeletePublicScenarioTests extends TestBase {
             .deleteScenario();
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
+    }
+
+
+    @Test
+    public void testForceDelete() {
+//        String testScenarioName = new Util().getScenarioName();
+
+//        loginPage = new LoginPage(driver);
+//        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
+//            .publishScenario()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
+//            .filterCriteria()
+//            .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+//            .apply(ExplorePage.class)
+//            .highlightScenario(testScenarioName, "casting");
+
+
+        new ScenarioAction().forceDelete(driver, "testName");
+
     }
 }
