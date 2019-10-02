@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.settings;
 
+import com.apriori.pageobjects.utils.MapUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.enums.ColourEnum;
 
@@ -127,12 +128,11 @@ public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPa
      */
     public SelectionSettingsPage setColour(String colour) {
         pageUtils.waitForElementAndClick(colourDropdown);
-        pageUtils.waitForElementToAppear(getLocatorFromMap(colour)).click();
+        pageUtils.waitForElementToAppear(new MapUtils(buildMap()).getLocatorFromMap(colour)).click();
         return this;
     }
 
     private Map<String, WebElement> buildMap() {
-
         map.put(ColourEnum.RED.getColour(), red);
         map.put(ColourEnum.YELLOW.getColour(), yellow);
         map.put(ColourEnum.LIME.getColour(), lime);
@@ -154,18 +154,6 @@ public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPa
         map.put(ColourEnum.CERULEAN.getColour(), cerulean);
         map.put(ColourEnum.INDIGO.getColour(), indigo);
         map.put(ColourEnum.BLACK.getColour(), black);
-
         return map;
-    }
-
-    private Map<String, WebElement> getMap() {
-        if (map.isEmpty()) {
-            map = buildMap();
-        }
-        return map;
-    }
-
-    private WebElement getLocatorFromMap(String toleranceName) {
-        return getMap().get(toleranceName);
     }
 }
