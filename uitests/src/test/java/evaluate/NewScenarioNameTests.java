@@ -61,7 +61,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
+        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), CoreMatchers.is(true));
 

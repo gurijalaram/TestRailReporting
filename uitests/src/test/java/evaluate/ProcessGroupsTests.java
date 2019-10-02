@@ -16,6 +16,7 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -512,33 +513,9 @@ public class ProcessGroupsTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @Description("Testing process group PMI")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupPMI() {
-
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_04_gtoldtc.prt"))
-            .publishScenario()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_04_gtoldtc");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category(CustomerSmokeTests.class)
-    @Test
     @Description("Testing process group Powder Metal")
     @TestRail(testCaseId = {"1591"})
+    @Issue("AP-56462")
     public void testProcessGroupPowderMetal() {
 
         String testScenarioName = new Util().getScenarioName();
