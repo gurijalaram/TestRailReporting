@@ -16,6 +16,7 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import pages.jobqueue.JobQueuePage;
 
@@ -34,6 +35,7 @@ public class DeletePublicComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
+    @Issue("AP-56464")
     public void testPublicComparisonDelete() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -69,6 +71,7 @@ public class DeletePublicComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
+    @Issue("AP-56464")
     public void deletePublicComparisonPage() {
 
         String testScenarioName = new Util().getScenarioName();
