@@ -9,11 +9,13 @@ import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -46,7 +48,9 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCurrentScenarioName(testScenarioName), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
+    @TestRail(testCaseId = {"1576", "1586", "1587", "1589"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
 
@@ -57,7 +61,11 @@ public class NewScenarioNameTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
+
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), CoreMatchers.is(true));
+
+        evaluatePage.costScenario()
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "partbody_2");

@@ -1,6 +1,7 @@
 package testsuites;
 
 import evaluate.NewScenarioNameTests;
+import evaluate.ProcessGroupsTests;
 import evaluate.designguidance.thread.ThreadTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
@@ -11,7 +12,8 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 @Categories.IncludeCategory(CustomerSmokeTests.class)
 @Suite.SuiteClasses({
     NewScenarioNameTests.class,
-    ThreadTests.class
+    ThreadTests.class,
+    ProcessGroupsTests.class
 })
 public class CustomerSmokeTestSuite {
 }

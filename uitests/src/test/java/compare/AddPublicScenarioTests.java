@@ -16,7 +16,7 @@ import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -32,6 +32,7 @@ public class AddPublicScenarioTests extends TestBase {
 
     @Test
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
+    @Issue("AP-56464")
     public void filterAddPublicScenario() {
 
         String testScenarioName = new Util().getScenarioName();
