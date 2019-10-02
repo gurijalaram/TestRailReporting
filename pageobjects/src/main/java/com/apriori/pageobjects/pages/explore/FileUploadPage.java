@@ -103,7 +103,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return new page object
      */
     private EvaluatePage selectOkButton() {
-        pageUtils.waitForElementToBeClickable(okButton).click();
+        pageUtils.waitForElementAndClick(okButton);
         return new EvaluatePage(driver);
     }
 
