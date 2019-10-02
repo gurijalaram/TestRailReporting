@@ -77,6 +77,12 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
     @FindBy(css = "input[data-ap-field='symmetryOverride']")
     private WebElement symmetryInput;
 
+    @FindBy(css = ".modal-footer button.btn.btn-primary")
+    private WebElement saveButton;
+
+    @FindBy(css = ".modal-footer button.btn.btn-default")
+    private WebElement cancelButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private Map<String, WebElement> map = new HashMap<>();
@@ -153,5 +159,25 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
         map.put(ToleranceEnum.TOLERANCE.getTolerance(), toleranceInput);
         map.put(ToleranceEnum.TOTALRUNOUT.getTolerance(), totalRunoutInput);
         return map;
+    }
+
+    /**
+     * Selects the save button
+     *
+     * @return new page object
+     */
+    public ToleranceSettingsPage save() {
+        saveButton.click();
+        return new ToleranceSettingsPage(driver);
+    }
+
+    /**
+     * Selects the cancel button
+     *
+     * @return new page object
+     */
+    public ToleranceSettingsPage cancel() {
+        cancelButton.click();
+        return new ToleranceSettingsPage(driver);
     }
 }
