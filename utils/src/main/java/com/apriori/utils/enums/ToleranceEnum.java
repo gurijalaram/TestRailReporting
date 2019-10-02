@@ -21,7 +21,8 @@ public enum ToleranceEnum {
     STRAIGHTNESS("Straightness"),
     SYMMETRY("Symmetry"),
     TOLERANCE("Tolerance"),
-    TOTALRUNOUT("Total Runout");
+    TOTALRUNOUT("Total Runout"),
+    BEND_ANGLE_TOLERANCE("Bend Angle Tolerance");
 
     private final String tolerance;
 
