@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
+import com.apriori.pageobjects.utils.MapUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.enums.ToleranceEnum;
 
@@ -109,7 +110,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return true/false
      */
     public Boolean isTolerance(String tolerance, String text) {
-        return pageUtils.checkElementAttribute(getLocatorFromMap(tolerance), "value", text);
+        return pageUtils.checkElementAttribute(new MapUtils(buildMap()).getLocatorFromMap(tolerance), "value", text);
     }
 
     /**
@@ -119,7 +120,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return
      */
     public ToleranceEditPage removeTolerance(String text) {
-        getLocatorFromMap(text).clear();
+        new MapUtils(buildMap()).getLocatorFromMap(text).clear();
         return this;
     }
 
@@ -131,13 +132,12 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return
      */
     public ToleranceEditPage setTolerance(String tolerance, String text) {
-        pageUtils.clearInput(getLocatorFromMap(tolerance));
-        getLocatorFromMap(tolerance).sendKeys(text);
+        pageUtils.clearInput(new MapUtils(buildMap()).getLocatorFromMap(tolerance));
+        new MapUtils(buildMap()).getLocatorFromMap(tolerance).sendKeys(text);
         return this;
     }
 
     private Map<String, WebElement> buildMap() {
-
         map.put(ToleranceEnum.CIRCULARITY.getTolerance(), circularityInput);
         map.put(ToleranceEnum.PARALLELISM.getTolerance(), parallelismInput);
         map.put(ToleranceEnum.CONCENTRICITY.getTolerance(), concentricityInput);
@@ -154,19 +154,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
         map.put(ToleranceEnum.SYMMETRY.getTolerance(), symmetryInput);
         map.put(ToleranceEnum.TOLERANCE.getTolerance(), toleranceInput);
         map.put(ToleranceEnum.TOTALRUNOUT.getTolerance(), totalRunoutInput);
-
         return map;
-    }
-
-    private Map<String, WebElement> getMap() {
-        if (map.isEmpty()) {
-            map = buildMap();
-        }
-        return map;
-    }
-
-    private WebElement getLocatorFromMap(String toleranceName) {
-        return getMap().get(toleranceName);
     }
 
     /**
