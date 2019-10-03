@@ -18,7 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
-import pages.jobqueue.JobQueuePage;
+import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 
 public class DeletePublicComparisonTests extends TestBase {
 

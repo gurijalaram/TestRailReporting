@@ -1,4 +1,4 @@
-package pages.jobqueue;
+package com.apriori.pageobjects.pages.jobqueue;
 
 import com.apriori.pageobjects.utils.PageUtils;
 
