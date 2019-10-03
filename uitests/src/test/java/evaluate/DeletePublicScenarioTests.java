@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.actions.ScenarioAction;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.utils.WorkOrderRequestEntity;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -51,25 +52,22 @@ public class DeletePublicScenarioTests extends TestBase {
         assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
     }
 
-
+//TEST EXAMPLE OF USE FORCE DELETE SCENARIO
     @Test
     public void testForceDelete() {
-//        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().getScenarioName();
 
-//        loginPage = new LoginPage(driver);
-//        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-//
-//        explorePage = new ExplorePage(driver);
-//        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
-//            .publishScenario()
-//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
-//            .filterCriteria()
-//            .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
-//            .apply(ExplorePage.class)
-//            .highlightScenario(testScenarioName, "casting");
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
+        explorePage = new ExplorePage(driver);
+        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
+            .publishScenario()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
 
-        new ScenarioAction().forceDelete(driver, "testName");
+        ScenarioAction.forceDelete(
+            WorkOrderRequestEntity.defaultRequestByUserEnum(UsersEnum.CID_TE_CFRITH_ALLDATA, testScenarioName)
+                .setWorkspace(WorkspaceEnum.PUBLIC_API));
 
     }
 }

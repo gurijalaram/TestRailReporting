@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class WorkOrderScenarioKey {
 
     @JsonProperty
-    private String workspaceID;
+    private Integer workspaceID;
 
     @JsonProperty
     private String stateName;
@@ -16,11 +16,11 @@ public class WorkOrderScenarioKey {
     @JsonProperty
     private String typeName;
 
-    public String getWorkspaceID() {
+    public Integer getWorkspaceID() {
         return workspaceID;
     }
 
-    public WorkOrderScenarioKey setWorkspaceID(String workspaceID) {
+    public WorkOrderScenarioKey setWorkspaceID(Integer workspaceID) {
         this.workspaceID = workspaceID;
         return this;
     }

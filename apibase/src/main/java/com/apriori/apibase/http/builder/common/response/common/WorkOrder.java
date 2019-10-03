@@ -28,14 +28,14 @@ public class WorkOrder {
     private String dateSubmitted;
 
     @JsonProperty
-    private ScenarioIterationKey scenarioIterationKey;
+    private WorkOrderScenarioIteration workOrderScenarioIteration;
 
-    public ScenarioIterationKey getScenarioIterationKey() {
-        return scenarioIterationKey;
+    public WorkOrderScenarioIteration getWorkOrderScenarioIteration() {
+        return workOrderScenarioIteration;
     }
 
-    public WorkOrder setScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
-        this.scenarioIterationKey = scenarioIterationKey;
+    public WorkOrder setWorkOrderScenarioIteration(WorkOrderScenarioIteration workOrderScenarioIteration) {
+        this.workOrderScenarioIteration = workOrderScenarioIteration;
         return this;
     }
 

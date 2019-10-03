@@ -2,7 +2,7 @@ package com.apriori.apibase.http.builder.common.response.common;
 
 import java.util.List;
 
-public class WorkSpaceSearch {
+public class WorkSpaceSearchWrapper {
 
     private WorkSpaceSearchCriteria criteria;
 
@@ -12,7 +12,7 @@ public class WorkSpaceSearch {
         return criteria;
     }
 
-    public WorkSpaceSearch setCriteria(WorkSpaceSearchCriteria criteria) {
+    public WorkSpaceSearchWrapper setCriteria(WorkSpaceSearchCriteria criteria) {
         this.criteria = criteria;
         return this;
     }
@@ -21,7 +21,7 @@ public class WorkSpaceSearch {
         return visibility;
     }
 
-    public WorkSpaceSearch setVisibility(List<String> visibility) {
+    public WorkSpaceSearchWrapper setVisibility(List<String> visibility) {
         this.visibility = visibility;
         return this;
     }

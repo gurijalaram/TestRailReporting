@@ -5,17 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class WorkOrderInputs {
 
     @JsonProperty
-    private ScenarioIterationKey scenarioIterationKey;
+    private WorkOrderScenarioIteration workOrderScenarioIteration;
 
     @JsonProperty
     private boolean includeOtherWorkspace;
 
-    public ScenarioIterationKey getScenarioIterationKey() {
-        return scenarioIterationKey;
+    public WorkOrderScenarioIteration getWorkOrderScenarioIteration() {
+        return workOrderScenarioIteration;
     }
 
-    public WorkOrderInputs setScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
-        this.scenarioIterationKey = scenarioIterationKey;
+    public WorkOrderInputs setWorkOrderScenarioIteration(WorkOrderScenarioIteration workOrderScenarioIteration) {
+        this.workOrderScenarioIteration = workOrderScenarioIteration;
         return this;
     }
 
