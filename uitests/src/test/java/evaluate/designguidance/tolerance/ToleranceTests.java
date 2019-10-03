@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.ToleranceEnum;
@@ -12,7 +13,6 @@ import main.java.enums.UsersEnum;
 import main.java.enums.VPEEnum;
 import main.java.pages.evaluate.EvaluatePage;
 import main.java.pages.evaluate.designguidance.DesignGuidancePage;
-import main.java.pages.evaluate.designguidance.GuidancePage;
 import main.java.pages.evaluate.designguidance.tolerances.ToleranceEditPage;
 import main.java.pages.evaluate.designguidance.tolerances.TolerancePage;
 import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
@@ -33,7 +33,6 @@ public class ToleranceTests extends TestBase {
     private WarningPage warningPage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
-    private GuidancePage guidancePage;
     private EvaluatePage evaluatePage;
     private DesignGuidancePage designGuidancePage;
 
@@ -42,6 +41,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56493")
     @TestRail(testCaseId = "707")
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
@@ -53,11 +53,9 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            /*.uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()*/
-
-            .openScenario("AutoScenario30-6110986313400", "DTCCASTINGISSUES")
+            .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getTolerance(), "PlanarFace:74")
@@ -90,6 +88,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56493")
     @TestRail(testCaseId = "708")
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
@@ -125,6 +124,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56493")
     @TestRail(testCaseId = "716")
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerancea() {
@@ -193,6 +193,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56493")
     @TestRail(testCaseId = "726")
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
