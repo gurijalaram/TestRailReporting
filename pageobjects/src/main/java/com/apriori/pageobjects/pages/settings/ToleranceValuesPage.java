@@ -141,23 +141,23 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
     }
 
     private Map<String, WebElement> buildMap() {
-        map.put(ToleranceEnum.CIRCULARITY.getTolerance(), circularityInput);
-        map.put(ToleranceEnum.PARALLELISM.getTolerance(), parallelismInput);
-        map.put(ToleranceEnum.CONCENTRICITY.getTolerance(), concentricityInput);
-        map.put(ToleranceEnum.CYLINDRICITY.getTolerance(), cylindricityInput);
-        map.put(ToleranceEnum.DIAMTOLERANCE.getTolerance(), diamToleranceInput);
-        map.put(ToleranceEnum.FLATNESS.getTolerance(), flatnessInput);
-        map.put(ToleranceEnum.PERPENDICULARITY.getTolerance(), perpendicularityInput);
-        map.put(ToleranceEnum.TRUEPOSITION.getTolerance(), truePositionInput);
-        map.put(ToleranceEnum.BEND_ANGLE_TOLERANCE.getTolerance(), bendAngleInput);
-        map.put(ToleranceEnum.PROFILESURFACE.getTolerance(), profileSurfaceInput);
-        map.put(ToleranceEnum.ROUGHNESSRA.getTolerance(), roughnessRaInput);
-        map.put(ToleranceEnum.ROUGHNESSRZ.getTolerance(), roughnessRzInput);
-        map.put(ToleranceEnum.RUNOUT.getTolerance(), runoutInput);
-        map.put(ToleranceEnum.STRAIGHTNESS.getTolerance(), straightnessInput);
-        map.put(ToleranceEnum.SYMMETRY.getTolerance(), symmetryInput);
-        map.put(ToleranceEnum.TOLERANCE.getTolerance(), toleranceInput);
-        map.put(ToleranceEnum.TOTALRUNOUT.getTolerance(), totalRunoutInput);
+        map.put(ToleranceEnum.CIRCULARITY.getToleranceName(), circularityInput);
+        map.put(ToleranceEnum.PARALLELISM.getToleranceName(), parallelismInput);
+        map.put(ToleranceEnum.CONCENTRICITY.getToleranceName(), concentricityInput);
+        map.put(ToleranceEnum.CYLINDRICITY.getToleranceName(), cylindricityInput);
+        map.put(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), diamToleranceInput);
+        map.put(ToleranceEnum.FLATNESS.getToleranceName(), flatnessInput);
+        map.put(ToleranceEnum.PERPENDICULARITY.getToleranceName(), perpendicularityInput);
+        map.put(ToleranceEnum.TRUEPOSITION.getToleranceName(), truePositionInput);
+        map.put(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), bendAngleInput);
+        map.put(ToleranceEnum.PROFILESURFACE.getToleranceName(), profileSurfaceInput);
+        map.put(ToleranceEnum.ROUGHNESSRA.getToleranceName(), roughnessRaInput);
+        map.put(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), roughnessRzInput);
+        map.put(ToleranceEnum.RUNOUT.getToleranceName(), runoutInput);
+        map.put(ToleranceEnum.STRAIGHTNESS.getToleranceName(), straightnessInput);
+        map.put(ToleranceEnum.SYMMETRY.getToleranceName(), symmetryInput);
+        map.put(ToleranceEnum.TOLERANCE.getToleranceName(), toleranceInput);
+        map.put(ToleranceEnum.TOTALRUNOUT.getToleranceName(), totalRunoutInput);
         return map;
     }
 

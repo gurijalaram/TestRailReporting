@@ -24,13 +24,13 @@ public enum ToleranceEnum {
     TOTALRUNOUT("Total Runout"),
     BEND_ANGLE_TOLERANCE("Bend Angle Tolerance");
 
-    private final String tolerance;
+    private final String toleranceName;
 
-    ToleranceEnum(String tolerance) {
-        this.tolerance = tolerance;
+    ToleranceEnum(String toleranceName) {
+        this.toleranceName = toleranceName;
     }
 
-    public String getTolerance() {
-        return this.tolerance;
+    public String getToleranceName() {
+        return this.toleranceName;
     }
 }
