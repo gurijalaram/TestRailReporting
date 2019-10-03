@@ -76,7 +76,6 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
     private WebElement selectGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='uncostedFeaturesInfo']//td[contains(text(),'" + gcdType + "')]/ancestor::tr");
         return pageUtils.waitForElementToAppear(gcd);
-
     }
 
     /**
