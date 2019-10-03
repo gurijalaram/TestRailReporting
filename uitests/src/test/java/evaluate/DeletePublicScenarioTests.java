@@ -56,7 +56,7 @@ public class DeletePublicScenarioTests extends TestBase {
     }
 
 //TEST EXAMPLE OF USE FORCE DELETE SCENARIO
-    @Test
+  //  @Test
     public void testForceDelete() {
         String testScenarioName = new Util().getScenarioName();
 
