@@ -15,5 +15,4 @@ public enum WorkOrderScenarioTypeEnum {
     public String getType() {
         return this.type;
     }
-
-    }
+}
