@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.settings;
 
-import com.apriori.pageobjects.utils.MapUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.enums.ColourEnum;
 
@@ -128,7 +127,7 @@ public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPa
      */
     public SelectionSettingsPage setColour(String colour) {
         pageUtils.waitForElementAndClick(colourDropdown);
-        pageUtils.waitForElementToAppear(new MapUtils(buildMap()).getLocatorFromMap(colour)).click();
+        pageUtils.waitForElementToAppear(getMap().get(colour)).click();
         return this;
     }
 
@@ -154,6 +153,13 @@ public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPa
         map.put(ColourEnum.CERULEAN.getColour(), cerulean);
         map.put(ColourEnum.INDIGO.getColour(), indigo);
         map.put(ColourEnum.BLACK.getColour(), black);
+        return map;
+    }
+
+    private Map<String, WebElement> getMap() {
+        if (map == null || map.isEmpty()) {
+            map = buildMap();
+        }
         return map;
     }
 }
