@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.homepage.HomePage;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
@@ -18,8 +19,14 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     @FindBy(css = "input[name='email']")
     private WebElement email;
 
-    @FindBy(css = "input[name='password']")
+    @FindBy(css = "a[name='password']")
     private WebElement password;
+
+    @FindBy(css = "input[href='javascript:void(0)']")
+    private WebElement forgotPassword;
+
+    @FindBy(css = "button[type='submit'")
+    private WebElement submitButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -60,4 +67,67 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     protected void isLoaded() throws Error {
 
     }
+
+    /**
+     * Enter email details
+     *
+     * @param emailAddress - user email address
+     */
+    private void enterEmail(String emailAddress){
+        email.click();
+        pageUtils.clearInput(email);
+        email.sendKeys(emailAddress);
+    }
+
+    /**
+     * Enter password
+     *
+     * @param password - user password
+     */
+    private void enterPassword(String password){
+        this.password.click();
+        pageUtils.clearInput(this.password);
+        this.password.sendKeys(password);
+    }
+
+    /**
+     * Single action to submit login credentials
+     */
+    private void submitLogin(){
+        submitButton.click();
+    }
+
+    /**
+     * Execute actions to login
+     *
+     * @param email - user email
+     * @param password - user password
+     */
+    private void executeLogin(String email, String password){
+        enterEmail(email);
+        enterPassword(password);
+        submitLogin();
+    }
+
+    /**
+     * Login to CI Report
+     *
+     * @param email - user email
+     * @param password - user password
+     * @return new page object
+     */
+    public HomePage login(String email, String password){
+        executeLogin(email, password);
+        return new HomePage(driver);
+    }
+
+
+
+
+
+
+
+
+
+
 }
