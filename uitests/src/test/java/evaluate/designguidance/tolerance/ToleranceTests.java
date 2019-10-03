@@ -1,28 +1,21 @@
-package test.java.evaluate.designguidance.tolerance;
+package evaluate.designguidance.tolerance;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ToleranceEditPage;
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ToleranceEnum;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
-import main.java.base.TestBase;
-import main.java.enums.ProcessGroupEnum;
-import main.java.enums.ToleranceEnum;
-import main.java.enums.UsersEnum;
-import main.java.enums.VPEEnum;
-import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.evaluate.designguidance.DesignGuidancePage;
-import main.java.pages.evaluate.designguidance.tolerances.ToleranceEditPage;
-import main.java.pages.evaluate.designguidance.tolerances.TolerancePage;
-import main.java.pages.evaluate.designguidance.tolerances.WarningPage;
-import main.java.pages.explore.ExplorePage;
-import main.java.pages.login.LoginPage;
-import main.java.pages.settings.SettingsPage;
-import main.java.pages.settings.ToleranceSettingsPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
+
 import org.junit.Test;
 
 public class ToleranceTests extends TestBase {

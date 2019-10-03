@@ -1,4 +1,4 @@
-package test.java.evaluate;
+package evaluate;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
@@ -7,25 +7,26 @@ import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
+import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.settings.SettingsPage;
+import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
-import main.java.enums.CurrencyEnum;
-import main.java.enums.ProcessGroupEnum;
-import main.java.enums.UsersEnum;
-import main.java.enums.VPEEnum;
-import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.evaluate.designguidance.investigation.InvestigationPage;
-import main.java.pages.evaluate.materialutilization.MaterialCompositionPage;
-import main.java.pages.evaluate.process.ProcessRoutingPage;
-import main.java.pages.evaluate.process.RoutingsPage;
-import main.java.pages.explore.ExplorePage;
-import main.java.pages.login.LoginPage;
-import main.java.pages.settings.SettingsPage;
-import main.java.pages.settings.ToleranceSettingsPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
+
 import org.hamcrest.Matchers;
 import org.junit.Test;
 

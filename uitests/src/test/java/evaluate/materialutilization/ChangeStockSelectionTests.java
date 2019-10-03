@@ -1,20 +1,22 @@
-package test.java.evaluate.materialutilization;
+package evaluate.materialutilization;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.SelectStockPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.ProcessGroupEnum;
-import main.java.enums.UsersEnum;
-import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.evaluate.materialutilization.stock.SelectStockPage;
-import main.java.pages.evaluate.materialutilization.stock.StockPage;
-import main.java.pages.login.LoginPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
+
 import org.junit.Test;
 
 public class ChangeStockSelectionTests extends TestBase {

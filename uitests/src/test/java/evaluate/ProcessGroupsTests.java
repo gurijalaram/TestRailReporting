@@ -1,21 +1,25 @@
-package test.java.evaluate;
+package evaluate;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.CostingLabelEnum;
-import main.java.enums.ProcessGroupEnum;
-import main.java.enums.UsersEnum;
-import main.java.enums.WorkspaceEnum;
-import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.explore.ExplorePage;
-import main.java.pages.login.LoginPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
+import io.qameta.allure.Issue;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ProcessGroupsTests extends TestBase {
 
@@ -27,8 +31,9 @@ public class ProcessGroupsTests extends TestBase {
         super();
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"598"})
+    @TestRail(testCaseId = {"598", "1591"})
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
 
@@ -41,6 +46,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @TestRail(testCaseId = {"598"})
     @Description("Testing process group Stock Machining")
@@ -55,8 +61,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Bar and Tube")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupBarTube() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -78,8 +86,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Casting")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupCasting() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -101,8 +111,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Extrusion")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupExtrusion() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -124,8 +136,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Filleting")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupFilleting() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -147,8 +161,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Gear Making")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupGearMaking() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -170,8 +186,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Machining-Contouring")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachiningContouring() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -193,8 +211,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Machining-Gage Parts")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachiningGageParts() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -216,8 +236,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Machining-Milling-4 Axis Mill")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachining4AxisMill() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -239,8 +261,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Machining-Milling-5 Axis Mill")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachining5AxisMill() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -262,8 +286,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Machining-Milling-Mill Turn")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachiningMillTurn() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -285,8 +311,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Partially Automated Machining")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPartiallyAutomatedMachining() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -308,8 +336,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Perimeter Milling")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPerimeterMilling() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -331,8 +361,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Pocket Recognition")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPocketRecognition() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -354,8 +386,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Pocket Recognition - shared walls")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPocketRecognitionSharedWalls() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -377,8 +411,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Rough Milling")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupRoughMilling() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -400,8 +436,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Slot Examples")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupSlotExamples() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -423,8 +461,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Turning")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupTurning() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -446,8 +486,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Blow Molding")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupBlowMolding() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -469,31 +511,11 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Test
-    @Description("Testing process group PMI")
-    public void testProcessGroupPMI() {
-
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_04_gtoldtc.prt"))
-            .publishScenario()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_04_gtoldtc");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Powder Metal")
+    @TestRail(testCaseId = {"1591"})
+    @Issue("AP-56462")
     public void testProcessGroupPowderMetal() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -515,8 +537,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Roll Bending")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupRollBending() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -538,8 +562,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Description("Testing process group Sheet Metal-Transfer Die")
+    @TestRail(testCaseId = {"1591"})
     public void testProcessGroupTransferDie() {
 
         String testScenarioName = new Util().getScenarioName();

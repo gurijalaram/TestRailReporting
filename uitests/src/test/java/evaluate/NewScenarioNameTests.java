@@ -1,21 +1,24 @@
-package test.java.evaluate;
+package evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.UsersEnum;
-import main.java.enums.WorkspaceEnum;
-import main.java.pages.evaluate.EvaluatePage;
-import main.java.pages.explore.ExplorePage;
-import main.java.pages.login.LoginPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import test.java.testsuites.suiteinterface.SmokeTests;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class NewScenarioNameTests extends TestBase {
 
@@ -27,7 +30,7 @@ public class NewScenarioNameTests extends TestBase {
         super();
     }
 
-    @Category(SmokeTests.class)
+    @Category(CustomerSmokeTests.class)
     @Test
     @TestRail(testCaseId = {"577"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
@@ -45,7 +48,9 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCurrentScenarioName(testScenarioName), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
+    @TestRail(testCaseId = {"1576", "1586", "1587", "1589"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
 
@@ -56,7 +61,11 @@ public class NewScenarioNameTests extends TestBase {
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
+
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), CoreMatchers.is(true));
+
+        evaluatePage.costScenario()
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "partbody_2");

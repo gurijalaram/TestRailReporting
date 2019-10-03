@@ -1,17 +1,19 @@
-package test.java.compare;
+package compare;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.compare.ComparePage;
+import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.ProcessGroupEnum;
-import main.java.enums.UsersEnum;
-import main.java.pages.compare.ComparePage;
-import main.java.pages.compare.ComparisonTablePage;
-import main.java.pages.login.LoginPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -27,6 +29,7 @@ public class AddPrivateScenarioTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"412", "1171"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
+    @Issue("AP-56464")
     public void filterAddPrivateScenario() {
 
         String testScenarioName = new Util().getScenarioName();

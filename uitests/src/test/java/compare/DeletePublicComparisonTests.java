@@ -1,21 +1,24 @@
-package test.java.compare;
+package compare;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.header.GenericHeader;
+import com.apriori.pageobjects.pages.compare.ComparePage;
+import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
+import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
-import main.java.base.TestBase;
-import main.java.enums.UsersEnum;
-import main.java.enums.WorkspaceEnum;
-import main.java.header.GenericHeader;
-import main.java.pages.compare.ComparePage;
-import main.java.pages.compare.ComparisonTablePage;
-import main.java.pages.explore.ExplorePage;
-import main.java.pages.login.LoginPage;
-import main.java.utils.FileResourceUtil;
-import main.java.utils.TestRail;
-import main.java.utils.Util;
+import io.qameta.allure.Issue;
 import org.junit.Test;
+import pages.jobqueue.JobQueuePage;
 
 public class DeletePublicComparisonTests extends TestBase {
 
@@ -23,6 +26,7 @@ public class DeletePublicComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private JobQueuePage jobQueuePage;
 
     public DeletePublicComparisonTests() {
         super();
@@ -31,6 +35,7 @@ public class DeletePublicComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
+    @Issue("AP-56464")
     public void testPublicComparisonDelete() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -52,18 +57,21 @@ public class DeletePublicComparisonTests extends TestBase {
             .apply();
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.publishScenario()
+        jobQueuePage = genericHeader.publishScenario()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName)
             .delete()
-            .deleteExploreComparison();
+            .deleteExploreComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
 
-        assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
+        assertThat(new ExplorePage(driver).getListOfComparisons(testComparisonName) < 1, is(true));
     }
 
     @Test
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
+    @Issue("AP-56464")
     public void deletePublicComparisonPage() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -92,8 +100,13 @@ public class DeletePublicComparisonTests extends TestBase {
             .openComparison(testComparisonName);
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.delete().deleteComparison()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+        jobQueuePage = genericHeader.delete()
+            .deleteComparison()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Delete");
+
+        explorePage = new ExplorePage(driver);
+        explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
         assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
     }
