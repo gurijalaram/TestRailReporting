@@ -1,4 +1,4 @@
-package test.java.login;
+package login;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -62,6 +62,14 @@ public class LoginTests extends TestBase {
     public void testIncorrectEmailPassword() {
         loginPage = new LoginPage(driver);
         loginPage = loginPage.failedLoginAs("jacky348@apriori.com", "fakePassword");
+        assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
+    }
+
+    @Test
+    @Description("Valid user account must be an email")
+    public void testEmailIncorrect() {
+        loginPage = new LoginPage(driver);
+        loginPage = loginPage.failedLoginAs("mparker", "fakePassword");
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 }

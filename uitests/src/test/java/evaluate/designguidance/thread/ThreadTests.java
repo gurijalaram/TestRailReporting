@@ -1,4 +1,4 @@
-package test.java.evaluate.designguidance.thread;
+package evaluate.designguidance.thread;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,8 +21,10 @@ import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
+import io.qameta.allure.Issue;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ThreadTests extends TestBase {
 
@@ -53,8 +55,9 @@ public class ThreadTests extends TestBase {
         assertThat(investigationPage.getEditButton().isEnabled(), is(false));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"28"})
+    @TestRail(testCaseId = {"28", "1631"})
     @Description("C28 Test to check thread length persist")
     public void editThread() {
         loginPage = new LoginPage(driver);
@@ -270,6 +273,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"38", "40", "43", "584", "598"})
+    @Issue("AP-56325")
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
@@ -327,6 +331,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56325")
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
@@ -345,13 +350,14 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56325")
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
+            .costScenario(3)
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
@@ -366,7 +372,7 @@ public class ThreadTests extends TestBase {
         threadingPage = evaluatePage.openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
-            .costScenario()
+            .costScenario(3)
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
@@ -375,8 +381,9 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"44"})
+    @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
@@ -392,8 +399,9 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("10.00"), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"44"})
+    @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
@@ -409,8 +417,9 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("15.00"), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"44"})
+    @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);

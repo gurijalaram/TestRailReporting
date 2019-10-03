@@ -1,4 +1,4 @@
-package test.java.explore;
+package explore;
 
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;

@@ -1,4 +1,4 @@
-package test.java.evaluate.materialutilization;
+package evaluate.materialutilization;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;

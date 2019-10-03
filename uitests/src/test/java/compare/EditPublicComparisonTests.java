@@ -1,4 +1,4 @@
-package test.java.compare;
+package compare;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
