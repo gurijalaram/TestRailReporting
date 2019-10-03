@@ -1,9 +1,11 @@
 package explore;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -17,16 +19,19 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ActionsTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private ScenarioNotesPage scenarioNotesPage;
+    private EvaluatePage evaluatePage;
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"545", "731", "738"})
+    @TestRail(testCaseId = {"545", "731", "738", "1610"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
 
@@ -79,5 +84,30 @@ public class ActionsTests extends TestBase {
             .selectSaveButton();
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.STATUS.getColumns(), ColumnsEnum.COST_MATURITY.getColumns()));
+    }
+
+    @Test
+    @Description("User can lock and unlock a scenario")
+    public void lockUnlockScenario() {
+
+        String testScenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .publishScenario()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "bracket_basic");
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.lockScenario()
+            .openScenario(testScenarioName, "bracket_basic");
+
+        assertThat(evaluatePage.getLockedStatus(), is(equalTo("Locked")));
+
+      /*  evaluatePage.unlockScenario();
+        assertThat(evaluatePage.getLockedStatus(), is(equalTo("Unlocked")));*/
     }
 }
