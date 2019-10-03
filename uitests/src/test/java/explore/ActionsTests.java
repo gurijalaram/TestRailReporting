@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
+import com.apriori.pageobjects.header.GenericHeader;
+import com.apriori.pageobjects.header.PageHeader;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
@@ -28,6 +30,7 @@ public class ActionsTests extends TestBase {
     private ExplorePage explorePage;
     private ScenarioNotesPage scenarioNotesPage;
     private EvaluatePage evaluatePage;
+    private GenericHeader genericHeader;
 
     @Category(CustomerSmokeTests.class)
     @Test
@@ -94,20 +97,23 @@ public class ActionsTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+         /*   .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .publishScenario()
+            .publishScenario()*/
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "bracket_basic");
+            .highlightScenario("AutoScenario119-119745425228400", "TESTPART-4");
 
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.lockScenario()
-            .openScenario(testScenarioName, "bracket_basic");
+        new GenericHeader(driver).lockScenario();
+            new ExplorePage(driver).openScenario("AutoScenario119-119745425228400", "TESTPART-4");
 
+        new PageHeader(driver).openJobQueue().checkJobQueueActionComplete("AutoScenario119-119745425228400", "Update");
+
+        evaluatePage = new EvaluatePage(driver);
         assertThat(evaluatePage.getLockedStatus(), is(equalTo("Locked")));
 
-      /*  evaluatePage.unlockScenario();
-        assertThat(evaluatePage.getLockedStatus(), is(equalTo("Unlocked")));*/
+       evaluatePage.unlockScenario();
+        new PageHeader(driver).openJobQueue().checkJobQueueActionComplete("AutoScenario119-119745425228400", "Update");
+        assertThat(new EvaluatePage(driver).getLockedStatus(), is(equalTo("Unlocked")));
     }
 }
