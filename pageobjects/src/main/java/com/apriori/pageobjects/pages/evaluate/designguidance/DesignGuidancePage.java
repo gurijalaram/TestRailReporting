@@ -83,6 +83,15 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     }
 
     /**
+     * Opens the failures and warnings tab
+     *
+     * @return new page object
+     */
+    public FailuresPage openFailuresTab() {
+        return new FailuresPage(driver);
+    }
+
+    /**
      * Opens the investigation tab
      *
      * @return new page object
