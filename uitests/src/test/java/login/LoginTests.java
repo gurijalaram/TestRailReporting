@@ -68,7 +68,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Issue("AP-56501")
-    @Description("Valid user account must be an email")
+    @Description("Validate user account must be an email")
     public void testEmailIncorrect() {
         loginPage = new LoginPage(driver);
         loginPage = loginPage.failedLoginAs("mparker", "fakePassword");
