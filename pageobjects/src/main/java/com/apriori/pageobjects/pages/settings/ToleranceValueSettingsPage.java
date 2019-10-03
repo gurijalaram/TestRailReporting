@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.settings;
 
-import com.apriori.pageobjects.utils.MapUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.enums.ToleranceEnum;
 
@@ -19,9 +18,9 @@ import java.util.Map;
  * @author cfrith
  */
 
-public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> {
+public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValueSettingsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ToleranceValuesPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ToleranceValueSettingsPage.class);
 
     @FindBy(css = "[data-ap-comp='partOverrideTolerances'] .modal-title")
     private WebElement dialogTitle;
@@ -87,7 +86,7 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
     private PageUtils pageUtils;
     private Map<String, WebElement> map = new HashMap<>();
 
-    public ToleranceValuesPage(WebDriver driver) {
+    public ToleranceValueSettingsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -108,22 +107,22 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
     /**
      * Checks the value is correct
      *
-     * @param tolerance - the tolerance
-     * @param text      - the string value
+     * @param toleranceName - the tolerance
+     * @param text          - the string value
      * @return true/false
      */
-    public Boolean isTolerance(String tolerance, String text) {
-        return pageUtils.checkElementAttribute(new MapUtils(buildMap()).getLocatorFromMap(tolerance), "value", text);
+    public Boolean isTolerance(String toleranceName, String text) {
+        return pageUtils.checkElementAttribute(getMap().get(toleranceName), "value", text);
     }
 
     /**
      * Removes the tolerance
      *
-     * @param text - the string value
+     * @param toleranceName - the string value
      * @return
      */
-    public ToleranceValuesPage removeTolerance(String text) {
-        new MapUtils(buildMap()).getLocatorFromMap(text).clear();
+    public ToleranceValueSettingsPage removeTolerance(String toleranceName) {
+        getMap().get(toleranceName).clear();
         return this;
     }
 
@@ -134,9 +133,9 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
      * @param text      - the string value
      * @return
      */
-    public ToleranceValuesPage setTolerance(String tolerance, String text) {
-        pageUtils.clearInput(new MapUtils(buildMap()).getLocatorFromMap(tolerance));
-        new MapUtils(buildMap()).getLocatorFromMap(tolerance).sendKeys(text);
+    public ToleranceValueSettingsPage setTolerance(String tolerance, String text) {
+        pageUtils.clearInput(getMap().get(tolerance));
+        getMap().get(tolerance).sendKeys(text);
         return this;
     }
 
@@ -158,6 +157,13 @@ public class ToleranceValuesPage extends LoadableComponent<ToleranceValuesPage> 
         map.put(ToleranceEnum.SYMMETRY.getToleranceName(), symmetryInput);
         map.put(ToleranceEnum.TOLERANCE.getToleranceName(), toleranceInput);
         map.put(ToleranceEnum.TOTALRUNOUT.getToleranceName(), totalRunoutInput);
+        return map;
+    }
+
+    private Map<String, WebElement> getMap() {
+        if (map == null || map.isEmpty()) {
+            map = buildMap();
+        }
         return map;
     }
 
