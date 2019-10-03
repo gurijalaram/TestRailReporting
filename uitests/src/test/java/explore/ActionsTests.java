@@ -77,5 +77,10 @@ public class ActionsTests extends TestBase {
             .selectSaveButton();
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.STATUS.getColumns(), ColumnsEnum.COST_MATURITY.getColumns()));
+
+        explorePage.openColumnsTable()
+            .removeColumn(ColumnsEnum.COST_MATURITY.getColumns())
+            .removeColumn(ColumnsEnum.STATUS.getColumns())
+            .selectSaveButton();
     }
 }

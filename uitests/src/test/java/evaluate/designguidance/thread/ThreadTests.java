@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import main.java.base.TestBase;
 import main.java.enums.ProcessGroupEnum;
 import main.java.enums.UnitsEnum;
@@ -269,6 +270,7 @@ public class ThreadTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"38", "40", "43", "584", "598"})
     @Description("Testing thread length persist when attributes are changed")
+    @Issue("AP-56325")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -326,6 +328,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing thread units persist when changed to millimetres")
+    @Issue("AP-56325")
     public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -344,6 +347,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Description("Testing threading persist when secondary process is added")
+    @Issue("AP-56325")
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

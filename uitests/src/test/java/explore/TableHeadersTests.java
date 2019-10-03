@@ -57,8 +57,11 @@ public class TableHeadersTests extends TestBase {
             .addColumn(ColumnsEnum.TYPE.getColumns())
             .selectSaveButton();
 
-
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.TYPE.getColumns()));
+
+        explorePage.openColumnsTable()
+            .removeColumn(ColumnsEnum.TYPE.getColumns())
+            .selectSaveButton();
     }
 
     @Test
@@ -72,7 +75,10 @@ public class TableHeadersTests extends TestBase {
             .addColumn(ColumnsEnum.ASSIGNEE.getColumns())
             .selectSaveButton();
 
-
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.ASSIGNEE.getColumns()));
+
+        explorePage.openColumnsTable()
+            .removeColumn(ColumnsEnum.ASSIGNEE.getColumns())
+            .selectSaveButton();
     }
 }
