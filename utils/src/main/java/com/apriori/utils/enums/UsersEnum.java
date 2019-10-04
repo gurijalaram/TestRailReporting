@@ -6,7 +6,7 @@ package com.apriori.utils.enums;
 
 public enum UsersEnum {
 
-    CID_TE_USER("scrowe@apriori.com", "WhatIsIt321"),
+    CID_TE_USER("qa-automation-02@apriori.com", "TrumpetSnakeFridgeToasty18"),
     ADMIN_DEFAULT_USER("admin@apriori.com", "admin");
 
     private final String username;
