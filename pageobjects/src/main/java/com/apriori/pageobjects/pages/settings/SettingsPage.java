@@ -30,6 +30,12 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     @FindBy(css = "select[data-ap-field='currency']")
     private WebElement currencyDropdown;
 
+    @FindBy(css = "a[href='#selectionTab']")
+    private WebElement selectionButton;
+
+    @FindBy(css = "a[href='#prodInfoDefaults']")
+    private WebElement prodDefaultButton;
+
     @FindBy(css = ".btn.btn-primary")
     private WebElement saveButton;
 
@@ -66,6 +72,26 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     public ToleranceSettingsPage openTolerancesTab() {
         pageUtils.waitForElementAndClick(tolerancesButton);
         return new ToleranceSettingsPage(driver);
+    }
+
+    /**
+     * Opens selection tab
+     *
+     * @return new page object
+     */
+    public SelectionSettingsPage openSelectionTab() {
+        pageUtils.waitForElementAndClick(selectionButton);
+        return new SelectionSettingsPage(driver);
+    }
+
+    /**
+     * Opens production default tab
+     *
+     * @return new page object
+     */
+    public ProductionDefaultPage openProdDefaultTab() {
+        pageUtils.waitForElementAndClick(prodDefaultButton);
+        return new ProductionDefaultPage(driver);
     }
 
     /**

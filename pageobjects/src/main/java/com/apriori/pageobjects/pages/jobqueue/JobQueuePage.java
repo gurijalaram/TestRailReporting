@@ -1,4 +1,4 @@
-package pages.jobqueue;
+package com.apriori.pageobjects.pages.jobqueue;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
@@ -51,7 +51,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      */
     public JobQueuePage checkJobQueueActionComplete(String scenarioName, String jobType) {
         By status = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='okay18.png']");
-        pageUtils.waitForElementToAppear(status);
+        pageUtils.waitForElementToAppear(status, 1);
         closeJobQueue();
         return this;
     }

@@ -369,6 +369,6 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / Gravity Die Casting / Cleaning / Trim / Finishing / Visual Inspection / 2 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Melting / Gravity Die Casting / Trim / Cleaning / Finishing / Visual Inspection / 2 Axis Lathe"), is(true));
     }
 }

@@ -2,7 +2,6 @@ package testsuites;
 
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import evaluate.PsoEditTests;
 import compare.AddPrivateScenarioTests;
 import compare.AddPublicScenarioTests;
 import compare.DeletePrivateComparisonTests;
@@ -18,6 +17,7 @@ import evaluate.ListOfVPETests;
 import evaluate.NewScenarioNameTests;
 import evaluate.ProcessGroupsTests;
 import evaluate.ProcessRoutingTests;
+import evaluate.PsoEditTests;
 import evaluate.PublishExistingCostedTests;
 import evaluate.PublishNewCostedTests;
 import evaluate.ReCostScenarioTests;
@@ -35,11 +35,12 @@ import explore.FilterCriteriaTests;
 import explore.PreviewPanelTests;
 import explore.TableHeadersTests;
 import login.LoginTests;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite.SuiteClasses ({
     AddPrivateScenarioTests.class,
     AddPublicScenarioTests.class,
     DTCMachiningTests.class,
