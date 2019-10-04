@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.jobqueue;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -59,5 +60,18 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
         while (pageUtils.isElementDisplayed(jobQueueTable)) {
             jobQueueButton.click();
         }
+    }
+
+    /**
+     * Opens the scenario from the job queue
+     * @param scenarioName - the scenario name
+     * @param partName - the part name
+     * @param jobType - the job type
+     * @return new page object
+     */
+    public EvaluatePage openScenarioLink(String scenarioName, String partName, String jobType) {
+        By scenario = By.xpath("//div[.='" + jobType + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]");
+        pageUtils.waitForElementAndClick(scenario);
+        return new EvaluatePage(driver);
     }
 }
