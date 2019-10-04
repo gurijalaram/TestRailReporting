@@ -18,6 +18,7 @@ import io.qameta.allure.Description;
 
 import org.junit.After;
 import org.junit.Test;
+import org.omg.CORBA.UserException;
 
 public class DeletePublicScenarioTests extends TestBase {
 
@@ -54,7 +55,8 @@ public class DeletePublicScenarioTests extends TestBase {
     @After
     public void testForceDelete() {
         ScenarioAction.forceDelete(
-            WorkOrderRequestEntity.defaultRequestByUserEnum(UsersEnum.CID_TE_CFRITH_ALLDATA, testScenarioName)
+
+            WorkOrderRequestEntity.defaultRequestByUserEnum(UsersEnum.CID_TE_USER_ALLDATA, testScenarioName)
                 .setWorkspace(WorkspaceEnum.PUBLIC_API));
 
     }
