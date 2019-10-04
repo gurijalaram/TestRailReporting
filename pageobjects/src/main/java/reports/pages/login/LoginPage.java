@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reports.homepage.HomePage;
+import reports.pages.homepage.HomePage;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
@@ -120,14 +120,4 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         executeLogin(email, password);
         return new HomePage(driver);
     }
-
-
-
-
-
-
-
-
-
-
 }

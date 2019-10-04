@@ -1,4 +1,4 @@
-package reports.homepage;
+package reports.pages.homepage;
 
 import com.apriori.pageobjects.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
