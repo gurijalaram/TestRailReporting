@@ -8,6 +8,8 @@ public enum WorkspaceEnum {
 
     PRIVATE("Private Workspace"),
     PUBLIC("Public Workspace"),
+    PRIVATE_API("PRIVATE"),
+    PUBLIC_API("PUBLIC"),
     RECENT("Recent"),
     COMPARISONS("Comparisons"),
     FILTERED_VIEW("Filtered View");
