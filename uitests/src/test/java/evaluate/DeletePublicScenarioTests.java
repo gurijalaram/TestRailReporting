@@ -3,8 +3,10 @@ package evaluate;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.actions.ScenarioAction;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.utils.WorkOrderRequestEntity;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -14,12 +16,14 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 
+import org.junit.After;
 import org.junit.Test;
 
 public class DeletePublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private String testScenarioName;
 
     public DeletePublicScenarioTests() {
         super();
@@ -30,7 +34,7 @@ public class DeletePublicScenarioTests extends TestBase {
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
 
-        String testScenarioName = new Util().getScenarioName();
+        testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -44,12 +48,15 @@ public class DeletePublicScenarioTests extends TestBase {
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
-        explorePage = new ExplorePage(driver);
-        explorePage.delete()
-            .deleteScenario()
-            .openJobQueue()
-            .checkJobQueueActionComplete(testScenarioName, "Delete");
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") > 0, is(true));
+    }
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
+    @After
+    public void testForceDelete() {
+        ScenarioAction.forceDelete(
+
+            WorkOrderRequestEntity.defaultRequestByUserEnum(UsersEnum.CID_TE_USER_ALLDATA, testScenarioName)
+                .setWorkspace(WorkspaceEnum.PUBLIC_API));
+
     }
 }
