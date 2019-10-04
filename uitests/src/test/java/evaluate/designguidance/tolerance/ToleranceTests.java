@@ -164,7 +164,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "")
     @Description("Tolerance can be edited")
     public void testEditButtonDisabled() {
         loginPage = new LoginPage(driver);
@@ -179,7 +178,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "")
     @Description("Tolerance can be edited")
     public void testMaintainValuesChangeAttributes() {
         loginPage = new LoginPage(driver);
@@ -243,7 +241,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "")
     @Description("Tolerance can be edited")
     public void testCannotEditPublicTolerance() {
 
