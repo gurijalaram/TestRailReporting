@@ -164,34 +164,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Description("Tolerance can be edited")
-    public void testEditButtonDisabled() {
-        loginPage = new LoginPage(driver);
-        tolerancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openTolerancesTab();
-
-        assertThat(tolerancePage.getEditButton().isEnabled(), is(false));
-    }
-
-    @Test
-    @Description("Tolerance can be edited")
-    public void testMaintainValuesChangeAttributes() {
-        loginPage = new LoginPage(driver);
-        tolerancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openTolerancesTab();
-
-        assertThat(tolerancePage.isToleranceCount(ToleranceEnum.FLATNESS.getToleranceName(), "18"), is(true));
-    }
-
-    @Test
     @Issue("AP-56493")
     @TestRail(testCaseId = "726")
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
@@ -238,23 +210,5 @@ public class ToleranceTests extends TestBase {
 
         new SettingsPage(driver).save(EvaluatePage.class);
 
-    }
-
-    @Test
-    @Description("Tolerance can be edited")
-    public void testCannotEditPublicTolerance() {
-
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new LoginPage(driver);
-        tolerancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .publishScenario()
-            .openScenario(testScenarioName, "DTCCastingIssues")
-            .openDesignGuidance()
-            .openTolerancesTab();
-
-        assertThat(tolerancePage.getEditButton().isEnabled(), is(false));
     }
 }
