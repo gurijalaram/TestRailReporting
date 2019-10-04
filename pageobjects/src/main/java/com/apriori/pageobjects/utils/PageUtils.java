@@ -299,6 +299,10 @@ public class PageUtils {
         return waitForAppear(ExpectedConditions.visibilityOf(locator), "Element did not appear", timeoutInMinutes);
     }
 
+    public WebElement waitForElementToAppear(By locator, int timeoutInMinutes) {
+        return waitForAppear(ExpectedConditions.visibilityOfElementLocated(locator), "Element did not appear", timeoutInMinutes);
+    }
+
     public List<WebElement> waitForElementsToAppear(List<WebElement> elements) {
         return waitForAppear(ExpectedConditions.visibilityOfAllElements(elements), "Elements did not appear");
     }

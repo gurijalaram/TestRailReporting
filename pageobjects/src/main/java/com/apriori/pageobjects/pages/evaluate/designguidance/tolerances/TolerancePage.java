@@ -60,8 +60,8 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @return current page object
      */
     public TolerancePage selectToleranceTypeAndGCD(String toleranceType, String gcdType) {
-        selectToleranceType(toleranceType).click();
-        selectGCD(gcdType).click();
+        pageUtils.waitForElementAndClick(selectToleranceType(toleranceType));
+        pageUtils.waitForElementAndClick(selectGCD(gcdType));
         return this;
     }
 
@@ -73,6 +73,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      */
     private WebElement selectToleranceType(String toleranceType) {
         By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr");
+        pageUtils.waitForElementToAppear(tolerance);
         return pageUtils.scrollToElement(tolerance, toleranceScroller);
     }
 
@@ -84,6 +85,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      */
     private WebElement selectGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']/ancestor::tr");
+        pageUtils.waitForElementToAppear(gcd);
         return pageUtils.scrollToElement(gcd, detailsScroller);
     }
 

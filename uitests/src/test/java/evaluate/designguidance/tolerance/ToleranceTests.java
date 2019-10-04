@@ -41,6 +41,6 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD("Flatness", "PlanarFace:35")
             .editTolerance();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0.50"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.50"), is(true));
     }
 }

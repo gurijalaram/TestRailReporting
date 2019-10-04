@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
+package com.apriori.pageobjects.pages.settings;
 
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.enums.ToleranceEnum;
@@ -18,72 +18,75 @@ import java.util.Map;
  * @author cfrith
  */
 
-public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
+public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValueSettingsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ToleranceEditPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ToleranceValueSettingsPage.class);
 
-    @FindBy(css = ".modal-title")
+    @FindBy(css = "[data-ap-comp='partOverrideTolerances'] .modal-title")
     private WebElement dialogTitle;
 
-    @FindBy(css = "input[data-ap-field='circularity.current']")
-    private WebElement circularityInput;
-
-    @FindBy(css = "input[data-ap-field='concentricity.current']")
-    private WebElement concentricityInput;
-
-    @FindBy(css = "input[data-ap-field='cylindricity.current']")
-    private WebElement cylindricityInput;
-
-    @FindBy(css = "input[data-ap-field='diamTolerance.current']")
-    private WebElement diamToleranceInput;
-
-    @FindBy(css = "input[data-ap-field='parallelism.current']")
-    private WebElement parallelismInput;
-
-    @FindBy(css = "input[data-ap-field='flatness.current']")
-    private WebElement flatnessInput;
-
-    @FindBy(css = "input[data-ap-field='perpendicularity.current']")
-    private WebElement perpendicularityInput;
-
-    @FindBy(css = "input[data-ap-field='positionTolerance.current']")
-    private WebElement truePositionInput;
-
-    @FindBy(css = "input[data-ap-field='profileOfSurface.current']")
-    private WebElement profileSurfaceInput;
-
-    @FindBy(css = "input[data-ap-field='roughness.current']")
-    private WebElement roughnessInput;
-
-    @FindBy(css = "input[data-ap-field='rougnessRz.current']")
-    private WebElement roughnessRzInput;
-
-    @FindBy(css = "input[data-ap-field='runout.current']")
-    private WebElement runoutInput;
-
-    @FindBy(css = "input[data-ap-field='straightness.current']")
-    private WebElement straightnessInput;
-
-    @FindBy(css = "input[data-ap-field='symmetry.current']")
-    private WebElement symmetryInput;
-
-    @FindBy(css = "input[data-ap-field='tolerance.current']")
+    @FindBy(css = "input[data-ap-field='toleranceOverride']")
     private WebElement toleranceInput;
 
-    @FindBy(css = "input[data-ap-field='totalRunout.current']")
+    @FindBy(css = "input[data-ap-field='roughnessOverride']")
+    private WebElement roughnessRaInput;
+
+    @FindBy(css = "input[data-ap-field='roughnessRzOverride']")
+    private WebElement roughnessRzInput;
+
+    @FindBy(css = "input[data-ap-field='diamToleranceOverride']")
+    private WebElement diamToleranceInput;
+
+    @FindBy(css = "input[data-ap-field='positionToleranceOverride']")
+    private WebElement truePositionInput;
+
+    @FindBy(css = "input[data-ap-field='bendAngleToleranceOverride']")
+    private WebElement bendAngleInput;
+
+    @FindBy(css = "input[data-ap-field='circularityOverride']")
+    private WebElement circularityInput;
+
+    @FindBy(css = "input[data-ap-field='concentricityOverride']")
+    private WebElement concentricityInput;
+
+    @FindBy(css = "input[data-ap-field='cylindricityOverride']")
+    private WebElement cylindricityInput;
+
+    @FindBy(css = "input[data-ap-field='flatnessOverride']")
+    private WebElement flatnessInput;
+
+    @FindBy(css = "input[data-ap-field='parallelismOverride']")
+    private WebElement parallelismInput;
+
+    @FindBy(css = "input[data-ap-field='perpendicularityOverride']")
+    private WebElement perpendicularityInput;
+
+    @FindBy(css = "input[data-ap-field='profileOfSurfaceOverride']")
+    private WebElement profileSurfaceInput;
+
+    @FindBy(css = "input[data-ap-field='runoutOverride']")
+    private WebElement runoutInput;
+
+    @FindBy(css = "input[data-ap-field='totalRunoutOverride']")
     private WebElement totalRunoutInput;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
-    private WebElement applyButton;
+    @FindBy(css = "input[data-ap-field='straightnessOverride']")
+    private WebElement straightnessInput;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-default")
+    @FindBy(css = "input[data-ap-field='symmetryOverride']")
+    private WebElement symmetryInput;
+
+    @FindBy(css = ".modal-footer button.btn.btn-primary")
+    private WebElement saveButton;
+
+    @FindBy(css = ".modal-footer button.btn.btn-default")
     private WebElement cancelButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
     private Map<String, WebElement> map = new HashMap<>();
 
-    public ToleranceEditPage(WebDriver driver) {
+    public ToleranceValueSettingsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -105,7 +108,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * Checks the value is correct
      *
      * @param toleranceName - the tolerance
-     * @param text      - the string value
+     * @param text          - the string value
      * @return true/false
      */
     public Boolean isTolerance(String toleranceName, String text) {
@@ -118,7 +121,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param toleranceName - the string value
      * @return
      */
-    public ToleranceEditPage removeTolerance(String toleranceName) {
+    public ToleranceValueSettingsPage removeTolerance(String toleranceName) {
         getMap().get(toleranceName).clear();
         return this;
     }
@@ -130,7 +133,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param text      - the string value
      * @return
      */
-    public ToleranceEditPage setTolerance(String tolerance, String text) {
+    public ToleranceValueSettingsPage setTolerance(String tolerance, String text) {
         pageUtils.clearInput(getMap().get(tolerance));
         getMap().get(tolerance).sendKeys(text);
         return this;
@@ -145,8 +148,9 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
         map.put(ToleranceEnum.FLATNESS.getToleranceName(), flatnessInput);
         map.put(ToleranceEnum.PERPENDICULARITY.getToleranceName(), perpendicularityInput);
         map.put(ToleranceEnum.TRUEPOSITION.getToleranceName(), truePositionInput);
+        map.put(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), bendAngleInput);
         map.put(ToleranceEnum.PROFILESURFACE.getToleranceName(), profileSurfaceInput);
-        map.put(ToleranceEnum.ROUGHNESSRA.getToleranceName(), roughnessInput);
+        map.put(ToleranceEnum.ROUGHNESSRA.getToleranceName(), roughnessRaInput);
         map.put(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), roughnessRzInput);
         map.put(ToleranceEnum.RUNOUT.getToleranceName(), runoutInput);
         map.put(ToleranceEnum.STRAIGHTNESS.getToleranceName(), straightnessInput);
@@ -164,13 +168,13 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     }
 
     /**
-     * Selects the apply button
+     * Selects the save button
      *
      * @return new page object
      */
-    public TolerancePage apply() {
-        pageUtils.waitForElementAndClick(applyButton);
-        return new TolerancePage(driver);
+    public ToleranceSettingsPage save() {
+        saveButton.click();
+        return new ToleranceSettingsPage(driver);
     }
 
     /**
@@ -178,8 +182,8 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      *
      * @return new page object
      */
-    public TolerancePage cancel() {
-        pageUtils.waitForElementAndClick(cancelButton);
-        return new TolerancePage(driver);
+    public ToleranceSettingsPage cancel() {
+        cancelButton.click();
+        return new ToleranceSettingsPage(driver);
     }
 }
