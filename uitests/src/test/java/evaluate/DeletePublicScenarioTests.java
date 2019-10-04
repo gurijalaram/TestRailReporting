@@ -18,7 +18,6 @@ import io.qameta.allure.Description;
 
 import org.junit.After;
 import org.junit.Test;
-import org.omg.CORBA.UserException;
 
 public class DeletePublicScenarioTests extends TestBase {
 

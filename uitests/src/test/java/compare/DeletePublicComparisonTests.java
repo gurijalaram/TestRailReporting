@@ -7,6 +7,7 @@ import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -19,8 +20,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 
 import org.junit.Test;
-
-import pages.jobqueue.JobQueuePage;
 
 public class DeletePublicComparisonTests extends TestBase {
 
