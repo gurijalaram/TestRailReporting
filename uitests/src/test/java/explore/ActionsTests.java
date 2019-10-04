@@ -95,7 +95,7 @@ public class ActionsTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .costScenario()
             .publishScenario()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -107,7 +107,7 @@ public class ActionsTests extends TestBase {
 
         assertThat(evaluatePage.getLockedStatus(), is(equalTo("Locked")));
 
-      /*  evaluatePage.unlockScenario();
-        assertThat(evaluatePage.getLockedStatus(), is(equalTo("Unlocked")));*/
+        evaluatePage.unlockScenario();
+        assertThat(evaluatePage.getLockedStatus(), is(equalTo("Unlocked")));
     }
 }
