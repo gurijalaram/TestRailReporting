@@ -16,12 +16,14 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 
+import org.junit.After;
 import org.junit.Test;
 
 public class DeletePublicScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private String testScenarioName;
 
     public DeletePublicScenarioTests() {
         super();
@@ -32,7 +34,7 @@ public class DeletePublicScenarioTests extends TestBase {
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
 
-        String testScenarioName = new Util().getScenarioName();
+        testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
@@ -46,28 +48,11 @@ public class DeletePublicScenarioTests extends TestBase {
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
-        explorePage = new ExplorePage(driver);
-        explorePage.delete()
-            .deleteScenario()
-            .openJobQueue()
-            .checkJobQueueActionComplete(testScenarioName, "Delete");
-
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") > 0, is(true));
     }
 
-//TEST EXAMPLE OF USE FORCE DELETE SCENARIO
-  //  @Test
+    @After
     public void testForceDelete() {
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
-            .publishScenario()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
-
         ScenarioAction.forceDelete(
             WorkOrderRequestEntity.defaultRequestByUserEnum(UsersEnum.CID_TE_CFRITH_ALLDATA, testScenarioName)
                 .setWorkspace(WorkspaceEnum.PUBLIC_API));

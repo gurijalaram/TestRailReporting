@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.utils;
 
 import com.apriori.apibase.http.builder.common.response.common.WorkSpaceSearchWrapper;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.enums.WorkOrderScenarioTypeEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class WorkOrderRequestEntity {
 
-    private String baseURL = "https://cid-te.awsdev.apriori.com";
+    private String baseURL = Constants.defaultCidURL;
     private String username;
     private String password;
     private UsersEnum usersEnum;
