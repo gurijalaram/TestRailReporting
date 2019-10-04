@@ -59,10 +59,10 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getTolerance(), "PlanarFace:74")
+            .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
             .selectEditButton()
-            .setTolerance(ToleranceEnum.PROFILESURFACE.getTolerance(), "0.23")
-            .setTolerance(ToleranceEnum.PROFILESURFACE.getTolerance(), "0.16")
+            .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23")
+            .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.16")
             .apply(TolerancePage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -72,11 +72,11 @@ public class ToleranceTests extends TestBase {
         evaluatePage.costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getTolerance(), "PlanarFace:74")
+            .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getTolerance(), "0.23"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getTolerance(), "0.16"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.16"), is(true));
 
         toleranceEditPage.cancel();
 
@@ -106,13 +106,13 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
+            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getToleranceName(), "PlanarFace:35")
             .selectEditButton()
-            .removeTolerance(ToleranceEnum.FLATNESS.getTolerance())
+            .removeTolerance(ToleranceEnum.FLATNESS.getToleranceName())
             .apply(TolerancePage.class)
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getTolerance(), ""), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), ""), is(true));
 
         toleranceEditPage.cancel();
 
@@ -136,9 +136,9 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
+            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getToleranceName(), "PlanarFace:35")
             .selectEditButton()
-            .setTolerance(ToleranceEnum.FLATNESS.getTolerance(), "abcd")
+            .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "abcd")
             .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
@@ -155,9 +155,9 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getTolerance(), "PlanarFace:35")
+            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getToleranceName(), "PlanarFace:35")
             .selectEditButton()
-            .setTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0")
+            .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0")
             .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
@@ -188,7 +188,7 @@ public class ToleranceTests extends TestBase {
             .openDesignGuidance()
             .openTolerancesTab();
 
-        assertThat(tolerancePage.isToleranceCount(ToleranceEnum.FLATNESS.getTolerance(), "18"), is(true));
+        assertThat(tolerancePage.isToleranceCount(ToleranceEnum.FLATNESS.getToleranceName(), "18"), is(true));
     }
 
     @Test
@@ -209,9 +209,9 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getTolerance(), "PlanarFace:78")
+            .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "PlanarFace:78")
             .selectEditButton()
-            .setTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0.44")
+            .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.44")
             .apply(TolerancePage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -224,10 +224,10 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getTolerance(), "PlanarFace:78")
+            .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "PlanarFace:78")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getTolerance(), "0.44"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.44"), is(true));
 
         toleranceEditPage.cancel();
 
