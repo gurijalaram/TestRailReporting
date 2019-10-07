@@ -92,4 +92,13 @@ public class ReportLoginTests extends TestBase {
         int respCode = loginPage.getLinkRespCode(loginPage.getPrivacyPolicyURL());
         assertThat(respCode, is(lessThan (400)));
     }
+
+    @Test
+    @TestRail(testCaseId = {"C2701"})
+    @Description("Link to help page working")
+    public void testHelpLink() throws IOException {
+        loginPage = new LoginPage(driver);
+        int respCode = loginPage.getLinkRespCode(loginPage.getHelpURL());
+        assertThat(respCode, is(lessThan (400)));
+    }
 }
