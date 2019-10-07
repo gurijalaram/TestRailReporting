@@ -14,7 +14,7 @@ public class AnalysisPage extends LoadableComponent<AnalysisPage> {
 
     private final Logger logger = LoggerFactory.getLogger(AnalysisPage.class);
 
-    @FindBy(css = "//li[.='Properties']")
+    @FindBy(xpath = "//li[.='Properties']")
     private WebElement propertiesButton;
 
     private WebDriver driver;
@@ -35,8 +35,13 @@ public class AnalysisPage extends LoadableComponent<AnalysisPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(propertiesButton);
     }
 
+    /**
+     * Selects the properties button
+     * @return new page object
+     */
     public PropertiesDialogPage selectProperties() {
         pageUtils.waitForElementAndClick(propertiesButton);
         return new PropertiesDialogPage(driver);

@@ -15,6 +15,9 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
 
     private final Logger logger = LoggerFactory.getLogger(PropertiesDialogPage.class);
 
+    @FindBy(id = "propertiesPanel")
+    private WebElement propertyPanel;
+
     @FindBy(css = "div[id='propertiesPanel'] .glyphicon.glyphicon-remove")
     private WebElement closeButton;
 
@@ -39,6 +42,7 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(propertyPanel);
     }
 
     /**
@@ -56,10 +60,10 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
      * @param dropdown - the dropdown to be selected
      * @return current page object
      */
-    public PropertiesDialogPage closeDropdown(String dropdown) {
-        WebElement selection = driver.findElement(By.xpath("//div[.='" + dropdown + "']//span[@class]"));
-        if (selection.getAttribute("outerHTML").contains("down")) {
-            selection.click();
+    public PropertiesDialogPage minimizeDropdown(String dropdown) {
+        By caret = By.xpath("//div[.='" + dropdown + "']//span[@class]");
+        if (driver.findElement(caret).getAttribute("outerHTML").contains("down")) {
+            driver.findElement(caret).click();
         }
         return this;
     }
@@ -69,10 +73,16 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
      * @param dropdown - the dropdown to be selected
      * @return current page object
      */
-    public PropertiesDialogPage openDropdown(String dropdown) {
-        WebElement selection = driver.findElement(By.xpath("//div[.='" + dropdown + "']//span[@class]"));
-        if (selection.getAttribute("outerHTML").contains("right")) {
-            selection.click();
+    public PropertiesDialogPage expandDropdown(String dropdown) {
+        By caret = By.xpath("//div[.='" + dropdown + "']//span[@class]");
+        pageUtils.waitForElementToAppear(caret);
+
+        if (driver.findElement(caret).getAttribute("outerHTML").contains("down")) {
+            return this;
+        } else {
+            if (driver.findElement(caret).getAttribute("outerHTML").contains("right")) {
+                driver.findElement(caret).click();
+            }
         }
         return this;
     }
@@ -83,12 +93,12 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
      * @return true/false
      */
     public boolean isDisplayedGCDName(String GCDName) {
-        WebElement gcd = driver.findElement(By.xpath("//div[@data-ap-comp='gcdProperties']//div[.='" + GCDName + "']"));
-        return gcd.isDisplayed();
+        By gcd = By.xpath("//div[@data-ap-comp='gcdProperties']//div[.='" + GCDName + "']");
+        return driver.findElement(gcd).isDisplayed();
     }
 
     /** Gets the properties
-     * The full qualified name of the property must be entered as the locator looks for an exact match eg. "Finished Area (mm^2)"
+     * The fully qualified name of the property must be entered as the locator looks for an exact match eg. "Finished Area (mm^2)"
      * @param properties
      * @return string
      */
