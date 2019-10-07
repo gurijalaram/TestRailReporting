@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.Inves
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
@@ -26,7 +27,6 @@ import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -74,17 +74,18 @@ public class ProcessRoutingTests extends TestBase {
             .openSettings()
             .changeCurrency(CurrencyEnum.USD.getCurrency())
             .openTolerancesTab()
-            .selectAssumeTolerance();
+            .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        processRoutingPage = settingsPage.save(EvaluatePage.class)
+        processRoutingPage = settingsPage.save(ExplorePage.class)
+        .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 29.67", "Piece Part Cost (USD): 0.43",
-            "Fully Burdened Cost (USD): 0.82", "Total Capital Investments (USD): 10,732.01"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 53.88", "Piece Part Cost (USD): 0.63",
+            "Fully Burdened Cost (USD): 1.06", "Total Capital Investments (USD): 11,783.15"));
     }
 
     @Test
@@ -221,7 +222,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("1.63"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.64"), is(true));
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
@@ -231,7 +232,7 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("2.02"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("2.04"), is(true));
     }
 
     @Test
@@ -252,7 +253,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openMaterialCompositionTable();
 
-        assertThat(materialCompositionPage.getListOfMaterialTypes(), containsInAnyOrder("All", "ABS", "Acetal", "Nylon", "PET", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane"));
+        assertThat(materialCompositionPage.getListOfMaterialTypes(), containsInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane"));
     }
 
     @Test
@@ -360,7 +361,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 2 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 3 Axis Lathe"), is(true));
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
@@ -369,6 +370,6 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / Gravity Die Casting / Trim / Cleaning / Finishing / Visual Inspection / 2 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Melting / Gravity Die Casting / Trim / Cleaning / Finishing / Visual Inspection / 3 Axis Lathe"), is(true));
     }
 }

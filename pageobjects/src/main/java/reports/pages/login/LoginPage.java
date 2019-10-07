@@ -19,14 +19,20 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     @FindBy(css = "input[name='email']")
     private WebElement email;
 
-    @FindBy(css = "a[name='password']")
+    @FindBy(css = "input[name='password']")
     private WebElement password;
 
-    @FindBy(css = "input[href='javascript:void(0)']")
+    @FindBy(css = "a[href='javascript:void(0)']")
     private WebElement forgotPassword;
 
     @FindBy(css = "button[type='submit'")
     private WebElement submitButton;
+
+    @FindBy(css = "span[class='animated fadeInUp']")
+    private WebElement loginMsg;
+
+    @FindBy(css = "div.auth0-lock-error-msg")
+    private WebElement inputErrorMsg;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -73,7 +79,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      *
      * @param emailAddress - user email address
      */
-    private void enterEmail(String emailAddress){
+    private void enterEmail(String emailAddress) {
+        pageUtils.waitForElementToAppear(email);
         email.click();
         pageUtils.clearInput(email);
         email.sendKeys(emailAddress);
@@ -84,7 +91,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      *
      * @param password - user password
      */
-    private void enterPassword(String password){
+    private void enterPassword(String password) {
+        pageUtils.waitForElementToAppear(this.password);
         this.password.click();
         pageUtils.clearInput(this.password);
         this.password.sendKeys(password);
@@ -93,17 +101,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     /**
      * Single action to submit login credentials
      */
-    private void submitLogin(){
+    private void submitLogin() {
         submitButton.click();
     }
 
     /**
      * Execute actions to login
      *
-     * @param email - user email
+     * @param email    - user email
      * @param password - user password
      */
-    private void executeLogin(String email, String password){
+    private void executeLogin(String email, String password) {
         enterEmail(email);
         enterPassword(password);
         submitLogin();
@@ -112,12 +120,65 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     /**
      * Login to CI Report
      *
-     * @param email - user email
+     * @param email    - user email
      * @param password - user password
      * @return new page object
      */
-    public HomePage login(String email, String password){
+    public HomePage login(String email, String password) {
         executeLogin(email, password);
         return new HomePage(driver);
     }
+
+    /**
+     * Failed login to CI Report
+     *
+     * @param email    - user email
+     * @param password - user password
+     * @return current page object
+     */
+    public LoginPage failedLogin(String email, String password) {
+        executeLogin(email, password);
+        return new LoginPage(driver, false);
+    }
+
+    /**
+     * Get login message text
+     *
+     * @return String
+     */
+    public String getLoginMessage() {
+        pageUtils.waitForElementToAppear(loginMsg);
+        return loginMsg.getText();
+    }
+
+    /**
+     * Click forgot password link
+     */
+    public LoginPage clickForgotPassword() {
+        pageUtils.waitForElementToAppear(forgotPassword);
+        forgotPassword.click();
+        return new LoginPage(driver, false);
+    }
+
+    /**
+     * Submit email address alone for password recovery
+     *
+     * @param email - user email
+     */
+    public LoginPage submitEmail(String email) {
+        enterEmail(email);
+        submitLogin();
+        return new LoginPage(driver, false);
+    }
+
+    /**
+     * Get input error message
+     *
+     * @return String
+     */
+    public String getInputErrorMsg() {
+        pageUtils.waitForElementToAppear(inputErrorMsg);
+        return inputErrorMsg.getText();
+    }
+
 }
