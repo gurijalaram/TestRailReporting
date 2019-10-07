@@ -11,6 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reports.pages.homepage.HomePage;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class LoginPage extends LoadableComponent<LoginPage> {
 
     private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
@@ -33,6 +37,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     @FindBy(css = "div.auth0-lock-error-msg")
     private WebElement inputErrorMsg;
+
+    @FindBy(css = "a[href='https://www.apriori.com/sso-instructions-page']")
+    private WebElement helpLink;
+
+    @FindBy(css = "a[href='https://www.apriori.com/privacy-policy']")
+    private WebElement privacyPolicyLink;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -181,4 +191,36 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         return inputErrorMsg.getText();
     }
 
+    /**
+     * Get help link URL
+     *
+     * @return String help link URL
+     */
+    public String getHelpURL() {
+        pageUtils.waitForElementToAppear(helpLink);
+        return helpLink.getText();
+    }
+
+    /**
+     * Get privacy policy URL
+     *
+     * @return String privacy policy URL
+     */
+    public String getPrivacyPolicyURL() {
+        pageUtils.waitForElementToAppear(privacyPolicyLink);
+        return privacyPolicyLink.getText();
+    }
+
+    /**
+     * Get link response code
+     *
+     * @param linkURL - URL of link
+     * @return String response code
+     */
+    public int getLinkRespCode(String linkURL) throws IOException {
+        HttpURLConnection huc = (HttpURLConnection)(new URL(linkURL).openConnection());
+        huc.setRequestMethod("HEAD");
+        huc.connect();
+        return huc.getResponseCode();
+    }
 }
