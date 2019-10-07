@@ -6,7 +6,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompos
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
-import com.apriori.pageobjects.pages.evaluate.properties.AnalysisPage;
+import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
