@@ -118,7 +118,7 @@ public class EvaluatePage extends EvaluateHeader {
     private WebElement capitalInvestments;
 
     @FindBy(css = ".color-failure")
-    public WebElement failedCostedIcon;
+    private WebElement failedCostIcon;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -386,5 +386,15 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public String getCapitalInvestment() {
         return pageUtils.waitForElementToAppear(capitalInvestments).getText();
+    }
+
+    /**
+     * Gets the capital investment
+     *
+     * @return string
+     */
+    public boolean isfailedIconPresent() {
+        pageUtils.waitForElementToAppear(failedCostIcon);
+        return failedCostIcon.isDisplayed();
     }
 }
