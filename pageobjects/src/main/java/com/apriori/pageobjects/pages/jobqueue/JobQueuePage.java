@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.jobqueue;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -70,7 +71,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      * @return new page object
      */
     public EvaluatePage openScenarioLink(String scenarioName, String partName, String jobType) {
-        By scenario = By.xpath("//div[.='" + jobType + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]");
+        By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + StringUtils.capitalize(partName) + "')]");
         pageUtils.waitForElementAndClick(scenario);
         return new EvaluatePage(driver);
     }
