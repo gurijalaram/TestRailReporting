@@ -63,7 +63,7 @@ public class WarningPage extends LoadableComponent<WarningPage> {
      * @return new page object
      */
     public <T> T ok(Class<T> className) {
-        pageUtils.waitForElementToBeClickable(okButton).click();
+        pageUtils.waitForElementAndClick(okButton);
         return PageFactory.initElements(driver, className);
     }
 }

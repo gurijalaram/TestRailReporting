@@ -25,6 +25,9 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
 
+    @FindBy(css = "div[data-ap-comp='artifactTolerancesTable'] .v-grid-cell.tolerance-input-column")
+    private WebElement toleranceCell;
+
     @FindBy(css = "input[data-ap-field='circularity.current']")
     private WebElement circularityInput;
 
@@ -73,7 +76,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = "input[data-ap-field='totalRunout.current']")
     private WebElement totalRunoutInput;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
 
     @FindBy(css = "button.gwt-Button.btn.btn-default")
@@ -98,28 +101,28 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(dialogTitle);
+        pageUtils.waitForElementToAppear(toleranceCell);
     }
 
     /**
      * Checks the value is correct
      *
-     * @param tolerance - the tolerance
+     * @param toleranceName - the tolerance
      * @param text      - the string value
      * @return true/false
      */
-    public Boolean isTolerance(String tolerance, String text) {
-        return pageUtils.checkElementAttribute(getLocatorFromMap(tolerance), "value", text);
+    public Boolean isTolerance(String toleranceName, String text) {
+        return pageUtils.checkElementAttribute(getMap().get(toleranceName), "value", text);
     }
 
     /**
      * Removes the tolerance
      *
-     * @param text - the string value
+     * @param toleranceName - the string value
      * @return
      */
-    public ToleranceEditPage removeTolerance(String text) {
-        getLocatorFromMap(text).clear();
+    public ToleranceEditPage removeTolerance(String toleranceName) {
+        getMap().get(toleranceName).clear();
         return this;
     }
 
@@ -131,52 +134,48 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return
      */
     public ToleranceEditPage setTolerance(String tolerance, String text) {
-        pageUtils.clearInput(getLocatorFromMap(tolerance));
-        getLocatorFromMap(tolerance).sendKeys(text);
+        pageUtils.clearInput(getMap().get(tolerance));
+        getMap().get(tolerance).sendKeys(text);
         return this;
     }
 
     private Map<String, WebElement> buildMap() {
-
-        map.put(ToleranceEnum.CIRCULARITY.getTolerance(), circularityInput);
-        map.put(ToleranceEnum.PARALLELISM.getTolerance(), parallelismInput);
-        map.put(ToleranceEnum.CONCENTRICITY.getTolerance(), concentricityInput);
-        map.put(ToleranceEnum.CYLINDRICITY.getTolerance(), cylindricityInput);
-        map.put(ToleranceEnum.DIAMTOLERANCE.getTolerance(), diamToleranceInput);
-        map.put(ToleranceEnum.FLATNESS.getTolerance(), flatnessInput);
-        map.put(ToleranceEnum.PERPENDICULARITY.getTolerance(), perpendicularityInput);
-        map.put(ToleranceEnum.TRUEPOSITION.getTolerance(), truePositionInput);
-        map.put(ToleranceEnum.PROFILESURFACE.getTolerance(), profileSurfaceInput);
-        map.put(ToleranceEnum.ROUGHNESSRA.getTolerance(), roughnessInput);
-        map.put(ToleranceEnum.ROUGHNESSRZ.getTolerance(), roughnessRzInput);
-        map.put(ToleranceEnum.RUNOUT.getTolerance(), runoutInput);
-        map.put(ToleranceEnum.STRAIGHTNESS.getTolerance(), straightnessInput);
-        map.put(ToleranceEnum.SYMMETRY.getTolerance(), symmetryInput);
-        map.put(ToleranceEnum.TOLERANCE.getTolerance(), toleranceInput);
-        map.put(ToleranceEnum.TOTALRUNOUT.getTolerance(), totalRunoutInput);
-
+        map.put(ToleranceEnum.CIRCULARITY.getToleranceName(), circularityInput);
+        map.put(ToleranceEnum.PARALLELISM.getToleranceName(), parallelismInput);
+        map.put(ToleranceEnum.CONCENTRICITY.getToleranceName(), concentricityInput);
+        map.put(ToleranceEnum.CYLINDRICITY.getToleranceName(), cylindricityInput);
+        map.put(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), diamToleranceInput);
+        map.put(ToleranceEnum.FLATNESS.getToleranceName(), flatnessInput);
+        map.put(ToleranceEnum.PERPENDICULARITY.getToleranceName(), perpendicularityInput);
+        map.put(ToleranceEnum.TRUEPOSITION.getToleranceName(), truePositionInput);
+        map.put(ToleranceEnum.PROFILESURFACE.getToleranceName(), profileSurfaceInput);
+        map.put(ToleranceEnum.ROUGHNESSRA.getToleranceName(), roughnessInput);
+        map.put(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), roughnessRzInput);
+        map.put(ToleranceEnum.RUNOUT.getToleranceName(), runoutInput);
+        map.put(ToleranceEnum.STRAIGHTNESS.getToleranceName(), straightnessInput);
+        map.put(ToleranceEnum.SYMMETRY.getToleranceName(), symmetryInput);
+        map.put(ToleranceEnum.TOLERANCE.getToleranceName(), toleranceInput);
+        map.put(ToleranceEnum.TOTALRUNOUT.getToleranceName(), totalRunoutInput);
         return map;
     }
 
     private Map<String, WebElement> getMap() {
-        if (map.isEmpty()) {
+        if (map == null || map.isEmpty()) {
             map = buildMap();
         }
         return map;
     }
 
-    private WebElement getLocatorFromMap(String toleranceName) {
-        return getMap().get(toleranceName);
-    }
-
     /**
      * Selects the apply button
      *
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T>       - the return type
+     * @return generic page object
      */
-    public TolerancePage apply() {
-        pageUtils.waitForElementAndClick(applyButton);
-        return new TolerancePage(driver);
+    public <T> T apply(Class<T> className) {
+        pageUtils.javaScriptClick(applyButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

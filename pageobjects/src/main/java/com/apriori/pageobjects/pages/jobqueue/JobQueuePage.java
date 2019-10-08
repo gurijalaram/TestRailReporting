@@ -1,7 +1,9 @@
-package pages.jobqueue;
+package com.apriori.pageobjects.pages.jobqueue;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -50,7 +52,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      */
     public JobQueuePage checkJobQueueActionComplete(String scenarioName, String jobType) {
         By status = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='okay18.png']");
-        pageUtils.waitForElementToAppear(status);
+        pageUtils.waitForElementToAppear(status, 1);
         closeJobQueue();
         return this;
     }
@@ -59,5 +61,18 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
         while (pageUtils.isElementDisplayed(jobQueueTable)) {
             jobQueueButton.click();
         }
+    }
+
+    /**
+     * Opens the scenario from the job queue
+     * @param scenarioName - the scenario name
+     * @param partName - the part name
+     * @param jobType - the job type
+     * @return new page object
+     */
+    public EvaluatePage openScenarioLink(String scenarioName, String partName, String jobType) {
+        By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + partName.toUpperCase() + "')]");
+        pageUtils.waitForElementAndClick(scenario);
+        return new EvaluatePage(driver);
     }
 }

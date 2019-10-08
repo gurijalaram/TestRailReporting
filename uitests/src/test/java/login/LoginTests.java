@@ -11,6 +11,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 
+import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +67,8 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Description("Valid user account must be an email")
+    @Issue("AP-56501")
+    @Description("Validate user account must be an email")
     public void testEmailIncorrect() {
         loginPage = new LoginPage(driver);
         loginPage = loginPage.failedLoginAs("mparker", "fakePassword");

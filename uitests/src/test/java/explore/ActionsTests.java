@@ -19,6 +19,7 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -60,6 +61,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-838")
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
@@ -84,6 +86,11 @@ public class ActionsTests extends TestBase {
             .selectSaveButton();
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.STATUS.getColumns(), ColumnsEnum.COST_MATURITY.getColumns()));
+
+        explorePage.openColumnsTable()
+            .removeColumn(ColumnsEnum.COST_MATURITY.getColumns())
+            .removeColumn(ColumnsEnum.STATUS.getColumns())
+            .selectSaveButton();
     }
 
     @Test

@@ -1,5 +1,8 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -9,11 +12,11 @@ import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
-import io.qameta.allure.Description;
-import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import io.qameta.allure.Description;
+
+import io.qameta.allure.Issue;
+import org.junit.Test;
 
 public class AssemblyUploadTests extends TestBase {
 
@@ -25,6 +28,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56584")
     @TestRail(testCaseId = {"2628"})
     @Description("Assembly File Upload - STEP")
     public void testAssemblyFormatSTEP() {

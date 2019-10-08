@@ -118,10 +118,10 @@ public class EvaluatePage extends EvaluateHeader {
     private WebElement capitalInvestments;
 
     @FindBy(css = ".color-failure")
-    public WebElement failedCostedIcon;
+    private WebElement failedCostIcon;
 
     @FindBy(css = ".locked-status-icon")
-    public WebElement lockedStatusIcon;
+    private WebElement lockedStatusIcon;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -321,7 +321,9 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * @return
+     * Gets warning count
+     *
+     * @return string
      */
     public String getWarningsCount() {
         return pageUtils.waitForElementToAppear(warningsCount).getText();
@@ -389,6 +391,15 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public String getCapitalInvestment() {
         return pageUtils.waitForElementToAppear(capitalInvestments).getText();
+    }
+
+    /**
+     * Checks if the failed icon is present
+     *
+     * @return string
+     */
+    public boolean isFailedIconPresent() {
+        return failedCostIcon.isDisplayed();
     }
 
     /**
