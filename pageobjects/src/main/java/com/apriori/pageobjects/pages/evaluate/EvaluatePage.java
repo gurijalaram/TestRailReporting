@@ -120,6 +120,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = ".color-failure")
     private WebElement failedCostIcon;
 
+    @FindBy(css = ".locked-status-icon")
+    private WebElement lockedStatusIcon;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -397,5 +400,14 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public boolean isFailedIconPresent() {
         return failedCostIcon.isDisplayed();
+    }
+
+    /**
+     * Gets the locked status
+     *
+     * @return current page object
+     */
+    public String getLockedStatus() {
+        return pageUtils.waitForElementToAppear(lockedStatusIcon).getAttribute("title");
     }
 }

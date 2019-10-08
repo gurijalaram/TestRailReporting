@@ -70,7 +70,6 @@ public class ProcessRoutingTests extends TestBase {
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .openSettings()
             .changeCurrency(CurrencyEnum.USD.getCurrency())
             .openTolerancesTab()
