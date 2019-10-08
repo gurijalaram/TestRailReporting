@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
@@ -26,7 +25,6 @@ import org.junit.Test;
 public class SettingsTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private ScenarioNotesPage scenarioNotesPage;
     private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
     private ProductionDefaultPage productionDefaultPage;
@@ -35,8 +33,6 @@ public class SettingsTests extends TestBase {
     @TestRail(testCaseId = {"1609"})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
-
-        String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
         loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -64,7 +60,6 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_EASTERN_EUROPE.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("ABS, Plating"), is(true));
 
-
             productionDefaultPage.enterScenarioName("Initial")
             .selectProcessGroup("<No default specified>")
             .selectVPE("<No default specified>")
@@ -76,7 +71,6 @@ public class SettingsTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         explorePage = settingsPage.save(ExplorePage.class);
     }
-
 
     @Test
     @TestRail(testCaseId = {"274", "1609"})

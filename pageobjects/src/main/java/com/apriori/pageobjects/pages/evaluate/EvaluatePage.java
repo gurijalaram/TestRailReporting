@@ -318,7 +318,9 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * @return
+     * Gets warning count
+     *
+     * @return string
      */
     public String getWarningsCount() {
         return pageUtils.waitForElementToAppear(warningsCount).getText();
@@ -394,7 +396,6 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public boolean isFailedIconPresent() {
-        pageUtils.waitForElementToAppear(failedCostIcon);
         return failedCostIcon.isDisplayed();
     }
 }
