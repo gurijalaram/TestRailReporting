@@ -97,6 +97,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-837")
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
 
@@ -112,15 +113,14 @@ public class ActionsTests extends TestBase {
             .highlightScenario(testScenarioName, "bracket_basic");
 
         new GenericHeader(driver).lockScenario();
-            new ExplorePage(driver).openScenario("AutoScenario119-119745425228400", "TESTPART-4");
-
-        new PageHeader(driver).openJobQueue().checkJobQueueActionComplete("AutoScenario119-119745425228400", "Update");
+        new ExplorePage(driver).openScenario(testScenarioName, "bracket_basic");
+        new PageHeader(driver).openJobQueue().checkJobQueueActionComplete(testScenarioName, "Update");
 
         evaluatePage = new EvaluatePage(driver);
         assertThat(evaluatePage.getLockedStatus(), is(equalTo("Locked")));
 
-       evaluatePage.unlockScenario();
-        new PageHeader(driver).openJobQueue().checkJobQueueActionComplete("AutoScenario119-119745425228400", "Update");
+        evaluatePage.unlockScenario();
+        new PageHeader(driver).openJobQueue().checkJobQueueActionComplete(testScenarioName, "Update");
         assertThat(new EvaluatePage(driver).getLockedStatus(), is(equalTo("Unlocked")));
     }
 }
