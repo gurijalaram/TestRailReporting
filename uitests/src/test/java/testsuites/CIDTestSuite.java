@@ -38,6 +38,7 @@ import login.LoginTests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import settings.SettingsTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses ({
@@ -75,7 +76,8 @@ import org.junit.runners.Suite;
     ActionsTests.class,
     DTCCastingTests.class,
     ProcessRoutingTests.class,
-    PsoEditTests.class
+    PsoEditTests.class,
+    SettingsTests.class
 })
 public class CIDTestSuite {
 }

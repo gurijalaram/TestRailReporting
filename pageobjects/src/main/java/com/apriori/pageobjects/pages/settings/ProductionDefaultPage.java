@@ -72,7 +72,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      * @return curent page object
      */
     public ProductionDefaultPage enterScenarioName(String scenarioName) {
-        pageUtils.clearInput(scenarioNameInput);
+        pageUtils.waitForElementToAppear(scenarioNameInput).clear();
         scenarioNameInput.sendKeys(scenarioName);
         return this;
     }
@@ -148,6 +148,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
 
     /**
      * Selects the auto radio button
+     *
      * @return current page object
      */
     public ProductionDefaultPage selectBatchAuto() {
@@ -157,6 +158,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
 
     /**
      * Selects the manual radio button
+     *
      * @return current page object
      */
     public ProductionDefaultPage selectBatchManual() {
@@ -166,6 +168,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
 
     /**
      * Enter batch input
+     *
      * @param input - the value
      * @return
      */
@@ -173,5 +176,50 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
         pageUtils.waitForElementToAppear(batchInput).clear();
         batchInput.sendKeys(input);
         return this;
+    }
+
+    /**
+     * Gets the selected process group
+     *
+     * @return
+     */
+    public Boolean getSelectedProcessGroup(String text) {
+        return pageUtils.checkElementFirstOption(processGroupDropdown, text);
+    }
+
+    /**
+     * Gets the selected VPE
+     *
+     * @return
+     */
+    public Boolean getSelectedVPE(String text) {
+        return pageUtils.checkElementFirstOption(vpeDropdown, text);
+    }
+
+    /**
+     * Gets the MaterialCatalogue
+     *
+     * @return
+     */
+    public Boolean getSelectedCatalog(String text) {
+        return pageUtils.checkElementFirstOption(catalogDropdown, text);
+    }
+
+    /**
+     * Gets the Material
+     *
+     * @return
+     */
+    public Boolean getSelectedMaterial(String text) {
+        return pageUtils.checkElementFirstOption(materialDropdown, text);
+    }
+
+    /**
+     * Checks the input value is correct
+     *
+     * @return true/false
+     */
+    public Boolean getScenarioName(String text) {
+        return pageUtils.checkElementAttribute(scenarioNameInput, "value", text);
     }
 }
