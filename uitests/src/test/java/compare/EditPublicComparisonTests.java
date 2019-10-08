@@ -74,7 +74,6 @@ public class EditPublicComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.editScenario(ComparePage.class);
 
-
         assertThat(comparePage.getComparisonName(), containsString(testComparisonName.toUpperCase()));
     }
 }

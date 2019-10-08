@@ -17,7 +17,7 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class ActionsTests extends TestBase {
@@ -55,6 +55,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-838")
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
