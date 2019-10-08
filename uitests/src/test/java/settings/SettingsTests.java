@@ -1,5 +1,6 @@
 package settings;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -8,10 +9,12 @@ import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultPage;
+import com.apriori.pageobjects.pages.settings.SelectionSettingsPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UsersEnum;
@@ -30,6 +33,7 @@ public class SettingsTests extends TestBase {
     private EvaluatePage evaluatePage;
     private ProductionDefaultPage productionDefaultPage;
     private MoreInputsPage moreInputsPage;
+    private SelectionSettingsPage selectionSettingsPage;
 
     @Test
     @TestRail(testCaseId = {"1609", "276"})
@@ -226,6 +230,66 @@ public class SettingsTests extends TestBase {
 
         productionDefaultPage.selectVPE("<No default specified>")
             .selectMaterialCatalog("<No default specified>");
+        settingsPage = new SettingsPage(driver);
+        explorePage = settingsPage.save(ExplorePage.class);
+    }
+
+    @Test
+    @Description("User can change the default selection colour")
+    public void defaultColor() {
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openSelectionTab()
+            .setColour(ColourEnum.ELECTRIC_PURPLE.getColour());
+        settingsPage = new SettingsPage(driver);
+        explorePage = settingsPage.save(ExplorePage.class);
+
+        explorePage = new ExplorePage(driver);
+        selectionSettingsPage = explorePage.openSettings()
+            .openSelectionTab();
+
+        assertThat(selectionSettingsPage.getColour(), is(equalTo(ColourEnum.ELECTRIC_PURPLE.getColour())));
+
+        selectionSettingsPage.setColour(ColourEnum.YELLOW.getColour());
+        settingsPage = new SettingsPage(driver);
+        explorePage = settingsPage.save(ExplorePage.class);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"277"})
+    @Description("User can change the default Material")
+    public void defaultMaterial() {
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openProdDefaultTab()
+            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_INDIA.getVpe())
+            .selectMaterialCatalog(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
+            .selectMaterial("HIPS Extrusion");
+        settingsPage = new SettingsPage(driver);
+        explorePage = settingsPage.save(ExplorePage.class);
+
+        explorePage = new ExplorePage(driver);
+        productionDefaultPage = explorePage.openSettings()
+            .openProdDefaultTab();
+
+        assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup()), is(true));
+        assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_INDIA.getVpe()), is(true));
+        assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
+        assertThat(productionDefaultPage.getSelectedMaterial("HIPS Extrusion"), is(true));
+
+        productionDefaultPage.enterScenarioName("Initial")
+            .selectProcessGroup("<No default specified>")
+            .selectVPE("<No default specified>")
+            .selectMaterialCatalog("<No default specified>")
+            .selectMaterial("<No default specified>")
+            .enterAnnualVolume("")
+            .enterProductionLife("")
+            .selectBatchAuto();
         settingsPage = new SettingsPage(driver);
         explorePage = settingsPage.save(ExplorePage.class);
     }
