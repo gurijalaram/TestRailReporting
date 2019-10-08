@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultPage;
@@ -28,9 +29,10 @@ public class SettingsTests extends TestBase {
     private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
     private ProductionDefaultPage productionDefaultPage;
+    private MoreInputsPage moreInputsPage;
 
     @Test
-    @TestRail(testCaseId = {"1609"})
+    @TestRail(testCaseId = {"1609", "276"})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
 
@@ -102,5 +104,129 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup("<No default specified>");
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(EvaluatePage.class);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"275"})
+    @Description("User can change the default VPE")
+    public void defaultVPE() {
+
+        String testScenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openProdDefaultTab()
+            .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe());
+
+        settingsPage = new SettingsPage(driver);
+        explorePage = settingsPage.save(ExplorePage.class);
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getSelectedVPE(VPEEnum.APRIORI_MEXICO.getVpe()), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        productionDefaultPage = evaluatePage.openSettings()
+            .openProdDefaultTab()
+            .selectVPE("<No default specified>");
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(EvaluatePage.class);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"278", "279"})
+    @Description("User can change the default Production Life")
+    public void defaultProductionLife() {
+
+        String testScenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openProdDefaultTab()
+            .enterAnnualVolume("9524")
+            .enterProductionLife("7");
+
+        settingsPage = new SettingsPage(driver);
+        explorePage = settingsPage.save(ExplorePage.class);
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getAnnualVolume("9,524"), Matchers.is(true));
+        assertThat(evaluatePage.getProductionLife("7"), Matchers.is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        productionDefaultPage = evaluatePage.openSettings()
+            .openProdDefaultTab()
+            .enterAnnualVolume("")
+            .enterProductionLife("");
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(EvaluatePage.class);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"280", "281"})
+    @Description("User can change the default Batch size when set to manual")
+    public void defaultBatchSize() {
+
+        String testScenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openProdDefaultTab()
+            .selectBatchManual()
+            .enterBatchInput("46");
+        settingsPage = new SettingsPage(driver);
+        explorePage = settingsPage.save(ExplorePage.class);
+
+        explorePage = new ExplorePage(driver);
+        moreInputsPage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .openMoreInputs();
+
+        assertThat(moreInputsPage.getBatchSize("46"), Matchers.is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        productionDefaultPage = evaluatePage.openSettings()
+            .openProdDefaultTab()
+            .selectBatchAuto();
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(EvaluatePage.class);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"293"})
+    @Description("User should be able to select a material catalogue from a different region than the VPE")
+    public void differentMaterialCatalog() {
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openProdDefaultTab()
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectMaterialCatalog(VPEEnum.APRIORI_GERMANY.getVpe());
+        settingsPage = new SettingsPage(driver);
+        explorePage = settingsPage.save(ExplorePage.class);
+
+        explorePage = new ExplorePage(driver);
+        productionDefaultPage = explorePage.openSettings()
+            .openProdDefaultTab();
+
+        assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
+        assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_GERMANY.getVpe()), is(true));
+
+        productionDefaultPage.selectVPE("<No default specified>")
+            .selectMaterialCatalog("<No default specified>");
+        settingsPage = new SettingsPage(driver);
+        explorePage = settingsPage.save(ExplorePage.class);
     }
 }
