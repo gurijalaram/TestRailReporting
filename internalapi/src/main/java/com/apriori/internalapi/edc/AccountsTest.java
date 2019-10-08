@@ -9,6 +9,7 @@ import com.apriori.internalapi.edc.util.UserDataEDC;
 import com.apriori.internalapi.edc.util.UserTestDataUtil;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.http.HttpStatus;
@@ -50,13 +51,14 @@ public class AccountsTest {
     }
 
     @Test
+    @Issue("AP-56541")
     @Description("Test update account")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateAccount() {
         final AccountStatus accountStatus = createAndActivateNewAccount("TestNameForUpd", "TestSecretForUpd");
 
         try {
-            final String newName = "NEW NAME FOR UPDATE";
+            final String newName = "ACCOUNT UPDATE VIA AUTOMATION";
 
             updateAccount(accountStatus.getIdentity(),
                 accountStatus.setName(newName)

@@ -10,6 +10,7 @@ public enum ProcessGroupEnum {
     CASTING("Casting"),
     CASTING_DIE("Casting - Die"),
     CASTING_SAND("Casting - Sand"),
+    COMPOSITES("Composites"),
     FORGING("Forging"),
     PLASTIC_MOLDING("Plastic Molding"),
     POWDER_METAL("Powder Metal"),
