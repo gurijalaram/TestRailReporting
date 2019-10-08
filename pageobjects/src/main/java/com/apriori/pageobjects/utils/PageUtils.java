@@ -684,16 +684,16 @@ public class PageUtils {
     /**
      * Moves the scroller up
      *
-     * @param locator            - the locator of the element
+     * @param scroller            - the scroller
      * @param timeLimitInSeconds - the time limit in seconds to wait
      */
-    public void scrollUp(WebElement locator, int timeLimitInSeconds) {
+    public void scrollUp(WebElement scroller, int timeLimitInSeconds) {
         long startTime = System.currentTimeMillis() / 1000;
-        if (!isElementDisplayed(locator)) {
+        if (!isElementDisplayed(scroller)) {
             return;
         } else {
             do {
-                locator.sendKeys(Keys.UP);
+                scroller.sendKeys(Keys.UP);
             } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
         }
     }
