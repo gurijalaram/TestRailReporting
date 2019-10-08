@@ -208,7 +208,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
-        assertThat(evaluatePage.failedCostedIcon.isDisplayed(), is(true));
+        assertThat(evaluatePage.isFailedIconPresent(), is(true));
     }
 
     @Test
