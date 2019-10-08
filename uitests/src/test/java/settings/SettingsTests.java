@@ -53,8 +53,7 @@ public class SettingsTests extends TestBase {
             .enterProductionLife("7")
             .selectBatchManual()
             .enterBatchInput("50");
-        settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
+        new SettingsPage(driver).save(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
         productionDefaultPage = explorePage.openSettings()
@@ -66,7 +65,7 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_EASTERN_EUROPE.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("ABS, Plating"), is(true));
 
-            productionDefaultPage.enterScenarioName("Initial")
+        productionDefaultPage.enterScenarioName("Initial")
             .selectProcessGroup("<No default specified>")
             .selectVPE("<No default specified>")
             .selectMaterialCatalog("<No default specified>")
@@ -74,8 +73,7 @@ public class SettingsTests extends TestBase {
             .enterAnnualVolume("")
             .enterProductionLife("")
             .selectBatchAuto();
-        settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
+        new SettingsPage(driver).save(ExplorePage.class);
     }
 
     @Test
@@ -92,10 +90,8 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup());
 
         settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .costScenario()
             .publishScenario()
             .openJobQueue()
@@ -106,8 +102,7 @@ public class SettingsTests extends TestBase {
         productionDefaultPage = evaluatePage.openSettings()
             .openProdDefaultTab()
             .selectProcessGroup("<No default specified>");
-        settingsPage = new SettingsPage(driver);
-        evaluatePage = settingsPage.save(EvaluatePage.class);
+        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
@@ -124,10 +119,8 @@ public class SettingsTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe());
 
         settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -137,8 +130,7 @@ public class SettingsTests extends TestBase {
         productionDefaultPage = evaluatePage.openSettings()
             .openProdDefaultTab()
             .selectVPE("<No default specified>");
-        settingsPage = new SettingsPage(driver);
-        evaluatePage = settingsPage.save(EvaluatePage.class);
+        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
@@ -156,10 +148,8 @@ public class SettingsTests extends TestBase {
             .enterProductionLife("7");
 
         settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -171,8 +161,7 @@ public class SettingsTests extends TestBase {
             .openProdDefaultTab()
             .enterAnnualVolume("")
             .enterProductionLife("");
-        settingsPage = new SettingsPage(driver);
-        evaluatePage = settingsPage.save(EvaluatePage.class);
+        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
@@ -188,11 +177,10 @@ public class SettingsTests extends TestBase {
             .openProdDefaultTab()
             .selectBatchManual()
             .enterBatchInput("46");
-        settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
 
-        explorePage = new ExplorePage(driver);
-        moreInputsPage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+        settingsPage = new SettingsPage(driver);
+        moreInputsPage = settingsPage.save(ExplorePage.class)
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openMoreInputs();
@@ -203,8 +191,7 @@ public class SettingsTests extends TestBase {
         productionDefaultPage = evaluatePage.openSettings()
             .openProdDefaultTab()
             .selectBatchAuto();
-        settingsPage = new SettingsPage(driver);
-        evaluatePage = settingsPage.save(EvaluatePage.class);
+        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
@@ -219,10 +206,8 @@ public class SettingsTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .selectMaterialCatalog(VPEEnum.APRIORI_GERMANY.getVpe());
         settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
-
-        explorePage = new ExplorePage(driver);
-        productionDefaultPage = explorePage.openSettings()
+        productionDefaultPage = settingsPage.save(ExplorePage.class)
+            .openSettings()
             .openProdDefaultTab();
 
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
@@ -230,8 +215,7 @@ public class SettingsTests extends TestBase {
 
         productionDefaultPage.selectVPE("<No default specified>")
             .selectMaterialCatalog("<No default specified>");
-        settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
+        new SettingsPage(driver).save(ExplorePage.class);
     }
 
     @Test
@@ -244,17 +228,14 @@ public class SettingsTests extends TestBase {
             .openSelectionTab()
             .setColour(ColourEnum.ELECTRIC_PURPLE.getColour());
         settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
-
-        explorePage = new ExplorePage(driver);
-        selectionSettingsPage = explorePage.openSettings()
+        selectionSettingsPage = settingsPage.save(ExplorePage.class)
+            .openSettings()
             .openSelectionTab();
 
         assertThat(selectionSettingsPage.getColour(), is(equalTo(ColourEnum.ELECTRIC_PURPLE.getColour())));
 
         selectionSettingsPage.setColour(ColourEnum.YELLOW.getColour());
-        settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
+        new SettingsPage(driver).save(ExplorePage.class);
     }
 
     @Test
@@ -270,11 +251,10 @@ public class SettingsTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_INDIA.getVpe())
             .selectMaterialCatalog(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .selectMaterial("HIPS Extrusion");
-        settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
 
-        explorePage = new ExplorePage(driver);
-        productionDefaultPage = explorePage.openSettings()
+        settingsPage = new SettingsPage(driver);
+        productionDefaultPage = settingsPage.save(ExplorePage.class)
+            .openSettings()
             .openProdDefaultTab();
 
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup()), is(true));
@@ -290,7 +270,7 @@ public class SettingsTests extends TestBase {
             .enterAnnualVolume("")
             .enterProductionLife("")
             .selectBatchAuto();
-        settingsPage = new SettingsPage(driver);
-        explorePage = settingsPage.save(ExplorePage.class);
+
+        new SettingsPage(driver).save(ExplorePage.class);
     }
 }
