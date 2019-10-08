@@ -361,7 +361,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 3 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("High Pressure Die Casting"), is(true));
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
@@ -370,6 +370,6 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / Gravity Die Casting / Trim / Cleaning / Finishing / Visual Inspection / 3 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Gravity Die Casting"), is(true));
     }
 }
