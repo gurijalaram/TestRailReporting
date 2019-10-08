@@ -183,10 +183,8 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      *
      * @return
      */
-
     public Boolean getSelectedProcessGroup(String text) {
         return pageUtils.checkElementFirstOption(processGroupDropdown, text);
-
     }
 
     /**
@@ -194,16 +192,15 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      *
      * @return
      */
-
     public Boolean getSelectedVPE(String text) {
         return pageUtils.checkElementFirstOption(vpeDropdown, text);
-        /**
-         * Gets the MaterialCatalogue
-         *
-         * @return
-         */
     }
 
+    /**
+     * Gets the MaterialCatalogue
+     *
+     * @return
+     */
     public Boolean getSelectedCatalog(String text) {
         return pageUtils.checkElementFirstOption(catalogDropdown, text);
     }
@@ -213,7 +210,6 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      *
      * @return
      */
-
     public Boolean getSelectedMaterial(String text) {
         return pageUtils.checkElementFirstOption(materialDropdown, text);
     }

@@ -389,11 +389,11 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets the capital investment
+     * Checks if the failed icon is present
      *
      * @return string
      */
-    public boolean isfailedIconPresent() {
+    public boolean isFailedIconPresent() {
         pageUtils.waitForElementToAppear(failedCostIcon);
         return failedCostIcon.isDisplayed();
     }
