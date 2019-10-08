@@ -6,10 +6,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.pageobjects.header.GenericHeader;
-import com.apriori.pageobjects.header.PageHeader;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
+import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -32,6 +32,7 @@ public class ActionsTests extends TestBase {
     private ScenarioNotesPage scenarioNotesPage;
     private EvaluatePage evaluatePage;
     private GenericHeader genericHeader;
+    private JobQueuePage jobQueuePage;
 
     @Category(CustomerSmokeTests.class)
     @Test
@@ -113,14 +114,19 @@ public class ActionsTests extends TestBase {
             .highlightScenario(testScenarioName, "bracket_basic");
 
         new GenericHeader(driver).lockScenario();
-        new ExplorePage(driver).openScenario(testScenarioName, "bracket_basic");
-        new PageHeader(driver).openJobQueue().checkJobQueueActionComplete(testScenarioName, "Update");
+
+        explorePage = new ExplorePage(driver);
+        jobQueuePage = explorePage.openScenario(testScenarioName, "bracket_basic")
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Update");
 
         evaluatePage = new EvaluatePage(driver);
         assertThat(evaluatePage.getLockedStatus(), is(equalTo("Locked")));
 
-        evaluatePage.unlockScenario();
-        new PageHeader(driver).openJobQueue().checkJobQueueActionComplete(testScenarioName, "Update");
-        assertThat(new EvaluatePage(driver).getLockedStatus(), is(equalTo("Unlocked")));
+        evaluatePage.unlockScenario()
+            .openJobQueue()
+            .checkJobQueueActionComplete(testScenarioName, "Update");
+
+        assertThat(evaluatePage.getLockedStatus(), is(equalTo("Unlocked")));
     }
 }
