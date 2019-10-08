@@ -36,6 +36,30 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     @FindBy(css = "div.auth0-global-message.auth0-global-message-error span")
     private WebElement loginErrorMsg;
 
+    @FindBy(css = ".auth0-lock-header-logo")
+    private WebElement aprioriLogo;
+
+    @FindBy(css = ".auth0-lock-name")
+    private WebElement aprioriTitle;
+
+    @FindBy(xpath = "//a[contains(text(),'Privacy Policy')]")
+    private WebElement privacyPolicy;
+
+    @FindBy(xpath = "//a[contains(text(),'Help')]")
+    private WebElement helpLink;
+
+    @FindBy(css = ".marketing-info")
+    private WebElement marketingText;
+
+    @FindBy(css = ".welcome-message")
+    private WebElement welcomeText;
+
+    @FindBy(css = ".legal-text")
+    private WebElement legalText;
+
+    @FindBy(xpath = "//a[@class='white-link']")
+    private WebElement learnMore;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -150,5 +174,102 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      */
     public String getLoginErrorMessage() {
         return loginErrorMsg.getText();
+    }
+
+    /**
+     * Gets both username and password
+     *
+     * @return current page object
+     */
+    public LoginPage getUsernameAndPassword() {
+        getEmail();
+        getPassword();
+        return this;
+    }
+
+    /**
+     * Gets the email
+     *
+     * @return string
+     */
+    private String getEmail() {
+        return email.getText();
+    }
+
+    /**
+     * Gets the password
+     *
+     * @return string
+     */
+    private String getPassword() {
+        return this.password.getText();
+    }
+
+    /**
+     * Checks apriori logo is displayed
+     * @return true/false
+     */
+    public Boolean isLogoDisplayed() {
+        return aprioriLogo.isDisplayed();
+    }
+
+    /**
+     * Checks the environment title
+     * @return true/false
+     */
+    public Boolean isEnvironmentDisplayed() {
+        return aprioriTitle.isDisplayed();
+    }
+
+    /**
+     * Gets marketing text
+     * @return string
+     */
+    public String getMarketingText() {
+        return marketingText.getText();
+    }
+
+    /**
+     * Gets welcome text
+     * @return string
+     */
+    public String getWelcomeText() {
+        return welcomeText.getText();
+    }
+
+    /**
+     * Selects learn more
+     * @return new page object
+     */
+    public LearnMorePage learnMore() {
+        pageUtils.waitForElementAndClick(learnMore);
+        return new LearnMorePage(driver);
+    }
+
+    /**
+     * Selects forgotten password
+     * @return new page object
+     */
+    public ForgottenPasswordPage forgottenPassword() {
+        pageUtils.waitForElementAndClick(forgotPassword);
+        return new ForgottenPasswordPage(driver);
+    }
+
+    /**
+     * Selects privacy policy
+     * @return new page object
+     */
+    public PrivacyPolicyPage privacyPolicy() {
+        pageUtils.waitForElementAndClick(privacyPolicy);
+        return new PrivacyPolicyPage(driver);
+    }
+
+    /**
+     * Select helps link
+     * @return new page object
+     */
+    public HelpPage help() {
+        pageUtils.waitForElementAndClick(helpLink);
+        return new HelpPage(driver);
     }
 }
