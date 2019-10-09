@@ -254,7 +254,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @return string
      */
     public String getLearnMoreURL() {
-        return getURLs(learnMore);
+        return getURL(learnMore);
     }
 
     /**
@@ -281,7 +281,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @return String
      */
     public String getPrivacyPolicyURL() {
-        return getURLs(privacyPolicy);
+        return getURL(privacyPolicy);
     }
 
     /**
@@ -299,7 +299,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @return String
      */
     public String getHelpURL() {
-        return getURLs(helpLink);
+        return getURL(helpLink);
     }
 
     /**
@@ -312,7 +312,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         return pageUtils.urlRespCode(linkURL);
     }
 
-    private String getURLs(WebElement url) {
+    private String getURL(WebElement url) {
         return pageUtils.waitForElementToAppear(url).getAttribute("href");
     }
 }
