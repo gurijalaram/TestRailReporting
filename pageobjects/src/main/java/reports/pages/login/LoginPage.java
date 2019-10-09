@@ -217,6 +217,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @return String response code
      */
     public int getResponseCode(String linkURL) throws IOException {
-        return pageUtils.linkRespCode(linkURL);
+        return pageUtils.urlRespCode(linkURL);
     }
 }

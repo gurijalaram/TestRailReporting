@@ -718,7 +718,7 @@ public class PageUtils {
      * @param linkURL - URL of link
      * @return String response code
      */
-    public int linkRespCode(String linkURL) throws IOException {
+    public int urlRespCode(String linkURL) throws IOException {
         HttpURLConnection httpURLConnection = (HttpURLConnection)(new URL(linkURL).openConnection());
         httpURLConnection.setRequestMethod("HEAD");
         httpURLConnection.connect();
