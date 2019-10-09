@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+
 /**
  * @author cfrith
  */
@@ -247,6 +249,16 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     }
 
     /**
+     * Get learn more link URL
+     *
+     * @return string
+     */
+    public String getLearnMoreURL() {
+        pageUtils.waitForElementToAppear(learnMore);
+        return learnMore.getAttribute("href");
+    }
+
+    /**
      * Selects forgotten password
      * @return new page object
      */
@@ -265,11 +277,41 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     }
 
     /**
+     * Get privacy policy link URL
+     *
+     * @return String
+     */
+    public String getPrivacyPolicyURL() {
+        pageUtils.waitForElementToAppear(privacyPolicy);
+        return privacyPolicy.getAttribute("href");
+    }
+
+    /**
      * Select helps link
      * @return new page object
      */
     public HelpPage help() {
         pageUtils.waitForElementAndClick(helpLink);
         return new HelpPage(driver);
+    }
+
+    /**
+     * Get help link URL
+     *
+     * @return String
+     */
+    public String getHelpURL() {
+        pageUtils.waitForElementToAppear(helpLink);
+        return helpLink.getAttribute("href");
+    }
+
+    /**
+     * Get link response code
+     *
+     * @param linkURL - URL of link
+     * @return String response code
+     */
+    public int getResponseCode(String linkURL) throws IOException {
+        return pageUtils.linkRespCode(linkURL);
     }
 }

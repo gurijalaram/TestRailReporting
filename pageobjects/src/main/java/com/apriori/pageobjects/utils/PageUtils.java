@@ -27,6 +27,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -707,5 +710,18 @@ public class PageUtils {
     public WebDriver windowHandler() {
         List<String> windowList = new ArrayList<>(driver.getWindowHandles());
         return driver.switchTo().window(windowList.get(1));
+    }
+
+    /**
+     * Get link response code
+     *
+     * @param linkURL - URL of link
+     * @return String response code
+     */
+    public int linkRespCode(String linkURL) throws IOException {
+        HttpURLConnection httpURLConnection = (HttpURLConnection)(new URL(linkURL).openConnection());
+        httpURLConnection.setRequestMethod("HEAD");
+        httpURLConnection.connect();
+        return httpURLConnection.getResponseCode();
     }
 }
