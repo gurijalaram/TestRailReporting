@@ -198,7 +198,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      */
     public String getHelpURL() {
         pageUtils.waitForElementToAppear(helpLink);
-        return helpLink.getText();
+        return helpLink.getAttribute("href");
     }
 
     /**
@@ -208,7 +208,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      */
     public String getPrivacyPolicyURL() {
         pageUtils.waitForElementToAppear(privacyPolicyLink);
-        return privacyPolicyLink.getText();
+        return privacyPolicyLink.getAttribute("href");
     }
 
     /**
