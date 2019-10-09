@@ -135,10 +135,21 @@ public class GenericHeader extends PageHeader {
      *
      * @return current page object
      */
-    public ExplorePage lockScenario() {
-        actionsDropdown.click();
-        lockButton.click();
-        return new ExplorePage(driver);
+    public GenericHeader lockScenario() {
+        pageUtils.waitForElementAndClick(actionsDropdown);
+        pageUtils.waitForElementAndClick(lockButton);
+        return this;
+    }
+
+    /**
+     * Unlocks a scenario
+     *
+     * @return current page object
+     */
+    public GenericHeader unlockScenario() {
+        pageUtils.waitForElementAndClick(actionsDropdown);
+        pageUtils.waitForElementAndClick(lockButton);
+        return this;
     }
 
     /**

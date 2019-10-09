@@ -13,6 +13,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class TableHeadersTests extends TestBase {
@@ -49,6 +50,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-838")
     @TestRail(testCaseId = {"1095"})
     @Description("Test added columns are displayed in the public workspace")
     public void testPublicAddColumnHeaders() {
@@ -67,6 +69,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-838")
     @TestRail(testCaseId = {"1095"})
     @Description("Test added columns are displayed in the private workspace")
     public void testPrivateAddColumnHeaders() {
