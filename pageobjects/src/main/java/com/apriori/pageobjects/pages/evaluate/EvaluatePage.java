@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.header.EvaluateHeader;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
@@ -124,6 +125,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = ".color-failure")
     private WebElement failedCostIcon;
 
+    @FindBy(css = ".locked-status-icon")
+    private WebElement lockedStatusIcon;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -222,6 +226,16 @@ public class EvaluatePage extends EvaluateHeader {
     public DesignGuidancePage openDesignGuidance() {
         pageUtils.waitForElementAndClick(guidanceDetails);
         return new DesignGuidancePage(driver);
+    }
+
+    /**
+     * Opens the more inputs dialog
+     *
+     * @return new page object
+     */
+    public MoreInputsPage openMoreInputs() {
+        pageUtils.waitForElementAndClick(moreInputs);
+        return new MoreInputsPage(driver);
     }
 
     /**
@@ -411,4 +425,50 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementAndClick(analysisButton);
         return new AnalysisPage(driver);
     }
+
+    /**
+     * Gets the locked status
+     *
+     * @return current page object
+     */
+    public String getLockedStatus() {
+        return pageUtils.waitForElementToAppear(lockedStatusIcon).getAttribute("title");
+    }
+
+    /**
+     * Gets the selected process group
+     *
+     * @return string
+     */
+    public Boolean getSelectedProcessGroup(String text) {
+        return pageUtils.checkElementFirstOption(processGroupDropdown, text);
+    }
+
+    /**
+     * Gets the selected VPE
+     *
+     * @return string
+     */
+    public Boolean getSelectedVPE(String text) {
+        return pageUtils.checkElementFirstOption(vpeDropdown, text);
+    }
+
+    /**
+     * Checks the input value is correct
+     *
+     * @return true/false
+     */
+    public Boolean getAnnualVolume(String text) {
+        return pageUtils.checkElementAttribute(annVolume, "value", text);
+    }
+
+    /**
+     * Checks the input value is correct
+     *
+     * @return true/false
+     */
+    public Boolean getProductionLife(String text) {
+        return pageUtils.checkElementAttribute(annualVolumeYrs, "value", text);
+    }
+
 }

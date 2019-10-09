@@ -77,7 +77,6 @@ public class ProcessRoutingTests extends TestBase {
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .openSettings()
             .changeCurrency(CurrencyEnum.USD.getCurrency())
             .openTolerancesTab()
@@ -368,7 +367,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 3 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("High Pressure Die Casting"), is(true));
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
@@ -377,7 +376,7 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / Gravity Die Casting / Trim / Cleaning / Finishing / Visual Inspection / 3 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Gravity Die Casting"), is(true));
     }
 
     @Test

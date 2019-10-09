@@ -17,6 +17,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class PublishPublicComparisonTests extends TestBase {
@@ -31,6 +32,7 @@ public class PublishPublicComparisonTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56464")
     @Description("Test a public comparison can be published")
     public void testPublishPublicComparison() {
 
