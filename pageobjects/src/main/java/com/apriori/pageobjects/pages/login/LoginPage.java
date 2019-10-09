@@ -302,10 +302,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         return getURLs(helpLink);
     }
 
-    public String getURLs(WebElement url) {
-        return pageUtils.waitForElementToAppear(url).getAttribute("href");
-    }
-
     /**
      * Get link response code
      *
@@ -314,5 +310,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      */
     public int getResponseCode(String linkURL) throws IOException {
         return pageUtils.urlRespCode(linkURL);
+    }
+
+    private String getURLs(WebElement url) {
+        return pageUtils.waitForElementToAppear(url).getAttribute("href");
     }
 }
