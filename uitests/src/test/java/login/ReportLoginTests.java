@@ -3,15 +3,20 @@ package login;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.lessThan;
 
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import reports.pages.homepage.HomePage;
 import reports.pages.login.LoginPage;
+
+import java.io.IOException;
 
 public class ReportLoginTests extends TestBase {
 
@@ -35,6 +40,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C2695"})
     @Description("Successful login to CI Report")
     public void testLogin() {
         loginPage = new LoginPage(driver);
@@ -43,7 +49,8 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
-    @Description("Failed login to CI Report")
+    @TestRail(testCaseId = {"C2696"})
+    @Description("Failed login to CI Report, wrong password")
     public void failedLogin() {
         loginPage = new LoginPage(driver);
         loginPage.failedLogin(UsersEnum.CID_TE_USER.getUsername(), "fakePassword");
@@ -51,6 +58,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C2697"})
     @Description("Forgotten password functionality")
     public void forgotPassword() {
         loginPage = new LoginPage(driver);
@@ -60,6 +68,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C2698"})
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
         loginPage = new LoginPage(driver);
@@ -68,10 +77,29 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"C2699"})
     @Description("Invalid email address, wrong format")
     public void invalidEmail() {
         loginPage = new LoginPage(driver);
         loginPage.failedLogin("a@b", "fakePassword");
         assertThat(loginPage.getInputErrorMsg(), is(equalTo(invalidEmailMsg)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"C2700"})
+    @Description("Link to privacy policy working")
+    public void testPrivacyPolicyLink() throws IOException {
+        loginPage = new LoginPage(driver);
+        int respCode = loginPage.getLinkRespCode(loginPage.getPrivacyPolicyURL());
+        assertThat(respCode, is(lessThan (HttpStatus.SC_BAD_REQUEST)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"C2701"})
+    @Description("Link to help page working")
+    public void testHelpLink() throws IOException {
+        loginPage = new LoginPage(driver);
+        int respCode = loginPage.getLinkRespCode(loginPage.getHelpURL());
+        assertThat(respCode, is(lessThan (HttpStatus.SC_BAD_REQUEST)));
     }
 }
