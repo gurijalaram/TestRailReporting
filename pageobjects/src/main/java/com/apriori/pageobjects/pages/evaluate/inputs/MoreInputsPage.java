@@ -175,4 +175,14 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
         new Select(testUserSelect).selectByVisibleText(testUser);
         return this;
     }
+
+    /**
+     * Checks the input value is correct
+     *
+     * @return true/false
+     */
+    public Boolean getBatchSize(String text) {
+        return pageUtils.checkElementAttribute(batchSizeInput, "value", text);
+    }
+
 }

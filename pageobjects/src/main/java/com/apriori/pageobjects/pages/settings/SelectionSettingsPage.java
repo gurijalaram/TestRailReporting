@@ -115,7 +115,7 @@ public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPa
      *
      * @return string
      */
-    public String isColour() {
+    public String getColour() {
         return selectedColour.getAttribute("value");
     }
 
