@@ -14,14 +14,14 @@ public enum ColourEnum {
     SPRING_BUD("#99ff00"),
     MEDIUM_SPRING_GREEN("#00ff99"),
     DODGER_BLUE("#0099ff"),
-    ELECTRIC_PURPLE("9900ff"),
+    ELECTRIC_PURPLE("#9900ff"),
     NOBEL("#999999"),
     EGGPLANT("#990066"),
     GOLDEN_BROWN("#996600"),
     CHRISTI("#669900"),
     SHAMROCK_GREEN("#009966"),
     CERULEAN("#006699"),
-    INDIGO("660099"),
+    INDIGO("#660099"),
     BLACK("#000000");
 
     private final String colour;
