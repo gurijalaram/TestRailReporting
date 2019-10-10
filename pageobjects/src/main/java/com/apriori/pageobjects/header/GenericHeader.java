@@ -57,7 +57,7 @@ public class GenericHeader extends PageHeader {
     private WebElement comparisonButton;
 
     @FindBy(css = "button[data-ap-comp='toggleLockButton']")
-    private WebElement lockButton;
+    private WebElement lockToggleButton;
 
     @FindBy(css = "button[data-ap-comp='reloadButton']")
     private WebElement cadModelButton;
@@ -131,24 +131,32 @@ public class GenericHeader extends PageHeader {
     }
 
     /**
-     * Locks a scenario
+     * Lock/Unlocks a scenario
      *
      * @return current page object
      */
-    public GenericHeader lockScenario() {
+    public GenericHeader toggleLock() {
         pageUtils.waitForElementAndClick(actionsDropdown);
-        pageUtils.waitForElementAndClick(lockButton);
+        pageUtils.waitForElementAndClick(lockToggleButton);
         return this;
     }
 
     /**
-     * Unlocks a scenario
+     * Gets the locked status
+     *
+     * @return true false
+     */
+    public Boolean isActionLockedStatus(String status) {
+        return pageUtils.checkElementAttribute(lockToggleButton, "innerText", status);
+    }
+
+    /**
+     * Selects the actions button
      *
      * @return current page object
      */
-    public GenericHeader unlockScenario() {
+    public GenericHeader selectActions() {
         pageUtils.waitForElementAndClick(actionsDropdown);
-        pageUtils.waitForElementAndClick(lockButton);
         return this;
     }
 

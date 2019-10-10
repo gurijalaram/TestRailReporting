@@ -418,8 +418,8 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return current page object
      */
-    public String getLockedStatus() {
-        return pageUtils.waitForElementToAppear(lockedStatusIcon).getAttribute("title");
+    public Boolean isLockedStatus(String status) {
+        return pageUtils.checkElementAttribute(lockedStatusIcon, "title", status);
     }
 
     /**

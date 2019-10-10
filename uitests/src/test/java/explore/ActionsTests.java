@@ -1,6 +1,5 @@
 package explore;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
@@ -113,20 +112,22 @@ public class ActionsTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "bracket_basic");
 
-        new GenericHeader(driver).lockScenario();
+        new GenericHeader(driver).toggleLock();
+
+        new ExplorePage(driver).highlightScenario(testScenarioName, "bracket_basic");
+
+        genericHeader = new GenericHeader(driver);
+        genericHeader.selectActions();
+
+        assertThat(genericHeader.isActionLockedStatus("Unlock"), is(true));
 
         explorePage = new ExplorePage(driver);
-        jobQueuePage = explorePage.openScenario(testScenarioName, "bracket_basic")
-            .openJobQueue()
-            .checkJobQueueActionComplete(testScenarioName, "Update");
+        evaluatePage = explorePage.openScenario(testScenarioName, "bracket_basic");
 
-        evaluatePage = new EvaluatePage(driver);
-        assertThat(evaluatePage.getLockedStatus(), is(equalTo("Locked")));
+        assertThat(evaluatePage.isLockedStatus("Locked"), is(true));
 
-        evaluatePage.unlockScenario()
-            .openJobQueue()
-            .checkJobQueueActionComplete(testScenarioName, "Update");
+        new GenericHeader(driver).toggleLock();
 
-        assertThat(evaluatePage.getLockedStatus(), is(equalTo("Unlocked")));
+        assertThat(new EvaluatePage(driver).isLockedStatus("Unlocked"), is(true));
     }
 }
