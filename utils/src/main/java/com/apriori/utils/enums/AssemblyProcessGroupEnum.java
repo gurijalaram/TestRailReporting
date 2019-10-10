@@ -8,14 +8,14 @@ public enum AssemblyProcessGroupEnum {
     ASSEMBLY_MOLDING("Assembly Molding"),
     MANUALLY_COSTED("Manually Costed");
 
-    private final String assemblyProcessGroup;
+    private final String processGroup;
 
-    AssemblyProcessGroupEnum(String assemblyProcessGroup) {
-        this.assemblyProcessGroup = assemblyProcessGroup;
+    AssemblyProcessGroupEnum(String processGroup) {
+        this.processGroup = processGroup;
     }
 
     public String getProcessGroup() {
-        return this.assemblyProcessGroup;
+        return this.processGroup;
     }
 
     public static String[] getNames() {
