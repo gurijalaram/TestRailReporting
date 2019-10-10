@@ -74,7 +74,7 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
      * Get reset password text
      * @return - string
      */
-    public String getResetText() {
+    public String getResetPassword() {
         return resetPasswordText.getText();
     }
 }
