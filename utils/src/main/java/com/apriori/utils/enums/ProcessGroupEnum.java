@@ -4,7 +4,6 @@ import java.util.stream.Stream;
 
 public enum ProcessGroupEnum {
 
-    ASSEMBLY("Assembly"),
     ADDITIVE_MANUFACTURING("Additive Manufacturing"),
     BAR_TUBE_FAB("Bar & Tube Fab"),
     CASTING("Casting"),
