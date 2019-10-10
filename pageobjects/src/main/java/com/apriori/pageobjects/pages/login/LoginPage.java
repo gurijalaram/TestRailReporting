@@ -249,15 +249,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     }
 
     /**
-     * Get learn more link URL
-     *
-     * @return string
-     */
-    public String getLearnMoreURL() {
-        return getURL(learnMore);
-    }
-
-    /**
      * Selects forgotten password
      * @return new page object
      */
@@ -276,30 +267,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     }
 
     /**
-     * Get privacy policy link URL
-     *
-     * @return String
-     */
-    public String getPrivacyPolicyURL() {
-        return getURL(privacyPolicy);
-    }
-
-    /**
      * Select helps link
      * @return new page object
      */
     public HelpPage help() {
         pageUtils.waitForElementAndClick(helpLink);
         return new HelpPage(driver);
-    }
-
-    /**
-     * Get help link URL
-     *
-     * @return String
-     */
-    public String getHelpURL() {
-        return getURL(helpLink);
     }
 
     /**
@@ -310,9 +283,5 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      */
     public int getResponseCode(String linkURL) throws IOException {
         return pageUtils.urlRespCode(linkURL);
-    }
-
-    private String getURL(WebElement url) {
-        return pageUtils.waitForElementToAppear(url).getAttribute("href");
     }
 }
