@@ -55,6 +55,9 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = ".v-grid-header")
     private WebElement columnHeaders;
 
+    @FindBy(css = "div[data-ap-comp='noComponentsMessage']")
+    private WebElement noComponentText;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -231,5 +234,13 @@ public class ExplorePage extends ExploreHeader {
      */
     public List<String> getColumnHeaderNames() {
         return Arrays.stream(columnHeaders.getText().split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the no component message
+     * @return string
+     */
+    public String getNoComponentText() {
+        return pageUtils.waitForElementToAppear(noComponentText).getText();
     }
 }
