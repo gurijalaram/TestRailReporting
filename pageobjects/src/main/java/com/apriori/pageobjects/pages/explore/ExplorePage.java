@@ -243,4 +243,15 @@ public class ExplorePage extends ExploreHeader {
     public String getNoComponentText() {
         return pageUtils.waitForElementToAppear(noComponentText).getText();
     }
+
+    /**
+     * Refreshes the page
+     * todo - intentionally on this page and not in pageutils because only this page will need to be reloaded
+     * todo - for uploading files multiple times in the same test
+     * @return current page object
+     */
+    public ExplorePage refreshCurrentPage() {
+        driver.navigate().refresh();
+        return this;
+    }
 }
