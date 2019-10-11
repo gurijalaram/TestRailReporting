@@ -22,6 +22,7 @@ import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -36,6 +37,7 @@ public class SettingsTests extends TestBase {
     private SelectionSettingsPage selectionSettingsPage;
 
     @Test
+    @Issue("BA-842")
     @TestRail(testCaseId = {"1609", "276"})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
@@ -77,6 +79,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-842")
     @TestRail(testCaseId = {"274", "1609"})
     @Description("User can change the default Process group")
     public void defaultPG() {
@@ -106,6 +109,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-842")
     @TestRail(testCaseId = {"275"})
     @Description("User can change the default VPE")
     public void defaultVPE() {
@@ -134,6 +138,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-842")
     @TestRail(testCaseId = {"278", "279"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
@@ -165,6 +170,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-842")
     @TestRail(testCaseId = {"280", "281"})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
@@ -195,6 +201,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-842")
     @TestRail(testCaseId = {"293"})
     @Description("User should be able to select a material catalogue from a different region than the VPE")
     public void differentMaterialCatalog() {
@@ -219,6 +226,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-842")
     @Description("User can change the default selection colour")
     public void defaultColor() {
 
@@ -239,6 +247,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-842")
     @TestRail(testCaseId = {"277"})
     @Description("User can change the default Material")
     public void defaultMaterial() {
