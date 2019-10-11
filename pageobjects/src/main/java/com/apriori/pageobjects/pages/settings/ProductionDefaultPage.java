@@ -72,8 +72,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      * @return curent page object
      */
     public ProductionDefaultPage enterScenarioName(String scenarioName) {
-        pageUtils.waitForElementToAppear(scenarioNameInput).clear();
-        scenarioNameInput.sendKeys(scenarioName);
+        enterInput(scenarioNameInput, scenarioName);
         return this;
     }
 
@@ -129,9 +128,15 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      * @return current page object
      */
     public ProductionDefaultPage enterAnnualVolume(String annualVolume) {
-        pageUtils.waitForElementToAppear(volumeInput).clear();
-        volumeInput.sendKeys(annualVolume);
-        return this;
+        return enterInput(volumeInput, annualVolume);
+    }
+
+    /**
+     * Clears annual volume
+     * @return current page object
+     */
+    public ProductionDefaultPage clearAnnualVolume() {
+        return clearInput(volumeInput);
     }
 
     /**
@@ -141,9 +146,15 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      * @return current page object
      */
     public ProductionDefaultPage enterProductionLife(String years) {
-        pageUtils.waitForElementToAppear(lifeInput).clear();
-        lifeInput.sendKeys(years);
-        return this;
+        return enterInput(lifeInput, years);
+    }
+
+    /**
+     * Clears the production life
+     * @return current page object
+     */
+    public ProductionDefaultPage clearProductionLife() {
+        return clearInput(lifeInput);
     }
 
     /**
@@ -173,9 +184,16 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      * @return
      */
     public ProductionDefaultPage enterBatchInput(String input) {
-        pageUtils.waitForElementToAppear(batchInput).clear();
-        batchInput.sendKeys(input);
-        return this;
+        return enterInput(batchInput, input);
+    }
+
+    /**
+     * Clears batch input
+     *
+     * @return current page object
+     */
+    public ProductionDefaultPage clearBatchInput() {
+        return clearInput(batchInput);
     }
 
     /**
@@ -221,5 +239,16 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      */
     public Boolean getScenarioName(String text) {
         return pageUtils.checkElementAttribute(scenarioNameInput, "value", text);
+    }
+
+    private ProductionDefaultPage clearInput(WebElement locator) {
+        pageUtils.waitForElementToAppear(locator).clear();
+        return this;
+    }
+
+    private ProductionDefaultPage enterInput(WebElement locator, String text) {
+        clearInput(locator);
+        locator.sendKeys(text);
+        return this;
     }
 }

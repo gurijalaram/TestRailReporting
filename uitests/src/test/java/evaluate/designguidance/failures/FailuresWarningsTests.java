@@ -3,13 +3,7 @@ package evaluate.designguidance.failures;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
@@ -26,16 +20,9 @@ import org.junit.Test;
 public class FailuresWarningsTests extends TestBase {
 
     private LoginPage loginPage;
-    private DesignGuidancePage designGuidancePage;
-    private EvaluatePage evaluatePage;
-    private InvestigationPage investigationPage;
-    private ThreadingPage threadingPage;
-    private WarningPage warningPage;
     private SettingsPage settingsPage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private FailuresPage failuresPage;
-    private ExplorePage explorePage;
-    private GuidancePage guidancePage;
 
     @Test
     @Description("Ensure that 'Failures/ Warnings tab includes: - Issue type & count - Messaging")
