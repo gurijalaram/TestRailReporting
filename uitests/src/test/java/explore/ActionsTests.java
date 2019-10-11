@@ -35,6 +35,7 @@ public class ActionsTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
+    @Issue("BA-843")
     @TestRail(testCaseId = {"545", "731", "738", "1610"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
