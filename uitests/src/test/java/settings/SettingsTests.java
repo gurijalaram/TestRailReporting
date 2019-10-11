@@ -61,19 +61,19 @@ public class SettingsTests extends TestBase {
         productionDefaultPage = explorePage.openSettings()
             .openProdDefaultTab();
 
-        assertThat(productionDefaultPage.getScenarioName("MP Auto Test"), Matchers.is(true));
+        assertThat(productionDefaultPage.getScenarioName("MP Auto Test"), is(true));
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()), is(true));
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_BRAZIL.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_EASTERN_EUROPE.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("ABS, Plating"), is(true));
 
         productionDefaultPage.enterScenarioName("Initial")
-            .selectProcessGroup("<No default specified>")
-            .selectVPE("<No default specified>")
-            .selectMaterialCatalog("<No default specified>")
+            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
+            .selectVPE(VPEEnum.NO_DEFAULT.getVpe())
+            .selectMaterialCatalog(VPEEnum.NO_DEFAULT.getVpe())
             .selectMaterial("<No default specified>")
-            .enterAnnualVolume("")
-            .enterProductionLife("")
+            .clearAnnualVolume()
+            .clearProductionLife()
             .selectBatchAuto();
         new SettingsPage(driver).save(ExplorePage.class);
     }
@@ -104,7 +104,7 @@ public class SettingsTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         productionDefaultPage = evaluatePage.openSettings()
             .openProdDefaultTab()
-            .selectProcessGroup("<No default specified>");
+            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup());
         new SettingsPage(driver).save(EvaluatePage.class);
     }
 
@@ -133,7 +133,7 @@ public class SettingsTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         productionDefaultPage = evaluatePage.openSettings()
             .openProdDefaultTab()
-            .selectVPE("<No default specified>");
+            .selectVPE(VPEEnum.NO_DEFAULT.getVpe());
         new SettingsPage(driver).save(EvaluatePage.class);
     }
 
@@ -164,8 +164,8 @@ public class SettingsTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         productionDefaultPage = evaluatePage.openSettings()
             .openProdDefaultTab()
-            .enterAnnualVolume("")
-            .enterProductionLife("");
+            .clearAnnualVolume()
+            .clearProductionLife();
         new SettingsPage(driver).save(EvaluatePage.class);
     }
 
@@ -220,8 +220,8 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_GERMANY.getVpe()), is(true));
 
-        productionDefaultPage.selectVPE("<No default specified>")
-            .selectMaterialCatalog("<No default specified>");
+        productionDefaultPage.selectVPE(VPEEnum.NO_DEFAULT.getVpe())
+            .selectMaterialCatalog(VPEEnum.NO_DEFAULT.getVpe());
         new SettingsPage(driver).save(ExplorePage.class);
     }
 
@@ -272,14 +272,15 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedMaterial("HIPS Extrusion"), is(true));
 
         productionDefaultPage.enterScenarioName("Initial")
-            .selectProcessGroup("<No default specified>")
-            .selectVPE("<No default specified>")
-            .selectMaterialCatalog("<No default specified>")
+            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
+            .selectVPE(VPEEnum.NO_DEFAULT.getVpe())
+            .selectMaterialCatalog(VPEEnum.NO_DEFAULT.getVpe())
             .selectMaterial("<No default specified>")
-            .enterAnnualVolume("")
-            .enterProductionLife("")
+            .clearAnnualVolume()
+            .clearProductionLife()
             .selectBatchAuto();
 
         new SettingsPage(driver).save(ExplorePage.class);
     }
 }
+
