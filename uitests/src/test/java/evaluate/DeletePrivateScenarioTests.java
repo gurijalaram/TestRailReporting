@@ -1,5 +1,6 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -19,6 +20,8 @@ public class DeletePrivateScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+
+    private final String noComponentMessage = "You have no components that match the selected filter";
 
     public DeletePrivateScenarioTests() {
         super();
@@ -45,9 +48,10 @@ public class DeletePrivateScenarioTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.delete()
             .deleteScenario()
-            .openJobQueue()
-            .checkJobQueueActionComplete(testScenarioName, "Delete");
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .apply(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
 }

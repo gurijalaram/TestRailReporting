@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.lessThan;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.After;
@@ -63,7 +64,7 @@ public class ReportLoginTests extends TestBase {
     public void forgotPassword() {
         loginPage = new LoginPage(driver);
         loginPage.clickForgotPassword()
-                .submitEmail("fakeEmail@apriori.com");
+            .submitEmail("fakeEmail@apriori.com");
         assertThat(loginPage.getLoginMessage(), is(equalTo(passwordResetMsg.toUpperCase())));
     }
 
@@ -90,8 +91,7 @@ public class ReportLoginTests extends TestBase {
     @Description("Link to privacy policy working")
     public void testPrivacyPolicyLink() throws IOException {
         loginPage = new LoginPage(driver);
-        int respCode = loginPage.getLinkRespCode(loginPage.getPrivacyPolicyURL());
-        assertThat(respCode, is(lessThan (HttpStatus.SC_BAD_REQUEST)));
+        assertThat(loginPage.getResponseCode(loginPage.getPrivacyPolicyURL()), is(lessThan(HttpStatus.SC_BAD_REQUEST)));
     }
 
     @Test
@@ -99,7 +99,6 @@ public class ReportLoginTests extends TestBase {
     @Description("Link to help page working")
     public void testHelpLink() throws IOException {
         loginPage = new LoginPage(driver);
-        int respCode = loginPage.getLinkRespCode(loginPage.getHelpURL());
-        assertThat(respCode, is(lessThan (HttpStatus.SC_BAD_REQUEST)));
+        assertThat(loginPage.getResponseCode(loginPage.getHelpURL()), is(lessThan(HttpStatus.SC_BAD_REQUEST)));
     }
 }

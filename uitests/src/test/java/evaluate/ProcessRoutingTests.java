@@ -1,5 +1,6 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,6 +9,9 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
+import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
@@ -40,6 +44,9 @@ public class ProcessRoutingTests extends TestBase {
     private RoutingsPage routingsPage;
     private MaterialCompositionPage materialCompositionPage;
     private InvestigationPage investigationPage;
+    private GeometryPage geometryPage;
+    private AnalysisPage analysisPage;
+    private PropertiesDialogPage propertiesDialogPage;
 
     public ProcessRoutingTests() {
         super();
@@ -77,7 +84,7 @@ public class ProcessRoutingTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         processRoutingPage = settingsPage.save(ExplorePage.class)
-        .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -370,5 +377,43 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Gravity Die Casting"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1658"})
+    @Description("Validate the properties dialogue box updates with a newly selected and costed routing.")
+    public void propertiesRouting() {
+        loginPage = new LoginPage(driver);
+        geometryPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openDesignGuidance()
+            .openGeometryTab()
+            .selectGCDAndGCDProperty("Holes", "Simple Holes", "SimpleHole:1");
+
+        evaluatePage = new EvaluatePage(driver);
+        propertiesDialogPage = evaluatePage.selectAnalysis()
+            .selectProperties()
+            .expandDropdown("Technique");
+        assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Punching"));
+        propertiesDialogPage.closeProperties();
+
+        evaluatePage.openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("[CTL]/Waterjet/[Bend]")
+            .apply()
+            .closeProcessPanel()
+            .costScenario()
+            .openDesignGuidance()
+            .openGeometryTab()
+            .selectGCDAndGCDProperty("Holes", "Simple Holes", "SimpleHole:1");
+
+        evaluatePage = new EvaluatePage(driver);
+        propertiesDialogPage = evaluatePage.selectAnalysis()
+            .selectProperties()
+            .expandDropdown("Technique");
+        assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Waterjet Cutting"));
     }
 }

@@ -27,6 +27,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -684,17 +688,40 @@ public class PageUtils {
     /**
      * Moves the scroller up
      *
-     * @param locator            - the locator of the element
+     * @param scroller            - the scroller
      * @param timeLimitInSeconds - the time limit in seconds to wait
      */
-    public void scrollUp(WebElement locator, int timeLimitInSeconds) {
+    public void scrollUp(WebElement scroller, int timeLimitInSeconds) {
         long startTime = System.currentTimeMillis() / 1000;
-        if (!isElementDisplayed(locator)) {
+        if (!isElementDisplayed(scroller)) {
             return;
         } else {
             do {
-                locator.sendKeys(Keys.UP);
+                scroller.sendKeys(Keys.UP);
             } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
         }
+    }
+
+    /**
+     * Gets a list of current windows and switches to the first child window only
+     * todo - this is a WIP and will be developed further in the further
+     * @return webdriver functions
+     */
+    public WebDriver windowHandler() {
+        List<String> windowList = new ArrayList<>(driver.getWindowHandles());
+        return driver.switchTo().window(windowList.get(1));
+    }
+
+    /**
+     * Get link response code
+     *
+     * @param linkURL - URL of link
+     * @return String response code
+     */
+    public int urlRespCode(String linkURL) throws IOException {
+        HttpURLConnection httpURLConnection = (HttpURLConnection)(new URL(linkURL).openConnection());
+        httpURLConnection.setRequestMethod("HEAD");
+        httpURLConnection.connect();
+        return httpURLConnection.getResponseCode();
     }
 }

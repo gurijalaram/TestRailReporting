@@ -1,5 +1,6 @@
 package compare;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -7,7 +8,6 @@ import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -18,7 +18,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-
 import org.junit.Test;
 
 
@@ -28,7 +27,8 @@ public class DeletePrivateComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
-    private JobQueuePage jobQueuePage;
+
+    private final String noComponentMessage = "You have no components that match the selected filter";
 
     public DeletePrivateComparisonTests() {
         super();
@@ -59,15 +59,16 @@ public class DeletePrivateComparisonTests extends TestBase {
             .apply();
 
         genericHeader = new GenericHeader(driver);
-        jobQueuePage = genericHeader.selectExploreButton()
+        explorePage = genericHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName)
             .delete()
             .deleteExploreComparison()
-            .openJobQueue()
-            .checkJobQueueActionComplete(testScenarioName, "Delete");
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testComparisonName)
+            .apply(ExplorePage.class);
 
-        assertThat(new ExplorePage(driver).getListOfComparisons(testComparisonName) < 1, is(true));
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
 
     @Test
@@ -85,14 +86,12 @@ public class DeletePrivateComparisonTests extends TestBase {
             .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
-        genericHeader.delete()
+        explorePage = genericHeader.delete()
             .deleteComparison()
-            .openJobQueue()
-            .checkJobQueueActionComplete(testComparisonName, "Delete");
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testComparisonName)
+            .apply(ExplorePage.class);
 
-        explorePage = new ExplorePage(driver);
-        explorePage.selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
-
-        assertThat(explorePage.getListOfComparisons(testComparisonName) < 1, is(true));
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
 }

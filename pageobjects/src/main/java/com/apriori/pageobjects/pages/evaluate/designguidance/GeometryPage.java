@@ -72,9 +72,11 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
      */
     private GeometryPage selectGCDType(String gcdParent, String gcdChild) {
         By gcdParentElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdParent + "']//span[@class='fa fa-caret-right']");
+        pageUtils.waitForElementToAppear(gcdParentElement);
         pageUtils.scrollToElement(gcdParentElement, gcdTableScroller).click();
 
         By gcdChildElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdChild + "']");
+        pageUtils.waitForElementToAppear(gcdChildElement);
         pageUtils.scrollToElement(gcdChildElement, gcdTableScroller).click();
         return this;
     }
@@ -87,6 +89,7 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
      */
     private GeometryPage selectGCDProperty(String gcdProperty) {
         By gcd = By.xpath("//div[@data-ap-comp='artifactProperties']//td[contains(text(),'" + gcdProperty + "')]/ancestor::tr");
+        pageUtils.waitForElementToAppear(gcd);
         pageUtils.scrollToElement(gcd, propertiesScroller).click();
         return this;
     }
