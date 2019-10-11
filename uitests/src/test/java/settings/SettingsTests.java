@@ -59,7 +59,7 @@ public class SettingsTests extends TestBase {
         productionDefaultPage = explorePage.openSettings()
             .openProdDefaultTab();
 
-        assertThat(productionDefaultPage.getScenarioName("MP Auto Test"), Matchers.is(true));
+        assertThat(productionDefaultPage.getScenarioName("MP Auto Test"), is(true));
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()), is(true));
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_BRAZIL.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_EASTERN_EUROPE.getVpe()), is(true));

@@ -133,6 +133,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
 
     /**
      * Clears annual volume
+     *
      * @return current page object
      */
     public ProductionDefaultPage clearAnnualVolume() {
@@ -151,6 +152,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
 
     /**
      * Clears the production life
+     *
      * @return current page object
      */
     public ProductionDefaultPage clearProductionLife() {

@@ -124,7 +124,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
      * @return generic page object
      */
     public <T> T save(Class<T> className) {
-        saveButton.click();
+        pageUtils.waitForElementAndClick(saveButton);
         return PageFactory.initElements(driver, className);
     }
 
@@ -136,7 +136,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
      * @return generic page object
      */
     public <T> T cancel(Class<T> className) {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return PageFactory.initElements(driver, className);
     }
 }
