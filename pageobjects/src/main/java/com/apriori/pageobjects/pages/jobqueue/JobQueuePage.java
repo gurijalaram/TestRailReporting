@@ -49,25 +49,6 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     }
 
     /**
-     * Checks the job type in the job queue is complete
-     *
-     * @param scenarioName - the scenario name
-     * @param jobType      - the jobtype
-     */
-    public JobQueuePage checkJobQueueActionComplete(String scenarioName, String jobType) {
-        By status = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='okay18.png']");
-        pageUtils.waitForElementToAppear(status, 1);
-        closeJobQueue();
-        return this;
-    }
-
-    private void closeJobQueue() {
-        while (pageUtils.isElementDisplayed(jobQueueTable)) {
-            jobQueueButton.click();
-        }
-    }
-
-    /**
      * Opens the scenario from the job queue
      * @param scenarioName - the scenario name
      * @param partName - the part name
