@@ -2,6 +2,7 @@ package reports.pages.login;
 
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import reports.pages.homepage.HomePage;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
@@ -217,10 +216,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @param linkURL - URL of link
      * @return String response code
      */
-    public int getLinkRespCode(String linkURL) throws IOException {
-        HttpURLConnection huc = (HttpURLConnection)(new URL(linkURL).openConnection());
-        huc.setRequestMethod("HEAD");
-        huc.connect();
-        return huc.getResponseCode();
+    public int getResponseCode(String linkURL) throws IOException {
+        return pageUtils.urlRespCode(linkURL);
     }
 }
