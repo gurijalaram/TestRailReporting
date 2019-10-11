@@ -7,6 +7,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompos
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
+import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
@@ -117,6 +118,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "td[data-ap-field='capitalInvestment']")
     private WebElement capitalInvestments;
+
+    @FindBy(css = "li[data-ap-comp='analysis-button']")
+    private WebElement analysisButton;
 
     @FindBy(css = ".color-failure")
     private WebElement failedCostIcon;
@@ -411,6 +415,15 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public boolean isFailedIconPresent() {
         return failedCostIcon.isDisplayed();
+    }
+
+    /**
+     * Selects the analysis button
+     * @return new page object
+     */
+    public AnalysisPage selectAnalysis() {
+        pageUtils.waitForElementAndClick(analysisButton);
+        return new AnalysisPage(driver);
     }
 
     /**
