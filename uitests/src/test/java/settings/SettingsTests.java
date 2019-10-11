@@ -274,3 +274,4 @@ public class SettingsTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
     }
 }
+
