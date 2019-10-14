@@ -1,13 +1,13 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.header.EvaluateHeader;
+import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
-import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
@@ -28,6 +28,9 @@ import java.util.stream.Collectors;
 public class EvaluatePage extends EvaluateHeader {
 
     private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
+
+    @FindBy(css = "thead[data-ap-comp='scenarioKey'] label[data-ap-field='masterName']")
+    private WebElement partName;
 
     @FindBy(css = "div.main-viewport")
     private WebElement leftPanel;
@@ -179,6 +182,14 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementToBeClickable(processGroupDropdown);
         pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
         return this;
+    }
+
+    /**
+     * Gets the partname
+     * @return string
+     */
+    public String getPartName() {
+        return pageUtils.waitForElementToAppear(partName).getText();
     }
 
     /**
