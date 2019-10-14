@@ -1,6 +1,7 @@
 package evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -10,6 +11,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -76,5 +78,41 @@ public class NewScenarioNameTests extends TestBase {
             .save();
 
         assertThat(evaluatePage.getCurrentScenarioName(testNewScenarioName), is(true));
+    }
+
+    @Category(CustomerSmokeTests.class)
+    @Test
+    @TestRail(testCaseId = {"1588"})
+    @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
+    public void multipleUpload() {
+
+        String ScenarioA = new Util().getScenarioName();
+        String ScenarioB = new Util().getScenarioName();
+        String ScenarioC = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+        explorePage = new ExplorePage(driver);
+        explorePage = explorePage.uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .publishScenario()
+            .refreshCurrentPage()
+            .uploadFile(ScenarioB, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .publishScenario()
+            .refreshCurrentPage()
+            .uploadFile(ScenarioC, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .publishScenario()
+            .filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "MultiUpload")
+            .apply(ExplorePage.class);
+
+        assertThat(explorePage.getListOfScenarios(ScenarioA, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(ScenarioB, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(ScenarioC, "MultiUpload"), equalTo(1));
     }
 }

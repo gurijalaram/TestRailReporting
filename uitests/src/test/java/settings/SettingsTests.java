@@ -36,6 +36,8 @@ public class SettingsTests extends TestBase {
     private MoreInputsPage moreInputsPage;
     private SelectionSettingsPage selectionSettingsPage;
 
+    private final String NO_DEFAULT ="<No default specified>";
+
     @Test
     @Issue("BA-842")
     @TestRail(testCaseId = {"1609", "276"})
@@ -69,8 +71,8 @@ public class SettingsTests extends TestBase {
 
         productionDefaultPage.enterScenarioName("Initial")
             .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
-            .selectVPE(VPEEnum.NO_DEFAULT.getVpe())
-            .selectMaterialCatalog(VPEEnum.NO_DEFAULT.getVpe())
+            .selectVPE(NO_DEFAULT)
+            .selectMaterialCatalog((NO_DEFAULT))
             .selectMaterial("<No default specified>")
             .clearAnnualVolume()
             .clearProductionLife()
@@ -80,7 +82,7 @@ public class SettingsTests extends TestBase {
 
     @Test
     @Issue("BA-842")
-    @TestRail(testCaseId = {"274", "1609"})
+    @TestRail(testCaseId = {"274", "1609", "1602"})
     @Description("User can change the default Process group")
     public void defaultPG() {
 
@@ -133,7 +135,7 @@ public class SettingsTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         productionDefaultPage = evaluatePage.openSettings()
             .openProdDefaultTab()
-            .selectVPE(VPEEnum.NO_DEFAULT.getVpe());
+            .selectVPE((NO_DEFAULT));
         new SettingsPage(driver).save(EvaluatePage.class);
     }
 
@@ -220,8 +222,8 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_GERMANY.getVpe()), is(true));
 
-        productionDefaultPage.selectVPE(VPEEnum.NO_DEFAULT.getVpe())
-            .selectMaterialCatalog(VPEEnum.NO_DEFAULT.getVpe());
+        productionDefaultPage.selectVPE((NO_DEFAULT))
+            .selectMaterialCatalog((NO_DEFAULT));
         new SettingsPage(driver).save(ExplorePage.class);
     }
 
@@ -273,8 +275,8 @@ public class SettingsTests extends TestBase {
 
         productionDefaultPage.enterScenarioName("Initial")
             .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
-            .selectVPE(VPEEnum.NO_DEFAULT.getVpe())
-            .selectMaterialCatalog(VPEEnum.NO_DEFAULT.getVpe())
+            .selectVPE((NO_DEFAULT))
+            .selectMaterialCatalog((NO_DEFAULT))
             .selectMaterial("<No default specified>")
             .clearAnnualVolume()
             .clearProductionLife()
