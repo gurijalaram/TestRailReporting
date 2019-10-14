@@ -139,6 +139,43 @@ public class ExplorePage extends ExploreHeader {
     }
 
     /**
+     * Opens the part
+     *
+     * @param partName     - name of the part
+     * @param scenarioName - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openAssembly(String scenarioName, String partName) {
+        pageUtils.waitForElementToAppear(findAssembly(scenarioName, partName));
+        findAssembly(scenarioName, partName).click();
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Find specific element in the table
+     *
+     * @param partName     - name of the assembly
+     * @param scenarioName - scenario name
+     * @return the part as webelement
+     */
+    public WebElement findAssembly(String scenarioName, String partName) {
+        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "']");
+        return pageUtils.scrollToElement(scenario, componentScroller);
+    }
+
+    /**
+     * Highlights the assembly in the table
+     *
+     * @param scenarioName - scenario name
+     * @param partName     - name of the assembly
+     */
+    public void highlightAssembly(String scenarioName, String partName) {
+        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
+        pageUtils.scrollToElement(scenario, componentScroller);
+        pageUtils.waitForElementAndClick(scenario);
+    }
+
+    /**
      * Gets the number of elements present on the page
      *
      * @param scenarioName - scenario name

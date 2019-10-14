@@ -19,6 +19,9 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;
 
+    @FindBy(css = "div[data-ap-comp='assemblyComponentsTable']")
+    private WebElement componentsTable;
+
     @FindBy(css = "select[data-ap-field='tableViewFilter']")
     private WebElement filterDropdown;
 
@@ -46,7 +49,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(panelDetails);
+        pageUtils.waitForElementToAppear(componentsTable);
     }
 
     /**
@@ -67,9 +70,9 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * @param scenarioName - scenario name
      * @return a new page object
      */
-    public EvaluatePage openAssemblyPart(String scenarioName, String partName) {
-        pageUtils.waitForElementToAppear(findAssembly(scenarioName, partName));
-        findAssembly(scenarioName, partName).click();
+    public EvaluatePage openSubcomponent(String scenarioName, String partName) {
+        pageUtils.waitForElementToAppear(findSubcomponent(scenarioName, partName));
+        findSubcomponent(scenarioName, partName).click();
         return new EvaluatePage(driver);
     }
 
@@ -80,7 +83,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * @param scenarioName - scenario name
      * @return the part as webelement
      */
-    public WebElement findAssembly(String scenarioName, String partName) {
+    public WebElement findSubcomponent(String scenarioName, String partName) {
         By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
         return pageUtils.scrollToElement(scenario, componentScroller);
     }
@@ -91,7 +94,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * @param scenarioName - scenario name
      * @param partName     - name of the assembly
      */
-    public void highlightAssembly(String scenarioName, String partName) {
+    public void highlightSubcomponent(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller);
         pageUtils.waitForElementAndClick(scenario);

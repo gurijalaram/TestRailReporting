@@ -505,7 +505,7 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return new page object
      */
-    public ComponentsPage openComponents() {
+    public ComponentsPage openComponentsTable() {
         pageUtils.waitForElementAndClick(componentsDetails);
         return new ComponentsPage(driver);
     }
