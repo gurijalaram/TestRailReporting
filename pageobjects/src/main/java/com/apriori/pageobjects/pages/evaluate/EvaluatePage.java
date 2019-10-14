@@ -490,7 +490,7 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Opens the components tab
+     * Opens the components page
      *
      * @return new page object
      */
