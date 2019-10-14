@@ -443,7 +443,7 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return current page object
      */
-    public Boolean getCADConnectionStatus(String status) {
+    public Boolean isCADConnectionStatus(String status) {
         return pageUtils.checkElementAttribute(cadConnectedIcon, "title", status);
     }
 
