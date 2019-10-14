@@ -289,6 +289,12 @@ public class ExplorePage extends ExploreHeader {
         return driver.findElement(column).getAttribute("outerHTML");
     }
 
+    /**
+     * Sets the column order
+     * @param columnName - column name
+     * @param order - column order
+     * @return current page object
+     */
     private ExplorePage setColumn(String columnName, String order) {
         By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
 
