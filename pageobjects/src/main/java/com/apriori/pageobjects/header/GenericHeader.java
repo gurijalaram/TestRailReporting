@@ -188,6 +188,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ExplorePage publishScenario() {
+        pageUtils.checkElementAttributeEmpty(publishButton, "title");
         pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectPublishButton();
         return new ExplorePage(driver);
@@ -236,7 +237,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public RevertPage revert() {
-        pageUtils.waitForElementToAppear(revertButton).click();
+        pageUtils.waitForElementAndClick(revertButton);
         return new RevertPage(driver);
     }
 }
