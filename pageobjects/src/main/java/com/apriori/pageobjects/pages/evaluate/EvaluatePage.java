@@ -128,6 +128,24 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = ".locked-status-icon")
     private WebElement lockedStatusIcon;
 
+    @FindBy(css = "a[data-ap-nav-viewport='showAssemblyComponentsDetails']")
+    private WebElement componentsDetails;
+
+    @FindBy(css = "td[data-ap-field='totalComponents']")
+    private WebElement totalComponents;
+
+    @FindBy(css = "td[data-ap-field='uniqueComponents']")
+    private WebElement uniqueComponents;
+
+    @FindBy(css = "td[data-ap-field='uncostedComponentsCount']")
+    private WebElement uncostedComponents;
+
+    @FindBy(css = "td[data-ap-field='finishMass']")
+    private WebElement finishMass;
+
+    @FindBy(css = "td[data-ap-field='targetFinishMass']")
+    private WebElement targetMass;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -471,4 +489,58 @@ public class EvaluatePage extends EvaluateHeader {
         return pageUtils.checkElementAttribute(annualVolumeYrs, "value", text);
     }
 
+    /**
+     * Opens the components tab
+     *
+     * @return new page object
+     */
+    public ComponentsPage openComponents() {
+        pageUtils.waitForElementAndClick(componentsDetails);
+        return new ComponentsPage(driver);
+    }
+
+    /**
+     * Checks the value of the total components
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isTotalComponents(String value) {
+        return pageUtils.checkElementAttribute(totalComponents, "innerText", value);
+    }
+
+    /**
+     * Checks the value of unique components
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isUniqueComponents(String value) {
+        return pageUtils.checkElementAttribute(uniqueComponents, "innerText", value);
+    }
+
+    /**
+     * Checks the uncosted unique value
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isUncostedUnique(String value) {
+        return pageUtils.checkElementAttribute(uncostedComponents, "innerText", value);
+    }
+
+    /**
+     * Checks the value of finish mass
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isFinishMass(String value) {
+        return pageUtils.checkElementAttribute(finishMass, "innerText", value);
+    }
+
+    /**
+     * Checks the value of target mass
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isTargetMass(String value) {
+        return pageUtils.checkElementAttribute(targetMass, "innerText", value);
+    }
 }
