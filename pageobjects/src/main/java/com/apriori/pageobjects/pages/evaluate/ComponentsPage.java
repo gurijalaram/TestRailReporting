@@ -19,8 +19,8 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;
 
-    @FindBy(css = "div[data-ap-comp='assemblyComponentsTable']")
-    private WebElement componentsTable;
+    @FindBy(css = "div[data-ap-comp='assemblyComponentsTable'] .v-grid-row-focused")
+    private WebElement componentsTableRow;
 
     @FindBy(css = "select[data-ap-field='tableViewFilter']")
     private WebElement filterDropdown;
@@ -49,7 +49,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(componentsTable);
+        pageUtils.waitForElementToAppear(componentsTableRow);
     }
 
     /**
