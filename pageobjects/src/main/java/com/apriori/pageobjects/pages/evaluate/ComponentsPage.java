@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.pageobjects.pages.explore.TableColumnsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -23,6 +24,9 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
     @FindBy(css = "div[data-ap-comp='assemblyComponentsTable'] div.v-grid-scroller-vertical")
     private WebElement componentScroller;
+
+    @FindBy(css = "button[data-ap-nav-dialog='showTableViewEditor']")
+    private WebElement columnsButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -103,5 +107,15 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     public Boolean isAssemblyThumbnail(String scenarioName, String partName, String thumbnailType) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//div[@class='fa fa-cube assembly-thumbnail-icon']");
         return pageUtils.checkElementAttribute(driver.findElement(scenario), "title", thumbnailType);
+    }
+
+    /**
+     * Selects the table column button
+     *
+     * @return new page object
+     */
+    public TableColumnsPage openColumnsTable() {
+        pageUtils.waitForElementToAppear(columnsButton).click();
+        return new TableColumnsPage(driver);
     }
 }
