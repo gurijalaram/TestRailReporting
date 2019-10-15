@@ -1,5 +1,6 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -48,7 +49,7 @@ public class DeletePublicScenarioTests extends TestBase {
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") > 0, is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting"), is(equalTo(1)));
     }
 
     @After
