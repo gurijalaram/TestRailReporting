@@ -131,6 +131,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = ".locked-status-icon")
     private WebElement lockedStatusIcon;
 
+    @FindBy(css = ".cad-connection-status-icon")
+    private WebElement cadConnectedIcon;
+
     @FindBy(css = "a[data-ap-nav-viewport='showAssemblyComponentsDetails']")
     private WebElement componentsDetails;
 
@@ -465,6 +468,15 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public Boolean isLockedStatus(String status) {
         return pageUtils.checkElementAttribute(lockedStatusIcon, "title", status);
+    }
+
+    /**
+     * Gets the CAD Connection status
+     *
+     * @return current page object
+     */
+    public Boolean isCADConnectionStatus(String status) {
+        return pageUtils.checkElementAttribute(cadConnectedIcon, "title", status);
     }
 
     /**
