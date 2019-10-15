@@ -669,8 +669,14 @@ public class PageUtils {
      * @return
      */
     public Boolean checkElementAttribute(WebElement locator, String attribute, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
-        return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
+        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeOut);
+            return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        throw new AssertionError("\nWaited for: " + timeOut + "(s)\nExpected: " + text + "\nFound: " + locator.getText());
     }
 
     /**
@@ -688,7 +694,7 @@ public class PageUtils {
     /**
      * Moves the scroller up
      *
-     * @param scroller            - the scroller
+     * @param scroller           - the scroller
      * @param timeLimitInSeconds - the time limit in seconds to wait
      */
     public void scrollUp(WebElement scroller, int timeLimitInSeconds) {
@@ -705,6 +711,7 @@ public class PageUtils {
     /**
      * Gets a list of current windows and switches to the first child window only
      * todo - this is a WIP and will be developed further in the further
+     *
      * @return webdriver functions
      */
     public WebDriver windowHandler() {
@@ -719,7 +726,7 @@ public class PageUtils {
      * @return String response code
      */
     public int urlRespCode(String linkURL) throws IOException {
-        HttpURLConnection httpURLConnection = (HttpURLConnection)(new URL(linkURL).openConnection());
+        HttpURLConnection httpURLConnection = (HttpURLConnection) (new URL(linkURL).openConnection());
         httpURLConnection.setRequestMethod("HEAD");
         httpURLConnection.connect();
         return httpURLConnection.getResponseCode();
