@@ -134,6 +134,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "a[data-ap-nav-viewport='showAssemblyComponentsDetails']")
     private WebElement componentsDetails;
 
+    @FindBy(css = ".components-refresh-btn")
+    private WebElement refreshComponents;
+
     @FindBy(css = "td[data-ap-field='totalComponents']")
     private WebElement totalComponents;
 
@@ -508,6 +511,15 @@ public class EvaluatePage extends EvaluateHeader {
     public ComponentsPage openComponentsTable() {
         pageUtils.waitForElementAndClick(componentsDetails);
         return new ComponentsPage(driver);
+    }
+
+    /**
+     * Refreshes the component count
+     * @return current page object
+     */
+    public EvaluatePage refreshComponents() {
+        pageUtils.waitForElementAndClick(refreshComponents);
+        return this;
     }
 
     /**
