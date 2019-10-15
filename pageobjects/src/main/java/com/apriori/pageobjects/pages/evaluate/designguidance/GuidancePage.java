@@ -63,8 +63,8 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
     public GuidancePage selectIssueTypeAndGCD(String issueTypeDropdown, String issueType, String gcd) {
         collapseIssueDropdown();
         selectIssue(issueTypeDropdown);
-        selectIssueType(issueType).click();
-        selectGCD(gcd).click();
+        findIssueType(issueType).click();
+        findGCD(gcd).click();
         pageUtils.scrollUp(guidanceTableScroller, 2);
         return this;
     }
@@ -108,7 +108,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      * @param issueType - the issue type
      * @return
      */
-    private WebElement selectIssueType(String issueType) {
+    private WebElement findIssueType(String issueType) {
         By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]");
         return pageUtils.scrollToElement(issue, guidanceTableScroller);
     }
@@ -119,7 +119,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      * @param gcdType - the gcd
      * @return gcd as a webelement
      */
-    private WebElement selectGCD(String gcdType) {
+    private WebElement findGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='guidanceIssuesDetailsTable']//td[contains(text(),'" + gcdType + "')]/ancestor::tr");
         return pageUtils.scrollToElement(gcd, detailsTableScroller);
     }

@@ -70,50 +70,67 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     /**
      * Opens the part
      *
-     * @param partName     - name of the part
-     * @param scenarioName - scenario name
+     * @param subcomponentName - name of the part
+     * @param scenarioName     - scenario name
      * @return a new page object
      */
-    public EvaluatePage openSubcomponent(String scenarioName, String partName) {
-        pageUtils.waitForElementToAppear(findSubcomponent(scenarioName, partName));
-        findSubcomponent(scenarioName, partName).click();
+    public EvaluatePage openSubcomponent(String scenarioName, String subcomponentName) {
+        pageUtils.waitForElementAndClick(findSubcomponent(scenarioName, subcomponentName));
         return new EvaluatePage(driver);
     }
 
     /**
      * Find specific element in the table
      *
-     * @param partName     - name of the assembly
-     * @param scenarioName - scenario name
+     * @param subcomponentName - the subcomponent name
+     * @param scenarioName     - scenario name
      * @return the part as webelement
      */
-    public WebElement findSubcomponent(String scenarioName, String partName) {
-        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElement(scenario, componentScroller);
+    public WebElement findSubcomponent(String scenarioName, String subcomponentName) {
+        By subcomponent = By.cssSelector("a[href*='#openFromSearch::sk,partState," + subcomponentName.toUpperCase() + "," + scenarioName + "']");
+        return pageUtils.scrollToElement(subcomponent, componentScroller);
+    }
+
+    /**
+     * Expands assembly dropdown
+     *
+     * @param scenarioName - the scenario name
+     * @param assemblyName - the assembly name
+     * @return current page object
+     */
+    public ComponentsPage expandAssembly(String scenarioName, String assemblyName) {
+        By assembly = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + assemblyName.toUpperCase() + "," + scenarioName + "')]/ancestor::td//span[@class]");
+        pageUtils.scrollToElement(assembly, componentScroller);
+
+        if (driver.findElement(assembly).getAttribute("outerHTML").contains("right")) {
+            driver.findElement(assembly).click();
+        }
+        return this;
     }
 
     /**
      * Highlights the assembly in the table
      *
-     * @param scenarioName - scenario name
-     * @param partName     - name of the assembly
+     * @param scenarioName     - scenario name
+     * @param subcomponentName - subcomponent name
      */
-    public void highlightSubcomponent(String scenarioName, String partName) {
-        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
-        pageUtils.scrollToElement(scenario, componentScroller);
-        pageUtils.waitForElementAndClick(scenario);
+    public void selectSubcomponent(String scenarioName, String subcomponentName) {
+        By subcomponent = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + subcomponentName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
+        pageUtils.scrollToElement(subcomponent, componentScroller);
+        pageUtils.waitForElementAndClick(subcomponent);
     }
 
     /**
      * Checks the assembly thumbnail type
+     *
      * @param scenarioName - the scenario name
-     * @param partName - the part name
-     * @param thumbnailType - the thumbnail type
+     * @param assemblyName         - the part name
+     * @param thumbnailType    - the thumbnail type
      * @return true/false
      */
-    public Boolean isAssemblyThumbnail(String scenarioName, String partName, String thumbnailType) {
-        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//div[@class='fa fa-cube assembly-thumbnail-icon']");
-        return pageUtils.checkElementAttribute(driver.findElement(scenario), "title", thumbnailType);
+    public Boolean isAssemblyThumbnail(String scenarioName, String assemblyName, String thumbnailType) {
+        By assembly = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + assemblyName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//div[@class='fa fa-cube assembly-thumbnail-icon']");
+        return pageUtils.checkElementAttribute(driver.findElement(assembly), "title", thumbnailType);
     }
 
     /**
