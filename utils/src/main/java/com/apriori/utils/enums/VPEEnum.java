@@ -12,8 +12,7 @@ public enum VPEEnum {
     APRIORI_MEXICO("aPriori Mexico"),
     APRIORI_UNITED_KINGDOM("aPriori United Kingdom"),
     APRIORI_USA("aPriori USA"),
-    APRIORI_WESTERN_EUROPE("aPriori Western Europe"),
-    NO_DEFAULT("<No default specified>");
+    APRIORI_WESTERN_EUROPE("aPriori Western Europe");
 
     private final String vpe;
 
