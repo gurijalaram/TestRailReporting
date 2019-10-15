@@ -1,13 +1,13 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.header.EvaluateHeader;
+import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
-import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
@@ -127,6 +127,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = ".locked-status-icon")
     private WebElement lockedStatusIcon;
+
+    @FindBy(css = ".cad-connection-status-icon")
+    private WebElement cadConnectedIcon;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -433,6 +436,15 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public Boolean isLockedStatus(String status) {
         return pageUtils.checkElementAttribute(lockedStatusIcon, "title", status);
+    }
+
+    /**
+     * Gets the CAD Connection status
+     *
+     * @return current page object
+     */
+    public Boolean isCADConnectionStatus(String status) {
+        return pageUtils.checkElementAttribute(cadConnectedIcon, "title", status);
     }
 
     /**
