@@ -29,6 +29,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
+    @FindBy(css = "thead[data-ap-comp='scenarioKey'] label[data-ap-field='masterName']")
+    private WebElement partName;
+
     @FindBy(css = "div.main-viewport")
     private WebElement leftPanel;
 
@@ -131,6 +134,27 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = ".cad-connection-status-icon")
     private WebElement cadConnectedIcon;
 
+    @FindBy(css = "a[data-ap-nav-viewport='showAssemblyComponentsDetails']")
+    private WebElement componentsDetails;
+
+    @FindBy(css = ".components-refresh-btn")
+    private WebElement refreshComponents;
+
+    @FindBy(css = "td[data-ap-field='totalComponents']")
+    private WebElement totalComponents;
+
+    @FindBy(css = "td[data-ap-field='uniqueComponents']")
+    private WebElement uniqueComponents;
+
+    @FindBy(css = "td[data-ap-field='uncostedComponentsCount']")
+    private WebElement uncostedComponents;
+
+    @FindBy(css = "td[data-ap-field='finishMass']")
+    private WebElement finishMass;
+
+    @FindBy(css = "td[data-ap-field='targetFinishMass']")
+    private WebElement targetMass;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -164,6 +188,14 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementToBeClickable(processGroupDropdown);
         pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
         return this;
+    }
+
+    /**
+     * Gets the partname
+     * @return string
+     */
+    public String getPartName() {
+        return pageUtils.waitForElementToAppear(partName).getText();
     }
 
     /**
@@ -483,4 +515,67 @@ public class EvaluatePage extends EvaluateHeader {
         return pageUtils.checkElementAttribute(annualVolumeYrs, "value", text);
     }
 
+    /**
+     * Opens the components page
+     *
+     * @return new page object
+     */
+    public ComponentsPage openComponentsTable() {
+        pageUtils.waitForElementAndClick(componentsDetails);
+        return new ComponentsPage(driver);
+    }
+
+    /**
+     * Refreshes the component count
+     * @return current page object
+     */
+    public EvaluatePage refreshComponents() {
+        pageUtils.waitForElementAndClick(refreshComponents);
+        return this;
+    }
+
+    /**
+     * Checks the value of the total components
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isTotalComponents(String value) {
+        return pageUtils.checkElementAttribute(totalComponents, "innerText", value);
+    }
+
+    /**
+     * Checks the value of unique components
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isUniqueComponents(String value) {
+        return pageUtils.checkElementAttribute(uniqueComponents, "innerText", value);
+    }
+
+    /**
+     * Checks the uncosted unique value
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isUncostedUnique(String value) {
+        return pageUtils.checkElementAttribute(uncostedComponents, "innerText", value);
+    }
+
+    /**
+     * Checks the value of finish mass
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isFinishMass(String value) {
+        return pageUtils.checkElementAttribute(finishMass, "innerText", value);
+    }
+
+    /**
+     * Checks the value of target mass
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isTargetMass(String value) {
+        return pageUtils.checkElementAttribute(targetMass, "innerText", value);
+    }
 }
