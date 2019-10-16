@@ -25,6 +25,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ToleranceTests extends TestBase {
 
@@ -41,9 +43,10 @@ public class ToleranceTests extends TestBase {
         super();
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Issue("AP-56493")
-    @TestRail(testCaseId = "707")
+    @TestRail(testCaseId = {"707", "1607"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
         loginPage = new LoginPage(driver);
@@ -88,9 +91,10 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(EvaluatePage.class);
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Issue("AP-56493")
-    @TestRail(testCaseId = "708")
+    @TestRail(testCaseId = {"708", "1607"})
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
         loginPage = new LoginPage(driver);
@@ -124,9 +128,10 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(EvaluatePage.class);
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Issue("AP-56493")
-    @TestRail(testCaseId = "716")
+    @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerancea() {
         loginPage = new LoginPage(driver);
@@ -144,8 +149,9 @@ public class ToleranceTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = "717")
+    @TestRail(testCaseId = {"717", "1608"})
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
         loginPage = new LoginPage(driver);
