@@ -41,7 +41,7 @@ public class PublishNewCostedTests extends TestBase {
             .costScenario()
             .publishScenario();
 
-        assertThat(explorePage.findScenario(testScenarioName, partName).isDisplayed(), is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, partName) > 0, is(true));
     }
 
     @Category(CustomerSmokeTests.class)
@@ -61,6 +61,6 @@ public class PublishNewCostedTests extends TestBase {
             .publishScenario("Analysis", "Low", "Abe Chaves")
             .selectPublishButton();
 
-        assertThat(explorePage.findScenario(testScenarioName, partName).isDisplayed(), is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, partName) > 0, is(true));
     }
 }
