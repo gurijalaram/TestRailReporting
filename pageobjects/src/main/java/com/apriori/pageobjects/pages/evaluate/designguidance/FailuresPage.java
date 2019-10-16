@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -23,10 +24,12 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public FailuresPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -84,6 +87,17 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
      */
     public String getUncostedMessage() {
         return pageUtils.waitForElementToAppear(uncostedMessage).getText();
+    }
+
+    /**
+     * Gets the cell details
+     * @param issueType - tolerance type
+     * @param column - the column
+     * @return string
+     */
+    public String getGuidanceCell(String issueType, String column) {
+        findIssueType(issueType);
+        return columnUtils.columnDetails(issueType, column, "uncostedFeaturesInfo");
     }
 }
 

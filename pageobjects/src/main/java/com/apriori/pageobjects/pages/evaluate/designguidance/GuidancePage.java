@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -33,11 +34,12 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private DesignGuidancePage designGuidancePage;
+    private ColumnUtils columnUtils;
 
     public GuidancePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -131,5 +133,18 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      */
     public String getGuidanceMessage() {
         return pageUtils.waitForElementToAppear(gcdMessage).getText();
+    }
+
+    /**
+     * Gets the cell details
+     * @param issueType - tolerance type
+     * @param column - the column
+     * @param issueTypeDropdown
+     * @return string
+     */
+    public String getGuidanceCell(String issueTypeDropdown, String issueType, String column) {
+        selectIssue(issueTypeDropdown);
+        findIssueType(issueType);
+        return columnUtils.columnDetails(issueType, column, "guidanceIssuesTable");
     }
 }

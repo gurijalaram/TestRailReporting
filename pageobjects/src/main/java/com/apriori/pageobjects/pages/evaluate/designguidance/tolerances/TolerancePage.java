@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
+import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -33,10 +34,12 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public TolerancePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -118,5 +121,16 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      */
     public WebElement getEditButton() {
         return editToleranceButton;
+    }
+
+    /**
+     * Gets the cell details
+     * @param toleranceType - tolerance type
+     * @param column - the column
+     * @return string
+     */
+    public String getToleranceCell(String toleranceType, String column) {
+        findToleranceType(toleranceType);
+        return columnUtils.columnDetails(toleranceType, column, "tolerancesTable");
     }
 }
