@@ -131,7 +131,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     }
 
     /**
-     * Checks if the secondary processes check box is disabled
+     * Gets the attribute of the secondary process checkbox.
      *
      * @return true/false
      */
