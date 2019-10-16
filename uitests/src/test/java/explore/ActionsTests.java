@@ -97,8 +97,9 @@ public class ActionsTests extends TestBase {
             .selectSaveButton();
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @Issue("BA-837")
+    @TestRail(testCaseId = {"1610"})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
 
