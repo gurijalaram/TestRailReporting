@@ -2,6 +2,7 @@ package testsuites;
 
 import evaluate.NewScenarioNameTests;
 import evaluate.ProcessGroupsTests;
+import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.thread.ThreadTests;
 import explore.ActionsTests;
 import login.LoginTests;
@@ -17,7 +18,8 @@ import testsuites.suiteinterface.CustomerSmokeTests;
     ThreadTests.class,
     ProcessGroupsTests.class,
     ActionsTests.class,
-    LoginTests.class
+    LoginTests.class,
+    DTCCastingTests.class
 })
 public class CustomerSmokeTestSuite {
 }
