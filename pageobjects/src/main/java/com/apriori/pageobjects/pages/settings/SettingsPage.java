@@ -139,4 +139,13 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
         pageUtils.waitForElementAndClick(cancelButton);
         return PageFactory.initElements(driver, className);
     }
+
+    /**
+     * Gets the selected Units
+     *
+     * @return
+     */
+    public Boolean getSelectedUnits(String text) {
+        return pageUtils.checkElementFirstOption(unitsDropdown, text);
+    }
 }

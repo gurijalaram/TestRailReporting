@@ -307,7 +307,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"267", "268", "39", "294"})
+    @TestRail(testCaseId = {"267", "268", "39", "294", "285"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
