@@ -42,7 +42,7 @@ public class SettingsTests extends TestBase {
     private SelectionSettingsPage selectionSettingsPage;
     private WarningPage warningPage;
 
-    private final String NO_DEFAULT = "<No default specified>";
+    private final String NO_DEFAULT ="<No default specified>";
 
     @Category(CustomerSmokeTests.class)
     @Test
