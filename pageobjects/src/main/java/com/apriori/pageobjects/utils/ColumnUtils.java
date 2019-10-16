@@ -27,7 +27,7 @@ public class ColumnUtils {
      */
     public String columnDetails(String issueType, String column, String tableLocator) {
         String[] columns = driver.findElement(By.xpath("//div[@data-ap-comp='" + tableLocator + "']//thead")).getAttribute("innerText").split("\n");
-        String[] cells = driver.findElement(By.xpath("//div[@data-ap-comp='" + tableLocator + "']//td[contains(text(),'" + issueType + " ')]/ancestor::tr")).getAttribute("innerText").split("\n");
+        String[] cells = driver.findElement(By.xpath("//div[@data-ap-comp='" + tableLocator + "']//td[contains(text(),'" + issueType + "')]/ancestor::tr")).getAttribute("innerText").split("\n");
 
         Map<String, String> columnDetails = new HashMap<>();
 
