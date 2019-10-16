@@ -32,7 +32,7 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
 
-    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
+    @FindBy(css = "button[data-ap-comp='publishScenarioButton'] .fa")
     private WebElement publishButton;
 
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")

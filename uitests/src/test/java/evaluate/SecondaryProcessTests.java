@@ -1,24 +1,37 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
+import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.settings.SettingsPage;
+import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class SecondaryProcessTests extends TestBase {
 
     private LoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private ToleranceSettingsPage toleranceSettingsPage;
+    private SettingsPage settingsPage;
+    private SecondaryProcessPage secondaryProcessPage;
+    private ProcessRoutingPage processRoutingPage;
 
     public SecondaryProcessTests() {
         super();
@@ -186,7 +199,9 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isProcessRoutingDetails("Certification"), is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
+    @TestRail(testCaseId = {"1616"})
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
         loginPage = new LoginPage(driver);
@@ -202,6 +217,13 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Powder Coat Cart"), is(true));
+
+        processRoutingPage = evaluatePage.openProcessDetails()
+            .selectProcessChart("Powder Coat Cart");
+
+        assertThat(processRoutingPage.getProcessPercentage(), hasItem("38 (30%)"));
+
+
     }
 
     @Test
@@ -220,5 +242,70 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Passivation"), is(true));
+    }
+
+    @Category(CustomerSmokeTests.class)
+    @Test
+    @TestRail(testCaseId = {"1614"})
+    @Description("Multiple Secondary Processes before Costing")
+    public void multiSecondaryProcessBeforeCost() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Stainless Steel, Stock, 440B")
+            .apply()
+            .openSecondaryProcess()
+            .selectSecondaryProcess("Surface Treatment", "Passivation")
+            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isProcessRoutingDetails("Passivation / Carton Forming / Pack & Load"), is(true));
+    }
+
+    @Category(CustomerSmokeTests.class)
+    @Test
+    @TestRail(testCaseId = {"1614"})
+    @Description("Multiple Secondary Processes after Costing")
+    public void multiSecondaryProcessAfterCost() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
+            .apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
+            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isProcessRoutingDetails("Anodize / Carton Forming / Pack & Load"), is(true));
+    }
+
+    @Category(CustomerSmokeTests.class)
+    @Test
+    @TestRail(testCaseId = {"1615"})
+    @Description("secondary process automatically added by aPriori")
+    public void cannotDeselectSP() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        secondaryProcessPage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .openSecondaryProcess()
+            .findSecondaryProcess("High Pressure Die Cast", "Trim");
+
+        assertThat(secondaryProcessPage.getCheckboxStatus("Trim"), containsString("disabled"));
     }
 }
