@@ -21,6 +21,9 @@ public class TableHeadersTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
 
+    private final String ASCENDING = "sort-asc";
+    private final String DESCENDING = "sort-desc";
+
     public TableHeadersTests() {
         super();
     }
