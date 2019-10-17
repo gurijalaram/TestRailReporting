@@ -59,6 +59,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      * Selects both issue type and gcd details
      *
      * @param issueTypeDropdown - the issue type parent
+     * @param issueType - the issue type
      * @param gcd               - the gcd
      * @return current page object
      */
@@ -136,17 +137,27 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
     }
 
     /**
+     * Finds the issue type
+     * @param issueTypeDropdown - the issue type parent
+     * @param issueTypeDropdown - the issue type
+     * @return current page object
+     */
+    public GuidancePage findIssueType(String issueTypeDropdown, String issueType) {
+        collapseIssueDropdown();
+        selectIssue(issueTypeDropdown);
+        findIssueType(issueType);
+        return this;
+    }
+
+    /**
      * Gets the cell details
      *
      * @param issueType         - tolerance type
      * @param column            - the column
-     * @param issueTypeDropdown - the issue dropdown0-
      * @return string
      */
-    public String getGuidanceCell(String issueTypeDropdown, String issueType, String column) {
-        String cellLocator = "//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]/ancestor::tr[@class]";
-        selectIssue(issueTypeDropdown);
-        findIssueType(issueType);
-        return columnUtils.columnDetails("guidanceIssuesTable", column, cellLocator);
+    public String getGuidanceCell(String issueType, String column) {
+        String rowLocator = "//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]/ancestor::tr[@class]";
+        return columnUtils.columnDetails("guidanceIssuesTable", column, rowLocator);
     }
 }

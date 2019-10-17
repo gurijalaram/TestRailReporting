@@ -64,7 +64,7 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
      * @param issueType - the issue type
      * @return
      */
-    private WebElement findIssueType(String issueType) {
+    public WebElement findIssueType(String issueType) {
         By issue = By.xpath("//div[@data-ap-comp='uncostedFeaturesInfo']//td[contains(text(),'" + issueType + "')]");
         return pageUtils.waitForElementToAppear(issue);
     }
@@ -96,9 +96,8 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
      * @return string
      */
     public String getFailuresCell(String issueType, String column) {
-        String cellLocator = "//div[@data-ap-comp='uncostedFeaturesInfo']//td[contains(text(),'" + issueType + "')]/ancestor::tr";
-        findIssueType(issueType);
-        return columnUtils.columnDetails("uncostedFeaturesInfo", column, cellLocator);
+        String rowLocator = "//div[@data-ap-comp='uncostedFeaturesInfo']//td[contains(text(),'" + issueType + "')]/ancestor::tr";
+        return columnUtils.columnDetails("uncostedFeaturesInfo", column, rowLocator);
     }
 }
 

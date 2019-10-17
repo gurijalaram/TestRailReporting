@@ -81,7 +81,8 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
 
     /**
      * Finds the gcd child
-     * @param gcdType  - the gcd type
+     *
+     * @param gcdType - the gcd type
      * @return
      */
     private WebElement findGCDChild(String gcdType) {
@@ -104,15 +105,26 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
     }
 
     /**
+     * Finds the gcd
+     *
+     * @param gcdParent - the gcd dropdown
+     * @param gcdChild  - the gcd type
+     * @return current page object
+     */
+    public GeometryPage findGCD(String gcdParent, String gcdChild) {
+        findGCDType(gcdParent).click();
+        findGCDChild(gcdChild).click();
+        return this;
+    }
+
+    /**
      * Gets the cell details
-     * @param toleranceType - tolerance type
+     *
      * @param column - the column
      * @return string
      */
-    public String getGeometryCell(String toleranceType, String gcdType, String column) {
+    public String getGeometryCell(String gcdType, String column) {
         String cellLocator = "//div[@data-ap-comp='gcdTreeTable']//div[contains(text(),'" + gcdType + "')]/ancestor::tr[@class]";
-        findGCDType(toleranceType).click();
-        findGCDChild(gcdType);
         return columnUtils.columnDetails("gcdTreeTable", column, cellLocator);
     }
 }

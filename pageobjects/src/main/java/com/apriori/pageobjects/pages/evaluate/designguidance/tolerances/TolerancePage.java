@@ -69,12 +69,12 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
     }
 
     /**
-     * Selects the tolerance type.  Selection is based on exact match so unit must be specified eg. Flatness (mm)
+     * Finds the tolerance type.  Selection is based on contains so unit must be specified eg. Flatness
      *
      * @param toleranceType - the tolerance type
      * @return the tolerance as webelement
      */
-    private WebElement findToleranceType(String toleranceType) {
+    public WebElement findToleranceType(String toleranceType) {
         By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr");
         pageUtils.waitForElementToAppear(tolerance);
         return pageUtils.scrollToElement(tolerance, toleranceScroller);
@@ -130,8 +130,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @return string
      */
     public String getToleranceCell(String toleranceType, String column) {
-        String cellLocator = "//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr[@class]";
-        findToleranceType(toleranceType);
-        return columnUtils.columnDetails("tolerancesTable", column, cellLocator);
+        String rowLocator = "//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr[@class]";
+        return columnUtils.columnDetails("tolerancesTable", column, rowLocator);
     }
 }
