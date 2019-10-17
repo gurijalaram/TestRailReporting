@@ -130,7 +130,8 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @return string
      */
     public String getToleranceCell(String toleranceType, String column) {
+        String cellLocator = "//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr[@class]";
         findToleranceType(toleranceType);
-        return columnUtils.columnDetails(toleranceType, column, "tolerancesTable");
+        return columnUtils.columnDetails("tolerancesTable", column, cellLocator);
     }
 }

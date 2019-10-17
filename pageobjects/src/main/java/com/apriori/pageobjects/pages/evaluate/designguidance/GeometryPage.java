@@ -81,11 +81,11 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
 
     /**
      * Finds the gcd child
-     * @param gcdChild  - the gcd child
+     * @param gcdType  - the gcd type
      * @return
      */
-    private WebElement findGCDChild(String gcdChild) {
-        By gcdChildElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdChild + "']");
+    private WebElement findGCDChild(String gcdType) {
+        By gcdChildElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdType + "']");
         pageUtils.waitForElementToAppear(gcdChildElement);
         return pageUtils.scrollToElement(gcdChildElement, gcdTableScroller);
     }
@@ -109,9 +109,10 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
      * @param column - the column
      * @return string
      */
-    public String getGeometryCell(String toleranceType, String gcdChild, String column) {
-        findGCDType(toleranceType);
-        findGCDChild(gcdChild);
-        return columnUtils.columnDetails(toleranceType, column, "gcdTreeTable");
+    public String getGeometryCell(String toleranceType, String gcdType, String column) {
+        String cellLocator = "//div[@data-ap-comp='gcdTreeTable']//div[contains(text(),'" + gcdType + "')]/ancestor::tr[@class]";
+        findGCDType(toleranceType).click();
+        findGCDChild(gcdType);
+        return columnUtils.columnDetails("gcdTreeTable", column, cellLocator);
     }
 }

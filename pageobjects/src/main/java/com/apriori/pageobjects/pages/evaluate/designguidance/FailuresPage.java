@@ -95,9 +95,10 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
      * @param column - the column
      * @return string
      */
-    public String getGuidanceCell(String issueType, String column) {
+    public String getFailuresCell(String issueType, String column) {
+        String cellLocator = "//div[@data-ap-comp='uncostedFeaturesInfo']//td[contains(text(),'" + issueType + "')]/ancestor::tr";
         findIssueType(issueType);
-        return columnUtils.columnDetails(issueType, column, "uncostedFeaturesInfo");
+        return columnUtils.columnDetails("uncostedFeaturesInfo", column, cellLocator);
     }
 }
 

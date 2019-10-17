@@ -111,7 +111,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      * @return
      */
     private WebElement findIssueType(String issueType) {
-        By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]");
+        By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType.trim() + "')]");
         return pageUtils.scrollToElement(issue, guidanceTableScroller);
     }
 
@@ -137,14 +137,16 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     /**
      * Gets the cell details
-     * @param issueType - tolerance type
-     * @param column - the column
-     * @param issueTypeDropdown
+     *
+     * @param issueType         - tolerance type
+     * @param column            - the column
+     * @param issueTypeDropdown - the issue dropdown0-
      * @return string
      */
     public String getGuidanceCell(String issueTypeDropdown, String issueType, String column) {
+        String cellLocator = "//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]/ancestor::tr[@class]";
         selectIssue(issueTypeDropdown);
         findIssueType(issueType);
-        return columnUtils.columnDetails(issueType, column, "guidanceIssuesTable");
+        return columnUtils.columnDetails("guidanceIssuesTable", column, cellLocator);
     }
 }

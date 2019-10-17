@@ -3,6 +3,7 @@ package com.apriori.pageobjects.utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ public class ColumnUtils {
 
     private WebDriver driver;
 
+    Map<String, String> map = new HashMap<>();
+
     public ColumnUtils(WebDriver driver) {
         this.driver = driver;
     }
@@ -21,24 +24,25 @@ public class ColumnUtils {
     /**
      * Maps the column header to the cell value based on the webElement
      *
-     * @param column    - the column
-     * @param issueType - the issue type
+     * @param table       - the table
+     * @param column      - the column
+     * @param cellLocator - the locator of the cell
      * @return string
      */
-    public String columnDetails(String issueType, String column, String tableLocator) {
-        String[] columns = driver.findElement(By.xpath("//div[@data-ap-comp='" + tableLocator + "']//thead")).getAttribute("innerText").split("\n");
-        String[] cells = driver.findElement(By.xpath("//div[@data-ap-comp='" + tableLocator + "']//td[contains(text(),'" + issueType + "')]/ancestor::tr")).getAttribute("innerText").split("\n");
+    public String columnDetails(String table, String column, String cellLocator) {
+        String[] columns = driver.findElement(By.xpath("//div[@data-ap-comp='" + table + "']//thead")).getAttribute("innerText").split("\n");
+        String[] cells = driver.findElement(By.xpath(cellLocator)).getAttribute("innerText").split("\n");
 
-        Map<String, String> columnDetails = new HashMap<>();
+        String[] filteredCells = Arrays.stream(cells).filter(cell -> !cell.equals("\t\t")).toArray(String[]::new);
 
         for (int headerIndex = 0; headerIndex < columns.length; headerIndex++) {
-            for (int rowIndex = 0; rowIndex < cells.length; rowIndex++) {
+            for (int rowIndex = 0; rowIndex < filteredCells.length; rowIndex++) {
                 if (headerIndex == rowIndex) {
-                    columnDetails.put(columns[headerIndex], cells[headerIndex]);
+                    map.put(columns[headerIndex], filteredCells[headerIndex]);
                     break;
                 }
             }
         }
-        return columnDetails.get(column);
+        return map.get(column);
     }
 }
