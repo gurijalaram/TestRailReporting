@@ -38,7 +38,7 @@ public class FailuresWarningsTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(5)
-           .openDesignGuidance()
+            .openDesignGuidance()
             .openFailuresTab()
             .selectIssueTypeAndGCD("Failed GCDs", "CurvedWall:100");
 
