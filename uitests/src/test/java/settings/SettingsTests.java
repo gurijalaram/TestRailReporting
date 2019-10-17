@@ -42,7 +42,7 @@ public class SettingsTests extends TestBase {
     private SelectionSettingsPage selectionSettingsPage;
     private WarningPage warningPage;
 
-    private final String NO_DEFAULT ="<No default specified>";
+    private final String NO_DEFAULT = "<No default specified>";
 
     @Category(CustomerSmokeTests.class)
     @Test
@@ -78,8 +78,8 @@ public class SettingsTests extends TestBase {
         productionDefaultPage.enterScenarioName("Initial")
             .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
             .selectVPE(NO_DEFAULT)
-            .selectMaterialCatalog((NO_DEFAULT))
-            .selectMaterial("<No default specified>")
+            .selectMaterialCatalog(NO_DEFAULT)
+            .selectMaterial(NO_DEFAULT)
             .clearAnnualVolume()
             .clearProductionLife()
             .selectBatchAuto();
@@ -140,7 +140,7 @@ public class SettingsTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         productionDefaultPage = evaluatePage.openSettings()
             .openProdDefaultTab()
-            .selectVPE((NO_DEFAULT));
+            .selectVPE(NO_DEFAULT);
         new SettingsPage(driver).save(EvaluatePage.class);
     }
 
@@ -224,8 +224,8 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_GERMANY.getVpe()), is(true));
 
-        productionDefaultPage.selectVPE((NO_DEFAULT))
-            .selectMaterialCatalog((NO_DEFAULT));
+        productionDefaultPage.selectVPE(NO_DEFAULT)
+            .selectMaterialCatalog(NO_DEFAULT);
         new SettingsPage(driver).save(ExplorePage.class);
     }
 
@@ -278,9 +278,9 @@ public class SettingsTests extends TestBase {
 
         productionDefaultPage.enterScenarioName("Initial")
             .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
-            .selectVPE((NO_DEFAULT))
-            .selectMaterialCatalog((NO_DEFAULT))
-            .selectMaterial("<No default specified>")
+            .selectVPE(NO_DEFAULT)
+            .selectMaterialCatalog(NO_DEFAULT)
+            .selectMaterial(NO_DEFAULT)
             .clearAnnualVolume()
             .clearProductionLife()
             .selectBatchAuto();
@@ -320,8 +320,8 @@ public class SettingsTests extends TestBase {
         productionDefaultPage.enterScenarioName("Initial")
             .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
             .selectVPE(NO_DEFAULT)
-            .selectMaterialCatalog((NO_DEFAULT))
-            .selectMaterial("<No default specified>")
+            .selectMaterialCatalog(NO_DEFAULT)
+            .selectMaterial(NO_DEFAULT)
             .clearAnnualVolume()
             .clearProductionLife()
             .selectBatchAuto();
@@ -392,7 +392,7 @@ public class SettingsTests extends TestBase {
             .enterScenarioName("Save all tabs test")
             .enterAnnualVolume("295")
             .enterProductionLife("7");
-            new SettingsPage(driver).openSelectionTab()
+        new SettingsPage(driver).openSelectionTab()
             .setColour(ColourEnum.SHAMROCK_GREEN.getColour());
         new SettingsPage(driver).save(ExplorePage.class);
 
@@ -409,8 +409,8 @@ public class SettingsTests extends TestBase {
         productionDefaultPage.enterScenarioName("Initial")
             .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
             .selectVPE(NO_DEFAULT)
-            .selectMaterialCatalog((NO_DEFAULT))
-            .selectMaterial("<No default specified>")
+            .selectMaterialCatalog(NO_DEFAULT)
+            .selectMaterial(NO_DEFAULT)
             .clearAnnualVolume()
             .clearProductionLife()
             .selectBatchAuto();
