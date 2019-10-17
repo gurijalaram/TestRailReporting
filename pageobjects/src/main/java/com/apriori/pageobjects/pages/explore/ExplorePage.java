@@ -275,6 +275,7 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Gets the no component message
+     *
      * @return string
      */
     public String getNoComponentText() {
@@ -285,10 +286,60 @@ public class ExplorePage extends ExploreHeader {
      * Refreshes the page
      * todo - intentionally on this page and not in pageutils because only this page will need to be reloaded
      * todo - for uploading files multiple times in the same test
+     *
      * @return current page object
      */
     public ExplorePage refreshCurrentPage() {
         driver.navigate().refresh();
+        return this;
+    }
+
+    /**
+     * Sorts column in ascending order
+     *
+     * @param columnName - column name
+     * @return current page object
+     */
+    public ExplorePage sortColumnAscending(String columnName) {
+        return setColumn(columnName, "sort-asc");
+    }
+
+    /**
+     * Sorts column in descending order
+     *
+     * @param columnName - column name
+     * @return current page object
+     */
+    public ExplorePage sortColumnDescending(String columnName) {
+        sortColumnAscending(columnName);
+        return setColumn(columnName, "sort-desc");
+    }
+
+    /**
+     * Gets the current order of the column
+     *
+     * @param columnName - column name
+     * @return current page object
+     */
+    public String getColumnOrder(String columnName) {
+        By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
+        return driver.findElement(column).getAttribute("outerHTML");
+    }
+
+    /**
+     * Sets the column order
+     * @param columnName - column name
+     * @param order - column order
+     * @return current page object
+     */
+    private ExplorePage setColumn(String columnName, String order) {
+        By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
+
+        if (pageUtils.waitForElementToAppear(column).getAttribute("outerHTML").contains(order)) {
+            return this;
+        } else {
+            pageUtils.waitForElementAndClick(column);
+        }
         return this;
     }
 }

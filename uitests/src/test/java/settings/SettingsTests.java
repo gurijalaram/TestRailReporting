@@ -26,6 +26,8 @@ import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class SettingsTests extends TestBase {
     private LoginPage loginPage;
@@ -38,8 +40,8 @@ public class SettingsTests extends TestBase {
 
     private final String NO_DEFAULT ="<No default specified>";
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @Issue("BA-842")
     @TestRail(testCaseId = {"1609", "276"})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
@@ -81,7 +83,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-842")
+    @Issue("BA-840")
     @TestRail(testCaseId = {"274", "1609", "1602"})
     @Description("User can change the default Process group")
     public void defaultPG() {
@@ -223,7 +225,9 @@ public class SettingsTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
+    @TestRail(testCaseId = {"1609"})
     @Description("User can change the default selection colour")
     public void defaultColor() {
 
