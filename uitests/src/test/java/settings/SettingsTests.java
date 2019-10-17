@@ -385,15 +385,17 @@ public class SettingsTests extends TestBase {
     public void saveAllTabs() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        productionDefaultPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .openSettings()
             .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
             .openProdDefaultTab()
             .enterScenarioName("Save all tabs test")
             .enterAnnualVolume("295")
             .enterProductionLife("7");
+
         new SettingsPage(driver).openSelectionTab()
             .setColour(ColourEnum.SHAMROCK_GREEN.getColour());
+
         new SettingsPage(driver).save(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
