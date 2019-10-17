@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * @author cfrith
@@ -35,14 +36,7 @@ public class ColumnUtils {
 
         String[] filteredCells = Arrays.stream(cells).filter(cell -> !cell.equals("\t\t")).toArray(String[]::new);
 
-        for (int headerIndex = 0; headerIndex < columns.length; headerIndex++) {
-            for (int rowIndex = 0; rowIndex < filteredCells.length; rowIndex++) {
-                if (headerIndex == rowIndex) {
-                    map.put(columns[headerIndex], filteredCells[headerIndex]);
-                    break;
-                }
-            }
-        }
+        IntStream.range(0, columns.length).filter(headerIndex -> IntStream.range(0, filteredCells.length).anyMatch(rowIndex -> headerIndex == rowIndex)).forEach(headerIndex -> map.put(columns[headerIndex], filteredCells[headerIndex]));
         return map.get(column);
     }
 }
