@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
+import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -33,10 +34,12 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public TolerancePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -66,12 +69,12 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
     }
 
     /**
-     * Selects the tolerance type.  Selection is based on exact match so unit must be specified eg. Flatness (mm)
+     * Finds the tolerance type.  Selection is based on contains so unit must be specified eg. Flatness
      *
      * @param toleranceType - the tolerance type
      * @return the tolerance as webelement
      */
-    private WebElement findToleranceType(String toleranceType) {
+    public WebElement findToleranceType(String toleranceType) {
         By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr");
         pageUtils.waitForElementToAppear(tolerance);
         return pageUtils.scrollToElement(tolerance, toleranceScroller);
@@ -118,5 +121,16 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      */
     public WebElement getEditButton() {
         return editToleranceButton;
+    }
+
+    /**
+     * Gets the cell details
+     * @param toleranceType - tolerance type
+     * @param column - the column
+     * @return string
+     */
+    public String getToleranceCell(String toleranceType, String column) {
+        String rowLocator = "//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr[@class]";
+        return columnUtils.columnDetails("tolerancesTable", column, rowLocator);
     }
 }

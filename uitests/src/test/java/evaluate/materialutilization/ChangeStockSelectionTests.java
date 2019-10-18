@@ -1,10 +1,12 @@
 package evaluate.materialutilization;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.SelectStockPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -16,21 +18,24 @@ import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ChangeStockSelectionTests extends TestBase {
 
     private LoginPage loginPage;
     private SelectStockPage selectStockPage;
     private StockPage stockPage;
+    private EvaluatePage evaluatePage;
 
     public ChangeStockSelectionTests() {
         super();
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"960"})
+    @TestRail(testCaseId = {"960", "1617", "1618", "1619"})
     @Description("Test making changes to the Material Stock, the change is respected and the scenario can be re-cost")
     public void changeStockSelectionTest() {
         loginPage = new LoginPage(driver);
@@ -47,6 +52,10 @@ public class ChangeStockSelectionTests extends TestBase {
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
         new EvaluatePage(driver).costScenario();
         assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
+
+        evaluatePage = new MaterialPage(driver).closeMaterialAndUtilizationPanel();
+        assertThat(evaluatePage.getPartCost(), equalTo("22.38"));
+
     }
 
     @Test

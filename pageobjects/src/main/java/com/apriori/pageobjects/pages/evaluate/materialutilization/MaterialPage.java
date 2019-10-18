@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.materialutilization;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
@@ -33,6 +34,9 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     @FindBy(css = "a[href='#partNestingTab']")
     private WebElement partNestingTab;
+
+    @FindBy(css = ".panel .glyphicon-remove")
+    private WebElement closePanelButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -74,5 +78,15 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     public StockPage goToStockTab() {
         stockTab.click();
         return new StockPage(driver);
+    }
+
+    /**
+     * Closes the material & utilization
+     *
+     * @return new page object
+     */
+    public EvaluatePage closeMaterialAndUtilizationPanel() {
+        pageUtils.waitForElementAndClick(closePanelButton);
+        return new EvaluatePage(driver);
     }
 }

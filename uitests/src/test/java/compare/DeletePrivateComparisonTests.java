@@ -72,7 +72,6 @@ public class DeletePrivateComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-837")
     @TestRail(testCaseId = {"430"})
     @Description("Test a private comparison can be deleted from the comparison page")
     public void deletePrivateComparison() {

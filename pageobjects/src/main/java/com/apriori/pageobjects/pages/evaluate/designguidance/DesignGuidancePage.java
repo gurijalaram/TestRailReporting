@@ -130,4 +130,14 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
         pageUtils.waitForElementAndClick(closePanelButton);
         return this;
     }
+
+    /**
+     * Expands the guidance panel
+     *
+     *@return current page object
+     */
+    public DesignGuidancePage expandGuidanceTab() {
+        pageUtils.waitForElementToBeClickable(chevronButton).click();
+        return this;
+    }
 }
