@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -30,10 +31,12 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public GeometryPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -58,27 +61,34 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
      * @return current page object
      */
     public GeometryPage selectGCDAndGCDProperty(String gcdParent, String gcdChild, String gcdProperty) {
-        selectGCDType(gcdParent, gcdChild);
+        findGCDType(gcdParent).click();
+        findGCDChild(gcdChild).click();
         selectGCDProperty(gcdProperty);
         return this;
     }
 
     /**
-     * Selects the gcd type
+     * Finds the gcd type
      *
      * @param gcdParent - the gcd parent type
-     * @param gcdChild  - the gcd type
      * @return gcd type as webelement
      */
-    private GeometryPage selectGCDType(String gcdParent, String gcdChild) {
+    private WebElement findGCDType(String gcdParent) {
         By gcdParentElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdParent + "']//span[@class='fa fa-caret-right']");
         pageUtils.waitForElementToAppear(gcdParentElement);
-        pageUtils.scrollToElement(gcdParentElement, gcdTableScroller).click();
+        return pageUtils.scrollToElement(gcdParentElement, gcdTableScroller);
+    }
 
-        By gcdChildElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdChild + "']");
+    /**
+     * Finds the gcd child
+     *
+     * @param gcdType - the gcd type
+     * @return
+     */
+    private WebElement findGCDChild(String gcdType) {
+        By gcdChildElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdType + "']");
         pageUtils.waitForElementToAppear(gcdChildElement);
-        pageUtils.scrollToElement(gcdChildElement, gcdTableScroller).click();
-        return this;
+        return pageUtils.scrollToElement(gcdChildElement, gcdTableScroller);
     }
 
     /**
@@ -92,5 +102,29 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
         pageUtils.waitForElementToAppear(gcd);
         pageUtils.scrollToElement(gcd, propertiesScroller).click();
         return this;
+    }
+
+    /**
+     * Finds the gcd
+     *
+     * @param gcdParent - the gcd dropdown
+     * @param gcdChild  - the gcd type
+     * @return current page object
+     */
+    public GeometryPage findGCD(String gcdParent, String gcdChild) {
+        findGCDType(gcdParent).click();
+        findGCDChild(gcdChild).click();
+        return this;
+    }
+
+    /**
+     * Gets the cell details
+     *
+     * @param column - the column
+     * @return string
+     */
+    public String getGeometryCell(String gcdType, String column) {
+        String cellLocator = "//div[@data-ap-comp='gcdTreeTable']//div[contains(text(),'" + gcdType + "')]/ancestor::tr[@class]";
+        return columnUtils.columnDetails("gcdTreeTable", column, cellLocator);
     }
 }

@@ -139,6 +139,43 @@ public class ExplorePage extends ExploreHeader {
     }
 
     /**
+     * Opens the part
+     *
+     * @param partName     - name of the part
+     * @param scenarioName - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openAssembly(String scenarioName, String partName) {
+        pageUtils.waitForElementToAppear(findAssembly(scenarioName, partName));
+        findAssembly(scenarioName, partName).click();
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Find specific element in the table
+     *
+     * @param partName     - name of the assembly
+     * @param scenarioName - scenario name
+     * @return the part as webelement
+     */
+    public WebElement findAssembly(String scenarioName, String partName) {
+        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "']");
+        return pageUtils.scrollToElement(scenario, componentScroller);
+    }
+
+    /**
+     * Highlights the assembly in the table
+     *
+     * @param scenarioName - scenario name
+     * @param partName     - name of the assembly
+     */
+    public void highlightAssembly(String scenarioName, String partName) {
+        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
+        pageUtils.scrollToElement(scenario, componentScroller);
+        pageUtils.waitForElementAndClick(scenario);
+    }
+
+    /**
      * Gets the number of elements present on the page
      *
      * @param scenarioName - scenario name
@@ -238,6 +275,7 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Gets the no component message
+     *
      * @return string
      */
     public String getNoComponentText() {
@@ -248,10 +286,60 @@ public class ExplorePage extends ExploreHeader {
      * Refreshes the page
      * todo - intentionally on this page and not in pageutils because only this page will need to be reloaded
      * todo - for uploading files multiple times in the same test
+     *
      * @return current page object
      */
     public ExplorePage refreshCurrentPage() {
         driver.navigate().refresh();
+        return this;
+    }
+
+    /**
+     * Sorts column in ascending order
+     *
+     * @param columnName - column name
+     * @return current page object
+     */
+    public ExplorePage sortColumnAscending(String columnName) {
+        return setColumn(columnName, "sort-asc");
+    }
+
+    /**
+     * Sorts column in descending order
+     *
+     * @param columnName - column name
+     * @return current page object
+     */
+    public ExplorePage sortColumnDescending(String columnName) {
+        sortColumnAscending(columnName);
+        return setColumn(columnName, "sort-desc");
+    }
+
+    /**
+     * Gets the current order of the column
+     *
+     * @param columnName - column name
+     * @return current page object
+     */
+    public String getColumnOrder(String columnName) {
+        By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
+        return driver.findElement(column).getAttribute("outerHTML");
+    }
+
+    /**
+     * Sets the column order
+     * @param columnName - column name
+     * @param order - column order
+     * @return current page object
+     */
+    private ExplorePage setColumn(String columnName, String order) {
+        By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
+
+        if (pageUtils.waitForElementToAppear(column).getAttribute("outerHTML").contains(order)) {
+            return this;
+        } else {
+            pageUtils.waitForElementAndClick(column);
+        }
         return this;
     }
 }

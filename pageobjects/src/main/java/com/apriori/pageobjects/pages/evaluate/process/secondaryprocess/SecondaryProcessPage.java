@@ -36,6 +36,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private By secondaryProcess;
 
     public SecondaryProcessPage(WebDriver driver) {
         this.driver = driver;
@@ -64,7 +65,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      */
     public SecondaryProcessPage selectSecondaryProcess(String processType, String processName) {
         selectProcessType(processType);
-        selectProcessName(processName).click();
+        findProcessName(processName).click();
         return this;
     }
 
@@ -90,15 +91,23 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      * @param processName - the secondary process
      * @return current page object
      */
-    private WebElement selectProcessName(String processName) {
+    private WebElement findProcessName(String processName) {
         By processBox = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName + "']/ancestor::tr//input[@class='gwt-SimpleCheckBox']");
         return pageUtils.scrollToElement(processBox, processScroller);
     }
 
     public SecondaryOptionsPage highlightSecondaryProcess(String processType, String processName) {
         selectSecondaryProcess(processType, processName);
+        // TODO: 16/10/2019 refactor to webelement
         driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']/ancestor::tr")).click();
         return new SecondaryOptionsPage(driver);
+    }
+
+    public SecondaryProcessPage findSecondaryProcess(String processType, String processName) {
+        selectProcessType(processType);
+        // TODO: 16/10/2019 refactor to webelement
+        driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']/ancestor::tr"));
+        return this;
     }
 
     /**
@@ -119,5 +128,15 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     public EvaluatePage cancel() {
         cancelButton.click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Gets the attribute of the secondary process checkbox.
+     *
+     * @return true/false
+     */
+
+    public String getCheckboxStatus(String process) {
+        return driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//input")).getAttribute("outerHTML");
     }
 }

@@ -1,5 +1,6 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -55,7 +56,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting"), is(equalTo(0)));
     }
 
     @Test
@@ -83,6 +84,6 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") < 1, is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting"), is(equalTo(0)));
     }
 }

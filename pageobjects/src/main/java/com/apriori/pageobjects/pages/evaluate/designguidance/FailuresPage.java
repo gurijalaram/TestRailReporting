@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -23,11 +24,12 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private DesignGuidancePage designGuidancePage;
+    private ColumnUtils columnUtils;
 
     public FailuresPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -51,8 +53,8 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
      * @return current page object
      */
     public FailuresPage selectIssueTypeAndGCD(String issueType, String gcd) {
-        selectIssueType(issueType).click();
-        selectGCD(gcd).click();
+        findIssueType(issueType).click();
+        findGCD(gcd).click();
         return this;
     }
 
@@ -62,7 +64,7 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
      * @param issueType - the issue type
      * @return
      */
-    private WebElement selectIssueType(String issueType) {
+    public WebElement findIssueType(String issueType) {
         By issue = By.xpath("//div[@data-ap-comp='uncostedFeaturesInfo']//td[contains(text(),'" + issueType + "')]");
         return pageUtils.waitForElementToAppear(issue);
     }
@@ -73,18 +75,29 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
      * @param gcdType - the gcd
      * @return gcd as a webelement
      */
-    private WebElement selectGCD(String gcdType) {
+    private WebElement findGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='uncostedFeaturesInfo']//td[contains(text(),'" + gcdType + "')]/ancestor::tr");
         return pageUtils.waitForElementToAppear(gcd);
     }
 
     /**
-     * Gets the displayed reason for failure message
+     * Gets the displayed reason for failure
      *
-     * @return uncosted message
+     * @return failure message
      */
     public String getUncostedMessage() {
         return pageUtils.waitForElementToAppear(uncostedMessage).getText();
+    }
+
+    /**
+     * Gets the cell details
+     * @param issueType - tolerance type
+     * @param column - the column
+     * @return string
+     */
+    public String getFailuresCell(String issueType, String column) {
+        String rowLocator = "//div[@data-ap-comp='uncostedFeaturesInfo']//td[contains(text(),'" + issueType + "')]/ancestor::tr";
+        return columnUtils.columnDetails("uncostedFeaturesInfo", column, rowLocator);
     }
 }
 

@@ -1,6 +1,7 @@
 package reports.pages.homepage;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,7 +21,7 @@ public class HomePage extends LoadableComponent<HomePage> {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public HomePage(WebDriver driver){
+    public HomePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -30,12 +31,10 @@ public class HomePage extends LoadableComponent<HomePage> {
 
     @Override
     protected void load() {
-
     }
 
     @Override
     protected void isLoaded() throws Error {
-
     }
 
     /**
@@ -43,7 +42,7 @@ public class HomePage extends LoadableComponent<HomePage> {
      *
      * @return Visibility of button
      */
-    public boolean isCreateButtonDisplayed(){
+    public boolean isCreateButtonDisplayed() {
         pageUtils.waitForElementToAppear(createButton);
         return createButton.isDisplayed();
     }

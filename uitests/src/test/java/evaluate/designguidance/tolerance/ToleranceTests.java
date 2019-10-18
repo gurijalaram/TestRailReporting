@@ -25,6 +25,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ToleranceTests extends TestBase {
 
@@ -41,9 +43,10 @@ public class ToleranceTests extends TestBase {
         super();
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Issue("AP-56493")
-    @TestRail(testCaseId = "707")
+    @TestRail(testCaseId = {"707", "1607"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
         loginPage = new LoginPage(driver);
@@ -88,9 +91,10 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(EvaluatePage.class);
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Issue("AP-56493")
-    @TestRail(testCaseId = "708")
+    @TestRail(testCaseId = {"708", "1607"})
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
         loginPage = new LoginPage(driver);
@@ -124,9 +128,10 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(EvaluatePage.class);
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
     @Issue("AP-56493")
-    @TestRail(testCaseId = "716")
+    @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerancea() {
         loginPage = new LoginPage(driver);
@@ -144,8 +149,9 @@ public class ToleranceTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = "717")
+    @TestRail(testCaseId = {"717", "1608"})
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
         loginPage = new LoginPage(driver);
@@ -209,6 +215,37 @@ public class ToleranceTests extends TestBase {
             .selectAssumeTolerance();
 
         new SettingsPage(driver).save(EvaluatePage.class);
+    }
 
+    @Category(CustomerSmokeTests.class)
+    @Test
+    @TestRail(testCaseId = {"1595"})
+    @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
+    public void toleranceCounts() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        tolerancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .expandGuidanceTab()
+            .openTolerancesTab();
+
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.CIRCULARITY.getToleranceName()), "1"), is(true));
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.CONCENTRICITY.getToleranceName()), "1"), is(true));
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.CYLINDRICITY.getToleranceName()), "1"), is(true));
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.FLATNESS.getToleranceName()), "2"), is(true));
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.PARALLELISM.getToleranceName()), "1"), is(true));
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.PERPENDICULARITY.getToleranceName()), "1"), is(true));
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.PROFILESURFACE.getToleranceName()), "2"), is(true));
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.ROUGHNESSRA.getToleranceName()), "1"), is(true));
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.ROUGHNESSRZ.getToleranceName()), "2"), is(true));
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.RUNOUT.getToleranceName()), "1"), is(true));
     }
 }
