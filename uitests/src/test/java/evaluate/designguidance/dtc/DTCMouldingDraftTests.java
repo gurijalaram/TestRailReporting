@@ -1,6 +1,8 @@
 package evaluate.designguidance.dtc;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -59,6 +61,6 @@ public class DTCMouldingDraftTests extends TestBase {
             .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
-        //assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("22")));
+        assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("22")));
     }
 }
