@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.not;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.TableColumnsPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -25,7 +24,6 @@ public class TableHeadersTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private EvaluatePage evaluatePage;
     private TableColumnsPage tableColumnsPage;
 
     private final String ASCENDING = "sort-asc";

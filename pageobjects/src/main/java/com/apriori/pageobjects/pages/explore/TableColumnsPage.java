@@ -163,6 +163,6 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
      * @return current page object
      */
     public String getIncludedList() {
-        return includedList.getAttribute("innerText");
+        return includedList.getText();
     }
 }
