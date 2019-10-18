@@ -19,6 +19,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class DTCMachiningTests extends TestBase {
 
@@ -127,9 +129,10 @@ public class DTCMachiningTests extends TestBase {
         assertThat(guidancePage.getGuidanceMessage(), containsString("Feature is obstructed"));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1799", "1802", "1806"})
-    @Description("Verify Sharp corners on curved walls are highlighted")
+    @TestRail(testCaseId = {"1799", "1802", "1806", "1593"})
+    @Description("Ensure that  'Guidance' includes: - Issue type count - DTC Messaging for each guidance instance")
     public void stockMachiningDTC() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())

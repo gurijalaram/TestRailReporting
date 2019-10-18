@@ -29,7 +29,8 @@ import testsuites.suiteinterface.CustomerSmokeTests;
     SettingsTests.class,
     PublishNewCostedTests.class,
     FailuresWarningsTests.class,
-    DTCMouldingDraftTests.class
+    DTCMouldingDraftTests.class,
+    DTCCastingTests.class
 })
 public class CustomerSmokeTestSuite {
 }
