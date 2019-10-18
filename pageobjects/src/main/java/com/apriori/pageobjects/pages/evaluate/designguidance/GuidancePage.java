@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -33,11 +34,12 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private DesignGuidancePage designGuidancePage;
+    private ColumnUtils columnUtils;
 
     public GuidancePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -57,6 +59,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      * Selects both issue type and gcd details
      *
      * @param issueTypeDropdown - the issue type parent
+     * @param issueType - the issue type
      * @param gcd               - the gcd
      * @return current page object
      */
@@ -109,7 +112,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      * @return
      */
     private WebElement findIssueType(String issueType) {
-        By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]");
+        By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType.trim() + "')]");
         return pageUtils.scrollToElement(issue, guidanceTableScroller);
     }
 
@@ -131,5 +134,30 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      */
     public String getGuidanceMessage() {
         return pageUtils.waitForElementToAppear(gcdMessage).getText();
+    }
+
+    /**
+     * Finds the issue type
+     * @param issueTypeDropdown - the issue type parent
+     * @param issueTypeDropdown - the issue type
+     * @return current page object
+     */
+    public GuidancePage findIssueType(String issueTypeDropdown, String issueType) {
+        collapseIssueDropdown();
+        selectIssue(issueTypeDropdown);
+        findIssueType(issueType);
+        return this;
+    }
+
+    /**
+     * Gets the cell details
+     *
+     * @param issueType         - tolerance type
+     * @param column            - the column
+     * @return string
+     */
+    public String getGuidanceCell(String issueType, String column) {
+        String rowLocator = "//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]/ancestor::tr[@class]";
+        return columnUtils.columnDetails("guidanceIssuesTable", column, rowLocator);
     }
 }
