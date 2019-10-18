@@ -28,6 +28,7 @@ import evaluate.designguidance.dtc.DTCMachiningTests;
 import evaluate.designguidance.dtc.DTCMouldingDraftTests;
 import evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
 import evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
+import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.geometry.GeometryTests;
 import evaluate.designguidance.thread.ThreadTests;
 import evaluate.materialutilization.ChangeStockSelectionTests;
@@ -79,7 +80,8 @@ import settings.SettingsTests;
     ProcessRoutingTests.class,
     PsoEditTests.class,
     SettingsTests.class,
-    GeometryTests.class
+    GeometryTests.class,
+    FailuresWarningsTests.class
 })
 public class CIDTestSuite {
 }

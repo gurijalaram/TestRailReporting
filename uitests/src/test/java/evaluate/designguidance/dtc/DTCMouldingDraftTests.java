@@ -18,6 +18,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class DTCMouldingDraftTests extends TestBase {
 
@@ -29,8 +31,9 @@ public class DTCMouldingDraftTests extends TestBase {
         super();
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1066"})
+    @TestRail(testCaseId = {"1066", "1593"})
     @Description("Min. draft for Injection Moulding & Reaction Injection Moulding (>0.25 Degrees)")
     public void testDTCMouldingDraft() {
         loginPage = new LoginPage(driver);
@@ -62,5 +65,29 @@ public class DTCMouldingDraftTests extends TestBase {
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
         assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("22")));
+    }
+
+    @Category(CustomerSmokeTests.class)
+    @Test
+    @TestRail(testCaseId = {"1067", "1593", "1068"})
+    @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
+    public void StructuralFoamMouldDraft() {
+        loginPage = new LoginPage(driver);
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Structural Foam Mold")
+            .apply()
+            .closeProcessPanel()
+            .costScenario()
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Planar Faces", "PlanarFace:11");
+
+        assertThat(guidancePage.getGuidanceMessage(), containsString("No Surface draft has been applied."));
+        assertThat(guidancePage.getGuidanceCell("Planar Faces", "Count"), is(equalTo("4")));
     }
 }

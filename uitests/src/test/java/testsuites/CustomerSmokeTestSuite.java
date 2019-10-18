@@ -4,6 +4,8 @@ import evaluate.NewScenarioNameTests;
 import evaluate.ProcessGroupsTests;
 import evaluate.PublishNewCostedTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
+import evaluate.designguidance.dtc.DTCMouldingDraftTests;
+import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.thread.ThreadTests;
 import evaluate.designguidance.tolerance.ToleranceTests;
 import explore.ActionsTests;
@@ -25,7 +27,9 @@ import testsuites.suiteinterface.CustomerSmokeTests;
     DTCCastingTests.class,
     ToleranceTests.class,
     SettingsTests.class,
-    PublishNewCostedTests.class
+    PublishNewCostedTests.class,
+    FailuresWarningsTests.class,
+    DTCMouldingDraftTests.class
 })
 public class CustomerSmokeTestSuite {
 }
