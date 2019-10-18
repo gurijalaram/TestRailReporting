@@ -9,6 +9,7 @@ import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.thread.ThreadTests;
 import evaluate.designguidance.tolerance.ToleranceTests;
 import explore.ActionsTests;
+import explore.TableHeadersTests;
 import login.LoginTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
@@ -27,6 +28,8 @@ import testsuites.suiteinterface.CustomerSmokeTests;
     DTCCastingTests.class,
     ToleranceTests.class,
     SettingsTests.class,
+    PublishNewCostedTests.class,
+    TableHeadersTests.class,
     PublishNewCostedTests.class,
     FailuresWarningsTests.class,
     DTCMouldingDraftTests.class,

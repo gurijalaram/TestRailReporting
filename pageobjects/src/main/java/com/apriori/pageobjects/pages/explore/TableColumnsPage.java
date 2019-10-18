@@ -40,6 +40,12 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
     @FindBy(css = "[data-ap-scope='tableViewSelection'] .gwt-Button.btn.btn-default")
     private WebElement cancelButton;
 
+    @FindBy(css = "button[data-ap-comp='upButton']")
+    private WebElement upButton;
+
+    @FindBy(css = "button[data-ap-comp='downButton']")
+    private WebElement downButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -125,5 +131,38 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
     public ExplorePage selectCancelButton() {
         cancelButton.click();
         return new ExplorePage(driver);
+    }
+
+    /**
+     * Moves the column to the top
+     *
+     * @return current page object
+     */
+    public TableColumnsPage moveColumnToTop(String column) {
+        pageUtils.waitForElementToAppear(includedList);
+        new Select(includedList).selectByValue(column);
+        clickUpButton();
+        return this;
+    }
+
+    /**
+     * Clicks up until disabled
+     *
+     * @return current page object
+     */
+    private TableColumnsPage clickUpButton() {
+        do {
+            pageUtils.waitForElementAndClick(upButton);
+        } while (!upButton.getAttribute("outerHTML").contains("disabled"));
+        return this;
+    }
+
+    /**
+     * Gets the included columns list
+     *
+     * @return current page object
+     */
+    public String getIncludedList() {
+        return includedList.getText();
     }
 }
