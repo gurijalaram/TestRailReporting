@@ -2,8 +2,7 @@ package testsuites;
 
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import compare.AddPrivateScenarioTests;
-import compare.AddPublicScenarioTests;
+import compare.AddScenarioTests;
 import compare.DeletePrivateComparisonTests;
 import compare.DeletePublicComparisonTests;
 import compare.EditPublicComparisonTests;
@@ -44,8 +43,7 @@ import settings.SettingsTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses ({
-    AddPrivateScenarioTests.class,
-    AddPublicScenarioTests.class,
+    AddScenarioTests.class,
     DTCMachiningTests.class,
     DTCMouldingDraftTests.class,
     DTCMouldingEdgeRadiusTests.class,

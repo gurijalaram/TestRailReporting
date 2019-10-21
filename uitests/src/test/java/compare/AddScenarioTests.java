@@ -20,14 +20,34 @@ import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-public class AddPublicScenarioTests extends TestBase {
+public class AddScenarioTests extends TestBase{
 
     private LoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
     private WarningPage warningPage;
 
-    public AddPublicScenarioTests() {
-        super();
+    @Test
+    @TestRail(testCaseId = {"412", "1171"})
+    @Description("Test filtering and adding a private scenario then searching component table for the scenario")
+    @Issue("AP-56464")
+    public void filterAddPrivateScenario() {
+
+        String testScenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        comparisonTablePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .costScenario()
+            .createNewComparison()
+            .enterComparisonName(new Util().getComparisonName())
+            .save(ComparePage.class)
+            .addScenario()
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Part Name", "Contains", "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface")
+            .apply(ComparisonTablePage.class);
+
+        assertThat(comparisonTablePage.findScenario(testScenarioName, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface").isDisplayed(), Matchers.is(true));
     }
 
     @Test
@@ -39,17 +59,17 @@ public class AddPublicScenarioTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         comparisonTablePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
-            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
-            .costScenario()
-            .publishScenario()
-            .createNewComparison()
-            .enterComparisonName(new Util().getComparisonName())
-            .save(ComparePage.class)
-            .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
-            .apply(ComparisonTablePage.class);
+                .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+                .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+                .costScenario()
+                .publishScenario()
+                .createNewComparison()
+                .enterComparisonName(new Util().getComparisonName())
+                .save(ComparePage.class)
+                .addScenario()
+                .filterCriteria()
+                .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
+                .apply(ComparisonTablePage.class);
 
         assertThat(comparisonTablePage.findScenario(testScenarioName, "Casting").isDisplayed(), Matchers.is(true));
     }
@@ -60,8 +80,8 @@ public class AddPublicScenarioTests extends TestBase {
     public void comparisonNoScenarioName() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .createNewComparison()
-            .save(WarningPage.class);
+                .createNewComparison()
+                .save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));
     }
