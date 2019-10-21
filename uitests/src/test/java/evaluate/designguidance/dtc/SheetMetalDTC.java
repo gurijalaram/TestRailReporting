@@ -5,11 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
@@ -30,10 +26,6 @@ public class SheetMetalDTC extends TestBase {
     private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
-    private EvaluatePage evaluatePage;
-    private GeometryPage geometryPage;
-    private PropertiesDialogPage propertiesDialogPage;
-    private TolerancePage tolerancePage;
 
     public SheetMetalDTC() {
         super();
@@ -71,5 +63,58 @@ public class SheetMetalDTC extends TestBase {
 
         guidancePage.selectIssueTypeAndGCD("Machined GCDs", "Center Drilling / Drilling", "SimpleHole:3");
         assertThat(guidancePage.getGuidanceCell("Center Drilling / Drilling", "Count"), is(equalTo("3")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1840", "1841"})
+    @Description("Verify Proximity Issues Are Highlighted")
+    public void sheetMetalProximity() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        guidancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetalTray.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Proximity Warning, Distance", "Complex Holes", "ComplexHole:10");
+
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Hole is too close to to the following bend(s): StraightBend:3"));
+
+        guidancePage.selectIssueTypeAndGCD("Proximity Warning, Distance", "Simple Holes", "SimpleHole:2");
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Hole is too close to the following hole(s): SimpleHole:3, SimpleHole:1"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1838", "1844"})
+    @Description("Verify Bend Issues Are Highlighted")
+    public void sheetMetalBends() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        guidancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("extremebends.prt.1"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Bend Issue", "Intersects", "StraightBend:4");
+
+        assertThat(guidancePage.getGuidanceMessage(), containsString("There is an intersection with a form and therefore cannot be made with Bending"));
+
+        guidancePage.selectIssueTypeAndGCD("Bend Issue", "Length", "StraightBend:3");
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Bend flap is too small to be formed with Bending"));
+
+        guidancePage.selectIssueTypeAndGCD("Bend Issue", "Radius", "StraightBend:3");
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Bend radius is too small"));
     }
 }
