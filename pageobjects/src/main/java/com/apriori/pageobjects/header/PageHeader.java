@@ -4,6 +4,7 @@ import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
+import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
@@ -41,11 +42,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "a.navbar-help")
     private WebElement helpButton;
 
-    @FindBy(css = "span.glyphicon-user")
-    private WebElement logoutButton;
-
     @FindBy(css = "a > span.glyphicon-user")
     private WebElement userInfoDropdown;
+
+    @FindBy(xpath = "//a[contains(text(),'Log Out')]")
+    private WebElement logOutButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -129,12 +130,22 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     }
 
     /**
-     * Selects the logout button
+     * Selects the admin dropdown button
      *
      * @return new page object
      */
-    public PageHeader openLogOut() {
-        pageUtils.waitForElementAndClick(logoutButton);
+    public PageHeader openAdminDropdown() {
+        pageUtils.waitForElementAndClick(userInfoDropdown);
         return this;
+    }
+
+    /**
+     * Selects the log out button
+     *
+     * @return new page object
+     */
+    public LoginPage selectLogOut() {
+        pageUtils.waitForElementAndClick(logOutButton);
+        return new LoginPage(driver);
     }
 }

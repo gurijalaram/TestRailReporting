@@ -1,12 +1,10 @@
 package evaluate;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.actions.ScenarioAction;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.pageobjects.utils.WorkOrderRequestEntity;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -16,7 +14,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 
-import org.junit.After;
 import org.junit.Test;
 
 public class DeletePublicScenarioTests extends TestBase {
@@ -24,6 +21,8 @@ public class DeletePublicScenarioTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private String testScenarioName;
+
+    private final String noComponentMessage = "You have no components that match the selected filter";
 
     public DeletePublicScenarioTests() {
         super();
@@ -48,14 +47,14 @@ public class DeletePublicScenarioTests extends TestBase {
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "casting") > 0, is(true));
+        explorePage = new ExplorePage(driver);
+        explorePage.delete()
+            .deleteScenario()
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .apply(ExplorePage.class);
+
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
 
-    @After
-    public void testForceDelete() {
-        ScenarioAction.forceDelete(
-            WorkOrderRequestEntity.defaultRequestByUserEnum(UsersEnum.CID_TE_USER_ALLDATA, testScenarioName)
-                .setWorkspace(WorkspaceEnum.PUBLIC_API));
-
-    }
 }

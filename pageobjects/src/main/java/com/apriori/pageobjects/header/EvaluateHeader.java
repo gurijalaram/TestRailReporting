@@ -89,7 +89,7 @@ public class EvaluateHeader extends GenericHeader {
     /**
      * Method to check for the loading image displayed/not displayed
      */
-    private void checkForImage() {
+    public void checkForImage() {
         pageUtils.isElementDisplayed(loadingImage);
         pageUtils.waitForElementNotDisplayed(loadingImage);
     }

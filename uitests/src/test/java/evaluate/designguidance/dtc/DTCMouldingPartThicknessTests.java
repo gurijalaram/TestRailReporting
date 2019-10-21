@@ -32,11 +32,17 @@ public class DTCMouldingPartThicknessTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Structural Foam Mold")
+            .apply()
+            .closeProcessPanel()
+            .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
 
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Part Thickness is less than the minimum limit with this material."));
     }
 
     @Test

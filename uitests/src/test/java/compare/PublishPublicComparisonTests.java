@@ -1,6 +1,7 @@
 package compare;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.header.PageHeader;
@@ -17,6 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class PublishPublicComparisonTests extends TestBase {
@@ -31,6 +33,7 @@ public class PublishPublicComparisonTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56464")
     @Description("Test a public comparison can be published")
     public void testPublishPublicComparison() {
 
@@ -56,6 +59,6 @@ public class PublishPublicComparisonTests extends TestBase {
         explorePage = pageHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
-        assertThat(explorePage.getListOfComparisons(testComparisonName) > 0, is(true));
+        assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));
     }
 }

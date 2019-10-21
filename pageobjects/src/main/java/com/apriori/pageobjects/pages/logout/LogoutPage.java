@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.explore;
+package com.apriori.pageobjects.pages.logout;
 
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.utils.PageUtils;
@@ -62,7 +62,7 @@ public class LogoutPage extends LoadableComponent<LogoutPage> {
     }
 
     public LoginPage logOut() {
-        logOut.click();
+        pageUtils.waitForElementAndClick(logOut);
         return new LoginPage(driver);
     }
 }

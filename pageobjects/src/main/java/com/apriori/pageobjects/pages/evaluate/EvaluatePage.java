@@ -1,7 +1,9 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.header.EvaluateHeader;
+import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
@@ -26,6 +28,9 @@ import java.util.stream.Collectors;
 public class EvaluatePage extends EvaluateHeader {
 
     private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
+
+    @FindBy(css = "thead[data-ap-comp='scenarioKey'] label[data-ap-field='masterName']")
+    private WebElement partName;
 
     @FindBy(css = "div.main-viewport")
     private WebElement leftPanel;
@@ -117,8 +122,38 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "td[data-ap-field='capitalInvestment']")
     private WebElement capitalInvestments;
 
+    @FindBy(css = "li[data-ap-comp='analysis-button']")
+    private WebElement analysisButton;
+
     @FindBy(css = ".color-failure")
-    public WebElement failedCostedIcon;
+    private WebElement failedCostIcon;
+
+    @FindBy(css = ".locked-status-icon")
+    private WebElement lockedStatusIcon;
+
+    @FindBy(css = ".cad-connection-status-icon")
+    private WebElement cadConnectedIcon;
+
+    @FindBy(css = "a[data-ap-nav-viewport='showAssemblyComponentsDetails']")
+    private WebElement componentsDetails;
+
+    @FindBy(css = ".components-refresh-btn")
+    private WebElement refreshComponents;
+
+    @FindBy(css = "td[data-ap-field='totalComponents']")
+    private WebElement totalComponents;
+
+    @FindBy(css = "td[data-ap-field='uniqueComponents']")
+    private WebElement uniqueComponents;
+
+    @FindBy(css = "td[data-ap-field='uncostedComponentsCount']")
+    private WebElement uncostedComponents;
+
+    @FindBy(css = "td[data-ap-field='finishMass']")
+    private WebElement finishMass;
+
+    @FindBy(css = "td[data-ap-field='targetFinishMass']")
+    private WebElement targetMass;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -153,6 +188,14 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementToBeClickable(processGroupDropdown);
         pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
         return this;
+    }
+
+    /**
+     * Gets the partname
+     * @return string
+     */
+    public String getPartName() {
+        return pageUtils.waitForElementToAppear(partName).getText();
     }
 
     /**
@@ -218,6 +261,16 @@ public class EvaluatePage extends EvaluateHeader {
     public DesignGuidancePage openDesignGuidance() {
         pageUtils.waitForElementAndClick(guidanceDetails);
         return new DesignGuidancePage(driver);
+    }
+
+    /**
+     * Opens the more inputs dialog
+     *
+     * @return new page object
+     */
+    public MoreInputsPage openMoreInputs() {
+        pageUtils.waitForElementAndClick(moreInputs);
+        return new MoreInputsPage(driver);
     }
 
     /**
@@ -318,7 +371,9 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * @return
+     * Gets warning count
+     *
+     * @return string
      */
     public String getWarningsCount() {
         return pageUtils.waitForElementToAppear(warningsCount).getText();
@@ -386,5 +441,141 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public String getCapitalInvestment() {
         return pageUtils.waitForElementToAppear(capitalInvestments).getText();
+    }
+
+    /**
+     * Checks if the failed icon is present
+     *
+     * @return string
+     */
+    public boolean isFailedIconPresent() {
+        return failedCostIcon.isDisplayed();
+    }
+
+    /**
+     * Selects the analysis button
+     * @return new page object
+     */
+    public AnalysisPage selectAnalysis() {
+        pageUtils.waitForElementAndClick(analysisButton);
+        return new AnalysisPage(driver);
+    }
+
+    /**
+     * Gets the locked status
+     *
+     * @return current page object
+     */
+    public Boolean isLockedStatus(String status) {
+        return pageUtils.checkElementAttribute(lockedStatusIcon, "title", status);
+    }
+
+    /**
+     * Gets the CAD Connection status
+     *
+     * @return current page object
+     */
+    public Boolean isCADConnectionStatus(String status) {
+        return pageUtils.checkElementAttribute(cadConnectedIcon, "title", status);
+    }
+
+    /**
+     * Gets the selected process group
+     *
+     * @return string
+     */
+    public Boolean getSelectedProcessGroup(String text) {
+        return pageUtils.checkElementFirstOption(processGroupDropdown, text);
+    }
+
+    /**
+     * Gets the selected VPE
+     *
+     * @return string
+     */
+    public Boolean getSelectedVPE(String text) {
+        return pageUtils.checkElementFirstOption(vpeDropdown, text);
+    }
+
+    /**
+     * Checks the input value is correct
+     *
+     * @return true/false
+     */
+    public Boolean getAnnualVolume(String text) {
+        return pageUtils.checkElementAttribute(annVolume, "value", text);
+    }
+
+    /**
+     * Checks the input value is correct
+     *
+     * @return true/false
+     */
+    public Boolean getProductionLife(String text) {
+        return pageUtils.checkElementAttribute(annualVolumeYrs, "value", text);
+    }
+
+    /**
+     * Opens the components page
+     *
+     * @return new page object
+     */
+    public ComponentsPage openComponentsTable() {
+        pageUtils.waitForElementAndClick(componentsDetails);
+        return new ComponentsPage(driver);
+    }
+
+    /**
+     * Refreshes the component count
+     * @return current page object
+     */
+    public EvaluatePage refreshComponents() {
+        pageUtils.waitForElementAndClick(refreshComponents);
+        return this;
+    }
+
+    /**
+     * Checks the value of the total components
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isTotalComponents(String value) {
+        return pageUtils.checkElementAttribute(totalComponents, "innerText", value);
+    }
+
+    /**
+     * Checks the value of unique components
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isUniqueComponents(String value) {
+        return pageUtils.checkElementAttribute(uniqueComponents, "innerText", value);
+    }
+
+    /**
+     * Checks the uncosted unique value
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isUncostedUnique(String value) {
+        return pageUtils.checkElementAttribute(uncostedComponents, "innerText", value);
+    }
+
+    /**
+     * Checks the value of finish mass
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isFinishMass(String value) {
+        return pageUtils.checkElementAttribute(finishMass, "innerText", value);
+    }
+
+    /**
+     * Checks the value of target mass
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isTargetMass(String value) {
+        return pageUtils.checkElementAttribute(targetMass, "innerText", value);
     }
 }

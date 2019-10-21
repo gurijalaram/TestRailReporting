@@ -25,6 +25,9 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
 
+    @FindBy(css = "div[data-ap-comp='artifactTolerancesTable'] .v-grid-cell.tolerance-input-column")
+    private WebElement toleranceCell;
+
     @FindBy(css = "input[data-ap-field='circularity.current']")
     private WebElement circularityInput;
 
@@ -73,7 +76,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = "input[data-ap-field='totalRunout.current']")
     private WebElement totalRunoutInput;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
 
     @FindBy(css = "button.gwt-Button.btn.btn-default")
@@ -98,7 +101,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(dialogTitle);
+        pageUtils.waitForElementToAppear(toleranceCell);
     }
 
     /**
@@ -166,11 +169,13 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     /**
      * Selects the apply button
      *
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T>       - the return type
+     * @return generic page object
      */
-    public TolerancePage apply() {
-        pageUtils.waitForElementAndClick(applyButton);
-        return new TolerancePage(driver);
+    public <T> T apply(Class<T> className) {
+        pageUtils.javaScriptClick(applyButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

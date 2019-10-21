@@ -1,5 +1,6 @@
 package explore;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -48,7 +49,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", "SheetMetal")
             .apply(ExplorePage.class);
 
-        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "SheetMetal") > 0, is(true));
+        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "SheetMetal"), is(equalTo(1)));
     }
 
     @Test
@@ -124,7 +125,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Push Pin")
             .apply(ExplorePage.class);
 
-        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin") > 0, is(true));
+        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), is(equalTo(1)));
     }
 
     @Test

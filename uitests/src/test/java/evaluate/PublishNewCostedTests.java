@@ -13,8 +13,9 @@ import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class PublishNewCostedTests extends TestBase {
 
@@ -40,11 +41,12 @@ public class PublishNewCostedTests extends TestBase {
             .costScenario()
             .publishScenario();
 
-        assertThat(explorePage.findScenario(testScenarioName, partName).isDisplayed(), is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, partName) > 0, is(true));
     }
 
+    @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"400", "401", "402", "404", "525"})
+    @TestRail(testCaseId = {"400", "401", "402", "404", "525", "1610"})
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
 
@@ -59,6 +61,6 @@ public class PublishNewCostedTests extends TestBase {
             .publishScenario("Analysis", "Low", "Abe Chaves")
             .selectPublishButton();
 
-        assertThat(explorePage.findScenario(testScenarioName, partName).isDisplayed(), is(true));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, partName) > 0, is(true));
     }
 }

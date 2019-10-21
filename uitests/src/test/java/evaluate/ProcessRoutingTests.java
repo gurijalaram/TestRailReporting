@@ -1,5 +1,6 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,10 +9,14 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
+import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
@@ -26,7 +31,6 @@ import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -40,6 +44,9 @@ public class ProcessRoutingTests extends TestBase {
     private RoutingsPage routingsPage;
     private MaterialCompositionPage materialCompositionPage;
     private InvestigationPage investigationPage;
+    private GeometryPage geometryPage;
+    private AnalysisPage analysisPage;
+    private PropertiesDialogPage propertiesDialogPage;
 
     public ProcessRoutingTests() {
         super();
@@ -70,21 +77,21 @@ public class ProcessRoutingTests extends TestBase {
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .openSettings()
             .changeCurrency(CurrencyEnum.USD.getCurrency())
             .openTolerancesTab()
-            .selectAssumeTolerance();
+            .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        processRoutingPage = settingsPage.save(EvaluatePage.class)
+        processRoutingPage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 29.67", "Piece Part Cost (USD): 0.43",
-            "Fully Burdened Cost (USD): 0.82", "Total Capital Investments (USD): 10,732.01"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 53.88", "Piece Part Cost (USD): 0.63",
+            "Fully Burdened Cost (USD): 1.06", "Total Capital Investments (USD): 11,783.15"));
     }
 
     @Test
@@ -207,7 +214,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
-        assertThat(evaluatePage.failedCostedIcon.isDisplayed(), is(true));
+        assertThat(evaluatePage.isFailedIconPresent(), is(true));
     }
 
     @Test
@@ -221,7 +228,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("1.63"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.64"), is(true));
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
@@ -231,7 +238,7 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("2.02"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("2.04"), is(true));
     }
 
     @Test
@@ -252,7 +259,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openMaterialCompositionTable();
 
-        assertThat(materialCompositionPage.getListOfMaterialTypes(), containsInAnyOrder("All", "ABS", "Acetal", "Nylon", "PET", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane"));
+        assertThat(materialCompositionPage.getListOfMaterialTypes(), containsInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane"));
     }
 
     @Test
@@ -360,7 +367,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 2 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("High Pressure Die Casting"), is(true));
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
@@ -369,6 +376,44 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / Gravity Die Casting / Trim / Cleaning / Finishing / Visual Inspection / 2 Axis Lathe"), is(true));
+        assertThat(evaluatePage.isProcessRoutingDetails("Gravity Die Casting"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1658"})
+    @Description("Validate the properties dialogue box updates with a newly selected and costed routing.")
+    public void propertiesRouting() {
+        loginPage = new LoginPage(driver);
+        geometryPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openDesignGuidance()
+            .openGeometryTab()
+            .selectGCDAndGCDProperty("Holes", "Simple Holes", "SimpleHole:1");
+
+        evaluatePage = new EvaluatePage(driver);
+        propertiesDialogPage = evaluatePage.selectAnalysis()
+            .selectProperties()
+            .expandDropdown("Technique");
+        assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Punching"));
+        propertiesDialogPage.closeProperties();
+
+        evaluatePage.openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("[CTL]/Waterjet/[Bend]")
+            .apply()
+            .closeProcessPanel()
+            .costScenario()
+            .openDesignGuidance()
+            .openGeometryTab()
+            .selectGCDAndGCDProperty("Holes", "Simple Holes", "SimpleHole:1");
+
+        evaluatePage = new EvaluatePage(driver);
+        propertiesDialogPage = evaluatePage.selectAnalysis()
+            .selectProperties()
+            .expandDropdown("Technique");
+        assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Waterjet Cutting"));
     }
 }

@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
+import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -33,10 +34,12 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public TolerancePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -60,18 +63,18 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @return current page object
      */
     public TolerancePage selectToleranceTypeAndGCD(String toleranceType, String gcdType) {
-        pageUtils.waitForElementAndClick(selectToleranceType(toleranceType));
-        pageUtils.waitForElementAndClick(selectGCD(gcdType));
+        pageUtils.waitForElementAndClick(findToleranceType(toleranceType));
+        pageUtils.waitForElementAndClick(findGCD(gcdType));
         return this;
     }
 
     /**
-     * Selects the tolerance type.  Selection is based on exact match so unit must be specified eg. Flatness (mm)
+     * Finds the tolerance type.  Selection is based on contains so unit must be specified eg. Flatness
      *
      * @param toleranceType - the tolerance type
      * @return the tolerance as webelement
      */
-    private WebElement selectToleranceType(String toleranceType) {
+    public WebElement findToleranceType(String toleranceType) {
         By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr");
         pageUtils.waitForElementToAppear(tolerance);
         return pageUtils.scrollToElement(tolerance, toleranceScroller);
@@ -83,10 +86,22 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @param gcdType - the gcd type
      * @return the gcd as webelement
      */
-    private WebElement selectGCD(String gcdType) {
+    private WebElement findGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']/ancestor::tr");
         pageUtils.waitForElementToAppear(gcd);
         return pageUtils.scrollToElement(gcd, detailsScroller);
+    }
+
+    /**
+     * Checks the tolerance count
+     *
+     * @param toleranceType - the tolerance type
+     * @param text          - the text
+     * @return true/false
+     */
+    public Boolean isToleranceCount(String toleranceType, String text) {
+        findToleranceType(toleranceType).click();
+        return pageUtils.checkElementAttribute(findToleranceType(toleranceType), "outerText", text);
     }
 
     /**
@@ -94,8 +109,28 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      *
      * @return current page object
      */
-    public ToleranceEditPage editTolerance() {
-        editToleranceButton.click();
+    public ToleranceEditPage selectEditButton() {
+        pageUtils.waitForElementAndClick(editToleranceButton);
         return new ToleranceEditPage(driver);
+    }
+
+    /**
+     * Gets the button as a webelement
+     *
+     * @return the button as webelement
+     */
+    public WebElement getEditButton() {
+        return editToleranceButton;
+    }
+
+    /**
+     * Gets the cell details
+     * @param toleranceType - tolerance type
+     * @param column - the column
+     * @return string
+     */
+    public String getToleranceCell(String toleranceType, String column) {
+        String rowLocator = "//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr[@class]";
+        return columnUtils.columnDetails("tolerancesTable", column, rowLocator);
     }
 }

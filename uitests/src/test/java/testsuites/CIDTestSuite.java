@@ -28,6 +28,8 @@ import evaluate.designguidance.dtc.DTCMachiningTests;
 import evaluate.designguidance.dtc.DTCMouldingDraftTests;
 import evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
 import evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
+import evaluate.designguidance.failures.FailuresWarningsTests;
+import evaluate.designguidance.geometry.GeometryTests;
 import evaluate.designguidance.thread.ThreadTests;
 import evaluate.materialutilization.ChangeStockSelectionTests;
 import explore.ActionsTests;
@@ -38,6 +40,7 @@ import login.LoginTests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import settings.SettingsTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses ({
@@ -75,7 +78,10 @@ import org.junit.runners.Suite;
     ActionsTests.class,
     DTCCastingTests.class,
     ProcessRoutingTests.class,
-    PsoEditTests.class
+    PsoEditTests.class,
+    SettingsTests.class,
+    GeometryTests.class,
+    FailuresWarningsTests.class
 })
 public class CIDTestSuite {
 }

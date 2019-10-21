@@ -32,7 +32,7 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
 
-    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
+    @FindBy(css = "button[data-ap-comp='publishScenarioButton'] .fa")
     private WebElement publishButton;
 
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
@@ -57,7 +57,7 @@ public class GenericHeader extends PageHeader {
     private WebElement comparisonButton;
 
     @FindBy(css = "button[data-ap-comp='toggleLockButton']")
-    private WebElement lockButton;
+    private WebElement lockToggleButton;
 
     @FindBy(css = "button[data-ap-comp='reloadButton']")
     private WebElement cadModelButton;
@@ -131,14 +131,33 @@ public class GenericHeader extends PageHeader {
     }
 
     /**
-     * Locks a scenario
+     * Lock/Unlocks a scenario
      *
      * @return current page object
      */
-    public ExplorePage lockScenario() {
-        actionsDropdown.click();
-        lockButton.click();
-        return new ExplorePage(driver);
+    public GenericHeader toggleLock() {
+        pageUtils.waitForElementAndClick(actionsDropdown);
+        pageUtils.waitForElementAndClick(lockToggleButton);
+        return this;
+    }
+
+    /**
+     * Gets the locked status
+     *
+     * @return true false
+     */
+    public Boolean isActionLockedStatus(String status) {
+        return pageUtils.checkElementAttribute(lockToggleButton, "innerText", status);
+    }
+
+    /**
+     * Selects the actions button
+     *
+     * @return current page object
+     */
+    public GenericHeader selectActions() {
+        pageUtils.waitForElementAndClick(actionsDropdown);
+        return this;
     }
 
     /**
@@ -169,6 +188,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ExplorePage publishScenario() {
+        pageUtils.checkElementAttributeEmpty(publishButton, "title");
         pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectPublishButton();
         return new ExplorePage(driver);
@@ -217,7 +237,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public RevertPage revert() {
-        pageUtils.waitForElementToAppear(revertButton).click();
+        pageUtils.waitForElementAndClick(revertButton);
         return new RevertPage(driver);
     }
 }
