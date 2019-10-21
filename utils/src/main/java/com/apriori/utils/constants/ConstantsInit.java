@@ -27,6 +27,4 @@ public interface ConstantsInit extends Config {
     @Key("console.log.level")
     String consoleLogLevelData();
 
-    @Key("console.log.level")
-    String consoleLog();
 }
