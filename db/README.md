@@ -1,4 +1,5 @@
 Steps to runs DB project:
+
 0) https://confluence.apriori.com/display/ENG/How+to+set+up+Cost+Insight+applications+running+on+local+machine (Use Approach #1 to install aserver) !!!
 1) Clone Git repository: https://github.com/aPrioriTechnologies/apriori-qa/tree/BA-751/db
 2) To install different types of databases (MySQL, MSSQL), please use confluence pages:
