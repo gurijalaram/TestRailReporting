@@ -6,10 +6,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
+import com.apriori.pageobjects.pages.compare.SaveAsPage;
+import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.UsersEnum;
@@ -27,6 +27,7 @@ public class SaveAsComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private SaveAsPage saveAsPage;
 
 public SaveAsComparisonTests() {
         super();
@@ -39,6 +40,7 @@ public SaveAsComparisonTests() {
 
         String testComparisonName = new Util().getComparisonName();
         String testSaveAsComparisonName = "Save As Comparison Name";
+        String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         loginPage = new LoginPage(driver);
         comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -48,8 +50,17 @@ public SaveAsComparisonTests() {
 
         genericHeader = new GenericHeader(driver);
 
-        explorePage = genericHeader.saveAs()
+        comparePage = genericHeader.saveAs()
+                .inputName(testSaveAsComparisonName)
+                .inputDescription(testSaveAsComparisonDescription)
+                .selectCreateButton();
 
+        genericHeader = new GenericHeader(driver);
+
+        explorePage = genericHeader.selectExploreButton()
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+
+        assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
 
     }
 
