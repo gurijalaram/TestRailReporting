@@ -237,6 +237,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public RevertPage revert() {
+        pageUtils.checkElementAttributeEmpty(revertButton, "title");
         pageUtils.waitForElementAndClick(revertButton);
         return new RevertPage(driver);
     }
