@@ -1,13 +1,8 @@
 package dao;
 
-import entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import org.hibernate.Query;
-import org.hibernate.type.StringType;
-import org.hibernate.type.TimestampType;
-
 import java.util.List;
 
 public abstract class GlobalDao<T> {

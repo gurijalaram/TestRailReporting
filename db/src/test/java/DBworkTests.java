@@ -5,15 +5,11 @@ import utils.PropertiesHandler;
 
 
 import java.util.ArrayList;
+
 public class DBworkTests {
     static {
-        /*
-            set the type of db, for all tests:
-             - mysql
-             - mssql
-             - oracle
-        */
-        new PropertiesHandler().setDBProperties("mssql");
+        /* set the type of db, for all tests: mysql/mssql/oracle */
+        new PropertiesHandler().setDBProperties("mysql");
     }
 
     @Test
@@ -25,9 +21,10 @@ public class DBworkTests {
     }
 
     @Test
-    public void importIntoDB(){
+    public void importIntoDB() {
         DBDataImporter dbDataImporter = new DBDataImporter();
-        String [] partPath = new String [] {"C:\\Users\\ssakho.FBC\\Desktop\\test1"}; /* Path could be to share.point folder */
+        /* Path to folder with test materials */
+        String [] partPath = new String [] {"C:\\Users\\ssakho.FBC\\Desktop\\test\\ap"};
         dbDataImporter.imporFilesIntoDB(partPath);
         System.out.println("Data was successfully imported");
     }

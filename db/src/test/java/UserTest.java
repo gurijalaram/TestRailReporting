@@ -10,17 +10,13 @@ import java.util.List;
 public class UserTest {
 
     static {
-        /*
-            set the type of db, for all tests:
-             - mysql
-             - mssql
-             - oracle
-        */
-        new PropertiesHandler().setDBProperties("mssql");
+        /* set the type of db, for all tests: mysql/mssql/oracle */
+        new PropertiesHandler().setDBProperties("mysql");
     }
 
     @Test
     public void testGetAllUsersFromDB() {
+        /*Get all users from DB*/
         UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
         User user = new User();
         for (User userFromList : userDao.getAllObjects(user.getClass())) {
@@ -32,8 +28,8 @@ public class UserTest {
     public void testCreateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
         List<User> userForCreate = new ArrayList<User>();
-
-        /* Users Examples */
+        
+        /*Create new user with FullName: aPriori Default User and RawLoginID: adu*/
         User user = new User().setFullName("aPriori Default User").setRawLoginID("adu");
         userForCreate.add(user);
         userDao.create(userForCreate);
@@ -43,11 +39,9 @@ public class UserTest {
     public void testUpdateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
         List<User> userForDelete = new ArrayList<User>();
-
-        /* Users Examples */
+        
+        /*Change FullName of use "aPriori Default User" to "aPriori Test User" */
         User user = new User().setFullName("aPriori Default User");
-        /* Currently didn't find another way, of how to update multiple entities.
-        getByFullName - returns entity which should be updated. */
         userForDelete.add(userDao.getByFullName(user).setFullName("aPriori Test User"));
         userDao.update(userForDelete);
     }
@@ -57,9 +51,8 @@ public class UserTest {
         UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
         List<User> userForDelete = new ArrayList<User>();
 
-        /* Users Examples */
+        /*Remove user with name "aPriori Default User" and RawLoginID "adu" from DB*/
         User user = new User().setFullName("aPriori Default User").setRawLoginID("adu");
-
         userForDelete.add(user);
         userDao.delete(userDao.getAllObjects(userForDelete.get(0).getClass()));
     }
@@ -67,6 +60,7 @@ public class UserTest {
     @Test
     public void testGetUserByNameFromDB() {
         UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
+        /*Get single use by its name*/
         User user = new User().setFullName("Salvador Sakho");
         System.out.println(userDao.getByFullName(user).getUser_ID());
     }

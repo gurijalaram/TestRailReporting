@@ -3,6 +3,7 @@
 .settings/*
 *.iml
 target
+.metadata/*
 
 # ignore dumps which were created from java code
 *.sql

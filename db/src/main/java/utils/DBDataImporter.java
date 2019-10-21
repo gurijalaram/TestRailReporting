@@ -8,7 +8,7 @@ public class DBDataImporter {
 
     public void imporFilesIntoDB(String [] directories){
         try {
-            DataLoader.loadFiles(directories);
+                DataLoader.loadFiles(directories);
         } catch (IOException e) {
             e.printStackTrace();
         }

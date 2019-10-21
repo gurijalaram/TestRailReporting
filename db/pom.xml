@@ -8,6 +8,35 @@
     <artifactId>db</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <!--
+            commons.testutilLib.version possible values:
+            19.1.1.1-SNAPSHOT
+            19.1.1.2-SNAPSHOT
+            19.1.2.0-SNAPSHOT
+            19.1.2.1-SNAPSHOT
+            19.2.0.0-SNAPSHOT
+            (more versions can be found on nexus.apriori.com/apriori-snapshots/apriori/apriori-commons-testutil)
+        -->
+        <commons.testutilLib.version>19.2.0.0-SNAPSHOT</commons.testutilLib.version>
+        <!--
+            fbc.datamodel.version possible values
+            19.1.1.1-SNAPSHOT
+            19.1.1.2-SNAPSHOT
+            19.1.2.0-SNAPSHOT
+            19.1.2.1-SNAPSHOT
+            19.2.0.0-SNAPSHOT
+
+            (more versions can be found on nexus.apriori.com/apriori-snapshots/fbc/fbc-datamodel)
+        -->
+        <fbc.datamodel.version>19.2.0.0-SNAPSHOT</fbc.datamodel.version>
+
+
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
@@ -31,20 +60,68 @@
             <scope>test</scope>
         </dependency>
 
+
         <dependency>
             <groupId>com.apriori</groupId>
             <artifactId>apriori-commons-testutil</artifactId>
-            <version>19.1.1.1</version>
+            <version>${commons.testutilLib.version}</version>
         </dependency>
 
-       <dependency>
-  			<groupId>com.fbc</groupId>
-  			<artifactId>fbc-datamodel</artifactId>
-  			<version>19.1.1.0</version>
-  			<classifier>hibernate</classifier>
-  			<type>zip</type>
-		</dependency>
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>fbc-datamodel</artifactId>
+            <version>${fbc.datamodel.version}</version>
+            <classifier>hibernate</classifier>
+            <type>zip</type>
+        </dependency>
 
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>fbc-datamodel</artifactId>
+            <version>${fbc.datamodel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>fbc-util-core</artifactId>
+            <version>${fbc.datamodel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>apriori-math</artifactId>
+            <version>${fbc.datamodel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>fbc-util-cad</artifactId>
+            <version>${fbc.datamodel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>fbc-cost-csl</artifactId>
+            <version>${fbc.datamodel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>fbc-util-hibernate3</artifactId>
+            <version>${fbc.datamodel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>fbc-util-core</artifactId>
+            <version>${fbc.datamodel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fbc</groupId>
+            <artifactId>fbc-boot</artifactId>
+            <version>${fbc.datamodel.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -58,20 +135,17 @@
             </exclusions>
         </dependency>
 
-
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>1.0.0.Final</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.6.10.Final</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.hibernate</groupId>
