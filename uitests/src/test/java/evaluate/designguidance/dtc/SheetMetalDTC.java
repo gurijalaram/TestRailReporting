@@ -72,5 +72,4 @@ public class SheetMetalDTC extends TestBase {
         guidancePage.selectIssueTypeAndGCD("Machined GCDs", "Center Drilling / Drilling", "SimpleHole:3");
         assertThat(guidancePage.getGuidanceCell("Center Drilling / Drilling", "Count"), is(equalTo("3")));
     }
-
 }

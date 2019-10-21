@@ -26,6 +26,7 @@ import evaluate.SecondaryProcessTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCMachiningTests;
 import evaluate.designguidance.dtc.DTCPlasticMoulding;
+import evaluate.designguidance.dtc.SheetMetalDTC;
 import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.geometry.GeometryTests;
 import evaluate.designguidance.thread.ThreadTests;
@@ -77,7 +78,8 @@ import settings.SettingsTests;
     PsoEditTests.class,
     SettingsTests.class,
     GeometryTests.class,
-    FailuresWarningsTests.class
+    FailuresWarningsTests.class,
+    SheetMetalDTC.class
 })
 public class CIDTestSuite {
 }
