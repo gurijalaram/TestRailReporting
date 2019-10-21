@@ -23,9 +23,8 @@ import evaluate.RevertScenarioTests;
 import evaluate.SecondaryProcessTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCMachiningTests;
-import evaluate.designguidance.dtc.DTCMouldingDraftTests;
-import evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
-import evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
+import evaluate.designguidance.dtc.DTCPlasticMoulding;
+import evaluate.designguidance.dtc.SheetMetalDTC;
 import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.geometry.GeometryTests;
 import evaluate.designguidance.thread.ThreadTests;
@@ -44,9 +43,7 @@ import settings.SettingsTests;
 @Suite.SuiteClasses ({
     AddScenarioTests.class,
     DTCMachiningTests.class,
-    DTCMouldingDraftTests.class,
-    DTCMouldingEdgeRadiusTests.class,
-    DTCMouldingPartThicknessTests.class,
+    DTCPlasticMoulding.class,
     ThreadTests.class,
     SecondaryProcessTests.class,
     FilterCriteriaTests.class,
@@ -77,7 +74,8 @@ import settings.SettingsTests;
     PsoEditTests.class,
     SettingsTests.class,
     GeometryTests.class,
-    FailuresWarningsTests.class
+    FailuresWarningsTests.class,
+    SheetMetalDTC.class
 })
 public class CIDTestSuite {
 }
