@@ -4,9 +4,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
+import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -25,6 +27,9 @@ public class AddScenarioTests extends TestBase{
     private LoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
     private WarningPage warningPage;
+    private ComparePage comparePage;
+    private GenericHeader genericHeader;
+    private ComparisonPage comparisonPage;
 
     @Test
     @TestRail(testCaseId = {"412", "1171"})
