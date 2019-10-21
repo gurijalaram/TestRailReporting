@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class WorkOrderRequestEntity {
 
-    private String baseURL = Constants.defaultCidURL;
+    private String baseURL = Constants.url;
     private String username;
     private String password;
     private UsersEnum usersEnum;

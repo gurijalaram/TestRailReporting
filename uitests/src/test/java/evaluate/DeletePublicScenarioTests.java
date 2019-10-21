@@ -54,7 +54,6 @@ public class DeletePublicScenarioTests extends TestBase {
     @After
     public void testForceDelete() {
         ScenarioAction.forceDelete(
-
             WorkOrderRequestEntity.defaultRequestByUserEnum(UsersEnum.CID_TE_USER_ALLDATA, testScenarioName)
                 .setWorkspace(WorkspaceEnum.PUBLIC_API));
 
