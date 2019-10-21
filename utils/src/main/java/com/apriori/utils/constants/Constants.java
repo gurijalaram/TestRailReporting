@@ -1,14 +1,24 @@
 package com.apriori.utils.constants;
 
 import org.aeonbits.owner.ConfigFactory;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.logging.Level;
 
 
 public class Constants {
 
-    private static final ConstantsInit constantsInit = ConfigFactory.create(ConstantsInit.class);
+    private static final ConstantsInit constantsInit;
+    public static final String defaultEnvironmentValue = "cid-te";
+    private static final String defaultEnvironmentKey = "env";
+
+    static {
+
+        if (System.getProperty(defaultEnvironmentKey) == null) {
+            System.setProperty(defaultEnvironmentKey, defaultEnvironmentValue);
+        }
+        constantsInit = ConfigFactory.create(ConstantsInit.class);
+    }
+
 
     public static final Level consoleLogLevel = Level.parse(constantsInit.consoleLogLevelData());
     public static final String url = constantsInit.url();
