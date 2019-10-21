@@ -28,6 +28,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -75,7 +76,7 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_EASTERN_EUROPE.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("ABS, Plating"), is(true));
 
-        productionDefaultPage.enterScenarioName("Initial")
+/*        productionDefaultPage.enterScenarioName("Initial")
             .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
             .selectVPE(NO_DEFAULT)
             .selectMaterialCatalog(NO_DEFAULT)
@@ -83,8 +84,9 @@ public class SettingsTests extends TestBase {
             .clearAnnualVolume()
             .clearProductionLife()
             .selectBatchAuto();
-        new SettingsPage(driver).save(ExplorePage.class);
+        new SettingsPage(driver).save(ExplorePage.class);*/
     }
+    @After
 
     @Test
     @Issue("BA-840")
