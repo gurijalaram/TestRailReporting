@@ -4,7 +4,6 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import compare.AddScenarioTests;
 import compare.DeleteComparisonTests;
-import compare.DeletePublicComparisonTests;
 import compare.EditPublicComparisonTests;
 import compare.PublishPublicComparisonTests;
 import evaluate.AssemblyUploadTests;
@@ -60,7 +59,6 @@ import settings.SettingsTests;
     DeletePublicScenarioTests.class,
     DeleteComparisonTests.class,
     DeleteScenarioIterationsTests.class,
-    DeletePublicComparisonTests.class,
     EditPublicComparisonTests.class,
     NewScenarioNameTests.class,
     PublishExistingCostedTests.class,
