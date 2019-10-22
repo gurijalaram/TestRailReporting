@@ -3,9 +3,10 @@ package testsuites;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import compare.AddScenarioTests;
+import compare.SaveAsComparisonTests;
 import compare.DeleteComparisonTests;
 import compare.EditPublicComparisonTests;
-import compare.PublishPublicComparisonTests;
+import compare.PublishComparisonTests;
 import evaluate.AssemblyUploadTests;
 import evaluate.CostAllCadTests;
 import evaluate.DeletePrivateScenarioTests;
@@ -69,6 +70,8 @@ import settings.SettingsTests;
     PsoEditTests.class,
     PublishExistingCostedTests.class,
     PublishNewCostedTests.class,
+    PublishComparisonTests.class,
+    SaveAsComparisonTests.class,
     ReCostScenarioTests.class,
     RevertScenarioTests.class,
     SecondaryProcessTests.class,
