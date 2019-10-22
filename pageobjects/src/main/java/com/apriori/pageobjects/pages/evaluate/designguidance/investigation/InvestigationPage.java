@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.investigation;
 
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
+import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -37,10 +38,12 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public InvestigationPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -134,5 +137,28 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      */
     public Boolean getThreadHeader(String text) {
         return pageUtils.checkElementAttribute(threadHeader, "outerText", text);
+    }
+
+    /**
+     * Finds the issue type
+     *
+     * @param issueType - the issue type
+     * @return
+     */
+    public InvestigationPage findIssueType(String issueType) {
+        By issue = By.xpath("//div[@data-ap-comp='dtcInvestigationTable']//div[contains(text(),'" + issueType.trim() + "')]");
+        return this;
+    }
+
+    /**
+     * Gets the cell details
+     *
+     * @param issueType         - tolerance type
+     * @param column            - the column
+     * @return string
+     */
+    public String getInvestigationCell(String issueType, String column) {
+        String rowLocator = "//div[@data-ap-comp='dtcInvestigationTable']//div[contains(text(),'" + issueType + "')]/ancestor::tr[@class]";
+        return columnUtils.columnDetails("dtcInvestigationTable", column, rowLocator);
     }
 }
