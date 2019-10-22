@@ -375,8 +375,8 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public String getWarningsCount() {
-        return pageUtils.waitForElementToAppear(warningsCount).getText();
+    public Boolean getWarningsCount(String count) {
+        return pageUtils.checkElementAttribute(warningsCount, "outerText", count);
     }
 
     /**
@@ -384,8 +384,8 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public String getGuidanceIssuesCount() {
-        return pageUtils.waitForElementToAppear(guidanceIssuesCount).getText();
+    public Boolean getGuidanceIssuesCount(String count) {
+        return pageUtils.checkElementAttribute(guidanceIssuesCount, "outerText", count);
     }
 
     /**
@@ -393,8 +393,8 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public String getGcdTolerancesCount() {
-        return pageUtils.waitForElementToAppear(gcdTolerancesCount).getText();
+    public Boolean getGcdTolerancesCount(String count) {
+        return pageUtils.checkElementAttribute(gcdTolerancesCount, "outerText", count);
     }
 
     /**
