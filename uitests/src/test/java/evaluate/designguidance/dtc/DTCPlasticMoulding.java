@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -26,6 +27,7 @@ public class DTCPlasticMoulding extends TestBase {
     private LoginPage loginPage;
     private GuidancePage guidancePage;
     private EvaluatePage evaluatePage;
+    private InvestigationPage investigationPage;
 
     public DTCPlasticMoulding() {
         super();
@@ -153,12 +155,12 @@ public class DTCPlasticMoulding extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1078", "1079"})
-    @Description("Testing DTC Moulding Min Wall Thickness")
+    @TestRail(testCaseId = {"1078", "1079", "1080"})
+    @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticMaxWallThickness() {
         loginPage = new LoginPage(driver);
         guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap thickPart.CATPart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -166,6 +168,7 @@ public class DTCPlasticMoulding extends TestBase {
             .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
+        assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 3.556 mm")));
 
         new DesignGuidancePage(driver).closeDesignGuidance();
         new EvaluatePage(driver).openProcessDetails()
@@ -178,7 +181,25 @@ public class DTCPlasticMoulding extends TestBase {
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
 
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Structural Foam Mold is not feasible. Part Thickness is more than the minimum limit with this material."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Structural Foam Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
+        assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 15 mm")));
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+        new EvaluatePage(driver).openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Reaction Injection Mold")
+            .apply()
+            .closeProcessPanel()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Polyurethane, Polymeric MDI")
+            .apply()
+            .costScenario()
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
+
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Reaction Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
+        assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 50.8 mm")));
     }
 
     @Test
@@ -211,5 +232,27 @@ public class DTCPlasticMoulding extends TestBase {
             .selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Reaction Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1071", "1072", "1083"})
+    @Description("Testing DTC Moulding Max Wall Thickness")
+    public void plasticSlideLift() {
+        loginPage = new LoginPage(driver);
+        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Slides and Lifters");
+
+        assertThat(investigationPage.getInvestigationCell("SlideBundle", "GCD Count"), is(equalTo("1")));
+        assertThat(investigationPage.getInvestigationCell("LifterBundle", "GCD Count"), is(equalTo("8")));
+
+        investigationPage.selectInvestigationTopic("Special Mold Tooling");
+
+        assertThat(investigationPage.getInvestigationCell("Threading Mechanisms", "GCD Count"), is(equalTo("8")));
+        assertThat(investigationPage.getInvestigationCell("Ribs", "GCD Count"), is(equalTo("3")));
     }
 }
