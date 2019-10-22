@@ -205,7 +205,7 @@ public class DTCPlasticMoulding extends TestBase {
             .apply()
             .closeProcessPanel()
             .openMaterialCompositionTable()
-            .selectMaterialComposition("Polymeric MDI")
+            .selectMaterialComposition("Polyurethane, Polymeric MDI")
             .apply()
             .costScenario()
             .openDesignGuidance()
