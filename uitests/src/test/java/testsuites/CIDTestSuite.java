@@ -2,10 +2,8 @@ package testsuites;
 
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import compare.AddPrivateScenarioTests;
-import compare.AddPublicScenarioTests;
-import compare.DeletePrivateComparisonTests;
-import compare.DeletePublicComparisonTests;
+import compare.AddScenarioTests;
+import compare.DeleteComparisonTests;
 import compare.EditPublicComparisonTests;
 import compare.PublishPublicComparisonTests;
 import evaluate.AssemblyUploadTests;
@@ -43,8 +41,7 @@ import settings.SettingsTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses ({
-    AddPrivateScenarioTests.class,
-    AddPublicScenarioTests.class,
+    AddScenarioTests.class,
     DTCMachiningTests.class,
     DTCPlasticMoulding.class,
     ThreadTests.class,
@@ -57,9 +54,8 @@ import settings.SettingsTests;
     CostAllCadTests.class,
     DeletePrivateScenarioTests.class,
     DeletePublicScenarioTests.class,
-    DeletePrivateComparisonTests.class,
+    DeleteComparisonTests.class,
     DeleteScenarioIterationsTests.class,
-    DeletePublicComparisonTests.class,
     EditPublicComparisonTests.class,
     NewScenarioNameTests.class,
     PublishExistingCostedTests.class,
