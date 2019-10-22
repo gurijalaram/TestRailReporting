@@ -47,7 +47,6 @@ import settings.SettingsTests;
     AddScenarioTests.class,
     DeleteComparisonTests.class,
     EditPublicComparisonTests.class,
-    PublishPublicComparisonTests.class,
     DTCCastingTests.class,
     DTCMachiningTests.class,
     DTCPlasticMoulding.class,
