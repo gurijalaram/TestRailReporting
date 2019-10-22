@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultPage;
 import com.apriori.pageobjects.pages.settings.SelectionSettingsPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
+import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -28,6 +29,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -43,6 +45,11 @@ public class SettingsTests extends TestBase {
     private WarningPage warningPage;
 
     private final String NO_DEFAULT = "<No default specified>";
+
+    @After
+    public void resetAllSettings() {
+        new AfterTestUtil(driver).resetAllSettings();
+    }
 
     @Category(CustomerSmokeTests.class)
     @Test
@@ -74,16 +81,6 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_BRAZIL.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_EASTERN_EUROPE.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("ABS, Plating"), is(true));
-
-        productionDefaultPage.enterScenarioName("Initial")
-            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
-            .selectVPE(NO_DEFAULT)
-            .selectMaterialCatalog(NO_DEFAULT)
-            .selectMaterial(NO_DEFAULT)
-            .clearAnnualVolume()
-            .clearProductionLife()
-            .selectBatchAuto();
-        new SettingsPage(driver).save(ExplorePage.class);
     }
 
     @Test
@@ -108,12 +105,6 @@ public class SettingsTests extends TestBase {
             .openJobQueue()
             .openScenarioLink(testScenarioName, "bracket_basic", "publish");
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), CoreMatchers.is(true));
-
-        evaluatePage = new EvaluatePage(driver);
-        productionDefaultPage = evaluatePage.openSettings()
-            .openProdDefaultTab()
-            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup());
-        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
@@ -136,12 +127,6 @@ public class SettingsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSelectedVPE(VPEEnum.APRIORI_MEXICO.getVpe()), is(true));
-
-        evaluatePage = new EvaluatePage(driver);
-        productionDefaultPage = evaluatePage.openSettings()
-            .openProdDefaultTab()
-            .selectVPE(NO_DEFAULT);
-        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
@@ -166,13 +151,6 @@ public class SettingsTests extends TestBase {
 
         assertThat(evaluatePage.getAnnualVolume("9,524"), Matchers.is(true));
         assertThat(evaluatePage.getProductionLife("7"), Matchers.is(true));
-
-        evaluatePage = new EvaluatePage(driver);
-        productionDefaultPage = evaluatePage.openSettings()
-            .openProdDefaultTab()
-            .clearAnnualVolume()
-            .clearProductionLife();
-        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
@@ -197,12 +175,6 @@ public class SettingsTests extends TestBase {
             .openMoreInputs();
 
         assertThat(moreInputsPage.getBatchSize("46"), Matchers.is(true));
-
-        evaluatePage = new EvaluatePage(driver);
-        productionDefaultPage = evaluatePage.openSettings()
-            .openProdDefaultTab()
-            .selectBatchAuto();
-        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Test
@@ -223,10 +195,6 @@ public class SettingsTests extends TestBase {
 
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_GERMANY.getVpe()), is(true));
-
-        productionDefaultPage.selectVPE(NO_DEFAULT)
-            .selectMaterialCatalog(NO_DEFAULT);
-        new SettingsPage(driver).save(ExplorePage.class);
     }
 
     @Category(CustomerSmokeTests.class)
@@ -246,9 +214,6 @@ public class SettingsTests extends TestBase {
             .openSelectionTab();
 
         assertThat(selectionSettingsPage.getColour(), is(equalTo(ColourEnum.ELECTRIC_PURPLE.getColour())));
-
-        selectionSettingsPage.setColour(ColourEnum.YELLOW.getColour());
-        new SettingsPage(driver).save(ExplorePage.class);
     }
 
     @Test
@@ -275,17 +240,6 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_INDIA.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("HIPS Extrusion"), is(true));
-
-        productionDefaultPage.enterScenarioName("Initial")
-            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
-            .selectVPE(NO_DEFAULT)
-            .selectMaterialCatalog(NO_DEFAULT)
-            .selectMaterial(NO_DEFAULT)
-            .clearAnnualVolume()
-            .clearProductionLife()
-            .selectBatchAuto();
-
-        new SettingsPage(driver).save(ExplorePage.class);
     }
 
     @Test
@@ -316,16 +270,6 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_INDIA.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_MEXICO.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("F-0005 Sponge"), is(true));
-
-        productionDefaultPage.enterScenarioName("Initial")
-            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
-            .selectVPE(NO_DEFAULT)
-            .selectMaterialCatalog(NO_DEFAULT)
-            .selectMaterial(NO_DEFAULT)
-            .clearAnnualVolume()
-            .clearProductionLife()
-            .selectBatchAuto();
-        new SettingsPage(driver).save(ExplorePage.class);
     }
 
     @Test
@@ -407,16 +351,6 @@ public class SettingsTests extends TestBase {
 
         selectionSettingsPage = new SettingsPage(driver).openSelectionTab();
         assertThat(selectionSettingsPage.getColour(), is(equalTo(ColourEnum.SHAMROCK_GREEN.getColour())));
-
-        productionDefaultPage.enterScenarioName("Initial")
-            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
-            .selectVPE(NO_DEFAULT)
-            .selectMaterialCatalog(NO_DEFAULT)
-            .selectMaterial(NO_DEFAULT)
-            .clearAnnualVolume()
-            .clearProductionLife()
-            .selectBatchAuto();
-        new SettingsPage(driver).save(ExplorePage.class);
     }
 }
 

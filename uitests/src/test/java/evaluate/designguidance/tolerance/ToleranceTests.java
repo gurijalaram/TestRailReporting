@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
+import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -24,6 +25,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -41,6 +43,11 @@ public class ToleranceTests extends TestBase {
 
     public ToleranceTests() {
         super();
+    }
+
+    @After
+    public void resetToleranceSettings() {
+        new AfterTestUtil(driver).resetToleranceSettings();
     }
 
     @Category(CustomerSmokeTests.class)
@@ -80,15 +87,6 @@ public class ToleranceTests extends TestBase {
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23"), is(true));
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.16"), is(true));
-
-        toleranceEditPage.cancel();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceSettingsPage = evaluatePage.openSettings()
-            .openTolerancesTab()
-            .selectAssumeTolerance();
-
-        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Category(CustomerSmokeTests.class)
@@ -117,15 +115,6 @@ public class ToleranceTests extends TestBase {
             .selectEditButton();
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), ""), is(true));
-
-        toleranceEditPage.cancel();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceSettingsPage = evaluatePage.openSettings()
-            .openTolerancesTab()
-            .selectAssumeTolerance();
-
-        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Category(CustomerSmokeTests.class)
@@ -206,15 +195,6 @@ public class ToleranceTests extends TestBase {
             .selectEditButton();
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.44"), is(true));
-
-        toleranceEditPage.cancel();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceSettingsPage = evaluatePage.openSettings()
-            .openTolerancesTab()
-            .selectAssumeTolerance();
-
-        new SettingsPage(driver).save(EvaluatePage.class);
     }
 
     @Category(CustomerSmokeTests.class)
@@ -234,7 +214,7 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidanceTab()
+            .expandGuidancePanel()
             .openTolerancesTab();
 
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.CIRCULARITY.getToleranceName()), "1"), is(true));

@@ -672,7 +672,8 @@ public class PageUtils {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
         try {
             WebDriverWait wait = new WebDriverWait(driver, timeOut);
-            return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
+            return wait.ignoreAll(ignoredWebDriverExceptions)
+                .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
