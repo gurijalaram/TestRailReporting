@@ -2,10 +2,8 @@ package testsuites;
 
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import compare.AddPrivateScenarioTests;
-import compare.AddPublicScenarioTests;
-import compare.DeletePrivateComparisonTests;
-import compare.DeletePublicComparisonTests;
+import compare.AddScenarioTests;
+import compare.DeleteComparisonTests;
 import compare.EditPublicComparisonTests;
 import compare.PublishPublicComparisonTests;
 import evaluate.AssemblyUploadTests;
@@ -25,9 +23,8 @@ import evaluate.RevertScenarioTests;
 import evaluate.SecondaryProcessTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCMachiningTests;
-import evaluate.designguidance.dtc.DTCMouldingDraftTests;
-import evaluate.designguidance.dtc.DTCMouldingEdgeRadiusTests;
-import evaluate.designguidance.dtc.DTCMouldingPartThicknessTests;
+import evaluate.designguidance.dtc.DTCPlasticMoulding;
+import evaluate.designguidance.dtc.SheetMetalDTC;
 import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.geometry.GeometryTests;
 import evaluate.designguidance.thread.ThreadTests;
@@ -44,12 +41,9 @@ import settings.SettingsTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses ({
-    AddPrivateScenarioTests.class,
-    AddPublicScenarioTests.class,
+    AddScenarioTests.class,
     DTCMachiningTests.class,
-    DTCMouldingDraftTests.class,
-    DTCMouldingEdgeRadiusTests.class,
-    DTCMouldingPartThicknessTests.class,
+    DTCPlasticMoulding.class,
     ThreadTests.class,
     SecondaryProcessTests.class,
     FilterCriteriaTests.class,
@@ -60,9 +54,8 @@ import settings.SettingsTests;
     CostAllCadTests.class,
     DeletePrivateScenarioTests.class,
     DeletePublicScenarioTests.class,
-    DeletePrivateComparisonTests.class,
+    DeleteComparisonTests.class,
     DeleteScenarioIterationsTests.class,
-    DeletePublicComparisonTests.class,
     EditPublicComparisonTests.class,
     NewScenarioNameTests.class,
     PublishExistingCostedTests.class,
@@ -81,7 +74,8 @@ import settings.SettingsTests;
     PsoEditTests.class,
     SettingsTests.class,
     GeometryTests.class,
-    FailuresWarningsTests.class
+    FailuresWarningsTests.class,
+    SheetMetalDTC.class
 })
 public class CIDTestSuite {
 }
