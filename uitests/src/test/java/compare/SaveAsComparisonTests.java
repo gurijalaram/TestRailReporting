@@ -35,7 +35,7 @@ public SaveAsComparisonTests() {
     public void testSaveAsPrivateComparison() {
 
         String testComparisonName = new Util().getComparisonName();
-        String testSaveAsComparisonName = "Save As Comparison Name";
+        String testSaveAsComparisonName = new Util().getComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         loginPage = new LoginPage(driver);
