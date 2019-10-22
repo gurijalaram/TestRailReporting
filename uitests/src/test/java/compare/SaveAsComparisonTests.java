@@ -1,13 +1,10 @@
 package compare;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.compare.SaveAsPage;
-import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.TestRail;
@@ -27,7 +24,6 @@ public class SaveAsComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
-    private SaveAsPage saveAsPage;
 
 public SaveAsComparisonTests() {
         super();
