@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.header;
 
+import com.apriori.pageobjects.pages.compare.SaveAsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.RevertPage;
@@ -46,6 +47,9 @@ public class GenericHeader extends PageHeader {
 
     @FindBy(css = "button[data-ap-comp='editScenarioButton']")
     private WebElement editButton;
+
+    @FindBy(css = "button[data-ap-comp='saveComparisonAsButton']")
+    private WebElement saveComparisonAsButton;
 
     @FindBy(css = "button[data-ap-comp='newComponentButton']")
     private WebElement componentButton;
@@ -205,8 +209,8 @@ public class GenericHeader extends PageHeader {
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
         pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectStatus(status)
-            .selectCostMaturity(costMaturity)
-            .selectAssignee(assignee);
+                .selectCostMaturity(costMaturity)
+                .selectAssignee(assignee);
         return new PublishPage(driver);
     }
 
@@ -240,5 +244,17 @@ public class GenericHeader extends PageHeader {
         pageUtils.checkElementAttributeEmpty(revertButton, "title");
         pageUtils.waitForElementAndClick(revertButton);
         return new RevertPage(driver);
+    }
+
+    /**
+     * Selects the save as button
+     *
+     * @return new page object
+     */
+    public SaveAsPage saveAs() {
+        pageUtils.checkElementAttributeEmpty(saveComparisonAsButton, "title");
+        pageUtils.waitForElementAndClick(saveComparisonAsButton);
+        return new SaveAsPage(driver);
+
     }
 }
