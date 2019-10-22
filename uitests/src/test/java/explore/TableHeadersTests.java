@@ -78,7 +78,7 @@ public class TableHeadersTests extends TestBase {
 
     @Test
     @Issue("BA-838")
-    @TestRail(testCaseId = {"1095", "1095"})
+    @TestRail(testCaseId = {"1095"})
     @Description("Test added columns are displayed in the private workspace")
     public void testPrivateAddColumnHeaders() {
         loginPage = new LoginPage(driver);
