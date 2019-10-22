@@ -17,6 +17,7 @@ import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -154,6 +155,7 @@ public class DTCPlasticMoulding extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"1078", "1079"})
+    @Issue("BA-851")
     @Description("Testing DTC Moulding Min Wall Thickness")
     public void plasticMaxWallThickness() {
         loginPage = new LoginPage(driver);
@@ -203,7 +205,7 @@ public class DTCPlasticMoulding extends TestBase {
             .apply()
             .closeProcessPanel()
             .openMaterialCompositionTable()
-            .selectMaterialComposition("Polymeric MDI")
+            .selectMaterialComposition("Polyurethane, Polymeric MDI")
             .apply()
             .costScenario()
             .openDesignGuidance()
