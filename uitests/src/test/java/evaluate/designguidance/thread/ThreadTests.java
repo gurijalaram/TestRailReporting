@@ -11,6 +11,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.Threadin
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
+import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -22,6 +23,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -38,6 +40,11 @@ public class ThreadTests extends TestBase {
 
     public ThreadTests() {
         super();
+    }
+
+    @After
+    public void resetDisplayPreferences() {
+        new AfterTestUtil(driver).resetDisplayPreferences();
     }
 
     @Test
@@ -323,11 +330,6 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading");
 
         assertThat(investigationPage.getThreadHeader("(in)"), is(true));
-
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.openSettings()
-            .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
-            .save(EvaluatePage.class);
     }
 
     @Test
