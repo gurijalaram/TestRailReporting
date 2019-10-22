@@ -99,7 +99,7 @@ public class ActionsTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1610"})
+    @TestRail(testCaseId = {"1610", "592", "593"})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
 

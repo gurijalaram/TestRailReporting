@@ -160,4 +160,16 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
         String rowLocator = "//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType + "')]/ancestor::tr[@class]";
         return columnUtils.columnDetails("guidanceIssuesTable", column, rowLocator);
     }
+
+    /**
+     * Gets the cell details
+     *
+     * @param gcd         - tolerance type
+     * @param column            - the column
+     * @return string
+     */
+    public String getGCDGuidance(String gcd, String column) {
+        String rowLocator = "//div[@data-ap-comp='guidanceIssuesDetailsTable']//td[contains(text(),'" + gcd + "')]/ancestor::tr[@class]";
+        return columnUtils.columnDetails("guidanceIssuesDetailsTable", column, rowLocator);
+    }
 }

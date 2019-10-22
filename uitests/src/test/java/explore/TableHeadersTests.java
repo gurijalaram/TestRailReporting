@@ -97,7 +97,7 @@ public class TableHeadersTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1611"})
+    @TestRail(testCaseId = {"1611", "1094"})
     @Description("Test remove thumbnails")
     public void testRemoveThumbnails() {
         loginPage = new LoginPage(driver);
@@ -119,7 +119,7 @@ public class TableHeadersTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1611"})
+    @TestRail(testCaseId = {"1611", "1086"})
     @Description("Test sort all columns")
     public void testSortColumns() {
         loginPage = new LoginPage(driver);

@@ -200,7 +200,7 @@ public class DTCCastingTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .expandGuidancePanel()
