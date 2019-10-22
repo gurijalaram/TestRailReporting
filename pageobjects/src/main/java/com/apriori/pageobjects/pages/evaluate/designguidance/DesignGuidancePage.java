@@ -136,7 +136,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      *
      *@return current page object
      */
-    public DesignGuidancePage expandGuidanceTab() {
+    public DesignGuidancePage expandGuidancePanel() {
         pageUtils.waitForElementToBeClickable(chevronButton).click();
         return this;
     }

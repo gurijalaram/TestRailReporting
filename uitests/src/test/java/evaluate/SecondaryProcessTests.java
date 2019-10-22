@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
+import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -20,6 +21,7 @@ import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -35,6 +37,11 @@ public class SecondaryProcessTests extends TestBase {
 
     public SecondaryProcessTests() {
         super();
+    }
+
+    @After
+    public void resetToleranceSettings() {
+        new AfterTestUtil(driver).resetToleranceSettings();
     }
 
     @Test
