@@ -5,11 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
@@ -24,18 +20,14 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
-public class SheetMetalDTC extends TestBase {
+public class SheetMetalDTCTests extends TestBase {
 
     private LoginPage loginPage;
     private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
-    private EvaluatePage evaluatePage;
-    private GeometryPage geometryPage;
-    private PropertiesDialogPage propertiesDialogPage;
-    private TolerancePage tolerancePage;
 
-    public SheetMetalDTC() {
+    public SheetMetalDTCTests() {
         super();
     }
 

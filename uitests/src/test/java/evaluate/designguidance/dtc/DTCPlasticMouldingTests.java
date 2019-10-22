@@ -21,13 +21,13 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
-public class DTCPlasticMoulding extends TestBase {
+public class DTCPlasticMouldingTests extends TestBase {
 
     private LoginPage loginPage;
     private GuidancePage guidancePage;
     private EvaluatePage evaluatePage;
 
-    public DTCPlasticMoulding() {
+    public DTCPlasticMouldingTests() {
         super();
     }
 
