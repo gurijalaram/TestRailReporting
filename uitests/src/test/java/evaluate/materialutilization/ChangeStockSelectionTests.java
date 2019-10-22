@@ -52,10 +52,6 @@ public class ChangeStockSelectionTests extends TestBase {
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
         new EvaluatePage(driver).costScenario();
         assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
-
-        evaluatePage = new MaterialPage(driver).closeMaterialAndUtilizationPanel();
-        assertThat(evaluatePage.getPartCost(), equalTo("22.38"));
-
     }
 
     @Test
