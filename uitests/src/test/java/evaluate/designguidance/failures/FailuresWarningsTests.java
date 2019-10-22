@@ -33,7 +33,7 @@ public class FailuresWarningsTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1592", "1059"})
+    @TestRail(testCaseId = {"1592", "1059", "1831", "1791"})
     @Description("Ensure that 'Failures/ Warnings tab includes: Messaging")
     public void failedCostingMessaging() {
         loginPage = new LoginPage(driver);

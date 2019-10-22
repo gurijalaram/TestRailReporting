@@ -5,7 +5,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
@@ -18,6 +20,7 @@ import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class SheetMetalDTC extends TestBase {
@@ -26,12 +29,16 @@ public class SheetMetalDTC extends TestBase {
     private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
+    private EvaluatePage evaluatePage;
+    private InvestigationPage investigationPage;
+    private ExplorePage explorePage;
 
     public SheetMetalDTC() {
         super();
     }
 
     @Test
+    @Issue("BA-851")
     @TestRail(testCaseId = {"1839", "1842", "1843"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
@@ -116,5 +123,63 @@ public class SheetMetalDTC extends TestBase {
 
         guidancePage.selectIssueTypeAndGCD("Bend Issue", "Radius", "StraightBend:3");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Bend radius is too small"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1829"})
+    @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
+    public void tileDTC() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("extremebends.prt.1"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getWarningsCount("5"), is(true));
+        assertThat(evaluatePage.getGuidanceIssuesCount("9"), is(true));
+        assertThat(evaluatePage.getGcdTolerancesCount("22"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1834", "1835", "1836", "1837"})
+    @Description("Testing DTC Sheet Metal")
+    public void sheetMetalDTCInvestigation() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        investigationPage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheMetDTC.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Holes and Fillets")
+            .findIssueType("Hole - Standard");
+
+        assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("2")));
+        assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("4")));
+
+        investigationPage.selectInvestigationTopic("Distinct Sizes Count")
+            .findIssueType("Bend Radius");
+
+        assertThat(investigationPage.getInvestigationCell("Bend Radius", "Tool Count"), is(equalTo("1")));
+        assertThat(investigationPage.getInvestigationCell("Bend Radius", "GCD Count"), is(equalTo("1")));
+        assertThat(investigationPage.getInvestigationCell("Hole Size", "Tool Count"), is(equalTo("2")));
+        assertThat(investigationPage.getInvestigationCell("Hole Size", "GCD Count"), is(equalTo("4")));
+
+        investigationPage.selectInvestigationTopic("Machining Setups")
+            .findIssueType("SetupAxis:1");
+
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("14")));
     }
 }
