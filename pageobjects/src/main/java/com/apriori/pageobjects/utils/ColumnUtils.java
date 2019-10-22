@@ -27,12 +27,12 @@ public class ColumnUtils {
      *
      * @param table       - the table
      * @param column      - the column
-     * @param cellLocator - the locator of the cell
+     * @param rowLocator - the locator of the cell
      * @return string
      */
-    public String columnDetails(String table, String column, String cellLocator) {
+    public String columnDetails(String table, String column, String rowLocator) {
         String[] columns = driver.findElement(By.xpath("//div[@data-ap-comp='" + table + "']//thead")).getAttribute("innerText").split("\n");
-        String[] cells = driver.findElement(By.xpath(cellLocator)).getAttribute("innerText").split("\n");
+        String[] cells = driver.findElement(By.xpath(rowLocator)).getAttribute("innerText").split("\n");
 
         String[] filteredCells = Arrays.stream(cells).filter(cell -> !cell.equals("\t\t")).toArray(String[]::new);
 
