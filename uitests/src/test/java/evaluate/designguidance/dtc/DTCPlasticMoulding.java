@@ -175,6 +175,7 @@ public class DTCPlasticMoulding extends TestBase {
             .closeProcessPanel()
             .costScenario()
             .openDesignGuidance()
+            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
 

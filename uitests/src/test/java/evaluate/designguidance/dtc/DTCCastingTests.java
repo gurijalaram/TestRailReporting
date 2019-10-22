@@ -132,7 +132,7 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(3)
             .openDesignGuidance()
-            .expandGuidanceTab()
+            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:6");
 
@@ -174,7 +174,7 @@ public class DTCCastingTests extends TestBase {
             .closeProcessPanel()
             .costScenario(2)
             .openDesignGuidance()
-            .expandGuidanceTab()
+            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:7");
 
@@ -203,7 +203,7 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidanceTab()
+            .expandGuidancePanel()
             .openTolerancesTab();
 
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.DIAMTOLERANCE.getToleranceName()), "9"), Matchers.is(true));

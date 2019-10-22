@@ -129,7 +129,7 @@ public class DTCMachiningTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidanceTab()
+            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "Planar Faces", "PlanarFace:9");
 
@@ -153,7 +153,7 @@ public class DTCMachiningTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidanceTab()
+            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Planar Faces", "PlanarFace:10");
 
