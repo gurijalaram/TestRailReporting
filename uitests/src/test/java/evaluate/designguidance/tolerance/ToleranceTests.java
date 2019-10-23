@@ -278,7 +278,7 @@ public class ToleranceTests extends TestBase {
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        toleranceEditPage = settingsPage.save(ExplorePage.class)
+        tolerancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -288,7 +288,11 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton()
             .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
-            .apply(TolerancePage.class)
+            .apply(TolerancePage.class);
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+        new EvaluatePage(driver).openDesignGuidance()
+            .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
