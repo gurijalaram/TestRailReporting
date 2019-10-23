@@ -174,7 +174,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return generic page object
      */
     public <T> T apply(Class<T> className) {
-        pageUtils.javaScriptClick(applyButton);
+        pageUtils.waitForElementAndClick(applyButton);
         return PageFactory.initElements(driver, className);
     }
 
