@@ -80,7 +80,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"645", "269", "647"})
+    @TestRail(testCaseId = {"645", "269", "647", "649"})
     @Description("View detailed information about costed process")
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
@@ -431,13 +431,18 @@ public class ProcessRoutingTests extends TestBase {
     public void cycleTime() {
         loginPage = new LoginPage(driver);
         processRoutingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
-            .openProcessDetails();
+            .openProcessDetails()
+            .selectProcessChart("Band Saw");
 
-        assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("20 (19%)"));
-        assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("89 (81%)"));
+        assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("16 (45%)"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("DoAll 3613-1 Vert"));
+
+        processRoutingPage.selectProcessChart("2 Axis Lathe");
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 19.47"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Virtual 2 Axis Lathe - Small"));
     }
 }
