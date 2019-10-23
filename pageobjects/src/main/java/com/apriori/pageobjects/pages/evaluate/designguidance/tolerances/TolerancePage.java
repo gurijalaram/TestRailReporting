@@ -26,7 +26,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
     @FindBy(css = "div[data-ap-comp='tolerancesTable'] .v-grid-scroller-vertical")
     private WebElement toleranceScroller;
 
-    @FindBy(css = "div[id='tolerancesTab'] .edit-tolerances-btn")
+    @FindBy(css = "button[data-ap-comp='editTolerancesBtn']")
     private WebElement editToleranceButton;
 
     @FindBy(css = "div[data-ap-comp='tolerancesDetailsTable'] .v-grid-scroller-vertical")
