@@ -25,7 +25,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -79,7 +78,7 @@ public class ToleranceTests extends TestBase {
         designGuidancePage.closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario()
+        toleranceEditPage = evaluatePage.costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
@@ -122,7 +121,7 @@ public class ToleranceTests extends TestBase {
     @Issue("AP-56493")
     @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
-    public void testNoJunkTolerancea() {
+    public void testNoJunkTolerances() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
@@ -185,7 +184,7 @@ public class ToleranceTests extends TestBase {
         designGuidancePage.closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.openMaterialCompositionTable()
+        toleranceEditPage = evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
             .apply()
             .costScenario()
