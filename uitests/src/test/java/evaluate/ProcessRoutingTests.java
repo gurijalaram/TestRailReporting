@@ -32,6 +32,7 @@ import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
@@ -79,7 +80,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"645", "269"})
+    @TestRail(testCaseId = {"645", "269", "647"})
     @Description("View detailed information about costed process")
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
@@ -422,5 +423,21 @@ public class ProcessRoutingTests extends TestBase {
             .selectProperties()
             .expandDropdown("Technique");
         assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Waterjet Cutting"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"648"})
+    @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
+    public void cycleTime() {
+        loginPage = new LoginPage(driver);
+        processRoutingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails();
+
+        assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("20 (19%)"));
+        assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("89 (81%)"));
     }
 }

@@ -72,7 +72,7 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
             .selectEditButton()
             .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23")
-            .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.16")
+            .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16")
             .apply(TolerancePage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -86,7 +86,7 @@ public class ToleranceTests extends TestBase {
             .selectEditButton();
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.16"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16"), is(true));
     }
 
     @Category(CustomerSmokeTests.class)
