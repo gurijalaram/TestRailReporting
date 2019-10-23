@@ -58,7 +58,7 @@ public class SaveAsPage extends LoadableComponent<SaveAsPage> {
      * @return current page object
      */
     public SaveAsPage inputName(String name) {
-        nameInput.clear();
+        pageUtils.waitForElementToAppear(nameInput).clear();
         nameInput.sendKeys(name);
         return this;
     }

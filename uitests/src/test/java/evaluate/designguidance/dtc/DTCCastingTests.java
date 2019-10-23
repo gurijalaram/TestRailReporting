@@ -14,6 +14,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
+import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -25,6 +26,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -42,6 +44,11 @@ public class DTCCastingTests extends TestBase {
 
     public DTCCastingTests() {
         super();
+    }
+
+    @After
+    public void resetToleranceSettings() {
+        new AfterTestUtil(driver).resetToleranceSettings();
     }
 
     @Test
@@ -80,11 +87,6 @@ public class DTCCastingTests extends TestBase {
 
         guidancePage.selectIssueTypeAndGCD("Machining Issues", "Obstructed Surfaces", "PlanarFace:4");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Facing: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry."));
-
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.openSettings()
-            .openTolerancesTab()
-            .selectAssumeTolerance();
     }
 
     @Category(CustomerSmokeTests.class)
@@ -112,11 +114,6 @@ public class DTCCastingTests extends TestBase {
             .selectProperties()
             .expandDropdown("Properties");
         assertThat(propertiesDialogPage.getProperties("Finished Area (mm^2)"), containsString("85.62"));
-
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.openSettings()
-            .openTolerancesTab()
-            .selectAssumeTolerance();
     }
 
     @Test
@@ -135,7 +132,7 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(3)
             .openDesignGuidance()
-            .expandGuidanceTab()
+            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:6");
 
@@ -177,7 +174,7 @@ public class DTCCastingTests extends TestBase {
             .closeProcessPanel()
             .costScenario(2)
             .openDesignGuidance()
-            .expandGuidanceTab()
+            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:7");
 
@@ -203,10 +200,10 @@ public class DTCCastingTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidanceTab()
+            .expandGuidancePanel()
             .openTolerancesTab();
 
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.DIAMTOLERANCE.getToleranceName()), "9"), Matchers.is(true));
