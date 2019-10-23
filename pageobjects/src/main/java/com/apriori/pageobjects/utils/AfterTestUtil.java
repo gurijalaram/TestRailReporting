@@ -98,7 +98,6 @@ public class AfterTestUtil {
             .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
             .selectVPE(NO_DEFAULT)
             .selectMaterialCatalog(NO_DEFAULT)
-            .selectMaterial(NO_DEFAULT)
             .clearAnnualVolume()
             .clearProductionLife()
             .selectBatchAuto();

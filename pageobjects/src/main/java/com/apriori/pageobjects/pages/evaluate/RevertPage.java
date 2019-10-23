@@ -1,8 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.header.EvaluateHeader;
 import com.apriori.pageobjects.utils.PageUtils;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -70,7 +68,6 @@ public class RevertPage extends LoadableComponent<RevertPage> {
      */
     public <T> T revertScenario(Class<T> className) {
         pageUtils.waitForElementAndClick(revertButton);
-        new EvaluateHeader(driver).checkForImage();
         return PageFactory.initElements(driver, className);
     }
 
