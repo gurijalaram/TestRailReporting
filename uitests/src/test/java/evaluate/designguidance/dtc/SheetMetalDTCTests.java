@@ -25,7 +25,7 @@ import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 
-public class SheetMetalDTC extends TestBase {
+public class SheetMetalDTCTests extends TestBase {
 
     private LoginPage loginPage;
     private GuidancePage guidancePage;
@@ -33,9 +33,8 @@ public class SheetMetalDTC extends TestBase {
     private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
-    private ExplorePage explorePage;
 
-    public SheetMetalDTC() {
+    public SheetMetalDTCTests() {
         super();
     }
 

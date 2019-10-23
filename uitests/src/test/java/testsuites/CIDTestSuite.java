@@ -25,8 +25,8 @@ import evaluate.RevertScenarioTests;
 import evaluate.SecondaryProcessTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCMachiningTests;
-import evaluate.designguidance.dtc.DTCPlasticMoulding;
-import evaluate.designguidance.dtc.SheetMetalDTC;
+import evaluate.designguidance.dtc.DTCPlasticMouldingTests;
+import evaluate.designguidance.dtc.SheetMetalDTCTests;
 import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.geometry.GeometryTests;
 import evaluate.designguidance.thread.ThreadTests;
@@ -49,8 +49,9 @@ import settings.SettingsTests;
     EditPublicComparisonTests.class,
     DTCCastingTests.class,
     DTCMachiningTests.class,
-    DTCPlasticMoulding.class,
-    SheetMetalDTC.class,
+    DTCPlasticMouldingTests.class,
+    DTCPlasticMouldingTests.class,
+    SheetMetalDTCTests.class,
     FailuresWarningsTests.class,
     GeometryTests.class,
     ThreadTests.class,

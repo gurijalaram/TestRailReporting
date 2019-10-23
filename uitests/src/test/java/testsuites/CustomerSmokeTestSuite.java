@@ -4,7 +4,7 @@ import evaluate.NewScenarioNameTests;
 import evaluate.ProcessGroupsTests;
 import evaluate.PublishNewCostedTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
-import evaluate.designguidance.dtc.DTCPlasticMoulding;
+import evaluate.designguidance.dtc.DTCPlasticMouldingTests;
 import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.thread.ThreadTests;
 import evaluate.designguidance.tolerance.ToleranceTests;
@@ -32,7 +32,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
     TableHeadersTests.class,
     PublishNewCostedTests.class,
     FailuresWarningsTests.class,
-    DTCPlasticMoulding.class,
+    DTCPlasticMouldingTests.class,
     DTCCastingTests.class
 })
 public class CustomerSmokeTestSuite {
