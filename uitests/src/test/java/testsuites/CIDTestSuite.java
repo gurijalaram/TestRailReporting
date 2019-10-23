@@ -50,7 +50,7 @@ import settings.SettingsTests;
     DTCCastingTests.class,
     DTCMachiningTests.class,
     DTCPlasticMouldingTests.class,
-    DTCPlasticMoulding.class,
+    DTCPlasticMouldingTests.class,
     SheetMetalDTCTests.class,
     FailuresWarningsTests.class,
     GeometryTests.class,
