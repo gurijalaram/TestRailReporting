@@ -79,7 +79,7 @@ public class ToleranceTests extends TestBase {
         designGuidancePage.closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.costScenario()
+        toleranceEditPage = evaluatePage.costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
@@ -185,7 +185,7 @@ public class ToleranceTests extends TestBase {
         designGuidancePage.closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.openMaterialCompositionTable()
+        toleranceEditPage = evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
             .apply()
             .costScenario()
