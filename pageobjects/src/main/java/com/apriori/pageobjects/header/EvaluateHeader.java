@@ -92,6 +92,7 @@ public class EvaluateHeader extends GenericHeader {
     public void checkForImage() {
         pageUtils.isElementDisplayed(loadingImage);
         pageUtils.waitForElementNotDisplayed(loadingImage);
+        driver.navigate().refresh();
     }
 
     /**
