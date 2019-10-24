@@ -6,9 +6,9 @@ import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
-import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -31,7 +31,6 @@ public class ActionsTests extends TestBase {
     private ScenarioNotesPage scenarioNotesPage;
     private EvaluatePage evaluatePage;
     private GenericHeader genericHeader;
-    private JobQueuePage jobQueuePage;
 
     @Category(CustomerSmokeTests.class)
     @Test
@@ -47,7 +46,8 @@ public class ActionsTests extends TestBase {
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "M3CapScrew");
 
@@ -76,7 +76,8 @@ public class ActionsTests extends TestBase {
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "M3CapScrew");
 
@@ -110,7 +111,8 @@ public class ActionsTests extends TestBase {
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "bracket_basic");
 

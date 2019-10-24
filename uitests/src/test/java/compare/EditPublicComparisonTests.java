@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.TestRail;
@@ -16,7 +17,6 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import io.qameta.allure.Issue;
 import org.junit.Test;
 
@@ -47,7 +47,8 @@ public class EditPublicComparisonTests extends TestBase {
 
         genericHeader = new GenericHeader(driver);
 
-        explorePage = genericHeader.publishScenario()
+        explorePage = genericHeader.publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
         assertThat(explorePage.findComparison(testComparisonName).isDisplayed(), is(true));
@@ -69,7 +70,8 @@ public class EditPublicComparisonTests extends TestBase {
 
         genericHeader = new GenericHeader(driver);
 
-        explorePage = genericHeader.publishScenario()
+        explorePage = genericHeader.publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName);
 

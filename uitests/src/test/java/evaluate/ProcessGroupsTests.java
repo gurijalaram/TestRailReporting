@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -74,7 +75,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("350611.prt.1"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "350611");
 
@@ -99,7 +101,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_012_009-0020647_hinge_2.prt.1"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "case_012_009-0020647_hinge_2");
 
@@ -124,7 +127,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("700-33770-01_A0.stp"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "700-33770-01_A0");
 
@@ -149,7 +153,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_005_flat end mill contouring.SLDPRT"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "case_005_flat end mill contouring");
 
@@ -174,7 +179,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "Case_001_-_Rockwell_2075-0243G");
 
@@ -199,7 +205,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "case_002_00400016-003M10_A");
 
@@ -224,7 +231,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("GagePart_Case_011_gundrillgagepart-01.prt.1"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "GagePart_Case_011_gundrillgagepart-01");
 
@@ -249,7 +257,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("prt0001.prt.1"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "prt0001");
 
@@ -274,7 +283,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("7021021-2_rib.prt.1"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "7021021-2_rib");
 
@@ -299,7 +309,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("ms16555-627_1.prt.1"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "ms16555-627_1");
 
@@ -324,7 +335,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("14100640.stp"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "14100640");
 
@@ -349,7 +361,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("14100640.stp"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "14100640");
 
@@ -374,7 +387,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("03229_0032_002_A.stp"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "03229_0032_002_A");
 
@@ -399,7 +413,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "case_066_SpaceX_00128711-001_A");
 
@@ -424,7 +439,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("16-340053-00-04.prt.1"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "16-340053-00-04");
 
@@ -449,7 +465,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "case_007_SpaceX_00088481-001_C");
 
@@ -474,7 +491,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "case_002_006-8611543_prt");
 
@@ -499,7 +517,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "225_gasket-1-solid1");
 
@@ -525,7 +544,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_31_test_part_6_small.prt.2"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "case_31_test_part_6_small");
 
@@ -550,7 +570,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("AGCO _ 71421375.prt.1"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "AGCO _ 71421375");
 
@@ -575,7 +596,8 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_011_CENA-009-A1-LH-Rear-Body-Mount.prt"))
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "case_011_CENA-009-A1-LH-Rear-Body-Mount");
 
