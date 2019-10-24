@@ -7,7 +7,6 @@ import com.apriori.pageobjects.pages.evaluate.RevertPage;
 import com.apriori.pageobjects.pages.explore.AssignPage;
 import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.explore.DeletePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.pages.explore.ScenarioPage;
@@ -191,11 +190,10 @@ public class GenericHeader extends PageHeader {
      *
      * @return new page object
      */
-    public ExplorePage publishScenario() {
+    public <T> T publishScenario(Class<T> className) {
         pageUtils.checkElementAttributeEmpty(publishButton, "title");
         pageUtils.waitForElementAndClick(publishButton);
-        new PublishPage(driver).selectPublishButton();
-        return new ExplorePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
