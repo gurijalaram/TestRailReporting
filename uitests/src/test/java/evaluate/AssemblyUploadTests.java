@@ -17,7 +17,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class AssemblyUploadTests extends TestBase {
@@ -43,7 +42,9 @@ public class AssemblyUploadTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
     }
 
-    @BeforeClass
+    @Test
+    @TestRail(testCaseId = {"2655"})
+    @Description("Uploaded STEP assembly and components can be recosted")
     public void costAssembly() {
 
         String scenarioName = new Util().getScenarioName();
@@ -93,5 +94,11 @@ public class AssemblyUploadTests extends TestBase {
             .selectExploreButton()
             .openAssembly(scenarioName, "Assembly2")
             .costScenario();
+
+        assertThat(evaluatePage.isTotalComponents("22"), is(true));
+        assertThat(evaluatePage.isUniqueComponents("10"), is(true));
+        assertThat(evaluatePage.isUncostedUnique("0"), is(true));
+        assertThat(evaluatePage.isFinishMass("0.80"), is(true));
+        assertThat(evaluatePage.isTargetMass("0.00"), is(true));
     }
 }
