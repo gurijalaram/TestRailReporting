@@ -44,7 +44,7 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = ".dropdown .glyphicons-settings")
     private WebElement actionsDropdown;
 
-    @FindBy(css = "button[data-ap-comp='editScenarioButton']")
+    @FindBy(css = "button[data-ap-comp='editScenarioButton'] span")
     private WebElement editButton;
 
     @FindBy(css = "button[data-ap-comp='saveComparisonAsButton']")
