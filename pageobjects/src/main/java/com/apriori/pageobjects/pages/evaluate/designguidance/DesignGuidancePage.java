@@ -32,9 +32,6 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement questionButton;
 
-    @FindBy(css = ".details-viewport-part .glyphicon-remove")
-    private WebElement closeButton;
-
     @FindBy(css = "a[href='#guidanceTab")
     private WebElement guidanceTab;
 
