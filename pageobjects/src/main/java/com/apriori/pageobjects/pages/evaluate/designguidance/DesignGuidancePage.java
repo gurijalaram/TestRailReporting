@@ -104,7 +104,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public TolerancePage openTolerancesTab() {
-        tolerancesTab.click();
+        pageUtils.waitForElementAndClick(tolerancesTab);
         return new TolerancePage(driver);
     }
 
@@ -114,7 +114,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public GeometryPage openGeometryTab() {
-        geometryTab.click();
+        pageUtils.waitForElementAndClick(geometryTab);
         return new GeometryPage(driver);
     }
 
@@ -134,7 +134,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      *@return current page object
      */
     public DesignGuidancePage expandGuidancePanel() {
-        pageUtils.waitForElementToBeClickable(chevronButton).click();
+        pageUtils.waitForElementAndClick(chevronButton);
         return this;
     }
 }
