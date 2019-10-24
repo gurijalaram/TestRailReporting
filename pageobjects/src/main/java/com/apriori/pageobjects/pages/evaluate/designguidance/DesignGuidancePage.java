@@ -32,9 +32,6 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement questionButton;
 
-    @FindBy(css = ".details-viewport-part .glyphicon-remove")
-    private WebElement closeButton;
-
     @FindBy(css = "a[href='#guidanceTab")
     private WebElement guidanceTab;
 
@@ -107,7 +104,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public TolerancePage openTolerancesTab() {
-        tolerancesTab.click();
+        pageUtils.waitForElementAndClick(tolerancesTab);
         return new TolerancePage(driver);
     }
 
@@ -117,7 +114,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public GeometryPage openGeometryTab() {
-        geometryTab.click();
+        pageUtils.waitForElementAndClick(geometryTab);
         return new GeometryPage(driver);
     }
 
@@ -137,7 +134,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      *@return current page object
      */
     public DesignGuidancePage expandGuidancePanel() {
-        pageUtils.waitForElementToBeClickable(chevronButton).click();
+        pageUtils.waitForElementAndClick(chevronButton);
         return this;
     }
 }

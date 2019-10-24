@@ -1,9 +1,9 @@
 package evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
@@ -19,7 +19,6 @@ import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
-
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
@@ -228,7 +227,7 @@ public class SecondaryProcessTests extends TestBase {
         processRoutingPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Powder Coat Cart");
 
-        assertThat(processRoutingPage.getProcessPercentage(), hasItem("38 (30%)"));
+        assertThat(processRoutingPage.getProcessPercentage(), hasItem("38 (77%)"));
 
 
     }
