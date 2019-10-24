@@ -256,7 +256,7 @@ public class ToleranceTests extends TestBase {
         designGuidancePage.closeDesignGuidance();
 
         evaluatePage = new EvaluatePage(driver);
-        evaluatePage.selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+        toleranceEditPage = evaluatePage.selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .costScenario()
             .openDesignGuidance()
