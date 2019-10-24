@@ -259,6 +259,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public DesignGuidancePage openDesignGuidance() {
+        driver.navigate().refresh();
         pageUtils.waitForElementAndClick(guidanceDetails);
         return new DesignGuidancePage(driver);
     }
