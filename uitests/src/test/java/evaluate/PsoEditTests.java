@@ -4,12 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
-import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -23,9 +20,6 @@ import org.junit.Test;
 public class PsoEditTests extends TestBase {
 
     private LoginPage loginPage;
-    private GuidancePage guidancePage;
-    private ToleranceSettingsPage toleranceSettingsPage;
-    private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
     private ProcessOptionsPage processOptionsPage;
     private ProcessRoutingPage processRoutingPage;

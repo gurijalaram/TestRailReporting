@@ -57,11 +57,7 @@ public class EvaluateHeader extends GenericHeader {
      * @return current page object
      */
     public EvaluatePage costScenario() {
-        pageUtils.waitForElementAndClick(costButton);
-        new CostingJobPage(driver).selectCostButton();
-        checkForCostLabel();
-        checkForImage();
-        return new EvaluatePage(driver);
+        return costScenario(2);
     }
 
     /**
@@ -78,6 +74,19 @@ public class EvaluateHeader extends GenericHeader {
     }
 
     /**
+     * Cost the scenario
+     *
+     * @return current page object
+     */
+    public EvaluatePage costScenario(int timeoutInMinutes, int imageTimeoutInMinutes) {
+        pageUtils.waitForElementAndClick(costButton);
+        new CostingJobPage(driver).selectCostButton();
+        checkForCostLabel(timeoutInMinutes);
+        checkForImage(imageTimeoutInMinutes);
+        return new EvaluatePage(driver);
+    }
+
+    /**
      * Gets cost label
      *
      * @return true/false
@@ -90,8 +99,15 @@ public class EvaluateHeader extends GenericHeader {
      * Method to check for the loading image displayed/not displayed
      */
     public void checkForImage() {
+        checkForImage((int)0.5);
+    }
+
+    /**
+     * Method to check for the loading image displayed/not displayed
+     */
+    public void checkForImage(int timeoutInMinutes) {
         pageUtils.isElementDisplayed(loadingImage);
-        pageUtils.waitForElementNotDisplayed(loadingImage);
+        pageUtils.waitForElementNotDisplayed(loadingImage, timeoutInMinutes);
         driver.navigate().refresh();
     }
 
@@ -99,8 +115,7 @@ public class EvaluateHeader extends GenericHeader {
      * Method to check cost label contains/doesn't contain text
      */
     private void checkForCostLabel() {
-        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
-        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        checkForCostLabel(2);
     }
 
     /**
