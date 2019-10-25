@@ -566,7 +566,7 @@ public class PageUtils {
      * @return
      */
     public void waitForElementNotDisplayed(WebElement locator, int timeoutInMinutes) {
-        WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
             .ignoreAll(ignoredWebDriverExceptions)
             .until(not((ExpectedCondition<Boolean>) element -> (locator).isDisplayed()));
     }
@@ -579,8 +579,8 @@ public class PageUtils {
      * @return true/false
      */
     public Boolean checkElementContains(WebElement locator, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
-        return wait.ignoreAll(ignoredWebDriverExceptions)
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
     }
 
@@ -592,8 +592,8 @@ public class PageUtils {
      * @return true/false
      */
     public Boolean checkElementNotContain(WebElement locator, String text, int timeoutInMinutes) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes);
-        return wait.ignoreAll(ignoredWebDriverExceptions)
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
+            .ignoreAll(ignoredWebDriverExceptions)
             .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
     }
 
@@ -634,8 +634,8 @@ public class PageUtils {
      * @return
      */
     public Boolean checkElementAttributeEmpty(WebElement locator, String attribute) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
-        return wait.until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
     }
 
     /**
@@ -645,8 +645,8 @@ public class PageUtils {
      * @return true/false
      */
     public <T> Boolean checkElementVisibleByBoolean(List<T> locator) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2);
-        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2)
+            .until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
     }
 
     /**
@@ -658,8 +658,8 @@ public class PageUtils {
     public Boolean checkElementAttribute(WebElement locator, String attribute, String text) {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
         try {
-            WebDriverWait wait = new WebDriverWait(driver, timeOut);
-            return wait.ignoreAll(ignoredWebDriverExceptions)
+            return new WebDriverWait(driver, timeOut)
+                .ignoreAll(ignoredWebDriverExceptions)
                 .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
         } catch (TimeoutException e) {
             e.printStackTrace();
@@ -674,8 +674,8 @@ public class PageUtils {
      * @return
      */
     public Boolean checkElementFirstOption(WebElement locator, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
-        return wait.ignoreAll(ignoredWebDriverExceptions)
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
     }
 
