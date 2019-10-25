@@ -159,6 +159,7 @@ public class GenericHeader extends PageHeader {
      * @return current page object
      */
     public GenericHeader selectActions() {
+        pageUtils.waitForElementToAppear(deleteButton);
         pageUtils.waitForElementAndClick(actionsDropdown);
         return this;
     }
@@ -180,6 +181,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ScenarioNotesPage selectScenarioInfoNotes() {
+        pageUtils.waitForElementToAppear(deleteButton);
         pageUtils.waitForElementAndClick(actionsDropdown);
         pageUtils.waitForElementAndClick(scenarioNotesButton);
         return new ScenarioNotesPage(driver);
