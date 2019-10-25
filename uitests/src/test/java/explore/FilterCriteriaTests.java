@@ -3,6 +3,7 @@ package explore;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -13,15 +14,10 @@ import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 public class FilterCriteriaTests extends TestBase {
-
-    private final String scenarioName = "AutoScenario" + LocalDateTime.now();
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
@@ -118,7 +114,8 @@ public class FilterCriteriaTests extends TestBase {
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
-            .publishScenario();
+            .publishScenario(PublishPage.class)
+            .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filterCriteria()
