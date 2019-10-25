@@ -1,19 +1,24 @@
 package evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -29,7 +34,6 @@ public class NewScenarioNameTests extends TestBase {
     }
 
     @Category(CustomerSmokeTests.class)
-    @Issue("AP-56493")
     @Test
     @TestRail(testCaseId = {"577"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
@@ -47,7 +51,7 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCurrentScenarioName(testScenarioName), is(true));
     }
 
-    /*@Category(CustomerSmokeTests.class)
+    @Category(CustomerSmokeTests.class)
     @Test
     @TestRail(testCaseId = {"1576", "1586", "1587", "1589"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
@@ -115,5 +119,5 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(explorePage.getListOfScenarios(ScenarioA, "MultiUpload"), equalTo(1));
         assertThat(explorePage.getListOfScenarios(ScenarioB, "MultiUpload"), equalTo(1));
         assertThat(explorePage.getListOfScenarios(ScenarioC, "MultiUpload"), equalTo(1));
-    }*/
+    }
 }
