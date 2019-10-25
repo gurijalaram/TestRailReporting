@@ -565,8 +565,8 @@ public class PageUtils {
      * @param locator - the locator of the element
      * @return
      */
-    public Boolean waitForElementNotDisplayed(WebElement locator) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+    public Boolean waitForElementNotDisplayed(WebElement locator, int timeoutInMinutes) {
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
             .ignoreAll(ignoredWebDriverExceptions)
             .until(not((ExpectedCondition<Boolean>) element -> (locator).isDisplayed()));
     }
@@ -582,19 +582,6 @@ public class PageUtils {
         WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2);
         return wait.ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
-    }
-
-    /**
-     * Checks for string to not be present in element text and returns true/false
-     *
-     * @param locator - the locator of the element
-     * @param text
-     * @return true/false
-     */
-    public Boolean checkElementNotContain(WebElement locator, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2);
-        return wait.ignoreAll(ignoredWebDriverExceptions)
-            .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
     }
 
     /**
