@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
@@ -269,7 +270,8 @@ public class ThreadTests extends TestBase {
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .openScenario(testScenarioName, "CurvedWall")
             .openDesignGuidance()
             .openInvestigationTab()

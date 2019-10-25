@@ -108,6 +108,7 @@ public class EvaluateHeader extends GenericHeader {
     public void checkForImage(int timeoutInMinutes) {
         pageUtils.isElementDisplayed(loadingImage);
         pageUtils.waitForElementNotDisplayed(loadingImage, timeoutInMinutes);
+        driver.navigate().refresh();
     }
 
     /**
