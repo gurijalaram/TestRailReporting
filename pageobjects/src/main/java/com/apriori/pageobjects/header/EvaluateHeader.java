@@ -99,7 +99,7 @@ public class EvaluateHeader extends GenericHeader {
      * Method to check for the loading image displayed/not displayed
      */
     public void checkForImage() {
-        checkForImage((int)0.5);
+        checkForImage(1);
     }
 
     /**
