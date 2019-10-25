@@ -33,6 +33,9 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "select[data-ap-field='assignee']")
     private WebElement assigneeDropdown;
 
+    @FindBy(css = "select[data-ap-field='lockStatus']")
+    private WebElement lockDropdown;
+
     @FindBy(css = "input[data-ap-field='locked']")
     private WebElement lockCheckBox;
 
@@ -94,6 +97,17 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public PublishPage selectAssignee(String assignee) {
         new Select(assigneeDropdown).selectByVisibleText(assignee);
+        return this;
+    }
+
+    /**
+     * Selects the lock dropdown
+     *
+     * @param lock - lock dropdown
+     * @return current page object
+     */
+    public PublishPage selectLock(String lock) {
+        new Select(lockDropdown).selectByVisibleText(lock);
         return this;
     }
 
