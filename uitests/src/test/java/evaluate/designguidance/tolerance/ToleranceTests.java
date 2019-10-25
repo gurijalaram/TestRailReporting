@@ -72,7 +72,7 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
             .selectEditButton()
             .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23")
-            .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.16")
+            .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16")
             .apply(TolerancePage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
@@ -86,7 +86,7 @@ public class ToleranceTests extends TestBase {
             .selectEditButton();
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.16"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16"), is(true));
     }
 
     @Category(CustomerSmokeTests.class)
@@ -124,7 +124,13 @@ public class ToleranceTests extends TestBase {
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        warningPage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -144,7 +150,13 @@ public class ToleranceTests extends TestBase {
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        warningPage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -160,7 +172,7 @@ public class ToleranceTests extends TestBase {
 
     @Test
     @Issue("AP-56493")
-    @TestRail(testCaseId = "726")
+    @TestRail(testCaseId = {"726", "712"})
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
         loginPage = new LoginPage(driver);
@@ -172,7 +184,8 @@ public class ToleranceTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
@@ -265,5 +278,58 @@ public class ToleranceTests extends TestBase {
             .selectEditButton();
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "2.16"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"730", "709", "713", "714", "722"})
+    @Description("Validate tolerance edits are maintained when user adds a secondary process group")
+    public void testMaintainingSecondaryPG() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        tolerancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectEditButton()
+            .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
+            .apply(TolerancePage.class);
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        toleranceEditPage = evaluatePage.openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectEditButton();
+
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
+
+        new ToleranceEditPage(driver).setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
+            .cancel();
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        toleranceEditPage = evaluatePage.openSecondaryProcess()
+            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .apply()
+            .costScenario()
+            .openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectEditButton();
+
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
     }
 }

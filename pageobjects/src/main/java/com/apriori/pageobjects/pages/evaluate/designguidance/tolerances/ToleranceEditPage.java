@@ -79,7 +79,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-default")
+    @FindBy(css = "button[data-ap-dialog-cancel]")
     private WebElement cancelButton;
 
     private WebDriver driver;
