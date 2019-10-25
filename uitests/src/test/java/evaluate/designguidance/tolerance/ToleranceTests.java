@@ -332,4 +332,61 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {"723"})
+    @Description("Validate tolerance edits when default values set")
+    public void specificDefaultTolerances() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .editValues()
+            .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.4")
+            .setTolerance(ToleranceEnum.SYMMETRY.getToleranceName(), "2.5")
+            .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "1.3")
+            .save();
+
+        settingsPage = new SettingsPage(driver);
+        tolerancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
+            .selectEditButton()
+            .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
+            .apply(TolerancePage.class);
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        toleranceEditPage = evaluatePage.openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectEditButton();
+
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
+
+        new ToleranceEditPage(driver).setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
+            .cancel();
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        toleranceEditPage = evaluatePage.openSecondaryProcess()
+            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .apply()
+            .costScenario()
+            .openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectEditButton();
+
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
+    }
 }

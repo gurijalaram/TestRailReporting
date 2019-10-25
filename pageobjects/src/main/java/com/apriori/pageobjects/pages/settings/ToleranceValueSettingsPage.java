@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.settings;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.enums.ToleranceEnum;
 
+import com.sun.xml.bind.v2.TODO;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -76,7 +77,8 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
     @FindBy(css = "input[data-ap-field='symmetryOverride']")
     private WebElement symmetryInput;
 
-    @FindBy(css = ".modal-footer button.btn.btn-primary")
+    @FindBy(css = ".modal-footer button.btn.btn-primary") "button[class='btn btn-primary']"
+    TODO fix this
     private WebElement saveButton;
 
     @FindBy(css = ".modal-footer button.btn.btn-default")

@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
@@ -30,6 +31,7 @@ public class DTCMachiningTests extends TestBase {
     private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
+    private InvestigationPage investigationPage;
 
     public DTCMachiningTests() {
         super();
@@ -182,5 +184,44 @@ public class DTCMachiningTests extends TestBase {
             .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Curved Walls", "CurvedWall:22");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Contouring: Feature contains a sharp corner"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1792", "1795", "1796"})
+    @Description("Verify the investigate tab correctly presents features & conditions which impact cost")
+    public void stockMachineDTC() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        investigationPage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("nist_ftc_06_asme1_sw1500_rd.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .expandGuidancePanel()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Holes and Fillets")
+            .findIssueType("Hole - Standard");
+
+        assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("4")));
+        assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("12")));
+
+        investigationPage.findIssueType("Fillet Radius - Standard");
+        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "Tool Count"), is(equalTo("1")));
+        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "GCD Count"), is(equalTo("20")));
+
+        investigationPage.selectInvestigationTopic("Machining Setups")
+            .findIssueType("SetupAxis:1");
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("46")));
+
+        investigationPage.findIssueType("SetupAxis:2");
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:2", "GCD Count"), is(equalTo("56")));
+
+        investigationPage.findIssueType("SetupAxis:4");
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("34")));
     }
 }
