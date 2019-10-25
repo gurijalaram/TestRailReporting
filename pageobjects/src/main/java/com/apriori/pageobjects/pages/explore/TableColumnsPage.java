@@ -119,7 +119,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
      * @return new page object
      */
     public ExplorePage selectSaveButton() {
-        okButton.click();
+        pageUtils.waitForElementAndClick(okButton);
         return new ExplorePage(driver);
     }
 

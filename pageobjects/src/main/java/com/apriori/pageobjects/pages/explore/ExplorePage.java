@@ -270,7 +270,7 @@ public class ExplorePage extends ExploreHeader {
      * @return column headers as string
      */
     public List<String> getColumnHeaderNames() {
-        return Arrays.stream(columnHeaders.getText().split("\n")).collect(Collectors.toList());
+        return Arrays.stream(columnHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
 
     /**
