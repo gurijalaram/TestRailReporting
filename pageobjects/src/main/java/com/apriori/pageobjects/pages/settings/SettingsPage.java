@@ -126,7 +126,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     public <T> T save(Class<T> className) {
         pageUtils.waitForElementAndClick(saveButton);
         // TODO: 24/10/2019 as per John's comment, this is a quick workaround as this is a direct write to db and shouldn't take this long. ticket has also been raised to disable saving until ready..AP-56966
-        pageUtils.waitFor(4000);
+        pageUtils.waitFor(10000);
         return PageFactory.initElements(driver, className);
     }
 
