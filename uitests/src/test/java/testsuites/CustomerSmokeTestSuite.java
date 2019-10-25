@@ -1,16 +1,27 @@
 package testsuites;
 
 import evaluate.NewScenarioNameTests;
+import evaluate.ProcessGroupsTests;
+import evaluate.PublishNewCostedTests;
+import evaluate.designguidance.dtc.DTCCastingTests;
+import evaluate.designguidance.dtc.DTCPlasticMouldingTests;
+import evaluate.designguidance.failures.FailuresWarningsTests;
+import evaluate.designguidance.thread.ThreadTests;
+import evaluate.designguidance.tolerance.ToleranceTests;
+import explore.ActionsTests;
+import explore.TableHeadersTests;
+import login.LoginTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import settings.SettingsTests;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 @RunWith(Categories.class)
 @Categories.IncludeCategory(CustomerSmokeTests.class)
 @Suite.SuiteClasses({
-    NewScenarioNameTests.class
-    /*ThreadTests.class,
+    NewScenarioNameTests.class,
+    ThreadTests.class,
     ProcessGroupsTests.class,
     ActionsTests.class,
     LoginTests.class,
@@ -22,7 +33,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
     PublishNewCostedTests.class,
     FailuresWarningsTests.class,
     DTCPlasticMouldingTests.class,
-    DTCCastingTests.class*/
+    DTCCastingTests.class
 })
 public class CustomerSmokeTestSuite {
 }
