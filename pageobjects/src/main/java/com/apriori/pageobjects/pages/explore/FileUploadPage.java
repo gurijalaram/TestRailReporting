@@ -68,8 +68,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     public EvaluatePage uploadFile(String scenarioName, File filePath) {
         inputScenarioName(scenarioName)
             .uploadFileDetails(filePath);
-        selectOkButton();
-        return new EvaluatePage(driver);
+        return selectOkButton();
     }
 
     /**
@@ -79,7 +78,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return current page object
      */
     private FileUploadPage inputScenarioName(String scenarioName) {
-        scenarioNameInput.click();
+        pageUtils.waitForElementAndClick(scenarioNameInput);
         pageUtils.clearInput(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
         return this;
