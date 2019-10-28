@@ -134,7 +134,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @return
      */
     public ToleranceEditPage setTolerance(String tolerance, String text) {
-        pageUtils.clearInput(getMap().get(tolerance));
+        getMap().get(tolerance).clear();
         getMap().get(tolerance).sendKeys(text);
         return this;
     }
