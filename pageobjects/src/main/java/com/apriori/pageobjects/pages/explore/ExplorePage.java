@@ -123,7 +123,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the part as webelement
      */
     public WebElement findScenario(String scenarioName, String partName) {
-        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
+        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]");
         return pageUtils.scrollToElement(scenario, componentScroller);
     }
 
@@ -195,7 +195,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenario as webelement
      */
     public WebElement findComparison(String comparisonName) {
-        By comparison = By.cssSelector("a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]");
         return pageUtils.scrollToElement(comparison, componentScroller);
     }
 
