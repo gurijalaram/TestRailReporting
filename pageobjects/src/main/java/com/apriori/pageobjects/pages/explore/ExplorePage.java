@@ -110,6 +110,7 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public ComparePage openComparison(String comparisonName) {
+        pageUtils.waitForElementToAppear(findComparison(comparisonName));
         findComparison(comparisonName).click();
         return new ComparePage(driver);
     }
