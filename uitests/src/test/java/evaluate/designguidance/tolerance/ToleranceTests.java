@@ -341,7 +341,7 @@ public class ToleranceTests extends TestBase {
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .openSettings()
             .openTolerancesTab()
-            .editValues()
+            .selectSpecificDefaultValues()
             .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.4")
             .setTolerance(ToleranceEnum.SYMMETRY.getToleranceName(), "2.5")
             .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "1.3")
@@ -365,7 +365,7 @@ public class ToleranceTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         toleranceEditPage = evaluatePage.openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
@@ -388,5 +388,25 @@ public class ToleranceTests extends TestBase {
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1291"})
+    @Description("Verify PMI data is not extracted ")
+    public void assumeTolerances() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectAssumeTolerance();
+
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.getGcdTolerancesCount("0"), is(true));
     }
 }

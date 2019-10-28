@@ -76,9 +76,9 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
      *
      * @return current page object
      */
-    public ToleranceSettingsPage selectSpecificDefaultValues() {
-        specificCheckbox.click();
-        return this;
+    public ToleranceValueSettingsPage selectSpecificDefaultValues() {
+        pageUtils.waitForElementAndClick(specificCheckbox);
+        return new ToleranceValueSettingsPage(driver);
     }
 
     /**
