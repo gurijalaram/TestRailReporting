@@ -167,6 +167,15 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     }
 
     /**
+     * Checks if the tolerance field is displayed and editable
+     * @param toleranceName - tolerance name
+     * @return true/false
+     */
+    public Boolean isToleranceInputDisplayed(String toleranceName) {
+        return pageUtils.isElementDisplayed(getMap().get(toleranceName));
+    }
+
+    /**
      * Selects the apply button
      *
      * @param className - the class the method should return
