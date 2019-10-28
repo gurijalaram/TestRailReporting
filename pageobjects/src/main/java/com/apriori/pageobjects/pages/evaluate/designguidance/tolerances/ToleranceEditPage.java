@@ -25,7 +25,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
 
-    @FindBy(css = "div[data-ap-comp='artifactTolerancesTable'] .v-grid-cell.tolerance-input-column")
+    @FindBy(css = "div[data-ap-comp='artifactTolerancesTable'] .v-grid-cell")
     private WebElement toleranceCell;
 
     @FindBy(css = "input[data-ap-field='circularity.current']")
