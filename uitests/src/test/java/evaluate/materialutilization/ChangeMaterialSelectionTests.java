@@ -301,4 +301,44 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("C60E"), is(true));
     }
+
+    /*@Test
+    @TestRail(testCaseId = {"864", "866", "867"})
+    @Description("Test making changes to the Material for Sheet Plastic, the change is respected and the scenario can be cost")
+    public void changeMaterialSelectionTestSheetPlastic() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("2038646_Sheet_plastic.prt.1"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Polyethylene, HDPE, Extrusion Sheet"), is(true));
+
+        new EvaluatePage(driver).openMaterialCompositionTable()
+            .selectMaterialComposition("C60E")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("C60E"), is(true));
+    }*/
+
+    @Test
+    @TestRail(testCaseId = {"864", "866", "867"})
+    @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
+    public void changeMaterialSelectionTestStockMachining() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1010"), is(true));
+
+        new EvaluatePage(driver).openMaterialCompositionTable()
+            .selectMaterialComposition("Polyetheretherketone (PEEK)")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+    }
 }
