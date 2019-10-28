@@ -1,12 +1,10 @@
 package evaluate.materialutilization;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.SelectStockPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -27,7 +25,6 @@ public class ChangeStockSelectionTests extends TestBase {
     private LoginPage loginPage;
     private SelectStockPage selectStockPage;
     private StockPage stockPage;
-    private EvaluatePage evaluatePage;
 
     public ChangeStockSelectionTests() {
         super();
