@@ -151,7 +151,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
@@ -182,5 +182,65 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfo("PET 30% Glass"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"864", "866", "867"})
+    @Description("Test making changes to the Material for Powder Metal, the change is respected and the scenario can be cost")
+    public void changeMaterialSelectionTestPowderMetal() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Powder Metal.stp"))
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("F-0005"), is(true));
+
+        new EvaluatePage(driver).openMaterialCompositionTable()
+            .selectMaterialComposition("FLN2-4405")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("FLN2-4405"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"864", "866", "867"})
+    @Description("Test making changes to the Material for Rapid Prototyping, the change is respected and the scenario can be cost")
+    public void changeMaterialSelectionTestRapidPrototyping() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Default"), is(true));
+
+        new EvaluatePage(driver).openMaterialCompositionTable()
+            .selectMaterialComposition("870 Black")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("870 Black"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"864", "866", "867"})
+    @Description("Test making changes to the Material for Roto & Blow Molding, the change is respected and the scenario can be cost")
+    public void changeMaterialSelectionTestRotoBlowMolding() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Polyethylene, High Density (HDPE)"), is(true));
+
+        new EvaluatePage(driver).openMaterialCompositionTable()
+            .selectMaterialComposition("Nylon, Type 46")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Nylon, Type 46"), is(true));
     }
 }
