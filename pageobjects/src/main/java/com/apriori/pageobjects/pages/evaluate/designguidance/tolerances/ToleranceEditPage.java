@@ -58,7 +58,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = "input[data-ap-field='roughness.current']")
     private WebElement roughnessInput;
 
-    @FindBy(css = "input[data-ap-field='rougnessRz.current']")
+    @FindBy(css = "input[data-ap-field='roughnessRz.current']")
     private WebElement roughnessRzInput;
 
     @FindBy(css = "input[data-ap-field='runout.current']")
