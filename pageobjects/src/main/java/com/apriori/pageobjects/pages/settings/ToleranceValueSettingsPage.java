@@ -168,13 +168,15 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
     }
 
     /**
-     * Selects the save button
+     * Selects the apply button
      *
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T>       - the return type
+     * @return generic page object
      */
-    public ToleranceSettingsPage save() {
-        saveButton.click();
-        return new ToleranceSettingsPage(driver);
+    public <T> T save(Class<T> className) {
+        pageUtils.waitForElementAndClick(saveButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
