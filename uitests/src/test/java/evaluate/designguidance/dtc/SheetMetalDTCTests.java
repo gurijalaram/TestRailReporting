@@ -188,4 +188,28 @@ public class SheetMetalDTCTests extends TestBase {
 
         assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("14")));
     }
+
+    @Test
+    @TestRail(testCaseId = {"1845","719"})
+    @Description("Verify tolerances which induce an additional operation")
+    public void toleranceAdditionalOp() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        guidancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .expandGuidancePanel()
+            .openGuidanceTab()
+           .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
+
+        assertThat(guidancePage.getGCDGuidance("SimpleHole:2", "Current"), is(equalTo("0.02")));
+        assertThat(guidancePage.getGCDGuidance("SimpleHole:2", "Basic Machining Threshold"), is(equalTo("0.06")));
+    }
 }

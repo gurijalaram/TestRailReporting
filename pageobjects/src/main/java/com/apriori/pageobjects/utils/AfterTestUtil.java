@@ -4,7 +4,6 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
 
 import org.openqa.selenium.WebDriver;
@@ -36,10 +35,9 @@ public class AfterTestUtil {
         explorePage.openSettings()
             .openProdDefaultTab()
             .enterScenarioName("Initial")
-            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
+            .selectProcessGroup(NO_DEFAULT)
             .selectVPE(NO_DEFAULT)
             .selectMaterialCatalog(NO_DEFAULT)
-            .selectMaterial(NO_DEFAULT)
             .clearAnnualVolume()
             .clearProductionLife()
             .selectBatchAuto();
@@ -95,7 +93,7 @@ public class AfterTestUtil {
             .setColour(ColourEnum.YELLOW.getColour());
         new SettingsPage(driver).openProdDefaultTab()
             .enterScenarioName("Initial")
-            .selectProcessGroup(ProcessGroupEnum.NO_DEFAULT.getProcessGroup())
+            .selectProcessGroup(NO_DEFAULT)
             .selectVPE(NO_DEFAULT)
             .selectMaterialCatalog(NO_DEFAULT)
             .clearAnnualVolume()

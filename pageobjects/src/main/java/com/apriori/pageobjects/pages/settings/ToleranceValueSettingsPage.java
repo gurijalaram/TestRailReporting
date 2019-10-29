@@ -76,7 +76,7 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
     @FindBy(css = "input[data-ap-field='symmetryOverride']")
     private WebElement symmetryInput;
 
-    @FindBy(css = ".modal-footer button.btn.btn-primary")
+    @FindBy(css = "[data-ap-comp='partOverrideTolerances'] button.btn.btn-primary")
     private WebElement saveButton;
 
     @FindBy(css = ".modal-footer button.btn.btn-default")

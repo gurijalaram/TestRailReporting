@@ -2,6 +2,7 @@ package evaluate.designguidance.tolerance;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -331,5 +332,138 @@ public class ToleranceTests extends TestBase {
 
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"723"})
+    @Description("Validate tolerance edits when default values set")
+    public void specificDefaultTolerances() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectSpecificDefaultValues()
+            .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.4")
+            .setTolerance(ToleranceEnum.SYMMETRY.getToleranceName(), "2.5")
+            .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "1.3")
+            .save();
+
+        settingsPage = new SettingsPage(driver);
+        tolerancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
+            .selectEditButton()
+            .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
+            .apply(TolerancePage.class);
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        toleranceEditPage = evaluatePage.openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
+            .selectEditButton();
+
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
+
+        new ToleranceEditPage(driver).setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
+            .cancel();
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        toleranceEditPage = evaluatePage.openSecondaryProcess()
+            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .apply()
+            .costScenario()
+            .openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectEditButton();
+
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
+        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1291"})
+    @Description("Verify PMI data is not extracted ")
+    public void assumeTolerances() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectAssumeTolerance();
+
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.getGcdTolerancesCount("0"), is(true));
+    }
+
+    @Test
+    @Issue("AP-57049")
+    @TestRail(testCaseId = {"1286"})
+    @Description(" All tolerances types can be selected & edited")
+    public void specificTolerances() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .editValues()
+            .setTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "0.1")
+            .setTolerance(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), "0.2")
+            .setTolerance(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "0.3")
+            .setTolerance(ToleranceEnum.TRUEPOSITION.getToleranceName(), "0.4")
+            .setTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), "0.5")
+            .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "0.6")
+            .setTolerance(ToleranceEnum.CONCENTRICITY.getToleranceName(), "0.7")
+            .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "0.8")
+            .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.9")
+            .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "1.0")
+            .setTolerance(ToleranceEnum.PERPENDICULARITY.getToleranceName(), "1.1")
+            .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "1.2")
+            .setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "1.3")
+            .setTolerance(ToleranceEnum.TOTALRUNOUT.getToleranceName(), "1.4")
+            .setTolerance(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "1.5")
+            .setTolerance(ToleranceEnum.SYMMETRY.getToleranceName(), "1.6")
+            .save();
+
+        settingsPage = new SettingsPage(driver);
+        tolerancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openDesignGuidance()
+            .expandGuidancePanel()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:1");
+
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CIRCULARITY.getToleranceName(), "Count"), is(equalTo("12")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CONCENTRICITY.getToleranceName(), "Count"), is(equalTo("12")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CYLINDRICITY.getToleranceName(), "Count"), is(equalTo("12")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "Count"), is(equalTo("16")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.FLATNESS.getToleranceName(), "Count"), is(equalTo("14")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.PARALLELISM.getToleranceName(), "Count"), is(equalTo("26")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.PERPENDICULARITY.getToleranceName(), "Count"), is(equalTo("26")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.PROFILESURFACE.getToleranceName(), "Count"), is(equalTo("27")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "Count"), is(equalTo("30")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), "Count"), is(equalTo("30")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.RUNOUT.getToleranceName(), "Count"), is(equalTo("30")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "Count"), is(equalTo("26")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.SYMMETRY.getToleranceName(), "Count"), is(equalTo("30")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.TOTALRUNOUT.getToleranceName(), "Count"), is(equalTo("12")));
+        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.TRUEPOSITION.getToleranceName(), "Count"), is(equalTo("30")));
     }
 }
