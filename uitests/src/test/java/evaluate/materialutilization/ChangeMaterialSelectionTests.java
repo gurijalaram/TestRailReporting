@@ -154,7 +154,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1010"), is(true));
 
         new EvaluatePage(driver).openMaterialCompositionTable()
             .selectMaterialComposition("Titanium, Ti-5Al-2.5Sn")
@@ -174,7 +174,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Abs"), is(true));
+        assertThat(evaluatePage.isMaterialInfo("ABS"), is(true));
 
         new EvaluatePage(driver).openMaterialCompositionTable()
             .selectMaterialComposition("PET 30% Glass")
@@ -332,7 +332,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
 
         new EvaluatePage(driver).openMaterialCompositionTable()
             .selectMaterialComposition("Polyetheretherketone (PEEK)")
