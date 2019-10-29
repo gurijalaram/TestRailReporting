@@ -87,7 +87,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
      * @return new page object
      */
     public ToleranceValueSettingsPage editValues() {
-        editValuesButton.click();
+        pageUtils.waitForElementAndClick(editValuesButton);
         return new ToleranceValueSettingsPage(driver);
     }
 
