@@ -14,12 +14,14 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
+import com.apriori.pageobjects.pages.settings.ToleranceValueSettingsPage;
 import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ToleranceEnum;
+import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -41,14 +43,15 @@ public class ToleranceTests extends TestBase {
     private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
     private DesignGuidancePage designGuidancePage;
+    private ToleranceValueSettingsPage toleranceValueSettingsPage;
 
     public ToleranceTests() {
         super();
     }
 
     @After
-    public void resetToleranceSettings() {
-        new AfterTestUtil(driver).resetToleranceSettings();
+    public void resetAllSettings() {
+        new AfterTestUtil(driver).resetAllSettings();
     }
 
     @Category(CustomerSmokeTests.class)
@@ -173,7 +176,7 @@ public class ToleranceTests extends TestBase {
 
     @Test
     @Issue("AP-56493")
-    @TestRail(testCaseId = {"726", "712"})
+    @TestRail(testCaseId = {"726", "712", "1295", "1297"})
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
         loginPage = new LoginPage(driver);
@@ -506,5 +509,59 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "CurvedWall:2");
 
         assertThat(tolerancePage.getToleranceCell(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "Count"), is(equalTo("30")));
-       }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1289"})
+    @Description("Validate Tolerance Policy updates to System Unit User preferences")
+    public void toleranceUnits() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .editValues()
+            .setTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "0.3")
+            .setTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), "1.2")
+            .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "8.9")
+            .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "1.9")
+            .save(ToleranceSettingsPage.class);
+
+        settingsPage = new SettingsPage(driver);
+        toleranceValueSettingsPage = settingsPage.save(ExplorePage.class)
+            .openSettings()
+            .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
+            .save(ExplorePage.class)
+            .openSettings()
+            .openTolerancesTab()
+            .editValues();
+
+        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "11.81102"), is(true));
+        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), "1.2"), is(true));
+        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "0.35039"), is(true));
+        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.0748"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1296"})
+    @Description("Validate 'Replace values less than' button")
+    public void replaceValuesButton() {
+        loginPage = new LoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel()
+            .replaceValues("0.2", "0.35");
+
+        settingsPage = new SettingsPage(driver);
+        tolerancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .expandGuidancePanel()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5");
+
+       assertThat(tolerancePage.getGCDCell("CurvedWall:5", "Current"), is(equalTo("0.35000")));
+    }
 }
