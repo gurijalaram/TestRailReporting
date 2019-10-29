@@ -482,30 +482,16 @@ public class ToleranceTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
+    @Test
     @TestRail(testCaseId = {"1294"})
-    @Description("Validate PMI is off when use specifc is selected")
+    @Description("Validate PMI is off when use specific is selected")
     public void specificTolerancesNoPMI() {
         loginPage = new LoginPage(driver);
         toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .openSettings()
             .openTolerancesTab()
             .editValues()
-            .setTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "0.1")
-            .setTolerance(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), "0.2")
-            .setTolerance(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "0.3")
-            .setTolerance(ToleranceEnum.TRUEPOSITION.getToleranceName(), "0.4")
-            .setTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), "0.5")
-            .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "0.6")
-            .setTolerance(ToleranceEnum.CONCENTRICITY.getToleranceName(), "0.7")
-            .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "0.8")
-            .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.9")
-            .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "1.0")
-            .setTolerance(ToleranceEnum.PERPENDICULARITY.getToleranceName(), "1.1")
-            .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "1.2")
-            .setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "1.3")
-            .setTolerance(ToleranceEnum.TOTALRUNOUT.getToleranceName(), "1.4")
-            .setTolerance(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "1.5")
-            .setTolerance(ToleranceEnum.SYMMETRY.getToleranceName(), "1.6")
+            .setTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "1.2")
             .save(ToleranceSettingsPage.class);
 
         settingsPage = new SettingsPage(driver);
@@ -517,22 +503,8 @@ public class ToleranceTests extends TestBase {
             .openDesignGuidance()
             .expandGuidancePanel()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:1");
+            .selectToleranceTypeAndGCD(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "CurvedWall:2");
 
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CIRCULARITY.getToleranceName(), "Count"), is(equalTo("12")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CONCENTRICITY.getToleranceName(), "Count"), is(equalTo("12")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CYLINDRICITY.getToleranceName(), "Count"), is(equalTo("12")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "Count"), is(equalTo("16")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.FLATNESS.getToleranceName(), "Count"), is(equalTo("14")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.PARALLELISM.getToleranceName(), "Count"), is(equalTo("26")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.PERPENDICULARITY.getToleranceName(), "Count"), is(equalTo("26")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.PROFILESURFACE.getToleranceName(), "Count"), is(equalTo("27")));
         assertThat(tolerancePage.getToleranceCell(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "Count"), is(equalTo("30")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), "Count"), is(equalTo("30")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.RUNOUT.getToleranceName(), "Count"), is(equalTo("30")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "Count"), is(equalTo("26")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.SYMMETRY.getToleranceName(), "Count"), is(equalTo("30")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.TOTALRUNOUT.getToleranceName(), "Count"), is(equalTo("12")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.TRUEPOSITION.getToleranceName(), "Count"), is(equalTo("30")));
-    }
+       }
 }
