@@ -445,4 +445,22 @@ public class ProcessRoutingTests extends TestBase {
         assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 19.47"));
         assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Virtual 2 Axis Lathe - Small"));
     }
+
+    @Test
+    @TestRail(testCaseId = {"1657"})
+    @Description("Validate routing out of date message appears")
+    public void routingOutOfDate() {
+        loginPage = new LoginPage(driver);
+        processRoutingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Structural Foam Mold")
+            .apply();
+
+        assertThat(processRoutingPage.isRoutingOutOfDateDisplayed(), is(true));
+    }
 }

@@ -62,6 +62,9 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     @FindBy(xpath = "//label[.='Options']")
     private WebElement optionsTab;
 
+    @FindBy(css = ".costing-out-of-date-title")
+    private WebElement outOfDateMsg;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -179,5 +182,13 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     public ProcessOptionsPage selectOptions() {
         pageUtils.waitForElementAndClick(optionsTab);
         return new ProcessOptionsPage(driver);
+    }
+
+    /**
+     * Checks if the routing out of date message appears
+     * @return true/false
+     */
+    public Boolean isRoutingOutOfDateDisplayed() {
+        return pageUtils.isElementDisplayed(outOfDateMsg);
     }
 }
