@@ -4,6 +4,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,6 +38,12 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     @FindBy(css = ".panel .glyphicon-remove")
     private WebElement closePanelButton;
+
+    @FindBy(css = "[data-ap-comp=materialProperties]")
+    private WebElement materialPropertiesTree;
+
+    @FindBy(css = "button[data-ap-comp='expandPanelButton']")
+    private WebElement chevronButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -88,5 +95,65 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     public EvaluatePage closeMaterialAndUtilizationPanel() {
         pageUtils.waitForElementAndClick(closePanelButton);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Gets material information
+     *The fully qualified name of the property must be entered as the locator looks for an exact match eg. "(kg / m^3)"
+     * @param info
+     * @return string
+     */
+    public String getMaterialInfo(String info) {
+        pageUtils.waitForElementToAppear(materialPropertiesTree);
+        By propertiesInfo = By.xpath("//td[.='" + info + "']/following::td");
+        return driver.findElement(propertiesInfo).getAttribute("innerText");
+    }
+
+    /**
+     * Expands the panel
+     *
+     *@return current page object
+     */
+    public MaterialPage expandPanel() {
+        pageUtils.waitForElementAndClick(chevronButton);
+        return this;
+    }
+
+    /**
+     * Opens the dropdown
+     * @param dropdown - the dropdown to be selected
+     * @return current page object
+     */
+    public MaterialPage expandDropdown(String dropdown) {
+        By caret = By.xpath("//div[.='" + dropdown + "']//span[@class]");
+        pageUtils.waitForElementToAppear(caret);
+
+        if (driver.findElement(caret).getAttribute("outerHTML").contains("true")) {
+            return this;
+        } else {
+            if (driver.findElement(caret).getAttribute("outerHTML").contains("false")) {
+                driver.findElement(caret).click();
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Opens the dropdown
+     * @param dropdown - the dropdown to be selected
+     * @return current page object
+     */
+    public MaterialPage collapseDropdown(String dropdown) {
+        By caret = By.xpath("//div[.='" + dropdown + "']//span[@class]");
+        pageUtils.waitForElementToAppear(caret);
+
+        if (driver.findElement(caret).getAttribute("outerHTML").contains("false")) {
+            return this;
+        } else {
+            if (driver.findElement(caret).getAttribute("outerHTML").contains("true")) {
+                driver.findElement(caret).click();
+            }
+        }
+        return this;
     }
 }
