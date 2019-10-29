@@ -31,6 +31,7 @@ import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.geometry.GeometryTests;
 import evaluate.designguidance.thread.ThreadTests;
 import evaluate.designguidance.tolerance.ToleranceTests;
+import evaluate.materialutilization.ChangeMaterialSelectionTests;
 import evaluate.materialutilization.ChangeStockSelectionTests;
 import explore.ActionsTests;
 import explore.FilterCriteriaTests;
@@ -57,6 +58,7 @@ import settings.SettingsTests;
     ThreadTests.class,
     ToleranceTests.class,
     ChangeStockSelectionTests.class,
+    ChangeMaterialSelectionTests.class,
     AssemblyUploadTests.class,
     CostAllCadTests.class,
     DeletePrivateScenarioTests.class,
