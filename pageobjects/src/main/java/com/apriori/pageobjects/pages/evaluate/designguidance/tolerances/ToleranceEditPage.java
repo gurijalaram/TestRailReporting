@@ -25,7 +25,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
 
-    @FindBy(css = "div[data-ap-comp='artifactTolerancesTable'] .v-grid-cell.tolerance-input-column")
+    @FindBy(css = "div[data-ap-comp='artifactTolerancesTable'] .v-grid-cell")
     private WebElement toleranceCell;
 
     @FindBy(css = "input[data-ap-field='circularity.current']")
@@ -58,7 +58,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = "input[data-ap-field='roughness.current']")
     private WebElement roughnessInput;
 
-    @FindBy(css = "input[data-ap-field='rougnessRz.current']")
+    @FindBy(css = "input[data-ap-field='roughnessRz.current']")
     private WebElement roughnessRzInput;
 
     @FindBy(css = "input[data-ap-field='runout.current']")
@@ -164,6 +164,15 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
             map = buildMap();
         }
         return map;
+    }
+
+    /**
+     * Checks if the tolerance field is displayed and editable
+     * @param toleranceName - tolerance name
+     * @return true/false
+     */
+    public Boolean isToleranceInputDisplayed(String toleranceName) {
+        return pageUtils.isElementDisplayed(getMap().get(toleranceName));
     }
 
     /**
