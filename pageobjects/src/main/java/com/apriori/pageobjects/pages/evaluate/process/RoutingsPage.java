@@ -135,6 +135,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
         }
         return firstColumn;
     }
+
     /**
      * Finds the routing in the table
      *
