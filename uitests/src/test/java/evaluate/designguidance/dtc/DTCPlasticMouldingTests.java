@@ -46,7 +46,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario(5)
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
+            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
@@ -64,7 +64,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
+            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
         assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("22")));
@@ -88,7 +88,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Planar Faces", "PlanarFace:11");
+            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Planar Faces", "PlanarFace:11");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("No Surface draft has been applied."));
         assertThat(guidancePage.getGuidanceCell("Planar Faces", "Count"), is(equalTo("4")));
@@ -104,7 +104,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii  Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
+            .selectIssueTypeAndGCD("Radii Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Internal Edge Radius is less than the minimum limit"));
     }
@@ -119,7 +119,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii  Issue", "Minimum External Edge Radius", "SharpEdge:7");
+            .selectIssueTypeAndGCD("Radii Issue", "Minimum External Edge Radius", "SharpEdge:7");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("External Edge Radius is less than the minimum limit"));
     }
@@ -141,17 +141,17 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario(1)
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
+            .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Structural Foam Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Radii  Issue", "Minimum Edge Radius on Parting Line", "SharpEdge:1");
+        guidancePage.selectIssueTypeAndGCD("Radii Issue", "Minimum Edge Radius on Parting Line", "SharpEdge:1");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sharp Edge may partially be off the parting line, in which case no feasible molding options could be found."));
 
-        guidancePage.selectIssueTypeAndGCD("Radii  Issue", "Minimum External Edge Radius", "SharpEdge:14");
+        guidancePage.selectIssueTypeAndGCD("Radii Issue", "Minimum External Edge Radius", "SharpEdge:14");
         assertThat(guidancePage.getGuidanceMessage(), containsString("External Edge Radius is less than the minimum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Radii  Issue", "Minimum Internal Edge Radius", "SharpEdge:5");
+        guidancePage.selectIssueTypeAndGCD("Radii Issue", "Minimum Internal Edge Radius", "SharpEdge:5");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Internal Edge Radius is less than the minimum limit with this material."));
     }
 
@@ -167,7 +167,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
+            .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 3.556 mm")));
@@ -182,7 +182,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .expandGuidancePanel()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
+            .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Structural Foam Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 15 mm")));
@@ -199,7 +199,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
+            .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Reaction Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 50.8 mm")));
@@ -216,7 +216,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
+            .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
 
@@ -232,7 +232,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
+            .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Reaction Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
     }
