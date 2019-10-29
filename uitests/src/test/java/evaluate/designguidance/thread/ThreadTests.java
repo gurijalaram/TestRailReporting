@@ -336,12 +336,13 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Issue("AP-56325")
+    @TestRail(testCaseId = {"42"})
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
             .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
@@ -351,10 +352,15 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading");
 
         assertThat(investigationPage.getThreadHeader("(mm)"), is(true));
+
+        investigationPage = new InvestigationPage(driver);
+        threadingPage = investigationPage.editThread("Simple Holes", "SimpleHole:1");
+        assertThat(threadingPage.isThreadLength("20"), is(true));
     }
 
     @Test
     @Issue("AP-56325")
+    @TestRail(testCaseId = {"37", "41"})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
@@ -365,7 +371,7 @@ public class ThreadTests extends TestBase {
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:27")
+            .editThread("Simple Holes", "SimpleHole:1")
             .selectThreadDropdown("Yes")
             .enterThreadLength("4.85")
             .apply(InvestigationPage.class);
@@ -380,7 +386,7 @@ public class ThreadTests extends TestBase {
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:27");
+            .editThread("Simple Holes", "SimpleHole:1");
 
         assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }
