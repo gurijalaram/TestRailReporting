@@ -11,7 +11,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserDataUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -40,7 +40,7 @@ public class EditPublicComparisonTests extends TestBase {
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        comparePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
@@ -62,7 +62,7 @@ public class EditPublicComparisonTests extends TestBase {
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        comparePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);

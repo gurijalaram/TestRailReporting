@@ -9,7 +9,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserDataUtil;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -32,7 +32,7 @@ public class RevertScenarioTests extends TestBase {
     public void testRevertSavedScenario() {
 
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
@@ -51,7 +51,7 @@ public class RevertScenarioTests extends TestBase {
     public void testRevertUnsavedScenario() {
 
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())

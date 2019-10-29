@@ -12,7 +12,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserDataUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -41,7 +41,7 @@ public class NewScenarioNameTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .createNewScenario()
             .enterScenarioName(testScenarioName)
@@ -60,7 +60,7 @@ public class NewScenarioNameTests extends TestBase {
         String testNewScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+        loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword());
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
@@ -91,7 +91,7 @@ public class NewScenarioNameTests extends TestBase {
         String ScenarioC = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+        loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword());
         explorePage = new ExplorePage(driver);
         explorePage = explorePage.uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())

@@ -14,7 +14,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserDataUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -50,7 +50,7 @@ public class LoginTests extends TestBase {
     @Description("Test successful login")
     public void testLogin() {
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+        explorePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword());
         assertThat(explorePage.isDeleteButtonPresent(), is(true));
     }
 
@@ -58,7 +58,7 @@ public class LoginTests extends TestBase {
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
         loginPage = new LoginPage(driver);
-        loginPage = loginPage.failedLoginAs(UsersEnum.CID_TE_USER.getUsername(), "fakePassword");
+        loginPage = loginPage.failedLoginAs(UserDataUtil.getGlobalUser().getUsername(), "fakePassword");
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
@@ -66,7 +66,7 @@ public class LoginTests extends TestBase {
     @Description("Test unsuccessful login with incorrect email, correct password")
     public void testIncorrectEmail() {
         loginPage = new LoginPage(driver);
-        loginPage = loginPage.failedLoginAs("jacky348@apriori.com", UsersEnum.CID_TE_USER.getPassword());
+        loginPage = loginPage.failedLoginAs("jacky348@apriori.com", UserDataUtil.getGlobalUser().getPassword());
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
@@ -129,7 +129,7 @@ public class LoginTests extends TestBase {
         String ScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
             .uploadFile(ScenarioName, new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -137,7 +137,7 @@ public class LoginTests extends TestBase {
             .selectLogOut();
 
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
             .openScenario(ScenarioName, "225_gasket-1-solid1");
 
         assertThat(evaluatePage.isCADConnectionStatus("CAD file connected"), is(true));

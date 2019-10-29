@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserDataUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -47,7 +47,7 @@ public class ReportLoginTests extends TestBase {
     @Description("Successful login to CI Report")
     public void testLogin() {
         loginPage = new LoginPage(driver);
-        homePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
+        homePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword());
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }
 
@@ -56,7 +56,7 @@ public class ReportLoginTests extends TestBase {
     @Description("Failed login to CI Report, wrong password")
     public void failedLogin() {
         loginPage = new LoginPage(driver);
-        loginPage.failedLogin(UsersEnum.CID_TE_USER.getUsername(), "fakePassword");
+        loginPage.failedLogin(UserDataUtil.getGlobalUser().getUsername(), "fakePassword");
         assertThat(loginPage.getLoginMessage(), is(equalTo(loginErrorMessage.toUpperCase())));
     }
 

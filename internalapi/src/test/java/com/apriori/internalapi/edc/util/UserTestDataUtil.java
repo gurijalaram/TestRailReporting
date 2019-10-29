@@ -10,6 +10,9 @@ import com.apriori.apibase.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.apibase.http.enums.common.api.PartsAPIEnum;
 import com.apriori.apibase.utils.MultiPartFiles;
 import com.apriori.apibase.utils.WebDriverUtils;
+import com.apriori.utils.Util;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserDataUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,59 +34,15 @@ public class UserTestDataUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(UserTestDataUtil.class);
 
-    private static BlockingQueue<List<String>> usersQueue = new LinkedBlockingQueue<>();
-
-    static {
-        recordUsersForTest();
-    }
-
-    private static void recordUsersForTest() {
-        final File usersCredsCSV = getResourceFile("test-data/edc-qa-users.csv");
-
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(usersCredsCSV))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] values = line.split(",");
-                usersQueue.add(Arrays.asList(values));
-            }
-        } catch (IOException e) {
-            logger.error(String.format("Error with initializing users. Users file: %s", usersCredsCSV.getAbsolutePath()));
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private static File getResourceFile(String resourceFileName) {
-        try {
-            return new File(
-                    URLDecoder.decode(
-                            ClassLoader.getSystemResource(resourceFileName).getFile(),
-                            "UTF-8"
-                    )
-            );
-        } catch (UnsupportedEncodingException e) {
-            logger.error(String.format("Resource file: %s was not fount", resourceFileName));
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private List<String> getUserCredentials() {
-        try {
-            return usersQueue.take();
-        } catch (InterruptedException e) {
-            logger.error("Can't take user from queue. Thread info:" + Thread.currentThread().getName());
-            throw new IllegalArgumentException();
-        }
-    }
-
     public UserDataEDC initEmptyUser() {
-        List<String> userNamePass = getUserCredentials();
+        UserCredentials userNamePass = UserDataUtil.getUser();
 
-        UserDataEDC userDataEDC = new UserDataEDC(userNamePass.get(0), userNamePass.get(1));
+        UserDataEDC userDataEDC = new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
 
         userDataEDC.setTokenAndInitAuthorizationHeaders(
                 new WebDriverUtils()
-                        .getToken(userNamePass.get(0),
-                                userNamePass.get(1)
+                        .getToken(userNamePass.getUsername(),
+                            userNamePass.getPassword()
                         )
         );
 
@@ -167,7 +126,7 @@ public class UserTestDataUtil {
 
     public void uploadTestData(final UserDataEDC userDataEDC) {
 
-        final File testData = getResourceFile("test-data/apriori-3-items.csv");
+        final File testData = Util.getLocalResourceFile("test-data/apriori-3-items.csv");
 
         new HTTPRequest()
                 .unauthorized()

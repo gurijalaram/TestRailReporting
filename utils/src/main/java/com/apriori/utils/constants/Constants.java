@@ -9,16 +9,16 @@ public class Constants {
 
     private static final ConstantsInit constantsInit;
     public static final String defaultEnvironmentValue = "cid-te";
-    private static final String defaultEnvironmentKey = "env";
+    public static final String defaultEnvironmentKey = "env";
 
     static {
 
         if (System.getProperty(defaultEnvironmentKey) == null) {
             System.setProperty(defaultEnvironmentKey, defaultEnvironmentValue);
         }
+
         constantsInit = ConfigFactory.create(ConstantsInit.class);
     }
-
 
     public static final Level consoleLogLevel = Level.parse(constantsInit.consoleLogLevelData());
     public static final String url = constantsInit.url();
@@ -27,4 +27,6 @@ public class Constants {
     public static final String GRID_SERVER_URL = constantsInit.gridServerUrl();
     public static final String cidURL = constantsInit.cidURL();
     public static final String cirURL = constantsInit.cirURL();
+    public static final String usersFile = constantsInit.usersCsvFileName();
+    public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 }

@@ -3,7 +3,7 @@ package com.apriori.utils.constants;
 import org.aeonbits.owner.Config;
 
 @Config.Sources({
-    "classpath:${env}.properties"
+    "classpath:${env}/${env}.properties"
 })
 public interface ConstantsInit extends Config {
 
@@ -27,4 +27,9 @@ public interface ConstantsInit extends Config {
     @Key("console.log.level")
     String consoleLogLevelData();
 
+    @Key("users.csv.file")
+    String usersCsvFileName();
+
+    @Key("different.users")
+    Boolean useDifferentUsers();
 }
