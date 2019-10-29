@@ -126,7 +126,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     /*@Test
     @TestRail(testCaseId = {"864", "866", "867"})
-    @Description("Test making changes to the Material for Die Casting, the change is respected and the scenario can be cost")
+    @Description("Test making changes to the Material for Composites, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestComposites() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
@@ -302,7 +302,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfo("C60E"), is(true));
     }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Sheet Plastic, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetPlastic() {
@@ -312,15 +312,15 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Polyethylene, HDPE, Extrusion Sheet"), is(true));
+        assertThat(evaluatePage.isMaterialInfo("Polyethylene, HDPE Extrusion Sheet"), is(true));
 
         new EvaluatePage(driver).openMaterialCompositionTable()
-            .selectMaterialComposition("C60E")
+            .selectMaterialComposition("Acrylic, PMMA")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("C60E"), is(true));
-    }*/
+        assertThat(evaluatePage.isMaterialInfo("Acrylic, PMMA"), is(true));
+    }
 
     @Test
     @TestRail(testCaseId = {"864", "866", "867"})
