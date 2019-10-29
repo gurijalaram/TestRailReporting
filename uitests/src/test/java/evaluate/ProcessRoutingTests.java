@@ -463,4 +463,34 @@ public class ProcessRoutingTests extends TestBase {
 
         assertThat(processRoutingPage.isRoutingOutOfDateDisplayed(), is(true));
     }
+
+    @Test
+    @Description("Validate routings Additive")
+    public void routingsAddivite() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("", "Material Jetting", "Powder Bed Fusion", "Vat Photopolymerization"));
+    }
+
+    @Test
+    @Description("Validate routings Bar and Tube")
+    public void routingsBarTube() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP"))
+            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("", "Bent Part", "Unbent Part"));
+    }
 }

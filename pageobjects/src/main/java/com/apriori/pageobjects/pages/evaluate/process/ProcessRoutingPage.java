@@ -63,7 +63,7 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     private WebElement optionsTab;
 
     @FindBy(css = ".costing-out-of-date-title")
-    private WebElement outOfDateMsg;
+    private List<WebElement> outOfDateMsg;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -189,6 +189,6 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      * @return true/false
      */
     public Boolean isRoutingOutOfDateDisplayed() {
-        return pageUtils.isElementDisplayed(outOfDateMsg);
+        return pageUtils.checkElementVisibleByBoolean(outOfDateMsg);
     }
 }
