@@ -11,7 +11,11 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -118,6 +122,19 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
         return routingTableCells.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
+    public Map<String, List<String>> getRoutingDetailsByColumn(String columnName) {
+        String[] header = driver.findElement(By.cssSelector("div[data-ap-comp='routingSelectionTable'] thead")).getAttribute("innerText").split("\n");
+        List<WebElement> rows = driver.findElements(By.cssSelector("div[data-ap-comp='routingSelectionTable'] tr.v-grid-row-has-data"));
+
+        Map<String, List<String>> firstColumn = new HashMap<>();
+        List<String> firstColumnCell = new ArrayList<>();
+
+        for (WebElement routingRow : rows) {
+            firstColumnCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0));
+            firstColumn.put(header[0], firstColumnCell);
+        }
+        return firstColumn;
+    }
     /**
      * Finds the routing in the table
      *
