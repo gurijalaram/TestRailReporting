@@ -133,4 +133,15 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
         String rowLocator = "//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr[@class]";
         return columnUtils.columnDetails("tolerancesTable", column, rowLocator);
     }
+
+    /**
+     * Gets the cell details
+     * @param gcd - gcd
+     * @param column - the column
+     * @return string
+     */
+    public String getGCDCell(String gcd, String column) {
+        String rowLocator = "//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcd + "']/ancestor::tr[@class]";
+        return columnUtils.columnDetails("tolerancesDetailsTable", column, rowLocator);
+    }
 }

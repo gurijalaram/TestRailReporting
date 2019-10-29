@@ -2,8 +2,10 @@ package com.apriori.pageobjects.utils;
 
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
+import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.ToleranceEnum;
 import com.apriori.utils.enums.UnitsEnum;
 
 import org.openqa.selenium.WebDriver;
@@ -76,8 +78,9 @@ public class AfterTestUtil {
         explorePage = new ExplorePage(driver);
         explorePage.openSettings()
             .openTolerancesTab()
-            .selectAssumeTolerance();
-        new SettingsPage(driver).save(ExplorePage.class);
+            .selectUseCADModel()
+            .uncheckReplaceLessValuesButton();
+        new AfterTestUtil(driver).resetSpecificTolValues();
     }
 
     /**
@@ -100,7 +103,35 @@ public class AfterTestUtil {
             .clearProductionLife()
             .selectBatchAuto();
         new SettingsPage(driver).openTolerancesTab()
-            .selectAssumeTolerance();
+            .selectUseCADModel()
+            .uncheckReplaceLessValuesButton();
+        new AfterTestUtil(driver).resetSpecificTolValues();
+    }
+
+    /**
+     * Clears any values in Use specific default values Tolerance PMI Policy
+     */
+    private void resetSpecificTolValues() {
+        new ToleranceSettingsPage(driver).editValues()
+            .setTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.TRUEPOSITION.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.CONCENTRICITY.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.PERPENDICULARITY.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.TOTALRUNOUT.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "")
+            .setTolerance(ToleranceEnum.SYMMETRY.getToleranceName(), "")
+            .save(ToleranceSettingsPage.class);
+        new ToleranceSettingsPage(driver).selectAssumeTolerance();
+
         new SettingsPage(driver).save(ExplorePage.class);
     }
 }
