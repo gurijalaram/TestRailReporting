@@ -26,6 +26,7 @@ public class MaterialStockTests extends TestBase {
     private SelectStockPage selectStockPage;
     private StockPage stockPage;
     private MaterialPage materialPage;
+    private EvaluatePage evaluatePage;
 
     public MaterialStockTests() {
         super();
@@ -57,15 +58,18 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"962", "965", "966", "967"})
+    @TestRail(testCaseId = {"962", "965", "966", "967", "974"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
         loginPage = new LoginPage(driver);
-        stockPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openMaterialComposition()
+            .costScenario();
+        assertThat(evaluatePage.getPartCost(), is(equalTo("20.74")));
+
+        evaluatePage = new EvaluatePage(driver);
+        stockPage = evaluatePage.openMaterialComposition()
             .expandPanel()
             .goToStockTab();
         assertThat(new StockPage(driver).checkTableDetails("Auto"), is(true));
@@ -73,18 +77,22 @@ public class MaterialStockTests extends TestBase {
         stockPage.editStock()
             .selectStock("4.00  mm x 1500 mm x 3000 mm")
             .apply();
-
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
-        new MaterialPage(driver).closeMaterialAndUtilizationPanel();
-        new EvaluatePage(driver).costScenario()
-            .openMaterialComposition()
+
+        materialPage = new MaterialPage(driver);
+        evaluatePage = materialPage.closeMaterialAndUtilizationPanel()
+            .costScenario();
+        assertThat(evaluatePage.getPartCost(), is(equalTo("21.28")));
+
+        evaluatePage = new EvaluatePage(driver);
+        stockPage = evaluatePage.openMaterialComposition()
             .goToStockTab();
         assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
         assertThat(new StockPage(driver).checkTableDetails("Manual"), is(true));
     }
 
     @Test
-    @TestRail(testCaseId = {"968"})
+    @TestRail(testCaseId = {"968", "969",})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
         loginPage = new LoginPage(driver);
@@ -98,7 +106,6 @@ public class MaterialStockTests extends TestBase {
             .goToStockTab();
         assertThat(new StockPage(driver).checkTableDetails("ROUND_BAR"), is(true));
         assertThat(new StockPage(driver).checkTableDetails("Virtual Stock Yes"), is(true));
-        assertThat(new StockPage(driver).checkTableDetails("Unit Cost (USD / kg) ↵ "), is(true));
 
         new MaterialPage(driver).closeMaterialAndUtilizationPanel();
         new EvaluatePage(driver).selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
@@ -107,6 +114,5 @@ public class MaterialStockTests extends TestBase {
             .goToStockTab();
         assertThat(new StockPage(driver).checkTableDetails("SQUARE_BAR"), is(true));
         assertThat(new StockPage(driver).checkTableDetails("Virtual Stock No"), is(true));
-        assertThat(new StockPage(driver).checkTableDetails("Unit Cost (USD / kg) ↵2.85↵"), is(true));
     }
 }
