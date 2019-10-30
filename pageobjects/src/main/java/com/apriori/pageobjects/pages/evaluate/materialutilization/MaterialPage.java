@@ -105,7 +105,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
      */
     public String getMaterialInfo(String info) {
         pageUtils.waitForElementToAppear(materialPropertiesTree);
-        By propertiesInfo = By.xpath("//td[.='" + info + "']/following::td");
+        By propertiesInfo = By.xpath("//table[@class='table material-grid'] //td[.='" + info + "']/following-sibling::td");
         return driver.findElement(propertiesInfo).getAttribute("innerText");
     }
 
