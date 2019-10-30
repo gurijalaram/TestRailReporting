@@ -39,9 +39,7 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openMaterialComposition()
-            .expandPanel()
-            .collapseDropdown("Material Properties")
-            .expandDropdown("Material Properties");
+            .expandPanel();
         assertThat(materialPage.getMaterialInfo("Name"), is(equalTo("F-0005")));
         assertThat(materialPage.getMaterialInfo("Cut Code"), is(equalTo("2.1")));
 

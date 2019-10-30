@@ -118,42 +118,4 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
         pageUtils.waitForElementAndClick(chevronButton);
         return this;
     }
-
-    /**
-     * Opens the dropdown
-     * @param dropdown - the dropdown to be selected
-     * @return current page object
-     */
-    public MaterialPage expandDropdown(String dropdown) {
-        By caret = By.xpath("//div[.='" + dropdown + "']//span[@class]");
-        pageUtils.waitForElementToAppear(caret);
-
-        if (driver.findElement(caret).getAttribute("outerHTML").contains("true")) {
-            return this;
-        } else {
-            if (driver.findElement(caret).getAttribute("outerHTML").contains("false")) {
-                driver.findElement(caret).click();
-            }
-        }
-        return this;
-    }
-
-    /**
-     * Opens the dropdown
-     * @param dropdown - the dropdown to be selected
-     * @return current page object
-     */
-    public MaterialPage collapseDropdown(String dropdown) {
-        By caret = By.xpath("//div[.='" + dropdown + "']//span[@class]");
-        pageUtils.waitForElementToAppear(caret);
-
-        if (driver.findElement(caret).getAttribute("outerHTML").contains("false")) {
-            return this;
-        } else {
-            if (driver.findElement(caret).getAttribute("outerHTML").contains("true")) {
-                driver.findElement(caret).click();
-            }
-        }
-        return this;
-    }
 }
