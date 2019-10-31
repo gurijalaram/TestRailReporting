@@ -6,20 +6,26 @@ import java.util.logging.Level;
 
 
 public class Constants {
-
-    private static final ConstantsInit constantsInit;
     public static final String defaultEnvironmentValue = "cid-te";
     public static final String defaultEnvironmentKey = "env";
+    public static String environment = defaultEnvironmentValue;
+
+    private static final ConstantsInit constantsInit;
 
     static {
 
         if (System.getProperty(defaultEnvironmentKey) == null) {
             System.setProperty(defaultEnvironmentKey, defaultEnvironmentValue);
+        } else {
+            environment = System.getProperty(defaultEnvironmentKey);
         }
 
         constantsInit = ConfigFactory.create(ConstantsInit.class);
     }
 
+    public static final String defaultUserName = "admin@apriori.com";
+    public static final String defaultPassword = "admin";
+    public static final String defaultAccessLevel = "admin";
     public static final Level consoleLogLevel = Level.parse(constantsInit.consoleLogLevelData());
     public static final String url = constantsInit.url();
     public static final String schemaBasePath = constantsInit.schemaBasePath();

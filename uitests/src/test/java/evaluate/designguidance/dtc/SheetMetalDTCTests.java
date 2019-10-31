@@ -17,7 +17,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserDataUtil;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -49,7 +49,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -83,7 +83,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -108,7 +108,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -136,7 +136,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -157,7 +157,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();

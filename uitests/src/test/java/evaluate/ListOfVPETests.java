@@ -7,7 +7,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.Util;
-import com.apriori.utils.users.UserDataUtil;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -28,7 +28,7 @@ public class ListOfVPETests extends TestBase {
     @Description("Get List of VPEs")
     public void getVPEsList() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
 
         assertThat(evaluatePage.getListOfVPEs(), hasItems(VPEEnum.getNames()));

@@ -6,7 +6,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
-import com.apriori.utils.users.UserDataUtil;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
@@ -37,7 +37,7 @@ public SaveAsComparisonTests() {
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
                 .createNewComparison()
                 .enterComparisonName(testComparisonName)
                 .save(ComparePage.class);
@@ -67,7 +67,7 @@ public SaveAsComparisonTests() {
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
                 .createNewComparison()
                 .enterComparisonName(testComparisonName)
                 .save(ComparePage.class);

@@ -14,7 +14,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserDataUtil;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -40,7 +40,7 @@ public class AddScenarioTests extends TestBase{
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        comparisonTablePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        comparisonTablePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
@@ -63,7 +63,7 @@ public class AddScenarioTests extends TestBase{
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        comparisonTablePage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        comparisonTablePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
                 .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
                 .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
                 .costScenario()
@@ -84,7 +84,7 @@ public class AddScenarioTests extends TestBase{
     @Description("Test warning message appears when the user does not enter a scenario name for a comparison")
     public void comparisonNoScenarioName() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UserDataUtil.getGlobalUser().getUsername(), UserDataUtil.getGlobalUser().getPassword())
+        warningPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
                 .createNewComparison()
                 .save(WarningPage.class);
 
