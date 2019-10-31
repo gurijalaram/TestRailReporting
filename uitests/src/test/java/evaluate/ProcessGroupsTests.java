@@ -376,32 +376,6 @@ public class ProcessGroupsTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @Description("Testing process group Pocket Recognition")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupPocketRecognition() {
-
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("03229_0032_002_A.stp"))
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "03229_0032_002_A");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(5);
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category(CustomerSmokeTests.class)
-    @Test
     @Description("Testing process group Pocket Recognition - shared walls")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPocketRecognitionSharedWalls() {
