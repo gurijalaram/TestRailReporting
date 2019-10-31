@@ -83,13 +83,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
-
-        settingsPage = new SettingsPage(driver);
-        guidancePage = settingsPage.save(ExplorePage.class)
+        guidancePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetalTray.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
