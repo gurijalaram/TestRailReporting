@@ -110,6 +110,7 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public ComparePage openComparison(String comparisonName) {
+        pageUtils.waitForElementToAppear(findComparison(comparisonName));
         findComparison(comparisonName).click();
         return new ComparePage(driver);
     }
@@ -122,7 +123,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the part as webelement
      */
     public WebElement findScenario(String scenarioName, String partName) {
-        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
+        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]");
         return pageUtils.scrollToElement(scenario, componentScroller);
     }
 
@@ -194,7 +195,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenario as webelement
      */
     public WebElement findComparison(String comparisonName) {
-        By comparison = By.cssSelector("a[href*='#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "']");
+        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]");
         return pageUtils.scrollToElement(comparison, componentScroller);
     }
 
@@ -270,7 +271,7 @@ public class ExplorePage extends ExploreHeader {
      * @return column headers as string
      */
     public List<String> getColumnHeaderNames() {
-        return Arrays.stream(columnHeaders.getText().split("\n")).collect(Collectors.toList());
+        return Arrays.stream(columnHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
 
     /**

@@ -76,7 +76,7 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
     @FindBy(css = "input[data-ap-field='symmetryOverride']")
     private WebElement symmetryInput;
 
-    @FindBy(css = ".modal-footer button.btn.btn-primary")
+    @FindBy(css = "[data-ap-comp='partOverrideTolerances'] button.btn.btn-primary")
     private WebElement saveButton;
 
     @FindBy(css = ".modal-footer button.btn.btn-default")
@@ -134,7 +134,7 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
      * @return
      */
     public ToleranceValueSettingsPage setTolerance(String tolerance, String text) {
-        pageUtils.clearInput(getMap().get(tolerance));
+        getMap().get(tolerance).clear();
         getMap().get(tolerance).sendKeys(text);
         return this;
     }
@@ -168,13 +168,15 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
     }
 
     /**
-     * Selects the save button
+     * Selects the apply button
      *
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T>       - the return type
+     * @return generic page object
      */
-    public ToleranceSettingsPage save() {
-        saveButton.click();
-        return new ToleranceSettingsPage(driver);
+    public <T> T save(Class<T> className) {
+        pageUtils.waitForElementAndClick(saveButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

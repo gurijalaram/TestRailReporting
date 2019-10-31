@@ -27,11 +27,13 @@ import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
@@ -79,7 +81,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"645", "269"})
+    @TestRail(testCaseId = {"645", "269", "647", "649"})
     @Description("View detailed information about costed process")
     public void testViewProcessDetails() {
         loginPage = new LoginPage(driver);
@@ -97,8 +99,8 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 53.88", "Piece Part Cost (USD): 0.63",
-            "Fully Burdened Cost (USD): 1.06", "Total Capital Investments (USD): 11,783.15"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 53.88", "Piece Part Cost (USD): 0.64",
+            "Fully Burdened Cost (USD): 1.06", "Total Capital Investments (USD): 11,805.76"));
     }
 
     @Test
@@ -422,5 +424,26 @@ public class ProcessRoutingTests extends TestBase {
             .selectProperties()
             .expandDropdown("Technique");
         assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Waterjet Cutting"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"648"})
+    @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
+    public void cycleTime() {
+        loginPage = new LoginPage(driver);
+        processRoutingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Band Saw");
+
+        assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("16 (45%)"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("DoAll 3613-1 Vert"));
+
+        processRoutingPage.selectProcessChart("2 Axis Lathe");
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 19.47"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Virtual 2 Axis Lathe - Small"));
     }
 }

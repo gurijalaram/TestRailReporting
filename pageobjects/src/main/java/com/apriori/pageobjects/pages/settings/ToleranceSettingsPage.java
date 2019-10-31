@@ -76,9 +76,9 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
      *
      * @return current page object
      */
-    public ToleranceSettingsPage selectSpecificDefaultValues() {
-        specificCheckbox.click();
-        return this;
+    public ToleranceValueSettingsPage selectSpecificDefaultValues() {
+        pageUtils.waitForElementAndClick(specificCheckbox);
+        return new ToleranceValueSettingsPage(driver);
     }
 
     /**
@@ -87,7 +87,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
      * @return new page object
      */
     public ToleranceValueSettingsPage editValues() {
-        editValuesButton.click();
+        pageUtils.waitForElementAndClick(editValuesButton);
         return new ToleranceValueSettingsPage(driver);
     }
 
@@ -110,10 +110,21 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
      */
     public ToleranceSettingsPage replaceValues(String minCADValue, String cadReplacementValue) {
         replaceValuesCheckbox.click();
-        pageUtils.clearInput(minCADInput);
+        minCADInput.clear();
         minCADInput.sendKeys(minCADValue);
-        pageUtils.clearInput(cadReplacementInput);
+        cadReplacementInput.clear();
         cadReplacementInput.sendKeys(cadReplacementValue);
+        return this;
+    }
+
+    /**
+     * Unchecks the replace less values option
+     * @return current page object
+     */
+    public ToleranceSettingsPage uncheckReplaceLessValuesButton() {
+        if (replaceValuesCheckbox.getAttribute("value").contains("on")) {
+            replaceValuesCheckbox.click();
+        }
         return this;
     }
 }

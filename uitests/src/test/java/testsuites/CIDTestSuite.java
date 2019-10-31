@@ -31,7 +31,9 @@ import evaluate.designguidance.failures.FailuresWarningsTests;
 import evaluate.designguidance.geometry.GeometryTests;
 import evaluate.designguidance.thread.ThreadTests;
 import evaluate.designguidance.tolerance.ToleranceTests;
+import evaluate.materialutilization.ChangeMaterialSelectionTests;
 import evaluate.materialutilization.ChangeStockSelectionTests;
+import evaluate.materialutilization.MaterialStockTests;
 import explore.ActionsTests;
 import explore.FilterCriteriaTests;
 import explore.PreviewPanelTests;
@@ -57,6 +59,7 @@ import settings.SettingsTests;
     ThreadTests.class,
     ToleranceTests.class,
     ChangeStockSelectionTests.class,
+    ChangeMaterialSelectionTests.class,
     AssemblyUploadTests.class,
     CostAllCadTests.class,
     DeletePrivateScenarioTests.class,
@@ -81,7 +84,8 @@ import settings.SettingsTests;
     PrivateWorkspaceTests.class,
     TableHeadersTests.class,
     LoginTests.class,
-    SettingsTests.class
+    SettingsTests.class,
+    MaterialStockTests.class
 })
 public class CIDTestSuite {
 }

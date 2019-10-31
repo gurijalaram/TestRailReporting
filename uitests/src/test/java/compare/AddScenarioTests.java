@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -22,7 +23,7 @@ import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-public class AddScenarioTests extends TestBase{
+public class AddScenarioTests extends TestBase {
 
     private LoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
@@ -63,18 +64,20 @@ public class AddScenarioTests extends TestBase{
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
+
         comparisonTablePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
-                .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
-                .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
-                .costScenario()
-                .publishScenario()
-                .createNewComparison()
-                .enterComparisonName(new Util().getComparisonName())
-                .save(ComparePage.class)
-                .addScenario()
-                .filterCriteria()
-                .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
-                .apply(ComparisonTablePage.class);
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .createNewComparison()
+            .enterComparisonName(new Util().getComparisonName())
+            .save(ComparePage.class)
+            .addScenario()
+            .filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
+            .apply(ComparisonTablePage.class);
 
         assertThat(comparisonTablePage.findScenario(testScenarioName, "Casting").isDisplayed(), Matchers.is(true));
     }
@@ -85,8 +88,8 @@ public class AddScenarioTests extends TestBase{
     public void comparisonNoScenarioName() {
         loginPage = new LoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
-                .createNewComparison()
-                .save(WarningPage.class);
+            .createNewComparison()
+            .save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));
     }

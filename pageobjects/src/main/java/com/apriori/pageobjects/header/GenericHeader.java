@@ -7,7 +7,6 @@ import com.apriori.pageobjects.pages.evaluate.RevertPage;
 import com.apriori.pageobjects.pages.explore.AssignPage;
 import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.explore.DeletePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.pages.explore.ScenarioPage;
@@ -45,7 +44,7 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = ".dropdown .glyphicons-settings")
     private WebElement actionsDropdown;
 
-    @FindBy(css = "button[data-ap-comp='editScenarioButton']")
+    @FindBy(css = "button[data-ap-comp='editScenarioButton'] span")
     private WebElement editButton;
 
     @FindBy(css = "button[data-ap-comp='saveComparisonAsButton']")
@@ -160,6 +159,7 @@ public class GenericHeader extends PageHeader {
      * @return current page object
      */
     public GenericHeader selectActions() {
+        pageUtils.waitForElementToAppear(deleteButton);
         pageUtils.waitForElementAndClick(actionsDropdown);
         return this;
     }
@@ -181,6 +181,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ScenarioNotesPage selectScenarioInfoNotes() {
+        pageUtils.waitForElementToAppear(deleteButton);
         pageUtils.waitForElementAndClick(actionsDropdown);
         pageUtils.waitForElementAndClick(scenarioNotesButton);
         return new ScenarioNotesPage(driver);
@@ -191,11 +192,10 @@ public class GenericHeader extends PageHeader {
      *
      * @return new page object
      */
-    public ExplorePage publishScenario() {
+    public <T> T publishScenario(Class<T> className) {
         pageUtils.checkElementAttributeEmpty(publishButton, "title");
         pageUtils.waitForElementAndClick(publishButton);
-        new PublishPage(driver).selectPublishButton();
-        return new ExplorePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

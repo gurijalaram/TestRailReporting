@@ -3,6 +3,7 @@ package evaluate;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -39,7 +40,8 @@ public class PublishNewCostedTests extends TestBase {
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .publishScenario();
+            .publishScenario(PublishPage.class)
+            .selectPublishButton();
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, partName) > 0, is(true));
     }

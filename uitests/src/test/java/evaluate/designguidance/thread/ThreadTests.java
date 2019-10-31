@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
@@ -269,7 +270,8 @@ public class ThreadTests extends TestBase {
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .openScenario(testScenarioName, "CurvedWall")
             .openDesignGuidance()
             .openInvestigationTab()
@@ -334,12 +336,13 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Issue("AP-56325")
+    @TestRail(testCaseId = {"42"})
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
             .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
@@ -349,10 +352,15 @@ public class ThreadTests extends TestBase {
             .selectInvestigationTopic("Threading");
 
         assertThat(investigationPage.getThreadHeader("(mm)"), is(true));
+
+        investigationPage = new InvestigationPage(driver);
+        threadingPage = investigationPage.editThread("Simple Holes", "SimpleHole:1");
+        assertThat(threadingPage.isThreadLength("20"), is(true));
     }
 
     @Test
     @Issue("AP-56325")
+    @TestRail(testCaseId = {"37", "41"})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
@@ -363,7 +371,7 @@ public class ThreadTests extends TestBase {
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:27")
+            .editThread("Simple Holes", "SimpleHole:1")
             .selectThreadDropdown("Yes")
             .enterThreadLength("4.85")
             .apply(InvestigationPage.class);
@@ -378,7 +386,7 @@ public class ThreadTests extends TestBase {
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:27");
+            .editThread("Simple Holes", "SimpleHole:1");
 
         assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }

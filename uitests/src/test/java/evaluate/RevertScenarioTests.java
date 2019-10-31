@@ -36,7 +36,7 @@ public class RevertScenarioTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
-            .costScenario()
+            .costScenario(3)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .revert()
@@ -55,7 +55,7 @@ public class RevertScenarioTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
-            .costScenario()
+            .costScenario(3)
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .revert()
             .revertScenario(EvaluatePage.class);

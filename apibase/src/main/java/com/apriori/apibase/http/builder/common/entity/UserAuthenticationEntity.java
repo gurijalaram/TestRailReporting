@@ -1,6 +1,5 @@
 package com.apriori.apibase.http.builder.common.entity;
 
-import com.apriori.utils.enums.UsersEnum;
 
 /**
  * The class is intended to hold necessary user data to be able to login with a user through internal API.
@@ -26,11 +25,6 @@ public class UserAuthenticationEntity {
         this.alreadyLoggedIn = false;
     }
 
-    public UserAuthenticationEntity(UsersEnum usersEnum) {
-        this.emailAddress = usersEnum.getUsername();
-        this.password = usersEnum.getPassword();
-        this.alreadyLoggedIn = false;
-    }
 
     public UserAuthenticationEntity(String emailAddress, String sessionId, boolean alreadyLoggedIn) {
         this.emailAddress = emailAddress;

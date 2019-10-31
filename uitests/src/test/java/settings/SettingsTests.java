@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -43,8 +44,6 @@ public class SettingsTests extends TestBase {
     private MoreInputsPage moreInputsPage;
     private SelectionSettingsPage selectionSettingsPage;
     private WarningPage warningPage;
-
-    private final String NO_DEFAULT = "<No default specified>";
 
     @After
     public void resetAllSettings() {
@@ -101,7 +100,8 @@ public class SettingsTests extends TestBase {
         evaluatePage = settingsPage.save(ExplorePage.class)
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .openJobQueue()
             .openScenarioLink(testScenarioName, "bracket_basic", "publish");
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), CoreMatchers.is(true));

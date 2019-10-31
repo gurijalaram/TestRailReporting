@@ -2,7 +2,7 @@ package com.apriori.pageobjects.utils;
 
 import com.apriori.apibase.http.builder.common.response.common.WorkSpaceSearchWrapper;
 import com.apriori.utils.constants.Constants;
-import com.apriori.utils.enums.UsersEnum;
+//import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.enums.WorkOrderScenarioTypeEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 
@@ -15,32 +15,33 @@ public class WorkOrderRequestEntity {
     private String baseURL = Constants.url;
     private String username;
     private String password;
-    private UsersEnum usersEnum;
+//    private UsersEnum usersEnum;
     private String scenarioName;
     private WorkSpaceSearchWrapper workSpaceSearchWrapper;
     private List<WorkspaceEnum> workspace = Collections.singletonList(WorkspaceEnum.PRIVATE_API);
     private WorkOrderScenarioTypeEnum scenarioType = WorkOrderScenarioTypeEnum.PART;
     private boolean includeAllStateIterations = false;
 
-    /**
-     * Init default request for the PART in workspace
-     * @param usersEnum
-     * @param scenarioName
-     * @return
-     */
-    public static WorkOrderRequestEntity defaultRequestByUserEnum(UsersEnum usersEnum, String scenarioName) {
-        return new WorkOrderRequestEntity(usersEnum, scenarioName);
-    }
+//    /**
+//     * Init default request for the PART in workspace
+//     * @param usersEnum
+//     * @param scenarioName
+//     * @return
+//     */
+//    public static WorkOrderRequestEntity defaultRequestByUserEnum(UsersEnum usersEnum, String scenarioName) {
+//        return new WorkOrderRequestEntity(usersEnum, scenarioName);
+//    }
 
     public static WorkOrderRequestEntity defaultRequestByCustomCredentials(String username, String password, String scenarioName) {
         return new WorkOrderRequestEntity(username, password, scenarioName);
     }
 
-    private WorkOrderRequestEntity(UsersEnum usersEnum, String scenarioName) {
-        this.username = usersEnum.getUsername();
-        this.password = usersEnum.getPassword();
-        this.scenarioName = scenarioName;
-    }
+//    //TODO
+//    private WorkOrderRequestEntity(UsersEnum usersEnum, String scenarioName) {
+//        this.username = usersEnum.getUsername();
+//        this.password = usersEnum.getPassword();
+//        this.scenarioName = scenarioName;
+//    }
 
     public WorkOrderRequestEntity(String username, String password, String scenarioName) {
         this.username = username;
@@ -93,14 +94,14 @@ public class WorkOrderRequestEntity {
         return this;
     }
 
-    public UsersEnum getUsersEnum() {
-        return usersEnum;
-    }
-
-    public WorkOrderRequestEntity setUsersEnum(UsersEnum usersEnum) {
-        this.usersEnum = usersEnum;
-        return this;
-    }
+//    public UsersEnum getUsersEnum() {
+//        return usersEnum;
+//    }
+//
+//    public WorkOrderRequestEntity setUsersEnum(UsersEnum usersEnum) {
+//        this.usersEnum = usersEnum;
+//        return this;
+//    }
 
     public List<String> getWorkspace() {
         return workspace.stream().map(WorkspaceEnum::getWorkspace).collect(Collectors.toList());

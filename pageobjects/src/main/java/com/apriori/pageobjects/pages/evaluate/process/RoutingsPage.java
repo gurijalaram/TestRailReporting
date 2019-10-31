@@ -11,8 +11,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -25,9 +26,6 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
     @FindBy(css = "div[data-ap-comp='routingSelectionTable'] td")
     private WebElement routingTableCell;
 
-    @FindBy(css = "div[data-ap-comp='routingSelectionTable'] td")
-    private List<WebElement> routingTableCells;
-
     @FindBy(css = "label[data-ap-field='lastCostedLabel']")
     private WebElement costedRouting;
 
@@ -39,6 +37,9 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
     @FindBy(css = "div[data-ap-comp='routingSelectionTable'] div.v-grid-scroller-vertical")
     private WebElement routingScroller;
+
+    @FindBy(css = "div[data-ap-comp='routingSelectionTable'] tr.v-grid-row-has-data")
+    private List<WebElement> routingTableRows;
 
     @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
@@ -115,7 +116,9 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      * @return list of routings
      */
     public List<String> getRoutings() {
-        return routingTableCells.stream().map(WebElement::getText).collect(Collectors.toList());
+        List<String> routingCell = new ArrayList<>();
+        routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
+        return routingCell;
     }
 
     /**

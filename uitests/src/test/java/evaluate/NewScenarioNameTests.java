@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -68,7 +69,8 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), CoreMatchers.is(true));
 
         evaluatePage.costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .highlightScenario(testScenarioName, "partbody_2");
 
@@ -96,17 +98,20 @@ public class NewScenarioNameTests extends TestBase {
         explorePage = explorePage.uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .refreshCurrentPage()
             .uploadFile(ScenarioB, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .refreshCurrentPage()
             .uploadFile(ScenarioC, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "MultiUpload")
             .apply(ExplorePage.class);
