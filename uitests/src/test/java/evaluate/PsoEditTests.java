@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.process.ProcessOptionsPage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -21,7 +21,7 @@ public class PsoEditTests extends TestBase {
 
     private LoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private ProcessOptionsPage processOptionsPage;
+    private ProcessSetupOptionsPage processSetupOptionsPage;
     private ProcessRoutingPage processRoutingPage;
 
     @Test
@@ -29,7 +29,7 @@ public class PsoEditTests extends TestBase {
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
         loginPage = new LoginPage(driver);
-        processOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(3)
@@ -47,15 +47,15 @@ public class PsoEditTests extends TestBase {
         processRoutingPage.closeProcessPanel();
 
         evaluatePage = new EvaluatePage(driver);
-        processOptionsPage = evaluatePage.costScenario()
+        processSetupOptionsPage = evaluatePage.costScenario()
             .openProcessDetails()
             .selectProcessChart("Injection Molding")
             .selectOptions();
 
-        assertThat(processOptionsPage.getDefinedValueDropdown("8"), is(true));
-        assertThat(processOptionsPage.isNominalOverride("0.4"), is(true));
-        assertThat(processOptionsPage.isAddColorantSelected("checked"), is("true"));
-        assertThat(processOptionsPage.isMaterialRegrind("0.3"), is(true));
+        assertThat(processSetupOptionsPage.getDefinedValueDropdown("8"), is(true));
+        assertThat(processSetupOptionsPage.isNominalOverride("0.4"), is(true));
+        assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.isMaterialRegrind("0.3"), is(true));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class PsoEditTests extends TestBase {
     @Description("Die Casting edit PSO")
     public void DieCastPSO() {
         loginPage = new LoginPage(driver);
-        processOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting-Die.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -78,14 +78,14 @@ public class PsoEditTests extends TestBase {
         processRoutingPage.closeProcessPanel();
 
         evaluatePage = new EvaluatePage(driver);
-        processOptionsPage = evaluatePage.costScenario()
+        processSetupOptionsPage = evaluatePage.costScenario()
             .openProcessDetails()
             .selectProcessChart("High Pressure Die Casting")
             .selectOptions();
 
-        assertThat(processOptionsPage.isOptimizeForMinimumCostSelected("checked"), is("true"));
-        assertThat(processOptionsPage.getMoldMaterial("AISI P20"), is(true));
-        assertThat(processOptionsPage.getSelectedPartTolerance("Low Tolerance +/-0.254 (+/-0.010\")"), is(true));
+        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.getMoldMaterial("AISI P20"), is(true));
+        assertThat(processSetupOptionsPage.getSelectedPartTolerance("Low Tolerance +/-0.254 (+/-0.010\")"), is(true));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class PsoEditTests extends TestBase {
     @Description("Sand Casting edit PSO")
     public void SandCastPSO() {
         loginPage = new LoginPage(driver);
-        processOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SandCast.x_t"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
@@ -107,20 +107,20 @@ public class PsoEditTests extends TestBase {
         processRoutingPage.closeProcessPanel();
 
         evaluatePage = new EvaluatePage(driver);
-        processOptionsPage = evaluatePage.costScenario()
+        processSetupOptionsPage = evaluatePage.costScenario()
             .openProcessDetails()
             .selectProcessChart("Vertical Automatic")
             .selectOptions();
 
-        assertThat(processOptionsPage.isOptimizeForMinimumCostSelected("checked"), is("true"));
-        assertThat(processOptionsPage.getMoldMaterial("Plastic"), is(true));
+        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.getMoldMaterial("Plastic"), is(true));
     }
     @Test
     @TestRail(testCaseId = {"768"})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void MachiningPSO() {
         loginPage = new LoginPage(driver);
-        processOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -133,12 +133,12 @@ public class PsoEditTests extends TestBase {
         processRoutingPage.closeProcessPanel();
 
         evaluatePage = new EvaluatePage(driver);
-        processOptionsPage = evaluatePage.costScenario()
+        processSetupOptionsPage = evaluatePage.costScenario()
             .openProcessDetails()
             .selectProcessChart("Band Saw")
             .selectOptions();
 
-        assertThat(processOptionsPage.isBundleCount("3"), is(true));
+        assertThat(processSetupOptionsPage.isBundleCount("3"), is(true));
     }
 
     @Test
@@ -146,7 +146,7 @@ public class PsoEditTests extends TestBase {
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void PowderMetalPSO() {
         loginPage = new LoginPage(driver);
-        processOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
@@ -159,12 +159,12 @@ public class PsoEditTests extends TestBase {
         processRoutingPage.closeProcessPanel();
 
         evaluatePage = new EvaluatePage(driver);
-        processOptionsPage = evaluatePage.costScenario()
+        processSetupOptionsPage = evaluatePage.costScenario()
             .openProcessDetails()
             .selectProcessChart("Compaction Pressing")
             .selectOptions();
 
-        assertThat(processOptionsPage.isMaterialAllowance("0.611"), is(true));
+        assertThat(processSetupOptionsPage.isMaterialAllowance("0.611"), is(true));
     }
 
     @Test
@@ -172,7 +172,7 @@ public class PsoEditTests extends TestBase {
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
     public void SheetPlasticPSO() {
         loginPage = new LoginPage(driver);
-        processOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("sheet_plastic.STEP"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .costScenario()
@@ -185,11 +185,11 @@ public class PsoEditTests extends TestBase {
         processRoutingPage.closeProcessPanel();
 
         evaluatePage = new EvaluatePage(driver);
-        processOptionsPage = evaluatePage.costScenario()
+        processSetupOptionsPage = evaluatePage.costScenario()
             .openProcessDetails()
             .selectProcessChart("4 Cavities Drape Forming")
             .selectOptions();
 
-        assertThat(processOptionsPage.isCoolingTime("150.29"), is(true));
+        assertThat(processSetupOptionsPage.isCoolingTime("150.29"), is(true));
     }
 }

@@ -22,7 +22,6 @@ import evaluate.PublishExistingCostedTests;
 import evaluate.PublishNewCostedTests;
 import evaluate.ReCostScenarioTests;
 import evaluate.RevertScenarioTests;
-import evaluate.SecondaryProcessPSOTests;
 import evaluate.SecondaryProcessTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCMachiningTests;
@@ -86,8 +85,7 @@ import settings.SettingsTests;
     TableHeadersTests.class,
     LoginTests.class,
     SettingsTests.class,
-    MaterialStockTests.class,
-    SecondaryProcessPSOTests.class
+    MaterialStockTests.class
 })
 public class CIDTestSuite {
 }
