@@ -29,7 +29,7 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
     private WebElement calculatedValueRadioButton;
 
     @FindBy(css = "input[data-ap-comp='partThickness.radioButtons.user']")
-    private WebElement overrideRadioButton;
+    private WebElement overridePartThicknessRadioButton;
 
     @FindBy(css = "input[data-ap-field='partThickness.modeValues.user.value']")
     private WebElement partThicknessInput;
@@ -131,7 +131,7 @@ public class SecondaryOptionsPage extends SecondaryProcessPage {
      * @return current page object
      */
     public SecondaryOptionsPage selectOverrideButton() {
-        pageUtils.waitForElementToAppear(overrideRadioButton).click();
+        pageUtils.waitForElementToAppear(overridePartThicknessRadioButton).click();
         return this;
     }
 

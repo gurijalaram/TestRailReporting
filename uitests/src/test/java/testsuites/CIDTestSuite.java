@@ -3,10 +3,10 @@ package testsuites;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import compare.AddScenarioTests;
-import compare.SaveAsComparisonTests;
 import compare.DeleteComparisonTests;
 import compare.EditPublicComparisonTests;
 import compare.PublishComparisonTests;
+import compare.SaveAsComparisonTests;
 import evaluate.AssemblyUploadTests;
 import evaluate.CostAllCadTests;
 import evaluate.DeletePrivateScenarioTests;
@@ -22,6 +22,7 @@ import evaluate.PublishExistingCostedTests;
 import evaluate.PublishNewCostedTests;
 import evaluate.ReCostScenarioTests;
 import evaluate.RevertScenarioTests;
+import evaluate.SecondaryProcessPSOTests;
 import evaluate.SecondaryProcessTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCMachiningTests;
@@ -85,7 +86,8 @@ import settings.SettingsTests;
     TableHeadersTests.class,
     LoginTests.class,
     SettingsTests.class,
-    MaterialStockTests.class
+    MaterialStockTests.class,
+    SecondaryProcessPSOTests.class
 })
 public class CIDTestSuite {
 }
