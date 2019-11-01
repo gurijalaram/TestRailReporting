@@ -47,6 +47,9 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     @FindBy(css = "input[data-ap-field='nominalWallThickness.modeValues.userOverride.value']")
     private WebElement overrideInput;
 
+    @FindBy(css = "input[data-ap-field='bundleSawingCount.modeValues.userOverride.value']")
+    private WebElement overrideBundleInput;
+
     @FindBy(css = "input[data-ap-comp='colorantAdd.radioButtons.defaultColorant']")
     private WebElement noColorantRadioButton;
 
@@ -67,6 +70,15 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     @FindBy(css = "input[data-ap-field='regrindAmount.modeValues.userDefinedMode.value']")
     private WebElement materialRegrindInput;
+
+    @FindBy(css = "input[data-ap-field='coolingTime.modeValues.user.value']")
+    private WebElement coolingTimeInput;
+
+    @FindBy(css = "input[data-ap-field='materialAllowance.modeValues.userOverride.value']")
+    private WebElement materialAllowanceInput;
+
+    @FindBy(css = "select[data-ap-field='partTolerance.modeValues.defaultTolerance.storedListValue']")
+    private WebElement partToleranceDropdown;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -129,6 +141,15 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
+     * Check Optimize for minimum cost is selected
+     *
+     * @return current page object
+     */
+    public String isOptimizeForMinimumCostSelected(String attribute) {
+        return pageUtils.waitForElementToAppear(optimizeRadioButton).getAttribute(attribute);
+    }
+
+    /**
      * Selects user defined value dropdown for number of cavities
      *
      * @param option - the option
@@ -140,14 +161,12 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
     }
 
     /**
-     * Checks the user defined value dropdown for number of cavities
+     * Gets the selected user defined value dropdown for number of cavities
      *
-     * @param option - the option
-     * @return current page object
+     * @return
      */
-    public ProcessOptionsPage getDefinedValueDropdown(String option) {
-        pageUtils.selectDropdownOption(definedValueDropdown, option);
-        return this;
+    public Boolean getDefinedValueDropdown(String text) {
+        return pageUtils.checkElementFirstOption(definedValueDropdown, text);
     }
 
     /**
@@ -156,9 +175,18 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
      * @param option - the option
      * @return current page object
      */
-    public ProcessOptionsPage selectMaterialDropdown(String option) {
+    public ProcessOptionsPage selectMoldMaterialDropdown(String option) {
         pageUtils.selectDropdownOption(moldMaterialDropdown, option);
         return this;
+    }
+
+    /**
+     * Gets the selected Mold Material
+     *
+     * @return
+     */
+    public Boolean getMoldMaterial(String text) {
+        return pageUtils.checkElementFirstOption(moldMaterialDropdown, text);
     }
 
     /**
@@ -222,6 +250,48 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
      */
     public Boolean isNominalOverride(String text) {
         return checkAttribute(overrideInput, text);
+    }
+
+    /**
+     * Sets the override value for bundle count
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public ProcessOptionsPage setBundleCountOverride(String value) {
+        setInput(overrideBundleInput, value);
+        return this;
+    }
+
+    /**
+     * Checks the user override value for bundle count
+     *
+     * @param text - the value
+     * @return true/false
+     */
+    public Boolean isBundleCount(String text) {
+        return checkAttribute(overrideBundleInput, text);
+    }
+
+    /**
+     * Sets the override value for Material Allowance (Piece Part Cost Driver) (mm)
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public ProcessOptionsPage setMaterialAllowanceOverride(String value) {
+        setInput(materialAllowanceInput, value);
+        return this;
+    }
+
+    /**
+     * Checks the user override value for Material Allowance
+     *
+     * @param text - the value
+     * @return true/false
+     */
+    public Boolean isMaterialAllowance(String text) {
+        return checkAttribute(materialAllowanceInput, text);
     }
 
     /**
@@ -325,6 +395,27 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
         return checkAttribute(materialRegrindInput, text);
     }
 
+    /**
+     * Sets the cooling time user defined value
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public ProcessOptionsPage setCoolingtimeInput(String value) {
+        setInput(coolingTimeInput, value);
+        return this;
+    }
+
+    /**
+     * Checks cooling tme user defined value
+     *
+     * @param text - the value
+     * @return true/false
+     */
+    public Boolean isCoolingTime(String text) {
+        return checkAttribute(coolingTimeInput, text);
+    }
+
     private void setInput(WebElement locator, String value) {
         pageUtils.waitForElementToAppear(locator).clear();
         locator.sendKeys(value);
@@ -332,5 +423,25 @@ public class ProcessOptionsPage extends LoadableComponent<ProcessOptionsPage> {
 
     private Boolean checkAttribute(WebElement locator, String text) {
         return pageUtils.checkElementAttribute(locator, "value", text);
+    }
+
+    /**
+     * Selects part tolerance dropdown
+     *
+     * @param option - the option
+     * @return current page object
+     */
+    public ProcessOptionsPage selectPartToleranceDropdown(String option) {
+        pageUtils.selectDropdownOption(partToleranceDropdown, option);
+        return this;
+    }
+
+    /**
+     * Gets the selected Part Tolerance
+     *
+     * @return
+     */
+    public Boolean getSelectedPartTolerance(String text) {
+        return pageUtils.checkElementFirstOption(partToleranceDropdown, text);
     }
 }

@@ -40,6 +40,9 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
 
+    @FindBy(css = "[data-ap-field='assignee']")
+    private WebElement assigneeField;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -181,13 +184,15 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     }
 
     /**
-     * Selects the apply button
+     * Selects the save button
      *
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T>       - the return type
+     * @return generic page object
      */
-    public ExplorePage save() {
+    public <T> T save(Class<T> className) {
         pageUtils.waitForElementAndClick(saveButton);
-        return new ExplorePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -198,5 +203,14 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     public ExplorePage cancel() {
         cancelButton.click();
         return new ExplorePage(driver);
+    }
+
+    /**
+     * Checks the assignee
+     *
+     * @return the assignee as string
+     */
+    public Boolean isAssignee(String text) {
+        return pageUtils.checkElementAttribute(assigneeField, "value", text);
     }
 }
