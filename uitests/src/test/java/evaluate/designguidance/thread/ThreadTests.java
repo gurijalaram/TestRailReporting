@@ -365,13 +365,13 @@ public class ThreadTests extends TestBase {
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(3)
+            .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Simple Holes", "SimpleHole:1")
+            .editThread("Curved Walls", "CurvedWall:1")
             .selectThreadDropdown("Yes")
             .enterThreadLength("4.85")
             .apply(InvestigationPage.class);
@@ -382,11 +382,11 @@ public class ThreadTests extends TestBase {
         threadingPage = evaluatePage.openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
-            .costScenario(3)
+            .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .editThread("Simple Holes", "SimpleHole:1");
+            .editThread("Curved Walls", "CurvedWall:1");
 
         assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }

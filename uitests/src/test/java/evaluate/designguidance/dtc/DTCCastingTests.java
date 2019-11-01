@@ -130,25 +130,25 @@ public class DTCCastingTests extends TestBase {
         guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(3)
+            .costScenario()
             .openDesignGuidance()
             .expandGuidancePanel()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:6");
+            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:6");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
         assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("89")));
 
-        guidancePage.selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
+        guidancePage.selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
         assertThat(guidancePage.getGuidanceMessage(), containsString("High Pressure Die Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Material  Issue", "Maximum Wall Thickness", "Component:1");
+        guidancePage.selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
         assertThat(guidancePage.getGuidanceMessage(), containsString("High Pressure Die Casting is not feasible. Part Thickness is more than the maximum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Radius  Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
+        guidancePage.selectIssueTypeAndGCD("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
         assertThat(guidancePage.getGuidanceMessage(), containsString("High Pressure Die Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Hole  Issue", "Minimum Hole Diameter", "SimpleHole:12");
+        guidancePage.selectIssueTypeAndGCD("Hole Issue", "Minimum Hole Diameter", "SimpleHole:12");
         assertThat(guidancePage.getGuidanceMessage(), containsString("High Pressure Die Casting is not feasible. Hole Diameter is less than the minimum limit with this material."));
     }
 
@@ -166,24 +166,24 @@ public class DTCCastingTests extends TestBase {
         guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(3)
+            .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Gravity Die Cast")
             .apply()
             .closeProcessPanel()
-            .costScenario(2)
+            .costScenario()
             .openDesignGuidance()
             .expandGuidancePanel()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft  Issue, Draft Angle", "Curved Walls", "CurvedWall:7");
+            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:7");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
-        guidancePage.selectIssueTypeAndGCD("Material  Issue", "Minimum Wall Thickness", "Component:1");
+        guidancePage.selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Gravity Die Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Radius  Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
+        guidancePage.selectIssueTypeAndGCD("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Gravity Die Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
     }
 
