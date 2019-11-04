@@ -161,6 +161,9 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
     @FindBy(css = "input[data-ap-comp='numMasks.radioButtons.userOverride']")
     private WebElement maskFeatureRadioButton;
 
+    @FindBy(css = "input[data-ap-field='partsPerLoadWindow.modeValues.user.value']")
+    private WebElement componentsPerLoadInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -648,6 +651,15 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
         setInput(maskFeaturesInput, text);
         return this;
     }
+    /**
+     * Check no masking button is selected
+     *
+     * @return current page object
+     */
+    public String isNoMaskingSelected(String attribute) {
+        return pageUtils.waitForElementToAppear(noMaskingRadioButton).getAttribute(attribute);
+    }
+
 
     /**
      * Checks mask feature input
@@ -817,7 +829,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return current page object
      */
-    public ProcessSetupOptionsPage setMaksedFeaturesInput(String text) {
+    public ProcessSetupOptionsPage setMaskedFeaturesInput(String text) {
         setInput(maskModeInput, text);
         return this;
     }
@@ -830,5 +842,26 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      */
     public Boolean isMaskedFeatures(String text) {
         return checkAttribute(maskModeInput, text);
+    }
+
+    /**
+     * Set parts per load
+     *
+     * @param text - the text
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage setComponentsPerLoad(String text) {
+        setInput(componentsPerLoadInput, text);
+        return this;
+    }
+
+    /**
+     * Checks components per load
+     *
+     * @param text - the text
+     * @return true false
+     */
+    public Boolean isComponentsPerLoad(String text) {
+        return checkAttribute(componentsPerLoadInput, text);
     }
 }
