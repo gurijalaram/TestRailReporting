@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -18,7 +19,9 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
@@ -33,6 +36,7 @@ public class SecondaryProcessTests extends TestBase {
     private SettingsPage settingsPage;
     private SecondaryProcessPage secondaryProcessPage;
     private ProcessRoutingPage processRoutingPage;
+    private ProcessSetupOptionsPage processSetupOptionsPage;
 
     public SecondaryProcessTests() {
         super();
@@ -44,21 +48,32 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"679"})
     @Description("Test secondary process leak test")
     public void secondaryProcessLeakTest() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("ABS, 10% Glass")
-            .apply()
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .openSecondaryProcess()
-            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
-            .apply()
-            .costScenario();
+            .highlightSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
+            .selectOverrideButton()
+            .setPartThickness("0.21");
 
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        evaluatePage = secondaryProcessPage.apply()
+            .costScenario();
         assertThat(evaluatePage.isProcessRoutingDetails("Hydrostatic Leak Testing"), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        processSetupOptionsPage = evaluatePage.openProcessDetails()
+            .selectProcessChart("Hydrostatic Leak Testing")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.isPartThickness("0.21"), is(true));
+
+
     }
 
     @Test
@@ -80,6 +95,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"687", "688"})
     @Description("Test secondary process Carburize")
     public void secondaryProcessCarburize() {
         loginPage = new LoginPage(driver);
@@ -93,62 +109,99 @@ public class SecondaryProcessTests extends TestBase {
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carburize")
             .apply()
             .costScenario();
-
         assertThat(evaluatePage.isProcessRoutingDetails("Carburize"), is(true));
+
+        new EvaluatePage(driver).openProcessDetails()
+            .selectProcessChart("Carburize")
+            .selectOptions()
+            .setCaseOverrideInput("0.46")
+            .setMaskedFeaturesInput("1");
+
+        processRoutingPage = new ProcessRoutingPage(driver);
+        processSetupOptionsPage = processRoutingPage.closeProcessPanel()
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Carburize")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.isCaseOverride("0.46"), is(true));
+        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
     }
 
     @Test
+    @TestRail(testCaseId = {"690"})
     @Description("Test secondary process Atmosphere Oil Harden")
     public void secondaryProcessAtmosphereOilHarden() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden")
-            .apply()
-            .costScenario();
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden")
+            .setMaskedFeaturesInput("2");
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Atmosphere Oil Harden"), is(true));
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("2"), is(true));
     }
 
     @Test
+    @TestRail(testCaseId = {"696"})
     @Description("Test secondary process Standard Anneal")
     public void secondaryProcessStandardAnneal() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Standard Anneal")
-            .apply()
-            .costScenario();
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Standard Anneal")
+            .selectNumMaskedFeaturesButton()
+            .setMaskedFeaturesInput("1");
 
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        evaluatePage = secondaryProcessPage.apply()
+            .costScenario();
         assertThat(evaluatePage.isProcessRoutingDetails("Standard Anneal"), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        processSetupOptionsPage = evaluatePage.openProcessDetails()
+            .selectProcessChart("Standard Anneal")
+            .selectOptions();
+        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
     }
 
     @Test
+    @TestRail(testCaseId = {"700"})
     @Description("Test secondary process Vacuum Temper")
     public void secondaryProcessVacuumTemper() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
             .apply()
             .openSecondaryProcess()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper")
-            .apply()
-            .costScenario();
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper")
+            .setMaskedFeaturesInput("3");
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Vacuum Temper"), is(true));
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("3"), is(true));
     }
 
     @Test
@@ -228,8 +281,71 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Powder Coat Cart");
 
         assertThat(processRoutingPage.getProcessPercentage(), hasItem("38 (77%)"));
+    }
 
+    @Test
+    @TestRail(testCaseId = {"680", "681", "682"})
+    @Description("Test secondary process powder coat cart PSO")
+    public void psoPowderCoatCart() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Stainless Steel, Stock, 440B")
+            .apply()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
+            .selectFractionButton()
+            .setFractionPainted("0.3")
+            .selectNoMaskingButton()
+            .setSpecifyPainted("414")
+            .setSpecifiedInput("2");
 
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Powder Coat Cart")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.isFractionPainted("0.3"), is(true));
+        assertThat(processSetupOptionsPage.isNoMaskingSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.isSpecifyPainted("414"), is(true));
+        assertThat(processSetupOptionsPage.isSpecified("2"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"683", "684", "685", "686"})
+    @Description("Test secondary process wet coat line PSO")
+    public void psoWetCoatLine() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .openSecondaryProcess()
+            .selectSecondaryProcess("Surface Treatment, Paint", "Wet Coat Line")
+            .apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Surface Treatment, Paint", "Wet Coat Line")
+            .selectFractionButton()
+            .setFractionPainted("0.40")
+            .setMaskFeatures("1")
+            .setSpecifyPainted("254")
+            .setComponentsPerLoad("1");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Wet Coat Line")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.isFractionPainted("0.4"), is(true));
+        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.isSpecifyPainted("254"), is(true));
+        assertThat(processSetupOptionsPage.isComponentsPerLoad("1"), is(true));
     }
 
     @Test
@@ -313,5 +429,212 @@ public class SecondaryProcessTests extends TestBase {
             .findSecondaryProcess("High Pressure Die Cast", "Trim");
 
         assertThat(secondaryProcessPage.getCheckboxStatus("Trim"), containsString("disabled"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"689"})
+    @Description("Test secondary process Carbonitride")
+    public void secondaryProcessCarbonitride() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
+            .apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride")
+            .setMaskedFeaturesInput("1");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"691"})
+    @Description("Test secondary process Vacuum air harden")
+    public void secondaryProcessVacuumAirHarden() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
+            .apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden")
+            .setMaskedFeaturesInput("2");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("2"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"692"})
+    @Description("Test secondary process Vacuum Air Harden with High Temper")
+    public void secondaryProcessVacuumAirHardenHighTemp() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
+            .apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper")
+            .setMaskedFeaturesInput("1");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"693"})
+    @Description("Test secondary process Spring steel")
+    public void secondaryProcessSpringSteel() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden")
+            .setMaskedFeaturesInput("3");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("3"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"694"})
+    @Description("Test secondary process Stainless steel")
+    public void secondaryProcessStainlessSteel() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden")
+            .setMaskedFeaturesInput("1");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"695"})
+    @Description("Test secondary process High Speed Steel Harden")
+    public void secondaryProcessHighSpeedSteel() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden")
+            .setMaskedFeaturesInput("3");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("3"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"697"})
+    @Description("Test secondary process Low Temp Vacuum Anneal")
+    public void secondaryProcessLowTempVacuumAnneal() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal")
+            .setMaskedFeaturesInput("4");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("4"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"698"})
+    @Description("Test secondary process High Temp Vacuum Anneal")
+    public void secondaryProcessHighTempVacuumAnneal() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal")
+            .setMaskedFeaturesInput("2");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("2"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"699"})
+    @Description("Test secondary process Standard Temper")
+    public void secondaryProcessStandardTemper() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper")
+            .setMaskedFeaturesInput("1");
+
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        processSetupOptionsPage = secondaryProcessPage.apply()
+            .costScenario()
+            .openSecondaryProcess()
+            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper");
+
+        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
     }
 }

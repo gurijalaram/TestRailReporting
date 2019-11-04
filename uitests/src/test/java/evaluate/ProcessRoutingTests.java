@@ -4,8 +4,8 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -98,8 +98,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 53.88", "Piece Part Cost (USD): 0.63",
-            "Fully Burdened Cost (USD): 1.06", "Total Capital Investments (USD): 11,783.15"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), is(equalTo("Cycle Time (s): 53.88, Piece Part Cost (USD): 0.64, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,805.76")));
     }
 
     @Test
@@ -439,11 +438,11 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessChart("Band Saw");
 
         assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("16 (45%)"));
-        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("DoAll 3613-1 Vert"));
+        assertThat(processRoutingPage.isMachineName("DoAll 3613-1 Vert"), is(true));
 
         processRoutingPage.selectProcessChart("2 Axis Lathe");
-        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Cycle Time (s): 19.47"));
-        assertThat(processRoutingPage.getSelectionTableDetails(), arrayContaining("Virtual 2 Axis Lathe - Small"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 19.47"));
+        assertThat(processRoutingPage.isMachineName("Virtual 2 Axis Lathe - Small"), is(true));
     }
 
     @Test

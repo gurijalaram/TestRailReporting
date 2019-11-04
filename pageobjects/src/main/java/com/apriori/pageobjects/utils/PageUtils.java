@@ -565,8 +565,8 @@ public class PageUtils {
      * @param locator - the locator of the element
      * @return
      */
-    public void waitForElementNotDisplayed(WebElement locator, int timeoutInMinutes) {
-        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
+    public void waitForElementNotDisplayed(WebElement locator, double timeoutInMinutes) {
+        new WebDriverWait(driver, (long) (BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
             .ignoreAll(ignoredWebDriverExceptions)
             .until(not((ExpectedCondition<Boolean>) element -> (locator).isDisplayed()));
     }
@@ -579,9 +579,15 @@ public class PageUtils {
      * @return true/false
      */
     public Boolean checkElementContains(WebElement locator, String text) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        try {
+            return new WebDriverWait(driver, timeoutInMinutes)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        throw new AssertionError("\nWaited for: " + timeoutInMinutes + "(s)\nExpected: " + text + "\nFound: " + locator.getText());
     }
 
     /**

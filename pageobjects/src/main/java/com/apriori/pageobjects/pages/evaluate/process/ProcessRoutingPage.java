@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -61,6 +62,9 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
 
     @FindBy(xpath = "//label[.='Options']")
     private WebElement optionsTab;
+
+    @FindBy(css = "[data-ap-field='machineName']")
+    private WebElement machineName;
 
     @FindBy(css = ".costing-out-of-date-title")
     private List<WebElement> outOfDateMsg;
@@ -132,8 +136,8 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      *
      * @return list as string
      */
-    public String[] getSelectionTableDetails() {
-        return pageUtils.waitForElementToAppear(processSelectionTable).getText().split("\n");
+    public String getSelectionTableDetails() {
+        return Arrays.toString(pageUtils.waitForElementToAppear(processSelectionTable).getText().split("\n"));
     }
 
     /**
@@ -179,9 +183,18 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      *
      * @return new page object
      */
-    public ProcessOptionsPage selectOptions() {
+    public ProcessSetupOptionsPage selectOptions() {
         pageUtils.waitForElementAndClick(optionsTab);
-        return new ProcessOptionsPage(driver);
+        return new ProcessSetupOptionsPage(driver);
+    }
+
+    /**
+     * Checks the machine name
+     * @param name - the value
+     * @return true/false
+     */
+    public Boolean isMachineName(String name) {
+        return pageUtils.checkElementAttribute(machineName, "innerText", name);
     }
 
     /**

@@ -35,7 +35,7 @@ public class ActionsTests extends TestBase {
     @Category(CustomerSmokeTests.class)
     @Test
     @Issue("BA-843")
-    @TestRail(testCaseId = {"545", "731", "738", "1610"})
+    @TestRail(testCaseId = {"545", "731", "738", "1610", "742"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
 
@@ -54,7 +54,7 @@ public class ActionsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.selectScenarioInfoNotes()
             .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
-            .save()
+            .save(ExplorePage.class)
             .highlightScenario(testScenarioName, "M3CapScrew");
 
         explorePage = new ExplorePage(driver);
@@ -84,7 +84,7 @@ public class ActionsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Analysis", "Medium", "Qa Description", "Adding QA notes")
-            .save()
+            .save(ExplorePage.class)
             .openColumnsTable()
             .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
             .addColumn(ColumnsEnum.STATUS.getColumns())
@@ -133,5 +133,51 @@ public class ActionsTests extends TestBase {
         new GenericHeader(driver).toggleLock();
 
         assertThat(new EvaluatePage(driver).isLockedStatus("Unlocked"), is(true));
+    }
+
+    @Test
+    @Issue("BA-872")
+    @TestRail(testCaseId = {"733", "739", "743", "746"})
+    @Description("User can add scenario info and notes from action on evaluate page")
+    public void actionsEvaluatePage() {
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .selectScenarioInfoNotes()
+            .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
+            .save(EvaluatePage.class)
+            .costScenario()
+            .selectScenarioInfoNotes();
+
+        assertThat(scenarioNotesPage.isStatusSelected("Complete"), is(true));
+        assertThat(scenarioNotesPage.isCostMaturitySelected("Medium"), is(true));
+        assertThat(scenarioNotesPage.isDescription("Qa Auto Test"), is(true));
+        assertThat(scenarioNotesPage.isScenarioNotes("Uploaded and costed via automation"), is(true));
+    }
+
+    @Test
+    @Issue("BA-872")
+    @TestRail(testCaseId = {"732", "737", "741", "744"})
+    @Description("User can add scenario info and notes from input & notes tile")
+    public void infoNotesPanel() {
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .costScenario()
+            .selectInfoNotes()
+            .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
+            .save(EvaluatePage.class)
+            .costScenario()
+            .selectInfoNotes();
+
+        assertThat(scenarioNotesPage.isStatusSelected("New"), is(true));
+        assertThat(scenarioNotesPage.isCostMaturitySelected("High"), is(true));
+        assertThat(scenarioNotesPage.isDescription("infoNotesPanel"), is(true));
+        assertThat(scenarioNotesPage.isScenarioNotes("Panel Test"), is(true));
     }
 }

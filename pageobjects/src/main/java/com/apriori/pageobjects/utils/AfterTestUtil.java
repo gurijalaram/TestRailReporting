@@ -3,6 +3,7 @@ package com.apriori.pageobjects.utils;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ToleranceEnum;
@@ -32,7 +33,7 @@ public class AfterTestUtil {
      * Resets the production default settings back to default
      */
     public void resetProductionDefaults() {
-        driver.navigate().to("https://cid-te.awsdev.apriori.com/apriori/cost/");
+        driver.navigate().to(Constants.cidURL);
         explorePage = new ExplorePage(driver);
         explorePage.openSettings()
             .openProdDefaultTab()
@@ -50,7 +51,7 @@ public class AfterTestUtil {
      * Resets the display preference settings back to default
      */
     public void resetDisplayPreferences() {
-        driver.navigate().to("https://cid-te.awsdev.apriori.com/apriori/cost/");
+        driver.navigate().to(Constants.cidURL);
         explorePage = new ExplorePage(driver);
         explorePage.openSettings()
             .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
@@ -62,7 +63,7 @@ public class AfterTestUtil {
      * Resets the selection colour back to default
      */
     public void resetSelectionColour() {
-        driver.navigate().to("https://cid-te.awsdev.apriori.com/apriori/cost/");
+        driver.navigate().to(Constants.cidURL);
         explorePage = new ExplorePage(driver);
         explorePage.openSettings()
             .openSelectionTab()
@@ -74,7 +75,7 @@ public class AfterTestUtil {
      * Resets the Tolerance settings back to default
      */
     public void resetToleranceSettings() {
-        driver.navigate().to("https://cid-te.awsdev.apriori.com/apriori/cost/");
+        driver.navigate().to(Constants.cidURL);
         explorePage = new ExplorePage(driver);
         explorePage.openSettings()
             .openTolerancesTab()
@@ -87,7 +88,7 @@ public class AfterTestUtil {
      * Resets the production default settings back to default
      */
     public void resetAllSettings() {
-        driver.navigate().to("https://cid-te.awsdev.apriori.com/apriori/cost/");
+        driver.navigate().to(Constants.cidURL);
         explorePage = new ExplorePage(driver);
         explorePage.openSettings()
             .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
