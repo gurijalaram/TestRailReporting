@@ -42,7 +42,7 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToBeClickable(stockTable);
+        pageUtils.waitForElementToAppear(stockTable);
     }
 
     /**

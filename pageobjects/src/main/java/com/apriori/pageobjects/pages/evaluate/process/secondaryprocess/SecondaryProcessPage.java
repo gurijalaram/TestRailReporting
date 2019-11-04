@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.process.secondaryprocess;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -96,11 +97,11 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
         return pageUtils.scrollToElement(processBox, processScroller);
     }
 
-    public SecondaryOptionsPage highlightSecondaryProcess(String processType, String processName) {
+    public ProcessSetupOptionsPage highlightSecondaryProcess(String processType, String processName) {
         selectSecondaryProcess(processType, processName);
         // TODO: 16/10/2019 refactor to webelement
         driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']/ancestor::tr")).click();
-        return new SecondaryOptionsPage(driver);
+        return new ProcessSetupOptionsPage(driver);
     }
 
     public SecondaryProcessPage findSecondaryProcess(String processType, String processName) {
