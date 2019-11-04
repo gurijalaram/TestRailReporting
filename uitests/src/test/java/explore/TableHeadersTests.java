@@ -10,7 +10,7 @@ import com.apriori.pageobjects.pages.explore.TableColumnsPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColumnsEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -38,7 +38,7 @@ public class TableHeadersTests extends TestBase {
     @Description("Test default list of column headers in the private workspace")
     public void testPrivateDefaultColumnHeaders() {
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.NAME_SCENARIO.getColumns(), ColumnsEnum.LOCKED_WORKSPACE.getColumns(),
@@ -50,7 +50,7 @@ public class TableHeadersTests extends TestBase {
     @Description("Test default list of column headers in the public workspace")
     public void testPublicDefaultColumnHeaders() {
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.NAME_SCENARIO.getColumns(), ColumnsEnum.LOCKED_WORKSPACE.getColumns(),
@@ -63,7 +63,7 @@ public class TableHeadersTests extends TestBase {
     @Description("Test added columns are displayed in the public workspace")
     public void testPublicAddColumnHeaders() {
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openColumnsTable()
             .addColumn(ColumnsEnum.TYPE.getColumns())
@@ -82,7 +82,7 @@ public class TableHeadersTests extends TestBase {
     @Description("Test added columns are displayed in the private workspace")
     public void testPrivateAddColumnHeaders() {
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .openColumnsTable()
             .addColumn(ColumnsEnum.ASSIGNEE.getColumns())
@@ -101,7 +101,7 @@ public class TableHeadersTests extends TestBase {
     @Description("Test remove thumbnails")
     public void testRemoveThumbnails() {
         loginPage = new LoginPage(driver);
-        tableColumnsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        tableColumnsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .openColumnsTable()
             .removeColumn(ColumnsEnum.THUMBNAIL.getColumns())
@@ -123,7 +123,7 @@ public class TableHeadersTests extends TestBase {
     @Description("Test sort all columns")
     public void testSortColumns() {
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .sortColumnDescending(ColumnsEnum.NAME_SCENARIO.getColumns());
         assertThat(explorePage.getColumnOrder(ColumnsEnum.NAME_SCENARIO.getColumns()), containsString(DESCENDING));

@@ -6,6 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -82,7 +86,6 @@ public class Util {
         });
     }
 
-    //TODO z: just to contain all process with default authorization form in one place and make it comfortable to use
     public static Map<String, String> getDefaultAuthorizationForm(final String username, final String password) {
         return new HashMap<String, String>() {{
                 put("grant_type", "password");
@@ -93,6 +96,35 @@ public class Util {
                 put("password", password);
             }};
     }
+
+    /**
+     * Get file from resource folder current module.
+     * @param resourceFileName
+     * @return
+     */
+    public static File getLocalResourceFile(String resourceFileName) {
+        try {
+            return new File(
+                URLDecoder.decode(
+                    ClassLoader.getSystemResource(resourceFileName).getFile(),
+                    "UTF-8"
+                )
+            );
+        } catch (UnsupportedEncodingException e) {
+            logger.error(String.format("Resource file: %s was not fount", resourceFileName));
+            throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * Get resource file stream from a jar file. {getResource}
+     * @param resourceFileName
+     * @return
+     */
+    public static InputStream getResourceFileStream(String resourceFileName) {
+        return ClassLoader.getSystemResourceAsStream(resourceFileName);
+    }
+
 
     /**
      * Generates the scenario name and adds random number and nano time

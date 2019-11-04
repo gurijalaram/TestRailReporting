@@ -27,6 +27,44 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
     * In the terminal enter `docker-compose up -d`. For zalenium enter `docker run --rm -ti --name zalenium -p 4444:4444 -p 5555:5555 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos dosel/zalenium start`
     * In the terminal go to the base directory (eg. C:\automation-qa\apriori-qa\uitests) and enter the following goals `mvn clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=QA`
 
+## Users functionality
+Get user functionality has reference to `{environment}.properties` file. 
+
+**Reference properties:**
+   * **different.users**
+       - true: will return each time new user
+       - false: will return each time the same (first from list) user
+   * **users.csv.file**: the name of csv file with users list from `resources/ + {environment}` folder
+        - if there are no users, return default user with:
+           - username:{com.apriori.utils.constants.Constants#defaultUserName} (admin@apriori.com)
+           - password:{com.apriori.utils.constants.Constants#defaultPassword} (admin)
+           - accessLevel:{com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
+ 
+   Users list is global for two Collections:
+   * security users collection
+   * common users collection
+ 
+   Each collection has a copy of this list and after getting the user, this user will be removed from collection copy
+    
+   **Example:**
+   - security collection - user1, user2
+   - common collection - user1, user2
+   
+   after getting the security user
+   
+   - security collection - user2
+   - common collection - user1, user2
+   
+**Users csv file format:**
+ * {username},{password},{accessLevel}
+    - {username}: required
+    - {password}: required
+    - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
+ 
+ 
+    
+ 
+
 ## Run Sonarqube static code analysis
 1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard
 
