@@ -17,6 +17,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * Work with users list file.
+ * The users list file name, is declared by users.csv.file property.
+ *  users.csv.file: the name of csv file with users list by path: resources/{@link com.apriori.utils.constants.Constants#environment} folder
+ *     (if users are absent, return default user with:
+ *         - username:{@link com.apriori.utils.constants.Constants#defaultUserName}
+ *         - password:{@link com.apriori.utils.constants.Constants#defaultPassword}
+ *         - accessLevel:{@link com.apriori.utils.constants.Constants#defaultAccessLevel}
+ *      )
+ * @author vzarovnyi
+ */
 public class InitUsersData {
 
     private static final Logger logger = LoggerFactory.getLogger(InitUsersData.class);
@@ -47,7 +58,7 @@ public class InitUsersData {
                 if (values.length == 3) {
                     users.add(new UserCredentials(values[0], values[1], values[2]));
                 } else {
-                    users.add(new UserCredentials(values[0], values[1]));
+                    users.add(new UserCredentials(values[0], values[1], Constants.defaultAccessLevel));
                 }
             }
 

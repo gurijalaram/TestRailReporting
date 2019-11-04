@@ -75,15 +75,6 @@ public class WorkOrderRequestEntity {
         return this;
     }
 
-//    public UsersEnum getUsersEnum() {
-//        return usersEnum;
-//    }
-//
-//    public WorkOrderRequestEntity setUsersEnum(UsersEnum usersEnum) {
-//        this.usersEnum = usersEnum;
-//        return this;
-//    }
-
     public List<String> getWorkspace() {
         return workspace.stream().map(WorkspaceEnum::getWorkspace).collect(Collectors.toList());
     }
