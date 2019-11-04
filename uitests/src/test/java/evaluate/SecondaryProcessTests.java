@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
-import testsuites.suiteinterface.CustomerSmokeTests;
-
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
@@ -27,10 +25,10 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.hamcrest.CoreMatchers;
-
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class SecondaryProcessTests extends TestBase {
 
@@ -652,7 +650,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Selections are cleared when user cancels changes")
     public void selectionsCleared() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openSecondaryProcess()
@@ -668,7 +666,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openSecondaryProcess()
@@ -684,7 +682,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openSecondaryProcess()
