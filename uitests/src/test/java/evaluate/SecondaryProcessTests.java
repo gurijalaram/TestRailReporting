@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -18,7 +19,9 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
@@ -33,6 +36,7 @@ public class SecondaryProcessTests extends TestBase {
     private SettingsPage settingsPage;
     private SecondaryProcessPage secondaryProcessPage;
     private ProcessRoutingPage processRoutingPage;
+    private ProcessSetupOptionsPage processSetupOptionsPage;
 
     public SecondaryProcessTests() {
         super();
@@ -44,21 +48,32 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"679"})
     @Description("Test secondary process leak test")
     public void secondaryProcessLeakTest() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        processSetupOptionsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("ABS, 10% Glass")
-            .apply()
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .openSecondaryProcess()
-            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
-            .apply()
-            .costScenario();
+            .highlightSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
+            .selectOverrideButton()
+            .setPartThickness("0.21");
 
+        secondaryProcessPage = new SecondaryProcessPage(driver);
+        evaluatePage = secondaryProcessPage.apply()
+            .costScenario();
         assertThat(evaluatePage.isProcessRoutingDetails("Hydrostatic Leak Testing"), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        processSetupOptionsPage = evaluatePage.openProcessDetails()
+            .selectProcessChart("Hydrostatic Leak Testing")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.isPartThickness("0.21"), is(true));
+
+
     }
 
     @Test

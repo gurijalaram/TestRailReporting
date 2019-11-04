@@ -3,10 +3,10 @@ package testsuites;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import compare.AddScenarioTests;
-import compare.SaveAsComparisonTests;
 import compare.DeleteComparisonTests;
 import compare.EditPublicComparisonTests;
 import compare.PublishComparisonTests;
+import compare.SaveAsComparisonTests;
 import evaluate.AssemblyUploadTests;
 import evaluate.CostAllCadTests;
 import evaluate.DeletePrivateScenarioTests;

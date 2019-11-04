@@ -180,9 +180,9 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      *
      * @return new page object
      */
-    public ProcessOptionsPage selectOptions() {
+    public ProcessSetupOptionsPage selectOptions() {
         pageUtils.waitForElementAndClick(optionsTab);
-        return new ProcessOptionsPage(driver);
+        return new ProcessSetupOptionsPage(driver);
     }
 
     /**

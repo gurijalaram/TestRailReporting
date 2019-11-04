@@ -99,7 +99,7 @@ public class DeleteComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
-    @Issue("AP-56464")
+    @Issue("BA-839")
     public void testPublicComparisonDeleteExplore() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -130,7 +130,7 @@ public class DeleteComparisonTests extends TestBase {
             .delete()
             .deleteExploreComparison()
             .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
+            .filterPublicCriteria("Part", "Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));

@@ -473,7 +473,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1287"})
+    @TestRail(testCaseId = {"1287", "750"})
     @Description("tolerance Policy Panel functionality in CI Design-JUNK values are prevented")
     public void tolerancePolicyJunk() {
         loginPage = new LoginPage(driver);
