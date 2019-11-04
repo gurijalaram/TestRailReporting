@@ -3,7 +3,7 @@ package com.apriori.utils.enums;
 /**
  * @author kpatel
  */
-
+@Deprecated
 public enum UsersEnum {
 
     CID_TE_USER_ALLDATA("qa-automation-12@apriori.com", "TrumpetSnakeFridgeToasty18"),
@@ -30,6 +30,7 @@ public enum UsersEnum {
      *
      * @return CID username
      */
+    @Deprecated
     public String getUsername() {
         return username;
     }
@@ -39,6 +40,7 @@ public enum UsersEnum {
      *
      * @return cid password
      */
+    @Deprecated
     public String getPassword() {
         return password;
     }
