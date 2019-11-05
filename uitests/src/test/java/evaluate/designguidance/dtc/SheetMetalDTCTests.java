@@ -142,7 +142,7 @@ public class SheetMetalDTCTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getWarningsCount("5"), is(true));
+        assertThat(evaluatePage.getWarningsCount("6"), is(true));
         assertThat(evaluatePage.getGuidanceIssuesCount("9"), is(true));
         assertThat(evaluatePage.getGcdTolerancesCount("22"), is(true));
     }

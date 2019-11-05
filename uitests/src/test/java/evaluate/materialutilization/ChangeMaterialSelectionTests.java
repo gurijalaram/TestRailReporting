@@ -129,7 +129,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Composites, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestComposites() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
