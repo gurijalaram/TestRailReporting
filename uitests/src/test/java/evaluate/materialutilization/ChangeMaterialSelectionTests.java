@@ -385,5 +385,20 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
     }
 
+    @Test
+    @TestRail(testCaseId = {"869"})
+    @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
+    public void changeMaterialSelectionTestMaterialProperities() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Inconel 625")
+            .apply()
+            .costScenario();
 
+        assertThat(evaluatePage.isMaterialInfo("Inconel 625"), is(true));
+    }
 }
