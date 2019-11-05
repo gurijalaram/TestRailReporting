@@ -36,7 +36,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        
+
     }
 
     /**
