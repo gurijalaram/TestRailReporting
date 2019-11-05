@@ -407,6 +407,20 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfo("Inconel 625"), is(true));
     }*/
 
+    @Test
+    @TestRail(testCaseId = {"884"})
+    @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
+    public void changeMaterialSelectionTestPMI() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialCompositionTable()
+            .method("MCAD <material not found - VPE default used>")
+            .apply()
+            .costScenario();
 
 
+        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1095"), is(true));
+    }
 }
