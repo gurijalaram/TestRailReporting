@@ -1,5 +1,9 @@
 import daoImpl.UserDao;
+import daoImpl.UserGroupsDao;
 import entity.User;
+import entity.UserGroups;
+
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
 import utils.PropertiesHandler;
 import utils.SessionFactoryClass;
@@ -15,9 +19,9 @@ public class UserTest {
     }
 
     @Test
-    public void testGetAllUsersFromDB() {
+    public void testGetAllUsersFromDB() {        
         /*Get all users from DB*/
-        UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
+        UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
         User user = new User();
         for (User userFromList : userDao.getAllObjects(user.getClass())) {
             System.out.println(userFromList.getFullName());
@@ -26,18 +30,21 @@ public class UserTest {
 
     @Test
     public void testCreateUser() {
-        UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
-        List<User> userForCreate = new ArrayList<User>();
+        UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
+        List<User> usersForCreate = new ArrayList<User>();
         
         /*Create new user with FullName: aPriori Default User and RawLoginID: adu*/
-        User user = new User().setFullName("aPriori Default User").setRawLoginID("adu");
-        userForCreate.add(user);
-        userDao.create(userForCreate);
+        User user = new User()
+                        .setFullName("aPriori Default User")
+                        .setRawLoginID("adu");
+        usersForCreate.add(user);
+        userDao.create(usersForCreate);
+        
     }
 
     @Test
     public void testUpdateUser() {
-        UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
+        UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
         List<User> userForDelete = new ArrayList<User>();
         
         /*Change FullName of use "aPriori Default User" to "aPriori Test User" */
@@ -48,20 +55,20 @@ public class UserTest {
 
     @Test
     public void testDeleteUser() {
-        UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
+        UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
         List<User> userForDelete = new ArrayList<User>();
 
         /*Remove user with name "aPriori Default User" and RawLoginID "adu" from DB*/
-        User user = new User().setFullName("aPriori Default User").setRawLoginID("adu");
+        User user = new User().setFullName("aPriori Test User").setRawLoginID("adu");
         userForDelete.add(user);
-        userDao.delete(userDao.getAllObjects(userForDelete.get(0).getClass()));
+        userDao.delete(userForDelete);
     }
 
     @Test
     public void testGetUserByNameFromDB() {
-        UserDao userDao = new UserDao(new SessionFactoryClass(User.class).getSession());
+        UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
         /*Get single use by its name*/
-        User user = new User().setFullName("Salvador Sakho");
+        User user = new User().setFullName("aPriori Test User");
         System.out.println(userDao.getByFullName(user).getUser_ID());
-    }
+    }    
 }

@@ -1,21 +1,32 @@
 package utils;
 
 import org.hibernate.cfg.Configuration;
+
+import java.io.File;
+import java.net.URL;
+
 import org.hibernate.Session;
-public class SessionFactoryClass<T> {
+public class SessionFactoryClass {
 
-    private Class<T> entity;
-
-    public SessionFactoryClass(Class<T> entity) {
-        this.entity = entity;
-    }
+    public SessionFactoryClass() {}
 
     public Session getSession() {
         try {
-           return new Configuration()
-                    .setProperties(new PropertiesHandler().getDBProperties())
-                    .addAnnotatedClass(entity)
-                    .buildSessionFactory().openSession();
+            Configuration config = new Configuration()
+                            .setProperties(new PropertiesHandler().getDBProperties());
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            URL entityesUrl  =  loader.getResource("entity");
+            File folder = new File(entityesUrl.getPath());
+            File[] classes = folder.listFiles();            
+            for (int i = 0; i < classes.length; i++) {
+                int index = classes[i].getName().indexOf("."); 
+                String className = classes[i].getName().substring(0, index);
+                String classNamePath = "entity"+"."+className;
+                Class<?> repoClass = Class.forName(classNamePath);              
+                config.addAnnotatedClass(repoClass);
+            }
+
+            return config.buildSessionFactory().openSession();
         } catch (Exception e) {
             e.printStackTrace();
         }

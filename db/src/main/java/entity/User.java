@@ -3,9 +3,9 @@ package entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
- @Entity
- @Table(name = "fbc_user")
+ @Entity @Table(name = "fbc_user")
 public class User implements Serializable {
 
     private static final Long serialVersionUID = -231312312L;
@@ -93,6 +93,9 @@ public class User implements Serializable {
     private String extra9;
     @Column(name = "extra10")
     private String extra10;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<UserGroups> userGroups;
 
     public static Long getSerialVersionUID() {
         return serialVersionUID;

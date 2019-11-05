@@ -2,14 +2,35 @@ package daoImpl;
 
 import dao.GlobalDao;
 import entity.User;
-import org.hibernate.Session;
+import entity.UserGroups;
+import utils.SessionFactoryClass;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.Query;
 import java.util.List;
 
 public class UserDao extends GlobalDao <User> {
     public UserDao(Session session) {
         super(session);
+    }
+    
+    @Override
+    public void create(List<User> usersList) {
+        Transaction transaction;
+        try {
+            transaction = session.beginTransaction();
+            for(int i = 0; i < usersList.size(); i++) {
+                session.saveOrUpdate(usersList.get(i));
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       
+        
+        UserGroupsDao userGroupsDao = new UserGroupsDao(session);
+        userGroupsDao.addUsertoGroup(usersList);
     }
 
     public User getByFullName(User user) {
