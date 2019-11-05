@@ -113,7 +113,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
      * @return new page object
      */
     public EvaluatePage apply() {
-        applyButton.click();
+        pageUtils.waitForElementAndClick(applyButton);
         return new EvaluatePage(driver);
     }
 
@@ -123,7 +123,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
      * @return new page object
      */
     public EvaluatePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new EvaluatePage(driver);
     }
 

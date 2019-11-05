@@ -440,4 +440,35 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {"905"})
+    @Description("Test opening material selection and selecting apply without making a selection")
+    public void changeMaterialSelectionTestNoChange() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .openMaterialCompositionTable()
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"905"})
+    @Description("Test opening material selection and selecting cancel after making a selection")
+    public void changeMaterialSelectionTestCancel() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Stainless Steel, Stock, AISI 316")
+            .cancel()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+    }
 }
