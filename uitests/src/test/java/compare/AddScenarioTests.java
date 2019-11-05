@@ -35,7 +35,6 @@ public class AddScenarioTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"412", "1171"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
-    @Issue("AP-56464")
     public void filterAddPrivateScenario() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -58,7 +57,7 @@ public class AddScenarioTests extends TestBase {
 
     @Test
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
-    @Issue("AP-56464")
+    @Issue("BA-839")
     public void filterAddPublicScenario() {
 
         String testScenarioName = new Util().getScenarioName();
