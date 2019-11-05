@@ -54,16 +54,23 @@ Get user functionality has reference to `{environment}.properties` file.
    
    - security collection - user2
    - common collection - user1, user2
+       
+   **Example of execution API in code** :
+   - to receive common user use: `UserUtil.getUser()`
+   - to receive user by access level use: `UserUtil.getUser("Needed access level")  e.g. UserUtil.getUser("admin")`
+   
+   **UserUtil.getUser()/getUser(accessLevel)**: return UserCredentials.class
+   
+   **UserCredentials.class** contains:
+   - username (String)
+   - password (String)
+   - securityLevel (String)
    
 **Users csv file format:**
  * {username},{password},{accessLevel}
     - {username}: required
     - {password}: required
     - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
- 
- 
-    
- 
 
 ## Run Sonarqube static code analysis
 1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard
