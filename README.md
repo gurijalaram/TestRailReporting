@@ -71,10 +71,6 @@ Get user functionality has reference to `{environment}.properties` file.
     - {username}: required
     - {password}: required
     - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
- 
- 
-    
- 
 
 ## Run Sonarqube static code analysis
 1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard
