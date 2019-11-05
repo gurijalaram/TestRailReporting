@@ -54,6 +54,17 @@ Get user functionality has reference to `{environment}.properties` file.
    
    - security collection - user2
    - common collection - user1, user2
+       
+   **Example of execution API in code** :
+   - to receive common user use: `UserUtil.getUser()`
+   - to receive user by access level use: `UserUtil.getUser("Needed access level")  e.g. UserUtil.getUser("admin")`
+   
+   **UserUtil.getUser()/getUser(accessLevel)**: return UserCredentials.class
+   
+   **UserCredentials.class** contains:
+   - username (String)
+   - password (String)
+   - securityLevel (String)
    
 **Users csv file format:**
  * {username},{password},{accessLevel}
