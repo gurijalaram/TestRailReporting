@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -32,7 +31,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -99,7 +97,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), is(equalTo("Cycle Time (s): 53.88, Piece Part Cost (USD): 0.64, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,805.76")));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.88, Piece Part Cost (USD): 0.64, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,805.76"));
     }
 
     @Test
@@ -235,11 +233,9 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-
         assertThat(evaluatePage.getBurdenedCost("1.64"), is(true));
 
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.openProcessDetails()
+        new EvaluatePage(driver).openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("[CTL]/Waterjet/[Bend]")
             .apply()

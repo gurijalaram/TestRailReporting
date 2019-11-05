@@ -39,7 +39,6 @@ public class DeleteComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"433"})
     @Description("Test a private comparison can be deleted from the explore page")
-    @Issue("AP-56464")
     public void testDeletePrivateComparisonExplore() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -67,7 +66,7 @@ public class DeleteComparisonTests extends TestBase {
             .delete()
             .deleteExploreComparison()
             .filterCriteria()
-            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testComparisonName)
+            .filterPrivateCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
@@ -130,7 +129,7 @@ public class DeleteComparisonTests extends TestBase {
             .delete()
             .deleteExploreComparison()
             .filterCriteria()
-            .filterPublicCriteria("Part", "Scenario Name", "Contains", testComparisonName)
+            .filterPublicCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
@@ -139,7 +138,7 @@ public class DeleteComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
-    @Issue("AP-56464")
+    @Issue("BA-839")
     public void deletePublicComparisonPage() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -162,8 +161,7 @@ public class DeleteComparisonTests extends TestBase {
             .selectScenario(testScenarioName, "testpart-4")
             .apply();
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.publishScenario(PublishPage.class)
+        new GenericHeader(driver).publishScenario(PublishPage.class)
             .selectPublishButton()
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
@@ -174,7 +172,7 @@ public class DeleteComparisonTests extends TestBase {
         explorePage = genericHeader.delete()
             .deleteComparison()
             .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
+            .filterPublicCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
