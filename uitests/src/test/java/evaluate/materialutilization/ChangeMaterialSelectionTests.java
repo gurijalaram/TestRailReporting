@@ -423,4 +423,21 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1095"), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {"885"})
+    @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
+    public void changeMaterialSelectionTestPMINotExist() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS IronCast.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialCompositionTable()
+            .method("MCAD <material not found - VPE default used>")
+            .apply()
+            .costScenario();
+
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+    }
 }
