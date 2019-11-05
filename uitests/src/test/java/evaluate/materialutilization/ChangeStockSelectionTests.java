@@ -32,7 +32,7 @@ public class ChangeStockSelectionTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"960", "1617", "1618", "1619"})
+    @TestRail(testCaseId = {"960", "1617", "1618", "1619", "873"})
     @Description("Test making changes to the Material Stock in Sheet Metal, the change is respected and the scenario can be re-cost")
     public void changeStockSelectionTestSheetMetal() {
         loginPage = new LoginPage(driver);
