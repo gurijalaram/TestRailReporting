@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -19,6 +20,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     private LoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private MaterialPage materialPage;
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -385,20 +387,26 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
     }
 
-    @Test
+/*    @Test
     @TestRail(testCaseId = {"869"})
-    @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
-    public void changeMaterialSelectionTestMaterialProperities() {
+    @Description("Test closing and opening Material Properties, information within correct")
+    public void changeMaterialSelectionTestMaterialProperties() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        materialPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Inconel 625")
             .apply()
-            .costScenario();
+            .costScenario()
+            .openMaterialComposition()
+            .getMaterialInfo();
+
 
         assertThat(evaluatePage.isMaterialInfo("Inconel 625"), is(true));
-    }
+    }*/
+
+
+
 }
