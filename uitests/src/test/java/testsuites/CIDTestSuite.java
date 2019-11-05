@@ -37,7 +37,6 @@ import evaluate.materialutilization.MaterialStockTests;
 import explore.ActionsTests;
 import explore.FilterCriteriaTests;
 import explore.PreviewPanelTests;
-import explore.PrivateWorkspaceTests;
 import explore.TableHeadersTests;
 import login.LoginTests;
 import org.junit.runner.RunWith;
@@ -81,7 +80,6 @@ import settings.SettingsTests;
     ActionsTests.class,
     FilterCriteriaTests.class,
     PreviewPanelTests.class,
-    PrivateWorkspaceTests.class,
     TableHeadersTests.class,
     LoginTests.class,
     SettingsTests.class,
