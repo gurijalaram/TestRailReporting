@@ -2,6 +2,7 @@ package explore;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.not;
 
@@ -88,7 +89,7 @@ public class TableHeadersTests extends TestBase {
             .addColumn(ColumnsEnum.ASSIGNEE.getColumns())
             .selectSaveButton();
 
-        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.ASSIGNEE.getColumns()));
+        assertThat(explorePage.getColumnHeaderNames(), hasItem(ColumnsEnum.ASSIGNEE.getColumns()));
 
         explorePage.openColumnsTable()
             .removeColumn(ColumnsEnum.ASSIGNEE.getColumns())
