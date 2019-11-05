@@ -57,7 +57,6 @@ public class ToleranceTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @Issue("AP-56493")
     @TestRail(testCaseId = {"707", "1607"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
@@ -96,7 +95,6 @@ public class ToleranceTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @Issue("AP-56493")
     @TestRail(testCaseId = {"708", "1607"})
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {

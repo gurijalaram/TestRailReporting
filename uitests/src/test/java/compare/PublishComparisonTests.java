@@ -35,7 +35,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"421"})
-    @Issue("AP-56464")
+    @Issue("BA-839")
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
 
@@ -56,18 +56,10 @@ public class PublishComparisonTests extends TestBase {
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName, "Casting")
             .apply();
 
         genericHeader = new GenericHeader(driver);
-
-        explorePage = genericHeader.publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .filterCriteria()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
-
-        genericHeader = new GenericHeader(driver);
-
         explorePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
             .filterCriteria()
@@ -80,7 +72,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"421"})
-    @Issue("AP-56464")
+    @Issue("BA-839")
     @Description("Test a private comparison can be published from explore page")
     public void testPublishComparisonExplorePage() {
 
@@ -88,7 +80,6 @@ public class PublishComparisonTests extends TestBase {
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
-
         comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -102,10 +93,10 @@ public class PublishComparisonTests extends TestBase {
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName, "Casting")
             .apply();
 
         genericHeader = new GenericHeader(driver);
-
         explorePage = genericHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName)

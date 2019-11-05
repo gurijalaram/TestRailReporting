@@ -24,7 +24,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
@@ -52,7 +51,6 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-55576")
     @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
@@ -76,7 +74,7 @@ public class DTCCastingTests extends TestBase {
         guidancePage.selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:25");
+        guidancePage.selectIssueTypeAndGCD("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
 
         guidancePage.selectIssueTypeAndGCD("Hole Issue", "Minimum Hole Diameter", "SimpleHole:10");

@@ -142,7 +142,7 @@ public class ActionsTests extends TestBase {
     public void actionsEvaluatePage() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        scenarioNotesPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
