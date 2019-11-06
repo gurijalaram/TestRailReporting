@@ -627,7 +627,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder( "Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing", "Offline Blank - Fluid Cell Routing", "Laser Cut - Deep Draw Routing", "Router Cut - Deep Draw Routing", "Offline Blank - Deep Draw Routing"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing", "Offline Blank - Fluid Cell Routing", "Laser Cut - Deep Draw Routing", "Router Cut - Deep Draw Routing", "Offline Blank - Deep Draw Routing"));
     }
 
     @Test
@@ -642,7 +642,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder( "Stretch Form Transverse", "Stretch Form Longitudinal"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Stretch Form Transverse", "Stretch Form Longitudinal"));
     }
 
     @Test
@@ -657,7 +657,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder( "Single Cavity Mold", "2x1-Cavity Mold", "2x2-Cavity Mold"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Single Cavity Mold", "2x1-Cavity Mold", "2x2-Cavity Mold"));
     }
 
     @Test
@@ -673,6 +673,6 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder( "3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
     }
 }
