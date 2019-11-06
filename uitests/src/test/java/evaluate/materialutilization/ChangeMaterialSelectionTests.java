@@ -369,7 +369,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"868"})
+    @TestRail(testCaseId = {"868", "875"})
     @Description("Test de-selecting the material, previous material applied and the scenario can be cost")
     public void changeMaterialSelectionTestDeSelect() {
         loginPage = new LoginPage(driver);
