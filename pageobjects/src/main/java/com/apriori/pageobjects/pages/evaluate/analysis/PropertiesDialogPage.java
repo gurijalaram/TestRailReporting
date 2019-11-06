@@ -89,11 +89,11 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
 
     /**
      * Check the GCD name is displayed
-     * @param GCDName - the gcd name
+     * @param gcdName - the gcd name
      * @return true/false
      */
-    public boolean isDisplayedGCDName(String GCDName) {
-        By gcd = By.xpath("//div[@data-ap-comp='gcdProperties']//div[.='" + GCDName + "']");
+    public boolean isDisplayedGCDName(String gcdName) {
+        By gcd = By.xpath("//div[@data-ap-comp='gcdProperties']//div[.='" + gcdName + "']");
         return driver.findElement(gcd).isDisplayed();
     }
 
