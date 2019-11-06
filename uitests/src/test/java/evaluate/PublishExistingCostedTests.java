@@ -11,7 +11,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -37,7 +37,7 @@ public class PublishExistingCostedTests extends TestBase {
         String partName = "testpart-4";
 
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()

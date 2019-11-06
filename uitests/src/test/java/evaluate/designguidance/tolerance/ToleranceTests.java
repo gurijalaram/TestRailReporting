@@ -21,9 +21,10 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ToleranceEnum;
+
 import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.enums.UsersEnum;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -56,12 +57,11 @@ public class ToleranceTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @Issue("AP-56493")
     @TestRail(testCaseId = {"707", "1607"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -95,12 +95,11 @@ public class ToleranceTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @Issue("AP-56493")
     @TestRail(testCaseId = {"708", "1607"})
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -128,7 +127,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -154,7 +153,8 @@ public class ToleranceTests extends TestBase {
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -180,7 +180,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -220,7 +220,7 @@ public class ToleranceTests extends TestBase {
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -251,7 +251,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate applied tolerances are maintained after changing the scenario process group")
     public void testMaintainingToleranceChangePG() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -289,7 +289,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate tolerance edits are maintained when user adds a secondary process group")
     public void testMaintainingSecondaryPG() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -342,7 +342,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate tolerance edits when default values set")
     public void specificDefaultTolerances() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectSpecificDefaultValues()
@@ -399,7 +399,7 @@ public class ToleranceTests extends TestBase {
     @Description("Verify PMI data is not extracted ")
     public void assumeTolerances() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectAssumeTolerance();
@@ -420,7 +420,7 @@ public class ToleranceTests extends TestBase {
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .editValues()
@@ -475,7 +475,7 @@ public class ToleranceTests extends TestBase {
     @Description("tolerance Policy Panel functionality in CI Design-JUNK values are prevented")
     public void tolerancePolicyJunk() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        warningPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .editValues()
@@ -490,7 +490,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate PMI is off when use specific is selected")
     public void specificTolerancesNoPMI() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .editValues()
@@ -516,7 +516,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .editValues()
@@ -546,7 +546,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate 'Replace values less than' button")
     public void replaceValuesButton() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel()

@@ -15,7 +15,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -42,7 +42,7 @@ public class FailuresWarningsTests extends TestBase {
     @Description("Ensure that 'Failures/ Warnings tab includes: Messaging")
     public void failedCostingMessaging() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -68,7 +68,7 @@ public class FailuresWarningsTests extends TestBase {
     @Description("Ensure that 'Failures/ Warnings tab includes: - Issue type & count")
     public void failedCostingCount() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();

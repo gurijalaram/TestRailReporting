@@ -155,6 +155,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "td[data-ap-field='targetFinishMass']")
     private WebElement targetMass;
 
+    @FindBy(css = "[data-ap-field='userOverridesCount']")
+    private WebElement secondaryProcesses;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -577,5 +580,14 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public Boolean isTargetMass(String value) {
         return pageUtils.checkElementAttribute(targetMass, "innerText", value);
+    }
+
+    /**
+     * Checks the value of secondary processes
+     * @param value - the value
+     * @return true/false
+     */
+    public Boolean isSecondaryProcesses(String value) {
+        return pageUtils.checkElementAttribute(secondaryProcesses, "value", value);
     }
 }

@@ -31,10 +31,12 @@ public class HomePage extends LoadableComponent<HomePage> {
 
     @Override
     protected void load() {
+
     }
 
     @Override
     protected void isLoaded() throws Error {
+
     }
 
     /**

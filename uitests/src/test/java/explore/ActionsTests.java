@@ -15,7 +15,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ColumnsEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -42,7 +42,7 @@ public class ActionsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
@@ -72,7 +72,7 @@ public class ActionsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
@@ -107,7 +107,7 @@ public class ActionsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .costScenario()
@@ -142,7 +142,7 @@ public class ActionsTests extends TestBase {
     public void actionsEvaluatePage() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        scenarioNotesPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
@@ -165,7 +165,7 @@ public class ActionsTests extends TestBase {
     public void infoNotesPanel() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()

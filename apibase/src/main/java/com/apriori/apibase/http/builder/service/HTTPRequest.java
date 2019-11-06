@@ -2,7 +2,6 @@ package com.apriori.apibase.http.builder.service;
 
 import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.entity.UserAuthenticationEntity;
-import com.apriori.utils.enums.UsersEnum;
 
 import org.openqa.selenium.WebDriver;
 
@@ -34,17 +33,6 @@ public class HTTPRequest {
      */
     public RequestInitService unauthorized() {
         return RequestInitService.build(RequestEntity.unAuthorized());
-    }
-
-    /**
-     * Form authorization
-     * Using default form parameters, from utils sub-project, for common authorization
-     *
-     * @param user - Enum with username and password
-     * @return
-     */
-    public RequestInitService defaultFormAuthorization(UsersEnum user) {
-        return defaultFormAuthorization(user.getUsername(), user.getPassword());
     }
 
     /**

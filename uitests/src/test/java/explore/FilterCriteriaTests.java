@@ -10,7 +10,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -34,7 +34,7 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .costScenario()
@@ -52,7 +52,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria attribute")
     public void testPrivateCriteriaAttribute() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .filterCriteria()
             .filterPrivateCriteria("Part", "Process Group", "is", "Casting")
             .apply(ExplorePage.class);
@@ -63,7 +63,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria part contains")
     public void testPrivateCriteriaContains() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Test")
             .apply(ExplorePage.class);
@@ -74,7 +74,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria value option")
     public void testPrivateCriteriaPartValue() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .filterCriteria()
             .filterPrivateCriteria("Part", "Status", "is", "Waiting")
             .apply(ExplorePage.class);
@@ -85,7 +85,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .filterCriteria()
             .filterPrivateCriteria("Assembly", "Part Name", "Contains", "15136")
             .apply(ExplorePage.class);
@@ -96,7 +96,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria assembly status")
     public void testPrivateCriteriaAssemblyStatus() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .filterCriteria()
             .filterPrivateCriteria("Assembly", "Status", "is", "Nothing selected")
             .apply(ExplorePage.class);
@@ -110,7 +110,7 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
@@ -129,7 +129,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test public criteria assembly description")
     public void testPublicCriteriaAssemblyDesc() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .filterCriteria()
             .filterPublicCriteria("Assembly", "Description", "Contains", "Test")
             .apply(ExplorePage.class);
@@ -140,7 +140,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test public criteria comparison")
     public void testPublicCriteriaComparison() {
         loginPage = new LoginPage(driver);
-        loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Cost Maturity", "is", "Nothing selected")
             .apply(ExplorePage.class);

@@ -18,7 +18,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -52,7 +52,7 @@ public class ThreadTests extends TestBase {
     @Description("Test to check edit thread button is disabled")
     public void threadButtonDisabled() {
         loginPage = new LoginPage(driver);
-        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        investigationPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -69,7 +69,7 @@ public class ThreadTests extends TestBase {
     @Description("C28 Test to check thread length persist")
     public void editThread() {
         loginPage = new LoginPage(driver);
-        threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        threadingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -89,7 +89,7 @@ public class ThreadTests extends TestBase {
     @Description("Test to verify costed thread")
     public void selectScenario() {
         loginPage = new LoginPage(driver);
-        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        investigationPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -118,7 +118,7 @@ public class ThreadTests extends TestBase {
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
         loginPage = new LoginPage(driver);
-        threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        threadingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -137,7 +137,7 @@ public class ThreadTests extends TestBase {
     @Description("Test to set dropdown value to yes")
     public void setDropdownValueYes() {
         loginPage = new LoginPage(driver);
-        threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        threadingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
@@ -157,7 +157,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing warning message displayed when thread length is removed")
     public void costedThreadLengthRemoved() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        warningPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -180,7 +180,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     public void changeThreadValueCancel() {
         loginPage = new LoginPage(driver);
-        threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        threadingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -204,7 +204,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing that adding text values in the thread length shows a warning message")
     public void junkValuesCharTest() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        warningPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
@@ -223,7 +223,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing that adding no value in the thread shows a warning message")
     public void junkValueTest() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        warningPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -243,7 +243,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     public void zeroValueTest() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        warningPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -266,7 +266,7 @@ public class ThreadTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        investigationPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario()
@@ -286,7 +286,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
-        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        investigationPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -320,7 +320,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
         loginPage = new LoginPage(driver);
-        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        investigationPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -340,7 +340,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
         loginPage = new LoginPage(driver);
-        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        investigationPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -364,7 +364,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
         loginPage = new LoginPage(driver);
-        investigationPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        investigationPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -397,7 +397,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
         loginPage = new LoginPage(driver);
-        threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        threadingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CatiaPMIThreads.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -415,7 +415,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
         loginPage = new LoginPage(driver);
-        threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        threadingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("100plusThreads.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -433,7 +433,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
         loginPage = new LoginPage(driver);
-        threadingPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        threadingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()

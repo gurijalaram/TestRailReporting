@@ -3,7 +3,7 @@ package com.apriori.utils.enums;
 /**
  * @author kpatel
  */
-
+/*@Deprecated
 public enum UsersEnum {
 
     CID_TE_USER_ALLDATA("qa-automation-12@apriori.com", "TrumpetSnakeFridgeToasty18"),
@@ -16,7 +16,7 @@ public enum UsersEnum {
     UsersEnum(String username, String password) {
         this.username = username;
         this.password = password;
-    }
+    }*/
 
     // The following qa-auto users have restricted access:
     // qa-automation-37@apriori.com does not have read access to UDA project name “Eagle”
@@ -30,17 +30,19 @@ public enum UsersEnum {
      *
      * @return CID username
      */
+/*    @Deprecated
     public String getUsername() {
         return username;
     }
 
-    /**
+    *//**
      * Return password of the requested user
      *
      * @return cid password
-     */
+     *//*
+    @Deprecated
     public String getPassword() {
         return password;
-    }
+    }*/
 
-}
+//}

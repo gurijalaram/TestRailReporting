@@ -15,7 +15,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UsersEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -35,13 +35,12 @@ public class AddScenarioTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"412", "1171"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
-    @Issue("AP-56464")
     public void filterAddPrivateScenario() {
 
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        comparisonTablePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        comparisonTablePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
@@ -58,13 +57,14 @@ public class AddScenarioTests extends TestBase {
 
     @Test
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
-    @Issue("AP-56464")
+    @Issue("BA-839")
     public void filterAddPublicScenario() {
 
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        comparisonTablePage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+
+        comparisonTablePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
@@ -86,7 +86,7 @@ public class AddScenarioTests extends TestBase {
     @Description("Test warning message appears when the user does not enter a scenario name for a comparison")
     public void comparisonNoScenarioName() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UsersEnum.CID_TE_USER.getUsername(), UsersEnum.CID_TE_USER.getPassword())
+        warningPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .createNewComparison()
             .save(WarningPage.class);
 
