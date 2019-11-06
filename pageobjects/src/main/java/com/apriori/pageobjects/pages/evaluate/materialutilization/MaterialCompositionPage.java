@@ -36,10 +36,10 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
     @FindBy(css = "div[data-ap-comp='materialSelectionTable'] div.v-grid-scroller-vertical")
     private WebElement materialScroller;
 
-    @FindBy(css = "button.btn.btn-primary")
+    @FindBy(css = ".material-selection-dialog button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "button.btn.btn-default")
+    @FindBy(css = ".material-selection-dialog button.btn.btn-default")
     private WebElement cancelButton;
 
     private WebDriver driver;

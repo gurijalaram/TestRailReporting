@@ -14,41 +14,38 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author cfrith
+ * @author smccaffrey
  */
 
-public class MaterialPage extends LoadableComponent<MaterialPage> {
+public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
+    private final Logger logger = LoggerFactory.getLogger(PartNestingPage.class);
 
-    @FindBy(css = ".panel.panel-details")
-    private WebElement panelDetails;
+    @FindBy(css = "label[data-ap-field='selectedSheet']")
+    private WebElement selectedSheet;
 
-    @FindBy(css = "div[data-ap-comp='materialDetails']")
-    private WebElement materialTable;
+    @FindBy(css = "label[data-ap-field='blankSize']")
+    private WebElement blankSize;
 
-    @FindBy(css = "a[href='#materialDetailsTab']")
-    private WebElement materialUtilizationTab;
+    @FindBy(css = "label[data-ap-field='partsPerSheet']")
+    private WebElement partsPerSheet;
 
-    @FindBy(css = "a[href='#stockDetailsTab']")
-    private WebElement stockTab;
+    @FindBy(css = "input[data-ap-comp='COMPUTED']")
+    private WebElement rectangularNesting;
 
-    @FindBy(css = "a[href='#partNestingTab']")
-    private WebElement partNestingTab;
+    @FindBy(css = "input[data-ap-comp='TRUE_PART']")
+    private WebElement truePartNesting;
 
-    @FindBy(css = ".panel .glyphicon-remove")
-    private WebElement closePanelButton;
+    @FindBy(css = "input[data-ap-comp='MACHINE_DEFAULT']")
+    private WebElement machineDefaultPartNesting;
 
-    @FindBy(css = "[data-ap-comp=materialProperties]")
-    private WebElement materialPropertiesTree;
-
-    @FindBy(css = "button[data-ap-comp='expandPanelButton']")
-    private WebElement chevronButton;
+    @FindBy(css = "div[data-ap-comp='materialNestingDiagram']")
+    private WebElement partNestingDiagram;
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public MaterialPage(WebDriver driver) {
+    public PartNestingPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -63,8 +60,8 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(panelDetails);
-        pageUtils.waitForElementToAppear(materialTable);
+        pageUtils.waitForElementToAppear(selectedSheet);
+        pageUtils.waitForElementToAppear(partNestingDiagram);
     }
 
     /**
@@ -83,18 +80,8 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
      * @return new page object
      */
     public StockPage goToStockTab() {
-        pageUtils.waitForElementAndClick(stockTab);
+        stockTab.click();
         return new StockPage(driver);
-    }
-
-    /**
-     * Opens the stock tab
-     *
-     * @return new page object
-     */
-    public PartNestingPage goToPartNestingTab() {
-        pageUtils.waitForElementAndClick(partNestingTab);
-        return new PartNestingPage(driver);
     }
 
     /**
@@ -124,7 +111,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
      *
      *@return current page object
      */
-    public MaterialPage expandPanel() {
+    public PartNestingPage expandPanel() {
         pageUtils.waitForElementAndClick(chevronButton);
         return this;
     }

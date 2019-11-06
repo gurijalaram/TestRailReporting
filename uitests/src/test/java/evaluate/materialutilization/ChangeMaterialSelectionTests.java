@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.PartNestingPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.utils.FileResourceUtil;
@@ -21,6 +22,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     private LoginPage loginPage;
     private EvaluatePage evaluatePage;
     private MaterialPage materialPage;
+    private PartNestingPage partNestingPage;
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -468,6 +470,22 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectMaterialComposition("Stainless Steel, Stock, AISI 316")
             .cancel()
             .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+    }
+
+   @Test
+    @TestRail(testCaseId = {"906"})
+    @Description("Test opening Part Nesting Tab for appropriate Process Groups")
+    public void openPartNestingAppropriatePG() {
+        loginPage = new LoginPage(driver);
+        partNestingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .openMaterialComposition()
+            .goToPartNestingTab();
+
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
     }
