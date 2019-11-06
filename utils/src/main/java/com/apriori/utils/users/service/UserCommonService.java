@@ -6,7 +6,6 @@ import com.apriori.utils.users.UserCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -25,9 +24,9 @@ public class UserCommonService {
     /**
      * Return single user
      * if in {@link com.apriori.utils.constants.Constants#environment}.properties file different.users is false
-     *   else each time return unique user
+     * else each time return unique user
      *
-     * @exception NoSuchElementException if the iteration has no more elements
+     * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser() {
         return Constants.useDifferentUsers ? getNewUser() : getGlobalUser();
@@ -38,7 +37,7 @@ public class UserCommonService {
 
             UserCredentials userCredentials = usersQueue.poll();
 
-            if(userCredentials == null) {
+            if (userCredentials == null) {
                 throw new NoSuchElementException("Users list is empty.");
             }
 
