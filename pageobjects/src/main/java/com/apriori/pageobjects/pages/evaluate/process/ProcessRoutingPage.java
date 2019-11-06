@@ -66,6 +66,9 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     @FindBy(css = "[data-ap-field='machineName']")
     private WebElement machineName;
 
+    @FindBy(css = ".costing-out-of-date-title")
+    private List<WebElement> outOfDateMsg;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -192,5 +195,13 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      */
     public Boolean isMachineName(String name) {
         return pageUtils.checkElementAttribute(machineName, "innerText", name);
+    }
+
+    /**
+     * Checks if the routing out of date message appears
+     * @return true/false
+     */
+    public Boolean isRoutingOutOfDateDisplayed() {
+        return pageUtils.checkElementVisibleByBoolean(outOfDateMsg);
     }
 }
