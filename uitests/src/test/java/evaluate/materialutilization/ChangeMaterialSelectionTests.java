@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.PartNestingPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.utils.FileResourceUtil;
@@ -20,6 +21,7 @@ import org.junit.Test;
 public class ChangeMaterialSelectionTests extends TestBase {
 
     private LoginPage loginPage;
+    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private MaterialPage materialPage;
     private PartNestingPage partNestingPage;
@@ -410,9 +412,12 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"884"})
+    @TestRail(testCaseId = {"884", "888"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
+
+        String ScenarioName = new Util().getScenarioName();
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
@@ -420,8 +425,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .openMaterialCompositionTable()
             .method("MCAD <material not found - VPE default used>")
             .apply()
-            .costScenario();
-
+            .costScenario()
+            .selectExploreButton()
+            .openScenario(ScenarioName, "Machined Box AMERICAS");
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1095"), is(true));
     }
