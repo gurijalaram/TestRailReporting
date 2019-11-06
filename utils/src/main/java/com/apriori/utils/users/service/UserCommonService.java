@@ -38,7 +38,7 @@ public class UserCommonService {
 
             UserCredentials userCredentials = usersQueue.poll();
 
-            if(userCredentials == null) {
+            if (userCredentials == null) {
                 throw new NoSuchElementException("Users list is empty.");
             }
 

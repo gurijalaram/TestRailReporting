@@ -53,7 +53,7 @@ public class UserUtil {
      * @param accessLevel
      * @return
      */
-    public static UserCredentials getUser(String accessLevel){
+    public static UserCredentials getUser(String accessLevel) {
         UserCredentials user = UserSecurityService.getUser(accessLevel);
         logInfo(user);
 
