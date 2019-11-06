@@ -67,8 +67,10 @@ public class RevertPage extends LoadableComponent<RevertPage> {
      * @param <T>       - the return type
      * @return generic page object
      */
-
-
+    public <T> T revertScenario(Class<T> className) {
+        pageUtils.waitForElementAndClick(revertButton);
+        return PageFactory.initElements(driver, className);
+    }
 
     /**
      * Selects the cancel button
