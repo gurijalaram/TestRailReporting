@@ -427,7 +427,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .apply()
             .costScenario()
             .selectExploreButton()
-            .openScenario(ScenarioName, "Machined Box AMERICAS");
+            .openScenario(ScenarioName, "MACHINED BOX AMERICAS");
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1095"), is(true));
     }
