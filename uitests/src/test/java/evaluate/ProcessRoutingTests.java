@@ -31,6 +31,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -440,5 +441,238 @@ public class ProcessRoutingTests extends TestBase {
         processRoutingPage.selectProcessChart("2 Axis Lathe");
         assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 19.47"));
         assertThat(processRoutingPage.isMachineName("Virtual 2 Axis Lathe - Small"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1657"})
+    @Description("Validate routing out of date message appears")
+    public void routingOutOfDate() {
+        loginPage = new LoginPage(driver);
+        processRoutingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Structural Foam Mold")
+            .apply();
+
+        assertThat(processRoutingPage.isRoutingOutOfDateDisplayed(), is(true));
+    }
+
+    @Test
+    @Description("Validate routings Additive")
+    public void routingsAddivite() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Material Jetting", "Powder Bed Fusion", "Vat Photopolymerization"));
+    }
+
+    @Test
+    @Description("Validate routings Bar and Tube")
+    public void routingsBarTube() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP"))
+            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Bent Part", "Unbent Part"));
+    }
+
+    @Test
+    @Description("Validate routings Die Cast")
+    public void routingsDieCasting() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SandCast.x_t"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("High Pressure Die Cast", "Gravity Die Cast"));
+    }
+
+    @Test
+    @Issue("AP-57018")
+    @Description("Validate routings Sand Cast")
+    public void routingsSandCasting() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SandCast.x_t"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Vertical Automatic", "Horizontal Automatic", "Manual Std", "Manual Floor", "Manual Pit"));
+    }
+
+    @Test
+    @Issue("BA-867")
+    @Description("Validate routings Forging")
+    public void routingsForging() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP"))
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
+    }
+
+    @Test
+    @Description("Validate routings Plastic Moulding")
+    public void routingsPlasticMoulding() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Injection Mold", "Reaction Injection Mold", "Structural Foam Mold"));
+    }
+
+    @Test
+    @Issue("BA-867")
+    @Description("Validate routings Powder Metal")
+    public void routingsPowderMetal() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP"))
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
+    }
+
+    @Test
+    @Description("Validate routings Rapid Prototyping")
+    public void routingsRapidPrototyping() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
+            .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("3D Printing", "Selective Laser Sintering", "Stereolithography"));
+    }
+
+    @Test
+    @Description("Validate routings Roto & Blow Moulding")
+    public void routingsRotoBlowMould() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
+            .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Blow Molding", "Rotational Molding"));
+    }
+
+    @Test
+    @Issue("BA-867")
+    @Description("Validate routings Sheet Metal")
+    public void routingsSheetMetal() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("700-33770-01_A0.stp"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Stage Tooling", "Prog Die", "[CTL]/Shear/Press", "[CTL]/Shear/Chemical Mill", "Tandem Die", "[CTL]/Laser/[Bend]", "[CTL]/Laser Punch/[Bend]", "[CTL]/Plasma/[Deslag]/[Bend]", "[CTL]/Plasma Punch/[Deslag]/[Bend]", "[CTL]/Oxyfuel/[Deslag]/[Bend]", "[CTL]/Waterjet/[Bend]", "[CTL]/Turret/[Bend]", "[CTL]/[Bend]"));
+    }
+
+    @Test
+    @Description("Validate routings Sheet Metal - Hydroforming")
+    public void routingsHydroforming() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroforming.stp"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing", "Offline Blank - Fluid Cell Routing", "Laser Cut - Deep Draw Routing", "Router Cut - Deep Draw Routing", "Offline Blank - Deep Draw Routing"));
+    }
+
+    @Test
+    @Description("Validate routings Sheet Metal - Stretchforming")
+    public void routingsStretchforming() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroforming.stp"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Stretch Form Transverse", "Stretch Form Longitudinal"));
+    }
+
+    @Test
+    @Description("Validate routings Sheet Plastic")
+    public void routingsSheetPlastic() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("sheet_plastic.STEP"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Single Cavity Mold", "2x1-Cavity Mold", "2x2-Cavity Mold"));
+    }
+
+    @Test
+    @Issue("BA-867")
+    @Description("Validate routings Stock Machining")
+    public void routingsStockMachining() {
+        loginPage = new LoginPage(driver);
+        routingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
     }
 }
