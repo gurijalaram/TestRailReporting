@@ -129,6 +129,33 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
     }
 
     /**
+     * Check Rectangular Nesting is selected
+     *
+     * @return current page object
+     */
+    public String isRectangularNesting(String attribute) {
+        return pageUtils.waitForElementToAppear(rectangularNesting).getAttribute(attribute);
+    }
+
+    /**
+     * Check Rectangular Nesting is selected
+     *
+     * @return current page object
+     */
+    public String isTruePartNesting(String attribute) {
+        return pageUtils.waitForElementToAppear(truePartNesting).getAttribute(attribute);
+    }
+
+    /**
+     * Check Rectangular Nesting is selected
+     *
+     * @return current page object
+     */
+    public String isMachineDefaultNesting(String attribute) {
+        return pageUtils.waitForElementToAppear(machineDefaultPartNesting).getAttribute(attribute);
+    }
+
+    /**
      * Expands the panel
      *@return current page object
      */
@@ -136,4 +163,6 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
         pageUtils.waitForElementAndClick(chevronButton);
         return this;
     }
+
+
 }
