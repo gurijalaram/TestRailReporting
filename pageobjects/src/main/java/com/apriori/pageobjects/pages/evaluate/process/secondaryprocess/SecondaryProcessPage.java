@@ -122,6 +122,16 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     }
 
     /**
+     * Selects the clear all button
+     *
+     * @return this
+     */
+    public SecondaryProcessPage selectClearAll() {
+        clearAllButton.click();
+        return this;
+    }
+
+    /**
      * Selects the cancel button
      *
      * @return new page object

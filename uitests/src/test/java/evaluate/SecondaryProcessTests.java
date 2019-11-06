@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
-import testsuites.suiteinterface.CustomerSmokeTests;
-
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
@@ -19,16 +17,18 @@ import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
+import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class SecondaryProcessTests extends TestBase {
 
@@ -50,7 +50,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"679"})
+    @TestRail(testCaseId = {"679", "653", "670"})
     @Description("Test secondary process leak test")
     public void secondaryProcessLeakTest() {
         loginPage = new LoginPage(driver);
@@ -79,6 +79,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"658", "659", "661"})
     @Description("Test secondary process xray")
     public void secondaryProcessXray() {
         loginPage = new LoginPage(driver);
@@ -88,12 +89,16 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
             .apply()
-            .openSecondaryProcess()
+            .costScenario();
+        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+
+        new EvaluatePage(driver).openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .apply()
             .costScenario();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Xray Inspection"), is(true));
+        assertThat(evaluatePage.isSecondaryProcesses("1 Selected"), is(true));
     }
 
     @Test
@@ -370,7 +375,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1614"})
+    @TestRail(testCaseId = {"1614", "654"})
     @Description("Multiple Secondary Processes before Costing")
     public void multiSecondaryProcessBeforeCost() {
         loginPage = new LoginPage(driver);
@@ -391,7 +396,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1614"})
+    @TestRail(testCaseId = {"1614", "655", "656"})
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {
         loginPage = new LoginPage(driver);
@@ -413,7 +418,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1615"})
+    @TestRail(testCaseId = {"1615", "669"})
     @Description("secondary process automatically added by aPriori")
     public void cannotDeselectSP() {
         loginPage = new LoginPage(driver);
@@ -484,7 +489,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"692"})
+    @TestRail(testCaseId = {"692", "702"})
     @Description("Test secondary process Vacuum Air Harden with High Temper")
     public void secondaryProcessVacuumAirHardenHighTemp() {
         loginPage = new LoginPage(driver);
@@ -597,7 +602,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"698"})
+    @TestRail(testCaseId = {"698", "667"})
     @Description("Test secondary process High Temp Vacuum Anneal")
     public void secondaryProcessHighTempVacuumAnneal() {
         loginPage = new LoginPage(driver);
@@ -638,5 +643,65 @@ public class SecondaryProcessTests extends TestBase {
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper");
 
         assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"660"})
+    @Description("Selections are cleared when user cancels changes")
+    public void selectionsCleared() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .openSecondaryProcess()
+            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
+            .cancel()
+            .costScenario();
+
+        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"665"})
+    @Description("Validate if a secondary process fails to cost, entire part fails to cost")
+    public void secondaryProcessCostFailed() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .openSecondaryProcess()
+            .selectSecondaryProcess("Surface Treatment", "Passivation")
+            .apply()
+            .costScenario();
+
+       assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), CoreMatchers.is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"671", "672"})
+    @Description("Validate the user can clear all secondary process selections")
+    public void clearAllSP() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .openSecondaryProcess()
+            .selectSecondaryProcess("Surface Treatment", "Passivation")
+            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .selectClearAll()
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+
+        evaluatePage.openProcessDetails()
+            .selectSecondaryProcessButton()
+            .selectSecondaryProcess("Surface Treatment", "Passivation")
+            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .selectClearAll()
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
     }
 }
