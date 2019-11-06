@@ -1,10 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate.materialutilization;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,6 +40,12 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
     @FindBy(css = "div[data-ap-comp='materialNestingDiagram']")
     private WebElement partNestingDiagram;
 
+    @FindBy(css = ".panel .glyphicon-remove")
+    private WebElement closePanelButton;
+
+    @FindBy(css = "button[data-ap-comp='expandPanelButton']")
+    private WebElement chevronButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -65,50 +69,67 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
     }
 
     /**
-     * Opens the material & utilization tab
-     *
-     * @return new page object
+     * Selects Rectangular radio button
+     * @return current page object
      */
-    public MaterialUtilizationPage goToMaterialUtilizationTab() {
-        materialUtilizationTab.click();
-        return new MaterialUtilizationPage(driver);
+    public PartNestingPage selectRectangularNesting() {
+        pageUtils.waitForElementAndClick(rectangularNesting);
+        return this;
     }
 
     /**
-     * Opens the stock tab
-     *
-     * @return new page object
+     * Selects True-Part Shape radio button
+     * @return current page object
      */
-    public StockPage goToStockTab() {
-        stockTab.click();
-        return new StockPage(driver);
+    public PartNestingPage selectTrue_PartShapeNesting() {
+        pageUtils.waitForElementAndClick(truePartNesting);
+        return this;
+    }
+
+    /**
+     * Selects Machine Default radio button
+     * @return current page object
+     */
+    public PartNestingPage selectMachineDefaultNesting() {
+        pageUtils.waitForElementAndClick(machineDefaultPartNesting);
+        return this;
     }
 
     /**
      * Closes the material & utilization
-     *
      * @return new page object
      */
-    public EvaluatePage closeMaterialAndUtilizationPanel() {
+    public EvaluatePage closePartNestingPanel() {
         pageUtils.waitForElementAndClick(closePanelButton);
         return new EvaluatePage(driver);
     }
 
     /**
-     * Gets material information
-     *The fully qualified name of the property must be entered as the locator looks for an exact match eg. "(kg / m^3)"
-     * @param info
+     * Gets Selected Stock Sheet
      * @return string
      */
-    public String getMaterialInfo(String info) {
-        pageUtils.waitForElementToAppear(materialPropertiesTree);
-        By propertiesInfo = By.xpath("//table[@class='table material-grid'] //td[.='" + info + "']/following-sibling::td");
-        return driver.findElement(propertiesInfo).getAttribute("innerText");
+    public String getSelectedSheet() {
+        return selectedSheet.getText();
+    }
+
+    /**
+     * Gets computed Blank Size
+     * @return string
+     */
+    public String getBlankSize() {
+        return blankSize.getText();
+    }
+
+    /**
+     * Gets Number of Parts Per Sheet
+     * @return string
+     */
+    public String getPartsPerSheet() {
+        return partsPerSheet.getText();
     }
 
     /**
      * Expands the panel
-     *
      *@return current page object
      */
     public PartNestingPage expandPanel() {
