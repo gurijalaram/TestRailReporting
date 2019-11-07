@@ -651,6 +651,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
         setInput(maskFeaturesInput, text);
         return this;
     }
+
     /**
      * Check no masking button is selected
      *

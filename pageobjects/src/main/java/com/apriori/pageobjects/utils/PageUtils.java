@@ -536,8 +536,14 @@ public class PageUtils {
      * @return true/false
      */
     public <T> Boolean checkElementsNotVisibleByBoolean(List<T> locator) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 6);
-        return wait.until((ExpectedCondition<Boolean>) element -> (locator).size() < 1);
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 6;
+        try {
+            return new WebDriverWait(driver, timeoutInMinutes)
+                .until((ExpectedCondition<Boolean>) element -> (locator).size() < 1);
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        throw new AssertionError("\nWaited for: " + timeoutInMinutes + "(s)\nElement : " + locator + " is not visible");
     }
 
     /**
@@ -609,13 +615,20 @@ public class PageUtils {
      * @param locator - the locator of the element
      */
     public void waitForElementAndClick(WebElement locator) {
-        waitForElementToBeClickable(locator);
-        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until((WebDriver webDriver) -> {
-                locator.click();
-                return true;
-            });
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        try {
+            waitForElementToBeClickable(locator);
+
+            new WebDriverWait(driver, timeoutInMinutes)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until((WebDriver webDriver) -> {
+                    locator.click();
+                    return true;
+                });
+        } catch (TimeoutException | ElementClickInterceptedException e) {
+            e.printStackTrace();
+        }
+        throw new AssertionError("\nWaited for: " + timeoutInMinutes + "(s)\nElement could not be clicked: " + locator);
     }
 
     /**
@@ -624,13 +637,19 @@ public class PageUtils {
      * @param locator - the locator of the element
      */
     public void waitForElementAndClick(By locator) {
-        waitForElementToBeClickable(locator);
-        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until((WebDriver webDriver) -> {
-                driver.findElement(locator).click();
-                return true;
-            });
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        try {
+            waitForElementToBeClickable(locator);
+            new WebDriverWait(driver, timeoutInMinutes)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until((WebDriver webDriver) -> {
+                    driver.findElement(locator).click();
+                    return true;
+                });
+        } catch (TimeoutException | ElementClickInterceptedException e) {
+            e.printStackTrace();
+        }
+        throw new AssertionError("\nWaited for: " + timeoutInMinutes + "(s)\nElement could not be clicked: " + locator);
     }
 
     /**
@@ -640,8 +659,14 @@ public class PageUtils {
      * @return
      */
     public Boolean checkElementAttributeEmpty(WebElement locator, String attribute) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        try {
+            return new WebDriverWait(driver, timeoutInMinutes)
+                .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        throw new AssertionError("\nWaited for: " + timeoutInMinutes + "(s)\nLocator: " + locator + " does not contain attribute: " + attribute);
     }
 
     /**
@@ -651,8 +676,14 @@ public class PageUtils {
      * @return true/false
      */
     public <T> Boolean checkElementVisibleByBoolean(List<T> locator) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2)
-            .until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
+        try {
+            return new WebDriverWait(driver, timeoutInMinutes)
+                .until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        throw new AssertionError("\nWaited for: " + timeoutInMinutes + "(s)\nElement : " + locator + " is not visible");
     }
 
     /**
@@ -680,9 +711,15 @@ public class PageUtils {
      * @return
      */
     public Boolean checkElementFirstOption(WebElement locator, String text) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
+        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        try {
+            return new WebDriverWait(driver, timeOut)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        throw new AssertionError("\nWaited for: " + timeOut + "(s)\nLocator: " + locator + " does not contain text: " + text);
     }
 
     /**
