@@ -132,26 +132,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfo("Copper, Cast, UNS C28000"), is(true));
     }
 
-    /*@Test
-    @TestRail(testCaseId = {"864", "866", "867"})
-    @Description("Test making changes to the Material for Composites, the change is respected and the scenario can be cost")
-    public void changeMaterialSelectionTestComposites() {
-        loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.isMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
-
-        new EvaluatePage(driver).openMaterialCompositionTable()
-            .selectMaterialComposition("Copper, Cast, UNS C28000")
-            .apply()
-            .costScenario();
-
-        assertThat(evaluatePage.isMaterialInfo("Copper, Cast, UNS C28000"), is(true));
-    }*/
-
     @Test
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Forging, the change is respected and the scenario can be cost")
@@ -415,7 +395,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario()
             .openMaterialComposition();
 
-
         assertThat(materialPage.getMaterialInfo("Name"), is("Inconel 625"));
     }
 
@@ -453,7 +432,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .apply()
             .costScenario();
 
-
         assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
     }
 
@@ -488,7 +466,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
     }
 
-   @Test
+    @Test
     @TestRail(testCaseId = {"906"})
     @Description("Test opening Part Nesting Tab for appropriate Process Groups")
     public void openPartNestingAppropriatePG() {
@@ -499,7 +477,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario()
             .openMaterialComposition()
             .goToPartNestingTab();
-
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
     }
