@@ -615,20 +615,13 @@ public class PageUtils {
      * @param locator - the locator of the element
      */
     public void waitForElementAndClick(WebElement locator) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
-        try {
-            waitForElementToBeClickable(locator);
-
-            new WebDriverWait(driver, timeoutInMinutes)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((WebDriver webDriver) -> {
-                    locator.click();
-                    return true;
-                });
-        } catch (TimeoutException | ElementClickInterceptedException e) {
-            e.printStackTrace();
-        }
-        throw new AssertionError("\nWaited for: " + timeoutInMinutes + "(s)\nElement could not be clicked: " + locator);
+        waitForElementToBeClickable(locator);
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((WebDriver webDriver) -> {
+                locator.click();
+                return true;
+            });
     }
 
     /**
@@ -637,19 +630,13 @@ public class PageUtils {
      * @param locator - the locator of the element
      */
     public void waitForElementAndClick(By locator) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
-        try {
-            waitForElementToBeClickable(locator);
-            new WebDriverWait(driver, timeoutInMinutes)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((WebDriver webDriver) -> {
-                    driver.findElement(locator).click();
-                    return true;
-                });
-        } catch (TimeoutException | ElementClickInterceptedException e) {
-            e.printStackTrace();
-        }
-        throw new AssertionError("\nWaited for: " + timeoutInMinutes + "(s)\nElement could not be clicked: " + locator);
+        waitForElementToBeClickable(locator);
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((WebDriver webDriver) -> {
+                driver.findElement(locator).click();
+                return true;
+            });
     }
 
     /**
@@ -711,15 +698,21 @@ public class PageUtils {
      * @return
      */
     public Boolean checkElementFirstOption(WebElement locator, String text) {
-        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
-        try {
-            return new WebDriverWait(driver, timeOut)
+            return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        }
-        throw new AssertionError("\nWaited for: " + timeOut + "(s)\nLocator: " + locator + " does not contain text: " + text);
+    }
+
+    /**
+     * Waits the dropdown to be populated with the options
+     *
+     * @param locator - the locator
+     * @param option  - the option
+     */
+    public void checkDropdownOptions(WebElement locator, String option) {
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getText().contains(option))));
     }
 
     /**
