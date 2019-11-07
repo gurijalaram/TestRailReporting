@@ -391,7 +391,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
     }
 
-/*    @Test
+    @Test
     @TestRail(testCaseId = {"869"})
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
@@ -404,12 +404,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectMaterialComposition("Inconel 625")
             .apply()
             .costScenario()
-            .openMaterialComposition()
-            .getMaterialInfo();
+            .openMaterialComposition();
 
 
-        assertThat(evaluatePage.isMaterialInfo("Inconel 625"), is(true));
-    }*/
+        assertThat(materialPage.getMaterialInfo("Name"), is("Inconel 625"));
+    }
 
     @Test
     @TestRail(testCaseId = {"884", "888"})

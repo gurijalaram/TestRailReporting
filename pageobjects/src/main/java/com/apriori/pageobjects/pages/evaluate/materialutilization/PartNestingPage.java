@@ -162,6 +162,4 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
         pageUtils.waitForElementAndClick(chevronButton);
         return this;
     }
-
-
 }
