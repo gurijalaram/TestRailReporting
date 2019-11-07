@@ -104,7 +104,7 @@ public class PartNestingTests extends TestBase {
         assertThat(partNestingPage.isMachineDefaultNesting("checked"), is("true"));
     }
 
-   /* @Test
+    @Test
     @TestRail(testCaseId = {"907"})
     @Description("Validate Part Nesting Tab can not be accessed for inappropriate Process Groups")
     public void partNestingTabDisabled() {
@@ -116,5 +116,5 @@ public class PartNestingTests extends TestBase {
             .openMaterialComposition();
 
         assertThat(materialPage.getPartNestingButton().getAttribute("class"), is("disabled"));
-    }*/
+    }
 }
