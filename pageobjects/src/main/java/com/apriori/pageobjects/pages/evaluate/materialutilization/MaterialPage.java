@@ -88,7 +88,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     }
 
     /**
-     * Opens the stock tab
+     * Opens the part nesting tab
      *
      * @return new page object
      */
