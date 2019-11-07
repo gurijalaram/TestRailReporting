@@ -65,7 +65,6 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(selectedSheet);
-        pageUtils.waitForElementToAppear(partNestingDiagram);
     }
 
     /**
