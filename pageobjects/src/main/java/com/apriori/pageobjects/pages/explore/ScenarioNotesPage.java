@@ -88,6 +88,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return current page object
      */
     private ScenarioNotesPage selectStatus(String status) {
+        pageUtils.checkDropdownOptions(statusDropdown, status);
         new Select(statusDropdown).selectByVisibleText(status);
         return this;
     }
@@ -99,6 +100,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return current page object
      */
     private ScenarioNotesPage selectCostMaturity(String costMaturity) {
+        pageUtils.checkDropdownOptions(maturityDropdown, costMaturity);
         new Select(maturityDropdown).selectByVisibleText(costMaturity);
         return this;
     }

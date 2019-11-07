@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
@@ -48,7 +47,6 @@ public class ProcessRoutingTests extends TestBase {
     private MaterialCompositionPage materialCompositionPage;
     private InvestigationPage investigationPage;
     private GeometryPage geometryPage;
-    private AnalysisPage analysisPage;
     private PropertiesDialogPage propertiesDialogPage;
 
     public ProcessRoutingTests() {
