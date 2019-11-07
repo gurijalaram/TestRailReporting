@@ -74,6 +74,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectStatus(String status) {
+        pageUtils.checkDropdownOptions(statusDropdown, status);
         new Select(statusDropdown).selectByVisibleText(status);
         return this;
     }
@@ -85,6 +86,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectCostMaturity(String costMaturity) {
+        pageUtils.checkDropdownOptions(costMaturityDropdown, costMaturity);
         new Select(costMaturityDropdown).selectByVisibleText(costMaturity);
         return this;
     }
@@ -96,6 +98,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectAssignee(String assignee) {
+        pageUtils.checkDropdownOptions(assigneeDropdown, assignee);
         new Select(assigneeDropdown).selectByVisibleText(assignee);
         return this;
     }
@@ -107,6 +110,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectLock(String lock) {
+        pageUtils.checkDropdownOptions(lockDropdown, lock);
         new Select(lockDropdown).selectByVisibleText(lock);
         return this;
     }
@@ -117,7 +121,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return new page object
      */
     public ExplorePage selectPublishButton() {
-        publishButton.click();
+        pageUtils.waitForElementAndClick(publishButton);
         return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
     }
 
@@ -127,7 +131,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return new page object
      */
     public ExplorePage selectCancelButton() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new ExplorePage(driver);
     }
 }
