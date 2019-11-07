@@ -113,7 +113,8 @@ public class PartNestingTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .openMaterialComposition();
+            .openMaterialComposition()
+            .expandPanel();
 
         assertThat(materialPage.getPartNestingButton().getAttribute("class"), is("disabled"));
     }
