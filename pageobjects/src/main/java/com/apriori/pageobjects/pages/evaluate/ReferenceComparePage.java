@@ -41,6 +41,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     @FindBy(css = "div[data-ap-region='costResultsTile']")
     private WebElement costResultsTile;
 
+    @FindBy(css = "[class='section-compare baseline']")
+    private WebElement referenceValues;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -129,4 +132,14 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     public List<String> getCostResultsTile() {
         return Arrays.stream(costResultsTile.getText().split("\n")).collect(Collectors.toList());
     }
+
+    /**
+     * Gets reference panel info
+     *
+     * @return process panel as string
+     */
+    public List<String> getReferencePanelValues() {
+        return Arrays.stream(referenceValues.getText().split("\n")).collect(Collectors.toList());
+    }
+
 }
