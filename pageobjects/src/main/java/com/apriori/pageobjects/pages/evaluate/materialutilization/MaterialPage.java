@@ -33,7 +33,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     @FindBy(css = "a[href='#stockDetailsTab']")
     private WebElement stockTab;
 
-    @FindBy(css = "a[href='#partNestingTab']")
+    @FindBy(css = "li[id='partNestingTabBookmark']")
     private WebElement partNestingTab;
 
     @FindBy(css = ".panel .glyphicon-remove")
@@ -83,8 +83,18 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
      * @return new page object
      */
     public StockPage goToStockTab() {
-        stockTab.click();
+        pageUtils.waitForElementAndClick(stockTab);
         return new StockPage(driver);
+    }
+
+    /**
+     * Opens the part nesting tab
+     *
+     * @return new page object
+     */
+    public PartNestingPage goToPartNestingTab() {
+        pageUtils.waitForElementAndClick(partNestingTab);
+        return new PartNestingPage(driver);
     }
 
     /**
@@ -117,5 +127,16 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     public MaterialPage expandPanel() {
         pageUtils.waitForElementAndClick(chevronButton);
         return this;
+    }
+
+    /**
+     * Gets the button as a webelement
+     *
+     * @return the button as webelement
+     */
+    public WebElement getPartNestingButton() {
+        pageUtils.waitForElementToAppear(panelDetails);
+        pageUtils.waitForElementToAppear(partNestingTab);
+        return partNestingTab;
     }
 }

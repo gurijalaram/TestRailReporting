@@ -92,7 +92,7 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"968", "969",})
+    @TestRail(testCaseId = {"968", "969", "876"})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
         loginPage = new LoginPage(driver);

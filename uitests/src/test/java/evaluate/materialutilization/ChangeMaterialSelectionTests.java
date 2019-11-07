@@ -4,11 +4,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.PartNestingPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -18,7 +23,10 @@ import org.junit.Test;
 public class ChangeMaterialSelectionTests extends TestBase {
 
     private LoginPage loginPage;
+    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
+    private MaterialPage materialPage;
+    private PartNestingPage partNestingPage;
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -123,26 +131,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Copper, Cast, UNS C28000"), is(true));
     }
-
-    /*@Test
-    @TestRail(testCaseId = {"864", "866", "867"})
-    @Description("Test making changes to the Material for Composites, the change is respected and the scenario can be cost")
-    public void changeMaterialSelectionTestComposites() {
-        loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.isMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
-
-        new EvaluatePage(driver).openMaterialCompositionTable()
-            .selectMaterialComposition("Copper, Cast, UNS C28000")
-            .apply()
-            .costScenario();
-
-        assertThat(evaluatePage.isMaterialInfo("Copper, Cast, UNS C28000"), is(true));
-    }*/
 
     @Test
     @TestRail(testCaseId = {"864", "866", "867"})
@@ -323,9 +311,12 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"864", "866", "867"})
+    @TestRail(testCaseId = {"864", "866", "867", "889"})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
+
+        String ScenarioName = new Util().getScenarioName();
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
@@ -337,8 +328,156 @@ public class ChangeMaterialSelectionTests extends TestBase {
         new EvaluatePage(driver).openMaterialCompositionTable()
             .selectMaterialComposition("Polyetheretherketone (PEEK)")
             .apply()
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .openScenario(ScenarioName, "BRACKER_BASIC");
+
+        assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"865"})
+    @Description("Test re-selecting same material and the scenario can be recost")
+    public void changeMaterialSelectionTestReSelect() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Polyetheretherketone (PEEK)")
+            .apply()
+            .costScenario()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Polyetheretherketone (PEEK)")
+            .selectMaterialComposition("Polyetheretherketone (PEEK)")
+            .apply()
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"868", "875"})
+    @Description("Test de-selecting the material, previous material applied and the scenario can be cost")
+    public void changeMaterialSelectionTestDeSelect() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Polyetheretherketone (PEEK)")
+            .apply()
+            .costScenario()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Polyetheretherketone (PEEK)")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"869"})
+    @Description("Test closing and opening Material Properties, information within correct")
+    public void changeMaterialSelectionTestMaterialProperties() {
+        loginPage = new LoginPage(driver);
+        materialPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Inconel 625")
+            .apply()
+            .costScenario()
+            .openMaterialComposition();
+
+        assertThat(materialPage.getMaterialInfo("Name"), is("Inconel 625"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"884", "888"})
+    @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
+    public void changeMaterialSelectionTestPMI() {
+
+        String ScenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialCompositionTable()
+            .method("MCAD <material not found - VPE default used>")
+            .apply()
+            .costScenario()
+            .selectExploreButton()
+            .openScenario(ScenarioName, "MACHINED BOX AMERICAS");
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1095"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"885"})
+    @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
+    public void changeMaterialSelectionTestPMINotExist() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS IronCast.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialCompositionTable()
+            .method("MCAD <material not found - VPE default used>")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"905"})
+    @Description("Test opening material selection and selecting apply without making a selection")
+    public void changeMaterialSelectionTestNoChange() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .openMaterialCompositionTable()
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"905"})
+    @Description("Test opening material selection and selecting cancel after making a selection")
+    public void changeMaterialSelectionTestCancel() {
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("Stainless Steel, Stock, AISI 316")
+            .cancel()
+            .costScenario();
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"906"})
+    @Description("Test opening Part Nesting Tab for appropriate Process Groups")
+    public void openPartNestingAppropriatePG() {
+        loginPage = new LoginPage(driver);
+        partNestingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .openMaterialComposition()
+            .goToPartNestingTab();
+
+        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
     }
 }
