@@ -42,7 +42,7 @@ public class FailuresWarningsTests extends TestBase {
     @Description("Ensure that 'Failures/ Warnings tab includes: Messaging")
     public void failedCostingMessaging() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -68,7 +68,7 @@ public class FailuresWarningsTests extends TestBase {
     @Description("Ensure that 'Failures/ Warnings tab includes: - Issue type & count")
     public void failedCostingCount() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();

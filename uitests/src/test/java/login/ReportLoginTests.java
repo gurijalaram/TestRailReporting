@@ -47,7 +47,7 @@ public class ReportLoginTests extends TestBase {
     @Description("Successful login to CI Report")
     public void testLogin() {
         loginPage = new LoginPage(driver);
-        homePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword());
+        homePage = loginPage.login(UserUtil.getUser());
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }
 

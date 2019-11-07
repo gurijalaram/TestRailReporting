@@ -23,13 +23,15 @@ import org.slf4j.LoggerFactory;
  * - security users collection
  * - common users collection
  * <p>
- * Each collection has a copy of this list and after getting the user, this user will be removed from collection copy
+ * Each collection has a copy of this list and after getting the user, this user will be pushed to the end of queue
  * Example:
- * security collection - user1, user2
- * common collection - user1, user2
+ * security collection - user1, user2, user3
+ * common collection - user1, user2, user3
+ *
  * after getting the security user
- * security collection - user2
- * common collection - user1, user2
+ *
+ * security collection - user2, user3, user1
+ * common collection - user1, user2, user3
  *
  * @author vzarovnyi
  */
@@ -63,7 +65,7 @@ public class UserUtil {
     }
 
     private static void logInfo(UserCredentials user) {
-        logger.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getUsername(), user.getPassword(), user.getSecurityLevel()));
+        logger.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getUsername(), user.getPassword(), user.getAccessLevel()));
     }
 
 }

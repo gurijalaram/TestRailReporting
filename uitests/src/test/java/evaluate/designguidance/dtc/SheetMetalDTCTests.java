@@ -49,7 +49,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -84,7 +84,7 @@ public class SheetMetalDTCTests extends TestBase {
     public void sheetMetalProximity() {
         loginPage = new LoginPage(driver);
 
-        guidancePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetalTray.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
@@ -103,7 +103,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -131,7 +131,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -152,7 +152,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -189,7 +189,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();

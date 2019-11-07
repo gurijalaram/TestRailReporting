@@ -4,9 +4,11 @@ import com.apriori.apibase.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.apibase.http.enums.common.api.AuthEndpointEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
+
 import org.junit.Test;
 
 public class APILoginTest {
@@ -14,7 +16,8 @@ public class APILoginTest {
     @Test
     @Description("Test auto login functionality")
     public void testTokenAutoLoginFiledIfIncorrectLoginProcess() {
-        new HTTPRequest().defaultFormAuthorization(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        final UserCredentials userCredentials = UserUtil.getUser();
+        new HTTPRequest().defaultFormAuthorization(userCredentials.getUsername(), userCredentials.getPassword())
             .customizeRequest()
             .setEndpoint(AuthEndpointEnum.POST_AUTH)
             .commitChanges()
@@ -25,7 +28,8 @@ public class APILoginTest {
     @Test
     @Description("Test default login to environment")
     public void testDefaultLoginFiledIfIncorrectLoginProcess() {
-        new HTTPRequest().defaultFormAuthorization(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        final UserCredentials userCredentials = UserUtil.getUser();
+        new HTTPRequest().defaultFormAuthorization(userCredentials.getUsername(), userCredentials.getPassword())
             .customizeRequest()
             .setEndpoint(AuthEndpointEnum.POST_AUTH)
             .setAutoLogin(false)

@@ -57,7 +57,7 @@ public class SettingsTests extends TestBase {
     public void changeProductionDefaults() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .enterScenarioName("MP Auto Test")
@@ -91,7 +91,7 @@ public class SettingsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup());
@@ -115,7 +115,7 @@ public class SettingsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe());
@@ -137,7 +137,7 @@ public class SettingsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .enterAnnualVolume("9524")
@@ -161,7 +161,7 @@ public class SettingsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .selectBatchManual()
@@ -183,7 +183,7 @@ public class SettingsTests extends TestBase {
     public void differentMaterialCatalog() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -204,7 +204,7 @@ public class SettingsTests extends TestBase {
     public void defaultColor() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openSelectionTab()
             .setColour(ColourEnum.ELECTRIC_PURPLE.getColour());
@@ -223,7 +223,7 @@ public class SettingsTests extends TestBase {
     public void defaultMaterial() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
@@ -248,7 +248,7 @@ public class SettingsTests extends TestBase {
     public void logoutSettings() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -262,7 +262,7 @@ public class SettingsTests extends TestBase {
             .selectLogOut();
 
         loginPage = new LoginPage(driver);
-        productionDefaultPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        productionDefaultPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab();
 
@@ -278,7 +278,7 @@ public class SettingsTests extends TestBase {
     public void batchSize0() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .selectBatchManual()
@@ -295,7 +295,7 @@ public class SettingsTests extends TestBase {
     public void batchSizeJunk() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .selectBatchManual()
@@ -312,7 +312,7 @@ public class SettingsTests extends TestBase {
     public void batchSizeDecimal() {
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
             .selectBatchManual()
@@ -329,7 +329,7 @@ public class SettingsTests extends TestBase {
     public void saveAllTabs() {
 
         loginPage = new LoginPage(driver);
-        productionDefaultPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        productionDefaultPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
             .openProdDefaultTab()

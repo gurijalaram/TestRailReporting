@@ -44,16 +44,16 @@ Get user functionality has reference to `{environment}.properties` file.
    * security users collection
    * common users collection
  
-   Each collection has a copy of this list and after getting the user, this user will be removed from collection copy
+   Each collection has a copy of this list and after getting the user, this user will be pushed to the end of the queue
     
    **Example:**
-   - security collection - user1, user2
-   - common collection - user1, user2
+   - security collection - user1, user2, user3
+   - common collection - user1, user2, user3
    
    after getting the security user
    
-   - security collection - user2
-   - common collection - user1, user2
+   - security collection - user2, user3, user1
+   - common collection - user1, user2, user3
        
    **Example of execution API in code** :
    - to receive common user use: `UserUtil.getUser()`

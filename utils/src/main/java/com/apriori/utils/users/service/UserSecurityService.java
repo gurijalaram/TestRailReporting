@@ -3,12 +3,12 @@ package com.apriori.utils.users.service;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
 
-import org.apache.commons.collections4.MultiValuedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
  * Contain logic to work with users by access level.
@@ -19,9 +19,8 @@ public class UserSecurityService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserSecurityService.class);
 
-    private static MultiValuedMap<String, UserCredentials> usersByAccessLevel = InitUsersData.initUsersWithAccessLevels();
+    private static Map<String, Queue<UserCredentials>> usersByAccessLevel = InitUsersData.initUsersWithAccessLevels();
     private static UserCredentials globalUser;
-
 
     /**
      * Return single user
@@ -29,24 +28,19 @@ public class UserSecurityService {
      * else each time return unique user
      *
      * @param accessLevel - user's access level
-     * @exception NoSuchElementException if the iteration has no more elements
+     * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser(String accessLevel) {
         return Constants.useDifferentUsers ? getSecurityUser(accessLevel) : getGlobalUser();
     }
 
     private static synchronized UserCredentials getSecurityUser(String security) {
-        try {
-            Iterator<UserCredentials> securityUsers = usersByAccessLevel.get(security).iterator();
+        Queue<UserCredentials> users = usersByAccessLevel.get(security);
 
-            UserCredentials user = securityUsers.next();
-            securityUsers.remove();
-            return user;
+        UserCredentials userCredentials = users.poll();
+        users.add(userCredentials);
 
-        } catch (NoSuchElementException e) {
-            logger.error(e.getMessage());
-            throw new NoSuchElementException("Users list is empty.");
-        }
+        return userCredentials;
     }
 
     private static UserCredentials getGlobalUser() {

@@ -42,7 +42,7 @@ public class NewScenarioNameTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .createNewScenario()
             .enterScenarioName(testScenarioName)
@@ -61,7 +61,7 @@ public class NewScenarioNameTests extends TestBase {
         String testNewScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword());
+        loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
@@ -93,7 +93,7 @@ public class NewScenarioNameTests extends TestBase {
         String ScenarioC = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword());
+        loginPage.login(UserUtil.getUser());
         explorePage = new ExplorePage(driver);
         explorePage = explorePage.uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())

@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.login;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -110,8 +111,20 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @param password - the password
      * @return new page object
      */
+    @Deprecated
     public ExplorePage login(String email, String password) {
         executeLogin(email, password);
+        return new ExplorePage(driver);
+    }
+
+    /**
+     * Login to cid
+     *
+     * @param userCredentials - object with users credentials and access level
+     * @return new page object
+     */
+    public ExplorePage login(final UserCredentials userCredentials) {
+        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new ExplorePage(driver);
     }
 

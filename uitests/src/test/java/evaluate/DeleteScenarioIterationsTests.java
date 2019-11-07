@@ -35,7 +35,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword());
+        loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
@@ -67,7 +67,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword());
+        loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))

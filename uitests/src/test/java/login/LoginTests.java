@@ -49,7 +49,7 @@ public class LoginTests extends TestBase {
     @Description("Test successful login")
     public void testLogin() {
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword());
+        explorePage = loginPage.login(UserUtil.getUser());
         assertThat(explorePage.isDeleteButtonPresent(), is(true));
     }
 
@@ -119,7 +119,7 @@ public class LoginTests extends TestBase {
         String ScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        loginPage.login(UserUtil.getUser())
             .uploadFile(ScenarioName, new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -127,7 +127,7 @@ public class LoginTests extends TestBase {
             .selectLogOut();
 
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .openScenario(ScenarioName, "225_gasket-1-solid1");
 
         assertThat(evaluatePage.isCADConnectionStatus("CAD file connected"), is(true));

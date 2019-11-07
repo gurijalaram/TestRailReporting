@@ -44,7 +44,7 @@ public class SaveAsComparisonTests extends TestBase {
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
@@ -79,7 +79,7 @@ public class SaveAsComparisonTests extends TestBase {
 
         loginPage = new LoginPage(driver);
 
-        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);

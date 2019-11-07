@@ -33,20 +33,10 @@ public class UserCommonService {
     }
 
     private static UserCredentials getNewUser() {
-        try {
+        UserCredentials userCredentials = usersQueue.poll();
+        usersQueue.add(userCredentials);
 
-            UserCredentials userCredentials = usersQueue.poll();
-
-            if (userCredentials == null) {
-                throw new NoSuchElementException("Users list is empty.");
-            }
-
-            return userCredentials;
-
-        } catch (NoSuchElementException e) {
-            logger.error(e.getMessage());
-            throw new NoSuchElementException(e.getMessage());
-        }
+        return userCredentials;
     }
 
     private static UserCredentials getGlobalUser() {

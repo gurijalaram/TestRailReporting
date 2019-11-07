@@ -2,6 +2,7 @@ package reports.pages.login;
 
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -133,8 +134,20 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @param password - user password
      * @return new page object
      */
+    @Deprecated
     public HomePage login(String email, String password) {
         executeLogin(email, password);
+        return new HomePage(driver);
+    }
+
+    /**
+     * Login to CI Report
+     *
+     * @param userCredentials - object with users credentials and access level
+     * @return new page object
+     */
+    public HomePage login(UserCredentials userCredentials) {
+        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new HomePage(driver);
     }
 
