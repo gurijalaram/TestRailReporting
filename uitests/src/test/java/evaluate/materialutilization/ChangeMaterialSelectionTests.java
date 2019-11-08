@@ -342,7 +342,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -364,7 +364,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test de-selecting the material, previous material applied and the scenario can be cost")
     public void changeMaterialSelectionTestDeSelect() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -385,7 +385,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
         loginPage = new LoginPage(driver);
-        materialPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        materialPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
@@ -403,18 +403,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
 
-        String ScenarioName = new Util().getScenarioName();
+        String scenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialCompositionTable()
             .method("MCAD <material not found - VPE default used>")
             .apply()
             .costScenario()
             .selectExploreButton()
-            .openScenario(ScenarioName, "MACHINED BOX AMERICAS");
+            .openScenario(scenarioName, "MACHINED BOX AMERICAS");
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1095"), is(true));
     }
@@ -424,7 +424,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS IronCast.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialCompositionTable()
@@ -440,7 +440,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test opening material selection and selecting apply without making a selection")
     public void changeMaterialSelectionTestNoChange() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .openMaterialCompositionTable()
@@ -455,7 +455,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test opening material selection and selecting cancel after making a selection")
     public void changeMaterialSelectionTestCancel() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .openMaterialCompositionTable()
@@ -471,7 +471,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test opening Part Nesting Tab for appropriate Process Groups")
     public void openPartNestingAppropriatePG() {
         loginPage = new LoginPage(driver);
-        partNestingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        partNestingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
