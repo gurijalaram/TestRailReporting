@@ -96,7 +96,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.88, Piece Part Cost (USD): 0.64, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,805.76"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.88, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,741.62"));
     }
 
     @Test
@@ -232,7 +232,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getBurdenedCost("1.64"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.56"), is(true));
 
         new EvaluatePage(driver).openProcessDetails()
             .selectRoutingsButton()
@@ -241,7 +241,7 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("2.04"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.95"), is(true));
     }
 
     @Test
