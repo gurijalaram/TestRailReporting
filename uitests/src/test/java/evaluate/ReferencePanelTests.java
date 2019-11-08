@@ -85,6 +85,7 @@ public class ReferencePanelTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .costScenario(2)
             .openReferenceCompare()
+            .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PUBLIC.getWorkspace(), scenarioName);
 
         assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()), is(true));
