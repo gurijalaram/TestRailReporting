@@ -383,7 +383,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1658"})
+    @TestRail(testCaseId = {"1658", "1254"})
     @Description("Validate the properties dialogue box updates with a newly selected and costed routing.")
     public void propertiesRouting() {
         loginPage = new LoginPage(driver);
@@ -401,7 +401,8 @@ public class ProcessRoutingTests extends TestBase {
             .selectProperties()
             .expandDropdown("Technique");
         assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Punching"));
-        propertiesDialogPage.closeProperties();
+        new EvaluatePage(driver).selectAnalysis()
+            .closeProperties();
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
