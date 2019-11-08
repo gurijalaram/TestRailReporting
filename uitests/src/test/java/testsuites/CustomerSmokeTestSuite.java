@@ -11,15 +11,21 @@ import evaluate.designguidance.tolerance.ToleranceTests;
 import explore.ActionsTests;
 import explore.TableHeadersTests;
 import login.LoginTests;
-import org.junit.experimental.categories.Categories;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import settings.SettingsTests;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
-@RunWith(Categories.class)
+import com.apriori.utils.ProjectRunID;
+
+import org.junit.BeforeClass;
+import org.junit.experimental.categories.Categories;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+
+//@ProjectRunID("9999999")
+@RunWith(TestSuiteRunner.class)
 @Categories.IncludeCategory(CustomerSmokeTests.class)
-@Suite.SuiteClasses({
+@Suite.SuiteClasses( {
     NewScenarioNameTests.class,
     ThreadTests.class,
     ProcessGroupsTests.class,

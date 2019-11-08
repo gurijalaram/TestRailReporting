@@ -1,6 +1,7 @@
 package com.apriori.utils.web.rules;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.exceptions.APIClient;
 import com.apriori.utils.web.exceptions.APIException;
 
@@ -27,7 +28,6 @@ public class TestRailRule extends TestWatcher {
     private static final String API_URL = "https://apriori3.testrail.net";
     private static final String USERNAME = "kpatel+1@apriori.com";
     private static final String PASSWORD = "cAnKTFzwhgxS9TJxV09p-9XkAs5FMPEiE352kv0nY";
-    private static final Integer RUN_ID = 177;
 
     /*
      * (non-Javadoc)
@@ -86,7 +86,7 @@ public class TestRailRule extends TestWatcher {
         client.setPassword(PASSWORD);
         String[] values = testRail.testCaseId();
         for (String value : values) {
-            client.sendPost("add_result_for_case/" + RUN_ID + "/" + value + "", parameterData);
+            client.sendPost("add_result_for_case/" + Constants.RUN_ID + "/" + value + "", parameterData);
         }
     }
 }
