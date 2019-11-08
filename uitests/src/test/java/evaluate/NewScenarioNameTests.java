@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -28,6 +29,7 @@ public class NewScenarioNameTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
+    private JobQueuePage jobQueuePage;
 
     public NewScenarioNameTests() {
         super();
@@ -129,16 +131,15 @@ public class NewScenarioNameTests extends TestBase {
         String ScenarioA = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-        explorePage = new ExplorePage(driver);
-        explorePage = explorePage.uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectExploreButton()
-            .refreshCurrentPage()
+       jobQueuePage = loginPage.login(UserUtil.getUser())
             .uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .refreshCurrentPage();
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .createNewScenario()
+            .enterScenarioName(ScenarioA)
+            .save()
+            .openJobQueue();
 
+       //assertThat(jobQueuePage.saveashasfailed);
     }
 }
