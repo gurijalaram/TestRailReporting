@@ -6,13 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.ReferenceComparePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.pageobjects.pages.settings.ProductionDefaultPage;
-import com.apriori.pageobjects.pages.settings.SelectionSettingsPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -27,13 +21,7 @@ import org.junit.Test;
 
 public class ReferencePanelTests extends TestBase {
     private LoginPage loginPage;
-    private ExplorePage explorePage;
-    private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
-    private ProductionDefaultPage productionDefaultPage;
-    private MoreInputsPage moreInputsPage;
-    private SelectionSettingsPage selectionSettingsPage;
-    private WarningPage warningPage;
     private ReferenceComparePage referenceComparePage;
 
     @Test
@@ -68,7 +56,7 @@ public class ReferencePanelTests extends TestBase {
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -85,7 +73,8 @@ public class ReferencePanelTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .costScenario(2)
             .openReferenceCompare()
-            .selectDropdownScenario(WorkspaceEnum.PUBLIC.getWorkspace(), scenarioName);
+            .selectDropdown()
+            .selectDropdownScenario(WorkspaceEnum.PUBLIC.name(), scenarioName);
 
         assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()), is(true));
         assertThat(referenceComparePage.isReferenceVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
@@ -101,7 +90,7 @@ public class ReferencePanelTests extends TestBase {
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        referenceComparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        referenceComparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
