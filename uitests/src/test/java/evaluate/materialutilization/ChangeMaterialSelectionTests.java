@@ -465,19 +465,4 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
     }
-
-    @Test
-    @TestRail(testCaseId = {"906"})
-    @Description("Test opening Part Nesting Tab for appropriate Process Groups")
-    public void openPartNestingAppropriatePG() {
-        loginPage = new LoginPage(driver);
-        partNestingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openMaterialComposition()
-            .goToPartNestingTab();
-
-        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
-    }
 }
