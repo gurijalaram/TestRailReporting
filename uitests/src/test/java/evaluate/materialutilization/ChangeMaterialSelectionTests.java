@@ -107,7 +107,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         new EvaluatePage(driver).openMaterialCompositionTable()
             .selectMaterialComposition("Brass, Cast, Yellow 270")
             .apply()
-            .costScenario();
+            .costScenario(5);
 
         assertThat(evaluatePage.isMaterialInfo("Brass, Cast, Yellow 270"), is(true));
     }
