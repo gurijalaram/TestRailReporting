@@ -195,6 +195,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets the partname
+     *
      * @return string
      */
     public String getPartName() {
@@ -457,6 +458,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Selects the analysis button
+     *
      * @return new page object
      */
     public AnalysisPage selectAnalysis() {
@@ -530,6 +532,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Refreshes the component count
+     *
      * @return current page object
      */
     public EvaluatePage refreshComponents() {
@@ -539,6 +542,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Checks the value of the total components
+     *
      * @param value - the value
      * @return true/false
      */
@@ -548,6 +552,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Checks the value of unique components
+     *
      * @param value - the value
      * @return true/false
      */
@@ -557,6 +562,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Checks the uncosted unique value
+     *
      * @param value - the value
      * @return true/false
      */
@@ -566,6 +572,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Checks the value of finish mass
+     *
      * @param value - the value
      * @return true/false
      */
@@ -575,6 +582,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Checks the value of target mass
+     *
      * @param value - the value
      * @return true/false
      */
@@ -584,10 +592,33 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Checks the value of secondary processes
+     *
      * @param value - the value
      * @return true/false
      */
     public Boolean isSecondaryProcesses(String value) {
         return pageUtils.checkElementAttribute(secondaryProcesses, "value", value);
     }
+
+    /**
+     * Close the reference compare page
+     *
+     * @return new page object
+     */
+    public EvaluatePage collapseReferenceCompare() {
+        if (pageUtils.isElementDisplayed(chevron)) {
+            pageUtils.waitForElementAndClick(referenceChevron);
+        }
+        return this;
+    }
+
+    /**
+     * Checks the uncosted unique value
+     *
+     * @return true/false
+     */
+    public Boolean isReferencePanelExpanded() {
+        return pageUtils.isElementDisplayed(chevron);
+    }
+
 }

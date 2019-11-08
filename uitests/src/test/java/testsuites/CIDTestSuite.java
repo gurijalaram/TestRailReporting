@@ -21,6 +21,7 @@ import evaluate.PsoEditTests;
 import evaluate.PublishExistingCostedTests;
 import evaluate.PublishNewCostedTests;
 import evaluate.ReCostScenarioTests;
+import evaluate.ReferencePanelTests;
 import evaluate.RevertScenarioTests;
 import evaluate.SecondaryProcessTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
@@ -86,6 +87,7 @@ import settings.SettingsTests;
     SettingsTests.class,
     MaterialStockTests.class,
     PartNestingTests.class,
+    ReferencePanelTests.class
 })
 public class CIDTestSuite {
 }

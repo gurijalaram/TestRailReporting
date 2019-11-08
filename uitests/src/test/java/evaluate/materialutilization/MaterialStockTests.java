@@ -66,7 +66,7 @@ public class MaterialStockTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("20.74")));
+        assertThat(evaluatePage.getPartCost(), is(equalTo("19.67")));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialComposition()
@@ -82,7 +82,7 @@ public class MaterialStockTests extends TestBase {
         materialPage = new MaterialPage(driver);
         evaluatePage = materialPage.closeMaterialAndUtilizationPanel()
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("21.28")));
+        assertThat(evaluatePage.getPartCost(), is(equalTo("20.18")));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialComposition()

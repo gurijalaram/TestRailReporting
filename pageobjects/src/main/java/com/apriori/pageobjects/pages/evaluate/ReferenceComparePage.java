@@ -41,6 +41,54 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     @FindBy(css = "div[data-ap-region='costResultsTile']")
     private WebElement costResultsTile;
 
+    @FindBy(css = "[data-ap-field='processGroupSelection.baseline']")
+    private WebElement processGroupBaseline;
+
+    @FindBy(css = "[data-ap-field='primaryVpeName.baseline']")
+    private WebElement vpeBaseline;
+
+    @FindBy(css = "[data-ap-field='baselineUserOverridesCount']")
+    private WebElement secondaryProcessesBaseline;
+
+    @FindBy(css = "[data-ap-field='annualVolume.baseline']")
+    private WebElement annualVolumeBaseline;
+
+    @FindBy(css = "[data-ap-field='productionLife.baseline']")
+    private WebElement productionLifeBaseline;
+
+    @FindBy(css = "[data-ap-field='materialNameOverride.baseline']")
+    private WebElement materialBaseline;
+
+    @FindBy(css = "[data-ap-field='finishMass.baseline']")
+    private WebElement finishMassBaseline;
+
+    @FindBy(css = "[data-ap-field='utilization.baseline']")
+    private WebElement utilizationBaseline;
+
+    @FindBy(css = "[data-ap-field='failuresWarningsCount.baseline']")
+    private WebElement failuresWarningsCountBaseline;
+
+    @FindBy(css = "[data-ap-field='dtcMessagesCount.baseline']")
+    private WebElement guidanceIssuesBaseline;
+
+    @FindBy(css = "[data-ap-field='gcdWithTolerancesCount.baseline']")
+    private WebElement gcdWithTolerancesCountBaseline;
+
+    @FindBy(css = "[data-ap-field='cycleTime.baseline']")
+    private WebElement cycleTimeBaseline;
+
+    @FindBy(css = "[data-ap-field='materialCost.baseline']")
+    private WebElement materialCostBaseline;
+
+    @FindBy(css = "[data-ap-field='totalCost.baseline']")
+    private WebElement piecePartCostBaseline;
+
+    @FindBy(css = "[data-ap-field='fullyBurdenedCost.baseline']")
+    private WebElement fullyBurdenedCostBaseline;
+
+    @FindBy(css = "[data-ap-field='capitalInvestment.baseline']")
+    private WebElement capitalInvestmentBaseline;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -128,5 +176,87 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      */
     public List<String> getCostResultsTile() {
         return Arrays.stream(costResultsTile.getText().split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets reference panel process group
+     *
+     * @return as string
+     */
+    public Boolean isReferenceProcessGroup(String text) {
+        return checkAttribute(processGroupBaseline, text);
+    }
+
+    /**
+     * Gets reference panel VPE
+     *
+     * @return as string
+     */
+    public Boolean isReferenceVPE(String text) {
+        return checkAttribute(vpeBaseline, text);
+    }
+
+    /**
+     * Gets reference panel Secondary Processes
+     *
+     * @return as string
+     */
+    public Boolean isReferenceSecondaryProcesses(String text) {
+        return checkAttribute(secondaryProcessesBaseline, text);
+    }
+
+    /**
+     * Gets reference panel Annual Volume
+     *
+     * @return as string
+     */
+    public Boolean isReferenceAnnualVolume(String text) {
+        return checkAttribute(annualVolumeBaseline, text);
+    }
+
+    /**
+     * Gets reference panel Production Life
+     *
+     * @return as string
+     */
+    public Boolean isReferenceProductionLife(String text) {
+        return checkAttribute(productionLifeBaseline, text);
+    }
+
+    /**
+     * Gets reference panel Material
+     *
+     * @return as string
+     */
+    public Boolean isReferenceMaterial(String text) {
+        return checkAttribute(materialBaseline, text);
+    }
+
+    /**
+     * Gets reference panel Mass
+     *
+     * @return as string
+     */
+    public Boolean isReferenceFinishMass(String text) {
+        return checkAttribute(finishMassBaseline, text);
+    }
+
+    /**
+     * Gets reference Utilization
+     *
+     * @return as string
+     */
+    public Boolean isReferenceUtilization(String text) {
+        return checkAttribute(utilizationBaseline, text);
+    }
+
+    /**
+     * Refactored method to check element attribute
+     * @param locator - the locator
+     * @param text - the text
+     * @return true/false
+     */
+    private Boolean checkAttribute(WebElement locator, String text) {
+        return pageUtils.checkElementAttribute(locator, "innerText", text);
     }
 }
