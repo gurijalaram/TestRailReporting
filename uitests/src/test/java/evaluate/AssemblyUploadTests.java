@@ -118,7 +118,6 @@ public class AssemblyUploadTests extends TestBase {
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
-            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .delete()
             .deleteScenario()
             .filterCriteria()
@@ -128,4 +127,24 @@ public class AssemblyUploadTests extends TestBase {
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
 
+    @Test
+    @TestRail(testCaseId = {"2652"})
+    @Description("User can delete STEP Assembly Post-Costing")
+    public void testSTEPAssemblyDeletePostCost() {
+
+        scenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .costScenario()
+            .delete()
+            .deleteScenario()
+            .filterCriteria()
+            .filterPrivateCriteria("Assembly", "Scenario Name", "Contains", scenarioName)
+            .apply(ExplorePage.class);
+
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
+    }
 }
