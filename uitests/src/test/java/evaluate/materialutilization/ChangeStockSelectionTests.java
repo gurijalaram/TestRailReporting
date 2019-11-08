@@ -39,7 +39,7 @@ public class ChangeStockSelectionTests extends TestBase {
         loginPage = new LoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialComposition()
             .goToStockTab()
