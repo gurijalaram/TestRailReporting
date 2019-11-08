@@ -36,7 +36,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2628", "2647"})
+    @TestRail(testCaseId = {"2628", "2647", "2653"})
     @Description("Assembly File Upload - STEP")
     public void testAssemblyFormatSTEP() {
         loginPage = new LoginPage(driver);
@@ -46,6 +46,10 @@ public class AssemblyUploadTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
+        assertThat(evaluatePage.isTotalComponents("4"), is(true));
+        assertThat(evaluatePage.isUniqueComponents("4"), is(true));
+        assertThat(evaluatePage.getWarningsCount("4"), is(true));
+        assertThat(evaluatePage.getCycleTimeCount(), is("0.00"));
     }
 
     @Test
