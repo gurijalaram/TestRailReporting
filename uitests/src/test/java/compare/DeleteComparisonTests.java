@@ -45,7 +45,7 @@ public class DeleteComparisonTests extends TestBase {
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
             .costScenario()
             .selectExploreButton()
@@ -80,7 +80,7 @@ public class DeleteComparisonTests extends TestBase {
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
@@ -106,7 +106,7 @@ public class DeleteComparisonTests extends TestBase {
 
         loginPage = new LoginPage(driver);
 
-        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -146,7 +146,7 @@ public class DeleteComparisonTests extends TestBase {
 
         loginPage = new LoginPage(driver);
 
-        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .costScenario()
             .publishScenario(PublishPage.class)

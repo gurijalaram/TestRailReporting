@@ -55,7 +55,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -93,7 +93,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void geometryTest() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -119,7 +119,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -155,7 +155,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -190,7 +190,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();

@@ -40,7 +40,7 @@ public class EditPublicComparisonTests extends TestBase {
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
@@ -63,7 +63,7 @@ public class EditPublicComparisonTests extends TestBase {
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparePage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);

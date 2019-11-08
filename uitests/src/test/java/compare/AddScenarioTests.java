@@ -40,7 +40,7 @@ public class AddScenarioTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        comparisonTablePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparisonTablePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
@@ -64,7 +64,7 @@ public class AddScenarioTests extends TestBase {
 
         loginPage = new LoginPage(driver);
 
-        comparisonTablePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        comparisonTablePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
@@ -86,7 +86,7 @@ public class AddScenarioTests extends TestBase {
     @Description("Test warning message appears when the user does not enter a scenario name for a comparison")
     public void comparisonNoScenarioName() {
         loginPage = new LoginPage(driver);
-        warningPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        warningPage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .save(WarningPage.class);
 

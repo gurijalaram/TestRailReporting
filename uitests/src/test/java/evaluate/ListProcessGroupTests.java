@@ -29,7 +29,7 @@ public class ListProcessGroupTests extends TestBase {
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
@@ -39,7 +39,7 @@ public class ListProcessGroupTests extends TestBase {
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
                 .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Piston_assembly.stp"));
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(AssemblyProcessGroupEnum.getNames()));

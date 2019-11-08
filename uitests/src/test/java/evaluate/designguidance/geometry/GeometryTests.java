@@ -37,7 +37,7 @@ public class GeometryTests extends TestBase {
     @Description("Validate the user can open the Analysis Properties dialogue box for a specific GCD selected from the geometry tab")
     public void propertiesRouting() {
         loginPage = new LoginPage(driver);
-        geometryPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        geometryPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())

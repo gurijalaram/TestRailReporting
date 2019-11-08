@@ -37,7 +37,7 @@ public class MaterialStockTests extends TestBase {
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {
         loginPage = new LoginPage(driver);
-        materialPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        materialPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Powder Metal.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
@@ -62,7 +62,7 @@ public class MaterialStockTests extends TestBase {
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
@@ -92,11 +92,11 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"968", "969",})
+    @TestRail(testCaseId = {"968", "969", "876"})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
         loginPage = new LoginPage(driver);
-        stockPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        stockPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Square circle.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())

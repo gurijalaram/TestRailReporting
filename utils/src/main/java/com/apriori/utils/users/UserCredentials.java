@@ -7,12 +7,12 @@ public class UserCredentials {
     private String password;
 
     //TODO z: change it on Security ENUM when will be information about security levels
-    private String securityLevel;
+    private String accessLevel;
 
-    public UserCredentials(String username, String password, String securityLevel) {
+    public UserCredentials(String username, String password, String accessLevel) {
         this.username = username;
         this.password = password;
-        this.securityLevel = securityLevel;
+        this.accessLevel = accessLevel;
     }
 
     public UserCredentials(String username, String password) {
@@ -20,12 +20,12 @@ public class UserCredentials {
         this.password = password;
     }
 
-    public String getSecurityLevel() {
-        return securityLevel;
+    public String getAccessLevel() {
+        return accessLevel;
     }
 
-    public UserCredentials setSecurityLevel(String securityLevel) {
-        this.securityLevel = securityLevel;
+    public UserCredentials setAccessLevel(String securityLevel) {
+        this.accessLevel = securityLevel;
         return this;
     }
 

@@ -37,7 +37,7 @@ public class PublishExistingCostedTests extends TestBase {
         String partName = "testpart-4";
 
         loginPage = new LoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()

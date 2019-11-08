@@ -28,7 +28,7 @@ public class ListOfVPETests extends TestBase {
     @Description("Get List of VPEs")
     public void getVPEsList() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
 
         assertThat(evaluatePage.getListOfVPEs(), hasItems(VPEEnum.getNames()));

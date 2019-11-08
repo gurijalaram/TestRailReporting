@@ -34,6 +34,7 @@ import evaluate.designguidance.tolerance.ToleranceTests;
 import evaluate.materialutilization.ChangeMaterialSelectionTests;
 import evaluate.materialutilization.ChangeStockSelectionTests;
 import evaluate.materialutilization.MaterialStockTests;
+import evaluate.materialutilization.PartNestingTests;
 import explore.ActionsTests;
 import explore.FilterCriteriaTests;
 import explore.PreviewPanelTests;
@@ -83,7 +84,8 @@ import settings.SettingsTests;
     TableHeadersTests.class,
     LoginTests.class,
     SettingsTests.class,
-    MaterialStockTests.class
+    MaterialStockTests.class,
+    PartNestingTests.class,
 })
 public class CIDTestSuite {
 }
