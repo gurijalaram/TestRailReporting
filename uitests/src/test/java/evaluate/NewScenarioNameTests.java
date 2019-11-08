@@ -120,4 +120,25 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(explorePage.getListOfScenarios(ScenarioB, "MultiUpload"), equalTo(1));
         assertThat(explorePage.getListOfScenarios(ScenarioC, "MultiUpload"), equalTo(1));
     }
+
+    @Test
+    @TestRail(testCaseId = {"579"})
+    @Description("Validate the Failure to create a new scenario that is named identical to existing scenario")
+    public void failIdenticalScenario() {
+
+        String ScenarioA = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UserUtil.getUser());
+        explorePage = new ExplorePage(driver);
+        explorePage = explorePage.uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectExploreButton()
+            .refreshCurrentPage()
+            .uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .refreshCurrentPage();
+
+    }
 }
