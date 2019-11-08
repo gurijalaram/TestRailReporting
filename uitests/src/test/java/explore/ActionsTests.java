@@ -149,7 +149,7 @@ public class ActionsTests extends TestBase {
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
             .save(EvaluatePage.class)
-            .costScenario()
+            .costScenario(1)
             .selectScenarioInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("Complete"), is(true));
