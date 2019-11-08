@@ -41,8 +41,53 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     @FindBy(css = "div[data-ap-region='costResultsTile']")
     private WebElement costResultsTile;
 
-    @FindBy(css = "[class='section-compare baseline']")
-    private WebElement referenceValues;
+    @FindBy(css = "[data-ap-field='processGroupSelection.baseline']")
+    private WebElement processGroupBaseline;
+
+    @FindBy(css = "[data-ap-field='primaryVpeName.baseline']")
+    private WebElement vpeBaseline;
+
+    @FindBy(css = "[data-ap-field='baselineUserOverridesCount']")
+    private WebElement secondaryProcessesBaseline;
+
+    @FindBy(css = "[data-ap-field='annualVolume.baseline']")
+    private WebElement annualVolumeBaseline;
+
+    @FindBy(css = "[data-ap-field='productionLife.baseline']")
+    private WebElement productionLifeBaseline;
+
+    @FindBy(css = "[data-ap-field='materialNameOverride.baseline']")
+    private WebElement materialBaseline;
+
+    @FindBy(css = "[data-ap-field='finishMass.baseline']")
+    private WebElement finishMassBaseline;
+
+    @FindBy(css = "[data-ap-field='utilization.baseline']")
+    private WebElement utilizationBaseline;
+
+    @FindBy(css = "[data-ap-field='failuresWarningsCount.baseline']")
+    private WebElement failuresWarningsCountBaseline;
+
+    @FindBy(css = "[data-ap-field='dtcMessagesCount.baseline']")
+    private WebElement guidanceIssuesBaseline;
+
+    @FindBy(css = "[data-ap-field='gcdWithTolerancesCount.baseline']")
+    private WebElement gcdWithTolerancesCountBaseline;
+
+    @FindBy(css = "[data-ap-field='cycleTime.baseline']")
+    private WebElement cycleTimeBaseline;
+
+    @FindBy(css = "[data-ap-field='materialCost.baseline']")
+    private WebElement materialCostBaseline;
+
+    @FindBy(css = "[data-ap-field='totalCost.baseline']")
+    private WebElement piecePartCostBaseline;
+
+    @FindBy(css = "[data-ap-field='fullyBurdenedCost.baseline']")
+    private WebElement fullyBurdenedCostBaseline;
+
+    @FindBy(css = "[data-ap-field='capitalInvestment.baseline']")
+    private WebElement capitalInvestmentBaseline;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -134,12 +179,74 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     }
 
     /**
-     * Gets reference panel info
+     * Gets reference panel process group
      *
-     * @return process panel as string
+     * @return as string
      */
-    public List<String> getReferencePanelValues() {
-        return Arrays.stream(referenceValues.getText().split("\n")).collect(Collectors.toList());
+    public Boolean isReferenceProcessGroup(String text) {
+        return pageUtils.checkElementAttribute(processGroupBaseline, "innerText", text);
     }
 
+    /**
+     * Gets reference panel VPE
+     *
+     * @return as string
+     */
+    public Boolean isReferenceVPE(String text) {
+        return pageUtils.checkElementAttribute(vpeBaseline, "innerText", text);
+    }
+
+    /**
+     * Gets reference panel Secondary Processes
+     *
+     * @return as string
+     */
+    public Boolean isReferenceSecondaryProcesses(String text) {
+        return pageUtils.checkElementAttribute(secondaryProcessesBaseline, "innerText", text);
+    }
+
+    /**
+     * Gets reference panel Annual Volume
+     *
+     * @return as string
+     */
+    public Boolean isReferenceAnnualVolume(String text) {
+        return pageUtils.checkElementAttribute(annualVolumeBaseline, "innerText", text);
+    }
+
+    /**
+     * Gets reference panel Production Life
+     *
+     * @return as string
+     */
+    public Boolean isReferenceProductionLife(String text) {
+        return pageUtils.checkElementAttribute(productionLifeBaseline, "innerText", text);
+    }
+
+    /**
+     * Gets reference panel Material
+     *
+     * @return as string
+     */
+    public Boolean isReferenceMaterial(String text) {
+        return pageUtils.checkElementAttribute(materialBaseline, "innerText", text);
+    }
+
+    /**
+     * Gets reference panel Mass
+     *
+     * @return as string
+     */
+    public Boolean isReferenceFinishMass(String text) {
+        return pageUtils.checkElementAttribute(finishMassBaseline, "innerText", text);
+    }
+
+    /**
+     * Gets reference Utilization
+     *
+     * @return as string
+     */
+    public Boolean isReferenceUtilization(String text) {
+        return pageUtils.checkElementAttribute(utilizationBaseline, "innerText", text);
+    }
 }
