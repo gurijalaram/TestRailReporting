@@ -21,5 +21,7 @@ public class ConcurrentTestRunner extends BlockJUnit4ClassRunner {
             threads = System.getProperty("threadCount");
         }
         setScheduler(new ParallelScheduler(threads));
+
+        SuiteRunnerHelper.initProjectRunId(klass);
     }
 }

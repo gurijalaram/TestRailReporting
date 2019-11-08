@@ -6,7 +6,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import testsuites.suiteinterface.SmokeTests;
 
-@RunWith(Categories.class)
+import com.apriori.utils.runner.CategorySuiteRunner;
+
+//TODO: add project ID for TestRail
+//@ProjectRunID("999")
+@RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(SmokeTests.class)
 @Suite.SuiteClasses({
     NewScenarioNameTests.class

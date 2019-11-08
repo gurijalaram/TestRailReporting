@@ -45,6 +45,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import settings.SettingsTests;
 
+//TODO: add project ID for TestRail
+//@ProjectRunID("999")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses ({
     AddScenarioTests.class,

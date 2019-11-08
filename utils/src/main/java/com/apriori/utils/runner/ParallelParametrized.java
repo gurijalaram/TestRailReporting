@@ -15,6 +15,8 @@ public class ParallelParametrized extends Parameterized {
             threads = System.getProperty("threadCount");
         }
         setScheduler(new ParallelScheduler(threads));
+
+        SuiteRunnerHelper.initProjectRunId(klass);
     }
 
 
