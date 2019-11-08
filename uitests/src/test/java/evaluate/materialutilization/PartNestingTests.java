@@ -32,7 +32,7 @@ public class PartNestingTests extends TestBase {
     @Description("Validate Part Nesting Tab can be accessed")
     public void partNestingTabAccessible() {
         loginPage = new LoginPage(driver);
-        partNestingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        partNestingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
@@ -48,7 +48,7 @@ public class PartNestingTests extends TestBase {
     @Description("Select Rectangular method of Part Nesting and cost")
     public void partNestingTabRectangularNesting() {
         loginPage = new LoginPage(driver);
-        partNestingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        partNestingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
@@ -68,7 +68,7 @@ public class PartNestingTests extends TestBase {
     @Description("Select True Part method of Part Nesting and cost")
     public void partNestingTabTruePartNesting() {
         loginPage = new LoginPage(driver);
-        partNestingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        partNestingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
@@ -89,7 +89,7 @@ public class PartNestingTests extends TestBase {
         @Description("Select Machine Default method of Part Nesting and cost")
         public void partNestingTabMachineDefaultNesting() {
         loginPage = new LoginPage(driver);
-        partNestingPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        partNestingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
@@ -109,7 +109,7 @@ public class PartNestingTests extends TestBase {
     @Description("Validate Part Nesting Tab can not be accessed for inappropriate Process Groups")
     public void partNestingTabDisabled() {
         loginPage = new LoginPage(driver);
-        materialPage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        materialPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
