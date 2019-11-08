@@ -247,6 +247,16 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public Boolean isReferenceUtilization(String text) {
-        return pageUtils.checkElementAttribute(utilizationBaseline, "innerText", text);
+        return checkAttribute(utilizationBaseline, text);
+    }
+
+    /**
+     * Refactored method to check element attribute
+     * @param locator - the locator
+     * @param text - the text
+     * @return true/false
+     */
+    private Boolean checkAttribute(WebElement locator, String text) {
+        return pageUtils.checkElementAttribute(locator, "innerText", text);
     }
 }
