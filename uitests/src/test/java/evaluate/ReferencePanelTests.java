@@ -6,13 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.ReferenceComparePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.pageobjects.pages.settings.ProductionDefaultPage;
-import com.apriori.pageobjects.pages.settings.SelectionSettingsPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -27,13 +21,7 @@ import org.junit.Test;
 
 public class ReferencePanelTests extends TestBase {
     private LoginPage loginPage;
-    private ExplorePage explorePage;
-    private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
-    private ProductionDefaultPage productionDefaultPage;
-    private MoreInputsPage moreInputsPage;
-    private SelectionSettingsPage selectionSettingsPage;
-    private WarningPage warningPage;
     private ReferenceComparePage referenceComparePage;
 
     @Test
@@ -42,7 +30,7 @@ public class ReferencePanelTests extends TestBase {
     public void referenceUpdates() {
 
         loginPage = new LoginPage(driver);
-        referenceComparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        referenceComparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("powderMetal.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -68,7 +56,7 @@ public class ReferencePanelTests extends TestBase {
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -86,7 +74,7 @@ public class ReferencePanelTests extends TestBase {
             .costScenario(2)
             .openReferenceCompare()
             .selectDropdown()
-            .selectDropdownScenario(WorkspaceEnum.PUBLIC.getWorkspace(), scenarioName);
+            .selectDropdownScenario(WorkspaceEnum.PUBLIC.name(), scenarioName);
 
         assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()), is(true));
         assertThat(referenceComparePage.isReferenceVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
@@ -95,14 +83,14 @@ public class ReferencePanelTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"356"})
-    @Description("Validate  the compare panel can show the comparison between the most recent public iteration")
+    @TestRail(testCaseId = {"358"})
+    @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
 
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        referenceComparePage = loginPage.login(UserUtil.getUser().getUsername(), UserUtil.getUser().getPassword())
+        referenceComparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())

@@ -184,7 +184,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public Boolean isReferenceProcessGroup(String text) {
-        return pageUtils.checkElementAttribute(processGroupBaseline, "innerText", text);
+        return checkAttribute(processGroupBaseline, text);
     }
 
     /**
@@ -193,7 +193,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public Boolean isReferenceVPE(String text) {
-        return pageUtils.checkElementAttribute(vpeBaseline, "innerText", text);
+        return checkAttribute(vpeBaseline, text);
     }
 
     /**
@@ -202,7 +202,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public Boolean isReferenceSecondaryProcesses(String text) {
-        return pageUtils.checkElementAttribute(secondaryProcessesBaseline, "innerText", text);
+        return checkAttribute(secondaryProcessesBaseline, text);
     }
 
     /**
@@ -211,7 +211,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public Boolean isReferenceAnnualVolume(String text) {
-        return pageUtils.checkElementAttribute(annualVolumeBaseline, "innerText", text);
+        return checkAttribute(annualVolumeBaseline, text);
     }
 
     /**
@@ -220,7 +220,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public Boolean isReferenceProductionLife(String text) {
-        return pageUtils.checkElementAttribute(productionLifeBaseline, "innerText", text);
+        return checkAttribute(productionLifeBaseline, text);
     }
 
     /**
@@ -229,7 +229,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public Boolean isReferenceMaterial(String text) {
-        return pageUtils.checkElementAttribute(materialBaseline, "innerText", text);
+        return checkAttribute(materialBaseline, text);
     }
 
     /**
@@ -238,7 +238,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public Boolean isReferenceFinishMass(String text) {
-        return pageUtils.checkElementAttribute(finishMassBaseline, "innerText", text);
+        return checkAttribute(finishMassBaseline, text);
     }
 
     /**
@@ -247,6 +247,16 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public Boolean isReferenceUtilization(String text) {
-        return pageUtils.checkElementAttribute(utilizationBaseline, "innerText", text);
+        return checkAttribute(utilizationBaseline, text);
+    }
+
+    /**
+     * Refactored method to check element attribute
+     * @param locator - the locator
+     * @param text - the text
+     * @return true/false
+     */
+    private Boolean checkAttribute(WebElement locator, String text) {
+        return pageUtils.checkElementAttribute(locator, "innerText", text);
     }
 }
