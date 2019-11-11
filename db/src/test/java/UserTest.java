@@ -45,12 +45,12 @@ public class UserTest {
     @Test
     public void testUpdateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
-        List<User> userForDelete = new ArrayList<User>();
+        List<User> usersForUpdate = new ArrayList<User>();
         
         /*Change FullName of use "aPriori Default User" to "aPriori Test User" */
         User user = new User().setFullName("aPriori Default User");
-        userForDelete.add(userDao.getByFullName(user).setFullName("aPriori Test User"));
-        userDao.update(userForDelete);
+        usersForUpdate.add(userDao.getByFullName(user).setFullName("aPriori Test User"));
+        userDao.update(usersForUpdate);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class UserTest {
 
         /*Remove user with name "aPriori Default User" and RawLoginID "adu" from DB*/
         User user = new User().setFullName("aPriori Test User").setRawLoginID("adu");
-        userForDelete.add(user);
+        userForDelete.add(userDao.getByFullName(user));
         userDao.delete(userForDelete);
     }
 

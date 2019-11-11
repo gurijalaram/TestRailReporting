@@ -28,9 +28,10 @@ public class UserGroups implements Serializable{
     private String groupTypeName;
     @Column(name = "groupUuid")
     private String groupUuid;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private User user;
     
+    @ManyToOne
+    @JoinColumn(name = "user_ID", insertable=false, updatable=false)
+    private User user;
     
     public UserGroups( Long user_ID, String groupTypeName, String groupUuid) {
         this.user_ID = user_ID;
@@ -62,4 +63,13 @@ public class UserGroups implements Serializable{
     public void setGroupUuid(String groupUuid) {
         this.groupUuid = groupUuid;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
 }
