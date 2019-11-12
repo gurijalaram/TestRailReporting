@@ -5,17 +5,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.PartNestingPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -470,35 +468,5 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"901"})
-    @Description("Test setting a default material and ensure parts are costed in that material by default")
-    public void materialTestProductionDefault() {
-        loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser())
-            .openSettings()
-            .openProdDefaultTab()
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
-            .selectMaterialCatalog(VPEEnum.APRIORI_BRAZIL.getVpe())
-            .selectMaterial("Aluminum, Stock, ANSI 6061");
-        new SettingsPage(driver).save(ExplorePage.class);
-
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
-            .costScenario();
-
-        evaluatePage = new EvaluatePage(driver);
-        assertThat(evaluatePage.isMaterialInfo("Aluminum, Stock, ANSI 6061"), is(true));
-
-        driver.navigate().to(Constants.cidURL);
-        explorePage = new ExplorePage(driver);
-        explorePage.openSettings()
-            .openProdDefaultTab()
-            .selectProcessGroup(NO_DEFAULT)
-            .selectVPE(NO_DEFAULT)
-            .selectMaterialCatalog(NO_DEFAULT);
-        new SettingsPage(driver).save(ExplorePage.class);
     }
 }
