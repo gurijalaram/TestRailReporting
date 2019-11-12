@@ -37,6 +37,7 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-841")
     @TestRail(testCaseId = {"433"})
     @Description("Test a private comparison can be deleted from the explore page")
     public void testDeletePrivateComparisonExplore() {
@@ -98,7 +99,7 @@ public class DeleteComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
-    @Issue("BA-839")
+    @Issue("BA-841")
     public void testPublicComparisonDeleteExplore() {
 
         String testScenarioName = new Util().getScenarioName();
