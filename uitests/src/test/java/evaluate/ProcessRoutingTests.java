@@ -471,7 +471,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Material Jetting", "Powder Bed Fusion", "Vat Photopolymerization"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Material Jetting", "Powder Bed Fusion / Selective Laser Sintering", "Powder Bed Fusion / Direct Metal Laser Sintering", "Vat Photopolymerization"));
     }
 
     @Test
@@ -486,7 +486,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Bent Part", "Unbent Part"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Bent Part / CTL/[Punch]/[Bend]", "Bent Part / Tube Laser/[Punch]/[Bend]", "Unbent Part / CTL/[Punch]", "Unbent Part / Tube Laser/[Punch]", "Unbent Part / Roll Bending"));
     }
 
     @Test
@@ -614,6 +614,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-57276")
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
         loginPage = new LoginPage(driver);

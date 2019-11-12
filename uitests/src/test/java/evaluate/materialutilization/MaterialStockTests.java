@@ -40,6 +40,7 @@ public class MaterialStockTests extends TestBase {
         materialPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Powder Metal.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialComposition()
             .expandPanel();
@@ -65,6 +66,7 @@ public class MaterialStockTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
         assertThat(evaluatePage.getPartCost(), is(equalTo("19.67")));
 
