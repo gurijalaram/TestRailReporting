@@ -134,12 +134,14 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-57282")
     @Description("Test to set dropdown value to yes")
     public void setDropdownValueYes() {
         loginPage = new LoginPage(driver);
         threadingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()

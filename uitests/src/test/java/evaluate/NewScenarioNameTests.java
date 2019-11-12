@@ -18,6 +18,7 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -36,6 +37,7 @@ public class NewScenarioNameTests extends TestBase {
     @Category(CustomerSmokeTests.class)
     @Test
     @TestRail(testCaseId = {"577"})
+    @Issue("BA-874")
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
 
