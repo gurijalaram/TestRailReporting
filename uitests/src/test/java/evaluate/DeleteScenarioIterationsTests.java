@@ -39,7 +39,6 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
