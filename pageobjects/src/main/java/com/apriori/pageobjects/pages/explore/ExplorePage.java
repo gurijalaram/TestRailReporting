@@ -206,8 +206,9 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenario as webelement
      */
     public ExplorePage highlightComparison(String comparisonName) {
-        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr");
-        pageUtils.scrollToElement(comparison, componentScroller).click();
+        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
+        pageUtils.scrollToElement(comparison, componentScroller);
+        pageUtils.javaScriptClick(driver.findElement(comparison));
         return this;
     }
 
