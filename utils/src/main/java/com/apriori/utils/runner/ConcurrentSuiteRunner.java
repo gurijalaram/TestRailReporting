@@ -24,5 +24,7 @@ public class ConcurrentSuiteRunner extends Suite {
             threads = System.getProperty("threadCount");
         }
         setScheduler(new ParallelScheduler(threads));
+
+        SuiteRunnerHelper.initProjectRunId(klass);
     }
 }

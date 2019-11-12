@@ -75,6 +75,11 @@ Get user functionality has reference to `{environment}.properties` file.
 ## Run Sonarqube static code analysis
 1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard
 
+## Add TestRail configuration to _Test Suite_
+Annotate suite class that needs ProjectRunID using following format: `@ProjectRunID("999")`
+
+Annotate suite class that needs RunWith using following format (_class_ should be added from com.apriori.utils.runers, it is required) : `@RunWith(CategorySuiteRunner.class)`
+
 ## Add TestRail testCaseIDs to test methods
 Annotate method that needs testRailID using following format. Tags is optional so if you don't add, its ok
 `@TestRail(testCaseId = {"717"})`

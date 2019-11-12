@@ -1,6 +1,7 @@
 package com.apriori.utils.web.rules;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.exceptions.APIClient;
 import com.apriori.utils.web.exceptions.APIException;
 
@@ -27,7 +28,6 @@ public class TestRailRule extends TestWatcher {
     private static final String API_URL = "https://apriori3.testrail.net";
     private static final String USERNAME = "kpatel+1@apriori.com";
     private static final String PASSWORD = "cAnKTFzwhgxS9TJxV09p-9XkAs5FMPEiE352kv0nY";
-    private static final Integer RUN_ID = 177;
 
     /*
      * (non-Javadoc)
@@ -47,7 +47,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void failed(Throwable t, Description description) {
-        generateResultForCase();
+        generateResultForCase(FAILED_STATUS, FAILURE_COMMENTS);
     }
 
     /*
@@ -57,16 +57,16 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void succeeded(Description description) {
-        generateResultForCase();
+        generateResultForCase(SUCCESS_STATUS, SUCCESS_COMMENTS);
     }
 
-    private void generateResultForCase() {
+    private void generateResultForCase(final Integer statusCode, final String comment) {
         if (testRail == null) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
-        parameterData.put(STATUS_ID, SUCCESS_STATUS);
-        parameterData.put(COMMENT, SUCCESS_COMMENTS);
+        parameterData.put(STATUS_ID, statusCode);
+        parameterData.put(COMMENT, comment);
         try {
             addResultForCase(parameterData);
         } catch (APIException | IOException e) {
@@ -86,7 +86,7 @@ public class TestRailRule extends TestWatcher {
         client.setPassword(PASSWORD);
         String[] values = testRail.testCaseId();
         for (String value : values) {
-            client.sendPost("add_result_for_case/" + RUN_ID + "/" + value + "", parameterData);
+            client.sendPost("add_result_for_case/" + Constants.RUN_ID + "/" + value + "", parameterData);
         }
     }
 }

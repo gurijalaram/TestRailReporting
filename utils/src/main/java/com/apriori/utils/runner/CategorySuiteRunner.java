@@ -24,5 +24,7 @@ public class CategorySuiteRunner extends Categories {
             threads = System.getProperty("threadCount");
         }
         setScheduler(new ParallelScheduler(threads));
+
+        SuiteRunnerHelper.initProjectRunId(klass);
     }
 }

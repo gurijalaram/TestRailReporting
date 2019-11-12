@@ -43,7 +43,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C2695"})
+    @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
     public void testLogin() {
         loginPage = new LoginPage(driver);
@@ -52,7 +52,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C2696"})
+    @TestRail(testCaseId = {"2696"})
     @Description("Failed login to CI Report, wrong password")
     public void failedLogin() {
         loginPage = new LoginPage(driver);
@@ -61,7 +61,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C2697"})
+    @TestRail(testCaseId = {"2697"})
     @Description("Forgotten password functionality")
     public void forgotPassword() {
         loginPage = new LoginPage(driver);
@@ -71,7 +71,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C2698"})
+    @TestRail(testCaseId = {"2698"})
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
         loginPage = new LoginPage(driver);
@@ -80,7 +80,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C2699"})
+    @TestRail(testCaseId = {"2699"})
     @Description("Invalid email address, wrong format")
     public void invalidEmail() {
         loginPage = new LoginPage(driver);
@@ -89,7 +89,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C2700"})
+    @TestRail(testCaseId = {"2700"})
     @Description("Link to privacy policy working")
     public void testPrivacyPolicyLink() throws IOException {
         loginPage = new LoginPage(driver);
@@ -97,7 +97,7 @@ public class ReportLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"C2701"})
+    @TestRail(testCaseId = {"2701"})
     @Description("Link to help page working")
     public void testHelpLink() throws IOException {
         loginPage = new LoginPage(driver);
