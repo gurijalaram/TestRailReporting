@@ -9,6 +9,7 @@ import static org.hamcrest.Matchers.hasItem;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
@@ -48,6 +49,7 @@ public class ProcessRoutingTests extends TestBase {
     private InvestigationPage investigationPage;
     private GeometryPage geometryPage;
     private PropertiesDialogPage propertiesDialogPage;
+    private FailuresPage failuresPage;
 
     public ProcessRoutingTests() {
         super();
@@ -199,7 +201,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1670", "568", "570"})
+    @TestRail(testCaseId = {"1670", "568", "570", "571"})
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
         loginPage = new LoginPage(driver);
@@ -220,6 +222,13 @@ public class ProcessRoutingTests extends TestBase {
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
         assertThat(evaluatePage.isFailedIconPresent(), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        failuresPage = evaluatePage.openDesignGuidance()
+            .openFailuresTab()
+            .selectIssueTypeAndGCD("Costing Failed", "Component:1");
+
+        assertThat(failuresPage.getUncostedMessage(), containsString("This DMLS material is not compatible with Stereolithography."));
     }
 
     @Test

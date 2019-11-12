@@ -153,6 +153,7 @@ public class PsoEditTests extends TestBase {
             .openProcessDetails()
             .selectProcessChart("Compaction Pressing")
             .selectOptions()
+            .selectMaterialAllowanceOverrideValue()
             .setMaterialAllowanceOverride("0.611");
 
         processRoutingPage = new ProcessRoutingPage(driver);

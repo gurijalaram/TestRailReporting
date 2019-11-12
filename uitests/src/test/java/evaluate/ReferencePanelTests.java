@@ -49,7 +49,7 @@ public class ReferencePanelTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"356"})
+    @TestRail(testCaseId = {"356", "957"})
     @Description("Validate  the compare panel can show the comparison between the most recent public iteration")
     public void referencePublicIteration() {
 
@@ -83,7 +83,7 @@ public class ReferencePanelTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"358"})
+    @TestRail(testCaseId = {"358", "958"})
     @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
 
