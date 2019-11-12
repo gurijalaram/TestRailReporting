@@ -136,7 +136,7 @@ public class ExplorePage extends ExploreHeader {
     public void highlightScenario(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller);
-        pageUtils.waitForElementAndClick(scenario);
+        pageUtils.javaScriptClick(driver.findElement(scenario));
     }
 
     /**
@@ -173,7 +173,7 @@ public class ExplorePage extends ExploreHeader {
     public void highlightAssembly(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller);
-        pageUtils.waitForElementAndClick(scenario);
+        pageUtils.javaScriptClick(driver.findElement(scenario));
     }
 
     /**
