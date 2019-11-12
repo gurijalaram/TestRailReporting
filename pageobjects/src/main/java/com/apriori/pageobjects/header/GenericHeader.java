@@ -193,8 +193,8 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public <T> T publishScenario(Class<T> className) {
-        pageUtils.checkElementAttributeEmpty(publishButton, "title");
-        pageUtils.waitForElementAndClick(publishButton);
+        pageUtils.waitForElementToAppear(publishButton);
+        pageUtils.javaScriptClick(publishButton);
         return PageFactory.initElements(driver, className);
     }
 
