@@ -1,9 +1,12 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.DeletePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -11,26 +14,29 @@ import com.apriori.utils.Util;
 import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class AssemblyUploadTests extends TestBase {
 
     private LoginPage loginPage;
+    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
+    private DeletePage deletePage;
+
+    private String scenarioName;
+    private final String noComponentMessage = "You have no components that match the selected filter";
 
     public AssemblyUploadTests() {
         super();
     }
 
     @Test
-    @Issue("AP-56584")
-    @TestRail(testCaseId = {"2628"})
+    @TestRail(testCaseId = {"2628", "2647", "2653"})
     @Description("Assembly File Upload - STEP")
     public void testAssemblyFormatSTEP() {
         loginPage = new LoginPage(driver);
@@ -40,10 +46,14 @@ public class AssemblyUploadTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
+        assertThat(evaluatePage.isTotalComponents("4"), is(true));
+        assertThat(evaluatePage.isUniqueComponents("4"), is(true));
+        assertThat(evaluatePage.getWarningsCount("4"), is(true));
+        assertThat(evaluatePage.getCycleTimeCount(), is("0.00"));
     }
 
     @Test
-    @TestRail(testCaseId = {"2655"})
+    @TestRail(testCaseId = {"2655", "2647", "2643"})
     @Description("Uploaded STEP assembly and components can be recosted")
     public void costAssembly() {
 
@@ -100,5 +110,45 @@ public class AssemblyUploadTests extends TestBase {
         assertThat(evaluatePage.isUncostedUnique("0"), is(true));
         assertThat(evaluatePage.isFinishMass("0.80"), is(true));
         assertThat(evaluatePage.isTargetMass("0.00"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"2651"})
+    @Description("User can delete STEP Assembly Pre-Costing")
+    public void testSTEPAssemblyDeletePreCost() {
+
+        scenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .delete()
+            .deleteScenario()
+            .filterCriteria()
+            .filterPrivateCriteria("Assembly", "Scenario Name", "Contains", scenarioName)
+            .apply(ExplorePage.class);
+
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"2652"})
+    @Description("User can delete STEP Assembly Post-Costing")
+    public void testSTEPAssemblyDeletePostCost() {
+
+        scenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .costScenario()
+            .delete()
+            .deleteScenario()
+            .filterCriteria()
+            .filterPrivateCriteria("Assembly", "Scenario Name", "Contains", scenarioName)
+            .apply(ExplorePage.class);
+
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
 }
