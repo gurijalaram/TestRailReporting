@@ -141,13 +141,13 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     protected FilterCriteriaPage setScenarioType(String type) {
         switch (type) {
             case "Part":
-                partCheckBox.click();
+                pageUtils.waitForElementAndClick(partCheckBox);
                 break;
             case "Assembly":
-                assemblyCheckBox.click();
+                pageUtils.waitForElementAndClick(assemblyCheckBox);
                 break;
             case "Comparison":
-                comparisonCheckBox.click();
+                pageUtils.waitForElementAndClick(comparisonCheckBox);
                 break;
             default:
                 throw new IllegalArgumentException("The type: " + type + " is not found");
