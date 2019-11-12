@@ -252,7 +252,7 @@ public class ExplorePage extends ExploreHeader {
             closePreviewButton.click();
         }
         pageUtils.waitForElementToAppear(previewButton).click();
-        return new PreviewPanelPage(driver);dssc
+        return new PreviewPanelPage(driver);
     }
 
     /**
