@@ -47,7 +47,7 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void failed(Throwable t, Description description) {
-        generateResultForCase();
+        generateResultForCase(FAILED_STATUS, FAILURE_COMMENTS);
     }
 
     /*
@@ -57,16 +57,16 @@ public class TestRailRule extends TestWatcher {
      */
     @Override
     protected void succeeded(Description description) {
-        generateResultForCase();
+        generateResultForCase(SUCCESS_STATUS, SUCCESS_COMMENTS);
     }
 
-    private void generateResultForCase() {
+    private void generateResultForCase(final Integer statusCode, final String comment) {
         if (testRail == null) {
             return;
         }
         HashMap<String, Object> parameterData = new HashMap<>();
-        parameterData.put(STATUS_ID, SUCCESS_STATUS);
-        parameterData.put(COMMENT, SUCCESS_COMMENTS);
+        parameterData.put(STATUS_ID, statusCode);
+        parameterData.put(COMMENT, comment);
         try {
             addResultForCase(parameterData);
         } catch (APIException | IOException e) {
