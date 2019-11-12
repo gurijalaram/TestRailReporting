@@ -5,10 +5,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.PartNestingPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
+import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -27,10 +28,13 @@ public class ChangeMaterialSelectionTests extends TestBase {
     private EvaluatePage evaluatePage;
     private MaterialPage materialPage;
     private PartNestingPage partNestingPage;
+    private SettingsPage settingsPage;
 
     public ChangeMaterialSelectionTests() {
         super();
     }
+
+    private final String NO_DEFAULT = "<No default specified>";
 
     @Test
     @TestRail(testCaseId = {"864", "866", "867"})
@@ -332,7 +336,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(ScenarioName, "BRACKER_BASIC");
+            .openScenario(ScenarioName, "BRACKET_BASIC");
 
         assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
     }

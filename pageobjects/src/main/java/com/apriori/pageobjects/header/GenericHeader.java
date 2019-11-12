@@ -41,7 +41,7 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = "button[data-ap-comp='deleteScenarioButton']")
     private WebElement deleteButton;
 
-    @FindBy(css = ".dropdown .glyphicons-settings")
+    @FindBy(xpath = "//a[text()='Actions']")
     private WebElement actionsDropdown;
 
     @FindBy(css = "button[data-ap-comp='editScenarioButton'] span")
@@ -139,7 +139,7 @@ public class GenericHeader extends PageHeader {
      * @return current page object
      */
     public GenericHeader toggleLock() {
-        pageUtils.waitForElementAndClick(actionsDropdown);
+        pageUtils.javaScriptClick(actionsDropdown);
         pageUtils.waitForElementAndClick(lockToggleButton);
         return this;
     }
@@ -159,8 +159,7 @@ public class GenericHeader extends PageHeader {
      * @return current page object
      */
     public GenericHeader selectActions() {
-        pageUtils.waitForElementToAppear(deleteButton);
-        pageUtils.waitForElementAndClick(actionsDropdown);
+        pageUtils.javaScriptClick(actionsDropdown);
         return this;
     }
 
@@ -170,7 +169,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public AssignPage selectAssignScenario() {
-        actionsDropdown.click();
+        pageUtils.javaScriptClick(actionsDropdown);
         assignButton.click();
         return new AssignPage(driver);
     }
@@ -181,8 +180,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public ScenarioNotesPage selectScenarioInfoNotes() {
-        pageUtils.waitForElementToAppear(deleteButton);
-        pageUtils.waitForElementAndClick(actionsDropdown);
+        pageUtils.javaScriptClick(actionsDropdown);
         pageUtils.waitForElementAndClick(scenarioNotesButton);
         return new ScenarioNotesPage(driver);
     }
@@ -193,8 +191,8 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public <T> T publishScenario(Class<T> className) {
-        pageUtils.checkElementAttributeEmpty(publishButton, "title");
-        pageUtils.waitForElementAndClick(publishButton);
+        pageUtils.waitForElementToAppear(publishButton);
+        pageUtils.javaScriptClick(publishButton);
         return PageFactory.initElements(driver, className);
     }
 

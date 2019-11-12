@@ -136,7 +136,7 @@ public class ExplorePage extends ExploreHeader {
     public void highlightScenario(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller);
-        pageUtils.waitForElementAndClick(scenario);
+        pageUtils.javaScriptClick(driver.findElement(scenario));
     }
 
     /**
@@ -173,7 +173,7 @@ public class ExplorePage extends ExploreHeader {
     public void highlightAssembly(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller);
-        pageUtils.waitForElementAndClick(scenario);
+        pageUtils.javaScriptClick(driver.findElement(scenario));
     }
 
     /**
@@ -206,8 +206,9 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenario as webelement
      */
     public ExplorePage highlightComparison(String comparisonName) {
-        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr");
-        pageUtils.scrollToElement(comparison, componentScroller).click();
+        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
+        pageUtils.scrollToElement(comparison, componentScroller);
+        pageUtils.javaScriptClick(driver.findElement(comparison));
         return this;
     }
 
