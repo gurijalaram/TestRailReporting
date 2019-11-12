@@ -332,7 +332,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(ScenarioName, "BRACKER_BASIC");
+            .openScenario(ScenarioName, "BRACKET_BASIC");
 
         assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
     }
