@@ -23,7 +23,6 @@ import evaluate.PublishExistingCostedTests;
 import evaluate.PublishNewCostedTests;
 import evaluate.ReCostScenarioTests;
 import evaluate.ReferencePanelTests;
-import evaluate.RevertScenarioTests;
 import evaluate.SecondaryProcessTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCMachiningTests;
@@ -35,9 +34,9 @@ import evaluate.designguidance.thread.ThreadTests;
 import evaluate.designguidance.tolerance.ToleranceTests;
 import evaluate.materialutilization.ChangeMaterialSelectionTests;
 import evaluate.materialutilization.ChangeStockSelectionTests;
+import evaluate.materialutilization.MaterialPMITests;
 import evaluate.materialutilization.MaterialStockTests;
 import evaluate.materialutilization.PartNestingTests;
-import evaluate.materialutilization.MaterialPMITests;
 import explore.ActionsTests;
 import explore.FilterCriteriaTests;
 import explore.PreviewPanelTests;
@@ -80,7 +79,6 @@ import settings.SettingsTests;
     PublishComparisonTests.class,
     SaveAsComparisonTests.class,
     ReCostScenarioTests.class,
-    RevertScenarioTests.class,
     SecondaryProcessTests.class,
     ActionsTests.class,
     FilterCriteriaTests.class,
