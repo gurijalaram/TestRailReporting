@@ -1,5 +1,6 @@
 package testsuites;
 
+import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import compare.AddScenarioTests;
@@ -45,6 +46,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import settings.SettingsTests;
 
+@ProjectRunID("177")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses ({
     AddScenarioTests.class,
