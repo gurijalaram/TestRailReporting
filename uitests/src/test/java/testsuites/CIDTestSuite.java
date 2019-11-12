@@ -37,6 +37,7 @@ import evaluate.materialutilization.ChangeMaterialSelectionTests;
 import evaluate.materialutilization.ChangeStockSelectionTests;
 import evaluate.materialutilization.MaterialStockTests;
 import evaluate.materialutilization.PartNestingTests;
+import evaluate.materialutilization.MaterialPMITests;
 import explore.ActionsTests;
 import explore.FilterCriteriaTests;
 import explore.PreviewPanelTests;
@@ -89,7 +90,8 @@ import settings.SettingsTests;
     SettingsTests.class,
     MaterialStockTests.class,
     PartNestingTests.class,
-    ReferencePanelTests.class
+    ReferencePanelTests.class,
+    MaterialPMITests.class,
 })
 public class CIDTestSuite {
 }
