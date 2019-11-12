@@ -113,6 +113,12 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "td[data-ap-field='materialCost']")
     private WebElement materialCost;
 
+    @FindBy(css = "td[data-ap-field='compTotal.fullyBurdenedCost']")
+    private WebElement componentsCost;
+
+    @FindBy(css = "td[data-ap-field='assemblyProcTotal.fullyBurdenedCost']")
+    private WebElement assemblyProcessCost;
+
     @FindBy(css = "td[data-ap-field='totalCost']")
     private WebElement pPartCost;
 
@@ -417,6 +423,24 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public String getMaterialCost() {
         return pageUtils.waitForElementToAppear(materialCost).getText();
+    }
+
+    /**
+     * Gets the components cost
+     *
+     * @return string
+     */
+    public String getComponentsCost() {
+        return pageUtils.waitForElementToAppear(componentsCost).getText();
+    }
+
+    /**
+     * Gets the assembly process cost
+     *
+     * @return string
+     */
+    public String getAssemblyProcessCost() {
+        return pageUtils.waitForElementToAppear(assemblyProcessCost).getText();
     }
 
     /**
