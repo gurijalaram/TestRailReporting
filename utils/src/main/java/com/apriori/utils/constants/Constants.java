@@ -6,9 +6,12 @@ import java.util.logging.Level;
 
 
 public class Constants {
+    public static final String defaultProjectIDValue = "177";
+    public static final String defaultProjectIDKey = "RUN_ID";
     public static final String defaultEnvironmentValue = "cid-te";
     public static final String defaultEnvironmentKey = "env";
     public static String environment = defaultEnvironmentValue;
+    public static String RUN_ID = defaultProjectIDValue;
 
     private static final ConstantsInit constantsInit;
 
