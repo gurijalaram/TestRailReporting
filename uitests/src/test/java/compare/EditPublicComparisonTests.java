@@ -1,19 +1,17 @@
 package compare;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -24,7 +22,6 @@ public class EditPublicComparisonTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
-    private EvaluatePage evaluatePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
 
@@ -78,6 +75,6 @@ public class EditPublicComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.editScenario(ComparePage.class);
 
-        assertThat(comparePage.getComparisonName(), containsString(testComparisonName.toUpperCase()));
+        assertThat(comparePage.isComparisonName(testComparisonName.toUpperCase()), is(true));
     }
 }
