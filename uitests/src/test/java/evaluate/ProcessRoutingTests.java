@@ -404,6 +404,7 @@ public class ProcessRoutingTests extends TestBase {
         new EvaluatePage(driver).selectAnalysis()
             .closeProperties();
 
+        evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("[CTL]/Waterjet/[Bend]")
