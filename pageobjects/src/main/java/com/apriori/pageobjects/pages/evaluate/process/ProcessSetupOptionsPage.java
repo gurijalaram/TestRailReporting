@@ -77,6 +77,9 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
     @FindBy(css = "input[data-ap-field='materialAllowance.modeValues.userOverride.value']")
     private WebElement materialAllowanceInput;
 
+    @FindBy(css = "input[data-ap-comp='materialAllowance.radioButtons.userOverride")
+    private WebElement materialAllowanceOverrideButton;
+
     @FindBy(css = "select[data-ap-field='partTolerance.modeValues.defaultTolerance.storedListValue']")
     private WebElement partToleranceDropdown;
 
@@ -376,6 +379,16 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      */
     public Boolean isMaterialAllowance(String text) {
         return checkAttribute(materialAllowanceInput, text);
+    }
+
+    /**
+     * Selects material allowance override button
+     *
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectMaterialAllowanceOverrideValue() {
+        pageUtils.waitForElementToAppear(materialAllowanceOverrideButton).click();
+        return this;
     }
 
     /**
