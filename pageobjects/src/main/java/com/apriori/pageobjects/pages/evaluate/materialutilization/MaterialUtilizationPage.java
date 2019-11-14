@@ -117,7 +117,18 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     }
 
     /**
+     * Gets string value which states if utilization panel is expanded or not
+     *
+     * @return string of utilization panel class name
+     */
+    public String utilizationPanelExpanded() {
+        return utilizationsTabToggle.getAttribute("className");
+    }
+
+    /**
      * Toggles Utilization panel (open or closed)
+     *
+     * @return current page object
      */
     public MaterialUtilizationPage toggleUtilizationPanel() {
         utilizationsTabToggle.click();
@@ -125,7 +136,18 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     }
 
     /**
+     * Gets string value which states if material panel is expanded or not
+     *
+     * @return string of material properties panel class name
+     */
+    public String materialPanelExpanded() {
+        return materialPropertiesTabToggle.getAttribute("className");
+    }
+
+    /**
      * Toggles Material Properties panel (open or closed)
+     *
+     * @return current page object
      */
     public MaterialUtilizationPage toggleMaterialPropertiesPanel() {
         materialPropertiesTabToggle.click();
