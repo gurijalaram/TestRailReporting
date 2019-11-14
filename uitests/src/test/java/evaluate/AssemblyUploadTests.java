@@ -19,6 +19,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class AssemblyUploadTests extends TestBase {
@@ -150,5 +151,24 @@ public class AssemblyUploadTests extends TestBase {
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"2648"})
+    @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
+    public void testSTEPAssemblyPowderCoatCart() {
+
+        scenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .openSecondaryProcess()
+            .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
+            .apply()
+            .costScenario();
+
+        assertThat(evaluatePage.isProcessRoutingDetails("Powder Coat Cart"), Matchers.is(true));
     }
 }
