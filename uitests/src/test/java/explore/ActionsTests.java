@@ -117,9 +117,6 @@ public class ActionsTests extends TestBase {
             .highlightScenario(testScenarioName, "bracket_basic");
 
         new GenericHeader(driver).toggleLock();
-
-        new ExplorePage(driver).highlightScenario(testScenarioName, "bracket_basic");
-
         genericHeader = new GenericHeader(driver);
         genericHeader.selectActions();
 

@@ -136,6 +136,7 @@ public class ExplorePage extends ExploreHeader {
     public void highlightScenario(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller);
+        pageUtils.waitForElementToAppear(scenario);
         pageUtils.javaScriptClick(driver.findElement(scenario));
     }
 
