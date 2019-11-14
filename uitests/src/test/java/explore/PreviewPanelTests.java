@@ -48,7 +48,7 @@ public class PreviewPanelTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.openPreviewPanel();
 
-        assertThat(new ExplorePage(driver).viewPreviewPanelData(), is(true));
+        assertThat(explorePage.viewPreviewPanelData(), is(true));
     }
 
     @Test
