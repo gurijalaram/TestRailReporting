@@ -4,10 +4,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.PreviewPanelPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -20,6 +22,7 @@ public class PreviewPanelTests extends TestBase {
 
     private LoginPage loginPage;
     private ExplorePage explorePage;
+    private PreviewPanelPage previewPanelPage;
 
     public PreviewPanelTests() {
         super();
@@ -36,6 +39,8 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .highlightScenario(testScenarioName, partName);
@@ -44,5 +49,30 @@ public class PreviewPanelTests extends TestBase {
         explorePage.openPreviewPanel();
 
         assertThat(explorePage.viewPreviewPanelData(), is(true));
+    }
+
+    @Test
+    @Description("Validate user can see information and metrics for the selected scenario in the preview panel")
+    @TestRail(testCaseId = {"1104", "1105"})
+    public void previewPanelMetrics() {
+
+        String testScenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+            .highlightScenario(testScenarioName, "225_gasket-1-solid1");
+
+        explorePage = new ExplorePage(driver);
+        previewPanelPage = explorePage.openPreviewPanel();
+
+        assertThat(previewPanelPage.isImageDisplayed(), is(true));
+        assertThat(previewPanelPage.isPiecePartCost("0.99"), is(true));
+        assertThat(previewPanelPage.isFullyBurdenedCost("1.70"), is(true));
+        assertThat(previewPanelPage.isTotalCapitalInvestment("19,637.44"), is(true));
     }
 }

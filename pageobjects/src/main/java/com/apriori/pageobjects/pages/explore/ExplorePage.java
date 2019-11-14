@@ -249,12 +249,12 @@ public class ExplorePage extends ExploreHeader {
      *
      * @return new page object
      */
-    public ExplorePage openPreviewPanel() {
+    public PreviewPanelPage openPreviewPanel() {
         if (pageUtils.isElementDisplayed(closePreviewButton)) {
             closePreviewButton.click();
         }
         pageUtils.waitForElementToAppear(previewButton).click();
-        return this;
+        return new PreviewPanelPage(driver);
     }
 
     /**
