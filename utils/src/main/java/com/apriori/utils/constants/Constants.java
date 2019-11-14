@@ -37,5 +37,5 @@ public class Constants {
     public static final String cidURL = constantsInit.cidURL();
     public static final String cirURL = constantsInit.cirURL();
     public static final String usersFile = constantsInit.usersCsvFileName();
-    public static final boolean useDifferentUsers = constantsInit.useDifferentUsers();
+    public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 }
