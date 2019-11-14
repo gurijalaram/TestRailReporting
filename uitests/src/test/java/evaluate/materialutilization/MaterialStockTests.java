@@ -117,4 +117,24 @@ public class MaterialStockTests extends TestBase {
         assertThat(new StockPage(driver).checkTableDetails("SQUARE_BAR"), is(true));
         assertThat(new StockPage(driver).checkTableDetails("Virtual Stock No"), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {"869"})
+    @Description("validate the user can collapse and expand material properties")
+    public void materialProperties() {
+        loginPage = new LoginPage(driver);
+        materialPage = loginPage.login(UserUtil.getUser())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openMaterialComposition()
+            .expandPanel()
+            //COLLAPSE MATERIAL PROPERTIES
+
+        //ASSERT THAT MATERIAL PROPERTIES IS COLLAPSED
+
+        //NEW MATERIALPAGE DRIVER. EXPAND MATERIAL PROPERTIES
+        //ASSER THAT UNIT COST IS 2.67
+    }
 }
