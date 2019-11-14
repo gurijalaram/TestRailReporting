@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author cfrith
@@ -116,8 +117,8 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      *
      * @return list of routings
      */
-    public HashSet<String> getRoutings() {
-        HashSet<String> routingCell = new HashSet<>();
+    public Set<String> getRoutings() {
+        Set<String> routingCell = new HashSet<>();
 
         long startTime = System.currentTimeMillis() / 1000;
 
