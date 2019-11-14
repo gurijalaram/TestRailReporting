@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -126,12 +127,12 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
             long timeLimitInSeconds = 5;
             do {
                 routingScroller.sendKeys(Keys.DOWN);
-                routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
+                routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getText().split("\n")).get(0)));
             } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
         }
-        routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
+        routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getText().split("\n")).get(0)));
 
-        return routingCell;
+        return routingCell.stream().filter(cell -> !cell.equals("")).collect(Collectors.toSet());
     }
 
     /**
