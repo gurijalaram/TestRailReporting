@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -29,6 +30,7 @@ public class NewScenarioNameTests extends TestBase {
     private LoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
+    private JobQueuePage jobQueuePage;
 
     public NewScenarioNameTests() {
         super();
