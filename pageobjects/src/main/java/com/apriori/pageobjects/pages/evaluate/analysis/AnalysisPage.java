@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.analysis;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -45,5 +46,14 @@ public class AnalysisPage extends LoadableComponent<AnalysisPage> {
     public PropertiesDialogPage selectProperties() {
         pageUtils.waitForElementAndClick(propertiesButton);
         return new PropertiesDialogPage(driver);
+    }
+
+    /**
+     * Selects the properties button to close
+     * @return new page object
+     */
+    public EvaluatePage closeProperties() {
+        pageUtils.waitForElementAndClick(propertiesButton);
+        return new EvaluatePage(driver);
     }
 }
