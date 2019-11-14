@@ -31,5 +31,5 @@ public interface ConstantsInit extends Config {
     String usersCsvFileName();
 
     @Key("different.users")
-    Boolean useDifferentUsers();
+    boolean useDifferentUsers();
 }
