@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.utils;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -309,6 +310,15 @@ public class PageUtils {
 
     public List<WebElement> waitForElementsToAppear(List<WebElement> elements) {
         return waitForAppear(ExpectedConditions.visibilityOfAllElements(elements), "Elements did not appear");
+    }
+
+    public WebElement waitForElementAppear(WebElement element) {
+        return waitForAppear(element);
+    }
+
+    private WebElement waitForAppear(WebElement element) {
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+            .until(visibilityOf(element));
     }
 
     private <T> T waitForAppear(ExpectedCondition<T> condition, String message) {

@@ -52,7 +52,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementAppear(toleranceTable);
     }
 
     /**

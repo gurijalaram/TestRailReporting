@@ -182,9 +182,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(leftPanel);
-        pageUtils.waitForElementToAppear(viewerCanvas, 2);
-        pageUtils.waitForElementToAppear(controlToolbars);
+        pageUtils.waitForElementAppear(leftPanel);
+        pageUtils.waitForElementAppear(viewerCanvas);
+        pageUtils.waitForElementAppear(controlToolbars);
     }
 
     /**
