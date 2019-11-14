@@ -33,6 +33,12 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     @FindBy(css = "div[id='materialTable']")
     private WebElement materialTableInfo;
 
+    @FindBy(xpath = "//span[contains(text(), 'Utilization')]/..")
+    private WebElement utilizationsTabToggle;
+
+    @FindBy(xpath = "//span[contains(text(), 'Material Properties')]/..")
+    private WebElement materialPropertiesTabToggle;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -108,5 +114,21 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
      */
     public String getMaterialTableInfo() {
         return pageUtils.waitForElementToAppear(materialTableInfo).getText();
+    }
+
+    /**
+     * Toggles Utilization panel (open or closed)
+     */
+    public MaterialUtilizationPage toggleUtilizationPanel() {
+        utilizationsTabToggle.click();
+        return this;
+    }
+
+    /**
+     * Toggles Material Properties panel (open or closed)
+     */
+    public MaterialUtilizationPage toggleMaterialPropertiesPanel() {
+        materialPropertiesTabToggle.click();
+        return this;
     }
 }
