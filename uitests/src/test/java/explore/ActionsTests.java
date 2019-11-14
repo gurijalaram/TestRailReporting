@@ -54,8 +54,7 @@ public class ActionsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.selectScenarioInfoNotes()
             .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
-            .save(ExplorePage.class)
-            .highlightScenario(testScenarioName, "M3CapScrew");
+            .save(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
         scenarioNotesPage = explorePage.selectScenarioInfoNotes();
