@@ -106,7 +106,7 @@ public class ReportLoginTests extends TestBase {
     public void testHelpLink() {
         loginPage = new LoginPage(driver);
         homePage = loginPage.login(UserUtil.getUser())
-                .isHelpButtonOnScreen();
+                .waitForHelpButtonVisibility();
         assertThat(homePage.isHelpButtonDisplayed(), is(true));
     }
 }
