@@ -50,12 +50,12 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
 
     /**
      * Opens the scenario from the job queue
-     *
+     * @param scenarioName - the scenario name
      * @param partName - the part name
      * @param jobType  - the job type
      * @return new page object
      */
-    public EvaluatePage openScenarioLink(String partName, String jobType) {
+    public EvaluatePage openScenarioLink(String scenarioName, String partName, String jobType) {
         By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + partName.toUpperCase() + "')]");
         pageUtils.waitForElementAndClick(scenario);
         return new EvaluatePage(driver);
