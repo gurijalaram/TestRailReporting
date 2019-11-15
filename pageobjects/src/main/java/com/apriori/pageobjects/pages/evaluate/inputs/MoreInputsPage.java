@@ -181,7 +181,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
      *
      * @return true/false
      */
-    public Boolean getBatchSize(String text) {
+    public boolean getBatchSize(String text) {
         return pageUtils.checkElementAttribute(batchSizeInput, "value", text);
     }
 

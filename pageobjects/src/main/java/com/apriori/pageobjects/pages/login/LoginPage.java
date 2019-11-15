@@ -224,7 +224,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * Checks apriori logo is displayed
      * @return true/false
      */
-    public Boolean isLogoDisplayed() {
+    public boolean isLogoDisplayed() {
         return aprioriLogo.isDisplayed();
     }
 
@@ -232,7 +232,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * Checks the environment title
      * @return true/false
      */
-    public Boolean isEnvironmentDisplayed() {
+    public boolean isEnvironmentDisplayed() {
         return aprioriTitle.isDisplayed();
     }
 

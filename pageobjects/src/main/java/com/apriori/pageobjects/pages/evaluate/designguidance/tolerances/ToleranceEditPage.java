@@ -111,7 +111,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param text      - the string value
      * @return true/false
      */
-    public Boolean isTolerance(String toleranceName, String text) {
+    public boolean isTolerance(String toleranceName, String text) {
         return pageUtils.checkElementAttribute(getMap().get(toleranceName), "value", text);
     }
 
@@ -171,7 +171,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * @param toleranceName - tolerance name
      * @return true/false
      */
-    public Boolean isToleranceInputDisplayed(String toleranceName) {
+    public boolean isToleranceInputDisplayed(String toleranceName) {
         return pageUtils.isElementDisplayed(getMap().get(toleranceName));
     }
 

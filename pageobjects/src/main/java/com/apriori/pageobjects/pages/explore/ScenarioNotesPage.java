@@ -152,7 +152,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      *
      * @return the description as string
      */
-    public Boolean isDescription(String text) {
+    public boolean isDescription(String text) {
         return pageUtils.checkElementAttribute(descriptionInput, "value", text);
     }
 
@@ -161,7 +161,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      *
      * @return the scenario notes as string
      */
-    public Boolean isScenarioNotes(String text) {
+    public boolean isScenarioNotes(String text) {
         return pageUtils.checkElementAttribute(scenarioNotesInput, "value", text);
     }
 
@@ -212,7 +212,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      *
      * @return the assignee as string
      */
-    public Boolean isAssignee(String text) {
+    public boolean isAssignee(String text) {
         return pageUtils.checkElementAttribute(assigneeField, "value", text);
     }
 }
