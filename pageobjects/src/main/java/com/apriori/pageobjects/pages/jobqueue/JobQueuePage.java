@@ -56,7 +56,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      * @return new page object
      */
     public EvaluatePage openScenarioLink(String scenarioName, String partName, String jobType) {
-        By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + partName.toUpperCase() + "')]");
+        By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]");
         pageUtils.waitForElementAndClick(scenario);
         return new EvaluatePage(driver);
     }
