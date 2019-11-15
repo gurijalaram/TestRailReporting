@@ -72,6 +72,6 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      */
     public boolean isJobQueueActionDisplayed(String scenarioName, String jobType, String icon) {
         By jobStatus = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='" + icon + "18.png']");
-        return pageUtils.waitForElementToAppear(jobStatus).isDisplayed();
+        return pageUtils.waitForElementToAppear(jobStatus, 2).isDisplayed();
     }
 }
