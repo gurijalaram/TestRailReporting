@@ -104,6 +104,7 @@ public class SettingsTests extends TestBase {
             .selectPublishButton()
             .openJobQueue()
             .openScenarioLink(testScenarioName, "bracket_basic", "publish");
+
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), CoreMatchers.is(true));
     }
 
