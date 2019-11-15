@@ -111,7 +111,7 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
      * @param text          - the string value
      * @return true/false
      */
-    public Boolean isTolerance(String toleranceName, String text) {
+    public boolean isTolerance(String toleranceName, String text) {
         return pageUtils.checkElementAttribute(getMap().get(toleranceName), "value", text);
     }
 

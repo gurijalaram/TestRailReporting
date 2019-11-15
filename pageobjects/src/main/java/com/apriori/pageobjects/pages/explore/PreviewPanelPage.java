@@ -58,7 +58,7 @@ public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
      *
      * @return as true/false
      */
-    public Boolean isPiecePartCost(String text) {
+    public boolean isPiecePartCost(String text) {
         return checkAttribute(totalCost, text);
     }
 
@@ -67,7 +67,7 @@ public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
      *
      * @return as true/false
      */
-    public Boolean isFullyBurdenedCost(String text) {
+    public boolean isFullyBurdenedCost(String text) {
         return checkAttribute(fullyBurdenedCost, text);
     }
 
@@ -76,7 +76,7 @@ public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
      *
      * @return as true/false
      */
-    public Boolean isTotalCapitalInvestment(String text) {
+    public boolean isTotalCapitalInvestment(String text) {
         return checkAttribute(totalCapitalInvestment, text);
     }
 
@@ -87,7 +87,7 @@ public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
      * @param text    - the text
      * @return true/false
      */
-    private Boolean checkAttribute(WebElement locator, String text) {
+    private boolean checkAttribute(WebElement locator, String text) {
         return pageUtils.checkElementAttribute(locator, "innerText", text);
     }
 
@@ -96,7 +96,7 @@ public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
      *
      * @return true/false
      */
-    public Boolean isImageDisplayed() {
+    public boolean isImageDisplayed() {
         return pageUtils.isElementDisplayed(thumbnailImage);
     }
 }
