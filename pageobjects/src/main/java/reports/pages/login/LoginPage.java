@@ -215,7 +215,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     /**
      * Get privacy policy URL
-     *
      * @return String privacy policy URL
      */
     public String getPrivacyPolicyURL() {
@@ -224,18 +223,16 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     }
 
     /**
-     * Check privacy policy link is displayed
-     *
+     * Wait for privacy policy link visibility
      * @return current page object
      */
-    public LoginPage isPrivacyPolicyButtonOnScreen() {
+    public LoginPage waitForPrivacyPolicyLinkVisibility() {
         pageUtils.waitForElementToAppear(privacyPolicyButton);
         return this;
     }
 
     /**
      * Gets isDisplayed property of Help button
-     *
      * @return isDisplayed property
      */
     public boolean isPrivacyPolicyButtonDisplayed() {
@@ -244,7 +241,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     /**
      * Get link response code
-     *
      * @param linkURL - URL of link
      * @return String response code
      */

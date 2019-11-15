@@ -54,17 +54,15 @@ public class HomePage extends LoadableComponent<HomePage> {
 
     /**
      * Wait for  help link to become visible
-     *
      * @return current page object
      */
-    public HomePage waitForHelpButtonVisibility() {
+    public HomePage waitForHelpLinkVisibility() {
         pageUtils.waitForElementToAppear(helpButton);
         return this;
     }
 
     /**
      * Gets isDisplayed property of Help button
-     *
      * @return isDisplayed property
      */
     public boolean isHelpButtonDisplayed() {

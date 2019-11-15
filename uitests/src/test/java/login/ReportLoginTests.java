@@ -94,9 +94,8 @@ public class ReportLoginTests extends TestBase {
     @TestRail(testCaseId = {"2700"})
     @Description("Link to privacy policy working")
     public void testPrivacyPolicyLink() throws IOException {
-        loginPage = new LoginPage(driver);
-        loginPage.init(driver, Constants.cirURL, true);
-        loginPage.isPrivacyPolicyButtonOnScreen();
+        loginPage = new LoginPage(driver)
+                .waitForPrivacyPolicyLinkVisibility();
         assertThat(loginPage.isPrivacyPolicyButtonDisplayed(), is(true));
     }
 
@@ -106,7 +105,7 @@ public class ReportLoginTests extends TestBase {
     public void testHelpLink() {
         loginPage = new LoginPage(driver);
         homePage = loginPage.login(UserUtil.getUser())
-                .waitForHelpButtonVisibility();
+                .waitForHelpLinkVisibility();
         assertThat(homePage.isHelpButtonDisplayed(), is(true));
     }
 }
