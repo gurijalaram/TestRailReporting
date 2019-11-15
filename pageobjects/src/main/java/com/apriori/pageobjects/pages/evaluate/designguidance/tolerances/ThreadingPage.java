@@ -100,7 +100,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
      *
      * @return - the thread length
      */
-    public Boolean isThreadLength(String text) {
+    public boolean isThreadLength(String text) {
         return pageUtils.checkElementAttribute(lengthInput, "value", text);
     }
 
