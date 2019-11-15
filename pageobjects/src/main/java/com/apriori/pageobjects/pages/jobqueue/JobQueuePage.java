@@ -50,9 +50,10 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
 
     /**
      * Opens the scenario from the job queue
+     *
      * @param scenarioName - the scenario name
-     * @param partName - the part name
-     * @param jobType  - the job type
+     * @param partName     - the part name
+     * @param jobType      - the job type
      * @return new page object
      */
     public EvaluatePage openScenarioLink(String scenarioName, String partName, String jobType) {
@@ -62,13 +63,15 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     }
 
     /**
-     * @param jobType - the jobtype
+     * Checks the job queue that the first job for the specified scenario is complete
+     *
+     * @param scenarioName - the scenario name
+     * @param jobType - the job type
+     * @return string
      */
-    public JobQueuePage checkJobQueueActionComplete(String scenarioName, String jobType) {
-        By status = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='okay18.png']");
-        pageUtils.waitForElementToAppear(status);
-        closeJobQueue();
-        return this;
+    public String checkJobQueueActionComplete(String scenarioName, String jobType) {
+        By status = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img");
+        return pageUtils.waitForElementToAppear(driver.findElement(status)).getAttribute("outerHTML");
     }
 
     private void closeJobQueue() {
