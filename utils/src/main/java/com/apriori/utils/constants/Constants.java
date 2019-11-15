@@ -10,7 +10,7 @@ public class Constants {
     public static final String defaultProjectIDKey = "RUN_ID";
 
     public static final String defaultBuildModeKey = "mode";
-    public static final String defaultBuildModeValue = "LOCAL";
+    public static final String defaultBuildModeValue = "QA";
 
     public static final String defaultUserName = "admin@apriori.com";
     public static final String defaultPassword = "admin";
