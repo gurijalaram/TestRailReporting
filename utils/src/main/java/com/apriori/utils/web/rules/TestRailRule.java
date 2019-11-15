@@ -2,6 +2,7 @@ package com.apriori.utils.web.rules;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.web.driver.TestMode;
 import com.apriori.utils.web.exceptions.APIClient;
 import com.apriori.utils.web.exceptions.APIException;
 
@@ -81,6 +82,11 @@ public class TestRailRule extends TestWatcher {
      */
     public void addResultForCase(Map<String, Object> parameterData)
             throws IOException, APIException {
+
+        if (!Constants.getBuildMode().equals(TestMode.QA.value())) {
+            return;
+        }
+
         APIClient client = new APIClient(API_URL);
         client.setUser(USERNAME);
         client.setPassword(PASSWORD);
