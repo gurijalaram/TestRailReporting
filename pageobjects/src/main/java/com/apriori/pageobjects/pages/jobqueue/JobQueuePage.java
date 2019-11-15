@@ -67,10 +67,11 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      *
      * @param scenarioName - the scenario name
      * @param jobType - the job type
-     * @return string
+     * @param text - the text
+     * @return true/false
      */
-    public String checkJobQueueAction(String scenarioName, String jobType) {
+    public Boolean isJobQueueAction(String scenarioName, String jobType, String text) {
         By status = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img");
-        return pageUtils.waitForElementToAppear(driver.findElement(status)).getAttribute("outerHTML");
+        return pageUtils.checkElementAttribute(driver.findElement(status),"outerHTML", text);
     }
 }
