@@ -66,12 +66,12 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      * Checks the job queue that the first job for the specified scenario is complete
      *
      * @param scenarioName - the scenario name
-     * @param jobType - the job type
-     * @param text - the text
+     * @param jobType      - the job type
+     * @param icon         - icon can be 'okay' or 'stop'
      * @return true/false
      */
-    public Boolean isJobQueueAction(String scenarioName, String jobType, String text) {
-        By status = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img");
-        return pageUtils.checkElementAttribute(driver.findElement(status),"outerHTML", text);
+    public boolean isJobQueueActionDisplayed(String scenarioName, String jobType, String icon) {
+        By jobStatus = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='" + icon + "18.png']");
+        return pageUtils.waitForElementToAppear(jobStatus).isDisplayed();
     }
 }
