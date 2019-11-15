@@ -17,6 +17,9 @@ public class HomePage extends LoadableComponent<HomePage> {
     @FindBy(css = "button[aria-label='Create Data Sources']")
     private WebElement createButton;
 
+    @FindBy(id = "helpLink")
+    private WebElement helpButton;
+
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -48,4 +51,24 @@ public class HomePage extends LoadableComponent<HomePage> {
         pageUtils.waitForElementToAppear(createButton);
         return createButton.isDisplayed();
     }
+
+    /**
+     * Check if Help link is displayed
+     *
+     * @return current page object
+     */
+    public HomePage isHelpButtonOnScreen() {
+        pageUtils.waitForElementToAppear(helpButton);
+        return this;
+    }
+
+    /**
+     * Gets isDisplayed property of Help button
+     *
+     * @return isDisplayed property
+     */
+    public boolean isHelpButtonDisplayed() {
+        return helpButton.isDisplayed();
+    }
+
 }

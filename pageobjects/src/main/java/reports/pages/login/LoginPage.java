@@ -39,10 +39,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     private WebElement inputErrorMsg;
 
     @FindBy(css = "a[href='https://www.apriori.com/sso-instructions-page']")
-    private WebElement helpLink;
+    private WebElement helpButton;
 
     @FindBy(css = "a[href='https://www.apriori.com/privacy-policy']")
-    private WebElement privacyPolicyLink;
+    private WebElement privacyPolicyButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -209,8 +209,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @return String help link URL
      */
     public String getHelpURL() {
-        pageUtils.waitForElementToAppear(helpLink);
-        return helpLink.getAttribute("href");
+        pageUtils.waitForElementToAppear(helpButton);
+        return helpButton.getAttribute("href");
     }
 
     /**
@@ -219,8 +219,27 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @return String privacy policy URL
      */
     public String getPrivacyPolicyURL() {
-        pageUtils.waitForElementToAppear(privacyPolicyLink);
-        return privacyPolicyLink.getAttribute("href");
+        pageUtils.waitForElementToAppear(privacyPolicyButton);
+        return privacyPolicyButton.getAttribute("href");
+    }
+
+    /**
+     * Check privacy policy link is displayed
+     *
+     * @return current page object
+     */
+    public LoginPage isPrivacyPolicyButtonOnScreen() {
+        pageUtils.waitForElementToAppear(privacyPolicyButton);
+        return this;
+    }
+
+    /**
+     * Gets isDisplayed property of Help button
+     *
+     * @return isDisplayed property
+     */
+    public boolean isPrivacyPolicyButtonDisplayed() {
+        return privacyPolicyButton.isDisplayed();
     }
 
     /**

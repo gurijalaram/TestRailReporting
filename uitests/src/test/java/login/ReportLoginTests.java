@@ -5,7 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;
 
+import com.apriori.pageobjects.pages.login.HelpPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -93,14 +95,18 @@ public class ReportLoginTests extends TestBase {
     @Description("Link to privacy policy working")
     public void testPrivacyPolicyLink() throws IOException {
         loginPage = new LoginPage(driver);
-        assertThat(loginPage.getResponseCode(loginPage.getPrivacyPolicyURL()), is(lessThan(HttpStatus.SC_BAD_REQUEST)));
+        loginPage.init(driver, Constants.cirURL, true);
+        loginPage.isPrivacyPolicyButtonOnScreen();
+        assertThat(loginPage.isPrivacyPolicyButtonDisplayed(), is(true));
     }
 
     @Test
     @TestRail(testCaseId = {"2701"})
     @Description("Link to help page working")
-    public void testHelpLink() throws IOException {
+    public void testHelpLink() {
         loginPage = new LoginPage(driver);
-        assertThat(loginPage.getResponseCode(loginPage.getHelpURL()), is(lessThan(HttpStatus.SC_BAD_REQUEST)));
+        homePage = loginPage.login(UserUtil.getUser())
+                .isHelpButtonOnScreen();
+        assertThat(homePage.isHelpButtonDisplayed(), is(true));
     }
 }
