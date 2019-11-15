@@ -73,10 +73,4 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
         By status = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img");
         return pageUtils.waitForElementToAppear(driver.findElement(status)).getAttribute("outerHTML");
     }
-
-    private void closeJobQueue() {
-        while (pageUtils.isElementDisplayed(jobQueueTable)) {
-            jobQueueButton.click();
-        }
-    }
 }
