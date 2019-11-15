@@ -104,6 +104,41 @@ public class SaveAsComparisonTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
+    }
 
+    @Test
+    @TestRail(testCaseId = {"413"})
+    @Description("Attempt to create a new comparison with a name that already exists")
+    public void comparisonNameExists() {
+
+        String scenarioName = new Util().getScenarioName();
+        String testComparisonName = new Util().getComparisonName();
+
+        loginPage = new LoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .costScenario()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .selectScenario(scenarioName, "Push Pin")
+            .apply();
+
+        new GenericHeader(driver).publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .selectScenario(scenarioName, "Push Pin")
+            .apply();
+
+        genericHeader = new GenericHeader(driver);
+        explorePage = genericHeader.selectExploreButton()
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+
+        assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
     }
 }

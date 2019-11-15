@@ -222,7 +222,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return current page object
      */
-    public ProcessSetupOptionsPage selectOptimizeButton() {
+    public ProcessSetupOptionsPage selectOptimizeForMinimumCostButton() {
         pageUtils.waitForElementToAppear(optimizeRadioButton).click();
         return this;
     }
@@ -335,7 +335,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isNominalOverride(String text) {
+    public Boolean isNominalWallThicknessOverride(String text) {
         return checkAttribute(overrideInput, text);
     }
 
@@ -425,7 +425,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return current page object
      */
-    public ProcessSetupOptionsPage selectDefinedColorButton() {
+    public ProcessSetupOptionsPage selectUserDefinedColorChargeButton() {
         pageUtils.waitForElementToAppear(definedColorRadioButton).click();
         return this;
     }
@@ -436,7 +436,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param value - the value
      * @return current page object
      */
-    public ProcessSetupOptionsPage setDefinedInput(String value) {
+    public ProcessSetupOptionsPage setDefinedColorChargeInput(String value) {
         setInput(definedInput, value);
         return this;
     }
@@ -447,7 +447,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isDefinedInput(String text) {
+    public Boolean isColorChargeOverride(String text) {
         return checkAttribute(definedInput, text);
     }
 
