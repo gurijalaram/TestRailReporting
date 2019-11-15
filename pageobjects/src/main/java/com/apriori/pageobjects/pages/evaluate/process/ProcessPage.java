@@ -176,7 +176,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @param text - the text
      * @return true/false
      */
-    public Boolean getProcessInfo(String text) {
+    public boolean getProcessInfo(String text) {
         return pageUtils.checkElementAttribute(processInfo, "innerText", text);
     }
 
@@ -186,7 +186,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @param text - the text
      * @return true/false
      */
-    public Boolean getProcessContributions(String text) {
+    public boolean getProcessContributions(String text) {
         return pageUtils.checkElementAttribute(processContributions, "innerText", text);
     }
 }

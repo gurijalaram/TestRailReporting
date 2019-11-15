@@ -252,7 +252,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return
      */
-    public Boolean getDefinedValueDropdown(String text) {
+    public boolean getDefinedValueDropdown(String text) {
         return pageUtils.checkElementFirstOption(definedValueDropdown, text);
     }
 
@@ -272,7 +272,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return
      */
-    public Boolean getMoldMaterial(String text) {
+    public boolean getMoldMaterial(String text) {
         return pageUtils.checkElementFirstOption(moldMaterialDropdown, text);
     }
 
@@ -293,7 +293,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isNumberOfCavities(String text) {
+    public boolean isNumberOfCavities(String text) {
         return checkAttribute(numberCavitiesInput, text);
     }
 
@@ -335,7 +335,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isNominalOverride(String text) {
+    public boolean isNominalOverride(String text) {
         return checkAttribute(overrideInput, text);
     }
 
@@ -356,7 +356,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isBundleCount(String text) {
+    public boolean isBundleCount(String text) {
         return checkAttribute(overrideBundleInput, text);
     }
 
@@ -377,7 +377,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isMaterialAllowance(String text) {
+    public boolean isMaterialAllowance(String text) {
         return checkAttribute(materialAllowanceInput, text);
     }
 
@@ -447,7 +447,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isDefinedInput(String text) {
+    public boolean isDefinedInput(String text) {
         return checkAttribute(definedInput, text);
     }
 
@@ -488,7 +488,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isMaterialRegrind(String text) {
+    public boolean isMaterialRegrind(String text) {
         return checkAttribute(materialRegrindInput, text);
     }
 
@@ -509,7 +509,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isCoolingTime(String text) {
+    public boolean isCoolingTime(String text) {
         return checkAttribute(coolingTimeInput, text);
     }
 
@@ -518,7 +518,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
         locator.sendKeys(value);
     }
 
-    private Boolean checkAttribute(WebElement locator, String text) {
+    private boolean checkAttribute(WebElement locator, String text) {
         return pageUtils.checkElementAttribute(locator, "value", text);
     }
 
@@ -538,7 +538,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return
      */
-    public Boolean getSelectedPartTolerance(String text) {
+    public boolean getSelectedPartTolerance(String text) {
         return pageUtils.checkElementFirstOption(partToleranceDropdown, text);
     }
 
@@ -579,7 +579,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public Boolean isPartThickness(String text) {
+    public boolean isPartThickness(String text) {
         return checkAttribute(partThicknessInput, text);
     }
 
@@ -620,7 +620,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return true/false
      */
-    public Boolean isFractionPainted(String text) {
+    public boolean isFractionPainted(String text) {
         return checkAttribute(fractionPaintedInput, text);
     }
 
@@ -681,7 +681,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return current page object
      */
-    public Boolean isMaskFeatures(String text) {
+    public boolean isMaskFeatures(String text) {
         return checkAttribute(maskFeaturesInput, text);
     }
 
@@ -731,7 +731,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return true/false
      */
-    public Boolean isSpecifyPainted(String text) {
+    public boolean isSpecifyPainted(String text) {
         return checkAttribute(specifyPaintedInput, text);
     }
 
@@ -772,7 +772,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return true false
      */
-    public Boolean isSpecified(String text) {
+    public boolean isSpecified(String text) {
         return checkAttribute(userSpecifiedInput, text);
     }
 
@@ -813,7 +813,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return true false
      */
-    public Boolean isCaseOverride(String text) {
+    public boolean isCaseOverride(String text) {
         return checkAttribute(caseOverrideInput, text);
     }
 
@@ -854,7 +854,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return true false
      */
-    public Boolean isMaskedFeatures(String text) {
+    public boolean isMaskedFeatures(String text) {
         return checkAttribute(maskModeInput, text);
     }
 
@@ -875,7 +875,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return true false
      */
-    public Boolean isComponentsPerLoad(String text) {
+    public boolean isComponentsPerLoad(String text) {
         return checkAttribute(componentsPerLoadInput, text);
     }
 }

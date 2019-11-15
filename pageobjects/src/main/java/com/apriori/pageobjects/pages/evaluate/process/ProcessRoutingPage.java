@@ -193,7 +193,7 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      * @param name - the value
      * @return true/false
      */
-    public Boolean isMachineName(String name) {
+    public boolean isMachineName(String name) {
         return pageUtils.checkElementAttribute(machineName, "innerText", name);
     }
 
@@ -201,7 +201,7 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      * Checks if the routing out of date message appears
      * @return true/false
      */
-    public Boolean isRoutingOutOfDateDisplayed() {
+    public boolean isRoutingOutOfDateDisplayed() {
         return pageUtils.checkElementVisibleByBoolean(outOfDateMsg);
     }
 }

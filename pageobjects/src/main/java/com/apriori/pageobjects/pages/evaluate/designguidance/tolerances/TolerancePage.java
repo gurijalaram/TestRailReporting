@@ -52,7 +52,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementAppear(toleranceTable);
     }
 
     /**
@@ -99,7 +99,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      * @param text          - the text
      * @return true/false
      */
-    public Boolean isToleranceCount(String toleranceType, String text) {
+    public boolean isToleranceCount(String toleranceType, String text) {
         findToleranceType(toleranceType).click();
         return pageUtils.checkElementAttribute(findToleranceType(toleranceType), "outerText", text);
     }
