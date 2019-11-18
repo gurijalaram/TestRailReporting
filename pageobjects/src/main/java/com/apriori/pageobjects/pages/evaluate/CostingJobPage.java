@@ -45,7 +45,8 @@ public class CostingJobPage extends LoadableComponent<CostingJobPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(dialog);
+        pageUtils.waitForElementAppear(dialog);
+        pageUtils.waitForElementAppear(dialogCostButton);
     }
 
     /**
