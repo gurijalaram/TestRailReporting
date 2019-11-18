@@ -70,8 +70,8 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      * @param icon         - icon can be 'okay' or 'stop'
      * @return true/false
      */
-    public boolean isJobQueueActionDisplayed(String scenarioName, String jobType, String icon) {
+    public WebElement checkJobQueueActionComplete(String scenarioName, String jobType, String icon) {
         By jobStatus = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='" + icon + "18.png']");
-        return pageUtils.waitForElementToAppear(jobStatus, 2).isDisplayed();
+        return pageUtils.waitForElementToAppear(jobStatus, 2);
     }
 }
