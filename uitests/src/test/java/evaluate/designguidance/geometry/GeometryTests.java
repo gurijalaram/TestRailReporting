@@ -33,7 +33,7 @@ public class GeometryTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1620", "1621"})
+    @TestRail(testCaseId = {"1620", "1621", "1255", "1259"})
     @Description("Validate the user can open the Analysis Properties dialogue box for a specific GCD selected from the geometry tab")
     public void propertiesRouting() {
         loginPage = new LoginPage(driver);

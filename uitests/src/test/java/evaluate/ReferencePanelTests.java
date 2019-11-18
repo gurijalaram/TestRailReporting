@@ -49,7 +49,7 @@ public class ReferencePanelTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"356"})
+    @TestRail(testCaseId = {"356", "354", "957"})
     @Description("Validate  the compare panel can show the comparison between the most recent public iteration")
     public void referencePublicIteration() {
 
@@ -83,7 +83,7 @@ public class ReferencePanelTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"358"})
+    @TestRail(testCaseId = {"358", "958"})
     @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
 
@@ -101,5 +101,44 @@ public class ReferencePanelTests extends TestBase {
         evaluatePage.collapseReferenceCompare();
 
         assertThat(evaluatePage.isReferencePanelExpanded(), is(false));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"357"})
+    @Description("Validate the compare panel can show the comparison between any named scenario of the same component")
+    public void compareMultiScenario() {
+
+        String scenarioName = new Util().getScenarioName();
+        String scenarioName2 = new Util().getScenarioName();
+        String scenarioName3 = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        referenceComparePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
+            .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .createNewScenario()
+            .enterScenarioName(scenarioName2)
+            .save()
+            .createNewScenario()
+            .enterScenarioName(scenarioName3)
+            .save()
+            .selectExploreButton()
+            .openScenario(scenarioName2, "Rapid Prototyping")
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
+            .costScenario(2)
+            .selectExploreButton()
+            .openScenario(scenarioName3, "Rapid Prototyping")
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .costScenario()
+            .openReferenceCompare()
+            .selectDropdown()
+            .selectDropdownScenario(WorkspaceEnum.PRIVATE.name(), scenarioName);
+
+        assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()), is(true));
+        assertThat(referenceComparePage.isReferenceVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
     }
 }

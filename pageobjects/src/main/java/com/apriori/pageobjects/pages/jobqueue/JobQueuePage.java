@@ -50,14 +50,28 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
 
     /**
      * Opens the scenario from the job queue
+     *
      * @param scenarioName - the scenario name
-     * @param partName - the part name
-     * @param jobType - the job type
+     * @param partName     - the part name
+     * @param jobType      - the job type
      * @return new page object
      */
     public EvaluatePage openScenarioLink(String scenarioName, String partName, String jobType) {
-        By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + partName.toUpperCase() + "')]");
+        By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]");
         pageUtils.waitForElementAndClick(scenario);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Checks the job queue that the first job for the specified scenario is complete
+     *
+     * @param scenarioName - the scenario name
+     * @param jobType      - the job type
+     * @param icon         - icon can be 'okay' or 'stop'
+     * @return true/false
+     */
+    public boolean isJobQueueActionDisplayed(String scenarioName, String jobType, String icon) {
+        By jobStatus = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='" + icon + "18.png']");
+        return pageUtils.waitForElementToAppear(jobStatus, 2).isDisplayed();
     }
 }

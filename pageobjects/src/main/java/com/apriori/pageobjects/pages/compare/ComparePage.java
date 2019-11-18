@@ -75,7 +75,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param text - the text
      * @return true/false
      */
-    public Boolean isComparisonName(String text) {
+    public boolean isComparisonName(String text) {
         return pageUtils.checkElementAttribute(comparisonName, "title", text);
     }
 }
