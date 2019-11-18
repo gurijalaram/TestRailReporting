@@ -68,5 +68,4 @@ public class HomePage extends LoadableComponent<HomePage> {
     public boolean isHelpButtonDisplayed() {
         return helpButton.isDisplayed();
     }
-
 }
