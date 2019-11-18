@@ -68,7 +68,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      * @param scenarioName - the scenario name
      * @param jobType      - the job type
      * @param icon         - icon can be 'okay' or 'stop'
-     * @return true/false
+     * @return webelement
      */
     public WebElement checkJobQueueActionComplete(String scenarioName, String jobType, String icon) {
         By jobStatus = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='" + icon + "18.png']");
