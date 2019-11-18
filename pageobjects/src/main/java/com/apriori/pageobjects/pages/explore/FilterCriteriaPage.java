@@ -23,6 +23,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
 
+    @FindBy(id = "scenarioComparisonButton")
+    private WebElement compareButton;
+
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
 
@@ -147,7 +150,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
                 pageUtils.waitForElementAndClick(assemblyCheckBox);
                 break;
             case "Comparison":
-                pageUtils.waitForElementAndClick(comparisonCheckBox);
+                if (!compareButton.getAttribute("className").contains("active-tab")) {
+                    pageUtils.waitForElementAndClick(comparisonCheckBox);
+                }
                 break;
             default:
                 throw new IllegalArgumentException("The type: " + type + " is not found");
