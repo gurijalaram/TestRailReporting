@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.process;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,9 +12,11 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -115,10 +118,21 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      *
      * @return list of routings
      */
-    public List<String> getRoutings() {
-        List<String> routingCell = new ArrayList<>();
-        routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
-        return routingCell;
+    public Set<String> getRoutings() {
+        Set<String> routingCell = new HashSet<>();
+
+        long startTime = System.currentTimeMillis() / 1000;
+
+        if (routingScroller.isDisplayed()) {
+            long timeLimitInSeconds = 5;
+            do {
+                routingScroller.sendKeys(Keys.DOWN);
+                routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getText().split("\n")).get(0)));
+            } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
+        }
+        routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getText().split("\n")).get(0)));
+
+        return routingCell.stream().filter(cell -> !cell.equals("")).collect(Collectors.toSet());
     }
 
     /**

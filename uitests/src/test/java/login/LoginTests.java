@@ -50,6 +50,7 @@ public class LoginTests extends TestBase {
     public void testLogin() {
         loginPage = new LoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
+
         assertThat(explorePage.isDeleteButtonPresent(), is(true));
     }
 
@@ -58,6 +59,7 @@ public class LoginTests extends TestBase {
     public void testIncorrectPwd() {
         loginPage = new LoginPage(driver);
         loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
+
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
@@ -66,6 +68,7 @@ public class LoginTests extends TestBase {
     public void testIncorrectEmail() {
         loginPage = new LoginPage(driver);
         loginPage = loginPage.failedLoginAs("jacky348@apriori.com", UserUtil.getUser().getPassword());
+
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
@@ -73,7 +76,8 @@ public class LoginTests extends TestBase {
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
         loginPage = new LoginPage(driver);
-        loginPage = loginPage.failedLoginAs("jacky348@apriori.com", "fakePassword");
+        loginPage = loginPage.failedLoginAs("fakeuser@apriori.com", "fakePassword");
+
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
@@ -83,6 +87,7 @@ public class LoginTests extends TestBase {
     @Description("Validate Login Dialog")
     public void loginDialog() {
         loginPage = new LoginPage(driver);
+
         assertThat(loginPage.getMarketingText(), containsString("For the past 7 years, aPriori has hosted the International Cost Insight Conference"));
         assertThat(loginPage.isLogoDisplayed(), is(true));
     }
@@ -94,6 +99,7 @@ public class LoginTests extends TestBase {
     public void forgotPassword() {
         loginPage = new LoginPage(driver);
         forgottenPasswordPage = loginPage.forgottenPassword();
+
         assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
     }
 
@@ -106,6 +112,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPage.getWelcomeText(), containsString("Welcome! This login page provides access to aPriori's web applications, support portal and customer community. Access to these web services is available only to aPriori licensed customers, partners and employees"));
 
         privacyPolicyPage = loginPage.privacyPolicy();
+
         assertThat(privacyPolicyPage.getChildWindowURL(), containsString("https://www.apriori.com/privacy-policy"));
         assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
     }
