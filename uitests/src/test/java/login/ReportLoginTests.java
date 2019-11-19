@@ -3,23 +3,17 @@ package login;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.lessThan;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
-import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import reports.pages.homepage.HomePage;
 import reports.pages.login.LoginPage;
-
-import java.io.IOException;
 
 public class ReportLoginTests extends TestBase {
 
@@ -48,6 +42,7 @@ public class ReportLoginTests extends TestBase {
     public void testLogin() {
         loginPage = new LoginPage(driver);
         homePage = loginPage.login(UserUtil.getUser());
+
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }
 
@@ -57,6 +52,7 @@ public class ReportLoginTests extends TestBase {
     public void failedLogin() {
         loginPage = new LoginPage(driver);
         loginPage.failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
+
         assertThat(loginPage.getLoginMessage(), is(equalTo(loginErrorMessage.toUpperCase())));
     }
 
@@ -67,6 +63,7 @@ public class ReportLoginTests extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.clickForgotPassword()
             .submitEmail("fakeEmail@apriori.com");
+
         assertThat(loginPage.getLoginMessage(), is(equalTo(passwordResetMsg.toUpperCase())));
     }
 
@@ -76,6 +73,7 @@ public class ReportLoginTests extends TestBase {
     public void emptyFieldsMessage() {
         loginPage = new LoginPage(driver);
         loginPage.failedLogin("", "");
+
         assertThat(loginPage.getInputErrorMsg(), is(equalTo(emptyFieldMsg)));
     }
 
@@ -85,22 +83,28 @@ public class ReportLoginTests extends TestBase {
     public void invalidEmail() {
         loginPage = new LoginPage(driver);
         loginPage.failedLogin("a@b", "fakePassword");
+
         assertThat(loginPage.getInputErrorMsg(), is(equalTo(invalidEmailMsg)));
     }
 
     @Test
     @TestRail(testCaseId = {"2700"})
     @Description("Link to privacy policy working")
-    public void testPrivacyPolicyLink() throws IOException {
+    public void testPrivacyPolicyLink() {
         loginPage = new LoginPage(driver);
-        assertThat(loginPage.getResponseCode(loginPage.getPrivacyPolicyURL()), is(lessThan(HttpStatus.SC_BAD_REQUEST)));
+        loginPage.waitForPrivacyPolicyLinkVisibility();
+
+        assertThat(loginPage.isPrivacyPolicyButtonDisplayed(), is(true));
     }
 
     @Test
     @TestRail(testCaseId = {"2701"})
     @Description("Link to help page working")
-    public void testHelpLink() throws IOException {
+    public void testHelpLink() {
         loginPage = new LoginPage(driver);
-        assertThat(loginPage.getResponseCode(loginPage.getHelpURL()), is(lessThan(HttpStatus.SC_BAD_REQUEST)));
+        homePage = loginPage.login(UserUtil.getUser());
+        homePage.waitForHelpLinkVisibility();
+
+        assertThat(homePage.isHelpButtonDisplayed(), is(true));
     }
 }
