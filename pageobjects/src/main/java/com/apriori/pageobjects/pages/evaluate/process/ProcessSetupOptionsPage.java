@@ -50,6 +50,9 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
     @FindBy(css = "input[data-ap-field='bundleSawingCount.modeValues.userOverride.value']")
     private WebElement overrideBundleInput;
 
+    @FindBy(css = "input[data-ap-comp='bundleSawingCount.radioButtons.userOverride']")
+    private WebElement bundleSawingRadioButton;
+
     @FindBy(css = "input[data-ap-comp='colorantAdd.radioButtons.defaultColorant']")
     private WebElement noColorantRadioButton;
 
@@ -337,6 +340,16 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      */
     public boolean isNominalOverride(String text) {
         return checkAttribute(overrideInput, text);
+    }
+
+    /**
+     * Selects override bundle count
+     *
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectOverrideBundleCount() {
+        pageUtils.waitForElementToAppear(bundleSawingRadioButton).click();
+        return this;
     }
 
     /**

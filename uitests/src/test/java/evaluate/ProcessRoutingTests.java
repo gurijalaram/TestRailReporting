@@ -544,7 +544,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder("3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("2AL+3AM Routing", "4 Axis Mill Routing", "3 Axis Lathe Routing", "2AL+4AM Routing", "Drill Press Routing", "5 Axis Mill Routing", "3 Axis Mill Routing", "MillTurn Routing", "2AL+5AM Routing"));
     }
 
     @Test
@@ -568,14 +568,14 @@ public class ProcessRoutingTests extends TestBase {
     public void routingsPowderMetal() {
         loginPage = new LoginPage(driver);
         routingsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder("3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder( "2AL+3AM Routing", "4 Axis Mill Routing", "3 Axis Lathe Routing", "2AL+4AM Routing", "Drill Press Routing", "5 Axis Mill Routing", "3 Axis Mill Routing", "MillTurn Routing", "2AL+5AM Routing"));
     }
 
     @Test
