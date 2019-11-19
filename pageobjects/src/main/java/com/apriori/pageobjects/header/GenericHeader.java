@@ -149,7 +149,7 @@ public class GenericHeader extends PageHeader {
      *
      * @return true false
      */
-    public Boolean isActionLockedStatus(String status) {
+    public boolean isActionLockedStatus(String status) {
         return pageUtils.checkElementAttribute(lockToggleButton, "innerText", status);
     }
 

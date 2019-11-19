@@ -206,7 +206,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      *
      * @return
      */
-    public Boolean getSelectedProcessGroup(String text) {
+    public boolean getSelectedProcessGroup(String text) {
         return pageUtils.checkElementFirstOption(processGroupDropdown, text);
     }
 
@@ -215,7 +215,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      *
      * @return
      */
-    public Boolean getSelectedVPE(String text) {
+    public boolean getSelectedVPE(String text) {
         return pageUtils.checkElementFirstOption(vpeDropdown, text);
     }
 
@@ -224,7 +224,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      *
      * @return
      */
-    public Boolean getSelectedCatalog(String text) {
+    public boolean getSelectedCatalog(String text) {
         return pageUtils.checkElementFirstOption(catalogDropdown, text);
     }
 
@@ -233,7 +233,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      *
      * @return
      */
-    public Boolean getSelectedMaterial(String text) {
+    public boolean getSelectedMaterial(String text) {
         return pageUtils.checkElementFirstOption(materialDropdown, text);
     }
 
@@ -242,7 +242,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      *
      * @return true/false
      */
-    public Boolean getScenarioName(String text) {
+    public boolean getScenarioName(String text) {
         return pageUtils.checkElementAttribute(scenarioNameInput, "value", text);
     }
 

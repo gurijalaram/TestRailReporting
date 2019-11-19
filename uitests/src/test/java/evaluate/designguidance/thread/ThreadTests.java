@@ -11,15 +11,14 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.Inves
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -32,12 +31,10 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 public class ThreadTests extends TestBase {
 
     private LoginPage loginPage;
-    private DesignGuidancePage designGuidancePage;
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
     private ThreadingPage threadingPage;
     private WarningPage warningPage;
-    private SettingsPage settingsPag;
 
     public ThreadTests() {
         super();

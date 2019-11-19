@@ -50,7 +50,7 @@ public class StockPage extends LoadableComponent<StockPage> {
      *
      * @return stock details as string
      */
-    public Boolean checkTableDetails(String stock) {
+    public boolean checkTableDetails(String stock) {
         return pageUtils.checkElementContains(stockTable, stock);
     }
 
