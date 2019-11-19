@@ -127,6 +127,7 @@ public class PsoEditTests extends TestBase {
             .openProcessDetails()
             .selectProcessChart("Band Saw")
             .selectOptions()
+            .selectOverrideBundleCount()
             .setBundleCountOverride("3");
 
         processRoutingPage = new ProcessRoutingPage(driver);
