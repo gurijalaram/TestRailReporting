@@ -240,7 +240,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      * @return true/false
      */
     public boolean getScenarioName(String text) {
-        return pageUtils.checkElementAttribute(scenarioNameInput, "value", text);
+        return pageUtils.waitForElementAttributeToContainText(scenarioNameInput, "value", text);
     }
 
     private ProductionDefaultPage clearInput(WebElement locator) {

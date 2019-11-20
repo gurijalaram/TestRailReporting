@@ -177,7 +177,7 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @return true/false
      */
     public boolean getProcessInfo(String text) {
-        return pageUtils.checkElementAttribute(processInfo, "innerText", text);
+        return pageUtils.waitForElementAttributeToContainText(processInfo, "innerText", text);
     }
 
     /**
@@ -187,6 +187,6 @@ public class ProcessPage extends LoadableComponent<ProcessPage> {
      * @return true/false
      */
     public boolean getProcessContributions(String text) {
-        return pageUtils.checkElementAttribute(processContributions, "innerText", text);
+        return pageUtils.waitForElementAttributeToContainText(processContributions, "innerText", text);
     }
 }

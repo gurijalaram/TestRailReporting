@@ -6,6 +6,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -230,6 +231,7 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
+        removePopup();
         pageUtils.waitForElementAndClick(filterButton);
         return new FilterCriteriaPage(driver);
     }
@@ -344,4 +346,13 @@ public class ExplorePage extends ExploreHeader {
         }
         return this;
     }
+
+    /**
+     * Removes popup over filter button
+     */
+    private void removePopup() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.getElementsByClassName('popover queue-notification bottom')[0].style.display = 'none';");
+    }
+
 }

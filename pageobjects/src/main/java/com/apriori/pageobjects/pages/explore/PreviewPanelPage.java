@@ -88,7 +88,7 @@ public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
      * @return true/false
      */
     private boolean checkAttribute(WebElement locator, String text) {
-        return pageUtils.checkElementAttribute(locator, "innerText", text);
+        return pageUtils.waitForElementAttributeToContainText(locator, "innerText", text);
     }
 
     /**

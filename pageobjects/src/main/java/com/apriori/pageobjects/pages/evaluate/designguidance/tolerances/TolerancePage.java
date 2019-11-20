@@ -101,7 +101,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      */
     public boolean isToleranceCount(String toleranceType, String text) {
         findToleranceType(toleranceType).click();
-        return pageUtils.checkElementAttribute(findToleranceType(toleranceType), "outerText", text);
+        return pageUtils.waitForElementAttributeToContainText(findToleranceType(toleranceType), "outerText", text);
     }
 
     /**

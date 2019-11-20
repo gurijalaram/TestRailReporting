@@ -260,7 +260,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public boolean isProcessRoutingDetails(String text) {
         pageUtils.waitForElementToAppear(processRoutingName);
-        return pageUtils.checkElementAttribute(processRoutingName, "title", text);
+        return pageUtils.waitForElementAttributeToContainText(processRoutingName, "title", text);
     }
 
     /**
@@ -367,7 +367,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return material info as string
      */
     public boolean isMaterialInfo(String text) {
-        return pageUtils.checkElementAttribute(materialsInfo, "value", text);
+        return pageUtils.waitForElementAttributeToContainText(materialsInfo, "value", text);
     }
 
     /**
@@ -386,7 +386,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public boolean getWarningsCount(String count) {
-        return pageUtils.checkElementAttribute(warningsCount, "outerText", count);
+        return pageUtils.waitForElementAttributeToContainText(warningsCount, "outerText", count);
     }
 
     /**
@@ -395,7 +395,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public boolean getGuidanceIssuesCount(String count) {
-        return pageUtils.checkElementAttribute(guidanceIssuesCount, "outerText", count);
+        return pageUtils.waitForElementAttributeToContainText(guidanceIssuesCount, "outerText", count);
     }
 
     /**
@@ -404,7 +404,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public boolean getGcdTolerancesCount(String count) {
-        return pageUtils.checkElementAttribute(gcdTolerancesCount, "outerText", count);
+        return pageUtils.waitForElementAttributeToContainText(gcdTolerancesCount, "outerText", count);
     }
 
     /**
@@ -496,7 +496,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public boolean isLockedStatus(String status) {
-        return pageUtils.checkElementAttribute(lockedStatusIcon, "title", status);
+        return pageUtils.waitForElementAttributeToContainText(lockedStatusIcon, "title", status);
     }
 
     /**
@@ -505,7 +505,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public boolean isCADConnectionStatus(String status) {
-        return pageUtils.checkElementAttribute(cadConnectedIcon, "title", status);
+        return pageUtils.waitForElementAttributeToContainText(cadConnectedIcon, "title", status);
     }
 
     /**
@@ -532,7 +532,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return true/false
      */
     public boolean getAnnualVolume(String text) {
-        return pageUtils.checkElementAttribute(annVolume, "value", text);
+        return pageUtils.waitForElementAttributeToContainText(annVolume, "value", text);
     }
 
     /**
@@ -541,7 +541,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return true/false
      */
     public boolean getProductionLife(String text) {
-        return pageUtils.checkElementAttribute(annualVolumeYrs, "value", text);
+        return pageUtils.waitForElementAttributeToContainText(annualVolumeYrs, "value", text);
     }
 
     /**
@@ -571,7 +571,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return true/false
      */
     public boolean isTotalComponents(String value) {
-        return pageUtils.checkElementAttribute(totalComponents, "innerText", value);
+        return pageUtils.waitForElementAttributeToContainText(totalComponents, "innerText", value);
     }
 
     /**
@@ -581,7 +581,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return true/false
      */
     public boolean isUniqueComponents(String value) {
-        return pageUtils.checkElementAttribute(uniqueComponents, "innerText", value);
+        return pageUtils.waitForElementAttributeToContainText(uniqueComponents, "innerText", value);
     }
 
     /**
@@ -591,7 +591,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return true/false
      */
     public boolean isUncostedUnique(String value) {
-        return pageUtils.checkElementAttribute(uncostedComponents, "innerText", value);
+        return pageUtils.waitForElementAttributeToContainText(uncostedComponents, "innerText", value);
     }
 
     /**
@@ -601,7 +601,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return true/false
      */
     public boolean isFinishMass(String value) {
-        return pageUtils.checkElementAttribute(finishMass, "innerText", value);
+        return pageUtils.waitForElementAttributeToContainText(finishMass, "innerText", value);
     }
 
     /**
@@ -611,7 +611,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return true/false
      */
     public boolean isTargetMass(String value) {
-        return pageUtils.checkElementAttribute(targetMass, "innerText", value);
+        return pageUtils.waitForElementAttributeToContainText(targetMass, "innerText", value);
     }
 
     /**
@@ -621,7 +621,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return true/false
      */
     public boolean isSecondaryProcesses(String value) {
-        return pageUtils.checkElementAttribute(secondaryProcesses, "value", value);
+        return pageUtils.waitForElementAttributeToContainText(secondaryProcesses, "value", value);
     }
 
     /**
