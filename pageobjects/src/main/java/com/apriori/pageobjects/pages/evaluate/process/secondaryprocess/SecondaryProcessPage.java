@@ -32,7 +32,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     @FindBy(css = "button.btn.btn-primary")
     private WebElement applyButton;
 
-    @FindBy(css = "button.btn.btn-default")
+    @FindBy(css = ".modal-footer button.btn.btn-default")
     private WebElement cancelButton;
 
     private WebDriver driver;
