@@ -125,7 +125,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public ExplorePage selectPublishButton() {
         pageUtils.waitForElementAndClick(publishButton);
-        pageUtils.waitForElementAttributeToContainText(exploreButton, "className", "active-tab");
+        pageUtils.checkElementAttribute(exploreButton, "className", "active-tab");
         return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
     }
 

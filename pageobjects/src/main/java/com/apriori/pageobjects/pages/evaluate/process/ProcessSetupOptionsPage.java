@@ -532,7 +532,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
     }
 
     private boolean checkAttribute(WebElement locator, String text) {
-        return pageUtils.waitForElementAttributeToContainText(locator, "value", text);
+        return pageUtils.checkElementAttribute(locator, "value", text);
     }
 
     /**

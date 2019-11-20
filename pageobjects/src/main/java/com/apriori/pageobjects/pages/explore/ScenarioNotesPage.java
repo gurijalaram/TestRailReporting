@@ -153,7 +153,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return the description as string
      */
     public boolean isDescription(String text) {
-        return pageUtils.waitForElementAttributeToContainText(descriptionInput, "value", text);
+        return pageUtils.checkElementAttribute(descriptionInput, "value", text);
     }
 
     /**
@@ -162,7 +162,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return the scenario notes as string
      */
     public boolean isScenarioNotes(String text) {
-        return pageUtils.waitForElementAttributeToContainText(scenarioNotesInput, "value", text);
+        return pageUtils.checkElementAttribute(scenarioNotesInput, "value", text);
     }
 
     /**
@@ -213,6 +213,6 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return the assignee as string
      */
     public boolean isAssignee(String text) {
-        return pageUtils.waitForElementAttributeToContainText(assigneeField, "value", text);
+        return pageUtils.checkElementAttribute(assigneeField, "value", text);
     }
 }

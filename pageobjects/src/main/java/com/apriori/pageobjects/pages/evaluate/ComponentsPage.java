@@ -130,7 +130,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      */
     public boolean isAssemblyThumbnail(String scenarioName, String assemblyName, String thumbnailType) {
         By assembly = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + assemblyName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//div[@class='fa fa-cube assembly-thumbnail-icon']");
-        return pageUtils.waitForElementAttributeToContainText(driver.findElement(assembly), "title", thumbnailType);
+        return pageUtils.checkElementAttribute(driver.findElement(assembly), "title", thumbnailType);
     }
 
     /**

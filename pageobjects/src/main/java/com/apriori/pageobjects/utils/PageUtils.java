@@ -454,17 +454,6 @@ public class PageUtils {
     }
 
     /**
-     * Waits until an element has a certain value in an attribute
-     *
-     * @param - element to check
-     * @return - boolean
-     */
-    public boolean waitForElementToHaveClass(WebElement elementToCheck, String classToCheckFor) {
-        WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS);
-        return wait.until(ExpectedConditions.attributeContains(elementToCheck, "className", classToCheckFor));
-    }
-
-    /**
      * Finds element in a table by scrolling.
      *
      * @param scenario - the locator for the scenario
@@ -688,7 +677,7 @@ public class PageUtils {
      * @param - expected value
      * @return - boolean
      */
-    public boolean waitForElementAttributeToContainText(WebElement element, String attribute, String text) {
+    public boolean checkElementAttribute(WebElement element, String attribute, String text) {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
         try {
             return new WebDriverWait(driver, timeOut)

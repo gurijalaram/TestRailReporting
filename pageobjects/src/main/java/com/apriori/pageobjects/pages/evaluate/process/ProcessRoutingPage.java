@@ -194,7 +194,7 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      * @return true/false
      */
     public boolean isMachineName(String name) {
-        return pageUtils.waitForElementAttributeToContainText(machineName, "innerText", name);
+        return pageUtils.checkElementAttribute(machineName, "innerText", name);
     }
 
     /**
