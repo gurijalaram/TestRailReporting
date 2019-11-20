@@ -1,19 +1,19 @@
 package compare;
 
-import com.apriori.pageobjects.header.GenericHeader;
-import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
+import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
+import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.Util;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 

@@ -147,9 +147,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
                 pageUtils.waitForElementAndClick(assemblyCheckBox);
                 break;
             case "Comparison":
-                //if (!compareButton.getAttribute("className").contains("active-tab")) {
                 pageUtils.waitForElementAndClick(comparisonCheckBox);
-                //}
                 break;
             default:
                 throw new IllegalArgumentException("The type: " + type + " is not found");
