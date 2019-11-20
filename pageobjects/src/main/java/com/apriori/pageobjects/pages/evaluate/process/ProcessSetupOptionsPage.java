@@ -122,7 +122,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
     @FindBy(css = "input[data-ap-comp='numMaskedFeatures.radioButtons.none']")
     private WebElement noMaskingRadioButton;
 
-    @FindBy(css = "'input[data-ap-comp='numMaskedFeatures.radioButtons.user']")
+    @FindBy(css = "input[data-ap-comp='numMaskedFeatures.radioButtons.user']")
     private WebElement maskFeaturesRadioButton;
 
     @FindBy(css = "input[data-ap-field='numMaskedFeatures.modeValues.user.value']")
@@ -662,7 +662,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return current page object
      */
-    public ProcessSetupOptionsPage selectMaskedFeaturesButton() {
+    public ProcessSetupOptionsPage selectEnterNumberOfMaskedFeaturesButton() {
         pageUtils.waitForElementToAppear(maskFeaturesRadioButton).click();
         return this;
     }
@@ -694,7 +694,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return current page object
      */
-    public boolean isMaskFeatures(String text) {
+    public boolean isTheNumberOfMaskedFeatures(String text) {
         return checkAttribute(maskFeaturesInput, text);
     }
 

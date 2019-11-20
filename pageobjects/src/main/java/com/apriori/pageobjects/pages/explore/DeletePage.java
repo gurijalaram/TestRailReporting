@@ -98,7 +98,6 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      */
     public ExplorePage deleteExploreComparison() {
         pageUtils.waitForElementToAppear(deleteButton).click();
-        notificationPopoverNotDisplayed();
         return new ExplorePage(driver);
     }
 
