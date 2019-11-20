@@ -231,7 +231,7 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
-        removePopup();
+        pageUtils.removePopup();
         pageUtils.waitForElementAndClick(filterButton);
         return new FilterCriteriaPage(driver);
     }
@@ -346,13 +346,4 @@ public class ExplorePage extends ExploreHeader {
         }
         return this;
     }
-
-    /**
-     * Removes popup over filter button
-     */
-    private void removePopup() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.getElementsByClassName('popover queue-notification bottom')[0].style.display = 'none';");
-    }
-
 }
