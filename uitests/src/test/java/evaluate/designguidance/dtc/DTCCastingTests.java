@@ -66,7 +66,7 @@ public class DTCCastingTests extends TestBase {
         guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(5)
+            .costScenario(8)
             .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:18");
