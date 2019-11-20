@@ -98,9 +98,10 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     }
 
     public ProcessSetupOptionsPage highlightSecondaryProcess(String processType, String processName) {
-        selectSecondaryProcess(processType, processName);
+        selectProcessType(processType)
+            .findProcessName(processName);
         // TODO: 16/10/2019 refactor to webelement
-        driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']/ancestor::tr")).click();
+        driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']")).click();
         return new ProcessSetupOptionsPage(driver);
     }
 

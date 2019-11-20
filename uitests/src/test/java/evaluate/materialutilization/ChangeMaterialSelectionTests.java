@@ -323,7 +323,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(ScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -336,7 +336,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(ScenarioName, "BRACKET_BASIC");
+            .sortColumnDescending("Last Saved")
+            .openScenario(ScenarioName, "bracket_basic");
 
         assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
     }

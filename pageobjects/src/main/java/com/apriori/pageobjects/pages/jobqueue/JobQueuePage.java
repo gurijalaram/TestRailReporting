@@ -27,6 +27,14 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     @FindBy(css = "a[data-ap-comp='jobQueue']")
     private WebElement jobQueueButton;
 
+
+
+    private WebElement statusIcon(String scenarioName, String jobType, String icon) {
+        return driver.findElement(
+            By.xpath(
+                String.format("//a[@title='%s']/ancestor::tr//div[.='%s']/ancestor::tr//img[@src='%s']", scenarioName, jobType, icon)));
+    }
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -70,8 +78,33 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      * @param icon         - icon can be 'okay' or 'stop'
      * @return webelement
      */
-    public WebElement checkJobQueueActionStatus(String scenarioName, String jobType, String icon) {
+    public JobQueuePage checkJobQueueActionStatus(String scenarioName, String jobType, String icon) {
         By jobStatus = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='" + icon + "18.png']");
-        return pageUtils.waitForElementToAppear(jobStatus, 2);
+        pageUtils.waitForElementToAppear(jobStatus, 2);
+        return this;
+    }
+
+    /**
+     * Checks the most recent server processes in the job queue and return the title
+     *
+     * @param scenarioName - the scenario name
+     * @param jobType      - the job type
+     * @param icon         - icon can be 'okay' or 'stop'
+     */
+    public String getServerProcessTitle(String scenarioName, String jobType, String icon) {
+        return statusIcon(scenarioName, jobType, icon).getAttribute("title");
+    }
+
+
+    /**
+     * Closes the job queue
+     *
+     * @param className - the class the method should return
+     * @param <T>       - the return type
+     * @return new page object
+     */
+    public <T> T closeJobQueue(Class<T> className) {
+        pageUtils.waitForElementAndClick(jobQueueButton);
+        return PageFactory.initElements(driver, className);
     }
 }

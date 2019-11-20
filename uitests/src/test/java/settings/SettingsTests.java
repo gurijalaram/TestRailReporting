@@ -3,6 +3,7 @@ package settings;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -352,6 +353,21 @@ public class SettingsTests extends TestBase {
 
         selectionSettingsPage = new SettingsPage(driver).openSelectionTab();
         assertThat(selectionSettingsPage.getColour(), is(equalTo(ColourEnum.SHAMROCK_GREEN.getColour())));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"295", "299"})
+    @Description("Options should filter subsequent drop down options available")
+    public void optionsFilter() {
+
+        loginPage = new LoginPage(driver);
+        productionDefaultPage = loginPage.login(UserUtil.getUser())
+            .openSettings()
+            .openProdDefaultTab()
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .selectMaterialCatalog(VPEEnum.APRIORI_USA.getVpe());
+
+        assertThat(productionDefaultPage.getListOfMaterials(), containsInAnyOrder("<No default specified>", "F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
     }
 }
 

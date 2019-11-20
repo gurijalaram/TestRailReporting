@@ -53,7 +53,7 @@ public class PsoEditTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("8"), is(true));
-        assertThat(processSetupOptionsPage.isNominalOverride("0.4"), is(true));
+        assertThat(processSetupOptionsPage.isNominalWallThicknessOverride("0.4"), is(true));
         assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
         assertThat(processSetupOptionsPage.isMaterialRegrind("0.3"), is(true));
     }
@@ -70,7 +70,7 @@ public class PsoEditTests extends TestBase {
             .openProcessDetails()
             .selectProcessChart("High Pressure Die Casting")
             .selectOptions()
-            .selectOptimizeButton()
+            .selectOptimizeForMinimumCostButton()
             .selectMoldMaterialDropdown("AISI P20")
             .selectPartToleranceDropdown("Low Tolerance +/-0.254 (+/-0.010\")");
 
@@ -100,7 +100,7 @@ public class PsoEditTests extends TestBase {
             .openProcessDetails()
             .selectProcessChart("Vertical Automatic")
             .selectOptions()
-            .selectOptimizeButton()
+            .selectOptimizeForMinimumCostButton()
             .selectMoldMaterialDropdown("Plastic");
 
         processRoutingPage = new ProcessRoutingPage(driver);
@@ -193,5 +193,68 @@ public class PsoEditTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.isCoolingTime("150.29"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1652"})
+    @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
+    public void routingPSOs() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Injection Molding")
+            .selectOptions()
+            .selectOptimizeForMinimumCostButton()
+            .selectOverrideNominalButton()
+            .setOverride("0.13")
+            .selectUserDefinedColorChargeButton()
+            .setDefinedColorChargeInput("0.68");
+
+        processRoutingPage = new ProcessRoutingPage(driver);
+        processRoutingPage.closeProcessPanel();
+
+        evaluatePage = new EvaluatePage(driver);
+        processSetupOptionsPage = evaluatePage.costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Injection Molding")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.isNominalWallThicknessOverride("0.13"), is(true));
+        assertThat(processSetupOptionsPage.isColorChargeOverride("0.68"), is(true));
+
+        processRoutingPage = new ProcessRoutingPage(driver);
+        processRoutingPage.closeProcessPanel();
+
+        evaluatePage = new EvaluatePage(driver);
+        processSetupOptionsPage = evaluatePage.openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Structural Foam Mold")
+            .apply()
+            .closeProcessPanel()
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Structural Foam Molding")
+            .selectOptions()
+            .selectDefinedValueDropdown("4")
+            .selectAddColorantButton()
+            .selectMaterialDefinedButton()
+            .setMaterialRegrindInput("1.00");
+
+        processRoutingPage = new ProcessRoutingPage(driver);
+        processRoutingPage.closeProcessPanel();
+
+        evaluatePage = new EvaluatePage(driver);
+        processSetupOptionsPage = evaluatePage.costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Structural Foam Molding")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.getDefinedValueDropdown("4"), is(true));
+        assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.isMaterialRegrind("1.00"), is(true));
     }
 }
