@@ -20,6 +20,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Issues;
 import org.junit.Test;
 
 public class PublishComparisonTests extends TestBase {
@@ -35,7 +36,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"421"})
-    @Issue("BA-839")
+    @Issue("AP-56845")
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
 
@@ -72,7 +73,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"421"})
-    @Issue("BA-839")
+    @Issue("AP-56845")
     @Description("Test a private comparison can be published from explore page")
     public void testPublishComparisonExplorePage() {
 
