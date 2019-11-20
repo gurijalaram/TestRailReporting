@@ -684,21 +684,23 @@ public class PageUtils {
     }
 
     /**
-     * Waits for the element and checks the attribute
+     * Waits for the element's specified attribute to contain the specified text
      *
-     * @param locator - the locator of the element
-     * @return
+     * @param - element to get attribute of
+     * @param - attribute to get from element
+     * @param - expected value
+     * @return - boolean
      */
-    public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
+    public boolean checkElementAttribute(WebElement element, String attribute, String text) {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
         try {
             return new WebDriverWait(driver, timeOut)
                 .ignoreAll(ignoredWebDriverExceptions)
-                .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
+                .until((ExpectedConditions.attributeContains(element, attribute, text)));
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
-        throw new AssertionError("\nWaited for: " + timeOut + "(s)\nExpected: " + text + "\nFound: " + locator.getText());
+        throw new AssertionError("\nWaited for: " + timeOut + "(s)\nExpected: " + text + "\nFound: " + element.getText());
     }
 
     /**
@@ -764,5 +766,13 @@ public class PageUtils {
         httpURLConnection.setRequestMethod("HEAD");
         httpURLConnection.connect();
         return httpURLConnection.getResponseCode();
+    }
+
+    /**
+     * Removes popup over filter button
+     */
+    public void removePopup() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.getElementsByClassName('popover queue-notification bottom')[0].style.display = 'none';");
     }
 }
