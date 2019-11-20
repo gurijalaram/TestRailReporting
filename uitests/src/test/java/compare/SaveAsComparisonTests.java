@@ -1,5 +1,6 @@
 package compare;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -7,6 +8,7 @@ import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -27,6 +29,7 @@ public class SaveAsComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private JobQueuePage jobQueuePage;
 
     public SaveAsComparisonTests() {
         super();
@@ -104,6 +107,35 @@ public class SaveAsComparisonTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
+    }
 
+    @Test
+    @TestRail(testCaseId = {"413"})
+    @Description("Attempt to create a new comparison with a name that already exists")
+    public void comparisonNameExists() {
+
+        String scenarioName = new Util().getScenarioName();
+        String testComparisonName = new Util().getComparisonName();
+
+        loginPage = new LoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .costScenario()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .selectScenario(scenarioName, "Push Pin")
+            .apply();
+
+        genericHeader = new GenericHeader(driver);
+        jobQueuePage = genericHeader.selectExploreButton()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ExplorePage.class)
+            .openJobQueue();
+
+       assertThat(jobQueuePage.getServerProcessTitle("", "Create new Comparison", "stop"), containsString("Comparison " + testComparisonName + " already exists"));
     }
 }

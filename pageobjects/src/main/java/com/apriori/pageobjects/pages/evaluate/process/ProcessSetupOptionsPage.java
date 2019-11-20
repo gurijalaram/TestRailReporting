@@ -122,7 +122,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
     @FindBy(css = "input[data-ap-comp='numMaskedFeatures.radioButtons.none']")
     private WebElement noMaskingRadioButton;
 
-    @FindBy(css = "'input[data-ap-comp='numMaskedFeatures.radioButtons.user']")
+    @FindBy(css = "input[data-ap-comp='numMaskedFeatures.radioButtons.user']")
     private WebElement maskFeaturesRadioButton;
 
     @FindBy(css = "input[data-ap-field='numMaskedFeatures.modeValues.user.value']")
@@ -225,7 +225,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return current page object
      */
-    public ProcessSetupOptionsPage selectOptimizeButton() {
+    public ProcessSetupOptionsPage selectOptimizeForMinimumCostButton() {
         pageUtils.waitForElementToAppear(optimizeRadioButton).click();
         return this;
     }
@@ -338,7 +338,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public boolean isNominalOverride(String text) {
+    public boolean isNominalWallThicknessOverride(String text) {
         return checkAttribute(overrideInput, text);
     }
 
@@ -438,7 +438,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return current page object
      */
-    public ProcessSetupOptionsPage selectDefinedColorButton() {
+    public ProcessSetupOptionsPage selectUserDefinedColorChargeButton() {
         pageUtils.waitForElementToAppear(definedColorRadioButton).click();
         return this;
     }
@@ -449,7 +449,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param value - the value
      * @return current page object
      */
-    public ProcessSetupOptionsPage setDefinedInput(String value) {
+    public ProcessSetupOptionsPage setDefinedColorChargeInput(String value) {
         setInput(definedInput, value);
         return this;
     }
@@ -460,7 +460,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the value
      * @return true/false
      */
-    public boolean isDefinedInput(String text) {
+    public boolean isColorChargeOverride(String text) {
         return checkAttribute(definedInput, text);
     }
 
@@ -662,7 +662,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return current page object
      */
-    public ProcessSetupOptionsPage selectMaskedFeaturesButton() {
+    public ProcessSetupOptionsPage selectEnterNumberOfMaskedFeaturesButton() {
         pageUtils.waitForElementToAppear(maskFeaturesRadioButton).click();
         return this;
     }
@@ -694,7 +694,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      * @param text - the text
      * @return current page object
      */
-    public boolean isMaskFeatures(String text) {
+    public boolean isTheNumberOfMaskedFeatures(String text) {
         return checkAttribute(maskFeaturesInput, text);
     }
 

@@ -10,6 +10,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
@@ -252,5 +255,14 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
         clearInput(locator);
         locator.sendKeys(text);
         return this;
+    }
+
+    /**
+     * Gets the list of materials from the dropdown
+     *
+     * @return hashset as duplicates need to be removed
+     */
+    public HashSet<String> getListOfMaterials() {
+        return new HashSet<>(Arrays.asList(pageUtils.waitForElementToAppear(materialDropdown, materialDropdown.getAttribute("innerText")).getText().split("\n")));
     }
 }

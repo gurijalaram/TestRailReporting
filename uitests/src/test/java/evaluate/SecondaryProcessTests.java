@@ -339,6 +339,7 @@ public class SecondaryProcessTests extends TestBase {
             .highlightSecondaryProcess("Surface Treatment, Paint", "Wet Coat Line")
             .selectFractionButton()
             .setFractionPainted("0.40")
+            .selectEnterNumberOfMaskedFeaturesButton()
             .setMaskFeatures("1")
             .setSpecifyPainted("254")
             .setComponentsPerLoad("1");
@@ -351,7 +352,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.isFractionPainted("0.4"), is(true));
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.isTheNumberOfMaskedFeatures("1"), is(true));
         assertThat(processSetupOptionsPage.isSpecifyPainted("254"), is(true));
         assertThat(processSetupOptionsPage.isComponentsPerLoad("1"), is(true));
     }
