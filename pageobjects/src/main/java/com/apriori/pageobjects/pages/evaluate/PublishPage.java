@@ -21,6 +21,9 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     private final Logger logger = LoggerFactory.getLogger(PublishPage.class);
 
+    @FindBy(css = "a[data-ap-comp='exploreButton']")
+    private WebElement exploreButton;
+
     @FindBy(css = "[data-ap-scope='publishDialog'] h3.modal-title")
     private WebElement modalDialog;
 
@@ -122,6 +125,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public ExplorePage selectPublishButton() {
         pageUtils.waitForElementAndClick(publishButton);
+        pageUtils.checkElementAttribute(exploreButton, "className", "active-tab");
         return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
     }
 
