@@ -144,7 +144,6 @@ public class DeleteComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
-    @Issue("BA-839")
     public void deletePublicComparisonPage() {
 
         String testScenarioName = new Util().getScenarioName();
