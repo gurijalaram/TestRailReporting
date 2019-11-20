@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -130,6 +131,8 @@ public class LoginTests extends TestBase {
             .uploadFile(ScenarioName, new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
             .openAdminDropdown()
             .selectLogOut();
 
