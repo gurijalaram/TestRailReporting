@@ -125,20 +125,15 @@ public class DeleteComparisonTests extends TestBase {
             .apply();
 
         genericHeader = new GenericHeader(driver);
-        jobQueuePage = genericHeader.publishScenario(PublishPage.class)
+        explorePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName)
             .delete()
             .deleteExploreComparison()
             .openJobQueue()
-            .checkJobQueueActionStatus("Initial", "Delete", "okay");
-
-        genericHeader = new GenericHeader(driver);
-        genericHeader.openJobQueue();
-
-        genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
+            .checkJobQueueActionStatus("Initial", "Delete", "okay")
+            .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);

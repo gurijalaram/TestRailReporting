@@ -28,6 +28,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     private WebElement jobQueueButton;
 
 
+
     private WebElement statusIcon(String scenarioName, String jobType, String icon) {
         return driver.findElement(
             By.xpath(
@@ -85,11 +86,25 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
 
     /**
      * Checks the most recent server processes in the job queue and return the title
-     *  @param scenarioName - the scenario name
+     *
+     * @param scenarioName - the scenario name
      * @param jobType      - the job type
      * @param icon         - icon can be 'okay' or 'stop'
      */
     public String getServerProcessTitle(String scenarioName, String jobType, String icon) {
         return statusIcon(scenarioName, jobType, icon).getAttribute("title");
+    }
+
+
+    /**
+     * Closes the job queue
+     *
+     * @param className - the class the method should return
+     * @param <T>       - the return type
+     * @return new page object
+     */
+    public <T> T closeJobQueue(Class<T> className) {
+        pageUtils.waitForElementAndClick(jobQueueButton);
+        return PageFactory.initElements(driver, className);
     }
 }
