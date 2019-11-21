@@ -235,8 +235,6 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
-        pageUtils.waitForElementToAppear(jobQueuePopup);
-        pageUtils.removePopup();
         pageUtils.waitForElementAndClick(filterButton);
         return new FilterCriteriaPage(driver);
     }

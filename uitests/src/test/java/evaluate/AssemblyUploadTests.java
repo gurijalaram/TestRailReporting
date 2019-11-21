@@ -19,6 +19,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -115,6 +116,7 @@ public class AssemblyUploadTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"2651"})
+    @Issue("AP-56845")
     @Description("User can delete STEP Assembly Pre-Costing")
     public void testSTEPAssemblyDeletePreCost() {
 
@@ -134,6 +136,7 @@ public class AssemblyUploadTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"2652"})
+    @Issue("AP-56845")
     @Description("User can delete STEP Assembly Post-Costing")
     public void testSTEPAssemblyDeletePostCost() {
 
