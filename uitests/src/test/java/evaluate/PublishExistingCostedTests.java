@@ -17,6 +17,7 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class PublishExistingCostedTests extends TestBase {
@@ -30,6 +31,7 @@ public class PublishExistingCostedTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"389", "1091"})
+    @Issue("AP-56845")
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 

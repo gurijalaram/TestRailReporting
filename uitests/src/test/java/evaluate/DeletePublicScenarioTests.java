@@ -15,6 +15,7 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class DeletePublicScenarioTests extends TestBase {
@@ -31,6 +32,7 @@ public class DeletePublicScenarioTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"587"})
+    @Issue("AP-56845")
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
 

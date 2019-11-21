@@ -231,7 +231,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
     /**
      * Gets the Material
      *
-     * @return
+     * @return true/false
      */
     public boolean getSelectedMaterial(String text) {
         return pageUtils.checkElementFirstOption(materialDropdown, text);

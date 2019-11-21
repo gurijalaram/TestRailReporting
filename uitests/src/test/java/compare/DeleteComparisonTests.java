@@ -21,6 +21,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 
+import io.qameta.allure.Issues;
 import org.junit.Test;
 
 
@@ -76,6 +77,7 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56845")
     @TestRail(testCaseId = {"430"})
     @Description("Test a private comparison can be deleted from the comparison page")
     public void testDeletePrivateComparison() {
