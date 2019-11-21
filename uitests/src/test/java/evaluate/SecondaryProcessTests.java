@@ -59,7 +59,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
+            .selectHighlightSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
             .selectOverrideButton()
             .setPartThickness("0.21");
 
@@ -74,8 +74,6 @@ public class SecondaryProcessTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.isPartThickness("0.21"), is(true));
-
-
     }
 
     @Test
@@ -147,7 +145,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
             .apply()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden")
             .setMaskedFeaturesInput("2");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
@@ -172,7 +170,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
             .apply()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Standard Anneal")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Standard Anneal")
             .selectNumMaskedFeaturesButton()
             .setMaskedFeaturesInput("1");
 
@@ -200,7 +198,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
             .apply()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper")
             .setMaskedFeaturesInput("3");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
@@ -303,7 +301,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
             .apply()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
+            .selectHighlightSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
             .selectFractionButton()
             .setFractionPainted("0.3")
             .selectNoMaskingButton()
@@ -478,7 +476,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden")
             .setMaskedFeaturesInput("2");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
@@ -503,7 +501,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper")
             .setMaskedFeaturesInput("1");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
@@ -525,7 +523,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden")
             .setMaskedFeaturesInput("3");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
@@ -547,7 +545,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden")
             .setMaskedFeaturesInput("1");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
@@ -569,7 +567,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden")
             .setMaskedFeaturesInput("3");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
@@ -591,7 +589,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal")
             .setMaskedFeaturesInput("4");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
@@ -613,7 +611,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal")
             .setMaskedFeaturesInput("2");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
@@ -635,7 +633,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper")
             .setMaskedFeaturesInput("1");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
