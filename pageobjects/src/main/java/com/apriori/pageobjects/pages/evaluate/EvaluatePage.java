@@ -254,6 +254,16 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
+     * Opens the Cost Result Panel
+     *
+     * @return new page object
+     */
+    public CostDetailsPage openCostDetails() {
+        pageUtils.waitForElementAndClick(resultsDetails);
+        return new CostDetailsPage(driver);
+    }
+
+    /**
      * Checks the process routing details
      *
      * @return the details as string
