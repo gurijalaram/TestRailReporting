@@ -92,10 +92,20 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
      * @return current page object
      */
     public MaterialCompositionPage selectMaterialComposition(String materialName) {
+        pageUtils.waitForElementAppear(findMaterialComposition(materialName)).click();
+        return this;
+    }
+
+    /**
+     * Selects the material name
+     *
+     * @param materialName - the material name
+     * @return current page object
+     */
+    public WebElement findMaterialComposition(String materialName) {
         setCompositionTableTopOfPage();
         By material = By.xpath("//div[@data-ap-comp='materialSelectionTable']//tbody//td[.='" + materialName + "']");
-        pageUtils.scrollToElement(material, materialScroller).click();
-        return this;
+        return pageUtils.scrollToElement(material, materialScroller);
     }
 
     /**
