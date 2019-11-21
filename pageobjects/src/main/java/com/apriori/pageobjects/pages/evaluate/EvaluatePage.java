@@ -92,7 +92,7 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "a[data-ap-nav-viewport='showCycleTimeDetails']")
     private WebElement processDetails;
 
-    @FindBy(css = "label[data-ap-field='processRoutingName'] div")
+    @FindBy(css = "[data-ap-field='processRoutingName'] div")
     private WebElement processRoutingName;
 
     @FindBy(css = "a[data-ap-nav-viewport='showCostResultDetails']")
