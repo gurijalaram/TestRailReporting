@@ -14,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,6 +59,9 @@ public class ExplorePage extends ExploreHeader {
 
     @FindBy(css = "div[data-ap-comp='noComponentsMessage']")
     private WebElement noComponentText;
+
+    @FindBy(css = "div[class*='popover queue-notification bottom'")
+    private WebElement jobQueuePopup;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -231,6 +235,7 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
+        pageUtils.waitForElementToAppear(jobQueuePopup);
         pageUtils.removePopup();
         pageUtils.waitForElementAndClick(filterButton);
         return new FilterCriteriaPage(driver);
