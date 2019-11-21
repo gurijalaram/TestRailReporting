@@ -280,7 +280,7 @@ public class ProcessRoutingTests extends TestBase {
     public void routingSecondaryPG() {
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("AdditiveManuf.stp"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -299,7 +299,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
-            .selectRouting("Powder Bed Fusion")
+            .selectRouting("Powder Bed Fusion / Direct Metal Laser Sintering")
             .apply()
             .closeProcessPanel()
             .openMaterialCompositionTable()
