@@ -1,8 +1,8 @@
 package testsuites;
 
+import cireporttests.login.ReportLoginTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
-import login.ReportLoginTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

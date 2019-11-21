@@ -1,4 +1,4 @@
-package login;
+package cireporttests.login;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
