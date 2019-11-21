@@ -27,14 +27,6 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     @FindBy(css = "a[data-ap-comp='jobQueue']")
     private WebElement jobQueueButton;
 
-
-
-    private WebElement statusIcon(String scenarioName, String jobType, String icon) {
-        return driver.findElement(
-            By.xpath(
-                String.format("//a[@title='%s']/ancestor::tr//div[.='%s']/ancestor::tr//img[@src='%s']", scenarioName, jobType, icon)));
-    }
-
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -95,7 +87,6 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
         return statusIcon(scenarioName, jobType, icon).getAttribute("title");
     }
 
-
     /**
      * Closes the job queue
      *
@@ -106,5 +97,9 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     public <T> T closeJobQueue(Class<T> className) {
         pageUtils.waitForElementAndClick(jobQueueButton);
         return PageFactory.initElements(driver, className);
+    }
+
+    private WebElement statusIcon(String scenarioName, String jobType, String icon) {
+        return driver.findElement(By.xpath(String.format("//a[@title='%s']/ancestor::tr//div[.='%s']/ancestor::tr//img[@src='%s']", scenarioName, jobType, icon)));
     }
 }
