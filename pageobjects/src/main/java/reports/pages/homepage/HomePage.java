@@ -20,12 +20,6 @@ public class HomePage extends LoadableComponent<HomePage> {
     @FindBy(id = "helpLink")
     private WebElement helpButton;
 
-    @FindBy(css = "li[id='main_view']")
-    private WebElement viewMenuButton;
-
-    @FindBy(css = "li[]")
-    private WebElement viewRepositoryMenuButton;
-
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -72,12 +66,5 @@ public class HomePage extends LoadableComponent<HomePage> {
      */
     public boolean isHelpButtonDisplayed() {
         return helpButton.isDisplayed();
-    }
-
-    public HomePage clickViewMenuOption() {
-        pageUtils.waitForElementToAppear(viewMenuButton);
-        pageUtils.waitForElementToBeClickable(viewMenuButton);
-        viewMenuButton.click();
-        return this;
     }
 }

@@ -107,4 +107,12 @@ public class ReportLoginTests extends TestBase {
 
         assertThat(homePage.isHelpButtonDisplayed(), is(true));
     }
+
+    @Test
+    @Description("Link to search results works")
+    public void testSearchResultsNavigation() {
+        loginPage = new LoginPage(driver);
+        homePage = loginPage.login(UserUtil.getUser())
+                .clickViewMenuOption();
+    }
 }
