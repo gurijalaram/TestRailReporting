@@ -72,7 +72,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
      */
     public String getCostContribution(String contributor) {
         By costInfo = By.xpath("//td[.='" + contributor + "']/following-sibling::td");
-        //pageUtils.scrollToElement(costInfo, verticalScroller);
+        //TODO add in ability to scroll when BA-890 is fixed pageUtils.scrollToElement(costInfo, verticalScroller);
         return driver.findElement(costInfo).getText();
     }
 }
