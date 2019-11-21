@@ -74,8 +74,6 @@ public class SecondaryProcessTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.isPartThickness("0.21"), is(true));
-
-
     }
 
     @Test
