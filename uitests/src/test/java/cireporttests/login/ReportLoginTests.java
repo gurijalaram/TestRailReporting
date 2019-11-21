@@ -113,6 +113,18 @@ public class ReportLoginTests extends TestBase {
     public void testSearchResultsNavigation() {
         loginPage = new LoginPage(driver);
         homePage = loginPage.login(UserUtil.getUser())
-                .clickViewMenuOption();
+                .navigateToPage("View Search Results");
+
+        assertThat(homePage.getRepositoryTitleText(), is(equalTo("Repository")));
+    }
+
+    @Test
+    @Description("Link to repository works")
+    public void testRepositoryNavigation() {
+        loginPage = new LoginPage(driver);
+        homePage = loginPage.login(UserUtil.getUser())
+                .navigateToPage("View Repository");
+
+        assertThat(homePage.getRepositoryTitleText(), is(equalTo("Repository")));
     }
 }
