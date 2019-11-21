@@ -129,9 +129,9 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     /**
      * Gets the selected thread status
      *
-     * @return
+     * @return true/false
      */
-    public boolean getThreadingStatus(String text) {
+    public boolean isThreadingStatus(String text) {
         return pageUtils.checkElementFirstOption(threadDropdown, text);
     }
 }

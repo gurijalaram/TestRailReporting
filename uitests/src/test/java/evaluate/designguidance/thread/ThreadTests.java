@@ -127,7 +127,7 @@ public class ThreadTests extends TestBase {
             .apply(InvestigationPage.class)
             .selectEditButton();
 
-        assertThat(threadingPage.getThreadingStatus("No"), is(true));
+        assertThat(threadingPage.isThreadingStatus("No"), is(true));
     }
 
     @Test
