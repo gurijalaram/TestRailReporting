@@ -453,7 +453,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario()
             .openSecondaryProcess()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride")
+            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride")
             .setMaskedFeaturesInput("1");
 
         secondaryProcessPage = new SecondaryProcessPage(driver);
