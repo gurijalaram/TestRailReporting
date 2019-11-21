@@ -6,7 +6,6 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -231,7 +230,6 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
-        pageUtils.removePopup();
         pageUtils.waitForElementAndClick(filterButton);
         return new FilterCriteriaPage(driver);
     }

@@ -14,6 +14,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,6 +29,7 @@ public class FilterCriteriaTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"2276"})
+    @Issue("AP-56845")
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
 
@@ -49,6 +51,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56845")
     @Description("Test private criteria attribute")
     public void testPrivateCriteriaAttribute() {
         loginPage = new LoginPage(driver);
@@ -60,6 +63,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56845")
     @Description("Test private criteria part contains")
     public void testPrivateCriteriaContains() {
         loginPage = new LoginPage(driver);
@@ -71,6 +75,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56845")
     @Description("Test private criteria value option")
     public void testPrivateCriteriaPartValue() {
         loginPage = new LoginPage(driver);
@@ -82,6 +87,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56845")
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
         loginPage = new LoginPage(driver);
@@ -93,6 +99,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56845")
     @Description("Test private criteria assembly status")
     public void testPrivateCriteriaAssemblyStatus() {
         loginPage = new LoginPage(driver);
@@ -105,6 +112,7 @@ public class FilterCriteriaTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"2277"})
+    @Issue("AP-56845")
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
         String testScenarioName = new Util().getScenarioName();
@@ -126,6 +134,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56845")
     @Description("Test public criteria assembly description")
     public void testPublicCriteriaAssemblyDesc() {
         loginPage = new LoginPage(driver);
@@ -137,6 +146,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-56845")
     @Description("Test public criteria comparison")
     public void testPublicCriteriaComparison() {
         loginPage = new LoginPage(driver);

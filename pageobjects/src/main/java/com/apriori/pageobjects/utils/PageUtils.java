@@ -767,12 +767,4 @@ public class PageUtils {
         httpURLConnection.connect();
         return httpURLConnection.getResponseCode();
     }
-
-    /**
-     * Removes popup over filter button
-     */
-    public void removePopup() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.getElementsByClassName('popover queue-notification bottom')[0].style.display = 'none';");
-    }
 }
