@@ -132,7 +132,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"278", "279"})
+    @TestRail(testCaseId = {"278", "279", "561"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
 
@@ -177,6 +177,7 @@ public class SettingsTests extends TestBase {
             .openMoreInputs();
 
         assertThat(moreInputsPage.getBatchSize("46"), Matchers.is(true));
+        assertThat(moreInputsPage.isCadFileName("push pin.stp"), is(true));
     }
 
     @Test

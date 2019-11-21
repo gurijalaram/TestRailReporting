@@ -120,7 +120,7 @@ public class LoginTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1590", "1583"})
+    @TestRail(testCaseId = {"1590", "1583", "1180"})
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
     public void cadConnectionRemains() {
 
