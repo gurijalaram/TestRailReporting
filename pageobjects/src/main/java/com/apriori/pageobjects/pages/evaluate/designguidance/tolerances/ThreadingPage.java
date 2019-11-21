@@ -125,4 +125,13 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
         cancelButton.click();
         return new InvestigationPage(driver);
     }
+
+    /**
+     * Gets the selected thread status
+     *
+     * @return true/false
+     */
+    public boolean isThreadingStatus(String text) {
+        return pageUtils.checkElementFirstOption(threadDropdown, text);
+    }
 }
