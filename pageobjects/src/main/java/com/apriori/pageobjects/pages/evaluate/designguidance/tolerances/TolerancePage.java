@@ -88,7 +88,6 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      */
     private WebElement findGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']/ancestor::tr");
-        pageUtils.waitForElementToAppear(gcd);
         return pageUtils.scrollToElement(gcd, detailsScroller);
     }
 
