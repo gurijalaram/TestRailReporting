@@ -125,7 +125,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      * @return new page object
      */
     public EvaluatePage apply() {
-        applyButton.click();
+        pageUtils.waitForElementAndClick(applyButton);
         return new EvaluatePage(driver);
     }
 
@@ -135,8 +135,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      * @return this
      */
     public SecondaryProcessPage selectClearAll() {
-        clearAllButton.click();
-        return this;
+        pageUtils.waitForElementAndClick(clearAllButton);
+        return new SecondaryProcessPage(driver);
     }
 
     /**
@@ -145,7 +145,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      * @return new page object
      */
     public EvaluatePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new EvaluatePage(driver);
     }
 
