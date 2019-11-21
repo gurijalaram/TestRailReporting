@@ -6,7 +6,6 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,7 +13,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,9 +57,6 @@ public class ExplorePage extends ExploreHeader {
 
     @FindBy(css = "div[data-ap-comp='noComponentsMessage']")
     private WebElement noComponentText;
-
-    @FindBy(css = "div[class*='popover queue-notification bottom'")
-    private WebElement jobQueuePopup;
 
     private WebDriver driver;
     private PageUtils pageUtils;
