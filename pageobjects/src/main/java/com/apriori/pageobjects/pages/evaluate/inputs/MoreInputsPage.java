@@ -76,10 +76,11 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
     /**
      * Gets name of cad file
      *
-     * @return the cad file name as a string
+     * @return true/false
      */
-    public String getCadFileName() {
-        return pageUtils.waitForElementToAppear(cadFileInput).getText();
+    public boolean isCadFileName(String text) {
+        pageUtils.waitForElementToAppear(cadFileInput);
+        return pageUtils.checkElementAttribute(cadFileInput, "title", text);
     }
 
     /**
