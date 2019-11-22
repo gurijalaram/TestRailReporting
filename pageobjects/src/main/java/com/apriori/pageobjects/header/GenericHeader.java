@@ -170,7 +170,7 @@ public class GenericHeader extends PageHeader {
      */
     public AssignPage selectAssignScenario() {
         pageUtils.javaScriptClick(actionsDropdown);
-        assignButton.click();
+        pageUtils.waitForElementAndClick(assignButton);
         return new AssignPage(driver);
     }
 
