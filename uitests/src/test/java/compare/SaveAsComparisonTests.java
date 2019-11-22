@@ -37,7 +37,6 @@ public class SaveAsComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"419"})
-    @Issue("BA-874")
     @Description("Test a private comparison can be have Save As performed on it")
     public void testSaveAsPrivateComparison() {
 
@@ -65,7 +64,11 @@ public class SaveAsComparisonTests extends TestBase {
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+            .openJobQueue()
+            .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .refreshCurrentPage();
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
     }
