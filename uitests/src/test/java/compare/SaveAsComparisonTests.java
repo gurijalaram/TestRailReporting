@@ -64,11 +64,10 @@ public class SaveAsComparisonTests extends TestBase {
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .openJobQueue()
             .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
             .closeJobQueue(ExplorePage.class)
-            .refreshCurrentPage();
+            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
     }
@@ -106,11 +105,10 @@ public class SaveAsComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
 
         explorePage = genericHeader.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .openJobQueue()
             .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
             .closeJobQueue(ExplorePage.class)
-            .refreshCurrentPage();
+            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
     }

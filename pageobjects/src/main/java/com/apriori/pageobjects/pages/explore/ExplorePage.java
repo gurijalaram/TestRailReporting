@@ -293,7 +293,7 @@ public class ExplorePage extends ExploreHeader {
      */
     public ExplorePage refreshCurrentPage() {
         driver.navigate().refresh();
-        return new ExplorePage(driver);
+        return this;
     }
 
     /**
