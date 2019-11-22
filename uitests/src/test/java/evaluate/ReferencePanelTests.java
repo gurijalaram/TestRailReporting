@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.ReferenceComparePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -121,15 +122,23 @@ public class ReferencePanelTests extends TestBase {
             .createNewScenario()
             .enterScenarioName(scenarioName2)
             .save()
-            .createNewScenario()
-            .enterScenarioName(scenarioName3)
-            .save()
             .selectExploreButton()
+            .openJobQueue()
+            .checkJobQueueActionStatus(scenarioName2, "Save As", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace())
             .openScenario(scenarioName2, "Rapid Prototyping")
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .costScenario(2)
+            .createNewScenario()
+            .enterScenarioName(scenarioName3)
+            .save()
             .selectExploreButton()
+            .openJobQueue()
+            .checkJobQueueActionStatus(scenarioName3, "Save As", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .openScenario(scenarioName3, "Rapid Prototyping")
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())

@@ -15,12 +15,11 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ColumnsEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -34,7 +33,6 @@ public class ActionsTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @Issue("BA-843")
     @TestRail(testCaseId = {"545", "731", "738", "1610", "742"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
@@ -64,7 +62,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-838")
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
@@ -84,6 +81,9 @@ public class ActionsTests extends TestBase {
         explorePage.selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Analysis", "Medium", "Qa Description", "Adding QA notes")
             .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
             .openColumnsTable()
             .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
             .addColumn(ColumnsEnum.STATUS.getColumns())
@@ -132,19 +132,23 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-872")
     @TestRail(testCaseId = {"733", "739", "743", "746"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
 
+        String scenarioName = new Util().getScenarioName();
+
         loginPage = new LoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
             .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus(scenarioName, "Update", "okay")
+            .closeJobQueue(EvaluatePage.class)
             .costScenario(1)
             .selectScenarioInfoNotes();
 
@@ -155,19 +159,23 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-872")
     @TestRail(testCaseId = {"732", "737", "741", "744"})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
 
+        String scenarioName = new Util().getScenarioName();
+
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
+        scenarioNotesPage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .selectInfoNotes()
             .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
             .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus(scenarioName, "Update", "okay")
+            .closeJobQueue(EvaluatePage.class)
             .costScenario()
             .selectInfoNotes();
 
