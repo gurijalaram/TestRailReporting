@@ -27,6 +27,9 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     @FindBy(css = "a[data-ap-comp='jobQueue']")
     private WebElement jobQueueButton;
 
+    @FindBy(xpath = "//div[@class='popover-content']//div[@class='gwt-Label']/ancestor::tr")
+    private WebElement jobQueueFirstRow;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -86,6 +89,16 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      */
     public String getServerProcessTitle(String component, String scenarioName, String jobType, String icon) {
         return statusIcon(component, scenarioName, jobType, icon).getAttribute("title");
+    }
+
+    /**
+     * Gets the first row in the job queue
+     * @param icon - the icon
+     * @return webelement
+     */
+    public WebElement getJobQueueFirstRow(String icon) {
+        pageUtils.checkElementAttribute(jobQueueFirstRow, "innerHTML", icon);
+        return pageUtils.waitForElementToAppear(jobQueueFirstRow);
     }
 
     /**
