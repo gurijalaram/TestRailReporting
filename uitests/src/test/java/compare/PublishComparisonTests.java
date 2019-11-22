@@ -62,6 +62,10 @@ public class PublishComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
+            .refreshCurrentPage()
+            .openJobQueue()
+            .checkJobQueueActionStatus("Initial", "Publish", "okay")
+            .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
