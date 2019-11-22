@@ -98,6 +98,6 @@ public class PublishExistingCostedTests extends TestBase {
             .selectPublishButton()
             .openJobQueue();
 
-        assertThat(jobQueuePage.getServerProcessTitle("PowderMetalShaft", testScenarioName, "Publish", "stop"), containsString("is locked and cannot be overridden"));
+        assertThat(jobQueuePage.getJobQueueRow("stop"), containsString("is locked and cannot be overridden"));
     }
 }

@@ -82,17 +82,16 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     /**
      * Checks the most recent server processes in the job queue and return the title
      *
-     * @param component    - the component name
-     * @param scenarioName - the scenario name
-     * @param jobType      - the job type
-     * @param icon         - icon can be 'okay' or 'stop'
+     * @param icon - icon can be 'okay' or 'stop'
      */
-    public String getServerProcessTitle(String component, String scenarioName, String jobType, String icon) {
-        return statusIcon(component, scenarioName, jobType, icon).getAttribute("title");
+    public String getJobQueueRow(String icon) {
+        checkJobQueueRow(icon);
+        return pageUtils.waitForElementToAppear(jobQueueFirstRow).getAttribute("innerHTML");
     }
 
     /**
      * Gets the first row in the job queue
+     *
      * @param icon - the icon
      * @return current page object
      */
