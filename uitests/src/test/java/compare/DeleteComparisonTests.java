@@ -131,6 +131,7 @@ public class DeleteComparisonTests extends TestBase {
             .highlightComparison(testComparisonName)
             .delete()
             .deleteExploreComparison()
+            // TODO: 22/11/2019 Remove refresh once issue fixed 
             .refreshCurrentPage()
             .openJobQueue()
             .checkJobQueueActionStatus("Initial", "Delete", "okay")
@@ -169,6 +170,7 @@ public class DeleteComparisonTests extends TestBase {
 
         new GenericHeader(driver).publishScenario(PublishPage.class)
             .selectPublishButton()
+            // TODO: 22/11/2019 Remove refresh once issue fixed 
             .refreshCurrentPage()
             .openJobQueue()
             .checkJobQueueActionStatus("Initial", "Publish", "okay")

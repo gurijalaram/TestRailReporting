@@ -62,6 +62,7 @@ public class PublishComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
+            // TODO: 22/11/2019 removed refresh once issue fixed
             .refreshCurrentPage()
             .openJobQueue()
             .checkJobQueueActionStatus("Initial", "Publish", "okay")
