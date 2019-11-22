@@ -19,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 
@@ -74,7 +73,6 @@ public class SaveAsComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-874")
     @TestRail(testCaseId = {"419"})
     @Description("Test a public comparison can be have Save As performed on it")
     public void testSaveAsPublicComparison() {
@@ -107,7 +105,11 @@ public class SaveAsComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
 
         explorePage = genericHeader.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+            .openJobQueue()
+            .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .refreshCurrentPage();
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
     }
