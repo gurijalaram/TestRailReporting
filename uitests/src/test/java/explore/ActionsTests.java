@@ -160,14 +160,19 @@ public class ActionsTests extends TestBase {
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
 
+        String scenarioName = new Util().getScenarioName();
+
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
+        scenarioNotesPage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .selectInfoNotes()
             .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
             .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus(scenarioName, "Update", "okay")
+            .closeJobQueue(EvaluatePage.class)
             .costScenario()
             .selectInfoNotes();
 
