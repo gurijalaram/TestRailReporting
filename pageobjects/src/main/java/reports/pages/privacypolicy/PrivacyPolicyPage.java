@@ -1,7 +1,6 @@
-package com.apriori.pageobjects.pages.login;
+package reports.pages.privacypolicy;
 
 import com.apriori.pageobjects.utils.PageUtils;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,30 +8,23 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.pages.login.LoginPage;
 
-/**
- * @author cfrith
- */
+public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
-public class HelpPage extends LoadableComponent<HelpPage> {
+    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
 
-    private Logger logger = LoggerFactory.getLogger(HelpPage.class);
-
-    @FindBy(id = "menu-main-menu")
-    private WebElement mainMenu;
-
-    @FindBy(css = ".page_title")
-    private WebElement heading;
+    @FindBy(xpath = "//section[@id='services_title_section']/div/h1")
+    private WebElement privacyPolicyTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public HelpPage(WebDriver driver) {
+    public PrivacyPolicyPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
     }
 
     @Override
@@ -42,14 +34,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
 
     @Override
     protected void isLoaded() throws Error {
-    }
 
-    /**
-     * Gets page heading
-     * @return - string
-     */
-    public String getPageHeading() {
-        return pageUtils.waitForElementToAppear(heading).getText();
     }
 
     /**
@@ -66,12 +51,5 @@ public class HelpPage extends LoadableComponent<HelpPage> {
      */
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
-    }
-
-    /**
-     * Waits for header to appear (page load)
-     */
-    public void waitForHeaderLoad() {
-        pageUtils.waitForElementToAppear(heading);
     }
 }
