@@ -1,8 +1,10 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -10,6 +12,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -21,22 +24,29 @@ public class CostAllCadTests extends TestBase {
 
     private LoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private CostDetailsPage costDetailsPage;
 
     public CostAllCadTests() {
         super();
     }
 
     @Test
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"574", "565", "567"})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
         loginPage = new LoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        costDetailsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openCostDetails()
+            .expandDropdown("Piece Part Cost")
+            .expandDropdown("Total Variable Costs");
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("14.51"));
+        assertThat(costDetailsPage.getCostContribution("Labor "), containsString("4.94"));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.31"));
     }
 
     @Test

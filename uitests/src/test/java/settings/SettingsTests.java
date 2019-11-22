@@ -23,6 +23,7 @@ import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -84,7 +85,6 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-840")
     @TestRail(testCaseId = {"274", "1609", "1602"})
     @Description("User can change the default Process group")
     public void defaultPG() {
@@ -132,7 +132,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"278", "279"})
+    @TestRail(testCaseId = {"278", "279", "561"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
 
@@ -177,6 +177,7 @@ public class SettingsTests extends TestBase {
             .openMoreInputs();
 
         assertThat(moreInputsPage.getBatchSize("46"), Matchers.is(true));
+        assertThat(moreInputsPage.isCadFileName("push pin.stp"), is(true));
     }
 
     @Test
@@ -249,8 +250,10 @@ public class SettingsTests extends TestBase {
     @Description("Have the users defaults automatically loaded for each login")
     public void logoutSettings() {
 
+        UserCredentials testUser = UserUtil.getUser();
+
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        loginPage.login(testUser)
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -264,7 +267,7 @@ public class SettingsTests extends TestBase {
             .selectLogOut();
 
         loginPage = new LoginPage(driver);
-        productionDefaultPage = loginPage.login(UserUtil.getUser())
+        productionDefaultPage = loginPage.login(testUser)
             .openSettings()
             .openProdDefaultTab();
 

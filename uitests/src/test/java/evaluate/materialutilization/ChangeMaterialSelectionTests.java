@@ -6,10 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.PartNestingPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -24,22 +21,18 @@ import org.junit.Test;
 public class ChangeMaterialSelectionTests extends TestBase {
 
     private LoginPage loginPage;
-    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private MaterialPage materialPage;
-    private PartNestingPage partNestingPage;
-    private SettingsPage settingsPage;
 
     public ChangeMaterialSelectionTests() {
         super();
     }
 
-    private final String NO_DEFAULT = "<No default specified>";
-
     @Test
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Additive Manufacturing, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestAdditive() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_Additive.prt.1"))
@@ -48,7 +41,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Aluminum AlSi10Mg"), is(true));
 
-            new EvaluatePage(driver).openMaterialCompositionTable()
+            evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Duraform ProX GF")
             .apply()
             .costScenario();
@@ -60,6 +53,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Bar & Tube Fab, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestBarandTubeFab() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_BarAndTube.prt"))
@@ -68,7 +62,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, AISI 316")
             .apply()
             .costScenario();
@@ -80,6 +74,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestCasting() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
@@ -88,7 +83,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("ISO JMB 800-1")
             .apply()
             .costScenario();
@@ -100,6 +95,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Sand Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSandCasting() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
@@ -108,7 +104,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Brass, Cast, Yellow 270")
             .apply()
             .costScenario(5);
@@ -120,6 +116,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Die Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestDieCasting() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
@@ -128,7 +125,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Copper, Cast, UNS C28000")
             .apply()
             .costScenario();
@@ -140,6 +137,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Forging, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestForging() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
@@ -148,7 +146,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1010"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Titanium, Ti-5Al-2.5Sn")
             .apply()
             .costScenario();
@@ -160,6 +158,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Plastic Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPlasticMolding() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
@@ -168,7 +167,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("ABS"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("PET 30% Glass")
             .apply()
             .costScenario();
@@ -180,6 +179,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Powder Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPowderMetal() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Powder Metal.stp"))
@@ -188,7 +188,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("F-0005"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("FLN2-4405")
             .apply()
             .costScenario();
@@ -200,6 +200,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Rapid Prototyping, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestRapidPrototyping() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
@@ -208,7 +209,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Default"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("870 Black")
             .apply()
             .costScenario();
@@ -220,6 +221,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Roto & Blow Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestRotoBlowMolding() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
@@ -228,7 +230,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Polyethylene, High Density (HDPE)"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Nylon, Type 46")
             .apply()
             .costScenario();
@@ -240,6 +242,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetal() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
@@ -248,17 +251,19 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Inconel 625")
             .apply()
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfo("Inconel 625"), is(true));
     }
+
     @Test
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Sheet Metal - Hydroforming, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetalHydroforming() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroform Sample Banana.stp"))
@@ -267,17 +272,19 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Aluminum, Stock, ANSI 2017"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Copper, Stock, UNS C11000")
             .apply()
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfo("Copper, Stock, UNS C11000"), is(true));
     }
+
     @Test
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Sheet Metal Transfer Die, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetalTransferDie() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
@@ -286,7 +293,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("C60E")
             .apply()
             .costScenario();
@@ -298,6 +305,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Sheet Plastic, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetPlastic() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("2038646_Sheet_plastic.prt.1"))
@@ -306,7 +314,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Polyethylene, HDPE Extrusion Sheet"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Acrylic, PMMA")
             .apply()
             .costScenario();
@@ -329,7 +337,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
 
-        new EvaluatePage(driver).openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Polyetheretherketone (PEEK)")
             .apply()
             .costScenario()
@@ -346,6 +354,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"865"})
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
@@ -368,6 +377,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"868", "875"})
     @Description("Test de-selecting the material, previous material applied and the scenario can be cost")
     public void changeMaterialSelectionTestDeSelect() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
@@ -389,6 +399,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"869"})
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
+
         loginPage = new LoginPage(driver);
         materialPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
@@ -428,6 +439,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"885"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS IronCast.SLDPRT"))
@@ -444,6 +456,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"905"})
     @Description("Test opening material selection and selecting apply without making a selection")
     public void changeMaterialSelectionTestNoChange() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
@@ -459,6 +472,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"905"})
     @Description("Test opening material selection and selecting cancel after making a selection")
     public void changeMaterialSelectionTestCancel() {
+
         loginPage = new LoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))

@@ -65,8 +65,46 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      * @return current page object
      */
     public SecondaryProcessPage selectSecondaryProcess(String processType, String processName) {
+        findProcessTypeAndName(processType, processName).click();
+        return this;
+    }
+
+    /**
+     * Finds and highlights the secondary process
+     *
+     * @param processType - the process type
+     * @param processName - the process name
+     * @return new page object
+     */
+    public ProcessSetupOptionsPage highlightSecondaryProcess(String processType, String processName) {
+        findProcessTypeAndName(processType, processName);
+        processNameLocator(processName).click();
+        return new ProcessSetupOptionsPage(driver);
+    }
+
+    /**
+     * Finds the secondary process, selects the checkbox and highlights the process
+     *
+      * @param processType - the process type
+      * @param processName - the process name
+     * @return new page object
+     */
+    public ProcessSetupOptionsPage selectHighlightSecondaryProcess(String processType, String processName) {
+        selectSecondaryProcess(processType, processName);
+        processNameLocator(processName).click();
+        return new ProcessSetupOptionsPage(driver);
+    }
+
+    /**
+     * Finds the secondary process
+     *
+     * @param processType - the process type
+     * @param processName - the process name
+     * @return current page object
+     */
+    public SecondaryProcessPage findSecondaryProcess(String processType, String processName) {
         selectProcessType(processType);
-        findProcessName(processName).click();
+        processNameLocator(processName);
         return this;
     }
 
@@ -87,6 +125,27 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     }
 
     /**
+     * Finds the process type and name
+     *
+     * @param processType - the process type
+     * @param processName - the process name
+     * @return webelement
+     */
+    private WebElement findProcessTypeAndName(String processType, String processName) {
+        return selectProcessType(processType).findProcessName(processName);
+    }
+
+    /**
+     * Builds the locator for the process name
+     *
+     * @param processName - the process name
+     * @return webelement
+     */
+    private WebElement processNameLocator(String processName) {
+        return driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']"));
+    }
+
+    /**
      * Select the secondary process checkbox
      *
      * @param processName - the secondary process
@@ -97,28 +156,13 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
         return pageUtils.scrollToElement(processBox, processScroller);
     }
 
-    public ProcessSetupOptionsPage highlightSecondaryProcess(String processType, String processName) {
-        selectProcessType(processType)
-            .findProcessName(processName);
-        // TODO: 16/10/2019 refactor to webelement
-        driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']")).click();
-        return new ProcessSetupOptionsPage(driver);
-    }
-
-    public SecondaryProcessPage findSecondaryProcess(String processType, String processName) {
-        selectProcessType(processType);
-        // TODO: 16/10/2019 refactor to webelement
-        driver.findElement(By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName.trim() + "']/ancestor::tr"));
-        return this;
-    }
-
     /**
      * Selects the apply button
      *
      * @return new page object
      */
     public EvaluatePage apply() {
-        applyButton.click();
+        pageUtils.waitForElementAndClick(applyButton);
         return new EvaluatePage(driver);
     }
 
@@ -128,8 +172,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      * @return this
      */
     public SecondaryProcessPage selectClearAll() {
-        clearAllButton.click();
-        return this;
+        pageUtils.waitForElementAndClick(clearAllButton);
+        return new SecondaryProcessPage(driver);
     }
 
     /**
@@ -138,7 +182,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      * @return new page object
      */
     public EvaluatePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new EvaluatePage(driver);
     }
 
