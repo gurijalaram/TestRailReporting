@@ -94,11 +94,12 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     /**
      * Gets the first row in the job queue
      * @param icon - the icon
-     * @return webelement
+     * @return current page object
      */
-    public WebElement getJobQueueFirstRow(String icon) {
+    public JobQueuePage checkJobQueueRow(String icon) {
+        pageUtils.checkElementAttribute(jobQueueFirstRow, "innerHTML", "clock");
         pageUtils.checkElementAttribute(jobQueueFirstRow, "innerHTML", icon);
-        return pageUtils.waitForElementToAppear(jobQueueFirstRow);
+        return this;
     }
 
     /**
