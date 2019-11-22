@@ -20,8 +20,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-
-import io.qameta.allure.Issues;
 import org.junit.Test;
 
 
@@ -134,7 +132,7 @@ public class DeleteComparisonTests extends TestBase {
             .delete()
             .deleteExploreComparison()
             .openJobQueue()
-            .checkJobQueueActionStatus("Initial", "Delete", "okay")
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)

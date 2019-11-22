@@ -65,26 +65,27 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     /**
      * Checks the job queue that the first job for the specified scenario is complete
      *
+     * @param component    - the component name
      * @param scenarioName - the scenario name
      * @param jobType      - the job type
      * @param icon         - icon can be 'okay' or 'stop'
      * @return webelement
      */
-    public JobQueuePage checkJobQueueActionStatus(String scenarioName, String jobType, String icon) {
-        By jobStatus = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='" + icon + "18.png']");
-        pageUtils.waitForElementToAppear(jobStatus, 2);
+    public JobQueuePage checkJobQueueActionStatus(String component, String scenarioName, String jobType, String icon) {
+        statusIcon(component, scenarioName, jobType, icon);
         return this;
     }
 
     /**
      * Checks the most recent server processes in the job queue and return the title
      *
+     * @param component    - the component name
      * @param scenarioName - the scenario name
      * @param jobType      - the job type
      * @param icon         - icon can be 'okay' or 'stop'
      */
-    public String getServerProcessTitle(String scenarioName, String jobType, String icon) {
-        return statusIcon(scenarioName, jobType, icon).getAttribute("title");
+    public String getServerProcessTitle(String component, String scenarioName, String jobType, String icon) {
+        return statusIcon(component, scenarioName, jobType, icon).getAttribute("title");
     }
 
     /**
@@ -99,7 +100,8 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
         return PageFactory.initElements(driver, className);
     }
 
-    private WebElement statusIcon(String scenarioName, String jobType, String icon) {
-        return driver.findElement(By.xpath(String.format("//a[@title='%s']/ancestor::tr//div[.='%s']/ancestor::tr//img[@src='%s']", scenarioName, jobType, icon)));
+    private WebElement statusIcon(String component, String scenarioName, String jobType, String icon) {
+        By statusIcon = By.xpath(String.format("//div[.='%s']/ancestor::tr//a[@title='%s']/ancestor::tr//div[.='%s']/ancestor::tr//img[@src='%s18.png']", component.toUpperCase(), scenarioName, StringUtils.capitalize(jobType), icon));
+        return pageUtils.waitForElementToAppear(driver.findElement(statusIcon), 2);
     }
 }
