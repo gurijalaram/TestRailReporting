@@ -169,6 +169,10 @@ public class DeleteComparisonTests extends TestBase {
 
         new GenericHeader(driver).publishScenario(PublishPage.class)
             .selectPublishButton()
+            .refreshCurrentPage()
+            .openJobQueue()
+            .checkJobQueueActionStatus("Initial", "Publish", "okay")
+            .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class)
