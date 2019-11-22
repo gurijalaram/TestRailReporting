@@ -20,8 +20,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-
-import io.qameta.allure.Issues;
 import org.junit.Test;
 
 
@@ -103,7 +101,7 @@ public class DeleteComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
-    @Issue("BA-841")
+    @Issue("AP-56845")
     public void testPublicComparisonDeleteExplore() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -123,7 +121,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "Machined Box AMERICAS")
+            .selectScenario(testScenarioName, "MACHINED BOX AMERICAS")
             .apply();
 
         genericHeader = new GenericHeader(driver);
@@ -133,11 +131,12 @@ public class DeleteComparisonTests extends TestBase {
             .highlightComparison(testComparisonName)
             .delete()
             .deleteExploreComparison()
+            .refreshCurrentPage()
             .openJobQueue()
             .checkJobQueueActionStatus("Initial", "Delete", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
-            .filterPublicCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
+            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
