@@ -85,7 +85,6 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-840")
     @TestRail(testCaseId = {"274", "1609", "1602"})
     @Description("User can change the default Process group")
     public void defaultPG() {
