@@ -114,7 +114,8 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     }
 
     private WebElement statusIcon(String component, String scenarioName, String jobType, String icon) {
-        By statusIcon = By.xpath(String.format("//div[.='%s']/ancestor::tr//a[@title='%s']/ancestor::tr//div[.='%s']/ancestor::tr//img[@src='%s18.png']", component.toUpperCase(), scenarioName, StringUtils.capitalize(jobType), icon));
+        By statusIcon = By.xpath(String.format("//div[.='%s']/ancestor::tr//a[@title='%s']/ancestor::tr//div[.='%s']/ancestor::tr//img[@src='%s18.png']",
+            component.toUpperCase(), scenarioName, StringUtils.capitalize(jobType), icon));
         return pageUtils.waitForElementToAppear(statusIcon, 2);
     }
 }
