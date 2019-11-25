@@ -1,6 +1,7 @@
 package cireporttests.navigation;
 
 import com.apriori.pageobjects.pages.login.HelpPage;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
@@ -17,6 +18,7 @@ import reports.pages.view.Repository;
 import reports.pages.view.Schedules;
 import reports.pages.view.SearchResults;
 
+import static com.apriori.utils.constants.Constants.ciaURL;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,6 +44,18 @@ public class NavigationTests extends TestBase {
 
     public NavigationTests() {
         super();
+    }
+
+    @Test
+    //@TestRail(testCaseId = {""})
+    @Description("Ensure link from Admin to Reporting works")
+    public void testAdminToReportNavigation() {
+        loginPage = new LoginPage(driver, ciaURL);
+        homePage = loginPage.login(UserUtil.getUser())
+                .navigateToReports();
+
+        assertThat(homePage.getTabCount(), is(equalTo(2)));
+        assertThat(homePage.getChildWindowURL(), is(equalTo(Constants.reportsHomeUrl)));
     }
 
     @Test
@@ -176,7 +190,7 @@ public class NavigationTests extends TestBase {
         domain = loginPage.login(UserUtil.getUser())
                 .navigateToCreateDomainPage();
 
-        assertThat(driver.getCurrentUrl(), is(equalTo("https://cid-te.awsdev.apriori.com/jasperserver-pro/domaindesigner.html")));
+        assertThat(driver.getCurrentUrl(), is(equalTo(Constants.reportingDomainDesignerUrl)));
         assertThat(domain.isDialogDisplayed(), is(equalTo(true)));
         assertThat(domain.isDialogEnabled(), is(equalTo(true)));
     }
@@ -201,7 +215,7 @@ public class NavigationTests extends TestBase {
                 .goToPrivacyPolicy();
 
         assertThat(privacyPolicyPage.getTabCount(), is(2));
-        assertThat(privacyPolicyPage.getChildWindowURL(), is(equalTo("https://www.apriori.com/privacy-policy")));
+        assertThat(privacyPolicyPage.getChildWindowURL(), is(equalTo(Constants.privacyPolicyUrl)));
     }
 
     @Test
@@ -213,6 +227,6 @@ public class NavigationTests extends TestBase {
                 .goToHelpPage();
 
         assertThat(helpPage.getTabCount(), is(2));
-        assertThat(helpPage.getChildWindowURL(), is(equalTo("http://help.jaspersoft.com/Default.htm#cshid=100")));
+        assertThat(helpPage.getChildWindowURL(), is(equalTo(Constants.reportingHelpUrl)));
     }
 }

@@ -2,6 +2,7 @@ package reports.pages.homepage;
 
 import com.apriori.pageobjects.pages.login.HelpPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reports.pages.create.*;
+import reports.pages.create.AdHocView;
+import reports.pages.create.Dashboard;
+import reports.pages.create.DataSource;
+import reports.pages.create.Domain;
+import reports.pages.create.Report;
 import reports.pages.library.Library;
 import reports.pages.manage.Roles;
 import reports.pages.manage.Users;
@@ -81,6 +86,9 @@ public class HomePage extends LoadableComponent<HomePage> {
 
     @FindBy(css = "ul[id=menuList] > li:nth-child(5)")
     private WebElement createDataSourceMenuOption;
+
+    @FindBy(id = "jasper")
+    private WebElement reportsMenuOption;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -233,6 +241,15 @@ public class HomePage extends LoadableComponent<HomePage> {
     }
 
     /**
+     * Navigate to Reports from Admin
+     * @return Home Page page object model
+     */
+    public HomePage navigateToReports() {
+        navigateToPage(reportsMenuOption);
+        return new HomePage(driver);
+    }
+
+    /**
      * Get page title text
      * @return String - page title text
      */
@@ -251,11 +268,36 @@ public class HomePage extends LoadableComponent<HomePage> {
         return new HelpPage(driver);
     }
 
+    /**
+     * Gets child window URL
+     * @return String - child window URL
+     */
+    public String getChildWindowURL() {
+        return pageUtils.windowHandler().getCurrentUrl();
+    }
+
+    /**
+     * Gets count of open tabs
+     * @return int - open tab count
+     */
+    public int getTabCount() {
+        return pageUtils.getCountOfOpenTabs();
+    }
+
+    /**
+     * General navigation method
+     * @param parentPage
+     */
     private void navigateToPage(WebElement parentPage) {
         pageUtils.waitForElementToAppear(parentPage);
         parentPage.click();
     }
 
+    /**
+     * Another general navigation method
+     * @param parentPage
+     * @param childPage
+     */
     private void navigateToPage(WebElement parentPage, WebElement childPage) {
         pageUtils.waitForElementToAppear(parentPage);
         parentPage.click();
