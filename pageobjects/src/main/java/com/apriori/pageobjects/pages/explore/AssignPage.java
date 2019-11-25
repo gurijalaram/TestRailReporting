@@ -87,7 +87,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     }
 
     /**
-     * Gets the selected Assignee
+     * Checks the selected Assignee
      *
      * @return true/false
      */
