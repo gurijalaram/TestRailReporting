@@ -19,10 +19,13 @@ public class Constants {
     public static final String defaultEnvironmentKey = "env";
     public static final String defaultEnvironmentValue = "cid-te";
 
-    public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
+    public static final String reportsUserGuideUrl = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/2019_R2/startHelp.html#context/CIR_UG/CIR_UG_title_page#page/CI_REPORT_USER_GUIDE/CIR_UG_title_page.html#";
+    public static final String adminUserGuideUrl = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/2019_R2/startHelp.html#context/CIA_UG/CIA_UG_title_page#page/CI_ADMIN_USER_GUIDE/CIA_UG_title_page.html#";
+    public static final String scenarioExportChapterUrl = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/2019_R2/startHelp.html#context/CIA_UG/Scen_Expt_chap#page/CI_ADMIN_USER_GUIDE/Scen_Expt_chap.html#wwpID0E0UY0HA";
     public static final String reportingDomainDesignerUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/domaindesigner.html";
-    public static final String reportingHelpUrl = "http://help.jaspersoft.com/Default.htm#cshid=100";
     public static final String reportsHomeUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/";
+    public static final String reportingHelpUrl = "http://help.jaspersoft.com/Default.htm#cshid=100";
+    public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
 
     public static String RUN_ID = defaultProjectIDValue;
 

@@ -1,8 +1,5 @@
 package com.apriori.pageobjects.utils;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.not;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -34,6 +31,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.not;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 /**
  * @author kpatel
@@ -145,6 +145,21 @@ public class PageUtils {
         try {
             return parent.findElement(by).isDisplayed();
         } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if the element is enabled or not. Important: this is not a wait method, it only shows
+     * the current status of the element.
+     *
+     * @param element - WebElement
+     * @return - returns whether element is enabled or not
+     */
+    public boolean isElementEnabled(WebElement element) {
+        try {
+            return element.isEnabled();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
             return false;
         }
     }

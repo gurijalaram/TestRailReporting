@@ -2,7 +2,6 @@ package reports.pages.homepage;
 
 import com.apriori.pageobjects.pages.login.HelpPage;
 import com.apriori.pageobjects.utils.PageUtils;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.pages.admin.logout.Logout;
 import reports.pages.create.AdHocView;
 import reports.pages.create.Dashboard;
 import reports.pages.create.DataSource;
@@ -35,9 +35,6 @@ public class HomePage extends LoadableComponent<HomePage> {
 
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;
-
-    @FindBy(xpath = "//h2[contains(text(), 'Data Sources')]")
-    private WebElement dataSourcesLink;
 
     @FindBy(id = "main_home")
     private WebElement homeMenuOption;
@@ -89,6 +86,18 @@ public class HomePage extends LoadableComponent<HomePage> {
 
     @FindBy(id = "jasper")
     private WebElement reportsMenuOption;
+
+    @FindBy(css = "ul[id='metaLinks'] > li:nth-child(2) > a")
+    private WebElement reportUserGuide;
+
+    @FindBy(id = "main_logOut_link")
+    private WebElement logoutMenuOption;
+
+    @FindBy(xpath = "//h2[contains(text(), 'Data Sources')]")
+    private WebElement dataSourcesLink;
+
+    @FindBy(xpath = "//h2[contains(text(), 'Admin')]")
+    private WebElement adminLink;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -249,6 +258,33 @@ public class HomePage extends LoadableComponent<HomePage> {
         return new HomePage(driver);
     }
 
+    public HomePage navigateToReportUserGuide() {
+        pageUtils.waitForElementToAppear(reportUserGuide);
+        reportUserGuide.click();
+        return this;
+    }
+
+    /**
+     * Navigates to help page
+     * @return Help Page page object
+     */
+    public HelpPage navigateToHelpPage() {
+        pageUtils.waitForElementToAppear(dataSourcesLink);
+        pageUtils.waitForElementAndClick(helpButton);
+        return new HelpPage(driver);
+    }
+
+    /**
+     * Navigates to log out screen
+     * @return Logout page object model
+     */
+    public Logout navigateToReportLogout() {
+        pageUtils.waitForElementToAppear(logoutMenuOption);
+        pageUtils.waitForElementToAppear(adminLink);
+        logoutMenuOption.click();
+        return new Logout(driver);
+    }
+
     /**
      * Get page title text
      * @return String - page title text
@@ -256,16 +292,6 @@ public class HomePage extends LoadableComponent<HomePage> {
     public String getHomeTitleText() {
         pageUtils.waitForElementToAppear(homePageTitle);
         return homePageTitle.getText();
-    }
-
-    /**
-     * Clicks Help link
-     * @return Help Page page object
-     */
-    public HelpPage goToHelpPage() {
-        pageUtils.waitForElementToAppear(dataSourcesLink);
-        pageUtils.waitForElementAndClick(helpButton);
-        return new HelpPage(driver);
     }
 
     /**

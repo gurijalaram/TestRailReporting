@@ -7,6 +7,9 @@ import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.TestRail;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import reports.pages.admin.logout.Logout;
+import reports.pages.admin.manage.ScenarioExport;
+import reports.pages.admin.manage.SystemDataExport;
 import reports.pages.create.*;
 import reports.pages.homepage.HomePage;
 import reports.pages.library.Library;
@@ -27,25 +30,127 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class NavigationTests extends TestBase {
 
     private PrivacyPolicyPage privacyPolicyPage;
+    private SystemDataExport systemDataExport;
+    private ScenarioExport scenarioExport;
     private SearchResults searchResults;
-    private HomePage homePage;
-    private LoginPage loginPage;
-    private HelpPage helpPage;
-    private Library library;
+    private DataSource dataSource;
     private Repository repository;
     private Schedules schedules;
+    private LoginPage loginPage;
+    private AdHocView adHocView;
+    private Dashboard dashboard;
     private Messages messages;
+    private HomePage homePage;
+    private HelpPage helpPage;
+    private Library library;
+    private Report report;
+    private Domain domain;
+    private Logout logout;
     private Users users;
     private Roles roles;
-    private AdHocView adHocView;
-    private Report report;
-    private Dashboard dashboard;
-    private Domain domain;
-    private DataSource dataSource;
 
     public NavigationTests() {
         super();
     }
+
+    @Test
+    @TestRail(testCaseId = "")
+    @Description("Ensure that the Manage Scenario Export Link works")
+    public void testManageScenarioExportNavigation() {
+        loginPage = new LoginPage(driver, ciaURL);
+        scenarioExport = loginPage.loginToCIAdmin(UserUtil.getUser())
+                .navigateToManageScenarioExport();
+
+        assertThat(scenarioExport.isHeaderDisplayed(), is(equalTo(true)));
+        assertThat(scenarioExport.isHeaderEnabled(), is(equalTo(true)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "")
+    @Description("Ensure that the Manage System Data Export Link works")
+    public void testManageSystemDataExportNavigation() {
+        loginPage = new LoginPage(driver, ciaURL);
+        systemDataExport = loginPage.loginToCIAdmin(UserUtil.getUser())
+                .navigateToManageSystemDataExport();
+
+        assertThat(systemDataExport.isHeaderDisplayed(), is(equalTo(true)));
+        assertThat(systemDataExport.isHeaderEnabled(), is(equalTo(true)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "")
+    @Description("Ensure that the Help Cost Insight Report Guide Link works")
+    public void testHelpCostInsightReportGuideNavigation() {
+        loginPage = new LoginPage(driver, ciaURL);
+        homePage = loginPage.loginToCIAdmin(UserUtil.getUser())
+                .navigateToHelpReportsGuide();
+
+        assertThat(homePage.getTabCount(), is(2));
+        assertThat(homePage.getChildWindowURL(), is(equalTo(Constants.reportsUserGuideUrl)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "")
+    @Description("Ensure that the Help Cost Insight Admin Guide Link works")
+    public void testHelpCostInsightAdminGuideNavigation() {
+        loginPage = new LoginPage(driver, ciaURL);
+        homePage = loginPage.loginToCIAdmin(UserUtil.getUser())
+                .navigateToHelpAdminGuide();
+
+        assertThat(homePage.getTabCount(), is(2));
+        assertThat(homePage.getChildWindowURL(), is(equalTo(Constants.adminUserGuideUrl)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "")
+    @Description("Ensure that the Scenario Export Chapter Link works")
+    public void testHelpScenarioExportChapterNavigation() {
+        loginPage = new LoginPage(driver, ciaURL);
+        homePage = loginPage.loginToCIAdmin(UserUtil.getUser())
+                .navigateToScenarioExportChapterPage();
+
+        assertThat(homePage.getTabCount(), is(2));
+        assertThat(homePage.getChildWindowURL(), is(equalTo(Constants.scenarioExportChapterUrl)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "")
+    @Description("Ensure that the CI Admin Logout Link works")
+    public void testCIAdminLogoutNavigation() {
+        loginPage = new LoginPage(driver, ciaURL);
+        logout = loginPage.loginToCIAdmin(UserUtil.getUser())
+                .navigateToAdminLogout();
+
+        assertThat(logout.isHeaderDisplayed(), is(true));
+        assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
+        assertThat(logout.getHeaderText(), is(equalTo("CI Design (TE)")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "")
+    @Description("Ensure that the CI Reports User Guide Link works")
+    public void testCIReportsUserGuideNavigation() {
+        loginPage = new LoginPage(driver);
+        homePage = loginPage.login(UserUtil.getUser())
+                .navigateToReportUserGuide();
+
+        assertThat(homePage.getTabCount(), is(equalTo(2)));
+        assertThat(homePage.getChildWindowURL(), is(equalTo(Constants.reportsUserGuideUrl)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2986")
+    @Description("Ensure that the CI Reports Logout Link works")
+    public void testCIReportsLogoutNavigation() {
+        loginPage = new LoginPage(driver);
+        logout = loginPage.login(UserUtil.getUser())
+                .navigateToReportLogout();
+
+        assertThat(logout.isHeaderDisplayed(), is(true));
+        assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
+        assertThat(logout.getHeaderText(), is(equalTo("CI Design (TE)")));
+    }
+
 
     @Test
     @TestRail(testCaseId = {"2966"})
@@ -225,7 +330,7 @@ public class NavigationTests extends TestBase {
     public void testHelpLink() {
         loginPage = new LoginPage(driver);
         helpPage = loginPage.login(UserUtil.getUser())
-                .goToHelpPage();
+                .navigateToHelpPage();
 
         assertThat(helpPage.getTabCount(), is(2));
         assertThat(helpPage.getChildWindowURL(), is(equalTo(Constants.reportingHelpUrl)));
