@@ -213,6 +213,17 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return the assignee as string
      */
     public boolean isAssignee(String text) {
-        return pageUtils.checkElementAttribute(assigneeField, "value", text);
+        return pageUtils.checkElementAttribute(assigneeField, "innerText", text);
+    }
+
+    /**
+     * Edits the scenario notes
+     *
+     * @param notes - the scenario notes
+     * @return current page object
+     */
+    public ScenarioNotesPage editNotes(String notes) {
+        scenarioNotesInput.sendKeys(notes);
+        return this;
     }
 }
