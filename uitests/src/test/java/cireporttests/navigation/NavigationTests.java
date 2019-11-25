@@ -4,6 +4,7 @@ import com.apriori.pageobjects.pages.login.HelpPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+import com.apriori.utils.TestRail;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import reports.pages.create.*;
@@ -47,7 +48,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
         loginPage = new LoginPage(driver, ciaURL);
@@ -59,7 +60,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2967"})
     @Description("Ensure that the link to Home works (doesn't navigate elsewhere - negative test)")
     public void testHomeNavigation() {
         loginPage = new LoginPage(driver);
@@ -70,7 +71,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2968"})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
         loginPage = new LoginPage(driver);
@@ -81,7 +82,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2969"})
     @Description("Ensure that the link to View Search Results works")
     public void testViewSearchResultsNavigation() {
         loginPage = new LoginPage(driver);
@@ -92,7 +93,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2970"})
     @Description("Ensure that the link to View Repository works")
     public void testViewRepositoryNavigation() {
         loginPage = new LoginPage(driver);
@@ -103,7 +104,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2971"})
     @Description("Ensure that the link to View Schedules works")
     public void testViewSchedulesNavigation() {
         loginPage = new LoginPage(driver);
@@ -114,7 +115,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2972"})
     @Description("Ensure that the link to View Messages works")
     public void testViewMessagesNavigation() {
         loginPage = new LoginPage(driver);
@@ -125,7 +126,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2973"})
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
         loginPage = new LoginPage(driver);
@@ -136,7 +137,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2974"})
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
         loginPage = new LoginPage(driver);
@@ -147,7 +148,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2975"})
     @Description("Ensure that the link to Create Ad Hoc View works")
     public void testCreateAdHocViewNavigation() {
         loginPage = new LoginPage(driver);
@@ -160,7 +161,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2976"})
     @Description("Ensure that the link to Create Report works")
     public void testCreateReportNavigation() {
         loginPage = new LoginPage(driver);
@@ -172,7 +173,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2977"})
     @Description("Ensure that the link to Create Dashboard works")
     public void testCreateDashboardNavigation() {
         loginPage = new LoginPage(driver);
@@ -183,7 +184,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2978"})
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
         loginPage = new LoginPage(driver);
@@ -196,7 +197,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"2979"})
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {
         loginPage = new LoginPage(driver);
@@ -207,8 +208,8 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"2700"})
-    @Description("Link to privacy policy working")
+    @TestRail(testCaseId = {"2700"})
+    @Description("Ensure that the link to the privacy policy works")
     public void testPrivacyPolicyLink() {
         loginPage = new LoginPage(driver);
         privacyPolicyPage = loginPage.waitForPrivacyPolicyLinkVisibility()
@@ -219,8 +220,8 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"2701"})
-    @Description("Link to help page working")
+    @TestRail(testCaseId = {"2701"})
+    @Description("Ensure that the link to the help page works")
     public void testHelpLink() {
         loginPage = new LoginPage(driver);
         helpPage = loginPage.login(UserUtil.getUser())
