@@ -65,6 +65,7 @@ public class SaveAsComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
             .openJobQueue()
+            // TODO: 25/11/2019 Moya to fix errors with correct test data before PR
             .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
             .closeJobQueue(ExplorePage.class)
             .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
@@ -106,6 +107,7 @@ public class SaveAsComparisonTests extends TestBase {
 
         explorePage = genericHeader.selectExploreButton()
             .openJobQueue()
+            // TODO: 25/11/2019 Moya to fix errors with correct test data before PR
             .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
             .closeJobQueue(ExplorePage.class)
             .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());

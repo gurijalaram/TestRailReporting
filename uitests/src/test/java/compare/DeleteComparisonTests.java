@@ -173,6 +173,7 @@ public class DeleteComparisonTests extends TestBase {
             // TODO: 22/11/2019 Remove refresh once issue fixed 
             .refreshCurrentPage()
             .openJobQueue()
+            // TODO: 25/11/2019 Moya to fix errors with correct test data before PR
             .checkJobQueueActionStatus("Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
