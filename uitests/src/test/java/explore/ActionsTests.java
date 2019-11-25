@@ -87,7 +87,7 @@ public class ActionsTests extends TestBase {
             .enterScenarioInfoNotes("Analysis", "Medium", "Qa Description", "Adding QA notes")
             .save(ExplorePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
             .closeJobQueue(ExplorePage.class)
             .openColumnsTable()
             .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
@@ -152,7 +152,7 @@ public class ActionsTests extends TestBase {
             .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
             .save(EvaluatePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(scenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("case_002_006-8611543_prt", scenarioName, "Update", "okay")
             .closeJobQueue(EvaluatePage.class)
             .costScenario(1)
             .selectScenarioInfoNotes();
@@ -179,7 +179,7 @@ public class ActionsTests extends TestBase {
             .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
             .save(EvaluatePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(scenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("BasicScenario_Forging", scenarioName, "Update", "okay")
             .closeJobQueue(EvaluatePage.class)
             .costScenario()
             .selectInfoNotes();
@@ -212,7 +212,7 @@ public class ActionsTests extends TestBase {
             .selectAssignee("Moya Parker")
             .update(ExplorePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
             .closeJobQueue(ExplorePage.class)
             .openScenario(testScenarioName, "PowderMetalShaft")
             .selectInfoNotes();
@@ -242,7 +242,7 @@ public class ActionsTests extends TestBase {
             .selectAssignee("Sinead Plunkett")
             .update(EvaluatePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
             .closeJobQueue(EvaluatePage.class);
 
         genericHeader = new GenericHeader(driver);
@@ -295,14 +295,14 @@ public class ActionsTests extends TestBase {
             .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
             .save(ExplorePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
             .closeJobQueue(ExplorePage.class)
             .openScenario(testScenarioName, "BasicScenario_Forging")
             .selectInfoNotes()
             .editNotes(" Validating the ability to edit notes")
             .save(EvaluatePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
@@ -332,14 +332,14 @@ public class ActionsTests extends TestBase {
             .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
             .save(ExplorePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
             .closeJobQueue(ExplorePage.class)
             .openScenario(testScenarioName, "Push Pin")
             .selectInfoNotes()
             .editNotes("")
             .save(EvaluatePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
@@ -356,8 +356,7 @@ public class ActionsTests extends TestBase {
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
 
-        loginPage = new LoginPage(driver);
-        loginPage.login(testUser1)
+        new LoginPage(driver).login(testUser1)
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
@@ -370,13 +369,15 @@ public class ActionsTests extends TestBase {
             .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
             .save(ExplorePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("Push Pin", testScenarioName, "Update", "okay")
             .closeJobQueue(ExplorePage.class)
             .openAdminDropdown()
             .selectLogOut();
 
-        loginPage = new LoginPage(driver);
-        scenarioNotesPage = loginPage.login(testUser2)
+        new LoginPage(driver).login(testUser2);
+
+        explorePage = new ExplorePage(driver);
+        scenarioNotesPage = explorePage.selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario(testScenarioName, "Push Pin")
             .selectInfoNotes();
 

@@ -65,8 +65,7 @@ public class PublishComparisonTests extends TestBase {
             // TODO: 22/11/2019 removed refresh once issue fixed
             .refreshCurrentPage()
             .openJobQueue()
-            // TODO: 25/11/2019 Moya to fix errors with correct test data before PR
-            .checkJobQueueActionStatus("Initial", "Publish", "okay")
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
@@ -109,8 +108,7 @@ public class PublishComparisonTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .openJobQueue()
-            // TODO: 25/11/2019 Moya to fix errors with correct test data before PR
-            .checkJobQueueActionStatus("Initial", "Publish", "okay")
+            .checkJobQueueActionStatus(testComparisonName,"Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
