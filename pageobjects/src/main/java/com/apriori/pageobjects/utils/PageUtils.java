@@ -1,6 +1,20 @@
 package com.apriori.pageobjects.utils;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
@@ -279,15 +293,15 @@ public class PageUtils {
     }
 
     public WebElement waitForElementToAppear(WebElement element) {
-        return waitForAppear(ExpectedConditions.visibilityOf(element), "Element did not appear");
+        return waitForAppear(visibilityOf(element), "Element did not appear");
     }
 
     public WebElement waitForElementToAppear(WebElement element, String message) {
-        return waitForAppear(ExpectedConditions.visibilityOf(element), message);
+        return waitForAppear(visibilityOf(element), message);
     }
 
     public WebElement waitForElementToAppear(WebElement locator, int timeoutInMinutes) {
-        return waitForAppear(ExpectedConditions.visibilityOf(locator), "Element did not appear", timeoutInMinutes);
+        return waitForAppear(visibilityOf(locator), "Element did not appear", timeoutInMinutes);
     }
 
     public WebElement waitForElementToAppear(By locator, int timeoutInMinutes) {
@@ -346,7 +360,7 @@ public class PageUtils {
         while (count < 20) {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 20);
-                return wait.until(ExpectedConditions.visibilityOf(parentElement.findElement(childLocator)));
+                return wait.until(visibilityOf(parentElement.findElement(childLocator)));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
@@ -368,7 +382,7 @@ public class PageUtils {
         while (count < 2) {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, waitTimeInSecond / 2);
-                return wait.until(ExpectedConditions.visibilityOf(parentElement.findElement(childLocator)));
+                return wait.until(visibilityOf(parentElement.findElement(childLocator)));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
