@@ -14,13 +14,12 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Issues;
 import org.junit.Test;
 
 public class PublishComparisonTests extends TestBase {
@@ -63,6 +62,11 @@ public class PublishComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
+            // TODO: 22/11/2019 removed refresh once issue fixed
+            .refreshCurrentPage()
+            .openJobQueue()
+            .checkJobQueueActionStatus("Initial", "Publish", "okay")
+            .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
@@ -94,7 +98,7 @@ public class PublishComparisonTests extends TestBase {
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "Casting")
+            .selectScenario(testScenarioName, "CASTING")
             .apply();
 
         genericHeader = new GenericHeader(driver);
@@ -103,6 +107,9 @@ public class PublishComparisonTests extends TestBase {
             .highlightComparison(testComparisonName)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
+            .openJobQueue()
+            .checkJobQueueActionStatus("Initial", "Publish", "okay")
+            .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
