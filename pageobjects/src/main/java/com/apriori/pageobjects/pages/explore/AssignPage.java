@@ -65,13 +65,15 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     }
 
     /**
-     * Selects the apply button
+     * Selects the update button
      *
-     * @return new page object
+     * @param className - the class the method should return
+     * @param <T>       - the return type
+     * @return generic page object
      */
-    public ExplorePage update() {
-        saveButton.click();
-        return new ExplorePage(driver);
+    public <T> T update(Class<T> className) {
+        pageUtils.waitForElementAndClick(saveButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -82,5 +84,14 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     public ExplorePage cancel() {
         cancelButton.click();
         return new ExplorePage(driver);
+    }
+
+    /**
+     * Checks the selected Assignee
+     *
+     * @return true/false
+     */
+    public boolean isAssignee(String text) {
+        return pageUtils.checkElementFirstOption(assigneeDropdown, text);
     }
 }

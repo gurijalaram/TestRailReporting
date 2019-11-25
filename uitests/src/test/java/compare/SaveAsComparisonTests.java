@@ -37,7 +37,6 @@ public class SaveAsComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"419"})
-    @Issue("BA-874")
     @Description("Test a private comparison can be have Save As performed on it")
     public void testSaveAsPrivateComparison() {
 
@@ -65,13 +64,15 @@ public class SaveAsComparisonTests extends TestBase {
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+            .openJobQueue()
+            .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
     }
 
     @Test
-    @Issue("BA-874")
     @TestRail(testCaseId = {"419"})
     @Description("Test a public comparison can be have Save As performed on it")
     public void testSaveAsPublicComparison() {
@@ -104,12 +105,16 @@ public class SaveAsComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
 
         explorePage = genericHeader.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+            .openJobQueue()
+            .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
     }
 
     @Test
+    @Issue("BA-874")
     @TestRail(testCaseId = {"413"})
     @Description("Attempt to create a new comparison with a name that already exists")
     public void comparisonNameExists() {
