@@ -48,7 +48,7 @@ public class NavigationTests extends TestBase {
 
     @Test
     //@TestRail(testCaseId = {""})
-    @Description("Ensure link from Admin to Reporting works")
+    @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
         loginPage = new LoginPage(driver, ciaURL);
         homePage = loginPage.login(UserUtil.getUser())
