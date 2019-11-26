@@ -83,6 +83,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      * Checks the most recent server processes in the job queue and return the title
      *
      * @param icon - icon can be 'okay' or 'stop'
+     * @return webelement
      */
     public String getJobQueueRow(String icon) {
         checkJobQueueRow(icon);
