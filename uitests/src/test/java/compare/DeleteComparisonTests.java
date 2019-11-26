@@ -9,7 +9,6 @@ import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -29,7 +28,6 @@ public class DeleteComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
-    private JobQueuePage jobQueuePage;
 
     private final String noComponentMessage = "You have no components that match the selected filter";
 
@@ -173,8 +171,7 @@ public class DeleteComparisonTests extends TestBase {
             // TODO: 22/11/2019 Remove refresh once issue fixed 
             .refreshCurrentPage()
             .openJobQueue()
-            // TODO: 25/11/2019 Moya to fix errors with correct test data before PR
-            //.checkJobQueueActionStatus("Initial", "Publish", "okay")
+            .checkJobQueueActionStatus("testpart-4", "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)

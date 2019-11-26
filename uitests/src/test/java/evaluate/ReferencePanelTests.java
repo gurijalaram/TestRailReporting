@@ -112,6 +112,7 @@ public class ReferencePanelTests extends TestBase {
         String scenarioName = new Util().getScenarioName();
         String scenarioName2 = new Util().getScenarioName();
         String scenarioName3 = new Util().getScenarioName();
+        String componentName = "Rapid Prototyping";
 
         loginPage = new LoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
@@ -124,10 +125,10 @@ public class ReferencePanelTests extends TestBase {
             .save()
             .selectExploreButton()
             .openJobQueue()
-            //.checkJobQueueActionStatus(scenarioName2, "Save As", "okay")
+            .checkJobQueueActionStatus(componentName, scenarioName2, "Save As", "okay")
             .closeJobQueue(ExplorePage.class)
             .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace())
-            .openScenario(scenarioName2, "Rapid Prototyping")
+            .openScenario(scenarioName2, componentName)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .costScenario(2)
@@ -136,10 +137,10 @@ public class ReferencePanelTests extends TestBase {
             .save()
             .selectExploreButton()
             .openJobQueue()
-            //.checkJobQueueActionStatus(scenarioName3, "Save As", "okay")
+            .checkJobQueueActionStatus(componentName, scenarioName3, "Save As", "okay")
             .closeJobQueue(ExplorePage.class)
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .openScenario(scenarioName3, "Rapid Prototyping")
+            .openScenario(scenarioName3, componentName)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario()
