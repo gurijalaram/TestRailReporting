@@ -302,7 +302,7 @@ public class ActionsTests extends TestBase {
             .editNotes(" Validating the ability to edit notes")
             .save(EvaluatePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
+            .checkJobQueueRow("okay")
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
@@ -339,7 +339,7 @@ public class ActionsTests extends TestBase {
             .editNotes("")
             .save(EvaluatePage.class)
             .openJobQueue()
-            .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
+            .checkJobQueueRow("okay")
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
