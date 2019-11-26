@@ -65,7 +65,7 @@ public class SaveAsComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
             .openJobQueue()
-            .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
+            .checkJobQueueActionStatus(testSaveAsComparisonName, "Initial", "Save Comparison As", "okay")
             .closeJobQueue(ExplorePage.class)
             .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
@@ -81,32 +81,25 @@ public class SaveAsComparisonTests extends TestBase {
         String testSaveAsComparisonName = new Util().getComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
-        loginPage = new LoginPage(driver);
-
-        comparePage = loginPage.login(UserUtil.getUser())
+        new LoginPage(driver).login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
 
-        genericHeader = new GenericHeader(driver);
-
-        comparePage = genericHeader.publishScenario(PublishPage.class)
+        new GenericHeader(driver).publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .openComparison(testComparisonName);
 
-        genericHeader = new GenericHeader(driver);
-
-        comparePage = genericHeader.saveAs()
+        new GenericHeader(driver).saveAs()
             .inputName(testSaveAsComparisonName)
             .inputDescription(testSaveAsComparisonDescription)
             .selectCreateButton();
 
         genericHeader = new GenericHeader(driver);
-
         explorePage = genericHeader.selectExploreButton()
             .openJobQueue()
-            .checkJobQueueActionStatus("Initial", "Save Comparison As", "okay")
+            .checkJobQueueActionStatus(testSaveAsComparisonName, "Initial", "Save Comparison As", "okay")
             .closeJobQueue(ExplorePage.class)
             .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
@@ -141,6 +134,6 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ExplorePage.class)
             .openJobQueue();
 
-       assertThat(jobQueuePage.getServerProcessTitle("", "Create new Comparison", "stop"), containsString("Comparison " + testComparisonName + " already exists"));
+        assertThat(jobQueuePage.getJobQueueRow("stop"), containsString("Comparison " + testComparisonName + " already exists"));
     }
 }

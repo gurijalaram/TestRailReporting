@@ -65,7 +65,7 @@ public class PublishComparisonTests extends TestBase {
             // TODO: 22/11/2019 removed refresh once issue fixed
             .refreshCurrentPage()
             .openJobQueue()
-            .checkJobQueueActionStatus("Initial", "Publish", "okay")
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
@@ -108,7 +108,7 @@ public class PublishComparisonTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .openJobQueue()
-            .checkJobQueueActionStatus("Initial", "Publish", "okay")
+            .checkJobQueueActionStatus(testComparisonName,"Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
