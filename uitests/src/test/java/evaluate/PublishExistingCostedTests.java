@@ -85,7 +85,7 @@ public class PublishExistingCostedTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         genericHeader.toggleLock()
             .openJobQueue()
-            .checkJobQueueActionStatus(testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
             .closeJobQueue(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
@@ -98,6 +98,6 @@ public class PublishExistingCostedTests extends TestBase {
             .selectPublishButton()
             .openJobQueue();
 
-        assertThat(jobQueuePage.getServerProcessTitle(testScenarioName, "Publish", "stop"), containsString("is locked and cannot be overridden"));
+        assertThat(jobQueuePage.getJobQueueRow("stop"), containsString("is locked and cannot be overridden"));
     }
 }

@@ -27,6 +27,9 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     @FindBy(css = "a[data-ap-comp='jobQueue']")
     private WebElement jobQueueButton;
 
+    @FindBy(xpath = "//div[@class='popover-content']//div[@class='gwt-Label']/ancestor::tr")
+    private WebElement jobQueueFirstRow;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -65,26 +68,38 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     /**
      * Checks the job queue that the first job for the specified scenario is complete
      *
+     * @param component    - the component name
      * @param scenarioName - the scenario name
      * @param jobType      - the job type
      * @param icon         - icon can be 'okay' or 'stop'
      * @return webelement
      */
-    public JobQueuePage checkJobQueueActionStatus(String scenarioName, String jobType, String icon) {
-        By jobStatus = By.xpath("//a[@title='" + scenarioName + "']/ancestor::tr//div[.='" + jobType + "']/ancestor::tr//img[@src='" + icon + "18.png']");
-        pageUtils.waitForElementToAppear(jobStatus, 2);
+    public JobQueuePage checkJobQueueActionStatus(String component, String scenarioName, String jobType, String icon) {
+        statusIcon(component, scenarioName, jobType, icon);
         return this;
     }
 
     /**
      * Checks the most recent server processes in the job queue and return the title
      *
-     * @param scenarioName - the scenario name
-     * @param jobType      - the job type
-     * @param icon         - icon can be 'okay' or 'stop'
+     * @param icon - icon can be 'okay' or 'stop'
+     * @return webelement
      */
-    public String getServerProcessTitle(String scenarioName, String jobType, String icon) {
-        return statusIcon(scenarioName, jobType, icon).getAttribute("title");
+    public String getJobQueueRow(String icon) {
+        checkJobQueueRow(icon);
+        return pageUtils.waitForElementToAppear(jobQueueFirstRow).getAttribute("innerHTML");
+    }
+
+    /**
+     * Gets the first row in the job queue
+     *
+     * @param icon - the icon
+     * @return current page object
+     */
+    public JobQueuePage checkJobQueueRow(String icon) {
+        pageUtils.checkElementAttribute(jobQueueFirstRow, "innerHTML", "clock");
+        pageUtils.checkElementAttribute(jobQueueFirstRow, "innerHTML", icon);
+        return this;
     }
 
     /**
@@ -99,7 +114,9 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
         return PageFactory.initElements(driver, className);
     }
 
-    private WebElement statusIcon(String scenarioName, String jobType, String icon) {
-        return driver.findElement(By.xpath(String.format("//a[@title='%s']/ancestor::tr//div[.='%s']/ancestor::tr//img[@src='%s']", scenarioName, jobType, icon)));
+    private WebElement statusIcon(String component, String scenarioName, String jobType, String icon) {
+        By statusIcon = By.xpath(String.format("//div[.='%s']/ancestor::tr//a[@title='%s']/ancestor::tr//div[.='%s']/ancestor::tr//img[@src='%s18.png']",
+            component.toUpperCase(), scenarioName, StringUtils.capitalize(jobType), icon));
+        return pageUtils.waitForElementToAppear(statusIcon, 2);
     }
 }
