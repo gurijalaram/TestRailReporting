@@ -7,19 +7,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reports.pages.login.LoginPage;
 
-public class Dashboard extends LoadableComponent<AdHocView> {
+public class Dashboard extends LoadableComponent<Dashboard> {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+    private final Logger logger = LoggerFactory.getLogger(Dashboard.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    @FindBy(xpath = "//div[@id='display']/div[1]/div/div/div[contains(@class, 'title')]")
+    @FindBy(css = "div[id='display'] .title")
     private WebElement dashboardPageTitle;
 
     public Dashboard(WebDriver driver) {

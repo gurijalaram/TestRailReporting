@@ -6,15 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reports.pages.login.LoginPage;
+import reports.pages.header.ReportsHeader;
 
-public class Schedules extends LoadableComponent<Repository> {
+public class Schedules extends ReportsHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+    private final Logger logger = LoggerFactory.getLogger(Schedules.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -23,6 +21,7 @@ public class Schedules extends LoadableComponent<Repository> {
     private WebElement schedulesPageTitle;
 
     public Schedules(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

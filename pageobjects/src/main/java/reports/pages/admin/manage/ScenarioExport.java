@@ -9,11 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reports.pages.homepage.HomePage;
 
 public class ScenarioExport extends LoadableComponent<ScenarioExport> {
 
-    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
+    private final Logger logger = LoggerFactory.getLogger(ScenarioExport.class);
     private WebDriver driver;
     private PageUtils pageUtils;
 

@@ -6,16 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reports.pages.login.LoginPage;
-import reports.pages.view.Repository;
+import reports.pages.header.ReportsHeader;
 
-public class Roles extends LoadableComponent<Repository> {
+public class Roles extends ReportsHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+    private final Logger logger = LoggerFactory.getLogger(Roles.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -24,6 +21,7 @@ public class Roles extends LoadableComponent<Repository> {
     private WebElement rolesPageTitle;
 
     public Roles(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

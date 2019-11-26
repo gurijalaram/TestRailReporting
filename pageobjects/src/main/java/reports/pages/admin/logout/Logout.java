@@ -9,11 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reports.pages.homepage.HomePage;
 
 public class Logout extends LoadableComponent<Logout> {
 
-    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
+    private final Logger logger = LoggerFactory.getLogger(Logout.class);
     private WebDriver driver;
     private PageUtils pageUtils;
 

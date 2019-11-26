@@ -10,11 +10,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reports.pages.login.LoginPage;
 
 public class AdHocView extends LoadableComponent<AdHocView> {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+    private final Logger logger = LoggerFactory.getLogger(AdHocView.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;

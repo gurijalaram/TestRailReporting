@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reports.pages.header.ReportsHeader;
 
-public class CirUserGuide extends ReportsHeader {
+public class CiaUserGuide extends ReportsHeader {
 
     private Logger logger = LoggerFactory.getLogger(CirUserGuide.class);
 
@@ -20,13 +20,13 @@ public class CirUserGuide extends ReportsHeader {
     @FindBy(css = "iframe[id='page_iframe']")
     private WebElement mainContentIframe;
 
-    @FindBy(css = ".Documentation_Cover_Page_Title")
-    private WebElement reportsUserGuideTitle;
+    @FindBy(css = ".aPriori_Cover_Page_Title")
+    private WebElement adminUserGuideTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public CirUserGuide(WebDriver driver) {
+    public CiaUserGuide(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -54,13 +54,13 @@ public class CirUserGuide extends ReportsHeader {
     }
 
     /**
-     * Gets page heading of Reports Help page
+     * Gets page heading of Admin User Guide page
      * @return String - page title
      */
-    public String getReportsUserGuidePageHeading() {
+    public String getAdminUserGuidePageHeading() {
         pageUtils.windowHandler();
         pageUtils.waitForElementToAppear(mainContentIframe);
         driver.switchTo().frame(mainContentIframe);
-        return reportsUserGuideTitle.getAttribute("textContent");
+        return adminUserGuideTitle.getAttribute("textContent");
     }
 }
