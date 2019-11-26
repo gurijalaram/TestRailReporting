@@ -16,38 +16,26 @@ import reports.pages.library.Library;
 import reports.pages.login.LoginPage;
 import reports.pages.manage.Roles;
 import reports.pages.manage.Users;
-import reports.pages.privacypolicy.PrivacyPolicyPage;
+import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
+import reports.pages.userguides.CirUserGuide;
 import reports.pages.view.Messages;
 import reports.pages.view.Repository;
 import reports.pages.view.Schedules;
 import reports.pages.view.SearchResults;
 
 import static com.apriori.utils.constants.Constants.ciaURL;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class NavigationTests extends TestBase {
 
-    private PrivacyPolicyPage privacyPolicyPage;
-    private SystemDataExport systemDataExport;
-    private ScenarioExport scenarioExport;
-    private SearchResults searchResults;
-    private DataSource dataSource;
-    private Repository repository;
-    private Schedules schedules;
     private LoginPage loginPage;
-    private AdHocView adHocView;
-    private Dashboard dashboard;
-    private Messages messages;
     private HomePage homePage;
-    private HelpPage helpPage;
-    private Library library;
-    private Report report;
-    private Domain domain;
     private Logout logout;
-    private Users users;
-    private Roles roles;
 
     public NavigationTests() {
         super();
@@ -57,6 +45,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = "")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
+        ScenarioExport scenarioExport;
         loginPage = new LoginPage(driver, ciaURL);
         scenarioExport = loginPage.loginToCIAdmin(UserUtil.getUser())
                 .navigateToManageScenarioExport();
@@ -69,6 +58,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = "")
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
+        SystemDataExport systemDataExport;
         loginPage = new LoginPage(driver, ciaURL);
         systemDataExport = loginPage.loginToCIAdmin(UserUtil.getUser())
                 .navigateToManageSystemDataExport();
@@ -81,12 +71,14 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = "")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() {
+        CirUserGuide cirUserGuide;
         loginPage = new LoginPage(driver, ciaURL);
-        homePage = loginPage.loginToCIAdmin(UserUtil.getUser())
+        cirUserGuide = loginPage.loginToCIAdmin(UserUtil.getUser())
                 .navigateToHelpReportsGuide();
 
-        assertThat(homePage.getTabCount(), is(2));
-        assertThat(homePage.getChildWindowURL(), is(equalTo(Constants.reportsUserGuideUrl)));
+        assertThat(cirUserGuide.getTabCount(), is(2));
+        //assertThat(cirUserGuide.getPageTitle(), is(equalTo("Cost Insight Report:User Guide")));
+        assertThat(cirUserGuide.getChildWindowURL(), is(containsString("CI_REPORT_USER_GUIDE")));
     }
 
     @Test
@@ -135,7 +127,7 @@ public class NavigationTests extends TestBase {
                 .navigateToReportUserGuide();
 
         assertThat(homePage.getTabCount(), is(equalTo(2)));
-        assertThat(homePage.getChildWindowURL(), is(equalTo(Constants.reportsUserGuideUrl)));
+        assertThat(homePage.getChildWindowURL(), is(equalTo("")));
     }
 
     @Test
@@ -179,6 +171,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2968"})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
+        Library library;
         loginPage = new LoginPage(driver);
         library = loginPage.login(UserUtil.getUser())
                 .navigateToLibraryPage();
@@ -190,6 +183,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2969"})
     @Description("Ensure that the link to View Search Results works")
     public void testViewSearchResultsNavigation() {
+        SearchResults searchResults;
         loginPage = new LoginPage(driver);
         searchResults = loginPage.login(UserUtil.getUser())
                 .navigateToViewSearchResultsPage();
@@ -201,6 +195,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2970"})
     @Description("Ensure that the link to View Repository works")
     public void testViewRepositoryNavigation() {
+        Repository repository;
         loginPage = new LoginPage(driver);
         repository = loginPage.login(UserUtil.getUser())
                 .navigateToViewRepositoryPage();
@@ -212,6 +207,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2971"})
     @Description("Ensure that the link to View Schedules works")
     public void testViewSchedulesNavigation() {
+        Schedules schedules;
         loginPage = new LoginPage(driver);
         schedules = loginPage.login(UserUtil.getUser())
                 .navigateToViewSchedulesPage();
@@ -223,6 +219,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2972"})
     @Description("Ensure that the link to View Messages works")
     public void testViewMessagesNavigation() {
+        Messages messages;
         loginPage = new LoginPage(driver);
         messages = loginPage.login(UserUtil.getUser())
                 .navigateToViewMessagesPage();
@@ -234,6 +231,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2973"})
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
+        Users users;
         loginPage = new LoginPage(driver);
         users = loginPage.login(UserUtil.getUser())
                 .navigateToManageUsersPage();
@@ -245,6 +243,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2974"})
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
+        Roles roles;
         loginPage = new LoginPage(driver);
         roles = loginPage.login(UserUtil.getUser())
                 .navigateToManageRolesPage();
@@ -256,6 +255,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2975"})
     @Description("Ensure that the link to Create Ad Hoc View works")
     public void testCreateAdHocViewNavigation() {
+        AdHocView adHocView;
         loginPage = new LoginPage(driver);
         adHocView = loginPage.login(UserUtil.getUser())
                 .navigateToCreateAdHocViewPage();
@@ -269,6 +269,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2976"})
     @Description("Ensure that the link to Create Report works")
     public void testCreateReportNavigation() {
+        Report report;
         loginPage = new LoginPage(driver);
         report = loginPage.login(UserUtil.getUser())
                 .navigateToCreateReportPage();
@@ -281,6 +282,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2977"})
     @Description("Ensure that the link to Create Dashboard works")
     public void testCreateDashboardNavigation() {
+        Dashboard dashboard;
         loginPage = new LoginPage(driver);
         dashboard = loginPage.login(UserUtil.getUser())
                 .navigateToCreateDashboardPage();
@@ -292,6 +294,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2978"})
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
+        Domain domain;
         loginPage = new LoginPage(driver);
         domain = loginPage.login(UserUtil.getUser())
                 .navigateToCreateDomainPage();
@@ -305,6 +308,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2979"})
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {
+        DataSource dataSource;
         loginPage = new LoginPage(driver);
         dataSource = loginPage.login(UserUtil.getUser())
                 .navigateToCreateDataSourcePage();
@@ -315,24 +319,28 @@ public class NavigationTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"2700"})
     @Description("Ensure that the link to the privacy policy works")
-    public void testPrivacyPolicyLink() {
+    public void testPrivacyPolicyNavigation() {
+        PrivacyPolicyPage privacyPolicyPage;
         loginPage = new LoginPage(driver);
         privacyPolicyPage = loginPage.waitForPrivacyPolicyLinkVisibility()
                 .goToPrivacyPolicy();
 
         assertThat(privacyPolicyPage.getTabCount(), is(2));
         assertThat(privacyPolicyPage.getChildWindowURL(), is(equalTo(Constants.privacyPolicyUrl)));
+        assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
     }
 
     @Test
     @TestRail(testCaseId = {"2701"})
     @Description("Ensure that the link to the help page works")
-    public void testHelpLink() {
+    public void testHelpNavigation() {
+        HelpPage helpPage;
         loginPage = new LoginPage(driver);
         helpPage = loginPage.login(UserUtil.getUser())
                 .navigateToHelpPage();
 
         assertThat(helpPage.getTabCount(), is(2));
-        assertThat(helpPage.getChildWindowURL(), is(equalTo(Constants.reportingHelpUrl)));
+        assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.reportingHelpUrl)));
+        assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
     }
 }

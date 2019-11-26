@@ -13,6 +13,7 @@ import reports.pages.admin.logout.Logout;
 import reports.pages.admin.manage.ScenarioExport;
 import reports.pages.admin.manage.SystemDataExport;
 import reports.pages.homepage.HomePage;
+import reports.pages.userguides.CirUserGuide;
 
 public class AdminHomePage extends LoadableComponent<AdminHomePage> {
 
@@ -99,11 +100,11 @@ public class AdminHomePage extends LoadableComponent<AdminHomePage> {
      * Navigates to Reports System User Guide
      * @return Home Page Page Object Model (since help is external to system)
      */
-    public HomePage navigateToHelpReportsGuide() {
+    public CirUserGuide navigateToHelpReportsGuide() {
         pageUtils.waitForElementToAppear(helpMenuOption);
         helpMenuOption.click();
         helpCIReportGuideMenuOption.click();
-        return new HomePage(driver);
+        return new CirUserGuide(driver);
     }
 
     /**

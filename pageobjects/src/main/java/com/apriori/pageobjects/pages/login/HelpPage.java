@@ -21,8 +21,11 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
 
-    @FindBy(css = ".page_title")
+    @FindBy(css = "body > h1")
     private WebElement heading;
+
+    @FindBy(css = "iframe[id='topic']")
+    private WebElement mainContentIframe;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -49,7 +52,9 @@ public class HelpPage extends LoadableComponent<HelpPage> {
      * @return - string
      */
     public String getPageHeading() {
-        return pageUtils.waitForElementToAppear(heading).getText();
+        driver.switchTo().frame(mainContentIframe);
+        pageUtils.waitForElementToAppear(heading);
+        return heading.getText();
     }
 
     /**

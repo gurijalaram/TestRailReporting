@@ -13,7 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reports.pages.admin.home.AdminHomePage;
 import reports.pages.homepage.HomePage;
-import reports.pages.privacypolicy.PrivacyPolicyPage;
+
+import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 

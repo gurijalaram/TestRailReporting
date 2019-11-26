@@ -59,4 +59,12 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     public String getChildWindowURL() {
         return pageUtils.windowHandler().getCurrentUrl();
     }
+
+    /**
+     * Gets count of open tabs
+     * @return int - open tab count
+     */
+    public int getTabCount() {
+        return pageUtils.getCountOfOpenTabs();
+    }
 }

@@ -91,6 +91,9 @@ public class HomePage extends LoadableComponent<HomePage> {
     @FindBy(css = "ul[id='metaLinks'] > li:nth-child(2) > a")
     private WebElement reportUserGuide;
 
+    @FindBy(css = ".Documentation_Cover_Page_Title")
+    private WebElement reportsUserGuideTitle;
+
     @FindBy(id = "main_logOut_link")
     private WebElement logoutMenuOption;
 
@@ -259,6 +262,10 @@ public class HomePage extends LoadableComponent<HomePage> {
         return new HomePage(driver);
     }
 
+    /**
+     * Navigates to Reports User Guide
+     * @return Home Page page object model
+     */
     public HomePage navigateToReportUserGuide() {
         pageUtils.waitForElementToAppear(reportUserGuide);
         reportUserGuide.click();
