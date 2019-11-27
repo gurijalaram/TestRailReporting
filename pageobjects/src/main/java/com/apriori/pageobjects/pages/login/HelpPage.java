@@ -53,8 +53,6 @@ public class HelpPage extends ReportsHeader {
      * @return - string
      */
     public String getPageHeading() {
-//        pageUtils.windowHandler();
-//        pageUtils.switchToIframe();
         return pageUtils.getPageHeading(heading);
     }
 
