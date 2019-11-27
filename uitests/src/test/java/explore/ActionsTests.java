@@ -252,6 +252,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-892")
     @TestRail(testCaseId = {"532"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
@@ -392,7 +393,7 @@ public class ActionsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new LoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .costScenario()
