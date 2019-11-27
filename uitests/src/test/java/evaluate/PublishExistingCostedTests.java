@@ -1,12 +1,12 @@
 package evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
+import com.apriori.pageobjects.pages.evaluate.PublishWarningPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
@@ -73,6 +73,8 @@ public class PublishExistingCostedTests extends TestBase {
     public void testPublishLockedScenario() {
 
         String testScenarioName = new Util().getScenarioName();
+        String scenarioNameB = new Util().getScenarioName();
+        String partName = "PowderMetalShaft";
 
         loginPage = new LoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -80,24 +82,29 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "PowderMetalShaft");
+            .highlightScenario(testScenarioName, partName);
 
         genericHeader = new GenericHeader(driver);
         genericHeader.toggleLock()
             .openJobQueue()
-            .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
+            .checkJobQueueActionStatus(partName, testScenarioName, "Update", "okay")
             .closeJobQueue(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
-        jobQueuePage = explorePage.openScenario(testScenarioName, "PowderMetalShaft")
+        explorePage = explorePage.openScenario(testScenarioName, partName)
             .editScenario(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
-            .publishScenario(PublishPage.class)
+            .publishScenario(PublishWarningPage.class)
+            .enterNewScenarioName(scenarioNameB)
+            .selectContinueButton()
             .selectPublishButton()
-            .openJobQueue();
+            .openJobQueue()
+            .checkJobQueueActionStatus(partName, scenarioNameB, "Publish", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
-        assertThat(jobQueuePage.getJobQueueRow("stop"), containsString("is locked and cannot be overridden"));
+        assertThat(explorePage.findScenario(scenarioNameB, partName).isDisplayed(), is(true));
     }
 }
