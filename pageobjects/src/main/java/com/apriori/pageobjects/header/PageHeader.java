@@ -3,6 +3,7 @@ package com.apriori.pageobjects.header;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
@@ -124,9 +125,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @retun new page object
      */
-    public PageHeader openHelp() {
+    public com.apriori.pageobjects.pages.help.HelpPage openHelpMenu() {
         pageUtils.waitForElementAndClick(helpButton);
-        return this;
+        return new HelpPage(driver);
     }
 
     /**
