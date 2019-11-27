@@ -171,7 +171,7 @@ public class DeleteComparisonTests extends TestBase {
             // TODO: 22/11/2019 Remove refresh once issue fixed 
             .refreshCurrentPage()
             .openJobQueue()
-            .checkJobQueueActionStatus("testpart-4", "Initial", "Publish", "okay")
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)

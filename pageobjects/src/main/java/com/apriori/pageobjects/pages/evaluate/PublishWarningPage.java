@@ -1,8 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.utils.PageUtils;
-import com.apriori.utils.enums.WorkspaceEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -56,6 +54,7 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
      * @return current page object
      */
     public PublishWarningPage enterNewScenarioName(String scenarioName) {
+        pageUtils.waitForElementAndClick(inputField);
         inputField.clear();
         inputField.sendKeys(scenarioName);
         return this;
@@ -66,9 +65,9 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
      *
      * @return new page object
      */
-    public ExplorePage selectContinueButton() {
-        continueButton.click();
-        return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
+    public PublishPage selectContinueButton() {
+        pageUtils.waitForElementAndClick(continueButton);
+        return new PublishPage(driver);
     }
 
     /**
