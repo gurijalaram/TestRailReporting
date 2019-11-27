@@ -15,9 +15,9 @@ public class HomePage extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
-    private WebDriver driver;
     private PageUtils pageUtils;
     private HelpPage helpPage;
+    private WebDriver driver;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -50,5 +50,21 @@ public class HomePage extends ReportsHeader {
     public boolean isCreateButtonDisplayed() {
         pageUtils.waitForElementToAppear(createButton);
         return createButton.isDisplayed();
+    }
+
+    /**
+     * Gets current URL of new tab
+     * @return String
+     */
+    public String getCurrentUrl() {
+        return pageUtils.windowHandler().getCurrentUrl();
+    }
+
+    /**
+     * Gets count of open tabs
+     * @return int
+     */
+    public int getTabCount() {
+        return pageUtils.getCountOfOpenTabs();
     }
 }

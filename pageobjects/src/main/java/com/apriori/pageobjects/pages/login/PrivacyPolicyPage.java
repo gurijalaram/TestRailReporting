@@ -21,7 +21,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
 
-    @FindBy(css = ".page_title")
+    @FindBy(css = "section[id='services_title_section'] > div > h1")
     private WebElement heading;
 
     private WebDriver driver;
@@ -49,7 +49,8 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      * @return - string
      */
     public String getPageHeading() {
-        return pageUtils.waitForElementToAppear(heading).getText();
+        pageUtils.windowHandler();
+        return heading.getText();
     }
 
     /**

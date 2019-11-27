@@ -6,12 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.pages.header.ReportsHeader;
 
-public class DataSource extends LoadableComponent<DataSource> {
+public class DataSource extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(DataSource.class);
 
@@ -22,6 +22,7 @@ public class DataSource extends LoadableComponent<DataSource> {
     private WebElement dataSourcePageTitle;
 
     public DataSource(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

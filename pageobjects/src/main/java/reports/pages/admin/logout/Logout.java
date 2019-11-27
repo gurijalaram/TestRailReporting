@@ -6,20 +6,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.pages.header.ReportsHeader;
 
-public class Logout extends LoadableComponent<Logout> {
+public class Logout extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(Logout.class);
-    private WebDriver driver;
-    private PageUtils pageUtils;
 
     @FindBy(css = "div[class='auth0-lock-header-welcome'] > div")
     private WebElement loginPageTitle;
 
+    private WebDriver driver;
+    private PageUtils pageUtils;
+
     public Logout(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

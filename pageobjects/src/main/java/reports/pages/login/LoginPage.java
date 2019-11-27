@@ -15,7 +15,6 @@ import reports.pages.admin.home.AdminHomePage;
 import reports.pages.header.ReportsHeader;
 import reports.pages.homepage.HomePage;
 
-
 public class LoginPage extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(LoginPage.class);

@@ -6,15 +6,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.pages.header.ReportsHeader;
 
 /**
  * @author cfrith
  */
 
-public class HelpPage extends LoadableComponent<HelpPage> {
+public class HelpPage extends ReportsHeader {
 
     private Logger logger = LoggerFactory.getLogger(HelpPage.class);
 
@@ -31,6 +31,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     private PageUtils pageUtils;
 
     public HelpPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -52,9 +53,9 @@ public class HelpPage extends LoadableComponent<HelpPage> {
      * @return - string
      */
     public String getPageHeading() {
-        driver.switchTo().frame(mainContentIframe);
-        pageUtils.waitForElementToAppear(heading);
-        return heading.getText();
+//        pageUtils.windowHandler();
+//        pageUtils.switchToIframe();
+        return pageUtils.getPageHeading(heading);
     }
 
     /**

@@ -6,21 +6,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reports.pages.admin.logout.Logout;
 import reports.pages.admin.manage.ScenarioExport;
 import reports.pages.admin.manage.SystemDataExport;
+import reports.pages.header.ReportsHeader;
 import reports.pages.homepage.HomePage;
 import reports.pages.userguides.CiaUserGuide;
 import reports.pages.userguides.CirUserGuide;
 
-public class AdminHomePage extends LoadableComponent<AdminHomePage> {
+public class AdminHomePage extends ReportsHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final Logger logger = LoggerFactory.getLogger(AdminHomePage.class);
 
     @FindBy(id = "manage.scenario-export-manager")
     private WebElement manageScenarioExportMenuOption;
@@ -49,7 +47,11 @@ public class AdminHomePage extends LoadableComponent<AdminHomePage> {
     @FindBy(id = "user.log-out")
     private WebElement logoutMenuOption;
 
+    private WebDriver driver;
+    private PageUtils pageUtils;
+
     public AdminHomePage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

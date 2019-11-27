@@ -6,20 +6,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.pages.header.ReportsHeader;
 
-public class ScenarioExport extends LoadableComponent<ScenarioExport> {
+public class ScenarioExport extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ScenarioExport.class);
-    private WebDriver driver;
-    private PageUtils pageUtils;
 
     @FindBy(css = "h1")
     private WebElement manageScenarioExportTitle;
 
+    private WebDriver driver;
+    private PageUtils pageUtils;
+
     public ScenarioExport(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

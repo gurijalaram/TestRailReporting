@@ -6,11 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.pages.header.ReportsHeader;
 
-public class Dashboard extends LoadableComponent<Dashboard> {
+public class Dashboard extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(Dashboard.class);
 
@@ -21,6 +22,7 @@ public class Dashboard extends LoadableComponent<Dashboard> {
     private WebElement dashboardPageTitle;
 
     public Dashboard(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

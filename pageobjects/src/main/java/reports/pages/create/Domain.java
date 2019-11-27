@@ -6,12 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.pages.header.ReportsHeader;
 
-public class Domain extends LoadableComponent<Domain> {
+public class Domain extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(Domain.class);
 
@@ -22,6 +22,7 @@ public class Domain extends LoadableComponent<Domain> {
     private WebElement domainDialog;
 
     public Domain(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -36,6 +37,14 @@ public class Domain extends LoadableComponent<Domain> {
     @Override
     protected void isLoaded() throws Error {
 
+    }
+
+    /**
+     * Gets current URL of new tab
+     * @return String
+     */
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
     }
 
     /**]

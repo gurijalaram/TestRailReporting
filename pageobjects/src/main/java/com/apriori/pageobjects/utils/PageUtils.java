@@ -3,6 +3,8 @@ package com.apriori.pageobjects.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
+import com.apriori.pageobjects.header.ExploreHeader;
+import com.apriori.utils.constants.Constants;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -789,5 +791,22 @@ public class PageUtils {
      */
     public int getCountOfOpenTabs() {
         return driver.getWindowHandles().size();
+    }
+
+    /**
+     * Gets page heading
+     * @param heading WebElement
+     * @return String heading
+     */
+    public String getPageHeading(WebElement heading) {
+        return heading.getText();
+    }
+
+    /**
+     * Switches to an iframe
+     */
+    public void switchToIframe() {
+        //waitForElementToAppear(mainContentIframe);
+        driver.switchTo().frame(1);
     }
 }

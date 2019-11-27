@@ -103,6 +103,12 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(id = "main_logOut_link")
     private WebElement logoutMenuOption;
 
+    @FindBy(xpath = "//h2[contains(text(), 'Admin')]")
+    private  WebElement adminTitle;
+
+    @FindBy(css = "div[id='header']")
+    private WebElement jasperLogo;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -244,8 +250,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return Home Page page object model
      */
     public CirUserGuide navigateToReportUserGuide() {
-        pageUtils.waitForElementToAppear(reportUserGuide);
-        reportUserGuide.click();
+        navigateToPage(reportUserGuide);
         return new CirUserGuide(driver);
     }
 
@@ -254,7 +259,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return Help Page page object
      */
     public HelpPage navigateToHelpPage() {
-        pageUtils.waitForElementAndClick(helpButton);
+        pageUtils.waitForElementToAppear(adminTitle);
+        navigateToPage(helpButton);
+        pageUtils.windowHandler();
+        pageUtils.switchToIframe();
+        pageUtils.waitForElementToAppear(jasperLogo);
         return new HelpPage(driver);
     }
 
@@ -263,8 +272,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return Logout page object model
      */
     public Logout navigateToReportLogout() {
-        pageUtils.waitForElementToAppear(logoutMenuOption);
-        logoutMenuOption.click();
+        pageUtils.waitForElementToAppear(adminTitle);
+        navigateToPage(logoutMenuOption);
         return new Logout(driver);
     }
 

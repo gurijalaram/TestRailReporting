@@ -12,7 +12,7 @@ import reports.pages.header.ReportsHeader;
 
 public class CiaUserGuide extends ReportsHeader {
 
-    private Logger logger = LoggerFactory.getLogger(CirUserGuide.class);
+    private Logger logger = LoggerFactory.getLogger(CiaUserGuide.class);
 
     @FindBy(xpath = "//*[contains(text(), 'Cost Insight Report:User Guide')]")
     private WebElement pageTitle;
@@ -51,6 +51,14 @@ public class CiaUserGuide extends ReportsHeader {
      */
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
+    }
+
+    /**
+     * Gets current URL of new tab
+     * @return String
+     */
+    public String getCurrentUrl() {
+        return pageUtils.windowHandler().getCurrentUrl();
     }
 
     /**

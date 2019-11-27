@@ -46,8 +46,16 @@ public class CirUserGuide extends ReportsHeader {
     }
 
     /**
+     * Gets current URL of new tab
+     * @return String
+     */
+    public String getCurrentUrl() {
+        return pageUtils.windowHandler().getCurrentUrl();
+    }
+
+    /**
      * Gets count of open tabs
-     * @return int - open tab count
+     * @return int
      */
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
