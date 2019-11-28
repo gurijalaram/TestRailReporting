@@ -44,7 +44,7 @@ public class Domain extends ReportsHeader {
      * @return String
      */
     public String getCurrentUrl() {
-        return driver.getCurrentUrl();
+        return pageUtils.getCurrentUrl();
     }
 
     /**]

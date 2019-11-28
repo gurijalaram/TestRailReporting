@@ -805,7 +805,22 @@ public class PageUtils {
      * Switches to an iframe
      */
     public void switchToIframe() {
-        //waitForElementToAppear(mainContentIframe);
         driver.switchTo().frame(1);
+    }
+
+    /**
+     * Gets current URL
+     * @return String
+     */
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    /**
+     * Gets tab two URL
+     * @return String
+     */
+    public String getTabTwoUrl() {
+        return windowHandler().getCurrentUrl();
     }
 }

@@ -57,7 +57,7 @@ public class HomePage extends ReportsHeader {
      * @return String
      */
     public String getCurrentUrl() {
-        return pageUtils.windowHandler().getCurrentUrl();
+        return pageUtils.getTabTwoUrl();
     }
 
     /**

@@ -61,7 +61,7 @@ public class HelpPage extends ReportsHeader {
      * @return - string
      */
     public String getChildWindowURL() {
-        return pageUtils.windowHandler().getCurrentUrl();
+        return pageUtils.getTabTwoUrl();
     }
 
     /**

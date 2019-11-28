@@ -58,7 +58,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      * @return - string
      */
     public String getChildWindowURL() {
-        return pageUtils.windowHandler().getCurrentUrl();
+        return pageUtils.getTabTwoUrl();
     }
 
     /**
