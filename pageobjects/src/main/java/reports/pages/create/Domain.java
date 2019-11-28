@@ -1,32 +1,32 @@
-package reports.pages.homepage;
+package reports.pages.create;
 
-import com.apriori.pageobjects.pages.login.HelpPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reports.pages.header.ReportsHeader;
 
-public class HomePage extends ReportsHeader {
+public class Domain extends ReportsHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
+    private final Logger logger = LoggerFactory.getLogger(Domain.class);
 
     private PageUtils pageUtils;
-    private HelpPage helpPage;
     private WebDriver driver;
 
-    public HomePage(WebDriver driver) {
+    @FindBy(css = "div[data-name='repositoryResourceChooserDialog']")
+    private WebElement domainDialog;
+
+    public Domain(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.helpPage = new HelpPage(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
     }
 
     @Override
@@ -39,32 +39,29 @@ public class HomePage extends ReportsHeader {
 
     }
 
-    @FindBy(css = "button[aria-label='Create Data Sources']")
-    private WebElement createButton;
-
-    /**
-     * Check if Create button is displayed
-     *
-     * @return Visibility of button
-     */
-    public boolean isCreateButtonDisplayed() {
-        pageUtils.waitForElementToAppear(createButton);
-        return createButton.isDisplayed();
-    }
-
     /**
      * Gets current URL of new tab
      * @return String
      */
     public String getCurrentUrl() {
-        return pageUtils.getTabTwoUrl();
+        return pageUtils.getCurrentUrl();
+    }
+
+    /**]
+     * Gets dialog isDisplayed value
+     * @return boolean - isDisplayed
+     */
+    public boolean isDialogDisplayed() {
+        pageUtils.waitForElementToAppear(domainDialog);
+        return domainDialog.isDisplayed();
     }
 
     /**
-     * Gets count of open tabs
-     * @return int
+     * Gets dialog isEnabled value
+     * @return boolean - is Enabled
      */
-    public int getTabCount() {
-        return pageUtils.getCountOfOpenTabs();
+    public boolean isDialogEnabled() {
+        pageUtils.waitForElementToAppear(domainDialog);
+        return domainDialog.isEnabled();
     }
 }

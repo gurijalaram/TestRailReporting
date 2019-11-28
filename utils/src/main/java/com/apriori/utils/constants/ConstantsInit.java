@@ -24,6 +24,9 @@ public interface ConstantsInit extends Config {
     @Key("url.cir")
     String cirURL();
 
+    @Key("url.admin")
+    String ciaURL();
+
     @Key("console.log.level")
     String consoleLogLevelData();
 

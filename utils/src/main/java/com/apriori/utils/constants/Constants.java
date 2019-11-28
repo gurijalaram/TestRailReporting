@@ -19,6 +19,12 @@ public class Constants {
     public static final String defaultEnvironmentKey = "env";
     public static final String defaultEnvironmentValue = "cid-te";
 
+    public static final String scenarioExportChapterUrl = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/2019_R2/startHelp.html#context/CIA_UG/Scen_Expt_chap#page/CI_ADMIN_USER_GUIDE/Scen_Expt_chap.html#wwpID0E0UY0HA";
+    public static final String reportingDomainDesignerUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/domaindesigner.html";
+    public static final String reportsHomeUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/";
+    public static final String reportingHelpUrl = "http://help.jaspersoft.com/Default";
+    public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
+
     public static String RUN_ID = defaultProjectIDValue;
 
     public static String environment = System.getProperty(defaultEnvironmentKey, defaultEnvironmentValue);
@@ -40,6 +46,7 @@ public class Constants {
     public static final String GRID_SERVER_URL = constantsInit.gridServerUrl();
     public static final String cidURL = constantsInit.cidURL();
     public static final String cirURL = constantsInit.cirURL();
+    public static final String ciaURL = constantsInit.ciaURL();
     public static final String usersFile = constantsInit.usersCsvFileName();
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 

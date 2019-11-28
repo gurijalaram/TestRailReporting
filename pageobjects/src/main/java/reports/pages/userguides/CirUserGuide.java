@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.login;
+package reports.pages.userguides;
 
 import com.apriori.pageobjects.utils.PageUtils;
 
@@ -10,27 +10,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reports.pages.header.ReportsHeader;
 
-/**
- * @author cfrith
- */
+public class CirUserGuide extends ReportsHeader {
 
-public class HelpPage extends ReportsHeader {
+    private Logger logger = LoggerFactory.getLogger(CirUserGuide.class);
 
-    private Logger logger = LoggerFactory.getLogger(HelpPage.class);
+    @FindBy(xpath = "//*[contains(text(), 'Cost Insight Report:User Guide')]")
+    private WebElement pageTitle;
 
-    @FindBy(id = "menu-main-menu")
-    private WebElement mainMenu;
-
-    @FindBy(css = "body > h1")
-    private WebElement heading;
-
-    @FindBy(css = "iframe[id='topic']")
+    @FindBy(css = "iframe[id='page_iframe']")
     private WebElement mainContentIframe;
+
+    @FindBy(css = ".Documentation_Cover_Page_Title")
+    private WebElement reportsUserGuideTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public HelpPage(WebDriver driver) {
+    public CirUserGuide(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -46,36 +42,33 @@ public class HelpPage extends ReportsHeader {
 
     @Override
     protected void isLoaded() throws Error {
+
     }
 
     /**
-     * Gets page heading
-     * @return - string
+     * Gets current URL of new tab
+     * @return String
      */
-    public String getPageHeading() {
-        return pageUtils.getPageHeading(heading);
-    }
-
-    /**
-     * Gets window url
-     * @return - string
-     */
-    public String getChildWindowURL() {
+    public String getCurrentUrl() {
         return pageUtils.getTabTwoUrl();
     }
 
     /**
-     * Gets number of open tabs
-     * @return int - number of tabs
+     * Gets count of open tabs
+     * @return int
      */
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
     }
 
     /**
-     * Waits for header to appear (page load)
+     * Gets page heading of Reports Help page
+     * @return String - page title
      */
-    public void waitForHeaderLoad() {
-        pageUtils.waitForElementToAppear(heading);
+    public String getReportsUserGuidePageHeading() {
+        pageUtils.windowHandler();
+        pageUtils.waitForElementToAppear(mainContentIframe);
+        driver.switchTo().frame(mainContentIframe);
+        return reportsUserGuideTitle.getAttribute("textContent");
     }
 }

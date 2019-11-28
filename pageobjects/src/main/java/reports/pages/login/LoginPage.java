@@ -1,5 +1,6 @@
 package reports.pages.login;
 
+import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
@@ -8,14 +9,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reports.pages.admin.home.AdminHomePage;
+import reports.pages.header.ReportsHeader;
 import reports.pages.homepage.HomePage;
 
-import java.io.IOException;
-
-public class LoginPage extends LoadableComponent<LoginPage> {
+public class LoginPage extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     private static String loginPageURL = Constants.cirURL;
@@ -48,14 +48,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     private PageUtils pageUtils;
 
     public LoginPage(WebDriver driver) {
+        super(driver);
         init(driver, "", true);
     }
 
     public LoginPage(WebDriver driver, String url) {
+        super(driver);
         init(driver, url, true);
     }
 
     public LoginPage(WebDriver driver, boolean loadNewPage) {
+        super(driver);
         init(driver, "", loadNewPage);
     }
 
@@ -152,6 +155,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     }
 
     /**
+     * Login to CI Report
+     *
+     * @param userCredentials - object with users credentials and access level
+     * @return new page object
+     */
+    public AdminHomePage loginToCIAdmin(UserCredentials userCredentials) {
+        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        return new AdminHomePage(driver);
+    }
+
+    /**
      * Failed login to CI Report
      *
      * @param email    - user email
@@ -204,25 +218,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     }
 
     /**
-     * Get help link URL
-     *
-     * @return String help link URL
-     */
-    public String getHelpURL() {
-        pageUtils.waitForElementToAppear(helpButton);
-        return helpButton.getAttribute("href");
-    }
-
-    /**
-     * Get privacy policy URL
-     * @return String privacy policy URL
-     */
-    public String getPrivacyPolicyURL() {
-        pageUtils.waitForElementToAppear(privacyPolicyButton);
-        return privacyPolicyButton.getAttribute("href");
-    }
-
-    /**
      * Wait for privacy policy link visibility
      * @return current page object
      */
@@ -232,19 +227,11 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     }
 
     /**
-     * Gets isDisplayed property of Help button
-     * @return isDisplayed property
+     * Clicks Privacy Policy link
+     * @return Privacy Policy page object
      */
-    public boolean isPrivacyPolicyButtonDisplayed() {
-        return privacyPolicyButton.isDisplayed();
-    }
-
-    /**
-     * Get link response code
-     * @param linkURL - URL of link
-     * @return String response code
-     */
-    public int getResponseCode(String linkURL) throws IOException {
-        return pageUtils.urlRespCode(linkURL);
+    public PrivacyPolicyPage goToPrivacyPolicy() {
+        privacyPolicyButton.click();
+        return new PrivacyPolicyPage(driver);
     }
 }

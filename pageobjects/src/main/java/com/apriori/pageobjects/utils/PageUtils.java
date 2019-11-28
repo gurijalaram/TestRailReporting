@@ -149,6 +149,21 @@ public class PageUtils {
         }
     }
 
+    /**
+     * Check if the element is enabled or not. Important: this is not a wait method, it only shows
+     * the current status of the element.
+     *
+     * @param element - WebElement
+     * @return - returns whether element is enabled or not
+     */
+    public boolean isElementEnabled(WebElement element) {
+        try {
+            return element.isEnabled();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
+            return false;
+        }
+    }
+
     public boolean isPageLoaded() {
         return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
     }
@@ -293,15 +308,15 @@ public class PageUtils {
     }
 
     public WebElement waitForElementToAppear(WebElement element) {
-        return waitForAppear(ExpectedConditions.visibilityOf(element), "Element did not appear");
+        return waitForAppear(visibilityOf(element), "Element did not appear");
     }
 
     public WebElement waitForElementToAppear(WebElement element, String message) {
-        return waitForAppear(ExpectedConditions.visibilityOf(element), message);
+        return waitForAppear(visibilityOf(element), message);
     }
 
     public WebElement waitForElementToAppear(WebElement locator, int timeoutInMinutes) {
-        return waitForAppear(ExpectedConditions.visibilityOf(locator), "Element did not appear", timeoutInMinutes);
+        return waitForAppear(visibilityOf(locator), "Element did not appear", timeoutInMinutes);
     }
 
     public WebElement waitForElementToAppear(By locator, int timeoutInMinutes) {
@@ -361,7 +376,7 @@ public class PageUtils {
         while (count < 20) {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 20);
-                return wait.until(ExpectedConditions.visibilityOf(parentElement.findElement(childLocator)));
+                return wait.until(visibilityOf(parentElement.findElement(childLocator)));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
@@ -383,7 +398,7 @@ public class PageUtils {
         while (count < 2) {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, waitTimeInSecond / 2);
-                return wait.until(ExpectedConditions.visibilityOf(parentElement.findElement(childLocator)));
+                return wait.until(visibilityOf(parentElement.findElement(childLocator)));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
@@ -767,5 +782,45 @@ public class PageUtils {
         httpURLConnection.setRequestMethod("HEAD");
         httpURLConnection.connect();
         return httpURLConnection.getResponseCode();
+    }
+
+    /**
+     * Gets count of open tabs
+     * @return int - number of open tabs
+     */
+    public int getCountOfOpenTabs() {
+        return driver.getWindowHandles().size();
+    }
+
+    /**
+     * Gets page heading
+     * @param heading WebElement
+     * @return String heading
+     */
+    public String getPageHeading(WebElement heading) {
+        return heading.getText();
+    }
+
+    /**
+     * Switches to an iframe
+     */
+    public void switchToIframe() {
+        driver.switchTo().frame(1);
+    }
+
+    /**
+     * Gets current URL
+     * @return String
+     */
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    /**
+     * Gets tab two URL
+     * @return String
+     */
+    public String getTabTwoUrl() {
+        return windowHandler().getCurrentUrl();
     }
 }
