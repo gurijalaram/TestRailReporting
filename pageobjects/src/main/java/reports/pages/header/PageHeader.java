@@ -262,8 +262,17 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementToAppear(adminTitle);
         navigateToPage(helpButton);
         pageUtils.windowHandler();
-        pageUtils.switchToIframe();
         pageUtils.waitForElementToAppear(jasperLogo);
+        return new HelpPage(driver);
+    }
+
+    /**
+     * switches to iframe within a page by its "id" value
+     * @param iFrameId - iframe id attribute
+     * @return new HelpPage object
+     */
+    public HelpPage switchToIFrame(String iFrameId) {
+        driver.switchTo().frame(iFrameId);
         return new HelpPage(driver);
     }
 

@@ -23,7 +23,6 @@ public class HomePage extends ReportsHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.helpPage = new HelpPage(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();

@@ -45,7 +45,7 @@ public class HelpPage extends ReportsHeader {
     }
 
     @Override
-    protected void isLoaded() throws Error {
+    protected void isLoaded() {
     }
 
     /**
