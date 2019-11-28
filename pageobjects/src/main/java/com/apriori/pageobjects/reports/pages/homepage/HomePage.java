@@ -1,5 +1,6 @@
-package com.apriori.pageobjects.pages.login;
+package com.apriori.pageobjects.reports.pages.homepage;
 
+import com.apriori.pageobjects.pages.login.HelpPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -10,30 +11,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.apriori.pageobjects.reports.header.ReportsHeader;
 
-/**
- * @author cfrith
- */
+public class HomePage extends ReportsHeader {
 
-public class HelpPage extends ReportsHeader {
+    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
-    private Logger logger = LoggerFactory.getLogger(HelpPage.class);
-
-    @FindBy(id = "menu-main-menu")
-    private WebElement mainMenu;
-
-    @FindBy(css = "body > h1")
-    private WebElement heading;
-
-    @FindBy(css = "iframe[id='topic']")
-    private WebElement mainContentIframe;
-
-    private WebDriver driver;
     private PageUtils pageUtils;
+    private HelpPage helpPage;
+    private WebDriver driver;
 
-    public HelpPage(WebDriver driver) {
+    public HomePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.helpPage = new HelpPage(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -46,36 +36,35 @@ public class HelpPage extends ReportsHeader {
 
     @Override
     protected void isLoaded() throws Error {
+
+    }
+
+    @FindBy(css = "button[aria-label='Create Data Sources']")
+    private WebElement createButton;
+
+    /**
+     * Check if Create button is displayed
+     *
+     * @return Visibility of button
+     */
+    public boolean isCreateButtonDisplayed() {
+        pageUtils.waitForElementToAppear(createButton);
+        return createButton.isDisplayed();
     }
 
     /**
-     * Gets page heading
-     * @return - string
+     * Gets current URL of new tab
+     * @return String
      */
-    public String getPageHeading() {
-        return pageUtils.getPageHeading(heading);
-    }
-
-    /**
-     * Gets window url
-     * @return - string
-     */
-    public String getChildWindowURL() {
+    public String getCurrentUrl() {
         return pageUtils.getTabTwoUrl();
     }
 
     /**
-     * Gets number of open tabs
-     * @return int - number of tabs
+     * Gets count of open tabs
+     * @return int
      */
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
-    }
-
-    /**
-     * Waits for header to appear (page load)
-     */
-    public void waitForHeaderLoad() {
-        pageUtils.waitForElementToAppear(heading);
     }
 }
