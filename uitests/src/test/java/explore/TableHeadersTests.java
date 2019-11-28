@@ -16,6 +16,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -58,6 +59,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-893")
     @TestRail(testCaseId = {"1095"})
     @Description("Test added columns are displayed in the public workspace")
     public void testPublicAddColumnHeaders() {
@@ -76,6 +78,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-893")
     @TestRail(testCaseId = {"1095", "531"})
     @Description("Test added columns are displayed in the private workspace")
     public void testPrivateAddColumnHeaders() {
