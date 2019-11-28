@@ -67,6 +67,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-893")
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
