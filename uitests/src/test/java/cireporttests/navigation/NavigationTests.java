@@ -2,12 +2,8 @@ package cireporttests.navigation;
 
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.pageobjects.pages.login.HelpPage;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import reports.pages.admin.manage.SystemDataExport;
 import reports.pages.admin.manage.ScenarioExport;
-import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 import reports.pages.userguides.CiaUserGuide;
@@ -31,9 +27,6 @@ import reports.pages.manage.Roles;
 import reports.pages.manage.Users;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.apriori.utils.constants.Constants.ciaURL;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -345,16 +338,17 @@ public class NavigationTests extends TestBase {
         assertThat(privacyPolicyPage.getTabCount(), is(2));
     }
 
-//    @Test
-//    @TestRail(testCaseId = {"2701"})
-//    @Description("Ensure that the link to the help page works")
-//    public void testHelpNavigation() {
-//        loginPage = new LoginPage(driver);
-//        helpPage = loginPage.login(UserUtil.getUser())
-//                .navigateToHelpPage();
-//
-//        assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
-//        assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.reportingHelpUrl)));
-//        assertThat(helpPage.getTabCount(), is(2));
-//    }
+    @Test
+    @TestRail(testCaseId = {"2701"})
+    @Description("Ensure that the link to the help page works")
+    public void testHelpNavigation() {
+        String iFrameId = "topic";
+        loginPage = new LoginPage(driver);
+        helpPage = loginPage.login(UserUtil.getUser())
+                .navigateToHelpPage().switchToIFrame(iFrameId);
+
+        assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
+        assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.reportingHelpUrl)));
+        assertThat(helpPage.getTabCount(), is(2));
+    }
 }
