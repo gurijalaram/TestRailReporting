@@ -5,6 +5,11 @@ import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.pageobjects.pages.login.HelpPage;
+<<<<<<< HEAD
+=======
+import reports.pages.admin.manage.SystemDataExport;
+import reports.pages.admin.manage.ScenarioExport;
+>>>>>>> master
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuide;
@@ -28,6 +33,10 @@ import com.apriori.pageobjects.reports.pages.manage.Users;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
 
+<<<<<<< HEAD
+=======
+import static com.apriori.utils.constants.Constants.ciaURL;
+>>>>>>> master
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -253,9 +262,10 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2701"})
     @Description("Ensure that the link to the help page works")
     public void testHelpNavigation() {
-        helpPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToHelpPage();
+        String iFrameId = "topic";
+        loginPage = new LoginPage(driver);
+        helpPage = loginPage.login(UserUtil.getUser())
+                .navigateToHelpPage().switchToIFrame(iFrameId);
 
         assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
         assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.reportingHelpUrl)));
