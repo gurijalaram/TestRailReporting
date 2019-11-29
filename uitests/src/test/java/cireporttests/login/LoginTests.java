@@ -8,8 +8,8 @@ import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.TestRail;
 
-import reports.pages.homepage.HomePage;
-import reports.pages.login.LoginPage;
+import com.apriori.pageobjects.reports.pages.homepage.HomePage;
+import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
@@ -50,7 +50,7 @@ public class LoginTests extends TestBase {
         String passwordResetMsg = "We've just sent you an email to reset your password.";
         loginPage = new LoginPage(driver);
         loginPage.clickForgotPassword()
-            .submitEmail("fakeEmail@apriori.com");
+                .submitEmail("fakeEmail@apriori.com");
 
         assertThat(loginPage.getLoginMessage(), is(equalTo(passwordResetMsg.toUpperCase())));
     }
