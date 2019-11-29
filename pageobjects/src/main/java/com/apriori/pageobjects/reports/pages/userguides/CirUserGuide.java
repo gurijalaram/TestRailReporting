@@ -69,6 +69,6 @@ public class CirUserGuide extends ReportsHeader {
         pageUtils.windowHandler();
         pageUtils.waitForElementToAppear(mainContentIframe);
         driver.switchTo().frame(mainContentIframe);
-        return reportsUserGuideTitle.getAttribute("textContent");
+        return pageUtils.getTextContent(reportsUserGuideTitle);
     }
 }

@@ -238,11 +238,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigate to Reports from Admin
-     * @return Home Page page object model
+     * @return Reports Page page object model
      */
-    public HomePage navigateToReports() {
+    public Report navigateToReports() {
         navigateToPage(reportsMenuOption);
-        return new HomePage(driver);
+        return new Report(driver);
     }
 
     /**

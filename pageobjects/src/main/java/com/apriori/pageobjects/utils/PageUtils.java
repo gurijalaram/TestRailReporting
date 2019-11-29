@@ -802,6 +802,13 @@ public class PageUtils {
     }
 
     /**
+     * Gets textContent of an element
+     * @param element
+     * @return
+     */
+    public String getTextContent(WebElement element) { return element.getAttribute("textContent"); }
+
+    /**
      * Gets current URL
      * @return String
      */
