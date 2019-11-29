@@ -2,6 +2,7 @@ package com.apriori.pageobjects.admin.pages.logout;
 
 import com.apriori.pageobjects.admin.header.AdminHeader;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

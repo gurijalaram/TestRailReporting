@@ -1,11 +1,12 @@
 package com.apriori.pageobjects.admin.header;
 
 import com.apriori.pageobjects.admin.pages.homepage.HomePage;
+import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
+import com.apriori.pageobjects.reports.pages.userguides.CirUserGuide;
 import com.apriori.pageobjects.utils.PageUtils;
-import com.apriori.pageobjects.admin.pages.logout.Logout;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,7 +15,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.apriori.pageobjects.reports.pages.userguides.CirUserGuide;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
