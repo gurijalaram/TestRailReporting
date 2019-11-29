@@ -16,7 +16,8 @@ import java.util.Map;
 public class Repository extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(Repository.class);
-    private Map<String, WebElement> folderElementMap = new HashMap<String, WebElement>();
+    private Map<String, WebElement> folderElementMap = new HashMap<>();
+    private Map<String, WebElement> reportElementMap = new HashMap<>();
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -24,46 +25,46 @@ public class Repository extends ReportsHeader {
     @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
     private WebElement repositoryPageTitle;
 
-    @FindBy(css = "li[id='node2'] > p")
+    @FindBy(css = "ul[id='node1sub'] > li:nth-child(1) > p > b")
     private WebElement organizationFolder;
 
-    @FindBy(css = "li[id='node4'] > p")
+    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/p/b")
     private WebElement aprioriSubFolder;
 
-    @FindBy(css = "li[id='node9'] > p")
+    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/p/b")
     private WebElement reportsFolder;
 
-    @FindBy(css = "li[id='node10'] > p")
+    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[1]/p/b")
     private  WebElement deploymentLeaderFolder;
 
-    @FindBy(css = "li[id='node11'] > p")
+    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[2]/p/b")
     private WebElement dtcMetricsFolder;
 
-    @FindBy(css = "li[id='node12'] > p")
+    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[3]/p/b")
     private WebElement generalFolder;
 
-    @FindBy(css = "li[id='node13'] > p")
+    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[4]/p/b")
     private WebElement solutionsFolder;
 
-    @FindBy(css = "li[id='node14'] > p")
+    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[5]/p/b")
     private WebElement upgradProcessFolder;
 
     @FindBy(css = "ul[id='resultsList']")
     private WebElement generalReportsList;
 
-    @FindBy(css = "a:contains('Assembly Cost (A4)')")
+    @FindBy(xpath = "//a[contains(text(), 'Assembly Cost (A4)')]")
     private WebElement assemblyCostA4Report;
 
-    @FindBy(css = "a:contains('Assembly Cost (Letter)')")
+    @FindBy(xpath = "//a[contains(text(), 'Assembly Cost (Letter)')]")
     private WebElement assemblyCostLetterReport;
 
-    @FindBy(css = "a:contains('Assembly Details')")
+    @FindBy(xpath = "//a[contains(text(), 'Assembly Details')]")
     private WebElement assemblyDetailsReport;
 
-    @FindBy(css = "a:contains('Component Cost')")
+    @FindBy(xpath = "//a[contains(text(), 'Component Cost')]")
     private WebElement componentCostReport;
 
-    @FindBy(css = "a:contains('Scenario Comparison')")
+    @FindBy(xpath = "//a[contains(text(), 'Scenario Comparison')]")
     private WebElement scenarioComparisonReport;
 
     @FindBy(id = "apply")
@@ -88,39 +89,13 @@ public class Repository extends ReportsHeader {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseFolderMap();
+        initialiseReportMap();
     }
 
-    public Repository navigateToDeploymentLeaderFolder() {
-        navigateToFolder("Deployment Leader");
+    public Repository navigateToFolder(String folder) {
+        pageUtils.waitForElementToAppear(folderElementMap.get(folder))
+                .click();
         return this;
-    }
-
-    public Repository navigateToDtcMetricsFolder() {
-        navigateToFolder("DTC Metrics");
-        return this;
-    }
-
-    public Repository navigateToGeneralFolder() {
-        navigateToFolder("General");
-        return this;
-    }
-
-    public Repository navigateToSolutionsFolder() {
-        navigateToFolder("Solutions");
-        return this;
-    }
-
-    public Repository navigateToUpgradeProcessFolder() {
-        navigateToFolder("Upgrade Process");
-        return this;
-    }
-
-    /**
-     * Generic method to allow for navigation to a folder
-     * @param reportsSubFolderName
-     */
-    public void navigateToFolder(String reportsSubFolderName) {
-        pageUtils.waitForElementToAppear(folderElementMap.get(reportsSubFolderName)).click();
     }
 
     /**
@@ -132,13 +107,38 @@ public class Repository extends ReportsHeader {
         return repositoryPageTitle.getText();
     }
 
+    /**
+     * Get count of General Reports
+     * @return String
+     */
     public String getCountOfGeneralReports() {
-        String retVal = generalReportsList.getAttribute("childElementCount");
+        pageUtils.waitForElementToAppear(generalReportsList);
+        return generalReportsList.getAttribute("childElementCount");
+    }
+
+    /**
+     * Get name of first report
+     * @return
+     */
+    public String getReportNameText(String reportName) {
+        WebElement element = reportElementMap.get(reportName);
+        String retVal = element.getAttribute("textContent");
         return retVal;
     }
 
     /**
-     * Initialises Folder Hash map
+     * Initialises Report hash map
+     */
+    private void initialiseReportMap() {
+        reportElementMap.put("Assembly Cost (A4)", assemblyCostA4Report);
+        reportElementMap.put("Assembly Cost (Letter)", assemblyCostLetterReport);
+        reportElementMap.put("Assembly Details", assemblyDetailsReport);
+        reportElementMap.put("Component Cost", componentCostReport);
+        reportElementMap.put("Scenario Comparison", scenarioComparisonReport);
+    }
+
+    /**
+     * Initialises Bottom Folder hash map
      */
     private void initialiseFolderMap() {
         folderElementMap.put("Deployment Leader", deploymentLeaderFolder);
@@ -146,6 +146,9 @@ public class Repository extends ReportsHeader {
         folderElementMap.put("General", generalFolder);
         folderElementMap.put("Solutions", solutionsFolder);
         folderElementMap.put("Upgrade Process", upgradProcessFolder);
-    }
 
+        folderElementMap.put("Organization", organizationFolder);
+        folderElementMap.put("aPriori", aprioriSubFolder);
+        folderElementMap.put("Reports", reportsFolder);
+    }
 }

@@ -797,16 +797,9 @@ public class PageUtils {
      * @param heading WebElement
      * @return String heading
      */
-    public String getPageHeading(WebElement heading) {
+    public String getElementText(WebElement heading) {
         return heading.getText();
     }
-
-    /**
-     * Gets textContent of an element
-     * @param element
-     * @return
-     */
-    public String getTextContent(WebElement element) { return element.getAttribute("textContent"); }
 
     /**
      * Gets current URL

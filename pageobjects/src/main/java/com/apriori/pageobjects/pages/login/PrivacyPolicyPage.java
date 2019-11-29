@@ -50,7 +50,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      */
     public String getPageHeading() {
         pageUtils.windowHandler();
-        return pageUtils.getPageHeading(heading);
+        return pageUtils.getElementText(heading);
     }
 
     /**
