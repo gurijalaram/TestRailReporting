@@ -516,7 +516,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57018")
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
         loginPage = new LoginPage(driver);
@@ -625,7 +624,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57276")
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
         loginPage = new LoginPage(driver);
