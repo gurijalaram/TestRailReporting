@@ -68,6 +68,8 @@ public class CiaUserGuide extends PageHeader {
         pageUtils.windowHandler();
         pageUtils.waitForElementToAppear(mainContentIframe);
         driver.switchTo().frame(mainContentIframe);
-        return adminUserGuideTitle.getAttribute("textContent");
+        pageUtils.waitForElementAppear(adminUserGuideTitle);
+        String retVal = adminUserGuideTitle.getAttribute("textContent");
+        return retVal;
     }
 }
