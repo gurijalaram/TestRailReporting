@@ -275,7 +275,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-874")
     @TestRail(testCaseId = {"543"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
@@ -312,7 +311,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-874")
     @TestRail(testCaseId = {"542", "546"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
