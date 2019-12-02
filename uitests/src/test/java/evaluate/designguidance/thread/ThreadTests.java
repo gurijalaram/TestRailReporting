@@ -22,7 +22,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -131,7 +130,6 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57282")
     @Description("Test to set dropdown value to yes")
     public void setDropdownValueYes() {
         loginPage = new LoginPage(driver);
@@ -281,7 +279,6 @@ public class ThreadTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"38", "40", "43", "584", "598"})
-    @Issue("AP-56325")
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
         loginPage = new LoginPage(driver);
@@ -334,7 +331,6 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-56325")
     @TestRail(testCaseId = {"42"})
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
@@ -358,7 +354,6 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-56325")
     @TestRail(testCaseId = {"37", "41"})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
