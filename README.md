@@ -21,12 +21,14 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 	* Select the module where the test is as the base directory
 	* Enter the following goals `clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=LOCAL -DthreadCount=3`. To run more tests in parallel, change `-DthreadCount=10` number
 	* To see supported browsers, check `DriverFactory.java`
+	* **OPTIONAL environment configurations**:
+	    * `-Denv={environment name}` e.g. `-Denv=cid-te`, environment by default `cid-te`: which environment properties we need to use (URL, authorization users, etc.) you can find properties by `utils/resources/{environment}/{environment}.properties`
+	    * `-Durl={base url for properties}` e.g. `-Durl=http:\\my-test-url`, by default `url.default` value from environment properties file: replace `url.default` from environment properties, you can find properties by `utils/resources/{environment}/{environment}.properties`
 3. Running test on docker (and zalenium if required):
     * Install docker
     * Pull docker images for selenium hub, chrome and firefox (dosel/zalenium if required)
     * In the terminal enter `docker-compose up -d`. For zalenium enter `docker run --rm -ti --name zalenium -p 4444:4444 -p 5555:5555 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos dosel/zalenium start`
     * In the terminal go to the base directory (eg. C:\automation-qa\apriori-qa\uitests) and enter the following goals `mvn clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=QA`
-
 ## Users functionality
 Get user functionality has reference to `{environment}.properties` file. 
 
