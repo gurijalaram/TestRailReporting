@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
+import com.apriori.pageobjects.reports.header.ReportsHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -8,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reports.pages.header.ReportsHeader;
 
 /**
  * @author cfrith
@@ -45,7 +45,7 @@ public class HelpPage extends ReportsHeader {
     }
 
     @Override
-    protected void isLoaded() throws Error {
+    protected void isLoaded() {
     }
 
     /**
