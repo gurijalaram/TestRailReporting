@@ -92,9 +92,15 @@ public class Repository extends ReportsHeader {
         initialiseReportMap();
     }
 
-    public Repository navigateToFolder(String folder) {
-        pageUtils.waitForElementToAppear(folderElementMap.get(folder))
-                .click();
+    /**
+     * Navigates to general folder
+     * @return current page object
+     */
+    public Repository navigateToGeneralFolder() {
+        navigateToFolder("Organization");
+        navigateToFolder("aPriori");
+        navigateToFolder("Reports");
+        navigateToFolder("General");
         return this;
     }
 
@@ -118,12 +124,62 @@ public class Repository extends ReportsHeader {
 
     /**
      * Get name of first report
-     * @return
+     * @return String - text of report name
      */
-    public String getReportNameText(String reportName) {
+    private String getReportNameText(String reportName) {
         WebElement element = reportElementMap.get(reportName);
-        String retVal = element.getAttribute("textContent");
-        return retVal;
+        return element.getAttribute("textContent");
+    }
+
+    /**
+     * Gets Assembly Cost (A4) report name
+     * @return String - report name
+     */
+    public String getAssemblyA4ReportName() {
+        return getReportNameText("Assembly Cost (A4)");
+    }
+
+    /**
+     * Gets Assembly Cost (Letter) report name
+     * @return String - report name
+     */
+    public String getAssemblyLetterReportName() {
+        return getReportNameText("Assembly Cost (Letter)");
+    }
+
+    /**
+     * Gets Assembly Details report name
+     * @return String - report name
+     */
+    public String getAssemblyDetailsReportName() {
+        return getReportNameText("Assembly Details");
+    }
+
+    /**
+     * Gets Component Cost report name
+     * @return String - report name
+     */
+    public String getComponentCostReportName() {
+        return getReportNameText("Component Cost");
+    }
+
+    /**
+     * Gets Scenario Comparison report name
+     * @return String - report name
+     */
+    public String getScenarioComparisonReportName() {
+        return getReportNameText("Scenario Comparison");
+    }
+
+    /**
+     * Generic folder navigation method
+     * @param folder to navigate to
+     * @return current page object
+     */
+    private Repository navigateToFolder(String folder) {
+        pageUtils.waitForElementToAppear(folderElementMap.get(folder))
+                .click();
+        return this;
     }
 
     /**

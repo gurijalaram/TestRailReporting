@@ -1,5 +1,6 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
+import com.apriori.pageobjects.reports.pages.library.Library;
 import com.apriori.pageobjects.reports.pages.view.Repository;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.utils.TestRail;
@@ -15,29 +16,42 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class AssemblyDetailsReportTests extends TestBase {
 
     private Repository repository;
+    private Library library;
 
     public AssemblyDetailsReportTests() {
         super();
     }
 
     @Test
-    @TestRail(testCaseId = "2987")
-    @Description("Ensure that the CI Reports User Guide Link works")
-    public void testCIReportsUserGuideNavigation() {
+    @TestRail(testCaseId = "1915")
+    @Description("validate report is available by navigation")
+    public void testReportAvailabilityByMenu() {
         repository = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToViewRepositoryPage()
-                .navigateToFolder("Organization")
-                .navigateToFolder("aPriori")
-                .navigateToFolder("Reports")
-                .navigateToFolder("General");
+                .navigateToGeneralFolder();
 
         assertThat(repository.getCountOfGeneralReports(), is(equalTo("5")));
 
-        assertThat(repository.getReportNameText("Assembly Cost (A4)"), is(equalTo("Assembly Cost (A4)")));
-        assertThat(repository.getReportNameText("Assembly Cost (Letter)"), is(equalTo("Assembly Cost (Letter)")));
-        assertThat(repository.getReportNameText("Assembly Details"), is(equalTo("Assembly Details")));
-        assertThat(repository.getReportNameText("Component Cost"), is(equalTo("Component Cost")));
-        assertThat(repository.getReportNameText("Scenario Comparison"), is(equalTo("Scenario Comparison")));
+        assertThat(repository.getAssemblyA4ReportName(), is(equalTo("Assembly Cost (A4)")));
+        assertThat(repository.getAssemblyLetterReportName(), is(equalTo("Assembly Cost (Letter)")));
+        assertThat(repository.getAssemblyDetailsReportName(), is(equalTo("Assembly Details")));
+        assertThat(repository.getComponentCostReportName(), is(equalTo("Component Cost")));
+        assertThat(repository.getScenarioComparisonReportName(), is(equalTo("Scenario Comparison")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3060")
+    @Description("Validate report is available by library")
+    public void testReportAvailabilityByLibrary() {
+        library = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage();
+
+        assertThat(library.getAssemblyA4ReportName(), is(equalTo("Assembly Cost (A4)")));
+        assertThat(library.getAssemblyLetterReportName(), is(equalTo("Assembly Cost (Letter)")));
+        assertThat(library.getAssemblyDetailsReportName(), is(equalTo("Assembly Details")));
+        assertThat(library.getComponentCostReportName(), is(equalTo("Component Cost")));
+        assertThat(library.getScenarioComparisonReportName(), is(equalTo("Scenario Comparison")));
     }
 }
