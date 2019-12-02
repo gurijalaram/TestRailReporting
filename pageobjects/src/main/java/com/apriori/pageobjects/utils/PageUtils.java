@@ -802,13 +802,6 @@ public class PageUtils {
     }
 
     /**
-     * Switches to an iframe
-     */
-    public void switchToIframe() {
-        driver.switchTo().frame(1);
-    }
-
-    /**
      * Gets current URL
      * @return String
      */
