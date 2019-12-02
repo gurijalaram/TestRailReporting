@@ -1,5 +1,6 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
+import com.apriori.pageobjects.reports.pages.view.AssemblyReports;
 import com.apriori.pageobjects.reports.pages.view.SearchResults;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.pageobjects.reports.pages.library.Library;
@@ -22,14 +23,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     private HomePage homePage;
     private Library library;
 
-    String[] reportNames = {
-            "Assembly Cost (A4)",
-            "Assembly Cost (Letter)",
-            "Assembly Details",
-            "Component Cost",
-            "Scenario Comparison"
-    };
-
     public AssemblyDetailsReportTests() {
         super();
     }
@@ -45,8 +38,9 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(repository.getCountOfGeneralReports(), is(equalTo("5")));
 
-        for(int i = 0; i < 5; i++) {
-            assertThat(repository.getReportName(reportNames[i]), is(equalTo(reportNames[i])));
+        AssemblyReports[] reportNames = AssemblyReports.values();
+        for(AssemblyReports report : reportNames) {
+            assertThat(repository.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
         }
     }
 
@@ -58,8 +52,9 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage();
 
-        for (int i = 0; i < 5; i++) {
-            assertThat(library.getReportName(reportNames[i]), is(equalTo(reportNames[i])));
+        AssemblyReports[] reportNames = AssemblyReports.values();
+        for (AssemblyReports report : reportNames) {
+            assertThat(library.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
         }
     }
 
@@ -72,9 +67,10 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         searchResults = new SearchResults(driver);
 
-        for (int i = 0; i < 5; i++) {
-            homePage.searchForReport(reportNames[i]);
-            assertThat(searchResults.getReportName(reportNames[i]), is(equalTo(reportNames[i])));
+        AssemblyReports[] reportNames = AssemblyReports.values();
+        for (AssemblyReports report : reportNames) {
+            homePage.searchForReport(report.getReportName());
+            assertThat(searchResults.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
         }
     }
 }

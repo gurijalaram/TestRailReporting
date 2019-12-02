@@ -826,6 +826,6 @@ public class PageUtils {
         By by = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
         waitForElementToAppear(by);
         WebElement element = driver.findElement(by);
-        return element.getAttribute("textContent");
+        return element.getText();
     }
 }

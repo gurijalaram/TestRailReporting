@@ -329,7 +329,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      */
     public HomePage searchForReport(String textToType) {
         pageUtils.waitForElementToBeClickable(searchInput);
-        pageUtils.waitForElementToAppear(searchInput);
         searchInput.sendKeys(textToType);
         searchButton.click();
         return new HomePage(driver);

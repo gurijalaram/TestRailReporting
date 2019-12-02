@@ -123,55 +123,6 @@ public class Repository extends ReportsHeader {
     }
 
     /**
-     * Get name of first report
-     * @return String - text of report name
-     */
-    private String getReportNameText(String reportName) {
-        WebElement element = reportElementMap.get(reportName);
-        return element.getAttribute("textContent");
-    }
-
-    /**
-     * Gets Assembly Cost (A4) report name
-     * @return String - report name
-     */
-    public String getAssemblyA4ReportName() {
-        return getReportNameText("Assembly Cost (A4)");
-    }
-
-    /**
-     * Gets Assembly Cost (Letter) report name
-     * @return String - report name
-     */
-    public String getAssemblyLetterReportName() {
-        return getReportNameText("Assembly Cost (Letter)");
-    }
-
-    /**
-     * Gets Assembly Details report name
-     * @return String - report name
-     */
-    public String getAssemblyDetailsReportName() {
-        return getReportNameText("Assembly Details");
-    }
-
-    /**
-     * Gets Component Cost report name
-     * @return String - report name
-     */
-    public String getComponentCostReportName() {
-        return getReportNameText("Component Cost");
-    }
-
-    /**
-     * Gets Scenario Comparison report name
-     * @return String - report name
-     */
-    public String getScenarioComparisonReportName() {
-        return getReportNameText("Scenario Comparison");
-    }
-
-    /**
      * Get name of a report
      * @return String - text of report name
      */
@@ -194,11 +145,11 @@ public class Repository extends ReportsHeader {
      * Initialises Report hash map
      */
     private void initialiseReportMap() {
-        reportElementMap.put("Assembly Cost (A4)", assemblyCostA4Report);
-        reportElementMap.put("Assembly Cost (Letter)", assemblyCostLetterReport);
-        reportElementMap.put("Assembly Details", assemblyDetailsReport);
-        reportElementMap.put("Component Cost", componentCostReport);
-        reportElementMap.put("Scenario Comparison", scenarioComparisonReport);
+        reportElementMap.put(AssemblyReports.ASSEMBLY_COST_A4.getReportName(), assemblyCostA4Report);
+        reportElementMap.put(AssemblyReports.ASSEMBLY_COST_LETTER.getReportName(), assemblyCostLetterReport);
+        reportElementMap.put(AssemblyReports.ASSEMBLY_DETAILS.getReportName(), assemblyDetailsReport);
+        reportElementMap.put(AssemblyReports.COMPONENT_COST.getReportName(), componentCostReport);
+        reportElementMap.put(AssemblyReports.SCENARIO_COMPARISON.getReportName(), scenarioComparisonReport);
     }
 
     /**
