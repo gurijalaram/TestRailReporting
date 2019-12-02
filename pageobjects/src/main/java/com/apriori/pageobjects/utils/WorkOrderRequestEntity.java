@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class WorkOrderRequestEntity {
 
-    private String baseURL = Constants.url;
+    private String baseURL = Constants.getBaseUrl();
     private String username;
     private String password;
     private String scenarioName;
