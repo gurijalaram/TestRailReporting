@@ -23,7 +23,7 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 	* To see supported browsers, check `DriverFactory.java`
 	* **OPTIONAL environment configurations**:
 	    * `-Denv={environment name}` e.g. `-Denv=cid-te`, environment by default `cid-te`: which environment properties we need to use (URL, authorization users, etc.) you can find properties by `utils/resources/{environment}/{environment}.properties`
-	    * `-Durl={base url for properties}` e.g. `-Durl=http:\\my-test-url`, by default `url.default` value from environment properties file: replace `url.default` from environment properties, you can find properties by `utils/resources/{environment}/{environment}.properties`
+	    * `-Durl={base url for properties}` e.g. `-Durl=http:\\my-base-url`, by default value from environment properties file `url.default` :  initialize base url by overriding `url.default`, from environment properties, to value inserted in `-Durl`, you can find properties by `utils/resources/{environment}/{environment}.properties`
 3. Running test on docker (and zalenium if required):
     * Install docker
     * Pull docker images for selenium hub, chrome and firefox (dosel/zalenium if required)
