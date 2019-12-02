@@ -109,6 +109,12 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "div[id='header']")
     private WebElement jasperLogo;
 
+    @FindBy(id = "searchInput")
+    private WebElement searchInput;
+
+    @FindBy(css = "span[id='globalSearch'] > a")
+    private WebElement searchButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -314,5 +320,18 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         parentPage.click();
         pageUtils.waitForElementToAppear(childPage);
         childPage.click();
+    }
+
+    /**
+     * Search for Report
+     * @param textToType
+     * @return current page object
+     */
+    public HomePage searchForReport(String textToType) {
+        pageUtils.waitForElementToBeClickable(searchInput);
+        pageUtils.waitForElementToAppear(searchInput);
+        searchInput.sendKeys(textToType);
+        searchButton.click();
+        return new HomePage(driver);
     }
 }

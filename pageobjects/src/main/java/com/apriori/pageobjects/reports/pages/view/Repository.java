@@ -172,6 +172,14 @@ public class Repository extends ReportsHeader {
     }
 
     /**
+     * Get name of a report
+     * @return String - text of report name
+     */
+    public String getReportName(String reportName) {
+        return pageUtils.getReportNameText(reportName);
+    }
+
+    /**
      * Generic folder navigation method
      * @param folder to navigate to
      * @return current page object
