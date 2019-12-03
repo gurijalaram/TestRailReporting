@@ -7,25 +7,26 @@ import org.aeonbits.owner.Config;
 })
 public interface ConstantsInit extends Config {
 
+    @Key("url.default")
     String url();
 
     @Key("schema.base.path")
     String schemaBasePath();
 
-    @Key("url.internal.api")
+    @Key("url.additional.internal.api")
     String internalApiURL();
+
+    @Key("url.additional.cid")
+    String cidURL();
+
+    @Key("url.additional.cir")
+    String cirURL();
+
+    @Key("url.additional.admin")
+    String ciaURL();
 
     @Key("url.grid.server")
     String gridServerUrl();
-
-    @Key("url.cid")
-    String cidURL();
-
-    @Key("url.cir")
-    String cirURL();
-
-    @Key("url.admin")
-    String ciaURL();
 
     @Key("console.log.level")
     String consoleLogLevelData();
