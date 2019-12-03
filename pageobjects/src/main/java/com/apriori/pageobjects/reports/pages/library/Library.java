@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.reports.pages.library;
 
 import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReport;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -54,5 +55,17 @@ public class Library extends ReportsHeader {
      */
     public String getReportName(String reportName) {
         return pageUtils.getReportNameText(reportName);
+    }
+
+    /**
+     * Navigate to a particular report
+     * @param reportName
+     * @return new page object
+     */
+    public AssemblyDetailsReport navigateToReport(String reportName) {
+        WebElement reportLinkElement = pageUtils.getReportLinkElement(reportName);
+        pageUtils.waitForElementToAppear(reportLinkElement);
+        reportLinkElement.click();
+        return new AssemblyDetailsReport(driver);
     }
 }

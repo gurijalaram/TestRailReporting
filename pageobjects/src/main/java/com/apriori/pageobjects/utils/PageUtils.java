@@ -828,4 +828,15 @@ public class PageUtils {
         WebElement element = driver.findElement(by);
         return element.getText();
     }
+
+    /**
+     * Get report link element
+     * @return WebElement
+     */
+    public WebElement getReportLinkElement(String reportName) {
+        By by = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
+        waitForElementToAppear(by);
+        WebElement element = driver.findElement(by);
+        return element;
+    }
 }

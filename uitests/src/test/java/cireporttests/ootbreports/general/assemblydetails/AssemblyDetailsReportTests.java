@@ -6,11 +6,14 @@ import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.pageobjects.reports.pages.library.Library;
 import com.apriori.pageobjects.reports.pages.view.Repository;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
+import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReport;
+import com.apriori.pageobjects.reports.pages.view.reports.InputControls;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
+import sun.rmi.runtime.Log;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -18,6 +21,8 @@ import static org.hamcrest.CoreMatchers.is;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
+    private AssemblyDetailsReport assemblyDetailsReport;
+    private InputControls inputControls;
     private SearchResults searchResults;
     private Repository repository;
     private HomePage homePage;
@@ -72,5 +77,25 @@ public class AssemblyDetailsReportTests extends TestBase {
             homePage.searchForReport(report.getReportName());
             assertThat(searchResults.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
         }
+    }
+
+    @Test
+    @TestRail(testCaseId = "1922")
+    @Description("Currency Code works")
+    public void testCurrencyCodeWorks() throws InterruptedException {
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReports.ASSEMBLY_DETAILS.getReportName())
+                .waitForPageLoad()
+                .checkUsdSelected()
+                .clickApplyAndOk()
+                .storeCapitalInvGrandTotalUSD()
+                .clickOptionsButton()
+                .checkGbpSelected()
+                .clickApplyAndOk();
+
+        // assert that values are different (not equal + less than)
+
     }
 }

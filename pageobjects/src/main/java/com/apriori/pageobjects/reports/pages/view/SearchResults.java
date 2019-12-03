@@ -28,16 +28,6 @@ public class SearchResults extends ReportsHeader {
         PageFactory.initElements(driver, this);
     }
 
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-
-    }
-
     /**
      * Get page title text
      * @return String - page title text

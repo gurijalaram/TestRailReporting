@@ -47,7 +47,7 @@ public class Repository extends ReportsHeader {
     private WebElement solutionsFolder;
 
     @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[5]/p/b")
-    private WebElement upgradProcessFolder;
+    private WebElement upgradeProcessFolder;
 
     @FindBy(css = "ul[id='resultsList']")
     private WebElement generalReportsList;
@@ -66,21 +66,6 @@ public class Repository extends ReportsHeader {
 
     @FindBy(xpath = "//a[contains(text(), 'Scenario Comparison')]")
     private WebElement scenarioComparisonReport;
-
-    @FindBy(id = "apply")
-    private WebElement applyButton;
-
-    @FindBy(id = "ok")
-    private WebElement okButton;
-
-    @FindBy(id = "reset")
-    private WebElement resetButton;
-
-    @FindBy(id = "cancelButton")
-    private WebElement cancelButton;
-
-    @FindBy(id = "save")
-    private WebElement saveButton;
 
     public Repository(WebDriver driver) {
         super(driver);
@@ -160,7 +145,7 @@ public class Repository extends ReportsHeader {
         folderElementMap.put("DTC Metrics", dtcMetricsFolder);
         folderElementMap.put("General", generalFolder);
         folderElementMap.put("Solutions", solutionsFolder);
-        folderElementMap.put("Upgrade Process", upgradProcessFolder);
+        folderElementMap.put("Upgrade Process", upgradeProcessFolder);
 
         folderElementMap.put("Organization", organizationFolder);
         folderElementMap.put("aPriori", aprioriSubFolder);
