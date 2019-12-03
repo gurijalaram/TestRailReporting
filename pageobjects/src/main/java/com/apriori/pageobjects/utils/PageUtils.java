@@ -3,6 +3,7 @@ package com.apriori.pageobjects.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
+import org.apache.commons.collections4.Get;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -797,7 +798,7 @@ public class PageUtils {
      * @param heading WebElement
      * @return String heading
      */
-    public String getPageHeading(WebElement heading) {
+    public String getElementText(WebElement heading) {
         return heading.getText();
     }
 
@@ -815,5 +816,16 @@ public class PageUtils {
      */
     public String getTabTwoUrl() {
         return windowHandler().getCurrentUrl();
+    }
+
+    /**
+     * Get name of a report
+     * @return String - text of report name
+     */
+    public String getReportNameText(String reportName) {
+        By by = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
+        waitForElementToAppear(by);
+        WebElement element = driver.findElement(by);
+        return element.getText();
     }
 }

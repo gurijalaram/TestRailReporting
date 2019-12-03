@@ -37,11 +37,8 @@ import static org.hamcrest.core.StringStartsWith.startsWith;
 public class NavigationTests extends TestBase {
 
     private PrivacyPolicyPage privacyPolicyPage;
-    private SystemDataExport systemDataExport;
-    private ScenarioExport scenarioExport;
     private SearchResults searchResults;
     private CirUserGuide cirUserGuide;
-    private CiaUserGuide ciaUserGuide;
     private DataSource dataSource;
     private Repository repository;
     private LoginPage loginPage;
@@ -254,8 +251,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to the help page works")
     public void testHelpNavigation() {
         String iFrameId = "topic";
-        loginPage = new LoginPage(driver);
-        helpPage = loginPage.login(UserUtil.getUser())
+        helpPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
                 .navigateToHelpPage()
                 .switchToIFrame(iFrameId);
 
