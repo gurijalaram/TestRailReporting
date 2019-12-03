@@ -63,13 +63,11 @@ public class RevertPage extends LoadableComponent<RevertPage> {
     /**
      * Selects the revert button
      *
-     * @param className - the class the method should return
-     * @param <T>       - the return type
-     * @return generic page object
+     * @return new Evaluate Page
      */
-    public <T> T revertScenario(Class<T> className) {
+    public EvaluatePage revertScenario() {
         pageUtils.waitForElementAndClick(revertButton);
-        return PageFactory.initElements(driver, className);
+        return new EvaluatePage(driver);
     }
 
     /**
