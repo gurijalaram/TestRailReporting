@@ -237,18 +237,4 @@ public class DeleteComparisonTests extends TestBase {
 
         assertThat(explorePage.getNoComponentText(), containsString("You have no components that match the selected filter"));
     }
-
-    @Test
-    @TestRail(testCaseId = {"414"})
-    @Description("Test all available characters in a comparison name")
-    public void comparisonAllCharacters() {
-
-        loginPage = new LoginPage(driver);
-        comparePage = loginPage.login(UserUtil.getUser())
-            .createNewComparison()
-            .enterComparisonName("!£$%^&*()_+{}~:?><`1-=[]#';|@")
-            .save(ComparePage.class);
-
-        assertThat(comparePage.isComparisonName("!£$%^&*()_+{}~:?><`1-=[]#';|@"), is(true));
-    }
 }
