@@ -3,6 +3,7 @@ package com.apriori.pageobjects.reports.pages.library;
 import com.apriori.pageobjects.reports.header.ReportsHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -45,5 +46,13 @@ public class Library extends ReportsHeader {
     public String getLibraryTitleText() {
         pageUtils.waitForElementToAppear(libraryPageTitle);
         return libraryPageTitle.getText();
+    }
+
+    /**
+     * Get name of a report
+     * @return String - text of report name
+     */
+    public String getReportName(String reportName) {
+        return pageUtils.getReportNameText(reportName);
     }
 }
