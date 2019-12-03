@@ -64,10 +64,15 @@ public class HelpPage extends LoadableComponent<HelpPage> {
 
     /**
      * Selects the Online Help Button
+     *
      * @return new page object
      */
-    public OnlineHelpPage clickOnlineHelp() {
+    public HelpPage clickOnlineHelp() {
         pageUtils.waitForElementAndClick(onlineHelpButton);
-        return new OnlineHelpPage(driver);
+        return this;
+    }
+
+    public String getChildPageTitle() {
+        return pageUtils.windowHandler().getTitle();
     }
 }

@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class HelpPage extends LoadableComponent<HelpPage> {
+public class LoginHelpPage extends LoadableComponent<LoginHelpPage> {
 
-    private Logger logger = LoggerFactory.getLogger(HelpPage.class);
+    private Logger logger = LoggerFactory.getLogger(LoginHelpPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -27,7 +27,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public HelpPage(WebDriver driver) {
+    public LoginHelpPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

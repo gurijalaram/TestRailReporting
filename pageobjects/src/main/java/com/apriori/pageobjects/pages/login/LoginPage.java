@@ -283,9 +283,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * Select helps link
      * @return new page object
      */
-    public HelpPage help() {
+    public LoginHelpPage help() {
         pageUtils.waitForElementAndClick(helpLink);
-        return new HelpPage(driver);
+        return new LoginHelpPage(driver);
     }
 
     /**

@@ -52,6 +52,9 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
     @FindBy(css = "select[data-ap-field='TestUser.value']")
     private WebElement testUserSelect;
 
+    @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
+    private WebElement helpButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -186,4 +189,17 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
         return pageUtils.checkElementAttribute(batchSizeInput, "value", text);
     }
 
+    /**
+     * Clicks the help button
+     *
+     * @return the current page object
+     */
+    public MoreInputsPage clickHelp() {
+        pageUtils.waitForElementAndClick(helpButton);
+        return this;
+    }
+
+    public String getChildPageTitle() {
+        return pageUtils.windowHandler().getTitle();
+    }
 }

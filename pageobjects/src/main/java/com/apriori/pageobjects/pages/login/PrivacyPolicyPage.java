@@ -58,5 +58,5 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      */
     public String getChildWindowURL() {
         return pageUtils.windowHandler().getCurrentUrl();
-    }
+}
 }
