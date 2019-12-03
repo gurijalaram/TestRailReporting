@@ -46,4 +46,12 @@ public class SearchResults extends ReportsHeader {
         pageUtils.waitForElementToAppear(searchResultsPageTitle);
         return searchResultsPageTitle.getAttribute("id");
     }
+
+    /**
+     * Get name of a report
+     * @return String - text of report name
+     */
+    public String getReportName(String reportName) {
+        return pageUtils.getReportNameText(reportName);
+    }
 }
