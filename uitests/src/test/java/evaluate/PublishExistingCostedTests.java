@@ -68,7 +68,7 @@ public class PublishExistingCostedTests extends TestBase {
 
     @Test
     @Issue("AP-57450")
-    @TestRail(testCaseId = {"390", "569"})
+    @TestRail(testCaseId = {"390", "569", "403"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
 
@@ -99,6 +99,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario(PublishWarningPage.class)
             .enterNewScenarioName(scenarioNameB)
             .selectContinueButton()
+            .selectLock()
             .selectPublishButton()
             .openJobQueue()
             .checkJobQueueActionStatus(partName, scenarioNameB, "Publish", "okay")
@@ -106,5 +107,65 @@ public class PublishExistingCostedTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
         assertThat(explorePage.findScenario(scenarioNameB, partName).isDisplayed(), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"391"})
+    @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
+    public void testDuplicatePublic() {
+
+        String testScenarioName = new Util().getScenarioName();
+        String partName = "PowderMetalShaft";
+
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .refreshCurrentPage()
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishWarningPage.class)
+            .selectOverwriteOption()
+            .selectContinueButton()
+            .selectPublishButton()
+            .openScenario(testScenarioName, partName);
+
+        assertThat(evaluatePage.isProcessRoutingDetails("Material Stock / Band Saw / Preheat / Hammer / Trim"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"393"})
+    @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
+    public void testDuplicateLockedPublic() {
+
+        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName2 = new Util().getScenarioName();
+        String partName = "PowderMetalShaft";
+
+        loginPage = new LoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectLock()
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .refreshCurrentPage()
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishWarningPage.class)
+            .enterNewScenarioName(testScenarioName2)
+            .selectContinueButton()
+            .selectPublishButton()
+            .openScenario(testScenarioName2, partName);
+
+        assertThat(evaluatePage.getCurrentScenarioName(testScenarioName2), is(true));
     }
 }
