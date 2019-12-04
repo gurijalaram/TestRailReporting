@@ -39,7 +39,7 @@ public class AssemblyDetailsReport extends ReportsHeader {
      */
     public float getCapitalInvGrandTotal() {
         pageUtils.waitForElementToAppear(capitalInvGrandTotal);
-        return Float.parseFloat(capitalInvGrandTotal.getText());
+        return Float.parseFloat(pageUtils.getElementText(capitalInvGrandTotal));
     }
 
     /**
