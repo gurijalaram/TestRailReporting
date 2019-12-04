@@ -419,7 +419,7 @@ public class ActionsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
