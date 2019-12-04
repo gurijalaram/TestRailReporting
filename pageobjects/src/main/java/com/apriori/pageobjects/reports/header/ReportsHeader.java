@@ -83,6 +83,10 @@ public class ReportsHeader extends PageHeader {
         return new InputControls(driver);
     }
 
+    /**
+     * Click options button to bring up Input Controls
+     * @return Input Controls page object
+     */
     public InputControls clickOptionsButton() {
         pageUtils.waitForElementToAppear(optionsButton);
         optionsButton.click();
