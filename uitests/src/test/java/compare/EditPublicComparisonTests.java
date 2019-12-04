@@ -7,7 +7,7 @@ import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.WorkspaceEnum;
@@ -20,7 +20,7 @@ import org.junit.Test;
 
 public class EditPublicComparisonTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
@@ -36,7 +36,7 @@ public class EditPublicComparisonTests extends TestBase {
 
         String testComparisonName = new Util().getComparisonName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
@@ -59,7 +59,7 @@ public class EditPublicComparisonTests extends TestBase {
 
         String testComparisonName = new Util().getComparisonName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)

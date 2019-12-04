@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.not;
 
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.TableColumnsPage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColumnsEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
@@ -22,7 +22,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class TableHeadersTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private TableColumnsPage tableColumnsPage;
 
@@ -37,7 +37,7 @@ public class TableHeadersTests extends TestBase {
     @TestRail(testCaseId = {"1096"})
     @Description("Test default list of column headers in the private workspace")
     public void testPrivateDefaultColumnHeaders() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
 
@@ -49,7 +49,7 @@ public class TableHeadersTests extends TestBase {
     @TestRail(testCaseId = {"1096"})
     @Description("Test default list of column headers in the public workspace")
     public void testPublicDefaultColumnHeaders() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
 
@@ -61,7 +61,7 @@ public class TableHeadersTests extends TestBase {
     @TestRail(testCaseId = {"1095"})
     @Description("Test added columns are displayed in the public workspace")
     public void testPublicAddColumnHeaders() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openColumnsTable()
@@ -79,7 +79,7 @@ public class TableHeadersTests extends TestBase {
     @TestRail(testCaseId = {"1095", "531"})
     @Description("Test added columns are displayed in the private workspace")
     public void testPrivateAddColumnHeaders() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .openColumnsTable()
@@ -98,7 +98,7 @@ public class TableHeadersTests extends TestBase {
     @TestRail(testCaseId = {"1611", "1094"})
     @Description("Test remove thumbnails")
     public void testRemoveThumbnails() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         tableColumnsPage = loginPage.login(UserUtil.getUser())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .openColumnsTable()
@@ -120,7 +120,7 @@ public class TableHeadersTests extends TestBase {
     @TestRail(testCaseId = {"1611", "1086"})
     @Description("Test sort all columns")
     public void testSortColumns() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .sortColumnDescending(ColumnsEnum.NAME_SCENARIO.getColumns());

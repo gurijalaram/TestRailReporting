@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -25,7 +25,7 @@ import org.junit.Test;
 
 public class PublishExistingCostedTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private GenericHeader genericHeader;
@@ -44,7 +44,7 @@ public class PublishExistingCostedTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String partName = "testpart-4";
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -74,7 +74,7 @@ public class PublishExistingCostedTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
             .publishScenario(PublishPage.class)

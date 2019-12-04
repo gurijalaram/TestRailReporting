@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -24,7 +24,7 @@ import org.junit.Test;
 
 public class DeleteComparisonTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
@@ -44,7 +44,7 @@ public class DeleteComparisonTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
             .costScenario()
@@ -80,7 +80,7 @@ public class DeleteComparisonTests extends TestBase {
 
         String testComparisonName = new Util().getComparisonName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
@@ -105,7 +105,7 @@ public class DeleteComparisonTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
 
         comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
@@ -149,7 +149,7 @@ public class DeleteComparisonTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
 
         comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))

@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -24,7 +24,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ProcessGroupsTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
 
@@ -38,7 +38,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_001_006-8613190_2.prt.2"))
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
@@ -53,7 +53,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Stock Machining")
     public void testProcessGroupStockMachining() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("42x1021_ref.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -70,7 +70,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -96,7 +96,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -122,7 +122,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -148,7 +148,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -174,7 +174,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -200,7 +200,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -226,7 +226,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -252,7 +252,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -278,7 +278,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -304,7 +304,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -330,7 +330,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -356,7 +356,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -382,7 +382,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -408,7 +408,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -434,7 +434,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -460,7 +460,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -486,7 +486,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -513,7 +513,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -539,7 +539,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -565,7 +565,7 @@ public class ProcessGroupsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);

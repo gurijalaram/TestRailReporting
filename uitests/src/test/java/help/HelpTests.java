@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.help.HelpPage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -22,7 +22,7 @@ import org.junit.Test;
 
 public class HelpTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private HelpPage helpPage;
     private MoreInputsPage moreInputsPage;
     private MaterialPage materialPage;
@@ -34,7 +34,7 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"263"})
     @Description("Be able to access help information in the application header")
     public void onlineHelpTest() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         helpPage = loginPage.login(UserUtil.getUser())
             .openHelpMenu()
             .clickOnlineHelp();
@@ -46,7 +46,7 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void moreInputsHelp() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         moreInputsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -61,7 +61,7 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void materialUtilHelp() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         materialPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -76,7 +76,7 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void designGuidanceHelp() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         designGuidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -91,7 +91,7 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void processDetailsHelp() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         processRoutingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -106,7 +106,7 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void CostResultsHelp() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         costDetailsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())

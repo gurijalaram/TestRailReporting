@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.logout;
 
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -61,8 +61,8 @@ public class LogoutPage extends LoadableComponent<LogoutPage> {
         return userName.getText();
     }
 
-    public LoginPage logOut() {
+    public CIDLoginPage logOut() {
         pageUtils.waitForElementAndClick(logOut);
-        return new LoginPage(driver);
+        return new CIDLoginPage(driver);
     }
 }

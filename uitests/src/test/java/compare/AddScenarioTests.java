@@ -10,7 +10,7 @@ import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.ComparisonPage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -25,7 +25,7 @@ import org.junit.Test;
 
 public class AddScenarioTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ComparisonTablePage comparisonTablePage;
     private WarningPage warningPage;
     private ComparePage comparePage;
@@ -39,7 +39,7 @@ public class AddScenarioTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         comparisonTablePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
@@ -62,7 +62,7 @@ public class AddScenarioTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
 
         comparisonTablePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
@@ -85,7 +85,7 @@ public class AddScenarioTests extends TestBase {
     @TestRail(testCaseId = {"462"})
     @Description("Test warning message appears when the user does not enter a scenario name for a comparison")
     public void comparisonNoScenarioName() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .save(WarningPage.class);

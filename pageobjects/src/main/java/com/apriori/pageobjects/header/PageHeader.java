@@ -5,7 +5,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
@@ -145,8 +145,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return new page object
      */
-    public LoginPage selectLogOut() {
+    public CIDLoginPage selectLogOut() {
         pageUtils.waitForElementAndClick(logOutButton);
-        return new LoginPage(driver);
+        return new CIDLoginPage(driver);
     }
 }

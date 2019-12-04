@@ -8,7 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.utils.AfterTestUtil;
@@ -27,7 +27,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class DTCMachiningTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
@@ -45,7 +45,7 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Keyseat Mill")
     public void testDTCKeyseat() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -61,7 +61,7 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1800"})
     @Description("Testing DTC Machining Sharp Corner on a Curved Surface")
     public void testDTCCurvedSurface() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -77,7 +77,7 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1798"})
     @Description("Testing DTC Machining Sharp Corner - Planar Face - Contouring")
     public void testDTCSharpCorner() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -93,7 +93,7 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1804"})
     @Description("Testing DTC Machining Side Milling L/D Ratio")
     public void testDTCSideMilling() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -109,7 +109,7 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1803"})
     @Description("Testing DTC Machining Missing Setups")
     public void testDTCMissingSetup() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -125,7 +125,7 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1801"})
     @Description("Verify obstructed surfaces on planar faces")
     public void obstructedSurfacePlanarFace() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -143,7 +143,7 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1799", "1802", "1806", "1593"})
     @Description("Ensure that  'Guidance' includes: - Issue type count - DTC Messaging for each guidance instance")
     public void stockMachiningDTC() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -174,7 +174,7 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1797"})
     @Description("Verify Sharp corners on curved walls are highlighted")
     public void sharpCornerCurvedWall() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("1379344_BEFORE_DTC.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -190,7 +190,7 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1792", "1795", "1796"})
     @Description("Verify the investigate tab correctly presents features & conditions which impact cost")
     public void stockMachineDTC() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()

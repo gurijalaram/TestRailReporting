@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -19,7 +19,7 @@ import org.junit.Test;
 
 public class PsoEditTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ProcessSetupOptionsPage processSetupOptionsPage;
     private ProcessRoutingPage processRoutingPage;
@@ -28,7 +28,7 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"761", "762", "763", "764"})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -62,7 +62,7 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"771", "772", "773"})
     @Description("Die Casting edit PSO")
     public void DieCastPSO() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting-Die.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -92,7 +92,7 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"769", "770"})
     @Description("Sand Casting edit PSO")
     public void SandCastPSO() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SandCast.x_t"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
@@ -119,7 +119,7 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"768"})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void MachiningPSO() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -146,7 +146,7 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"774"})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void PowderMetalPSO() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -173,7 +173,7 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"775"})
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
     public void SheetPlasticPSO() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("sheet_plastic.STEP"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
@@ -199,7 +199,7 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"1652"})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())

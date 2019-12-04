@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
@@ -22,7 +22,7 @@ import org.junit.Test;
 
 public class MaterialPMITests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
 
     @After
@@ -36,7 +36,7 @@ public class MaterialPMITests extends TestBase {
     @TestRail(testCaseId = {"901"})
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
