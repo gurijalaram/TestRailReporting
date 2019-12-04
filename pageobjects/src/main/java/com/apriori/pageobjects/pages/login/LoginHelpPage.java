@@ -1,12 +1,12 @@
 package com.apriori.pageobjects.pages.login;
 
+import com.apriori.pageobjects.reports.header.ReportsHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,20 +14,24 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class LoginHelpPage extends LoadableComponent<LoginHelpPage> {
+public class HelpPage extends ReportsHeader {
 
-    private Logger logger = LoggerFactory.getLogger(LoginHelpPage.class);
+    private Logger logger = LoggerFactory.getLogger(HelpPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
 
-    @FindBy(css = ".page_title")
+    @FindBy(css = "body > h1")
     private WebElement heading;
+
+    @FindBy(css = "iframe[id='topic']")
+    private WebElement mainContentIframe;
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public LoginHelpPage(WebDriver driver) {
+    public HelpPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -41,7 +45,7 @@ public class LoginHelpPage extends LoadableComponent<LoginHelpPage> {
     }
 
     @Override
-    protected void isLoaded() throws Error {
+    protected void isLoaded() {
     }
 
     /**
@@ -49,7 +53,7 @@ public class LoginHelpPage extends LoadableComponent<LoginHelpPage> {
      * @return - string
      */
     public String getPageHeading() {
-        return pageUtils.waitForElementToAppear(heading).getText();
+        return pageUtils.getElementText(heading);
     }
 
     /**
@@ -57,6 +61,21 @@ public class LoginHelpPage extends LoadableComponent<LoginHelpPage> {
      * @return - string
      */
     public String getChildWindowURL() {
-        return pageUtils.windowHandler().getCurrentUrl();
+        return pageUtils.getTabTwoUrl();
+    }
+
+    /**
+     * Gets number of open tabs
+     * @return int - number of tabs
+     */
+    public int getTabCount() {
+        return pageUtils.getCountOfOpenTabs();
+    }
+
+    /**
+     * Waits for header to appear (page load)
+     */
+    public void waitForHeaderLoad() {
+        pageUtils.waitForElementToAppear(heading);
     }
 }

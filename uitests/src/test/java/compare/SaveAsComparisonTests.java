@@ -19,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 
@@ -107,7 +106,6 @@ public class SaveAsComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-874")
     @TestRail(testCaseId = {"413"})
     @Description("Attempt to create a new comparison with a name that already exists")
     public void comparisonNameExists() {

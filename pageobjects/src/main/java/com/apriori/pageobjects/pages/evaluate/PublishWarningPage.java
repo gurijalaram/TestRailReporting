@@ -1,8 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.utils.PageUtils;
-import com.apriori.utils.enums.WorkspaceEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,6 +25,12 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
 
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
+
+    @FindBy(css = "[data-ap-comp='overwrite']")
+    private WebElement overwriteButton;
+
+    @FindBy(css = "[data-ap-comp='saveAsNew']")
+    private WebElement newScenarioButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -56,6 +60,8 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
      * @return current page object
      */
     public PublishWarningPage enterNewScenarioName(String scenarioName) {
+        pageUtils.waitForElementToAppear(dialogTitle);
+        pageUtils.waitForElementAndClick(inputField);
         inputField.clear();
         inputField.sendKeys(scenarioName);
         return this;
@@ -66,9 +72,9 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
      *
      * @return new page object
      */
-    public ExplorePage selectContinueButton() {
-        continueButton.click();
-        return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
+    public PublishPage selectContinueButton() {
+        pageUtils.waitForElementAndClick(continueButton);
+        return new PublishPage(driver);
     }
 
     /**
@@ -79,5 +85,25 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     public EvaluatePage selectCancelButton() {
         cancelButton.click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Selects the overwrite button
+     *
+     * @return current page object
+     */
+    public PublishWarningPage selectOverwriteOption() {
+        pageUtils.waitForElementAndClick(overwriteButton);
+        return this;
+    }
+
+    /**
+     * Selects the Publish as new scenario option
+     *
+     * @return current page object
+     */
+    public PublishWarningPage selectPublishAsNew() {
+        pageUtils.waitForElementAndClick(newScenarioButton);
+        return this;
     }
 }

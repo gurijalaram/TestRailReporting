@@ -98,7 +98,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.88, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,741.62"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.88, Piece Part Cost (USD): 0.62, Fully Burdened Cost (USD): 1.04, Total Capital Investments (USD): 11,741.62"));
     }
 
     @Test
@@ -516,7 +516,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57018")
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
         loginPage = new CIDLoginPage(driver);
@@ -625,7 +624,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57276")
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
         loginPage = new CIDLoginPage(driver);

@@ -67,6 +67,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-893")
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
@@ -252,6 +253,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-892")
     @TestRail(testCaseId = {"532"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
@@ -273,7 +275,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-874")
     @TestRail(testCaseId = {"543"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
@@ -310,7 +311,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-874")
     @TestRail(testCaseId = {"542", "546"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
@@ -392,7 +392,7 @@ public class ActionsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .costScenario()

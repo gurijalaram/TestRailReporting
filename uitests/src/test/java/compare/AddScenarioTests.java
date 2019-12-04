@@ -19,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
@@ -57,7 +56,6 @@ public class AddScenarioTests extends TestBase {
 
     @Test
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
-    @Issue("BA-839")
     public void filterAddPublicScenario() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -91,5 +89,21 @@ public class AddScenarioTests extends TestBase {
             .save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"414"})
+    @Description("Test all available characters in a comparison name")
+    public void comparisonAllCharacters() {
+
+        String testComparisonName = (new Util().getComparisonName() + "!£$%^&*()_+{}~:?><`1-=[]#';|@");
+
+        loginPage = new LoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class);
+
+        assertThat(comparePage.isComparisonName(testComparisonName.toUpperCase()), is(true));
     }
 }

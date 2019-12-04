@@ -24,7 +24,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
@@ -52,7 +51,6 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57282")
     @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {

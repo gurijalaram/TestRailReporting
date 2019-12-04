@@ -3,6 +3,7 @@ package com.apriori.pageobjects.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
+import org.apache.commons.collections4.Get;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -145,6 +146,21 @@ public class PageUtils {
         try {
             return parent.findElement(by).isDisplayed();
         } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if the element is enabled or not. Important: this is not a wait method, it only shows
+     * the current status of the element.
+     *
+     * @param element - WebElement
+     * @return - returns whether element is enabled or not
+     */
+    public boolean isElementEnabled(WebElement element) {
+        try {
+            return element.isEnabled();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
             return false;
         }
     }
@@ -293,15 +309,15 @@ public class PageUtils {
     }
 
     public WebElement waitForElementToAppear(WebElement element) {
-        return waitForAppear(ExpectedConditions.visibilityOf(element), "Element did not appear");
+        return waitForAppear(visibilityOf(element), "Element did not appear");
     }
 
     public WebElement waitForElementToAppear(WebElement element, String message) {
-        return waitForAppear(ExpectedConditions.visibilityOf(element), message);
+        return waitForAppear(visibilityOf(element), message);
     }
 
     public WebElement waitForElementToAppear(WebElement locator, int timeoutInMinutes) {
-        return waitForAppear(ExpectedConditions.visibilityOf(locator), "Element did not appear", timeoutInMinutes);
+        return waitForAppear(visibilityOf(locator), "Element did not appear", timeoutInMinutes);
     }
 
     public WebElement waitForElementToAppear(By locator, int timeoutInMinutes) {
@@ -318,6 +334,7 @@ public class PageUtils {
 
     private WebElement waitForAppear(WebElement element) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+            .ignoreAll(ignoredWebDriverExceptions)
             .until(visibilityOf(element));
     }
 
@@ -360,7 +377,7 @@ public class PageUtils {
         while (count < 20) {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 20);
-                return wait.until(ExpectedConditions.visibilityOf(parentElement.findElement(childLocator)));
+                return wait.until(visibilityOf(parentElement.findElement(childLocator)));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
@@ -382,7 +399,7 @@ public class PageUtils {
         while (count < 2) {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, waitTimeInSecond / 2);
-                return wait.until(ExpectedConditions.visibilityOf(parentElement.findElement(childLocator)));
+                return wait.until(visibilityOf(parentElement.findElement(childLocator)));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
                 logger.debug("Trying to recover from a stale element reference exception");
@@ -766,5 +783,49 @@ public class PageUtils {
         httpURLConnection.setRequestMethod("HEAD");
         httpURLConnection.connect();
         return httpURLConnection.getResponseCode();
+    }
+
+    /**
+     * Gets count of open tabs
+     * @return int - number of open tabs
+     */
+    public int getCountOfOpenTabs() {
+        return driver.getWindowHandles().size();
+    }
+
+    /**
+     * Gets page heading
+     * @param heading WebElement
+     * @return String heading
+     */
+    public String getElementText(WebElement heading) {
+        return heading.getText();
+    }
+
+    /**
+     * Gets current URL
+     * @return String
+     */
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    /**
+     * Gets tab two URL
+     * @return String
+     */
+    public String getTabTwoUrl() {
+        return windowHandler().getCurrentUrl();
+    }
+
+    /**
+     * Get name of a report
+     * @return String - text of report name
+     */
+    public String getReportNameText(String reportName) {
+        By by = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
+        waitForElementToAppear(by);
+        WebElement element = driver.findElement(by);
+        return element.getText();
     }
 }

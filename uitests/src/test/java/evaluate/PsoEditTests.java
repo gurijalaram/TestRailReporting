@@ -96,7 +96,7 @@ public class PsoEditTests extends TestBase {
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SandCast.x_t"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario()
+            .costScenario(3)
             .openProcessDetails()
             .selectProcessChart("Vertical Automatic")
             .selectOptions()

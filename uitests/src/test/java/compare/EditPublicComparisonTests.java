@@ -15,7 +15,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class EditPublicComparisonTests extends TestBase {
@@ -54,7 +53,6 @@ public class EditPublicComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"427"})
     @Description("Test editing a published comparison shows the comparison view")
-    @Issue("BA-841")
     public void testEditPublicComparison() {
 
         String testComparisonName = new Util().getComparisonName();

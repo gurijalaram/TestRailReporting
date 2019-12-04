@@ -30,7 +30,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"588", "394", "581"})
+    @TestRail(testCaseId = {"588", "394", "581", "395"})
     @Issue("AP-56845")
     @Description("Test a public scenario can be deleted from the evaluate page")
     public void testDeletePublicScenarioIteration() {
@@ -42,6 +42,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
             .publishScenario(PublishPage.class)
+            .selectLock()
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .filterCriteria()
