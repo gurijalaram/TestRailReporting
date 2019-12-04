@@ -90,4 +90,20 @@ public class AddScenarioTests extends TestBase {
 
         assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));
     }
+
+    @Test
+    @TestRail(testCaseId = {"414"})
+    @Description("Test all available characters in a comparison name")
+    public void comparisonAllCharacters() {
+
+        String testComparisonName = (new Util().getComparisonName() + "!£$%^&*()_+{}~:?><`1-=[]#';|@");
+
+        loginPage = new LoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class);
+
+        assertThat(comparePage.isComparisonName(testComparisonName.toUpperCase()), is(true));
+    }
 }
