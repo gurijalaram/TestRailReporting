@@ -14,10 +14,13 @@ public class AssemblyDetailsReport extends ReportsHeader {
 
     private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReport.class);
 
-    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[16]/td[2]/div/div[2]/table/tbody/tr[15]/td[34]/span")
+    @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
+    private WebElement currentCurrency;
+
+    @FindBy(xpath = "//span[contains(text(), 'GRAND TOTAL')]/../../td[34]/span")
     private WebElement capitalInvGrandTotal;
 
-    private String capitalInvGrandTotalUSD;
+    private float capitalInvGrandTotalPreviousCurrency;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -30,8 +33,25 @@ public class AssemblyDetailsReport extends ReportsHeader {
         PageFactory.initElements(driver, this);
     }
 
-    public AssemblyDetailsReport storeCapitalInvGrandTotalUSD() {
-        capitalInvGrandTotalUSD = capitalInvGrandTotal.getText();
+    /**
+     * Gets Capital Investments Grand Total
+     * @return current page object
+     */
+    public float getCapitalInvGrandTotal() {
+        pageUtils.waitForElementToAppear(capitalInvGrandTotal);
+        return Float.parseFloat(capitalInvGrandTotal.getText());
+    }
+
+    /**
+     * Gets current currency setting
+     * @return String
+     */
+    public String getCurrentCurrency() {
+        return pageUtils.getElementText(currentCurrency);
+    }
+
+    public AssemblyDetailsReport waitForReportToAppear() {
+        pageUtils.checkElementAttribute(currentCurrency, "innerText", "GBP");
         return this;
     }
 }

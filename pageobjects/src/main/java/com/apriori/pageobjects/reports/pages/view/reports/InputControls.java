@@ -11,9 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class InputControls extends ReportsHeader {
+
     private final Logger logger = LoggerFactory.getLogger(InputControls.class);
 
-    @FindBy(css = "label[title='Currency Code'] > div > div > div > a")
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
+    private WebElement topLevelExportSet;
+
+    @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
     private WebElement currentCurrencyElement;
 
     @FindBy(css = "li[title='USD'] > div > a")
@@ -37,6 +41,9 @@ public class InputControls extends ReportsHeader {
     @FindBy(id = "save")
     private WebElement saveButton;
 
+    @FindBy(id = "loading")
+    private WebElement loadingPopup;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -48,26 +55,46 @@ public class InputControls extends ReportsHeader {
         PageFactory.initElements(driver, this);
     }
 
-    public InputControls checkUsdSelected() {
-        if (!currentCurrencyElement.getAttribute("title").equals("USD")) {
+    /**
+     * Selects top level export set
+     * @return current page object
+     */
+    public InputControls selectTopLevelExportSet() {
+        pageUtils.waitForElementAndClick(topLevelExportSet);
+        return this;
+    }
+
+    /**
+     * Checks current currency selection, fixes if necessary
+     * @param currency
+     * @return current page object
+     */
+    public InputControls checkCurrencySelected(String currency) {
+        pageUtils.waitForElementToAppear(currentCurrencyElement);
+        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
+        if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
             currentCurrencyElement.click();
-            usdCurrencyOption.click();
+            switch (currency) {
+                case "USD":
+                    usdCurrencyOption.click();
+                    break;
+                case "GBP":
+                    gbpCurrencyOption.click();
+                    break;
+            }
         }
         return this;
     }
 
-    public InputControls checkGbpSelected() {
-        if (!currentCurrencyElement.getAttribute("title").equals("GBP")) {
-            currentCurrencyElement.click();
-            gbpCurrencyOption.click();
-        }
-        return this;
-    }
-
+    /**
+     * Clicks apply and ok
+     * @return Assembly Details Report page object
+     */
     public AssemblyDetailsReport clickApplyAndOk() {
         pageUtils.waitForElementToAppear(applyButton);
         applyButton.click();
         pageUtils.waitForElementToAppear(okButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
         return new AssemblyDetailsReport(driver);
     }

@@ -794,12 +794,12 @@ public class PageUtils {
     }
 
     /**
-     * Gets page heading
-     * @param heading WebElement
+     * Gets text of an element
+     * @param element WebElement
      * @return String heading
      */
-    public String getElementText(WebElement heading) {
-        return heading.getText();
+    public String getElementText(WebElement element) {
+        return element.getText();
     }
 
     /**

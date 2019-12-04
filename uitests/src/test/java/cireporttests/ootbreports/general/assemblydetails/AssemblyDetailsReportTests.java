@@ -15,14 +15,15 @@ import com.apriori.utils.TestRail;
 import org.junit.Test;
 import sun.rmi.runtime.Log;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.lessThan;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
     private AssemblyDetailsReport assemblyDetailsReport;
-    private InputControls inputControls;
     private SearchResults searchResults;
     private Repository repository;
     private HomePage homePage;
@@ -82,20 +83,28 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1922")
     @Description("Currency Code works")
-    public void testCurrencyCodeWorks() throws InterruptedException {
+    public void testCurrencyCodeWorks() {
+        float gbpGrandTotal;
+        float usdGrandTotal;
+
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReports.ASSEMBLY_DETAILS.getReportName())
                 .waitForPageLoad()
-                .checkUsdSelected()
-                .clickApplyAndOk()
-                .storeCapitalInvGrandTotalUSD()
-                .clickOptionsButton()
-                .checkGbpSelected()
+                .selectTopLevelExportSet()
+                .checkCurrencySelected("USD")
                 .clickApplyAndOk();
 
-        // assert that values are different (not equal + less than)
+        usdGrandTotal = assemblyDetailsReport.getCapitalInvGrandTotal();
+        assemblyDetailsReport.clickOptionsButton()
+                .checkCurrencySelected("GBP")
+                .clickApplyAndOk()
+                .waitForReportToAppear();
 
+        gbpGrandTotal = assemblyDetailsReport.getCapitalInvGrandTotal();
+        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo("GBP")));
+        assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+        assertThat(gbpGrandTotal, is(lessThan(usdGrandTotal)));
     }
 }

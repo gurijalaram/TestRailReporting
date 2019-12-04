@@ -68,6 +68,7 @@ public class ReportsHeader extends PageHeader {
 
     public ReportsHeader(WebDriver driver) {
         super(driver);
+        this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -84,6 +85,7 @@ public class ReportsHeader extends PageHeader {
 
     public InputControls clickOptionsButton() {
         pageUtils.waitForElementToAppear(optionsButton);
+        optionsButton.click();
         return new InputControls(driver);
     }
 }
