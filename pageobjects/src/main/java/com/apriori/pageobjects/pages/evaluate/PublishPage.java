@@ -107,14 +107,12 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     }
 
     /**
-     * Selects the lock dropdown
+     * Ticks the lock option
      *
-     * @param lock - lock dropdown
      * @return current page object
      */
-    public PublishPage selectLock(String lock) {
-        pageUtils.checkDropdownOptions(lockDropdown, lock);
-        new Select(lockDropdown).selectByVisibleText(lock);
+    public PublishPage selectLock() {
+        pageUtils.waitForElementAndClick(lockCheckBox);
         return this;
     }
 
