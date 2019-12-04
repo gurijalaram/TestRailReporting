@@ -26,6 +26,12 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
 
+    @FindBy(css = "[data-ap-comp='overwrite']")
+    private WebElement overwriteButton;
+
+    @FindBy(css = "[data-ap-comp='saveAsNew']")
+    private WebElement newScenarioButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -54,6 +60,7 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
      * @return current page object
      */
     public PublishWarningPage enterNewScenarioName(String scenarioName) {
+        pageUtils.waitForElementToAppear(dialogTitle);
         pageUtils.waitForElementAndClick(inputField);
         inputField.clear();
         inputField.sendKeys(scenarioName);
@@ -78,5 +85,25 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     public EvaluatePage selectCancelButton() {
         cancelButton.click();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Selects the overwrite button
+     *
+     * @return current page object
+     */
+    public PublishWarningPage selectOverwriteOption() {
+        overwriteButton.click();
+        return this;
+    }
+
+    /**
+     * Selects the Publish as new scenario option
+     *
+     * @return current page object
+     */
+    public PublishWarningPage selectPublishAsNew() {
+        newScenarioButton.click();
+        return this;
     }
 }
