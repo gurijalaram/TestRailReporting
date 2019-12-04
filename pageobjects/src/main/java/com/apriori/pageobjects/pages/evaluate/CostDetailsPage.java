@@ -22,6 +22,9 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     @FindBy(css = "[class='table tree-table']")
     private WebElement resultsTree;
 
+    @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
+    private WebElement helpButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -74,5 +77,20 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
         By costInfo = By.xpath("//td[.='" + contributor + "']/following-sibling::td");
         //TODO add in ability to scroll when BA-890 is fixed pageUtils.scrollToElement(costInfo, verticalScroller);
         return driver.findElement(costInfo).getText();
+    }
+
+    /**
+     * Clicks the help button
+     *
+     * @return the current page object
+     */
+    public CostDetailsPage clickHelp() {
+        pageUtils.waitForElementAndClick(helpButton);
+        return this;
+    }
+
+    public String getChildPageTitle() {
+        return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }

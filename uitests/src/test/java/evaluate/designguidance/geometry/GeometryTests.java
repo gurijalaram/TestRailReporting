@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -22,7 +22,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class GeometryTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private GeometryPage geometryPage;
     private PropertiesDialogPage propertiesDialogPage;
@@ -36,7 +36,7 @@ public class GeometryTests extends TestBase {
     @TestRail(testCaseId = {"1620", "1621", "1255", "1259"})
     @Description("Validate the user can open the Analysis Properties dialogue box for a specific GCD selected from the geometry tab")
     public void propertiesRouting() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         geometryPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())

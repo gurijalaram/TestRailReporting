@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.utils.AfterTestUtil;
@@ -27,7 +27,7 @@ import org.junit.Test;
 
 public class SheetMetalDTCTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
@@ -48,7 +48,7 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1839", "1842", "1843"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -82,7 +82,7 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1840", "1841"})
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
 
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetalTray.SLDPRT"))
@@ -102,7 +102,7 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1838", "1844"})
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -130,7 +130,7 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1829"})
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -151,7 +151,7 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1834", "1835", "1836", "1837"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -188,7 +188,7 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1845","719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()

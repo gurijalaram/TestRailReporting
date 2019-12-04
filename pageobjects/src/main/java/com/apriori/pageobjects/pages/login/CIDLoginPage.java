@@ -19,9 +19,9 @@ import java.io.IOException;
  * @author cfrith
  */
 
-public class LoginPage extends LoadableComponent<LoginPage> {
+public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+    private final Logger logger = LoggerFactory.getLogger(CIDLoginPage.class);
     private static String loginPageUrl = Constants.cidURL;
 
     @FindBy(css = "input[name='email']")
@@ -66,15 +66,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public LoginPage(WebDriver driver) {
+    public CIDLoginPage(WebDriver driver) {
         init(driver, "", true);
     }
 
-    public LoginPage(WebDriver driver, String url) {
+    public CIDLoginPage(WebDriver driver, String url) {
         init(driver, url, true);
     }
 
-    public LoginPage(WebDriver driver, boolean loadNewPage) {
+    public CIDLoginPage(WebDriver driver, boolean loadNewPage) {
         init(driver, "", loadNewPage);
     }
 
@@ -135,10 +135,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @param password - the password
      * @return the current page object
      */
-    public LoginPage failedLoginAs(String email, String password) {
+    public CIDLoginPage failedLoginAs(String email, String password) {
         executeLogin(email, password);
         pageUtils.waitForElementToAppear(loginErrorMsg);
-        return new LoginPage(driver, false);
+        return new CIDLoginPage(driver, false);
     }
 
     /**
@@ -196,7 +196,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      *
      * @return current page object
      */
-    public LoginPage getUsernameAndPassword() {
+    public CIDLoginPage getUsernameAndPassword() {
         getEmail();
         getPassword();
         return this;

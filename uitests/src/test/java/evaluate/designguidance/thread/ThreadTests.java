@@ -10,7 +10,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -29,7 +29,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ThreadTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
     private ThreadingPage threadingPage;
@@ -47,7 +47,7 @@ public class ThreadTests extends TestBase {
     @Test
     @Description("Test to check edit thread button is disabled")
     public void threadButtonDisabled() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -64,7 +64,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"28", "1631"})
     @Description("C28 Test to check thread length persist")
     public void editThread() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -84,7 +84,7 @@ public class ThreadTests extends TestBase {
     @Test
     @Description("Test to verify costed thread")
     public void selectScenario() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -113,7 +113,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -132,7 +132,7 @@ public class ThreadTests extends TestBase {
     @Test
     @Description("Test to set dropdown value to yes")
     public void setDropdownValueYes() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
@@ -153,7 +153,7 @@ public class ThreadTests extends TestBase {
     @Test
     @Description("Testing warning message displayed when thread length is removed")
     public void costedThreadLengthRemoved() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -176,7 +176,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"32", "33"})
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     public void changeThreadValueCancel() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -200,7 +200,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"32", "34"})
     @Description("Testing that adding text values in the thread length shows a warning message")
     public void junkValuesCharTest() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
@@ -219,7 +219,7 @@ public class ThreadTests extends TestBase {
     @Test
     @Description("Testing that adding no value in the thread shows a warning message")
     public void junkValueTest() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -239,7 +239,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"35"})
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     public void zeroValueTest() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -262,7 +262,7 @@ public class ThreadTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
@@ -281,7 +281,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"38", "40", "43", "584", "598"})
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -315,7 +315,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"267", "268", "39", "294", "285"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -334,7 +334,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"42"})
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -357,7 +357,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"37", "41"})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -390,7 +390,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CatiaPMIThreads.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -408,7 +408,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("100plusThreads.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -426,7 +426,7 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())

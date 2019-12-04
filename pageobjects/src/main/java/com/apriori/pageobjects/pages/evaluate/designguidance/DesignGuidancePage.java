@@ -47,6 +47,9 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     @FindBy(css = ".panel .glyphicon-remove")
     private WebElement closePanelButton;
 
+    @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
+    private WebElement helpButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -136,5 +139,20 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     public DesignGuidancePage expandGuidancePanel() {
         pageUtils.waitForElementAndClick(chevronButton);
         return this;
+    }
+
+    /**
+     * Clicks the help button
+     *
+     * @return the current page object
+     */
+    public DesignGuidancePage clickHelp() {
+        pageUtils.waitForElementAndClick(helpButton);
+        return this;
+    }
+
+    public String getChildPageTitle() {
+        return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }
