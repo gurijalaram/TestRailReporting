@@ -263,7 +263,7 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"749"})
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
