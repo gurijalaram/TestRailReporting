@@ -9,6 +9,7 @@ import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -28,6 +29,7 @@ public class DeleteComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    public JobQueuePage jobQueuePage;
 
     private final String noComponentMessage = "You have no components that match the selected filter";
 
@@ -185,5 +187,54 @@ public class DeleteComparisonTests extends TestBase {
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
+    }
+
+    @Test
+    @Issue("AP-56845")
+    @TestRail(testCaseId = {"431"})
+    @Description("In comparison view, the user can delete the currently open comparison and any matching public or private comparisons")
+    public void deletePublicPrivateComparison() {
+
+        String testScenarioName = new Util().getScenarioName();
+        String testComparisonName = new Util().getComparisonName();
+
+        new LoginPage(driver).login(UserUtil.getUser())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
+            .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName, "testpart-4")
+            .apply();
+
+        new GenericHeader(driver).publishScenario(PublishPage.class)
+            .selectPublishButton()
+            // TODO: 22/11/2019 Remove refresh once issue fixed
+            .refreshCurrentPage()
+            .openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+            .highlightComparison(testComparisonName)
+            .editScenario(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        explorePage = genericHeader.delete()
+            .selectIterationsCheckbox()
+            .deleteComparison()
+            .openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .filterCriteria()
+            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
+            .apply(ExplorePage.class);
+
+        assertThat(explorePage.getNoComponentText(), containsString("You have no components that match the selected filter"));
     }
 }
