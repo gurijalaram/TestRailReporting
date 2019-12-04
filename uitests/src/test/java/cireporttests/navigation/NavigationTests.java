@@ -254,7 +254,8 @@ public class NavigationTests extends TestBase {
         helpPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToHelpPage()
-                .switchToIFrame(iFrameId);
+                .switchToIFrame(iFrameId)
+                .ensurePageIsLoaded();
 
         assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
         assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.reportingHelpUrl)));

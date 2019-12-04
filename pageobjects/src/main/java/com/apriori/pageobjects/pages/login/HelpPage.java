@@ -49,6 +49,14 @@ public class HelpPage extends ReportsHeader {
     }
 
     /**
+     * Ensures page is loaded before continuing
+     */
+    public HelpPage ensurePageIsLoaded() {
+        pageUtils.checkElementAttribute(heading, "innerText", "Introduction to JasperReports Server");
+        return this;
+    }
+
+    /**
      * Gets page heading
      * @return - string
      */
@@ -78,4 +86,5 @@ public class HelpPage extends ReportsHeader {
     public void waitForHeaderLoad() {
         pageUtils.waitForElementToAppear(heading);
     }
+
 }
