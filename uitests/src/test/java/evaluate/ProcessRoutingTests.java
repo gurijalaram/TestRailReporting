@@ -15,16 +15,12 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.Inves
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.LoginPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
-import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
-import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
@@ -42,8 +38,6 @@ public class ProcessRoutingTests extends TestBase {
     private LoginPage loginPage;
     private ProcessRoutingPage processRoutingPage;
     private EvaluatePage evaluatePage;
-    private SettingsPage settingsPage;
-    private ToleranceSettingsPage toleranceSettingsPage;
     private RoutingsPage routingsPage;
     private MaterialCompositionPage materialCompositionPage;
     private InvestigationPage investigationPage;
@@ -80,40 +74,12 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"645", "269", "647", "649"})
-    @Description("View detailed information about costed process")
-    public void testViewProcessDetails() {
-        loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
-            .openSettings()
-            .changeCurrency(CurrencyEnum.USD.getCurrency())
-            .openTolerancesTab()
-            .selectUseCADModel();
-
-        settingsPage = new SettingsPage(driver);
-        processRoutingPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openProcessDetails();
-
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.88, Piece Part Cost (USD): 0.62, Fully Burdened Cost (USD): 1.04, Total Capital Investments (USD): 11,741.62"));
-    }
-
-    @Test
     @TestRail(testCaseId = {"646"})
     @Description("View individual process steps")
     public void testViewProcessSteps() {
         loginPage = new LoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        processRoutingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
-            .openSettings()
-            .openTolerancesTab()
-            .selectAssumeTolerance();
-
-        settingsPage = new SettingsPage(driver);
-        processRoutingPage = settingsPage.save(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
