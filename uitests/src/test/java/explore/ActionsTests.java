@@ -254,7 +254,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Issue("BA-892")
-    @TestRail(testCaseId = {"532"})
+    @TestRail(testCaseId = {"532", "736", "734"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
 
@@ -410,5 +410,41 @@ public class ActionsTests extends TestBase {
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Rapid Prototyping"), equalTo(1));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"740"})
+    @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
+    public void deleteDescription() {
+
+        String testScenarioName = new Util().getScenarioName();
+
+        loginPage = new LoginPage(driver);
+        loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "Push Pin");
+
+        genericHeader = new GenericHeader(driver);
+        scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
+            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QAutomation Test Remove Description", "")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openScenario(testScenarioName, "Push Pin")
+            .selectInfoNotes()
+            .deleteDescription()
+            .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueRow("okay")
+            .closeJobQueue(EvaluatePage.class)
+            .selectInfoNotes();
+
+        assertThat(scenarioNotesPage.isDescription(""), is(true));
     }
 }

@@ -115,6 +115,7 @@ public class PsoEditTests extends TestBase {
         assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is("true"));
         assertThat(processSetupOptionsPage.getMoldMaterial("Plastic"), is(true));
     }
+
     @Test
     @TestRail(testCaseId = {"768"})
     @Description("Machining - Validate the user can edit bundle sawing count")
@@ -256,5 +257,32 @@ public class PsoEditTests extends TestBase {
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("4"), is(true));
         assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
         assertThat(processSetupOptionsPage.isMaterialRegrind("1.00"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"749"})
+    @Description("Validate PSO Cannot be a junk value")
+    public void junkPSO() {
+        loginPage = new LoginPage(driver);
+        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Band Saw")
+            .selectOptions()
+            .selectOverrideBundleCount()
+            .setBundleCountOverride("jrigm");
+
+        processRoutingPage = new ProcessRoutingPage(driver);
+        processRoutingPage.closeProcessPanel();
+
+        evaluatePage = new EvaluatePage(driver);
+        processSetupOptionsPage = evaluatePage.costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Band Saw")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.isBundleCount(""), is(true));
     }
 }

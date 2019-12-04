@@ -24,7 +24,6 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
-import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
@@ -42,8 +41,6 @@ public class ProcessRoutingTests extends TestBase {
     private CIDLoginPage loginPage;
     private ProcessRoutingPage processRoutingPage;
     private EvaluatePage evaluatePage;
-    private SettingsPage settingsPage;
-    private ToleranceSettingsPage toleranceSettingsPage;
     private RoutingsPage routingsPage;
     private MaterialCompositionPage materialCompositionPage;
     private InvestigationPage investigationPage;
@@ -106,14 +103,8 @@ public class ProcessRoutingTests extends TestBase {
     @Description("View individual process steps")
     public void testViewProcessSteps() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        processRoutingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
-            .openSettings()
-            .openTolerancesTab()
-            .selectAssumeTolerance();
-
-        settingsPage = new SettingsPage(driver);
-        processRoutingPage = settingsPage.save(EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
