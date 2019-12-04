@@ -10,7 +10,6 @@ import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -29,7 +28,6 @@ public class DeleteComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
-    public JobQueuePage jobQueuePage;
 
     private final String noComponentMessage = "You have no components that match the selected filter";
 
@@ -167,7 +165,8 @@ public class DeleteComparisonTests extends TestBase {
             .selectScenario(testScenarioName, "testpart-4")
             .apply();
 
-        new GenericHeader(driver).publishScenario(PublishPage.class)
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
             // TODO: 22/11/2019 Remove refresh once issue fixed 
             .refreshCurrentPage()
@@ -198,7 +197,8 @@ public class DeleteComparisonTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
-        new LoginPage(driver).login(UserUtil.getUser())
+        loginPage = new CIDLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -213,7 +213,8 @@ public class DeleteComparisonTests extends TestBase {
             .selectScenario(testScenarioName, "testpart-4")
             .apply();
 
-        new GenericHeader(driver).publishScenario(PublishPage.class)
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
             // TODO: 22/11/2019 Remove refresh once issue fixed
             .refreshCurrentPage()

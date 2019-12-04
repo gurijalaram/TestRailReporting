@@ -283,9 +283,9 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
      * Select helps link
      * @return new page object
      */
-    public LoginHelpPage help() {
+    public HelpPage help() {
         pageUtils.waitForElementAndClick(helpLink);
-        return new LoginHelpPage(driver);
+        return new HelpPage(driver);
     }
 
     /**

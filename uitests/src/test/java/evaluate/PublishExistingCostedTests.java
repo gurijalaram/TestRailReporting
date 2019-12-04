@@ -117,7 +117,7 @@ public class PublishExistingCostedTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String partName = "PowderMetalShaft";
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -147,7 +147,7 @@ public class PublishExistingCostedTests extends TestBase {
         String testScenarioName2 = new Util().getScenarioName();
         String partName = "PowderMetalShaft";
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())

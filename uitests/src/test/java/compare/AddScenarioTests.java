@@ -98,7 +98,7 @@ public class AddScenarioTests extends TestBase {
 
         String testComparisonName = (new Util().getComparisonName() + "!£$%^&*()_+{}~:?><`1-=[]#';|@");
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
