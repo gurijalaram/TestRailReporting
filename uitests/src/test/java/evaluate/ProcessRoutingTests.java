@@ -24,6 +24,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
@@ -47,6 +48,8 @@ public class ProcessRoutingTests extends TestBase {
     private GeometryPage geometryPage;
     private PropertiesDialogPage propertiesDialogPage;
     private FailuresPage failuresPage;
+    private ToleranceSettingsPage toleranceSettingsPage;
+    private SettingsPage settingsPage;
 
     public ProcessRoutingTests() {
         super();

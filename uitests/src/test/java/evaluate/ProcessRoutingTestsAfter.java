@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.utils.AfterTestUtil;
@@ -24,7 +24,7 @@ import org.junit.Test;
 
 public class ProcessRoutingTestsAfter extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ProcessRoutingPage processRoutingPage;
     private SettingsPage settingsPage;
     private ToleranceSettingsPage toleranceSettingsPage;
@@ -43,7 +43,7 @@ public class ProcessRoutingTestsAfter extends TestBase {
     @TestRail(testCaseId = {"645", "269", "647", "649"})
     @Description("View detailed information about costed process")
     public void testViewProcessDetails() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .changeCurrency(CurrencyEnum.USD.getCurrency())
