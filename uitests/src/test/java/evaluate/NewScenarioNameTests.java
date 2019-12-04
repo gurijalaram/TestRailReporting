@@ -8,7 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -27,7 +27,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class NewScenarioNameTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private JobQueuePage jobQueuePage;
@@ -44,7 +44,7 @@ public class NewScenarioNameTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("partbody_2.stp"))
             .createNewScenario()
@@ -63,7 +63,7 @@ public class NewScenarioNameTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String testNewScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
@@ -96,7 +96,7 @@ public class NewScenarioNameTests extends TestBase {
         String ScenarioB = new Util().getScenarioName();
         String ScenarioC = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
         explorePage = new ExplorePage(driver);
         explorePage = explorePage.uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))

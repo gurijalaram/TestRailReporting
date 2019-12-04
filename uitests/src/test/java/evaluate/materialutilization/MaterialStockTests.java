@@ -8,7 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -22,7 +22,7 @@ import org.junit.Test;
 
 public class MaterialStockTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private StockPage stockPage;
     private MaterialPage materialPage;
     private MaterialUtilizationPage materialUtilizationPage;
@@ -36,7 +36,7 @@ public class MaterialStockTests extends TestBase {
     @TestRail(testCaseId = {"862", "871"})
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         materialPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Powder Metal.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -62,7 +62,7 @@ public class MaterialStockTests extends TestBase {
     @TestRail(testCaseId = {"962", "965", "966", "967", "974"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -97,7 +97,7 @@ public class MaterialStockTests extends TestBase {
     @TestRail(testCaseId = {"968", "969", "876"})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Square circle.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -122,7 +122,7 @@ public class MaterialStockTests extends TestBase {
     @TestRail(testCaseId = {"869"})
     @Description("validate the user can collapse and expand material properties")
     public void materialProperties() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         materialPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())

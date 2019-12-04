@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -27,7 +27,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class LoginTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private ForgottenPasswordPage forgottenPasswordPage;
     private PrivacyPolicyPage privacyPolicyPage;
@@ -49,7 +49,7 @@ public class LoginTests extends TestBase {
     @Test
     @Description("Test successful login")
     public void testLogin() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
         assertThat(explorePage.isDeleteButtonPresent(), is(true));
@@ -58,7 +58,7 @@ public class LoginTests extends TestBase {
     @Test
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
@@ -67,7 +67,7 @@ public class LoginTests extends TestBase {
     @Test
     @Description("Test unsuccessful login with incorrect email, correct password")
     public void testIncorrectEmail() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage = loginPage.failedLoginAs("jacky348@apriori.com", UserUtil.getUser().getPassword());
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
@@ -76,7 +76,7 @@ public class LoginTests extends TestBase {
     @Test
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage = loginPage.failedLoginAs("fakeuser@apriori.com", "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
@@ -87,7 +87,7 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"1574"})
     @Description("Validate Login Dialog")
     public void loginDialog() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
 
         assertThat(loginPage.getMarketingText(), containsString("For the past 7 years, aPriori has hosted the International Cost Insight Conference"));
         assertThat(loginPage.isLogoDisplayed(), is(true));
@@ -98,7 +98,7 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"1574"})
     @Description("Validate forgotten password link")
     public void forgotPassword() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         forgottenPasswordPage = loginPage.forgottenPassword();
 
         assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
@@ -109,7 +109,7 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"1575"})
     @Description("Validate Welcome Message")
     public void welcomeMessage() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         assertThat(loginPage.getWelcomeText(), containsString("Welcome! This login page provides access to aPriori's web applications, support portal and customer community. Access to these web services is available only to aPriori licensed customers, partners and employees"));
 
         privacyPolicyPage = loginPage.privacyPolicy();
@@ -126,7 +126,7 @@ public class LoginTests extends TestBase {
 
         String ScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .uploadFile(ScenarioName, new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -136,7 +136,7 @@ public class LoginTests extends TestBase {
             .openAdminDropdown()
             .selectLogOut();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .openScenario(ScenarioName, "225_gasket-1-solid1");
 
