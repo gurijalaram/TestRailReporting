@@ -74,5 +74,6 @@ public class HelpPage extends LoadableComponent<HelpPage> {
 
     public String getChildPageTitle() {
         return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }

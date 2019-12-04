@@ -125,7 +125,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @retun new page object
      */
-    public com.apriori.pageobjects.pages.help.HelpPage openHelpMenu() {
+    public HelpPage openHelpMenu() {
         pageUtils.waitForElementAndClick(helpButton);
         return new HelpPage(driver);
     }

@@ -201,5 +201,6 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     public String getChildPageTitle() {
         return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }

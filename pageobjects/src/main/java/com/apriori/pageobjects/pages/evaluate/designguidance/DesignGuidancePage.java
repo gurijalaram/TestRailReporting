@@ -153,5 +153,6 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     public String getChildPageTitle() {
         return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }

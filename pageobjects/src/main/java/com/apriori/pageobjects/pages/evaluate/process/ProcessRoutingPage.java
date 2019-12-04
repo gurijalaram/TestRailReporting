@@ -220,5 +220,6 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
 
     public String getChildPageTitle() {
         return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }

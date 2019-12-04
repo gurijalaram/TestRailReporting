@@ -91,5 +91,6 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     public String getChildPageTitle() {
         return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }

@@ -155,5 +155,6 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     public String getChildPageTitle() {
         return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }
