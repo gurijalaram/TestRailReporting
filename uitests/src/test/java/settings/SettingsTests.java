@@ -11,7 +11,7 @@ import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultPage;
 import com.apriori.pageobjects.pages.settings.SelectionSettingsPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
@@ -37,7 +37,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class SettingsTests extends TestBase {
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
@@ -57,7 +57,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -90,7 +90,7 @@ public class SettingsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -115,7 +115,7 @@ public class SettingsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -137,7 +137,7 @@ public class SettingsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -161,7 +161,7 @@ public class SettingsTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -184,7 +184,7 @@ public class SettingsTests extends TestBase {
     @Description("User should be able to select a material catalogue from a different region than the VPE")
     public void differentMaterialCatalog() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -205,7 +205,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default selection colour")
     public void defaultColor() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openSelectionTab()
@@ -223,7 +223,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Material")
     public void defaultMaterial() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -250,7 +250,7 @@ public class SettingsTests extends TestBase {
 
         UserCredentials testUser = UserUtil.getUser();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(testUser)
             .openSettings()
             .openProdDefaultTab()
@@ -264,7 +264,7 @@ public class SettingsTests extends TestBase {
         loginPage = explorePage.openAdminDropdown()
             .selectLogOut();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         productionDefaultPage = loginPage.login(testUser)
             .openSettings()
             .openProdDefaultTab();
@@ -280,7 +280,7 @@ public class SettingsTests extends TestBase {
     @Description("Manual Batch Quantity cannot be zero")
     public void batchSize0() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -297,7 +297,7 @@ public class SettingsTests extends TestBase {
     @Description("Manual Batch Quantity cannot be junk")
     public void batchSizeJunk() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -314,7 +314,7 @@ public class SettingsTests extends TestBase {
     @Description("Manual Batch Quantity cannot be a decimal")
     public void batchSizeDecimal() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()
@@ -331,7 +331,7 @@ public class SettingsTests extends TestBase {
     @Description("Changes made on all tabs of the user preferences should be saved regardless of the tab that the save button was closed on")
     public void saveAllTabs() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         productionDefaultPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
@@ -361,7 +361,7 @@ public class SettingsTests extends TestBase {
     @Description("Options should filter subsequent drop down options available")
     public void optionsFilter() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         productionDefaultPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openProdDefaultTab()

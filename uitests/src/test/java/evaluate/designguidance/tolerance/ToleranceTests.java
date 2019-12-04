@@ -11,7 +11,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.Toleranc
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceValueSettingsPage;
@@ -36,7 +36,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ToleranceTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ToleranceEditPage toleranceEditPage;
     private TolerancePage tolerancePage;
     private WarningPage warningPage;
@@ -60,7 +60,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"707", "1607"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -98,7 +98,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"708", "1607"})
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -126,7 +126,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -152,7 +152,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"717", "1608"})
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
 
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
@@ -179,7 +179,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"726", "712", "1295", "1297"})
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -219,7 +219,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1595"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -250,7 +250,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"724", "725", "729"})
     @Description("Validate applied tolerances are maintained after changing the scenario process group")
     public void testMaintainingToleranceChangePG() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -288,7 +288,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"730", "709", "713", "714", "722"})
     @Description("Validate tolerance edits are maintained when user adds a secondary process group")
     public void testMaintainingSecondaryPG() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -341,7 +341,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"723"})
     @Description("Validate tolerance edits when default values set")
     public void specificDefaultTolerances() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -398,7 +398,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1291"})
     @Description("Verify PMI data is not extracted ")
     public void assumeTolerances() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -419,7 +419,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1286"})
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -474,7 +474,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1287", "750"})
     @Description("tolerance Policy Panel functionality in CI Design-JUNK values are prevented")
     public void tolerancePolicyJunk() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -489,7 +489,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1294"})
     @Description("Validate PMI is off when use specific is selected")
     public void specificTolerancesNoPMI() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -515,7 +515,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1289"})
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -545,7 +545,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1296"})
     @Description("Validate 'Replace values less than' button")
     public void replaceValuesButton() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()

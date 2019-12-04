@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -24,7 +24,7 @@ import org.junit.Test;
 
 public class SaveAsComparisonTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
@@ -44,7 +44,7 @@ public class SaveAsComparisonTests extends TestBase {
         String testSaveAsComparisonName = new Util().getComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
@@ -80,7 +80,7 @@ public class SaveAsComparisonTests extends TestBase {
         String testSaveAsComparisonName = new Util().getComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
-        new LoginPage(driver).login(UserUtil.getUser())
+        new CIDLoginPage(driver).login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
@@ -113,7 +113,7 @@ public class SaveAsComparisonTests extends TestBase {
         String scenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())

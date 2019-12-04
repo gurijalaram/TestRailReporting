@@ -45,6 +45,9 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     @FindBy(css = "button[data-ap-comp='expandPanelButton']")
     private WebElement chevronButton;
 
+    @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
+    private WebElement helpButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -138,5 +141,20 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
         pageUtils.waitForElementToAppear(panelDetails);
         pageUtils.waitForElementToAppear(partNestingTab);
         return partNestingTab;
+    }
+
+    /**
+     * Clicks the help button
+     *
+     * @return the current page object
+     */
+    public MaterialPage clickHelp() {
+        pageUtils.waitForElementAndClick(helpButton);
+        return this;
+    }
+
+    public String getChildPageTitle() {
+        return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }

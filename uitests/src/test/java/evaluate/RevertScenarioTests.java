@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -20,7 +20,7 @@ import org.junit.Test;
 
 public class RevertScenarioTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
 
     public RevertScenarioTests() {
@@ -32,7 +32,7 @@ public class RevertScenarioTests extends TestBase {
     @TestRail(testCaseId = {"585"})
     public void testRevertSavedScenario() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
@@ -52,7 +52,7 @@ public class RevertScenarioTests extends TestBase {
     @TestRail(testCaseId = {"586"})
     public void testRevertUnsavedScenario() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("testpart-4.prt"))
             .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())

@@ -69,6 +69,9 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     @FindBy(css = ".costing-out-of-date-title")
     private List<WebElement> outOfDateMsg;
 
+    @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
+    private WebElement helpButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -203,5 +206,20 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      */
     public boolean isRoutingOutOfDateDisplayed() {
         return pageUtils.checkElementVisibleByBoolean(outOfDateMsg);
+    }
+
+    /**
+     * Clicks the help button
+     *
+     * @return the current page object
+     */
+    public ProcessRoutingPage clickHelp() {
+        pageUtils.waitForElementAndClick(helpButton);
+        return this;
+    }
+
+    public String getChildPageTitle() {
+        return pageUtils.windowHandler().getTitle();
+        // TODO remove code duplication
     }
 }
