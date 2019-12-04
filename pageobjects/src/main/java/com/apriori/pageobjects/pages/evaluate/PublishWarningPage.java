@@ -93,7 +93,7 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
      * @return current page object
      */
     public PublishWarningPage selectOverwriteOption() {
-        overwriteButton.click();
+        pageUtils.waitForElementAndClick(overwriteButton);
         return this;
     }
 
@@ -103,7 +103,7 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
      * @return current page object
      */
     public PublishWarningPage selectPublishAsNew() {
-        newScenarioButton.click();
+        pageUtils.waitForElementAndClick(newScenarioButton);
         return this;
     }
 }
