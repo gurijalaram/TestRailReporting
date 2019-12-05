@@ -122,9 +122,10 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
         Set<String> routingCell = new HashSet<>();
 
         long startTime = System.currentTimeMillis() / 1000;
+        long timeLimitInSeconds = 5;
 
-        if (routingScroller.isDisplayed()) {
-            long timeLimitInSeconds = 5;
+        if (pageUtils.isElementDisplayed(routingScroller)) {
+            pageUtils.waitForElementAndClick(routingScroller);
             do {
                 routingScroller.sendKeys(Keys.DOWN);
                 routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
