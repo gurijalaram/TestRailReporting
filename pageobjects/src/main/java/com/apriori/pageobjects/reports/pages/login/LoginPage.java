@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.reports.pages.login;
 
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
@@ -14,7 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoginPage extends ReportsHeader {
+public class LoginPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     private static String loginPageURL = Constants.cirURL;

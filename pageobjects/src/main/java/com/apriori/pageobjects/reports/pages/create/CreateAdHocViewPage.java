@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.create;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -11,17 +11,20 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Domain extends ReportsHeader {
+public class CreateAdHocViewPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Domain.class);
+    private final Logger logger = LoggerFactory.getLogger(CreateAdHocViewPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    @FindBy(css = "div[data-name='repositoryResourceChooserDialog']")
-    private WebElement domainDialog;
+    @FindBy(xpath = "//div[@id='display']/div[2]/div/div[1]/div")
+    private WebElement adHocViewPageTitle;
 
-    public Domain(WebDriver driver) {
+    @FindBy(xpath = "//div[contains(@class, 'sourceDialogNew ')]")
+    private WebElement adHocViewDiaolog;
+
+    public CreateAdHocViewPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -40,11 +43,12 @@ public class Domain extends ReportsHeader {
     }
 
     /**
-     * Gets current URL of new tab
-     * @return String
+     * Get page title text
+     * @return String - page title text
      */
-    public String getCurrentUrl() {
-        return pageUtils.getCurrentUrl();
+    public String getAdHocViewTitleText() {
+        pageUtils.waitForElementToAppear(adHocViewPageTitle);
+        return adHocViewPageTitle.getText();
     }
 
     /**]
@@ -52,8 +56,8 @@ public class Domain extends ReportsHeader {
      * @return boolean - isDisplayed
      */
     public boolean isDialogDisplayed() {
-        pageUtils.waitForElementToAppear(domainDialog);
-        return domainDialog.isDisplayed();
+        pageUtils.waitForElementToAppear(adHocViewDiaolog);
+        return adHocViewDiaolog.isDisplayed();
     }
 
     /**
@@ -61,7 +65,7 @@ public class Domain extends ReportsHeader {
      * @return boolean - is Enabled
      */
     public boolean isDialogEnabled() {
-        pageUtils.waitForElementToAppear(domainDialog);
-        return domainDialog.isEnabled();
+        pageUtils.waitForElementToAppear(adHocViewDiaolog);
+        return adHocViewDiaolog.isEnabled();
     }
 }

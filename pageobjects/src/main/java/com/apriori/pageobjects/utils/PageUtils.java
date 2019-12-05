@@ -794,12 +794,12 @@ public class PageUtils {
     }
 
     /**
-     * Gets page heading
-     * @param heading WebElement
+     * Gets text of an element
+     * @param element WebElement
      * @return String heading
      */
-    public String getElementText(WebElement heading) {
-        return heading.getText();
+    public String getElementText(WebElement element) {
+        return element.getText();
     }
 
     /**
@@ -823,9 +823,18 @@ public class PageUtils {
      * @return String - text of report name
      */
     public String getReportNameText(String reportName) {
-        By by = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
-        waitForElementToAppear(by);
-        WebElement element = driver.findElement(by);
-        return element.getText();
+        By reportLinkLocator = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
+        waitForElementToAppear(reportLinkLocator);
+        return driver.findElement(reportLinkLocator).getText();
+    }
+
+    /**
+     * Get report link element
+     * @return WebElement
+     */
+    public WebElement getReportLinkElement(String reportName) {
+        By reportLinkLocator = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
+        waitForElementToAppear(reportLinkLocator);
+        return driver.findElement(reportLinkLocator);
     }
 }

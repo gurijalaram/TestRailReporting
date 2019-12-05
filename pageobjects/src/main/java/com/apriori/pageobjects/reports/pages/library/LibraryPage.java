@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.reports.pages.library;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
+import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,9 +11,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Library extends ReportsHeader {
+public class LibraryPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Library.class);
+    private final Logger logger = LoggerFactory.getLogger(LibraryPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -21,7 +21,7 @@ public class Library extends ReportsHeader {
     @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
     private WebElement libraryPageTitle;
 
-    public Library(WebDriver driver) {
+    public LibraryPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -54,5 +54,17 @@ public class Library extends ReportsHeader {
      */
     public String getReportName(String reportName) {
         return pageUtils.getReportNameText(reportName);
+    }
+
+    /**
+     * Navigate to a particular report
+     * @param reportName
+     * @return new page object
+     */
+    public AssemblyDetailsReportPage navigateToReport(String reportName) {
+        WebElement reportLinkElement = pageUtils.getReportLinkElement(reportName);
+        pageUtils.waitForElementToAppear(reportLinkElement);
+        reportLinkElement.click();
+        return new AssemblyDetailsReportPage(driver);
     }
 }

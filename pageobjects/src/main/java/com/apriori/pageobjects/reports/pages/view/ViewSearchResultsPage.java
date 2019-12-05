@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -10,17 +10,17 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Schedules extends ReportsHeader {
+public class ViewSearchResultsPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Schedules.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewSearchResultsPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    @FindBy(xpath = "//div[contains(@class, 'listOfJobs')]/div/div[1]/div")
-    private WebElement schedulesPageTitle;
+    @FindBy(css = "body")
+    private WebElement searchResultsPageTitle;
 
-    public Schedules(WebDriver driver) {
+    public ViewSearchResultsPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -28,22 +28,20 @@ public class Schedules extends ReportsHeader {
         PageFactory.initElements(driver, this);
     }
 
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-
-    }
-
     /**
      * Get page title text
      * @return String - page title text
      */
-    public String getSchedulesTitleText() {
-        pageUtils.waitForElementToAppear(schedulesPageTitle);
-        return schedulesPageTitle.getText();
+    public String getSearchResultsTitleText() {
+        pageUtils.waitForElementToAppear(searchResultsPageTitle);
+        return searchResultsPageTitle.getAttribute("id");
+    }
+
+    /**
+     * Get name of a report
+     * @return String - text of report name
+     */
+    public String getReportName(String reportName) {
+        return pageUtils.getReportNameText(reportName);
     }
 }
