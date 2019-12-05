@@ -13,7 +13,6 @@ import com.apriori.pageobjects.admin.pages.login.LoginPage;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
-import org.seleniumhq.jetty9.server.Authentication;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,7 +25,6 @@ public class NavigationTests extends TestBase {
     private ScenarioExport scenarioExport;
     private CirUserGuide cirUserGuide;
     private CiaUserGuide ciaUserGuide;
-    private LoginPage loginPage;
     private HomePage homePage;
     private Logout logout;
 
@@ -62,7 +60,9 @@ public class NavigationTests extends TestBase {
     public void testHelpCostInsightReportGuideNavigation() {
         cirUserGuide = new LoginPage(driver)
                 .login(UserUtil.getUser())
-                .navigateToHelpReportsGuide();
+                .navigateToHelpReportsGuide()
+                .switchTab()
+                .switchToIFrameUserGuide("page_iframe");
 
         assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CI_REPORT_USER_GUIDE")));

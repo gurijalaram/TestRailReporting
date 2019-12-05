@@ -1,8 +1,5 @@
 package cireporttests.navigation;
 
-import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
-import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
-import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.pageobjects.pages.login.HelpPage;
 import com.apriori.utils.constants.Constants;
@@ -41,7 +38,6 @@ public class NavigationTests extends TestBase {
     private CirUserGuide cirUserGuide;
     private DataSource dataSource;
     private Repository repository;
-    private LoginPage loginPage;
     private Dashboard dashboard;
     private AdHocView adHocView;
     private Schedules schedules;
