@@ -65,7 +65,9 @@ public class NavigationTests extends TestBase {
     public void testCIReportsUserGuideNavigation() {
         cirUserGuide = new LoginPage(driver)
                 .login(UserUtil.getUser())
-                .navigateToReportUserGuide();
+                .navigateToReportUserGuide()
+                .switchTab()
+                .switchToIFrameUserGuide("page_iframe");
 
         assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CI_REPORT_USER_GUIDE")));
@@ -254,7 +256,7 @@ public class NavigationTests extends TestBase {
         helpPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToHelpPage()
-                .switchToIFrame(iFrameId)
+                .switchToIFrameHelpPage(iFrameId)
                 .ensurePageIsLoaded();
 
         assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
