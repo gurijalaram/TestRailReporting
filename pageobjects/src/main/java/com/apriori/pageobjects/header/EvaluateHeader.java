@@ -98,17 +98,19 @@ public class EvaluateHeader extends GenericHeader {
     /**
      * Method to check for the loading image displayed/not displayed
      */
-    public void checkForImage() {
+    public EvaluateHeader checkForImage() {
         checkForImage(0.5);
+        return this;
     }
 
     /**
      * Method to check for the loading image displayed/not displayed
      */
-    public void checkForImage(double timeoutInMinutes) {
+    public EvaluateHeader checkForImage(double timeoutInMinutes) {
         pageUtils.isElementDisplayed(loadingImage);
         pageUtils.waitForElementNotDisplayed(loadingImage, timeoutInMinutes);
         driver.navigate().refresh();
+        return this;
     }
 
     /**
