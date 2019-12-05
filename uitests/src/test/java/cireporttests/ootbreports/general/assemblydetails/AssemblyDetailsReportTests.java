@@ -7,13 +7,11 @@ import com.apriori.pageobjects.reports.pages.library.Library;
 import com.apriori.pageobjects.reports.pages.view.Repository;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReport;
-import com.apriori.pageobjects.reports.pages.view.reports.InputControls;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
-import sun.rmi.runtime.Log;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;

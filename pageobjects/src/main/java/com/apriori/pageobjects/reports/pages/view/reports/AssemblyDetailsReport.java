@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AssemblyDetailsReport extends ReportsHeader {
+public class AssemblyDetailsReport extends GenericReport {
 
     private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReport.class);
 

@@ -1,8 +1,6 @@
 package com.apriori.pageobjects.reports.header;
 
-import com.apriori.pageobjects.header.ExploreHeader;
-import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReport;
-import com.apriori.pageobjects.reports.pages.view.reports.InputControls;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReport;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -78,18 +76,18 @@ public class ReportsHeader extends PageHeader {
      * Wait for page to load before continuing
      * @return current page object
      */
-    public InputControls waitForPageLoad() {
+    public GenericReport waitForPageLoad() {
         pageUtils.waitForElementToAppear(applyButton);
-        return new InputControls(driver);
+        return new GenericReport(driver);
     }
 
     /**
      * Click options button to bring up Input Controls
      * @return Input Controls page object
      */
-    public InputControls clickOptionsButton() {
+    public GenericReport clickOptionsButton() {
         pageUtils.waitForElementToAppear(optionsButton);
         optionsButton.click();
-        return new InputControls(driver);
+        return new GenericReport(driver);
     }
 }

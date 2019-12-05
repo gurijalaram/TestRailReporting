@@ -10,9 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class InputControls extends ReportsHeader {
+public class GenericReport extends ReportsHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(InputControls.class);
+    private static Logger logger = LoggerFactory.getLogger(GenericReport.class);
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
     private WebElement topLevelExportSet;
@@ -44,10 +44,20 @@ public class InputControls extends ReportsHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
-    private PageUtils pageUtils;
     private WebDriver driver;
+    private PageUtils pageUtils;
 
-    public InputControls(WebDriver driver) {
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+
+    }
+
+    public GenericReport(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -59,7 +69,7 @@ public class InputControls extends ReportsHeader {
      * Selects top level export set
      * @return current page object
      */
-    public InputControls selectTopLevelExportSet() {
+    public GenericReport selectTopLevelExportSet() {
         pageUtils.waitForElementAndClick(topLevelExportSet);
         return this;
     }
@@ -69,7 +79,7 @@ public class InputControls extends ReportsHeader {
      * @param currency
      * @return current page object
      */
-    public InputControls checkCurrencySelected(String currency) {
+    public GenericReport checkCurrencySelected(String currency) {
         pageUtils.waitForElementToAppear(currentCurrencyElement);
         pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
         if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
