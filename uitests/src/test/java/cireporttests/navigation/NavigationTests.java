@@ -35,22 +35,21 @@ public class NavigationTests extends TestBase {
 
     private PrivacyPolicyPage privacyPolicyPage;
     private ViewSearchResultsPage searchResults;
-    private CirUserGuidePage cirUserGuide;
     private CreateDataSourcePage dataSource;
+    private CirUserGuidePage cirUserGuide;
     private ViewRepositoryPage repository;
-    private LoginPage loginPage;
     private CreateDashboardPage dashboard;
     private CreateAdHocViewPage adHocView;
     private ViewSchedulesPage schedules;
-    private HomePage homePage;
-    private HelpPage helpPage;
     private ViewMessagesPage messages;
-    private LibraryPage library;
     private CreateDomainPage domain;
     private CreateReportPage report;
-    private LogoutPage logout;
     private ManageRolesPage roles;
     private ManageUsersPage users;
+    private LibraryPage library;
+    private HomePage homePage;
+    private HelpPage helpPage;
+    private LogoutPage logout;
 
     public NavigationTests() {
         super();

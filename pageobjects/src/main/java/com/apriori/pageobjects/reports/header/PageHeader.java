@@ -287,18 +287,18 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @param iFrameId - iframe id attribute
      * @return new CirUserGuide page object
      */
-    public CirUserGuide switchToIFrameUserGuide(String iFrameId) {
+    public CirUserGuidePage switchToIFrameUserGuide(String iFrameId) {
         driver.switchTo().frame(iFrameId);
-        return new CirUserGuide(driver);
+        return new CirUserGuidePage(driver);
     }
 
     /**
      * Switches tab using window handler
      * @return new CirUserGuide page object
      */
-    public CirUserGuide switchTab() {
+    public CirUserGuidePage switchTab() {
         pageUtils.windowHandler();
-        return new CirUserGuide(driver);
+        return new CirUserGuidePage(driver);
     }
 
     /**
