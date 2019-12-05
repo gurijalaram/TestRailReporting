@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Repository extends ReportsHeader {
+public class ViewRepositoryPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Repository.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
     private Map<String, WebElement> folderElementMap = new HashMap<>();
     private Map<String, WebElement> reportElementMap = new HashMap<>();
 
@@ -67,7 +67,7 @@ public class Repository extends ReportsHeader {
     @FindBy(xpath = "//a[contains(text(), 'Scenario Comparison')]")
     private WebElement scenarioComparisonReport;
 
-    public Repository(WebDriver driver) {
+    public ViewRepositoryPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -81,7 +81,7 @@ public class Repository extends ReportsHeader {
      * Navigates to general folder
      * @return current page object
      */
-    public Repository navigateToGeneralFolder() {
+    public ViewRepositoryPage navigateToGeneralFolder() {
         navigateToFolder("Organization");
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
@@ -120,7 +120,7 @@ public class Repository extends ReportsHeader {
      * @param folder to navigate to
      * @return current page object
      */
-    private Repository navigateToFolder(String folder) {
+    private ViewRepositoryPage navigateToFolder(String folder) {
         pageUtils.waitForElementToAppear(folderElementMap.get(folder))
                 .click();
         return this;
@@ -130,11 +130,11 @@ public class Repository extends ReportsHeader {
      * Initialises Report hash map
      */
     private void initialiseReportMap() {
-        reportElementMap.put(AssemblyReports.ASSEMBLY_COST_A4.getReportName(), assemblyCostA4Report);
-        reportElementMap.put(AssemblyReports.ASSEMBLY_COST_LETTER.getReportName(), assemblyCostLetterReport);
-        reportElementMap.put(AssemblyReports.ASSEMBLY_DETAILS.getReportName(), assemblyDetailsReport);
-        reportElementMap.put(AssemblyReports.COMPONENT_COST.getReportName(), componentCostReport);
-        reportElementMap.put(AssemblyReports.SCENARIO_COMPARISON.getReportName(), scenarioComparisonReport);
+        reportElementMap.put(AssemblyReportsEnum.ASSEMBLY_COST_A4.getReportName(), assemblyCostA4Report);
+        reportElementMap.put(AssemblyReportsEnum.ASSEMBLY_COST_LETTER.getReportName(), assemblyCostLetterReport);
+        reportElementMap.put(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), assemblyDetailsReport);
+        reportElementMap.put(AssemblyReportsEnum.COMPONENT_COST.getReportName(), componentCostReport);
+        reportElementMap.put(AssemblyReportsEnum.SCENARIO_COMPARISON.getReportName(), scenarioComparisonReport);
     }
 
     /**

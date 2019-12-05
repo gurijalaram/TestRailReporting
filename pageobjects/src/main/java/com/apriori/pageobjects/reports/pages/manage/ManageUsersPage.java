@@ -1,6 +1,6 @@
-package com.apriori.pageobjects.reports.pages.view;
+package com.apriori.pageobjects.reports.pages.manage;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -10,17 +10,17 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Schedules extends ReportsHeader {
+public class ManageUsersPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Schedules.class);
+    private final Logger logger = LoggerFactory.getLogger(ManageUsersPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    @FindBy(xpath = "//div[contains(@class, 'listOfJobs')]/div/div[1]/div")
-    private WebElement schedulesPageTitle;
+    @FindBy(xpath = "//div[@id='users']/div/div[1]/div[contains(@class, 'title')]")
+    private WebElement usersPageTitle;
 
-    public Schedules(WebDriver driver) {
+    public ManageUsersPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -42,8 +42,8 @@ public class Schedules extends ReportsHeader {
      * Get page title text
      * @return String - page title text
      */
-    public String getSchedulesTitleText() {
-        pageUtils.waitForElementToAppear(schedulesPageTitle);
-        return schedulesPageTitle.getText();
+    public String getUsersTitleText() {
+        pageUtils.waitForElementToAppear(usersPageTitle);
+        return usersPageTitle.getText();
     }
 }

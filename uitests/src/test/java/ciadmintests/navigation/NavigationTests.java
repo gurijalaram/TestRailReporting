@@ -5,7 +5,7 @@ import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
-import com.apriori.pageobjects.reports.pages.userguides.CirUserGuide;
+import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.pageobjects.admin.pages.homepage.HomePage;
@@ -13,7 +13,6 @@ import com.apriori.pageobjects.admin.pages.login.LoginPage;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
-import org.seleniumhq.jetty9.server.Authentication;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +23,7 @@ public class NavigationTests extends TestBase {
 
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
-    private CirUserGuide cirUserGuide;
+    private CirUserGuidePage cirUserGuide;
     private CiaUserGuide ciaUserGuide;
     private LoginPage loginPage;
     private HomePage homePage;

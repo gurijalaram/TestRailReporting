@@ -5,7 +5,7 @@ import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
-import com.apriori.pageobjects.reports.pages.userguides.CirUserGuide;
+import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -107,9 +107,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * Navigates to Reports System User Guide
      * @return Home Page Page Object Model (since help is external to system)
      */
-    public CirUserGuide navigateToHelpReportsGuide() {
+    public CirUserGuidePage navigateToHelpReportsGuide() {
         navigateToPage(helpButton, reportGuideButton);
-        return new CirUserGuide(driver);
+        return new CirUserGuidePage(driver);
     }
 
     /**

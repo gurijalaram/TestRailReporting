@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view;
 
-public enum AssemblyReports {
+public enum AssemblyReportsEnum {
     ASSEMBLY_COST_A4("Assembly Cost (A4)"),
     ASSEMBLY_COST_LETTER("Assembly Cost (Letter)"),
     ASSEMBLY_DETAILS("Assembly Details"),
@@ -9,7 +9,7 @@ public enum AssemblyReports {
 
     private String reportName;
 
-    AssemblyReports(String name) {
+    AssemblyReportsEnum(String name) {
         this.reportName = name;
     }
 

@@ -1,26 +1,27 @@
-package com.apriori.pageobjects.reports.pages.view;
+package com.apriori.pageobjects.reports.pages.create;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Messages extends ReportsHeader {
+public class CreateDashboardPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Messages.class);
+    private final Logger logger = LoggerFactory.getLogger(CreateDashboardPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    @FindBy(xpath = "//div[contains(@class, 'showingToolBar')]/div/div[1]/div[contains(@class, 'title')]")
-    private WebElement messagesPageTitle;
+    @FindBy(css = "div[id='display'] .title")
+    private WebElement dashboardPageTitle;
 
-    public Messages(WebDriver driver) {
+    public CreateDashboardPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -42,8 +43,8 @@ public class Messages extends ReportsHeader {
      * Get page title text
      * @return String - page title text
      */
-    public String getMessagesTitleText() {
-        pageUtils.waitForElementToAppear(messagesPageTitle);
-        return messagesPageTitle.getText();
+    public String getAdHocViewTitleText() {
+        pageUtils.waitForElementToAppear(dashboardPageTitle);
+        return dashboardPageTitle.getText();
     }
 }

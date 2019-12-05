@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.reports.pages.homepage;
 
 import com.apriori.pageobjects.pages.login.HelpPage;
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HomePage extends ReportsHeader {
+public class HomePage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(HomePage.class);
 

@@ -1,6 +1,6 @@
-package com.apriori.pageobjects.reports.pages.manage;
+package com.apriori.pageobjects.reports.pages.view;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -10,17 +10,17 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Users extends ReportsHeader {
+public class ViewMessagesPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Users.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewMessagesPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    @FindBy(xpath = "//div[@id='users']/div/div[1]/div[contains(@class, 'title')]")
-    private WebElement usersPageTitle;
+    @FindBy(xpath = "//div[contains(@class, 'showingToolBar')]/div/div[1]/div[contains(@class, 'title')]")
+    private WebElement messagesPageTitle;
 
-    public Users(WebDriver driver) {
+    public ViewMessagesPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -42,8 +42,8 @@ public class Users extends ReportsHeader {
      * Get page title text
      * @return String - page title text
      */
-    public String getUsersTitleText() {
-        pageUtils.waitForElementToAppear(usersPageTitle);
-        return usersPageTitle.getText();
+    public String getMessagesTitleText() {
+        pageUtils.waitForElementToAppear(messagesPageTitle);
+        return messagesPageTitle.getText();
     }
 }

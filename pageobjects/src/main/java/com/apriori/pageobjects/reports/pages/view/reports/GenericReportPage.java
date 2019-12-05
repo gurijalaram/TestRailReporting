@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -10,9 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GenericReport extends ReportsHeader {
+public class GenericReportPage extends ReportsPageHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(GenericReport.class);
+    private static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
     private WebElement topLevelExportSet;
@@ -47,6 +47,15 @@ public class GenericReport extends ReportsHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
 
+
+    public GenericReportPage(WebDriver driver) {
+        super(driver);
+        this.driver = driver;
+        this.pageUtils = new PageUtils(driver);
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        PageFactory.initElements(driver, this);
+    }
+
     @Override
     protected void load() {
 
@@ -57,19 +66,11 @@ public class GenericReport extends ReportsHeader {
 
     }
 
-    public GenericReport(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-    }
-
     /**
      * Selects top level export set
      * @return current page object
      */
-    public GenericReport selectTopLevelExportSet() {
+    public GenericReportPage selectTopLevelExportSet() {
         pageUtils.waitForElementAndClick(topLevelExportSet);
         return this;
     }
@@ -79,7 +80,7 @@ public class GenericReport extends ReportsHeader {
      * @param currency
      * @return current page object
      */
-    public GenericReport checkCurrencySelected(String currency) {
+    public GenericReportPage checkCurrencySelected(String currency) {
         pageUtils.waitForElementToAppear(currentCurrencyElement);
         pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
         if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
@@ -100,12 +101,12 @@ public class GenericReport extends ReportsHeader {
      * Clicks apply and ok
      * @return Assembly Details Report page object
      */
-    public AssemblyDetailsReport clickApplyAndOk() {
+    public AssemblyDetailsReportPage clickApplyAndOk() {
         pageUtils.waitForElementToAppear(applyButton);
         applyButton.click();
         pageUtils.waitForElementToAppear(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
-        return new AssemblyDetailsReport(driver);
+        return new AssemblyDetailsReportPage(driver);
     }
 }

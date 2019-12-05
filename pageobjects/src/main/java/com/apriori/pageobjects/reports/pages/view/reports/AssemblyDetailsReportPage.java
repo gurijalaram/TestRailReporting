@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -10,9 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AssemblyDetailsReport extends GenericReport {
+public class AssemblyDetailsReportPage extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReport.class);
+    private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -25,7 +24,7 @@ public class AssemblyDetailsReport extends GenericReport {
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    public AssemblyDetailsReport(WebDriver driver) {
+    public AssemblyDetailsReportPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -50,7 +49,7 @@ public class AssemblyDetailsReport extends GenericReport {
         return pageUtils.getElementText(currentCurrency);
     }
 
-    public AssemblyDetailsReport waitForReportToAppear() {
+    public AssemblyDetailsReportPage waitForReportToAppear() {
         pageUtils.checkElementAttribute(currentCurrency, "innerText", "GBP");
         return this;
     }
