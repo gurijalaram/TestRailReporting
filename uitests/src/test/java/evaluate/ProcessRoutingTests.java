@@ -42,7 +42,6 @@ public class ProcessRoutingTests extends TestBase {
     private EvaluatePage evaluatePage;
     private RoutingsPage routingsPage;
     private MaterialCompositionPage materialCompositionPage;
-    private InvestigationPage investigationPage;
     private GeometryPage geometryPage;
     private PropertiesDialogPage propertiesDialogPage;
     private FailuresPage failuresPage;
