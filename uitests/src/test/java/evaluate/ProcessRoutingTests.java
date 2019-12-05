@@ -19,7 +19,6 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -34,7 +33,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
-import org.junit.After;
 import org.junit.Test;
 
 public class ProcessRoutingTests extends TestBase {
@@ -53,11 +51,6 @@ public class ProcessRoutingTests extends TestBase {
 
     public ProcessRoutingTests() {
         super();
-    }
-
-    @After
-    public void resetToleranceSettings() {
-        new AfterTestUtil(driver).resetToleranceSettings();
     }
 
     @Test
@@ -356,8 +349,7 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1673"})
     @Description("Validate behaviour when Adding/Editing threads that may require additional machining.")
     public void threadsRouting() {
-        loginPage = new CIDLoginPage(driver);
-        investigationPage = loginPage.login(UserUtil.getUser())
+        new CIDLoginPage(driver).login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -568,7 +560,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder( "2AL+3AM Routing", "4 Axis Mill Routing", "3 Axis Lathe Routing", "2AL+4AM Routing", "Drill Press Routing", "5 Axis Mill Routing", "3 Axis Mill Routing", "MillTurn Routing", "2AL+5AM Routing"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("2AL+3AM Routing", "4 Axis Mill Routing", "3 Axis Lathe Routing", "2AL+4AM Routing", "Drill Press Routing", "5 Axis Mill Routing", "3 Axis Mill Routing", "MillTurn Routing", "2AL+5AM Routing"));
     }
 
     @Test
