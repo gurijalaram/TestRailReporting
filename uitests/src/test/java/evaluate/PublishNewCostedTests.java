@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -20,7 +20,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class PublishNewCostedTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private ExplorePage explorePage;
 
     public PublishNewCostedTests() {
@@ -35,7 +35,7 @@ public class PublishNewCostedTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String partName = "Testpart-4";
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -55,7 +55,7 @@ public class PublishNewCostedTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String partName = "Testpart-4";
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())

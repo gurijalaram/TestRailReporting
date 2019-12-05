@@ -11,7 +11,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.utils.AfterTestUtil;
@@ -33,7 +33,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class DTCCastingTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
@@ -56,7 +56,7 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -94,7 +94,7 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1596"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void geometryTest() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -120,7 +120,7 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1042", "1046", "1051", "1053", "1055", "1057"})
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -156,7 +156,7 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1046", "1051", "1055"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()
@@ -191,7 +191,7 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1044"})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .openTolerancesTab()

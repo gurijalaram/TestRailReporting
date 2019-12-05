@@ -7,7 +7,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.ReferenceComparePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -21,7 +21,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 
 public class ReferencePanelTests extends TestBase {
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ReferenceComparePage referenceComparePage;
 
@@ -30,7 +30,7 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate the compare panel updates the comparison details to the previous iteration of the scenario")
     public void referenceUpdates() {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("powderMetal.stp"))
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -56,7 +56,7 @@ public class ReferencePanelTests extends TestBase {
 
         String scenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -90,7 +90,7 @@ public class ReferencePanelTests extends TestBase {
 
         String scenarioName = new Util().getScenarioName();
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -114,7 +114,7 @@ public class ReferencePanelTests extends TestBase {
         String scenarioName3 = new Util().getScenarioName();
         String componentName = "Rapid Prototyping";
 
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())

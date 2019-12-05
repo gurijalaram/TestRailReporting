@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.Util;
 import com.apriori.utils.users.UserUtil;
@@ -17,7 +17,7 @@ import org.junit.Test;
 
 public class ListOfVPETests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
 
     public ListOfVPETests() {
@@ -27,7 +27,7 @@ public class ListOfVPETests extends TestBase {
     @Test
     @Description("Get List of VPEs")
     public void getVPEsList() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
 

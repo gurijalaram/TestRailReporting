@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.SelectStockPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
-import com.apriori.pageobjects.pages.login.LoginPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -22,7 +22,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ChangeStockSelectionTests extends TestBase {
 
-    private LoginPage loginPage;
+    private CIDLoginPage loginPage;
     private SelectStockPage selectStockPage;
     private StockPage stockPage;
     private MaterialPage materialPage;
@@ -36,7 +36,7 @@ public class ChangeStockSelectionTests extends TestBase {
     @TestRail(testCaseId = {"960", "1617", "1618", "1619", "873"})
     @Description("Test making changes to the Material Stock in Sheet Metal, the change is respected and the scenario can be re-cost")
     public void changeStockSelectionTestSheetMetal() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -60,7 +60,7 @@ public class ChangeStockSelectionTests extends TestBase {
     @TestRail(testCaseId = {"983"})
     @Description("Test inappropriate stock cannot be selected")
     public void inappropriateStockSelectionTest() {
-        loginPage = new LoginPage(driver);
+        loginPage = new CIDLoginPage(driver);
         selectStockPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
