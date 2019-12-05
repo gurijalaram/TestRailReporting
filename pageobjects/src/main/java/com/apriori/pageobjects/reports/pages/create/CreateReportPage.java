@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.create;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -11,9 +11,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Report extends ReportsHeader {
+public class CreateReportPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Report.class);
+    private final Logger logger = LoggerFactory.getLogger(CreateReportPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -21,7 +21,7 @@ public class Report extends ReportsHeader {
     @FindBy(id = "reportGeneratorProperties")
     private WebElement createReportDialog;
 
-    public Report(WebDriver driver) {
+    public CreateReportPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);

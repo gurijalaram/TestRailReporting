@@ -59,7 +59,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      * Selects both issue type and gcd details
      *
      * @param issueTypeDropdown - the issue type parent
-     * @param issueType - the issue type
+     * @param issueType         - the issue type
      * @param gcd               - the gcd
      * @return current page object
      */
@@ -79,8 +79,10 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      */
     private GuidancePage collapseIssueDropdown() {
         By dropdown = By.cssSelector(".fa.fa-caret-down");
-        pageUtils.scrollToElement(dropdown, guidanceTableScroller);
-        pageUtils.waitForElementToAppear(dropdown).click();
+        if (pageUtils.isElementDisplayed(dropdown)) {
+            pageUtils.scrollToElement(dropdown, guidanceTableScroller);
+            pageUtils.waitForElementToAppear(dropdown).click();
+        }
         return this;
     }
 
@@ -138,6 +140,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
     /**
      * Finds the issue type
+     *
      * @param issueTypeDropdown - the issue type parent
      * @param issueTypeDropdown - the issue type
      * @return current page object
@@ -152,8 +155,8 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
     /**
      * Gets the cell details
      *
-     * @param issueType         - tolerance type
-     * @param column            - the column
+     * @param issueType - tolerance type
+     * @param column    - the column
      * @return string
      */
     public String getGuidanceCell(String issueType, String column) {
@@ -164,8 +167,8 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
     /**
      * Gets the cell details
      *
-     * @param gcd         - tolerance type
-     * @param column            - the column
+     * @param gcd    - tolerance type
+     * @param column - the column
      * @return string
      */
     public String getGCDGuidance(String gcd, String column) {

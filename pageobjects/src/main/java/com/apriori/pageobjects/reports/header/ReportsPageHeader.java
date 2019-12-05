@@ -1,8 +1,6 @@
 package com.apriori.pageobjects.reports.header;
 
-import com.apriori.pageobjects.header.ExploreHeader;
-import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReport;
-import com.apriori.pageobjects.reports.pages.view.reports.InputControls;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -12,8 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReportsHeader extends PageHeader {
-    private static Logger logger = LoggerFactory.getLogger(ReportsHeader.class);
+public class ReportsPageHeader extends PageHeader {
+    private static Logger logger = LoggerFactory.getLogger(ReportsPageHeader.class);
 
     @FindBy(xpath = "//div[@id='reportViewFrame']/div/div/div[@class='title']")
     private WebElement reportTitle;
@@ -66,7 +64,7 @@ public class ReportsHeader extends PageHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public ReportsHeader(WebDriver driver) {
+    public ReportsPageHeader(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -78,14 +76,18 @@ public class ReportsHeader extends PageHeader {
      * Wait for page to load before continuing
      * @return current page object
      */
-    public InputControls waitForPageLoad() {
+    public GenericReportPage waitForPageLoad() {
         pageUtils.waitForElementToAppear(applyButton);
-        return new InputControls(driver);
+        return new GenericReportPage(driver);
     }
 
-    public InputControls clickOptionsButton() {
+    /**
+     * Click options button to bring up Input Controls
+     * @return Input Controls page object
+     */
+    public GenericReportPage clickOptionsButton() {
         pageUtils.waitForElementToAppear(optionsButton);
         optionsButton.click();
-        return new InputControls(driver);
+        return new GenericReportPage(driver);
     }
 }

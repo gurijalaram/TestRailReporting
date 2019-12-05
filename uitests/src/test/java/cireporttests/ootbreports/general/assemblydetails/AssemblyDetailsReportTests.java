@@ -1,19 +1,17 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
-import com.apriori.pageobjects.reports.pages.view.AssemblyReports;
-import com.apriori.pageobjects.reports.pages.view.SearchResults;
+import com.apriori.pageobjects.reports.pages.view.AssemblyReportsEnum;
+import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
-import com.apriori.pageobjects.reports.pages.library.Library;
-import com.apriori.pageobjects.reports.pages.view.Repository;
+import com.apriori.pageobjects.reports.pages.library.LibraryPage;
+import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
-import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReport;
-import com.apriori.pageobjects.reports.pages.view.reports.InputControls;
+import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
-import sun.rmi.runtime.Log;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,11 +21,11 @@ import static org.hamcrest.Matchers.lessThan;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
-    private AssemblyDetailsReport assemblyDetailsReport;
-    private SearchResults searchResults;
-    private Repository repository;
+    private AssemblyDetailsReportPage assemblyDetailsReport;
+    private ViewSearchResultsPage searchResults;
+    private ViewRepositoryPage repository;
     private HomePage homePage;
-    private Library library;
+    private LibraryPage library;
 
     public AssemblyDetailsReportTests() {
         super();
@@ -44,8 +42,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(repository.getCountOfGeneralReports(), is(equalTo("5")));
 
-        AssemblyReports[] reportNames = AssemblyReports.values();
-        for(AssemblyReports report : reportNames) {
+        AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
+        for(AssemblyReportsEnum report : reportNames) {
             assertThat(repository.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
         }
     }
@@ -58,8 +56,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage();
 
-        AssemblyReports[] reportNames = AssemblyReports.values();
-        for (AssemblyReports report : reportNames) {
+        AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
+        for (AssemblyReportsEnum report : reportNames) {
             assertThat(library.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
         }
     }
@@ -71,10 +69,10 @@ public class AssemblyDetailsReportTests extends TestBase {
         homePage = new LoginPage(driver)
                 .login(UserUtil.getUser());
 
-        searchResults = new SearchResults(driver);
+        searchResults = new ViewSearchResultsPage(driver);
 
-        AssemblyReports[] reportNames = AssemblyReports.values();
-        for (AssemblyReports report : reportNames) {
+        AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
+        for (AssemblyReportsEnum report : reportNames) {
             homePage.searchForReport(report.getReportName());
             assertThat(searchResults.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
         }
@@ -90,7 +88,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
-                .navigateToReport(AssemblyReports.ASSEMBLY_DETAILS.getReportName())
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
                 .waitForPageLoad()
                 .selectTopLevelExportSet()
                 .checkCurrencySelected("USD")

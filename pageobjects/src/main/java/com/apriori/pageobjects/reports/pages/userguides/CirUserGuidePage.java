@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.userguides;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -10,9 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CirUserGuide extends ReportsHeader {
+public class CirUserGuidePage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(CirUserGuide.class);
+    private Logger logger = LoggerFactory.getLogger(CirUserGuidePage.class);
 
     @FindBy(xpath = "//*[contains(text(), 'Cost Insight Report:User Guide')]")
     private WebElement pageTitle;
@@ -26,7 +26,7 @@ public class CirUserGuide extends ReportsHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public CirUserGuide(WebDriver driver) {
+    public CirUserGuidePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);

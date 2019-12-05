@@ -1,21 +1,21 @@
 package com.apriori.pageobjects.reports.header;
 
 import com.apriori.pageobjects.pages.login.HelpPage;
-import com.apriori.pageobjects.reports.pages.create.AdHocView;
-import com.apriori.pageobjects.reports.pages.create.Dashboard;
-import com.apriori.pageobjects.reports.pages.create.DataSource;
-import com.apriori.pageobjects.reports.pages.create.Domain;
-import com.apriori.pageobjects.reports.pages.create.Report;
+import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewPage;
+import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
+import com.apriori.pageobjects.reports.pages.create.CreateDataSourcePage;
+import com.apriori.pageobjects.reports.pages.create.CreateDomainPage;
+import com.apriori.pageobjects.reports.pages.create.CreateReportPage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
-import com.apriori.pageobjects.reports.pages.library.Library;
-import com.apriori.pageobjects.reports.pages.logout.Logout;
-import com.apriori.pageobjects.reports.pages.manage.Roles;
-import com.apriori.pageobjects.reports.pages.manage.Users;
-import com.apriori.pageobjects.reports.pages.userguides.CirUserGuide;
-import com.apriori.pageobjects.reports.pages.view.Messages;
-import com.apriori.pageobjects.reports.pages.view.Repository;
-import com.apriori.pageobjects.reports.pages.view.Schedules;
-import com.apriori.pageobjects.reports.pages.view.SearchResults;
+import com.apriori.pageobjects.reports.pages.library.LibraryPage;
+import com.apriori.pageobjects.reports.pages.logout.LogoutPage;
+import com.apriori.pageobjects.reports.pages.manage.ManageRolesPage;
+import com.apriori.pageobjects.reports.pages.manage.ManageUsersPage;
+import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
+import com.apriori.pageobjects.reports.pages.view.ViewMessagesPage;
+import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
+import com.apriori.pageobjects.reports.pages.view.ViewSchedulesPage;
+import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -138,126 +138,126 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * Library page navigation method
      * @return Library Page page object
      */
-    public Library navigateToLibraryPage() {
+    public LibraryPage navigateToLibraryPage() {
         navigateToPage(libraryMenuOption);
-        return new Library(driver);
+        return new LibraryPage(driver);
     }
 
     /**
      * View Search Results page navigation method
      * @return Search Results Page page object
      */
-    public SearchResults navigateToViewSearchResultsPage() {
+    public ViewSearchResultsPage navigateToViewSearchResultsPage() {
         navigateToPage(viewMenuOption, viewSearchResultsMenuOption);
-        return new SearchResults(driver);
+        return new ViewSearchResultsPage(driver);
     }
 
     /**
      * View Repository page navigation method
      * @return Repository Page page object
      */
-    public Repository navigateToViewRepositoryPage() {
+    public ViewRepositoryPage navigateToViewRepositoryPage() {
         navigateToPage(viewMenuOption, viewRepositoryMenuOption);
-        return new Repository(driver);
+        return new ViewRepositoryPage(driver);
     }
 
     /**
      * View Schedules page navigation method
      * @return Schedules Page page object
      */
-    public Schedules navigateToViewSchedulesPage() {
+    public ViewSchedulesPage navigateToViewSchedulesPage() {
         navigateToPage(viewMenuOption, viewSchedulesMenuOption);
-        return new Schedules(driver);
+        return new ViewSchedulesPage(driver);
     }
 
     /**
      * View Messages page navigation method
      * @return Messages Page page object
      */
-    public Messages navigateToViewMessagesPage() {
+    public ViewMessagesPage navigateToViewMessagesPage() {
         navigateToPage(viewMenuOption, viewMessagesMenuOption);
-        return new Messages(driver);
+        return new ViewMessagesPage(driver);
     }
 
     /**
      * Manage Users page navigation method
      * @return Users Page page object
      */
-    public Users navigateToManageUsersPage() {
+    public ManageUsersPage navigateToManageUsersPage() {
         navigateToPage(manageMenuOption, manageUsersMenuOption);
-        return new Users(driver);
+        return new ManageUsersPage(driver);
     }
 
     /**
      * Manage Roles page navigation method
      * @return Roles Page page object
      */
-    public Roles navigateToManageRolesPage() {
+    public ManageRolesPage navigateToManageRolesPage() {
         navigateToPage(manageMenuOption, manageRolesMenuOption);
-        return new Roles(driver);
+        return new ManageRolesPage(driver);
     }
 
     /**
      * Create Ad Hoc View page navigation method
      * @return Ad Hoc View Page page object
      */
-    public AdHocView navigateToCreateAdHocViewPage() {
+    public CreateAdHocViewPage navigateToCreateAdHocViewPage() {
         navigateToPage(createMenuOption, createAdHocViewMenuOption);
-        return new AdHocView(driver);
+        return new CreateAdHocViewPage(driver);
     }
 
     /**
      * Create Report page navigation method
      * @return Report Page page object
      */
-    public Report navigateToCreateReportPage() {
+    public CreateReportPage navigateToCreateReportPage() {
         navigateToPage(createMenuOption, createReportMenuOption);
-        return new Report(driver);
+        return new CreateReportPage(driver);
     }
 
     /**
      * Create Dashboard page navigation method
      * @return Dashboard Page page object
      */
-    public Dashboard navigateToCreateDashboardPage() {
+    public CreateDashboardPage navigateToCreateDashboardPage() {
         navigateToPage(createMenuOption, createDashboardMenuOption);
-        return new Dashboard(driver);
+        return new CreateDashboardPage(driver);
     }
 
     /**
      * Create Domain page navigation method
      * @return Domain Page page object
      */
-    public Domain navigateToCreateDomainPage() {
+    public CreateDomainPage navigateToCreateDomainPage() {
         navigateToPage(createMenuOption, createDomainMenuOption);
-        return new Domain(driver);
+        return new CreateDomainPage(driver);
     }
 
     /**
      * Create Data Source page navigation method
      * @return Data Source Page page object
      */
-    public DataSource navigateToCreateDataSourcePage() {
+    public CreateDataSourcePage navigateToCreateDataSourcePage() {
         navigateToPage(createMenuOption, createDataSourceMenuOption);
-        return new DataSource(driver);
+        return new CreateDataSourcePage(driver);
     }
 
     /**
      * Navigate to Reports from Admin
      * @return Reports Page page object model
      */
-    public Report navigateToReports() {
+    public CreateReportPage navigateToReports() {
         navigateToPage(reportsMenuOption);
-        return new Report(driver);
+        return new CreateReportPage(driver);
     }
 
     /**
      * Navigates to Reports User Guide
      * @return Home Page page object model
      */
-    public CirUserGuide navigateToReportUserGuide() {
+    public CirUserGuidePage navigateToReportUserGuide() {
         navigateToPage(reportUserGuide);
-        return new CirUserGuide(driver);
+        return new CirUserGuidePage(driver);
     }
 
     /**
@@ -305,10 +305,10 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * Navigates to log out screen
      * @return Logout page object model
      */
-    public Logout navigateToReportLogout() {
+    public LogoutPage navigateToReportLogout() {
         pageUtils.waitForElementToAppear(adminTitle);
         navigateToPage(logoutMenuOption);
-        return new Logout(driver);
+        return new LogoutPage(driver);
     }
 
     /**

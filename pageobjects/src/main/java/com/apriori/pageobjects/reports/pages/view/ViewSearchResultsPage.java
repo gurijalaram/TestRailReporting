@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -10,9 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SearchResults extends ReportsHeader {
+public class ViewSearchResultsPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(SearchResults.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewSearchResultsPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -20,7 +20,7 @@ public class SearchResults extends ReportsHeader {
     @FindBy(css = "body")
     private WebElement searchResultsPageTitle;
 
-    public SearchResults(WebDriver driver) {
+    public ViewSearchResultsPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
