@@ -59,7 +59,7 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"962", "965", "966", "967", "974"})
+    @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
         loginPage = new CIDLoginPage(driver);
@@ -75,6 +75,7 @@ public class MaterialStockTests extends TestBase {
             .expandPanel()
             .goToStockTab();
         assertThat(new StockPage(driver).checkTableDetails("Auto"), is(true));
+        assertThat(new StockPage(driver).checkTableDetails("2.46"), is(true));
 
         stockPage.editStock()
             .selectStock("4.00  mm x 1500 mm x 3000 mm")
@@ -91,6 +92,7 @@ public class MaterialStockTests extends TestBase {
             .goToStockTab();
         assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
         assertThat(new StockPage(driver).checkTableDetails("Manual"), is(true));
+        assertThat(new StockPage(driver).checkTableDetails("2.46"), is(true));
     }
 
     @Test
