@@ -125,6 +125,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickApplyAndOk();
 
         // Make getters to do sums (in a reusable fashion) and return value
+        String partQuanity = assemblyDetailsReport.getTableCellText("5", "10");
         // Assert on all totals calculations
     }
 }
