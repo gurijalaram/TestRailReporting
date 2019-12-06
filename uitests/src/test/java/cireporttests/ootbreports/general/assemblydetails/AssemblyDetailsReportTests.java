@@ -1,11 +1,13 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
-import com.apriori.pageobjects.reports.pages.view.AssemblyReportsEnum;
+import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
+import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
+import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
@@ -90,7 +92,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
                 .waitForPageLoad()
-                .selectTopLevelExportSet()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .scrollDownInputControls()
                 .checkCurrencySelected("USD")
                 .clickApplyAndOk();
 
@@ -104,5 +107,24 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo("GBP")));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
         assertThat(gbpGrandTotal, is(lessThan(usdGrandTotal)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1936")
+    @Description("Verify totals calculations for Sub Assembly")
+    public void testTotalCalculationsForSubAssembly() {
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForPageLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .scrollDownInputControls()
+                .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+                .checkCurrencySelected("USD")
+                .clickApplyAndOk();
+
+        // Make getters to do sums (in a reusable fashion) and return value
+        // Assert on all totals calculations
     }
 }
