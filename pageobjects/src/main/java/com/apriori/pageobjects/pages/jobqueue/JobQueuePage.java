@@ -85,7 +85,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
      * @param icon - icon can be 'okay' or 'stop'
      * @return webelement
      */
-    public String getJobQueueRow(String icon) {
+    public String getJobQueueIconMessage(String icon) {
         checkJobQueueRow(icon);
         return pageUtils.waitForElementToAppear(jobQueueFirstRow).getAttribute("innerHTML");
     }

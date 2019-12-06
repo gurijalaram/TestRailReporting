@@ -132,6 +132,6 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ExplorePage.class)
             .openJobQueue();
 
-        assertThat(jobQueuePage.getJobQueueRow("stop"), containsString("Comparison " + testComparisonName + " already exists"));
+        assertThat(jobQueuePage.getJobQueueIconMessage("stop"), containsString("Comparison " + testComparisonName + " already exists"));
     }
 }
