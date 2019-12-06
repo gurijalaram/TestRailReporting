@@ -66,9 +66,7 @@ public class CirUserGuidePage extends ReportsPageHeader {
      * @return String - page title
      */
     public String getReportsUserGuidePageHeading() {
-        pageUtils.windowHandler();
-        pageUtils.waitForElementToAppear(mainContentIframe);
-        driver.switchTo().frame(mainContentIframe);
+        pageUtils.waitForElementToAppear(reportsUserGuideTitle);
         return reportsUserGuideTitle.getAttribute("textContent");
     }
 }
