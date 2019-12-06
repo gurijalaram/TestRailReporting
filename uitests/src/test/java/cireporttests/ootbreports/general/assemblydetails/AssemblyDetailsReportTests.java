@@ -15,6 +15,8 @@ import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -84,8 +86,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1922")
     @Description("Currency Code works")
     public void testCurrencyCodeWorks() {
-        float gbpGrandTotal;
-        float usdGrandTotal;
+        BigDecimal gbpGrandTotal;
+        BigDecimal usdGrandTotal;
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -95,15 +97,16 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
                 .checkCurrencySelected("USD")
-                .clickApplyAndOk();
+                .clickApplyAndOk()
+                .waitForCorrectCurrency("USD");
 
-        usdGrandTotal = assemblyDetailsReport.getCapitalInvGrandTotal();
+        usdGrandTotal = assemblyDetailsReport.getTableCellText("28", "34");
         assemblyDetailsReport.clickOptionsButton()
                 .checkCurrencySelected("GBP")
                 .clickApplyAndOk()
-                .waitForReportToAppear();
+                .waitForCorrectCurrency("GBP");
 
-        gbpGrandTotal = assemblyDetailsReport.getCapitalInvGrandTotal();
+        gbpGrandTotal = assemblyDetailsReport.getTableCellText("28", "34");
         assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo("GBP")));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
         assertThat(gbpGrandTotal, is(lessThan(usdGrandTotal)));
@@ -122,10 +125,13 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .scrollDownInputControls()
                 .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
                 .checkCurrencySelected("USD")
-                .clickApplyAndOk();
+                .clickApplyAndOk()
+                .waitForCorrectCurrency("USD");
 
-        // Make getters to do sums (in a reusable fashion) and return value
-        String partQuanity = assemblyDetailsReport.getTableCellText("5", "10");
         // Assert on all totals calculations
+        assertThat(assemblyDetailsReport.getTableCellText("28", "25"), is(equalTo(assemblyDetailsReport.getExpectedCycleTimeGrandTotal())));
+        assertThat(assemblyDetailsReport.getTableCellText("28", "28"), is(equalTo(assemblyDetailsReport.getExpectedPiecePartCostGrandTotal())));
+        //assertThat(assemblyDetailsReport.getTableCellText("28", "31"), is(equalTo(assemblyDetailsReport.getExpectedFullyBurdenedCostGrandTotal())));
+        assertThat(assemblyDetailsReport.getTableCellText("28", "34"), is(equalTo(assemblyDetailsReport.getExpectedCapitalInvestmentGrandTotal())));
     }
 }

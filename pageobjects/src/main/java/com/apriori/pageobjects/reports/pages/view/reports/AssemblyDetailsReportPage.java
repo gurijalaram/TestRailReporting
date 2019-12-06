@@ -10,6 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
+
 public class AssemblyDetailsReportPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
@@ -49,45 +51,58 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Generic method to get text from specified cell
      * @return String text of cell
      */
-    public String getTableCellText(String rowIndex, String columnIndex) {
+    public BigDecimal getTableCellText(String rowIndex, String columnIndex) {
         By cellLocator = By.xpath(String.format("//tr[%s]/td[%s]/span", rowIndex, columnIndex));
-        return pageUtils.getElementText(driver.findElement(cellLocator));
+        String commaRemovedFigure = pageUtils.getElementText(driver.findElement(cellLocator)).replaceAll(",","");
+        return new BigDecimal(commaRemovedFigure);
     }
 
     /**
-     *
-     * @return
+     * Performs calculation and returns result
+     * @return BigDecimal
      */
-    public float getFullyBurdenedCostGrandTotal() {
-        pageUtils.waitForElementToAppear(fullyBurdenedCostGrandTotalElement);
-        return Float.parseFloat(pageUtils.getElementText(fullyBurdenedCostGrandTotalElement));
+    public BigDecimal getExpectedCycleTimeGrandTotal() {
+        BigDecimal valueOne = getTableCellText("5", "24");
+        BigDecimal valueTwo = getTableCellText("7", "24");
+        BigDecimal valueThree = getTableCellText("11", "24");
+        BigDecimal valueFour = getTableCellText("15", "24");
+        return valueOne.add(valueTwo).add(valueThree).add(valueFour);
     }
 
     /**
-     *
-     * @return
+     * Performs calculation and returns result
+     * @return BigDecimal
      */
-    public float getPiecePartCostGrandTotal() {
-        pageUtils.waitForElementToAppear(piecePartCostGrandTotalElement);
-        return Float.parseFloat(pageUtils.getElementText(piecePartCostGrandTotalElement));
+    public BigDecimal getExpectedPiecePartCostGrandTotal() {
+        BigDecimal valueOne = getTableCellText("5", "27");
+        BigDecimal valueTwo = getTableCellText("7", "27");
+        BigDecimal valueThree = getTableCellText("11", "27");
+        BigDecimal valueFour = getTableCellText("15", "27");
+        BigDecimal valueFive = getTableCellText("17", "27");
+        return valueOne.add(valueTwo).add(valueThree).add(valueFour).add(valueFive);
     }
 
     /**
-     *
-     * @return
+     * Performs calculation and returns result
+     * @return BigDecimal
      */
-    public float getCycleTimeGrandTotal() {
-        pageUtils.waitForElementToAppear(cycleTimeGrandTotalElement);
-        return Float.parseFloat(pageUtils.getElementText(cycleTimeGrandTotalElement));
+    public BigDecimal getExpectedFullyBurdenedCostGrandTotal() {
+        BigDecimal valueOne = getTableCellText("5", "30");
+        BigDecimal valueTwo = getTableCellText("7", "30");
+        BigDecimal valueThree = getTableCellText("11", "30");
+        BigDecimal valueFour = getTableCellText("15", "30");
+        BigDecimal valueFive = getTableCellText("17", "30");
+        return valueOne.add(valueTwo).add(valueThree).add(valueFour).add(valueFive);
     }
 
     /**
-     * Gets Capital Investments Grand Total
-     * @return current page object
+     * Performs calculation and returns result
+     * @return BigDecimal
      */
-    public float getCapitalInvGrandTotal() {
-        pageUtils.waitForElementToAppear(capitalInvGrandTotalElement);
-        return Float.parseFloat(pageUtils.getElementText(capitalInvGrandTotalElement));
+    public BigDecimal getExpectedCapitalInvestmentGrandTotal() {
+        BigDecimal valueOne = getTableCellText("7", "33");
+        BigDecimal valueTwo = getTableCellText("11", "33");
+        return valueOne.add(valueTwo);
     }
 
     /**
@@ -98,8 +113,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return pageUtils.getElementText(currentCurrency);
     }
 
-    public AssemblyDetailsReportPage waitForReportToAppear() {
-        pageUtils.checkElementAttribute(currentCurrency, "innerText", "GBP");
+    public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
+        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return this;
     }
 }
