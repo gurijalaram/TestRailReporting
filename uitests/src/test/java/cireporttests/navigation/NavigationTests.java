@@ -35,22 +35,21 @@ public class NavigationTests extends TestBase {
 
     private PrivacyPolicyPage privacyPolicyPage;
     private ViewSearchResultsPage searchResults;
-    private CirUserGuidePage cirUserGuide;
     private CreateDataSourcePage dataSource;
+    private CirUserGuidePage cirUserGuide;
     private ViewRepositoryPage repository;
-    private LoginPage loginPage;
     private CreateDashboardPage dashboard;
     private CreateAdHocViewPage adHocView;
     private ViewSchedulesPage schedules;
-    private HomePage homePage;
-    private HelpPage helpPage;
     private ViewMessagesPage messages;
-    private LibraryPage library;
     private CreateDomainPage domain;
     private CreateReportPage report;
-    private LogoutPage logout;
     private ManageRolesPage roles;
     private ManageUsersPage users;
+    private LibraryPage library;
+    private HomePage homePage;
+    private HelpPage helpPage;
+    private LogoutPage logout;
 
     public NavigationTests() {
         super();
@@ -62,7 +61,9 @@ public class NavigationTests extends TestBase {
     public void testCIReportsUserGuideNavigation() {
         cirUserGuide = new LoginPage(driver)
                 .login(UserUtil.getUser())
-                .navigateToReportUserGuide();
+                .navigateToReportUserGuide()
+                .switchTab()
+                .switchToIFrameUserGuide("page_iframe");
 
         assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CI_REPORT_USER_GUIDE")));
@@ -251,7 +252,8 @@ public class NavigationTests extends TestBase {
         helpPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToHelpPage()
-                .switchToIFrame(iFrameId);
+                .switchToIFrameHelpPage(iFrameId)
+                .ensurePageIsLoaded();
 
         assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
         assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.reportingHelpUrl)));
