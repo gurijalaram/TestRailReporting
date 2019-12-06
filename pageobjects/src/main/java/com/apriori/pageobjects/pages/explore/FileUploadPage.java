@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -65,10 +64,10 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param filePath     - file path
      * @return current page object
      */
-    public EvaluatePage uploadFile(String scenarioName, File filePath) {
+    public FileUploadPage inputFileDetails(String scenarioName, File filePath) {
         inputScenarioName(scenarioName)
-            .uploadFileDetails(filePath);
-        return selectOkButton();
+            .enterFilePath(filePath);
+        return this;
     }
 
     /**
@@ -90,7 +89,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param filePath - the file path
      * @return current page object
      */
-    private FileUploadPage uploadFileDetails(File filePath) {
+    private FileUploadPage enterFilePath(File filePath) {
         fileInput.sendKeys(filePath.getAbsolutePath());
         fileInput.sendKeys(filePath.getAbsolutePath());
         return this;
@@ -99,11 +98,11 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     /**
      * Selects the ok button
      *
-     * @return new page object
+     * @return generic page object
      */
-    private EvaluatePage selectOkButton() {
+    public <T> T selectOkButton(Class<T> className) {
         pageUtils.waitForElementAndClick(okButton);
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
