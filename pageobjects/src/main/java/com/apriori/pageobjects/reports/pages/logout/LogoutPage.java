@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.logout;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -10,9 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Logout extends ReportsHeader {
+public class LogoutPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Logout.class);
+    private final Logger logger = LoggerFactory.getLogger(LogoutPage.class);
 
     @FindBy(css = "div[class='auth0-lock-header-welcome'] > div")
     private WebElement loginPageTitle;
@@ -20,7 +20,7 @@ public class Logout extends ReportsHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public Logout(WebDriver driver) {
+    public LogoutPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);

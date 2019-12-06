@@ -1,26 +1,27 @@
-package com.apriori.pageobjects.reports.pages.manage;
+package com.apriori.pageobjects.reports.pages.create;
 
-import com.apriori.pageobjects.reports.header.ReportsHeader;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Roles extends ReportsHeader {
+public class CreateDataSourcePage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(Roles.class);
+    private final Logger logger = LoggerFactory.getLogger(CreateDataSourcePage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    @FindBy(xpath = "//div[@id='roles']/div/div[1]/div[contains(@class, 'title')]")
-    private WebElement rolesPageTitle;
+    @FindBy(xpath = "//div[@id='display']/div/div/div/div[contains(@class, 'header')]/div")
+    private WebElement dataSourcePageTitle;
 
-    public Roles(WebDriver driver) {
+    public CreateDataSourcePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -42,8 +43,8 @@ public class Roles extends ReportsHeader {
      * Get page title text
      * @return String - page title text
      */
-    public String getRolesTitleText() {
-        pageUtils.waitForElementToAppear(rolesPageTitle);
-        return rolesPageTitle.getText();
+    public String getDataSourceTitleText() {
+        pageUtils.waitForElementToAppear(dataSourcePageTitle);
+        return dataSourcePageTitle.getText();
     }
 }
