@@ -1,5 +1,6 @@
 package explore;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -8,6 +9,7 @@ import static org.hamcrest.Matchers.hasItems;
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.AssignPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
@@ -35,6 +37,7 @@ public class ActionsTests extends TestBase {
     private EvaluatePage evaluatePage;
     private GenericHeader genericHeader;
     private AssignPage assignPage;
+    private WarningPage warningPage;
 
     @Category(CustomerSmokeTests.class)
     @Test
@@ -446,5 +449,30 @@ public class ActionsTests extends TestBase {
             .selectInfoNotes();
 
         assertThat(scenarioNotesPage.isDescription(""), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"2317"})
+    @Description("Ensure scripts cannot be entered into text input fields")
+    public void cannotUseScript() {
+
+        String testScenarioName = new Util().getScenarioName();
+
+        loginPage = new CIDLoginPage(driver);
+        loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "Push Pin");
+
+        genericHeader = new GenericHeader(driver);
+        warningPage = genericHeader.selectScenarioInfoNotes()
+            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "<script src=http://www.example.com/malicious-code.js></script>", "<script>alert(document.cookie)</script>")
+            .save(WarningPage.class);
+
+        assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 }

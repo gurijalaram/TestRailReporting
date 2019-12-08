@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.header.EvaluateHeader;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -25,6 +26,7 @@ public class CostAllCadTests extends TestBase {
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private CostDetailsPage costDetailsPage;
+    private EvaluateHeader evaluateHeader;
 
     public CostAllCadTests() {
         super();
@@ -164,5 +166,17 @@ public class CostAllCadTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), (is(true)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1605"})
+    @Description("Upload large GCD part. Part should be displayed in the viewer within 60 seconds")
+    public void translationTest() {
+        loginPage = new CIDLoginPage(driver);
+        evaluateHeader = loginPage.login(UserUtil.getUser())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("LargePart.prt.1"))
+            .checkForImage(0.1);
+
+        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), (is(true)));
     }
 }
