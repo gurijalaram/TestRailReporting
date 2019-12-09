@@ -113,7 +113,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "1936")
+    @TestRail(testCaseId = "3067")
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
         assemblyDetailsReport = new LoginPage(driver)
