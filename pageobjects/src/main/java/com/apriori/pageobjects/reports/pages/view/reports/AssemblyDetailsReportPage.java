@@ -106,6 +106,134 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedCycleTimeTotal() {
+        BigDecimal valueOne = getTableCellText("5", "24");
+        BigDecimal valueTwo = getTableCellText("7", "24");
+        return valueOne.add(valueTwo);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedPiecePartCostTotal() {
+        BigDecimal valueOne = getTableCellText("5", "27");
+        BigDecimal valueTwo = getTableCellText("7", "27");
+        return valueOne.add(valueOne).add(valueTwo);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedFullyBurdenedCostTotal() {
+        BigDecimal valueOne = getTableCellText("5", "30");
+        BigDecimal valueTwo = getTableCellText("7", "30");
+        return valueOne.add(valueOne).add(valueTwo);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedCapitalInvestmentTotal() {
+        BigDecimal valueOne = getTableCellText("5", "33");
+        BigDecimal valueTwo = getTableCellText("7", "33");
+        return valueOne.add(valueTwo);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedCycleTimeTotals() {
+        BigDecimal valueOne = getTableCellText("4", "25");
+        BigDecimal valueTwo = getTableCellText("5", "24");
+        BigDecimal valueThree = getTableCellText("8", "24");
+        BigDecimal valueFour = getTableCellText("11", "24");
+        BigDecimal valueFive = getTableCellText("14", "24");
+        BigDecimal valueSix = getTableCellText("17", "24");
+        BigDecimal valueSeven = getTableCellText("19", "24");
+        BigDecimal valueEight = getTableCellText("38", "24");
+        return valueOne.add(valueTwo)
+                .add(valueThree)
+                .add(valueFour)
+                .add(valueFive)
+                .add(valueSix)
+                .add(valueSeven)
+                .add(valueEight);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedPiecePartCostTotals() {
+        BigDecimal valueOne = getTableCellText("4", "28");
+        BigDecimal valueTwo = getTableCellText("5", "27");
+        BigDecimal valueThree = getTableCellText("8", "27");
+        BigDecimal valueFour = getTableCellText("11", "27");
+        BigDecimal valueFive = getTableCellText("14", "27");
+        BigDecimal valueSix = getTableCellText("17", "27");
+        BigDecimal valueSeven = getTableCellText("19", "27");
+        BigDecimal valueEight = getTableCellText("38", "27");
+        return valueOne.add(valueTwo)
+                .add(valueThree)
+                .add(valueThree)
+                .add(valueFour)
+                .add(valueFive)
+                .add(valueSix)
+                .add(valueSeven)
+                .add(valueSeven)
+                .add(valueEight);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedFullyBurdenedCostTotals() {
+        BigDecimal valueOne = getTableCellText("4", "31");
+        BigDecimal valueTwo = getTableCellText("5", "30");
+        BigDecimal valueThree = getTableCellText("8", "30");
+        BigDecimal valueFour = getTableCellText("11", "30");
+        BigDecimal valueFive = getTableCellText("14", "30");
+        BigDecimal valueSix = getTableCellText("17", "30");
+        BigDecimal valueSeven = getTableCellText("19", "30");
+        BigDecimal valueEight = getTableCellText("38", "30");
+        return valueOne.add(valueTwo)
+                .add(valueThree)
+                .add(valueThree)
+                .add(valueFour)
+                .add(valueFive)
+                .add(valueSix)
+                .add(valueSeven)
+                .add(valueSeven)
+                .add(valueEight);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedCapitalInvestmentTotals() {
+        BigDecimal valueOne = getTableCellText("4", "34");
+        BigDecimal valueTwo = getTableCellText("5", "33");
+        BigDecimal valueThree = getTableCellText("11", "33");
+        BigDecimal valueFour = getTableCellText("14", "33");
+        BigDecimal valueFive = getTableCellText("17", "33");
+        BigDecimal valueSix = getTableCellText("19", "33");
+        return valueOne.add(valueTwo)
+                .add(valueThree)
+                .add(valueFour)
+                .add(valueFive)
+                .add(valueSix);
+    }
+
+    /**
      * Gets current currency setting
      * @return String
      */
