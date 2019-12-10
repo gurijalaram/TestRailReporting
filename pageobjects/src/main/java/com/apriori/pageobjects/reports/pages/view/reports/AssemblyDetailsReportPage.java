@@ -2,6 +2,9 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +13,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class AssemblyDetailsReportPage extends GenericReportPage {
 
@@ -48,6 +54,62 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
+     * Temporary test method to use in order to understand how Jsoup works
+     */
+    public void getValues() {
+        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
+
+        int i = 0;
+        for (Element row : assemblyDetailsReport.select("table.jrPage > tbody > tr:nth-child(16) > td:nth-child(2) > div > div:nth-child(2) > table tr")) {
+            String cssQuery = "td:nth-child(24)";
+            //String cssQueryTwo = "td:nth-child(25)";
+
+            if (!row.select(cssQuery).text().isEmpty()) {
+                String mainValues = row.select(cssQuery).text();
+                logger.debug(String.format("main values (i: %d): %s", i, mainValues));
+            }
+
+            //if (!row.select(cssQueryTwo).text().isEmpty()) {
+            //    String nullTotalValues = row.select(cssQueryTwo).text();
+            //    logger.debug(String.format("null total values (i: %d): %s", i, nullTotalValues));
+            //}
+            i++;
+        }
+    }
+
+    private ArrayList<BigDecimal> getValuesFromTable(String cssSelector, int indexRequired) {
+        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
+        ArrayList<BigDecimal> valuesRetrieved = new ArrayList<>();
+        int i = 0;
+
+        for (Element row : assemblyDetailsReport.select("table.jrPage > tbody > tr:nth-child(16) > td:nth-child(2) > div > div:nth-child(2) > table tr")) {
+            if (!row.select(cssSelector).text().isEmpty() && indexRequired != 0 && i == 27) {
+                valuesRetrieved.add(new BigDecimal(row.select(cssSelector).text().replaceAll(",", "")));
+            } else if (row.select(cssSelector).text().isEmpty() && indexRequired == 0) {
+                valuesRetrieved.add(new BigDecimal(row.select(cssSelector).text().replaceAll(",", "")));
+            }
+            i++;
+        }
+        return valuesRetrieved;
+    }
+
+    public BigDecimal getExpectedCycleTimeGrandTotal() {
+        ArrayList<BigDecimal> valuesToAdd = getValuesFromTable("td:nth-child(24)", 0);
+        BigDecimal total = new BigDecimal("0");
+
+        for (BigDecimal value : valuesToAdd) {
+            total = total.add(value);
+        }
+
+        return total;
+    }
+
+    public BigDecimal getColumnTotal() {
+        ArrayList<BigDecimal> totalValue = getValuesFromTable("td:nth-child(25)", 27);
+        return totalValue.get(totalValue.size() - 1);
+    }
+
+    /**
      * Generic method to get text from specified cell
      * @return String text of cell
      */
@@ -55,182 +117,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         By cellLocator = By.xpath(String.format("//tr[%s]/td[%s]/span", rowIndex, columnIndex));
         String commaRemovedFigure = pageUtils.getElementText(driver.findElement(cellLocator)).replaceAll(",","");
         return new BigDecimal(commaRemovedFigure);
-    }
-
-    /**
-     * Performs calculation and returns result
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedCycleTimeGrandTotal() {
-        BigDecimal valueOne = getTableCellText("5", "24");
-        BigDecimal valueTwo = getTableCellText("7", "24");
-        BigDecimal valueThree = getTableCellText("11", "24");
-        BigDecimal valueFour = getTableCellText("15", "24");
-        return valueOne.add(valueTwo).add(valueThree).add(valueFour);
-    }
-
-    /**
-     * Performs calculation and returns result
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedPiecePartCostGrandTotal() {
-        BigDecimal valueOne = getTableCellText("5", "27");
-        BigDecimal valueTwo = getTableCellText("7", "27");
-        BigDecimal valueThree = getTableCellText("11", "27");
-        BigDecimal valueFour = getTableCellText("15", "27");
-        BigDecimal valueFive = getTableCellText("17", "27");
-        return valueOne.add(valueTwo).add(valueThree).add(valueFour).add(valueFive);
-    }
-
-    /**
-     * Performs calculation and returns result
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedFullyBurdenedCostGrandTotal() {
-        BigDecimal valueOne = getTableCellText("5", "30");
-        BigDecimal valueTwo = getTableCellText("7", "30");
-        BigDecimal valueThree = getTableCellText("11", "30");
-        BigDecimal valueFour = getTableCellText("15", "30");
-        BigDecimal valueFive = getTableCellText("17", "30");
-        return valueOne.add(valueTwo).add(valueThree).add(valueFour).add(valueFive);
-    }
-
-    /**
-     * Performs calculation and returns result
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedCapitalInvestmentGrandTotal() {
-        BigDecimal valueOne = getTableCellText("7", "33");
-        BigDecimal valueTwo = getTableCellText("11", "33");
-        return valueOne.add(valueTwo);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public BigDecimal getExpectedCycleTimeTotal() {
-        BigDecimal valueOne = getTableCellText("5", "24");
-        BigDecimal valueTwo = getTableCellText("7", "24");
-        return valueOne.add(valueTwo);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public BigDecimal getExpectedPiecePartCostTotal() {
-        BigDecimal valueOne = getTableCellText("5", "27");
-        BigDecimal valueTwo = getTableCellText("7", "27");
-        return valueOne.add(valueOne).add(valueTwo);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public BigDecimal getExpectedFullyBurdenedCostTotal() {
-        BigDecimal valueOne = getTableCellText("5", "30");
-        BigDecimal valueTwo = getTableCellText("7", "30");
-        return valueOne.add(valueOne).add(valueTwo);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public BigDecimal getExpectedCapitalInvestmentTotal() {
-        BigDecimal valueOne = getTableCellText("5", "33");
-        BigDecimal valueTwo = getTableCellText("7", "33");
-        return valueOne.add(valueTwo);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public BigDecimal getExpectedCycleTimeTotals() {
-        BigDecimal valueOne = getTableCellText("4", "25");
-        BigDecimal valueTwo = getTableCellText("5", "24");
-        BigDecimal valueThree = getTableCellText("8", "24");
-        BigDecimal valueFour = getTableCellText("11", "24");
-        BigDecimal valueFive = getTableCellText("14", "24");
-        BigDecimal valueSix = getTableCellText("17", "24");
-        BigDecimal valueSeven = getTableCellText("19", "24");
-        BigDecimal valueEight = getTableCellText("38", "24");
-        return valueOne.add(valueTwo)
-                .add(valueThree)
-                .add(valueFour)
-                .add(valueFive)
-                .add(valueSix)
-                .add(valueSeven)
-                .add(valueEight);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public BigDecimal getExpectedPiecePartCostTotals() {
-        BigDecimal valueOne = getTableCellText("4", "28");
-        BigDecimal valueTwo = getTableCellText("5", "27");
-        BigDecimal valueThree = getTableCellText("8", "27");
-        BigDecimal valueFour = getTableCellText("11", "27");
-        BigDecimal valueFive = getTableCellText("14", "27");
-        BigDecimal valueSix = getTableCellText("17", "27");
-        BigDecimal valueSeven = getTableCellText("19", "27");
-        BigDecimal valueEight = getTableCellText("38", "27");
-        return valueOne.add(valueTwo)
-                .add(valueThree)
-                .add(valueThree)
-                .add(valueFour)
-                .add(valueFive)
-                .add(valueSix)
-                .add(valueSeven)
-                .add(valueSeven)
-                .add(valueEight);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public BigDecimal getExpectedFullyBurdenedCostTotals() {
-        BigDecimal valueOne = getTableCellText("4", "31");
-        BigDecimal valueTwo = getTableCellText("5", "30");
-        BigDecimal valueThree = getTableCellText("8", "30");
-        BigDecimal valueFour = getTableCellText("11", "30");
-        BigDecimal valueFive = getTableCellText("14", "30");
-        BigDecimal valueSix = getTableCellText("17", "30");
-        BigDecimal valueSeven = getTableCellText("19", "30");
-        BigDecimal valueEight = getTableCellText("38", "30");
-        return valueOne.add(valueTwo)
-                .add(valueThree)
-                .add(valueThree)
-                .add(valueFour)
-                .add(valueFive)
-                .add(valueSix)
-                .add(valueSeven)
-                .add(valueSeven)
-                .add(valueEight);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public BigDecimal getExpectedCapitalInvestmentTotals() {
-        BigDecimal valueOne = getTableCellText("4", "34");
-        BigDecimal valueTwo = getTableCellText("5", "33");
-        BigDecimal valueThree = getTableCellText("11", "33");
-        BigDecimal valueFour = getTableCellText("14", "33");
-        BigDecimal valueFive = getTableCellText("17", "33");
-        BigDecimal valueSix = getTableCellText("19", "33");
-        return valueOne.add(valueTwo)
-                .add(valueThree)
-                .add(valueFour)
-                .add(valueFive)
-                .add(valueSix);
     }
 
     /**
