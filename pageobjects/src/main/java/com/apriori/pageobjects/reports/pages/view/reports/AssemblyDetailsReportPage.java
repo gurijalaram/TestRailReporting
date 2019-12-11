@@ -17,10 +17,16 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AssemblyDetailsReportPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
+    private Map<String, String> columnMap = new HashMap<>();
+    private Map<String, String> columnTotalMap = new HashMap<>();
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -40,8 +46,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'GRAND TOTAL')]/../../td[34]/span")
     private WebElement capitalInvGrandTotalElement;
 
-    private float capitalInvGrandTotalPreviousCurrency;
-
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -51,6 +55,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseColumnMap();
+        initialiseColumnTotalMap();
     }
 
     /**
@@ -64,12 +70,14 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             String cssQuery = "td:nth-child(24)";
             //String cssQueryTwo = "td:nth-child(25)";
 
-            if (!row.select(cssQuery).text().isEmpty()) {
+            if (!row.select(cssQuery).text().isEmpty() && !row.select(cssQuery).text().equals("null")
+                && !row.select(cssQuery).text().equals("0.00")) {
                 String mainValues = row.select(cssQuery).text();
                 logger.debug(String.format("main values (i: %d): %s", i, mainValues));
             }
 
-            //if (!row.select(cssQueryTwo).text().isEmpty()) {
+            //if (!row.select(cssQueryTwo).text().isEmpty() && !row.select(cssQueryTwo).text().equals("null")
+            //    && !row.select(cssQueryTwo).text().contains("Cycle")) {
             //    String nullTotalValues = row.select(cssQueryTwo).text();
             //    logger.debug(String.format("null total values (i: %d): %s", i, nullTotalValues));
             //}
@@ -77,36 +85,33 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         }
     }
 
-    private ArrayList<BigDecimal> getValuesFromTable(String cssSelector, int indexRequired) {
+    private ArrayList<BigDecimal> getValuesFromTable(String cssSelector) {
         Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
         ArrayList<BigDecimal> valuesRetrieved = new ArrayList<>();
-        int i = 0;
 
         for (Element row : assemblyDetailsReport.select("table.jrPage > tbody > tr:nth-child(16) > td:nth-child(2) > div > div:nth-child(2) > table tr")) {
-            if (!row.select(cssSelector).text().isEmpty() && indexRequired != 0 && i == 27) {
-                valuesRetrieved.add(new BigDecimal(row.select(cssSelector).text().replaceAll(",", "")));
-            } else if (row.select(cssSelector).text().isEmpty() && indexRequired == 0) {
+            if (!row.select(cssSelector).text().isEmpty() && !row.select(cssSelector).text().equals("null")
+                && !row.select(cssSelector).text().chars().anyMatch(Character::isLetter) && !row.select(cssSelector).text().equals("0.00")) {
                 valuesRetrieved.add(new BigDecimal(row.select(cssSelector).text().replaceAll(",", "")));
             }
-            i++;
         }
         return valuesRetrieved;
     }
 
-    public BigDecimal getExpectedCycleTimeGrandTotal() {
-        ArrayList<BigDecimal> valuesToAdd = getValuesFromTable("td:nth-child(24)", 0);
-        BigDecimal total = new BigDecimal("0");
-
-        for (BigDecimal value : valuesToAdd) {
-            total = total.add(value);
-        }
-
-        return total;
+    public BigDecimal getActualColumnGrandTotal(String column) {
+        ArrayList<BigDecimal> valuesRetrieved = getValuesFromTable(columnTotalMap.get(column));
+        return valuesRetrieved.get(0);
     }
 
-    public BigDecimal getColumnTotal() {
-        ArrayList<BigDecimal> totalValue = getValuesFromTable("td:nth-child(25)", 27);
-        return totalValue.get(totalValue.size() - 1);
+    public BigDecimal getExpectedColumnGrandTotal(String column) {
+        // quantity isn't always 1 - factor this in
+        List<BigDecimal> totalValues = getValuesFromTable(columnMap.get(column))
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
+        BigDecimal sum = totalValues.stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return sum;
     }
 
     /**
@@ -130,5 +135,19 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return this;
+    }
+
+    private void initialiseColumnMap() {
+        columnMap.put("Cycle Time", "td:nth-child(24)");
+        columnMap.put("Piece Part Cost", "td:nth-child(27)");
+        columnMap.put("Fully Burdened Cost", "td:nth-child(30)");
+        columnMap.put("Capital Investments", "td:nth-child(33)");
+    }
+
+    private void initialiseColumnTotalMap() {
+        columnTotalMap.put("Cycle Time", "td:nth-child(25)");
+        columnTotalMap.put("Piece Part Cost", "td:nth-child(28)");
+        columnTotalMap.put("Fully Burdened Cost", "td:nth-child(31)");
+        columnTotalMap.put("Capital Investments", "td:nth-child(34)");
     }
 }

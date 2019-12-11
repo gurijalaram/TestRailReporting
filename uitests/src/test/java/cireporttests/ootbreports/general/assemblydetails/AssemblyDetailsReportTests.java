@@ -129,11 +129,14 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForCorrectCurrency("GBP");
 
         // Assert on all totals calculations
-        assemblyDetailsReport.getValues();
-        //assertThat(assemblyDetailsReport.getColumnTotal(), is(equalTo(assemblyDetailsReport.getExpectedCycleTimeGrandTotal())));
-//        assertThat(assemblyDetailsReport.getTableCellText("28", "28"), is(equalTo(assemblyDetailsReport.getExpectedPiecePartCostGrandTotal())));
-//        assertThat(assemblyDetailsReport.getTableCellText("28", "31"), is(equalTo(assemblyDetailsReport.getExpectedFullyBurdenedCostGrandTotal())));
-//        assertThat(assemblyDetailsReport.getTableCellText("28", "34"), is(equalTo(assemblyDetailsReport.getExpectedCapitalInvestmentGrandTotal())));
+        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal("Cycle Time"),
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal("Cycle Time"))));
+        //assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal("Piece Part Cost"),
+        //        is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal("Piece Part Cost"))));
+        //assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal("Fully Burdened Cost"),
+        //        is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal("Fully Burdened Cost"))));
+        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal("Capital Investments"),
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal("Capital Investments"))));
     }
 
     @Test
