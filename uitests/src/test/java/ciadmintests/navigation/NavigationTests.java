@@ -25,7 +25,6 @@ public class NavigationTests extends TestBase {
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
     private CiaUserGuide ciaUserGuide;
-    private LoginPage loginPage;
     private HomePage homePage;
     private Logout logout;
 
@@ -61,10 +60,12 @@ public class NavigationTests extends TestBase {
     public void testHelpCostInsightReportGuideNavigation() {
         cirUserGuide = new LoginPage(driver)
                 .login(UserUtil.getUser())
-                .navigateToHelpReportsGuide();
+                .navigateToHelpReportsGuide()
+                .switchTab()
+                .switchToIFrameUserGuide("page_iframe");
 
         assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
-        assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CI_REPORT_USER_GUIDE")));
+        assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
         assertThat(cirUserGuide.getTabCount(), is(2));
     }
 

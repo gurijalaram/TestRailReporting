@@ -20,6 +20,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 public class PublishComparisonTests extends TestBase {
@@ -34,7 +35,7 @@ public class PublishComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"421"})
+    @TestRail(testCaseId = {"421", "434"})
     @Issue("AP-56845")
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
@@ -44,34 +45,46 @@ public class PublishComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
-            .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "Casting")
-            .apply();
+             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+             .costScenario()
+             .publishScenario(PublishPage.class)
+             .selectPublishButton()
+             .createNewComparison()
+             .enterComparisonName(testComparisonName)
+             .save(ComparePage.class)
+             .addScenario()
+             .filterCriteria()
+             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
+             .apply(ComparisonTablePage.class)
+             .selectScenario(testScenarioName, "Casting")
+             .apply();
+
+         new GenericHeader(driver).publishScenario(PublishPage.class)
+             .selectPublishButton()
+             // TODO: 22/11/2019 removed refresh once issue fixed
+             .refreshCurrentPage()
+             .openJobQueue()
+             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
+             .closeJobQueue(ExplorePage.class)
+             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+            .openComparison(testComparisonName);
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.publishScenario(PublishPage.class)
-            .selectPublishButton()
-            // TODO: 22/11/2019 removed refresh once issue fixed
-            .refreshCurrentPage()
+        comparePage = genericHeader.toggleLock()
             .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+            .closeJobQueue(ComparePage.class);
 
-        assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));
+        assertThat(comparePage.isComparisonLocked("Locked"), CoreMatchers.is(true));
+
+       genericHeader = new GenericHeader(driver);
+       comparePage = genericHeader.toggleLock()
+            .openJobQueue()
+            .checkJobQueueRow("okay")
+            .closeJobQueue(ComparePage.class);
+
+        assertThat(comparePage.isComparisonLocked("Locked"), CoreMatchers.is(true));
     }
 
 
@@ -108,7 +121,7 @@ public class PublishComparisonTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName,"Initial", "Publish", "okay")
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
             .filterCriteria()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)

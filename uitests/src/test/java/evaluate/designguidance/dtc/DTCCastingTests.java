@@ -91,7 +91,7 @@ public class DTCCastingTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1596"})
+    @TestRail(testCaseId = {"1596", "1261"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void geometryTest() {
         loginPage = new CIDLoginPage(driver);

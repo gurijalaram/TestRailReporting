@@ -33,7 +33,7 @@ public class GeometryTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1620", "1621", "1255", "1259"})
+    @TestRail(testCaseId = {"1620", "1621", "1255", "1259", "1256"})
     @Description("Validate the user can open the Analysis Properties dialogue box for a specific GCD selected from the geometry tab")
     public void propertiesRouting() {
         loginPage = new CIDLoginPage(driver);
@@ -51,7 +51,8 @@ public class GeometryTests extends TestBase {
             .selectProperties()
             .expandDropdown("Technique");
         assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Plunging"));
-        propertiesDialogPage.closeProperties();
+        propertiesDialogPage.minimizeDropdown("Technique")
+            .closeProperties();
 
         new GeometryPage(driver).selectGCDAndGCDProperty("Holes", "Ringed Holes", "RingedHole:1");
         evaluatePage = new EvaluatePage(driver);
