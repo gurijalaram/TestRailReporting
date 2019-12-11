@@ -496,7 +496,7 @@ public class PageUtils {
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed()) {
+                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
                     do {
                         scroller.sendKeys(Keys.PAGE_DOWN);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
@@ -535,7 +535,7 @@ public class PageUtils {
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed()) {
+                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
                     do {
                         scroller.sendKeys(Keys.PAGE_DOWN);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
