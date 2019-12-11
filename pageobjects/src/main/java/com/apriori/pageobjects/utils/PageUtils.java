@@ -498,7 +498,7 @@ public class PageUtils {
             try {
                 if (scroller.isDisplayed()) {
                     do {
-                        scroller.sendKeys(Keys.DOWN);
+                        scroller.sendKeys(Keys.PAGE_DOWN);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
 
                     Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
@@ -537,7 +537,7 @@ public class PageUtils {
             try {
                 if (scroller.isDisplayed()) {
                     do {
-                        scroller.sendKeys(Keys.DOWN);
+                        scroller.sendKeys(Keys.PAGE_DOWN);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
 
                     return driver.findElements(scenario);
