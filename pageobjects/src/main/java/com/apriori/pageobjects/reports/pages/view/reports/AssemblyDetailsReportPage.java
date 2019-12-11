@@ -89,13 +89,30 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
         ArrayList<BigDecimal> valuesRetrieved = new ArrayList<>();
 
-        for (Element row : assemblyDetailsReport.select("table.jrPage > tbody > tr:nth-child(16) > td:nth-child(2) > div > div:nth-child(2) > table tr")) {
-            if (!row.select(cssSelector).text().isEmpty() && !row.select(cssSelector).text().equals("null")
-                && !row.select(cssSelector).text().chars().anyMatch(Character::isLetter) && !row.select(cssSelector).text().equals("0.00")) {
-                valuesRetrieved.add(new BigDecimal(row.select(cssSelector).text().replaceAll(",", "")));
+        for (Element column : assemblyDetailsReport.select("table.jrPage > tbody > tr:nth-child(16) > td:nth-child(2) > div > div:nth-child(2) > table tr")) {
+            if (!column.select(cssSelector).text().isEmpty() && !column.select(cssSelector).text().equals("null")
+                && !column.select(cssSelector).text().chars().anyMatch(Character::isLetter) && !column.select(cssSelector).text().equals("0.00")) {
+                valuesRetrieved.add(new BigDecimal(column.select(cssSelector).text().replaceAll(",", "")));
             }
         }
         return valuesRetrieved;
+    }
+
+    public String[][] getQuantityAndPriceValues(String cssSelector, String column) {
+        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
+        ArrayList<BigDecimal> values = getValuesFromTable(columnMap.get(column));
+        String[][] vals = new String[values.size()][];
+
+        int i = 0;
+        for (Element row : assemblyDetailsReport.select(cssSelector)) {
+            if (!row.select(cssSelector).text().isEmpty() && !row.select(cssSelector).text().equals("null")
+                && !row.select(cssSelector).text().chars().anyMatch(Character::isLetter)) {
+                vals[i][i] = row.select(cssSelector).text();
+                vals[i][i + 1] = getValuesFromTable(columnMap.get(column)).get(i).toString();
+            }
+            i++;
+        }
+        return vals;
     }
 
     public BigDecimal getActualColumnGrandTotal(String column) {
@@ -104,14 +121,32 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     public BigDecimal getExpectedColumnGrandTotal(String column) {
-        // quantity isn't always 1 - factor this in
         List<BigDecimal> totalValues = getValuesFromTable(columnMap.get(column))
                 .stream()
                 .distinct()
                 .collect(Collectors.toList());
-        BigDecimal sum = totalValues.stream()
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return sum;
+
+        getQuantityAndPriceValues("tr:nth-child(5) span", columnMap.get(column));
+
+        // quantity isn't always 1 - factor this in
+        // 1 - get quantities of components
+        //ArrayList<BigDecimal> quantities = getValuesFromTable("td:nth-child(10)");
+        //for (int i = 0; i < totalValues.size(); i++) {
+        //    quantities.remove(i);
+        //}
+
+        // 2 - loop over them, if 2 (or greater than 1), then append to totalValues list
+        //int totalValuesStaticSize = totalValues.size();
+        //for (int i = 0; i < totalValuesStaticSize; i++) {
+        //    int result = quantities.get(i).compareTo(new BigDecimal("2"));
+        //    if (result == 0) {
+        //        totalValues.add(totalValues.get(i));
+        //    }
+        //}
+
+        //BigDecimal sum = totalValues.stream()
+        //        .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return new BigDecimal("2");
     }
 
     /**
