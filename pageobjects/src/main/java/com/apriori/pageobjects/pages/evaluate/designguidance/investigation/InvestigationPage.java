@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.designguidance.investigation;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
 import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -86,7 +87,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      */
     private WebElement findGCDType(String gcdType) {
         By type = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcdType + "')]/ancestor::tr//label[@class]");
-        return pageUtils.scrollToElement(type, threadScroller);
+        return pageUtils.scrollToElement(type, threadScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -97,7 +98,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      */
     private WebElement findGCD(String gcd) {
         By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]/ancestor::td[@class]");
-        return pageUtils.scrollToElement(gcdElement, threadScroller);
+        return pageUtils.scrollToElement(gcdElement, threadScroller, Constants.ARROW_DOWN);
     }
 
     /**

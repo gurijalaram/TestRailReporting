@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -80,7 +81,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
     private GuidancePage collapseIssueDropdown() {
         By dropdown = By.cssSelector(".fa.fa-caret-down");
         if (pageUtils.isElementDisplayed(dropdown)) {
-            pageUtils.scrollToElement(dropdown, guidanceTableScroller);
+            pageUtils.scrollToElement(dropdown, guidanceTableScroller, Constants.ARROW_DOWN);
             pageUtils.waitForElementToAppear(dropdown).click();
         }
         return this;
@@ -98,7 +99,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
 
         for (String parent : parents) {
             By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + parent.trim() + "')]/ancestor::tr//span[@class]");
-            pageUtils.scrollToElement(issue, guidanceTableScroller);
+            pageUtils.scrollToElement(issue, guidanceTableScroller, Constants.ARROW_DOWN);
 
             if (driver.findElement(issue).getAttribute("class").contains("right")) {
                 driver.findElement(issue).click();
@@ -115,7 +116,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      */
     private WebElement findIssueType(String issueType) {
         By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType.trim() + "')]");
-        return pageUtils.scrollToElement(issue, guidanceTableScroller);
+        return pageUtils.scrollToElement(issue, guidanceTableScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -126,7 +127,7 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      */
     private WebElement findGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='guidanceIssuesDetailsTable']//td[contains(text(),'" + gcdType + "')]/ancestor::tr");
-        return pageUtils.scrollToElement(gcd, detailsTableScroller);
+        return pageUtils.scrollToElement(gcd, detailsTableScroller, Constants.ARROW_DOWN);
     }
 
     /**
