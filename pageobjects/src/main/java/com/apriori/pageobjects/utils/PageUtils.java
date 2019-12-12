@@ -490,15 +490,16 @@ public class PageUtils {
      * @param scroller - the scroller to scroll the element into view
      * @return - the element as a webelement
      */
-    public WebElement scrollToElement(By scenario, WebElement scroller) {
+    public WebElement scrollToElement(By scenario, WebElement scroller, String keyboardButton) {
         long startTime = System.currentTimeMillis() / 1000;
         int count = 0;
+        Keys keyboardAction = keyboardButton.equals("page_down") ? Keys.PAGE_DOWN : Keys.DOWN;
 
         while (count < 12) {
             try {
                 if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
                     do {
-                        scroller.sendKeys(Keys.PAGE_DOWN);
+                        scroller.sendKeys(keyboardAction);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
 
                     Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
@@ -529,15 +530,16 @@ public class PageUtils {
      * @param scroller - the scroller to scroll the element into view
      * @return - the element as a webelement
      */
-    public List<WebElement> scrollToElements(By scenario, WebElement scroller) {
+    public List<WebElement> scrollToElements(By scenario, WebElement scroller, String keyboardButton) {
         long startTime = System.currentTimeMillis() / 1000;
         int count = 0;
+        Keys keyboardAction = keyboardButton.equals("page_down") ? Keys.PAGE_DOWN : Keys.DOWN;
 
         while (count < 12) {
             try {
                 if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
                     do {
-                        scroller.sendKeys(Keys.PAGE_DOWN);
+                        scroller.sendKeys(keyboardAction);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
 
                     return driver.findElements(scenario);
@@ -708,7 +710,7 @@ public class PageUtils {
      * @return - boolean
      */
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
-        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 10;
+        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, timeOut)
             .withMessage("\nExpected: " + text + "\nFound: " + locator.getAttribute(attribute))

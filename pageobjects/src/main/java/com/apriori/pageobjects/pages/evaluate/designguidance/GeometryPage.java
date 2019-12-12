@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -76,7 +77,7 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
     private WebElement findGCDType(String gcdParent) {
         By gcdParentElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdParent + "']//span[@class='fa fa-caret-right']");
         pageUtils.waitForElementToAppear(gcdParentElement);
-        return pageUtils.scrollToElement(gcdParentElement, gcdTableScroller);
+        return pageUtils.scrollToElement(gcdParentElement, gcdTableScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -88,7 +89,7 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
     private WebElement findGCDChild(String gcdType) {
         By gcdChildElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdType + "']");
         pageUtils.waitForElementToAppear(gcdChildElement);
-        return pageUtils.scrollToElement(gcdChildElement, gcdTableScroller);
+        return pageUtils.scrollToElement(gcdChildElement, gcdTableScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -100,7 +101,7 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
     private GeometryPage selectGCDProperty(String gcdProperty) {
         By gcd = By.xpath("//div[@data-ap-comp='artifactProperties']//td[contains(text(),'" + gcdProperty + "')]/ancestor::tr");
         pageUtils.waitForElementToAppear(gcd);
-        pageUtils.scrollToElement(gcd, propertiesScroller).click();
+        pageUtils.scrollToElement(gcd, propertiesScroller, Constants.ARROW_DOWN).click();
         return this;
     }
 

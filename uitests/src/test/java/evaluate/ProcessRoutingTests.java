@@ -16,8 +16,6 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompos
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
-import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -43,8 +41,6 @@ public class ProcessRoutingTests extends TestBase {
     private GeometryPage geometryPage;
     private PropertiesDialogPage propertiesDialogPage;
     private FailuresPage failuresPage;
-    private ToleranceSettingsPage toleranceSettingsPage;
-    private SettingsPage settingsPage;
 
     public ProcessRoutingTests() {
         super();
