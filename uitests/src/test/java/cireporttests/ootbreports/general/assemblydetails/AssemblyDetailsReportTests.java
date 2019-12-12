@@ -113,7 +113,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = "3067")
+    @TestRail(testCaseId = "3067")
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
         assemblyDetailsReport = new LoginPage(driver)
@@ -128,7 +128,6 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickApplyAndOk()
                 .waitForCorrectCurrency("GBP");
 
-        // Assert on all totals calculations
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal("Cycle Time (s)"),
                 is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal("Cycle Time"))));
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal("Piece Part Cost").add(new BigDecimal("5.72")),
