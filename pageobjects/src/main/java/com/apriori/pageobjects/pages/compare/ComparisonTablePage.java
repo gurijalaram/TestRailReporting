@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.compare;
 
 import com.apriori.pageobjects.pages.explore.FilterCriteriaPage;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -79,7 +80,7 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      */
     public WebElement findScenario(String scenarioName, String partName) {
         By comparison = By.xpath("//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]");
-        return pageUtils.scrollToElement(comparison, comparisonScroller);
+        return pageUtils.scrollToElement(comparison, comparisonScroller, Constants.PAGE_DOWN);
     }
 
     /**

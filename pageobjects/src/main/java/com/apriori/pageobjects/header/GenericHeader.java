@@ -4,6 +4,7 @@ import com.apriori.pageobjects.pages.compare.SaveAsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.RevertPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.AssignPage;
 import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.explore.DeletePage;
@@ -103,12 +104,26 @@ public class GenericHeader extends PageHeader {
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
-     * @return current page object
+     * @return new page object
      */
     public EvaluatePage uploadFile(String scenarioName, File filePath) {
         pageUtils.waitForElementAndClick(newFileDropdown);
         pageUtils.waitForElementAndClick(componentButton);
-        return new FileUploadPage(driver).uploadFile(scenarioName, filePath);
+        return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath)
+            .selectOkButton(EvaluatePage.class);
+    }
+
+    /**
+     * Fails to upload a file and navigates to warning page
+     * @param scenarioName - the name of the scenario
+     * @param filePath - location of the file
+     * @return new page object
+     */
+    public WarningPage failedUploadFile(String scenarioName, File filePath) {
+        pageUtils.waitForElementAndClick(newFileDropdown);
+        pageUtils.waitForElementAndClick(componentButton);
+        return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath)
+            .selectOkButton(WarningPage.class);
     }
 
     /**

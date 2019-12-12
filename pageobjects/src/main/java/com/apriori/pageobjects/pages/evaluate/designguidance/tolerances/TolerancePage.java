@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
 import com.apriori.pageobjects.utils.ColumnUtils;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -77,7 +78,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
     public WebElement findToleranceType(String toleranceType) {
         By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr");
         pageUtils.waitForElementToAppear(tolerance);
-        return pageUtils.scrollToElement(tolerance, toleranceScroller);
+        return pageUtils.scrollToElement(tolerance, toleranceScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -88,7 +89,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
      */
     private WebElement findGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']/ancestor::tr");
-        return pageUtils.scrollToElement(gcd, detailsScroller);
+        return pageUtils.scrollToElement(gcd, detailsScroller, Constants.ARROW_DOWN);
     }
 
     /**

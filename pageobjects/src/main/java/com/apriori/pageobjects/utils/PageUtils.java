@@ -3,7 +3,6 @@ package com.apriori.pageobjects.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
-import org.apache.commons.collections4.Get;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -491,15 +490,16 @@ public class PageUtils {
      * @param scroller - the scroller to scroll the element into view
      * @return - the element as a webelement
      */
-    public WebElement scrollToElement(By scenario, WebElement scroller) {
+    public WebElement scrollToElement(By scenario, WebElement scroller, String keyboardButton) {
         long startTime = System.currentTimeMillis() / 1000;
         int count = 0;
+        Keys keyboardAction = keyboardButton.equals("page_down") ? Keys.PAGE_DOWN : Keys.DOWN;
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed()) {
+                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
                     do {
-                        scroller.sendKeys(Keys.DOWN);
+                        scroller.sendKeys(keyboardAction);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
 
                     Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
@@ -530,15 +530,16 @@ public class PageUtils {
      * @param scroller - the scroller to scroll the element into view
      * @return - the element as a webelement
      */
-    public List<WebElement> scrollToElements(By scenario, WebElement scroller) {
+    public List<WebElement> scrollToElements(By scenario, WebElement scroller, String keyboardButton) {
         long startTime = System.currentTimeMillis() / 1000;
         int count = 0;
+        Keys keyboardAction = keyboardButton.equals("page_down") ? Keys.PAGE_DOWN : Keys.DOWN;
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed()) {
+                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
                     do {
-                        scroller.sendKeys(Keys.DOWN);
+                        scroller.sendKeys(keyboardAction);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
 
                     return driver.findElements(scenario);
@@ -710,14 +711,11 @@ public class PageUtils {
      */
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
-        try {
-            return new WebDriverWait(driver, timeOut)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        }
-        throw new AssertionError("\nWaited for: " + timeOut + "(s)\nExpected: " + text + "\nFound: " + locator.getText());
+
+        return new WebDriverWait(driver, timeOut)
+            .withMessage("\nExpected: " + text + "\nFound: " + locator.getAttribute(attribute))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
     }
 
     /**
@@ -787,6 +785,7 @@ public class PageUtils {
 
     /**
      * Gets count of open tabs
+     *
      * @return int - number of open tabs
      */
     public int getCountOfOpenTabs() {
@@ -795,6 +794,7 @@ public class PageUtils {
 
     /**
      * Gets text of an element
+     *
      * @param element WebElement
      * @return String heading
      */
@@ -804,6 +804,7 @@ public class PageUtils {
 
     /**
      * Gets current URL
+     *
      * @return String
      */
     public String getCurrentUrl() {
@@ -812,6 +813,7 @@ public class PageUtils {
 
     /**
      * Gets tab two URL
+     *
      * @return String
      */
     public String getTabTwoUrl() {
@@ -820,6 +822,7 @@ public class PageUtils {
 
     /**
      * Get name of a report
+     *
      * @return String - text of report name
      */
     public String getReportNameText(String reportName) {
@@ -830,6 +833,7 @@ public class PageUtils {
 
     /**
      * Get report link element
+     *
      * @return WebElement
      */
     public WebElement getReportLinkElement(String reportName) {

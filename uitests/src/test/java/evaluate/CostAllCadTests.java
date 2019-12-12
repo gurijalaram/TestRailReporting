@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.header.EvaluateHeader;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -19,6 +20,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class CostAllCadTests extends TestBase {
@@ -27,6 +29,7 @@ public class CostAllCadTests extends TestBase {
     private EvaluatePage evaluatePage;
     private CostDetailsPage costDetailsPage;
     private EvaluateHeader evaluateHeader;
+    private WarningPage warningPage;
 
     public CostAllCadTests() {
         super();
@@ -178,5 +181,16 @@ public class CostAllCadTests extends TestBase {
             .checkForImage(0.1);
 
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), (is(true)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"2317"})
+    @Description("Ensure scripts cannot be entered into all available text input fields")
+    public void failedUpload() {
+        loginPage = new CIDLoginPage(driver);
+        warningPage = loginPage.login(UserUtil.getUser())
+            .failedUploadFile("<script>alert(document.cookie)</script>", new FileResourceUtil().getResourceFile("LargePart.prt.1"));
+
+        assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
     }
 }
