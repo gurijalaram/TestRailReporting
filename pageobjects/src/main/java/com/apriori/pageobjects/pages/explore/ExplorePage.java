@@ -4,6 +4,7 @@ import com.apriori.pageobjects.header.ExploreHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -124,7 +125,7 @@ public class ExplorePage extends ExploreHeader {
      */
     public WebElement findScenario(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]");
-        return pageUtils.scrollToElement(scenario, componentScroller);
+        return pageUtils.scrollToElement(scenario, componentScroller, Constants.PAGE_DOWN);
     }
 
     /**
@@ -135,7 +136,7 @@ public class ExplorePage extends ExploreHeader {
      */
     public void highlightScenario(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
-        pageUtils.scrollToElement(scenario, componentScroller);
+        pageUtils.scrollToElement(scenario, componentScroller, Constants.PAGE_DOWN);
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.javaScriptClick(driver.findElement(scenario));
     }
@@ -162,7 +163,7 @@ public class ExplorePage extends ExploreHeader {
      */
     public WebElement findAssembly(String scenarioName, String partName) {
         By scenario = By.cssSelector("a[href*='#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElement(scenario, componentScroller);
+        return pageUtils.scrollToElement(scenario, componentScroller, Constants.PAGE_DOWN);
     }
 
     /**
@@ -173,7 +174,7 @@ public class ExplorePage extends ExploreHeader {
      */
     public void highlightAssembly(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
-        pageUtils.scrollToElement(scenario, componentScroller);
+        pageUtils.scrollToElement(scenario, componentScroller, Constants.PAGE_DOWN);
         pageUtils.javaScriptClick(driver.findElement(scenario));
     }
 
@@ -186,7 +187,7 @@ public class ExplorePage extends ExploreHeader {
      */
     public int getListOfScenarios(String scenarioName, String partName) {
         By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElements(scenario, componentScroller).size();
+        return pageUtils.scrollToElements(scenario, componentScroller, Constants.PAGE_DOWN).size();
     }
 
     /**
@@ -197,7 +198,7 @@ public class ExplorePage extends ExploreHeader {
      */
     public WebElement findComparison(String comparisonName) {
         By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]");
-        return pageUtils.scrollToElement(comparison, componentScroller);
+        return pageUtils.scrollToElement(comparison, componentScroller, Constants.PAGE_DOWN);
     }
 
     /**
@@ -208,7 +209,7 @@ public class ExplorePage extends ExploreHeader {
      */
     public ExplorePage highlightComparison(String comparisonName) {
         By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
-        pageUtils.scrollToElement(comparison, componentScroller);
+        pageUtils.scrollToElement(comparison, componentScroller, Constants.PAGE_DOWN);
         pageUtils.javaScriptClick(driver.findElement(comparison));
         return this;
     }
@@ -221,7 +222,7 @@ public class ExplorePage extends ExploreHeader {
      */
     public int getListOfComparisons(String comparisonName) {
         By comparison = By.xpath("//div[@title='" + comparisonName.toUpperCase() + "']");
-        return pageUtils.scrollToElements(comparison, componentScroller).size();
+        return pageUtils.scrollToElements(comparison, componentScroller, Constants.PAGE_DOWN).size();
     }
 
     /**
