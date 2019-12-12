@@ -708,7 +708,7 @@ public class PageUtils {
      * @return - boolean
      */
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
-        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 10;
+        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, timeOut)
             .withMessage("\nExpected: " + text + "\nFound: " + locator.getAttribute(attribute))
