@@ -3,7 +3,6 @@ package com.apriori.pageobjects.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
-import org.apache.commons.collections4.Get;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -497,9 +496,9 @@ public class PageUtils {
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed()) {
+                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
                     do {
-                        scroller.sendKeys(Keys.DOWN);
+                        scroller.sendKeys(Keys.PAGE_DOWN);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
 
                     Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
@@ -536,9 +535,9 @@ public class PageUtils {
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed()) {
+                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
                     do {
-                        scroller.sendKeys(Keys.DOWN);
+                        scroller.sendKeys(Keys.PAGE_DOWN);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
 
                     return driver.findElements(scenario);
@@ -709,15 +708,12 @@ public class PageUtils {
      * @return - boolean
      */
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
-        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
-        try {
-            return new WebDriverWait(driver, timeOut)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        }
-        throw new AssertionError("\nWaited for: " + timeOut + "(s)\nExpected: " + text + "\nFound: " + locator.getText());
+        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 10;
+
+        return new WebDriverWait(driver, timeOut)
+            .withMessage("\nExpected: " + text + "\nFound: " + locator.getAttribute(attribute))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
     }
 
     /**
@@ -787,6 +783,7 @@ public class PageUtils {
 
     /**
      * Gets count of open tabs
+     *
      * @return int - number of open tabs
      */
     public int getCountOfOpenTabs() {
@@ -795,6 +792,7 @@ public class PageUtils {
 
     /**
      * Gets text of an element
+     *
      * @param element WebElement
      * @return String heading
      */
@@ -804,6 +802,7 @@ public class PageUtils {
 
     /**
      * Gets current URL
+     *
      * @return String
      */
     public String getCurrentUrl() {
@@ -812,6 +811,7 @@ public class PageUtils {
 
     /**
      * Gets tab two URL
+     *
      * @return String
      */
     public String getTabTwoUrl() {
@@ -820,6 +820,7 @@ public class PageUtils {
 
     /**
      * Get name of a report
+     *
      * @return String - text of report name
      */
     public String getReportNameText(String reportName) {
@@ -830,6 +831,7 @@ public class PageUtils {
 
     /**
      * Get report link element
+     *
      * @return WebElement
      */
     public WebElement getReportLinkElement(String reportName) {
