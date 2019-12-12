@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
+import com.apriori.pageobjects.reports.pages.view.objects.TableRowNumbers;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.jsoup.Jsoup;
@@ -13,7 +14,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -25,8 +25,11 @@ import java.util.stream.Collectors;
 public class AssemblyDetailsReportPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
-    private Map<String, String> columnMap = new HashMap<>();
+
     private Map<String, String> columnTotalMap = new HashMap<>();
+    private Map<String, String> columnMap = new HashMap<>();
+    private Map<String, String> valueMap = new HashMap<>();
+    private Map<Integer, String> rowMap = new HashMap<>();
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -55,41 +58,17 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        initialiseColumnMap();
         initialiseColumnTotalMap();
-    }
-
-    /**
-     * Temporary test method to use in order to understand how Jsoup works
-     */
-    public void getValues() {
-        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
-
-        int i = 0;
-        for (Element row : assemblyDetailsReport.select("table.jrPage > tbody > tr:nth-child(16) > td:nth-child(2) > div > div:nth-child(2) > table tr")) {
-            String cssQuery = "td:nth-child(24)";
-            //String cssQueryTwo = "td:nth-child(25)";
-
-            if (!row.select(cssQuery).text().isEmpty() && !row.select(cssQuery).text().equals("null")
-                && !row.select(cssQuery).text().equals("0.00")) {
-                String mainValues = row.select(cssQuery).text();
-                logger.debug(String.format("main values (i: %d): %s", i, mainValues));
-            }
-
-            //if (!row.select(cssQueryTwo).text().isEmpty() && !row.select(cssQueryTwo).text().equals("null")
-            //    && !row.select(cssQueryTwo).text().contains("Cycle")) {
-            //    String nullTotalValues = row.select(cssQueryTwo).text();
-            //    logger.debug(String.format("null total values (i: %d): %s", i, nullTotalValues));
-            //}
-            i++;
-        }
+        initialiseColumnMap();
+        initialiseValueMap();
+        initialiseRowMap();
     }
 
     private ArrayList<BigDecimal> getValuesFromTable(String cssSelector) {
         Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
         ArrayList<BigDecimal> valuesRetrieved = new ArrayList<>();
 
-        for (Element column : assemblyDetailsReport.select("table.jrPage > tbody > tr:nth-child(16) > td:nth-child(2) > div > div:nth-child(2) > table tr")) {
+        for (Element column : assemblyDetailsReport.select("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr")) {
             if (!column.select(cssSelector).text().isEmpty() && !column.select(cssSelector).text().equals("null")
                 && !column.select(cssSelector).text().chars().anyMatch(Character::isLetter) && !column.select(cssSelector).text().equals("0.00")) {
                 valuesRetrieved.add(new BigDecimal(column.select(cssSelector).text().replaceAll(",", "")));
@@ -98,21 +77,52 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return valuesRetrieved;
     }
 
-    public String[][] getQuantityAndPriceValues(String cssSelector, String column) {
+    public BigDecimal getQuantityOrPriceValue(int rowIndex, String valueName) {
         Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
-        ArrayList<BigDecimal> values = getValuesFromTable(columnMap.get(column));
-        String[][] vals = new String[values.size()][];
+        TableRowNumbers rowValues = new TableRowNumbers();
 
-        int i = 0;
-        for (Element row : assemblyDetailsReport.select(cssSelector)) {
-            if (!row.select(cssSelector).text().isEmpty() && !row.select(cssSelector).text().equals("null")
-                && !row.select(cssSelector).text().chars().anyMatch(Character::isLetter)) {
-                vals[i][i] = row.select(cssSelector).text();
-                vals[i][i + 1] = getValuesFromTable(columnMap.get(column)).get(i).toString();
-            }
-            i++;
+        Element row = assemblyDetailsReport.select(String.format("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s", rowMap.get(rowIndex), valueMap.get(valueName))).first();
+        BigDecimal retVal = new BigDecimal("0.00");
+
+        if (valueName.equals("Cycle Time (s)")) {
+            retVal = getCycleTime(rowValues, row);
+        } else if (valueName.equals("Piece Part Cost")) {
+            retVal = getPiecePartCost(rowValues, row);
+        } else if (valueName.equals("Fully Burdened Cost")) {
+            retVal = getFullyBurdenedCost(rowValues, row);
+        } else {
+            retVal = getCapitalInvestments(rowValues, row);
         }
-        return vals;
+
+        return retVal;
+    }
+
+    public Integer getQuantity(int rowIndex) {
+        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
+        TableRowNumbers rowValues = new TableRowNumbers();
+
+        Element row = assemblyDetailsReport.select(String.format("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s", rowMap.get(rowIndex), valueMap.get("Quantity"))).first();
+        return Integer.parseInt(row.text());
+    }
+
+    public BigDecimal getCycleTime(TableRowNumbers nums, Element row) {
+        nums.setCycleTime(new BigDecimal(row.text().replaceAll(",", "")));
+        return nums.getCycleTime();
+    }
+
+    public BigDecimal getPiecePartCost(TableRowNumbers nums, Element row) {
+        nums.setPiecePartCost(new BigDecimal(row.text().replaceAll(",", "")));
+        return nums.getPiecePartCost();
+    }
+
+    public BigDecimal getFullyBurdenedCost(TableRowNumbers nums, Element row) {
+        nums.setFullyBurdenedCost(new BigDecimal(row.text().replaceAll(",", "")));
+        return nums.getFullyBurdenedCost();
+    }
+
+    public BigDecimal getCapitalInvestments(TableRowNumbers nums, Element row) {
+        nums.setCapitalInvestments(new BigDecimal(row.text().replaceAll(",", "")));
+        return nums.getCapitalInvestments();
     }
 
     public BigDecimal getActualColumnGrandTotal(String column) {
@@ -120,33 +130,41 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return valuesRetrieved.get(0);
     }
 
-    public BigDecimal getExpectedColumnGrandTotal(String column) {
-        List<BigDecimal> totalValues = getValuesFromTable(columnMap.get(column))
+    public BigDecimal getExpectedColumnGrandTotal(String valueName) {
+        ArrayList<Integer> indexes = new ArrayList<>();
+        indexes.add(1);
+        indexes.add(2);
+        indexes.add(4);
+        indexes.add(6);
+        indexes.add(8);
+        indexes.add(9);
+
+        List<BigDecimal> values = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            values.add(getQuantityOrPriceValue(indexes.get(i), valueName));
+        }
+
+        // if qty is more than 1, multiply by that, then add
+        //List<BigDecimal> finalValsToAdd = new ArrayList<>();
+
+        //int i = 0;
+        //for (BigDecimal val : values) {
+        //    if (getQuantityOrPriceValue(indexes.get(i), "Quantity").compareTo(new BigDecimal("2")) == 0) {
+        //        finalValsToAdd.add(val.multiply(new BigDecimal(getQuantity(indexes.get(i)))));
+        //    } else {
+        //        finalValsToAdd.add(val);
+        //    }
+        //    i++;
+        //}
+
+        List<BigDecimal> distinctTotalValues = values
                 .stream()
                 .distinct()
                 .collect(Collectors.toList());
 
-        getQuantityAndPriceValues("tr:nth-child(5) span", columnMap.get(column));
-
-        // quantity isn't always 1 - factor this in
-        // 1 - get quantities of components
-        //ArrayList<BigDecimal> quantities = getValuesFromTable("td:nth-child(10)");
-        //for (int i = 0; i < totalValues.size(); i++) {
-        //    quantities.remove(i);
-        //}
-
-        // 2 - loop over them, if 2 (or greater than 1), then append to totalValues list
-        //int totalValuesStaticSize = totalValues.size();
-        //for (int i = 0; i < totalValuesStaticSize; i++) {
-        //    int result = quantities.get(i).compareTo(new BigDecimal("2"));
-        //    if (result == 0) {
-        //        totalValues.add(totalValues.get(i));
-        //    }
-        //}
-
-        //BigDecimal sum = totalValues.stream()
-        //        .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return new BigDecimal("2");
+        return distinctTotalValues
+                .stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     /**
@@ -184,5 +202,22 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         columnTotalMap.put("Piece Part Cost", "td:nth-child(28)");
         columnTotalMap.put("Fully Burdened Cost", "td:nth-child(31)");
         columnTotalMap.put("Capital Investments", "td:nth-child(34)");
+    }
+
+    private void initialiseValueMap() {
+        valueMap.put("Quantity", "td:nth-child(10)");
+        valueMap.put("Cycle Time (s)", "td:nth-child(24)");
+        valueMap.put("Piece Part Cost", "td:nth-child(27)");
+        valueMap.put("Fully Burdened Cost", "td:nth-child(30)");
+        valueMap.put("Capital Investments", "td:nth-child(33)");
+    }
+
+    private void initialiseRowMap() {
+        rowMap.put(1, "tr:nth-child(5)");
+        rowMap.put(2, "tr:nth-child(7)");
+        rowMap.put(4, "tr:nth-child(11)");
+        rowMap.put(6, "tr:nth-child(15)");
+        rowMap.put(8, "tr:nth-child(17)");
+        rowMap.put(9, "tr:nth-child(19)");
     }
 }
