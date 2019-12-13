@@ -185,6 +185,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
+        pageUtils.waitForElementToAppear(currentCurrency);
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return this;
     }
