@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.process;
 
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -125,9 +126,8 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
         long timeLimitInSeconds = 5;
 
         if (pageUtils.isElementDisplayed(routingScroller)) {
-            pageUtils.waitForElementAndClick(routingScroller);
             do {
-                routingScroller.sendKeys(Keys.DOWN);
+                routingScroller.sendKeys(Keys.PAGE_DOWN);
                 routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
             } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
         }
@@ -144,7 +144,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      */
     public WebElement findRouting(String routingName) {
         By routing = By.xpath("//div[@data-ap-comp='routingSelectionTable']//td[contains(text(),'" + routingName + "')]/ancestor::tr");
-        return pageUtils.scrollToElement(routing, routingScroller);
+        return pageUtils.scrollToElement(routing, routingScroller, Constants.PAGE_DOWN);
     }
 
     /**
