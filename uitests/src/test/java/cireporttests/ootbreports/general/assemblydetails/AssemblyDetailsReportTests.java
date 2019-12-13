@@ -74,6 +74,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
         for (AssemblyReportsEnum report : reportNames) {
             homePage.searchForReport(report.getReportName());
+            searchResults.waitForPageLoad();
             assertThat(searchResults.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
         }
     }
