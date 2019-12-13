@@ -52,7 +52,8 @@ public class HelpPage extends ReportsPageHeader {
      * Ensures page is loaded before continuing
      */
     public HelpPage ensurePageIsLoaded() {
-        pageUtils.checkElementAttribute(heading, "innerText", "Introduction to JasperReports Server");
+        pageUtils.waitForElementToAppear(heading);
+        //pageUtils.checkElementAttribute(heading, "innerText", "Introduction to JasperReports Server");
         return this;
     }
 
