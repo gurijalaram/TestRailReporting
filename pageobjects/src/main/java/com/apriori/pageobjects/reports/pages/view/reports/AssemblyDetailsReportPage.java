@@ -26,9 +26,18 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
 
     private Map<String, String> columnTotalMap = new HashMap<>();
-    private Map<String, String> columnMap = new HashMap<>();
     private Map<String, String> valueMap = new HashMap<>();
-    private Map<Integer, String> rowMap = new HashMap<>();
+
+    private Map<String, String> topLevelColumnMap = new HashMap<>();
+    private Map<String, String> subSubAsmColumnMap = new HashMap<>();
+    private Map<String, String> subAssemblyColumnMap = new HashMap<>();
+
+    private Map<String, String> topLevelRowMap = new HashMap<>();
+    private Map<String, String> subSubAsmRowMap = new HashMap<>();
+    private Map<String, String> subAssemblyRowMap = new HashMap<>();
+
+    private String genericTrSelector = "tr:nth-child(%s)";
+    private String genericTdSelector = "td:nth-child(%s)";
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -57,12 +66,94 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        initialiseColumnTotalMap();
-        initialiseColumnMap();
-        initialiseValueMap();
-        initialiseRowMap();
+
+        initialiseTopLevelColumnMap();
+        initialiseSubSubAsmColumnMap();
+        initialiseSubAssemblyColumnMap();
+
+        initialiseTopLevelRowMap();
+        initialiseSubSubAsmRowMap();
+        initialiseSubAssemblyRowMap();
     }
 
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getValueFromTable(String assemblyType, String columnName, String rowIndex) {
+        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
+        String columnSelector = "";
+        String rowSelector = "";
+
+        switch (assemblyType) {
+            case "Top Level":
+                columnSelector = topLevelColumnMap.get(columnName);
+                rowSelector = topLevelRowMap.get(rowIndex);
+                break;
+            case "Sub-Sub-ASM":
+                columnSelector = subSubAsmColumnMap.get(columnName);
+                rowSelector = subSubAsmRowMap.get(rowIndex);
+                break;
+            case "Sub-Assembly":
+                columnSelector = subAssemblyColumnMap.get(columnName);
+                rowSelector = subAssemblyRowMap.get(rowIndex);
+                break;
+        }
+        String cssSelector = String.format("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s span", rowSelector, columnSelector);
+
+        BigDecimal retVal = new BigDecimal("0.00");
+
+        Element tableCell = assemblyDetailsReport.select(cssSelector).first();
+        if (!tableCell.text().isEmpty() && !tableCell.text().equals("null") && !tableCell.text().equals("0.00")
+            && tableCell.text().chars().noneMatch(Character::isLetter)) {
+            retVal = new BigDecimal(tableCell.text().replaceAll(",", ""));
+        }
+
+        return retVal;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<BigDecimal> getValuesByColumn(String assemblyType, String columnName) {
+        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
+        String columnSelector = "";
+
+        switch (assemblyType) {
+            case "Top Level":
+                columnSelector = topLevelColumnMap.get(columnName);
+                break;
+            case "Sub-Sub-ASM":
+                columnSelector = subSubAsmColumnMap.get(columnName);
+                break;
+            case "Sub-Assembly":
+                columnSelector = subAssemblyColumnMap.get(columnName);
+                break;
+        }
+        String cssSelector = String.format("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr %s span", columnSelector);
+
+        ArrayList<BigDecimal> valuesToReturn = new ArrayList<>();
+
+        for (Element element : assemblyDetailsReport.select(cssSelector)) {
+            if (!element.text().isEmpty() && !element.text().equals("null") && !element.text().equals("0.00")
+                    && element.text().chars().noneMatch(Character::isLetter)) {
+                if (columnName.equals("Cycle Time") && element.text().equals("79,995.28")) {
+                    continue;
+                } else {
+                    valuesToReturn.add(new BigDecimal(element.text().replaceAll(",", "")));
+                }
+            }
+        }
+
+        return valuesToReturn;
+    }
+
+    /**
+     *
+     * @param cssSelector
+     * @return
+     */
     private ArrayList<BigDecimal> getValuesFromTable(String cssSelector) {
         Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
         ArrayList<BigDecimal> valuesRetrieved = new ArrayList<>();
@@ -76,85 +167,26 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return valuesRetrieved;
     }
 
-    public BigDecimal getQuantityOrPriceValue(int rowIndex, String valueName) {
-        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
-        TableRowNumbers rowValues = new TableRowNumbers();
-
-        Element row = assemblyDetailsReport.select(String.format("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s", rowMap.get(rowIndex), valueMap.get(valueName))).first();
-        BigDecimal retVal = new BigDecimal("0.00");
-
-        if (valueName.equals("Cycle Time (s)")) {
-            retVal = getCycleTime(rowValues, row);
-        } else if (valueName.equals("Piece Part Cost")) {
-            retVal = getPiecePartCost(rowValues, row);
-        } else if (valueName.equals("Fully Burdened Cost")) {
-            retVal = getFullyBurdenedCost(rowValues, row);
-        } else {
-            retVal = getCapitalInvestments(rowValues, row);
-        }
-
-        return retVal;
+    /**
+     *
+     * @param assemblyType
+     * @param columnName
+     * @param rowIndex
+     * @return
+     */
+    public BigDecimal getActualColumnGrandTotal(String assemblyType, String columnName, String rowIndex) {
+        return getValueFromTable(assemblyType, columnName, rowIndex);
     }
 
-    public Integer getQuantity(int rowIndex) {
-        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
-        TableRowNumbers rowValues = new TableRowNumbers();
-
-        Element row = assemblyDetailsReport.select(String.format("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s", rowMap.get(rowIndex), valueMap.get("Quantity"))).first();
-        return Integer.parseInt(row.text());
-    }
-
-    public BigDecimal getCycleTime(TableRowNumbers nums, Element row) {
-        nums.setCycleTime(new BigDecimal(row.text().replaceAll(",", "")));
-        return nums.getCycleTime();
-    }
-
-    public BigDecimal getPiecePartCost(TableRowNumbers nums, Element row) {
-        nums.setPiecePartCost(new BigDecimal(row.text().replaceAll(",", "")));
-        return nums.getPiecePartCost();
-    }
-
-    public BigDecimal getFullyBurdenedCost(TableRowNumbers nums, Element row) {
-        nums.setFullyBurdenedCost(new BigDecimal(row.text().replaceAll(",", "")));
-        return nums.getFullyBurdenedCost();
-    }
-
-    public BigDecimal getCapitalInvestments(TableRowNumbers nums, Element row) {
-        nums.setCapitalInvestments(new BigDecimal(row.text().replaceAll(",", "")));
-        return nums.getCapitalInvestments();
-    }
-
-    public BigDecimal getActualColumnGrandTotal(String column) {
-        ArrayList<BigDecimal> valuesRetrieved = getValuesFromTable(columnTotalMap.get(column));
-        return valuesRetrieved.get(0);
-    }
-
-    public BigDecimal getExpectedColumnGrandTotal(String valueName) {
-        ArrayList<Integer> indexes = new ArrayList<>();
-        indexes.add(1);
-        indexes.add(2);
-        indexes.add(4);
-        indexes.add(6);
-        indexes.add(8);
-        indexes.add(9);
-
-        List<BigDecimal> values = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            values.add(getQuantityOrPriceValue(indexes.get(i), valueName));
-        }
-
-        // if qty is more than 1, multiply by that, then add
-        //List<BigDecimal> finalValsToAdd = new ArrayList<>();
-
-        //int i = 0;
-        //for (BigDecimal val : values) {
-        //    if (getQuantityOrPriceValue(indexes.get(i), "Quantity").compareTo(new BigDecimal("2")) == 0) {
-        //        finalValsToAdd.add(val.multiply(new BigDecimal(getQuantity(indexes.get(i)))));
-        //    } else {
-        //        finalValsToAdd.add(val);
-        //    }
-        //    i++;
-        //}
+    /**
+     *
+     * @param assemblyType
+     * @param columnName
+     * @return
+     */
+    public BigDecimal getExpectedColumnGrandTotal(String assemblyType, String columnName) {
+        List<BigDecimal> values;
+        values = getValuesByColumn(assemblyType, columnName);
 
         List<BigDecimal> distinctTotalValues = values
                 .stream()
@@ -167,16 +199,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Generic method to get text from specified cell
-     * @return String text of cell
-     */
-    public BigDecimal getTableCellText(String rowIndex, String columnIndex) {
-        By cellLocator = By.xpath(String.format("//tr[%s]/td[%s]/span", rowIndex, columnIndex));
-        String commaRemovedFigure = pageUtils.getElementText(driver.findElement(cellLocator)).replaceAll(",","");
-        return new BigDecimal(commaRemovedFigure);
-    }
-
-    /**
      * Gets current currency setting
      * @return String
      */
@@ -184,40 +206,113 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return pageUtils.getElementText(currentCurrency);
     }
 
+    /**
+     *
+     * @param currencyToCheck
+     * @return
+     */
     public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
         pageUtils.waitForElementToAppear(currentCurrency);
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return this;
     }
 
-    private void initialiseColumnMap() {
-        columnMap.put("Cycle Time", "td:nth-child(24)");
-        columnMap.put("Piece Part Cost", "td:nth-child(27)");
-        columnMap.put("Fully Burdened Cost", "td:nth-child(30)");
-        columnMap.put("Capital Investments", "td:nth-child(33)");
+    /**
+     *
+     */
+    private void initialiseTopLevelColumnMap() {
+        topLevelColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
+        topLevelColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
+
+        topLevelColumnMap.put("Piece Part Cost", String.format(genericTdSelector, "27"));
+        topLevelColumnMap.put("Piece Part Cost Total", String.format(genericTdSelector, "28"));
+
+        topLevelColumnMap.put("Fully Burdened Cost", String.format(genericTdSelector, "30"));
+        topLevelColumnMap.put("Fully Burdened Cost Total", String.format(genericTdSelector, "31"));
+
+        topLevelColumnMap.put("Capital Investments", String.format(genericTdSelector, "33"));
+        topLevelColumnMap.put("Capital Investments Total", String.format(genericTdSelector, "34"));
     }
 
-    private void initialiseColumnTotalMap() {
-        columnTotalMap.put("Cycle Time", "td:nth-child(25)");
-        columnTotalMap.put("Piece Part Cost", "td:nth-child(28)");
-        columnTotalMap.put("Fully Burdened Cost", "td:nth-child(31)");
-        columnTotalMap.put("Capital Investments", "td:nth-child(34)");
+    /**
+     *
+     */
+    private void initialiseSubSubAsmColumnMap() {
+        subSubAsmColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
+        subSubAsmColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
+
+        subSubAsmColumnMap.put("Piece Part Cost", String.format(genericTdSelector, "27"));
+        subSubAsmColumnMap.put("Piece Part Cost Total", String.format(genericTdSelector, "28"));
+
+        subSubAsmColumnMap.put("Fully Burdened Cost", String.format(genericTdSelector, "30"));
+        subSubAsmColumnMap.put("Fully Burdened Cost Total", String.format(genericTdSelector, "31"));
+
+        subSubAsmColumnMap.put("Capital Investments", String.format(genericTdSelector, "33"));
+        subSubAsmColumnMap.put("Capital Investments Total", String.format(genericTdSelector, "34"));
     }
 
-    private void initialiseValueMap() {
-        valueMap.put("Quantity", "td:nth-child(10)");
-        valueMap.put("Cycle Time (s)", "td:nth-child(24)");
-        valueMap.put("Piece Part Cost", "td:nth-child(27)");
-        valueMap.put("Fully Burdened Cost", "td:nth-child(30)");
-        valueMap.put("Capital Investments", "td:nth-child(33)");
+    /**
+     *
+     */
+    private void initialiseSubAssemblyColumnMap() {
+        subAssemblyColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
+        subAssemblyColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
+
+        subAssemblyColumnMap.put("Piece Part Cost", String.format(genericTdSelector, "27"));
+        subAssemblyColumnMap.put("Piece Part Cost Total", String.format(genericTdSelector, "28"));
+
+        subAssemblyColumnMap.put("Fully Burdened Cost", String.format(genericTdSelector, "30"));
+        subAssemblyColumnMap.put("Fully Burdened Cost Total", String.format(genericTdSelector, "31"));
+
+        subAssemblyColumnMap.put("Capital Investments", String.format(genericTdSelector, "33"));
+        subAssemblyColumnMap.put("Capital Investments Total", String.format(genericTdSelector, "34"));
     }
 
-    private void initialiseRowMap() {
-        rowMap.put(1, "tr:nth-child(5)");
-        rowMap.put(2, "tr:nth-child(7)");
-        rowMap.put(4, "tr:nth-child(11)");
-        rowMap.put(6, "tr:nth-child(15)");
-        rowMap.put(8, "tr:nth-child(17)");
-        rowMap.put(9, "tr:nth-child(19)");
+    /**
+     *
+     */
+    private void initialiseTopLevelRowMap() {
+        topLevelRowMap.put("1 Top Level", String.format(genericTrSelector, "5"));
+        topLevelRowMap.put("2 Top Level", String.format(genericTrSelector, "8"));
+        topLevelRowMap.put("3 Top Level", String.format(genericTrSelector, "11"));
+        topLevelRowMap.put("4 Top Level", String.format(genericTrSelector, "14"));
+        topLevelRowMap.put("5 Top Level", String.format(genericTrSelector, "17"));
+        topLevelRowMap.put("6 Top Level", String.format(genericTrSelector, "19"));
+        topLevelRowMap.put("7 Top Level", String.format(genericTrSelector, "21"));
+        topLevelRowMap.put("8 Top Level", String.format(genericTrSelector, "23"));
+        topLevelRowMap.put("9 Top Level", String.format(genericTrSelector, "27"));
+        topLevelRowMap.put("10 Top Level", String.format(genericTrSelector, "31"));
+        topLevelRowMap.put("11 Top Level", String.format(genericTrSelector, "33"));
+        topLevelRowMap.put("12 Top Level", String.format(genericTrSelector, "35"));
+        topLevelRowMap.put("13 Top Level", String.format(genericTrSelector, "38"));
+        topLevelRowMap.put("Component Subtotal Top Level", String.format(genericTrSelector, "42"));
+        topLevelRowMap.put("Assembly Processes Top Level", String.format(genericTrSelector, "45"));
+        topLevelRowMap.put("Grand Total Top Level", String.format(genericTrSelector, "47"));
+    }
+
+    /**
+     *
+     */
+    private void initialiseSubSubAsmRowMap() {
+        subSubAsmRowMap.put("1 Sub Sub ASM", String.format(genericTrSelector, "5"));
+        subSubAsmRowMap.put("2 Sub Sub ASM", String.format(genericTrSelector, "7"));
+        subSubAsmRowMap.put("Component Subtotal Sub Sub ASM", String.format(genericTrSelector, "11"));
+        subSubAsmRowMap.put("Assembly Processes Sub Sub ASM", String.format(genericTrSelector, "14"));
+        subSubAsmRowMap.put("Grand Total Sub Sub ASM", String.format(genericTrSelector, "16"));
+    }
+
+    /**
+     *
+     */
+    private void initialiseSubAssemblyRowMap() {
+        subAssemblyRowMap.put("1 Sub Assembly", String.format(genericTrSelector, "5"));
+        subAssemblyRowMap.put("2 Sub Assembly", String.format(genericTrSelector, "7"));
+        subAssemblyRowMap.put("3 Sub Assembly", String.format(genericTrSelector, "11"));
+        subAssemblyRowMap.put("4 Sub Assembly", String.format(genericTrSelector, "15"));
+        subAssemblyRowMap.put("5 Sub Assembly", String.format(genericTrSelector, "17"));
+        subAssemblyRowMap.put("6 Sub Assembly", String.format(genericTrSelector, "19"));
+        subAssemblyRowMap.put("Component Subtotal Sub Assembly", String.format(genericTrSelector, "23"));
+        subAssemblyRowMap.put("Assembly Processes Sub Assembly", String.format(genericTrSelector, "26"));
+        subAssemblyRowMap.put("Grand Total Sub Assembly", String.format(genericTrSelector, "28"));
     }
 }
