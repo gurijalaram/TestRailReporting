@@ -497,7 +497,7 @@ public class PageUtils {
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
+                if (scroller.isDisplayed() && !isElementDisplayed(scenario)) {
                     do {
                         scroller.sendKeys(keyboardAction);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
@@ -537,7 +537,7 @@ public class PageUtils {
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
+                if (scroller.isDisplayed() && !isElementDisplayed(scenario)) {
                     do {
                         scroller.sendKeys(keyboardAction);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
