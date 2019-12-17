@@ -107,6 +107,21 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         List<BigDecimal> values;
         values = getValuesByColumn(assemblyType, columnName);
 
+        // 1 - get quantities
+        // 2 - apply quantities to values in for loop
+        // Will this work before making values list distinct?
+        int i = 0;
+        List<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
+        for (BigDecimal quantity : quantities) {
+            //values.get(i).multiply(quantity);
+            logger.debug(String.format("quantity at %d is: %s", i, quantity.setScale(2).toString()));
+            i++;
+        }
+
+        for (int j = 0; j < values.size(); j++) {
+            logger.debug(String.format("value at %d is: %f", j, values.get(j)));
+        }
+
         List<BigDecimal> distinctTotalValues = values
                 .stream()
                 .distinct()
@@ -185,6 +200,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private void initialiseGenericColumnMap() {
         String genericTdSelector = "td:nth-child(%s)";
+
+        genericColumnMap.put("Quantity", String.format(genericTdSelector, "10"));
+
         genericColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
         genericColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
 
