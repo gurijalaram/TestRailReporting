@@ -88,6 +88,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1922")
     @Description("Currency Code works")
     public void testCurrencyCodeWorks() {
+        assemblyType = "Sub-Assembly";
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
@@ -102,17 +103,17 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickApplyAndOk()
                 .waitForCorrectCurrency("USD");
 
-        //usdGrandTotal = assemblyDetailsReport.getValueFromTable("Capital Investments Total", 12);
+        usdGrandTotal = assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total");
         assemblyDetailsReport.clickOptionsButton()
                 .checkCurrencySelected("GBP")
                 .clickApplyAndOk()
                 .waitForCorrectCurrency("GBP");
 
-        //gbpGrandTotal = assemblyDetailsReport.getValueFromTable("Capital Investments Total", 12);
+        gbpGrandTotal = assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total");
 
         assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo("GBP")));
-        //assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
-        //assertThat(gbpGrandTotal, is(lessThan(usdGrandTotal)));
+        assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+        assertThat(gbpGrandTotal, is(lessThan(usdGrandTotal)));
     }
 
     @Test
@@ -134,18 +135,16 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForCorrectCurrency("GBP");
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Cycle Time"),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Cycle Time Total", "Grand Total Sub Assembly"))));
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Sub Assembly", "Cycle Time Total"))));
 
-        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType, "Piece Part Cost")
-                        .add(new BigDecimal("5.72")),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Piece Part Cost Total", "Grand Total Sub Assembly"))));
+        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType, "Piece Part Cost"),
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Sub Assembly", "Piece Part Cost Total"))));
 
-        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType, "Fully Burdened Cost")
-                        .add(new BigDecimal("5.72")),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Fully Burdened Cost Total", "Grand Total Sub Assembly"))));
+        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType, "Fully Burdened Cost"),
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Sub Assembly", "Fully Burdened Cost Total"))));
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType, "Capital Investments"),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Capital Investments Total", "Grand Total Sub Assembly"))));
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total"))));
     }
 
     @Test
@@ -167,18 +166,16 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForCorrectCurrency("USD");
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Cycle Time"),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Cycle Time Total", "Grand Total Sub Sub ASM"))));
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Sub Sub ASM", "Cycle Time Total"))));
 
-        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Piece Part Cost")
-                        .add(new BigDecimal("7.65")),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType,"Piece Part Cost Total", "Grand Total Sub Sub ASM"))));
+        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Piece Part Cost"),
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType,"Grand Total Sub Sub ASM", "Piece Part Cost Total"))));
 
-        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Fully Burdened Cost")
-                        .add(new BigDecimal("7.65")),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Fully Burdened Cost Total", "Grand Total Sub Sub ASM"))));
+        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Fully Burdened Cost"),
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Sub Sub ASM", "Fully Burdened Cost Total"))));
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Capital Investments"),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType,"Capital Investments Total", "Grand Total Sub Sub ASM"))));
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType,"Grand Total Sub Sub ASM", "Capital Investments Total"))));
     }
 
     @Test
@@ -200,15 +197,15 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForCorrectCurrency("USD");
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Cycle Time"),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Cycle Time Total", "Grand Total Top Level"))));
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Top Level", "Cycle Time Total"))));
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Piece Part Cost"),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Piece Part Cost Total", "Grand Total Top Level"))));
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Top Level", "Piece Part Cost Total"))));
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Fully Burdened Cost"),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType,"Fully Burdened Cost Total", "Grand Total Top Level"))));
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType,"Grand Total Top Level", "Fully Burdened Cost Total"))));
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Capital Investments"),
-                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType,"Capital Investments Total", "Grand Total Top Level"))));
+                is(equalTo(assemblyDetailsReport.getActualColumnGrandTotal(assemblyType, "Grand Total Top Level", "Capital Investments Total"))));
     }
 }

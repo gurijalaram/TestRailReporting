@@ -80,36 +80,36 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      *
      * @return
      */
-    public BigDecimal getValueFromTable(String assemblyType, String columnName, String rowIndex) {
+    public BigDecimal getValueFromTable(String assemblyType, String rowIndex, String columnName) {
         Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
         String columnSelector = "";
         String rowSelector = "";
 
         switch (assemblyType) {
             case "Top Level":
-                columnSelector = topLevelColumnMap.get(columnName);
                 rowSelector = topLevelRowMap.get(rowIndex);
+                columnSelector = topLevelColumnMap.get(columnName);
                 break;
             case "Sub-Sub-ASM":
-                columnSelector = subSubAsmColumnMap.get(columnName);
                 rowSelector = subSubAsmRowMap.get(rowIndex);
+                columnSelector = subSubAsmColumnMap.get(columnName);
                 break;
             case "Sub-Assembly":
-                columnSelector = subAssemblyColumnMap.get(columnName);
                 rowSelector = subAssemblyRowMap.get(rowIndex);
+                columnSelector = subAssemblyColumnMap.get(columnName);
                 break;
         }
         String cssSelector = String.format("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s span", rowSelector, columnSelector);
 
-        BigDecimal retVal = new BigDecimal("0.00");
+        BigDecimal actualTotal = new BigDecimal("0.00");
 
-        Element tableCell = assemblyDetailsReport.select(cssSelector).first();
-        if (!tableCell.text().isEmpty() && !tableCell.text().equals("null") && !tableCell.text().equals("0.00")
-            && tableCell.text().chars().noneMatch(Character::isLetter)) {
-            retVal = new BigDecimal(tableCell.text().replaceAll(",", ""));
+        Element actualTotalCell = assemblyDetailsReport.select(cssSelector).first();
+        if (!actualTotalCell.text().isEmpty() && !actualTotalCell.text().equals("null") && !actualTotalCell.text().equals("0.00")
+            && actualTotalCell.text().chars().noneMatch(Character::isLetter)) {
+            actualTotal = new BigDecimal(actualTotalCell.text().replaceAll(",", ""));
         }
 
-        return retVal;
+        return actualTotal;
     }
 
     /**
@@ -174,8 +174,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @param rowIndex
      * @return
      */
-    public BigDecimal getActualColumnGrandTotal(String assemblyType, String columnName, String rowIndex) {
-        return getValueFromTable(assemblyType, columnName, rowIndex);
+    public BigDecimal getActualColumnGrandTotal(String assemblyType, String rowIndex, String columnName) {
+        return getValueFromTable(assemblyType, rowIndex, columnName);
     }
 
     /**
