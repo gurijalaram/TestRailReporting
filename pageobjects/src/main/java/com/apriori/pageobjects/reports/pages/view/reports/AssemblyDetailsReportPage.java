@@ -1,12 +1,10 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
-import com.apriori.pageobjects.reports.pages.view.objects.TableRowNumbers;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,37 +23,19 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
 
-    private Map<String, String> columnTotalMap = new HashMap<>();
-    private Map<String, String> valueMap = new HashMap<>();
-
-    private Map<String, String> topLevelColumnMap = new HashMap<>();
-    private Map<String, String> subSubAsmColumnMap = new HashMap<>();
-    private Map<String, String> subAssemblyColumnMap = new HashMap<>();
+    private Map<String, String> genericColumnMap = new HashMap<>();
 
     private Map<String, String> topLevelRowMap = new HashMap<>();
     private Map<String, String> subSubAsmRowMap = new HashMap<>();
     private Map<String, String> subAssemblyRowMap = new HashMap<>();
 
     private String genericTrSelector = "tr:nth-child(%s)";
-    private String genericTdSelector = "td:nth-child(%s)";
+    private String columnSelector;
+    private String rowSelector;
+    private String cssSelector;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
-
-    @FindBy(xpath = "//tr[5]/td[10]/span")
-    private WebElement reportTableCellElement;
-
-    @FindBy(xpath = "//span[contains(text(), 'GRAND TOTAL')]/../../td[25]/span")
-    private WebElement cycleTimeGrandTotalElement;
-
-    @FindBy(xpath = "//span[contains(text(), 'GRAND TOTAL')]/../../td[28]/span")
-    private WebElement piecePartCostGrandTotalElement;
-
-    @FindBy(xpath = "//span[contains(text(), 'GRAND TOTAL')]/../../td[31]/span")
-    private WebElement fullyBurdenedCostGrandTotalElement;
-
-    @FindBy(xpath = "//span[contains(text(), 'GRAND TOTAL')]/../../td[34]/span")
-    private WebElement capitalInvGrandTotalElement;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -67,77 +47,45 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
 
-        initialiseTopLevelColumnMap();
-        initialiseSubSubAsmColumnMap();
-        initialiseSubAssemblyColumnMap();
-
+        initialiseGenericColumnMap();
         initialiseTopLevelRowMap();
         initialiseSubSubAsmRowMap();
         initialiseSubAssemblyRowMap();
     }
 
     /**
-     *
-     * @return
+     * Generic method to get specific value from an Assembly Details Report table
+     * @param assemblyType
+     * @param rowIndex
+     * @param columnName
+     * @return BigDecimal
      */
     public BigDecimal getValueFromTable(String assemblyType, String rowIndex, String columnName) {
         Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
-        String columnSelector = "";
-        String rowSelector = "";
+        setCssLocator(assemblyType, rowIndex, columnName);
+        BigDecimal valueRequired = new BigDecimal("0.00");
+        Element valueCell = assemblyDetailsReport.select(cssSelector).first();
 
-        switch (assemblyType) {
-            case "Top Level":
-                rowSelector = topLevelRowMap.get(rowIndex);
-                columnSelector = topLevelColumnMap.get(columnName);
-                break;
-            case "Sub-Sub-ASM":
-                rowSelector = subSubAsmRowMap.get(rowIndex);
-                columnSelector = subSubAsmColumnMap.get(columnName);
-                break;
-            case "Sub-Assembly":
-                rowSelector = subAssemblyRowMap.get(rowIndex);
-                columnSelector = subAssemblyColumnMap.get(columnName);
-                break;
-        }
-        String cssSelector = String.format("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s span", rowSelector, columnSelector);
-
-        BigDecimal actualTotal = new BigDecimal("0.00");
-
-        Element actualTotalCell = assemblyDetailsReport.select(cssSelector).first();
-        if (!actualTotalCell.text().isEmpty() && !actualTotalCell.text().equals("null") && !actualTotalCell.text().equals("0.00")
-            && actualTotalCell.text().chars().noneMatch(Character::isLetter)) {
-            actualTotal = new BigDecimal(actualTotalCell.text().replaceAll(",", ""));
+        if (isValueValid(valueCell.text())) {
+            valueRequired = new BigDecimal(valueCell.text().replaceAll(",", ""));
         }
 
-        return actualTotal;
+        return valueRequired;
     }
 
     /**
-     *
-     * @return
+     * Generic method to get values in a given column
+     * @param assemblyType
+     * @param columnName
+     * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getValuesByColumn(String assemblyType, String columnName) {
         Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
-        String columnSelector = "";
-
-        switch (assemblyType) {
-            case "Top Level":
-                columnSelector = topLevelColumnMap.get(columnName);
-                break;
-            case "Sub-Sub-ASM":
-                columnSelector = subSubAsmColumnMap.get(columnName);
-                break;
-            case "Sub-Assembly":
-                columnSelector = subAssemblyColumnMap.get(columnName);
-                break;
-        }
-        String cssSelector = String.format("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr %s span", columnSelector);
-
+        setCssLocator(assemblyType, "", columnName);
         ArrayList<BigDecimal> valuesToReturn = new ArrayList<>();
 
         for (Element element : assemblyDetailsReport.select(cssSelector)) {
-            if (!element.text().isEmpty() && !element.text().equals("null") && !element.text().equals("0.00")
-                    && element.text().chars().noneMatch(Character::isLetter)) {
+            if (isValueValid(element.text())) {
                 if (columnName.equals("Cycle Time") && element.text().equals("79,995.28")) {
                     continue;
                 } else {
@@ -150,39 +98,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     *
-     * @param cssSelector
-     * @return
-     */
-    private ArrayList<BigDecimal> getValuesFromTable(String cssSelector) {
-        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
-        ArrayList<BigDecimal> valuesRetrieved = new ArrayList<>();
-
-        for (Element column : assemblyDetailsReport.select("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr")) {
-            if (!column.select(cssSelector).text().isEmpty() && !column.select(cssSelector).text().equals("null")
-                && !column.select(cssSelector).text().chars().anyMatch(Character::isLetter) && !column.select(cssSelector).text().equals("0.00")) {
-                valuesRetrieved.add(new BigDecimal(column.select(cssSelector).text().replaceAll(",", "")));
-            }
-        }
-        return valuesRetrieved;
-    }
-
-    /**
-     *
+     * Generic method to get expected total of a certain column
      * @param assemblyType
      * @param columnName
-     * @param rowIndex
-     * @return
-     */
-    public BigDecimal getActualColumnGrandTotal(String assemblyType, String rowIndex, String columnName) {
-        return getValueFromTable(assemblyType, rowIndex, columnName);
-    }
-
-    /**
-     *
-     * @param assemblyType
-     * @param columnName
-     * @return
+     * @return BigDecimal
      */
     public BigDecimal getExpectedColumnGrandTotal(String assemblyType, String columnName) {
         List<BigDecimal> values;
@@ -207,9 +126,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     *
+     * Waits for correct current currency to appear on screen
      * @param currencyToCheck
-     * @return
+     * @return current page object
      */
     public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
         pageUtils.waitForElementToAppear(currentCurrency);
@@ -218,58 +137,96 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     *
+     * Checks if value of current cell is a valid one
+     * @param valueToCheck
+     * @return boolean
      */
-    private void initialiseTopLevelColumnMap() {
-        topLevelColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
-        topLevelColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
-
-        topLevelColumnMap.put("Piece Part Cost", String.format(genericTdSelector, "27"));
-        topLevelColumnMap.put("Piece Part Cost Total", String.format(genericTdSelector, "28"));
-
-        topLevelColumnMap.put("Fully Burdened Cost", String.format(genericTdSelector, "30"));
-        topLevelColumnMap.put("Fully Burdened Cost Total", String.format(genericTdSelector, "31"));
-
-        topLevelColumnMap.put("Capital Investments", String.format(genericTdSelector, "33"));
-        topLevelColumnMap.put("Capital Investments Total", String.format(genericTdSelector, "34"));
+    private boolean isValueValid(String valueToCheck) {
+        boolean returnValue = false;
+        if (!valueToCheck.isEmpty() &&
+                !valueToCheck.equals("null") &&
+                !valueToCheck.equals("0.00") &&
+                valueToCheck.chars().noneMatch(Character::isLetter)) {
+            returnValue = true;
+        }
+        return returnValue;
     }
 
     /**
-     *
+     * Method to reduce duplication - sets css locator based on parameters
      */
-    private void initialiseSubSubAsmColumnMap() {
-        subSubAsmColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
-        subSubAsmColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
+    private void setCssLocator(String assemblyType, String rowIndex, String columnName) {
+        switch (assemblyType) {
+            case "Top Level":
+                rowSelector = topLevelRowMap.get(rowIndex);
+                columnSelector = genericColumnMap.get(columnName);
+                break;
+            case "Sub-Sub-ASM":
+                rowSelector = subSubAsmRowMap.get(rowIndex);
+                columnSelector = genericColumnMap.get(columnName);
+                break;
+            case "Sub-Assembly":
+                rowSelector = subAssemblyRowMap.get(rowIndex);
+                columnSelector = genericColumnMap.get(columnName);
+                break;
+        }
 
-        subSubAsmColumnMap.put("Piece Part Cost", String.format(genericTdSelector, "27"));
-        subSubAsmColumnMap.put("Piece Part Cost Total", String.format(genericTdSelector, "28"));
-
-        subSubAsmColumnMap.put("Fully Burdened Cost", String.format(genericTdSelector, "30"));
-        subSubAsmColumnMap.put("Fully Burdened Cost Total", String.format(genericTdSelector, "31"));
-
-        subSubAsmColumnMap.put("Capital Investments", String.format(genericTdSelector, "33"));
-        subSubAsmColumnMap.put("Capital Investments Total", String.format(genericTdSelector, "34"));
+        if (!rowIndex.isEmpty()) {
+            String baseCssSelector = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s span";
+            cssSelector = String.format(baseCssSelector, rowSelector, columnSelector);
+        } else {
+            String baseCssSelectorNoRowSpecified = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr %s span";
+            cssSelector = String.format(baseCssSelectorNoRowSpecified, columnSelector);
+        }
     }
 
     /**
-     *
+     * Hash Map initialisation for columns in Top Level export set report table
      */
-    private void initialiseSubAssemblyColumnMap() {
-        subAssemblyColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
-        subAssemblyColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
+    private void initialiseGenericColumnMap() {
+        String genericTdSelector = "td:nth-child(%s)";
+        genericColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
+        genericColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
 
-        subAssemblyColumnMap.put("Piece Part Cost", String.format(genericTdSelector, "27"));
-        subAssemblyColumnMap.put("Piece Part Cost Total", String.format(genericTdSelector, "28"));
+        genericColumnMap.put("Piece Part Cost", String.format(genericTdSelector, "27"));
+        genericColumnMap.put("Piece Part Cost Total", String.format(genericTdSelector, "28"));
 
-        subAssemblyColumnMap.put("Fully Burdened Cost", String.format(genericTdSelector, "30"));
-        subAssemblyColumnMap.put("Fully Burdened Cost Total", String.format(genericTdSelector, "31"));
+        genericColumnMap.put("Fully Burdened Cost", String.format(genericTdSelector, "30"));
+        genericColumnMap.put("Fully Burdened Cost Total", String.format(genericTdSelector, "31"));
 
-        subAssemblyColumnMap.put("Capital Investments", String.format(genericTdSelector, "33"));
-        subAssemblyColumnMap.put("Capital Investments Total", String.format(genericTdSelector, "34"));
+        genericColumnMap.put("Capital Investments", String.format(genericTdSelector, "33"));
+        genericColumnMap.put("Capital Investments Total", String.format(genericTdSelector, "34"));
+    }
+
+
+    /**
+     * Hash Map initialisation for columns in Sub Assembly export set report table
+     */
+    private void initialiseSubAssemblyRowMap() {
+        subAssemblyRowMap.put("1 Sub Assembly", String.format(genericTrSelector, "5"));
+        subAssemblyRowMap.put("2 Sub Assembly", String.format(genericTrSelector, "7"));
+        subAssemblyRowMap.put("3 Sub Assembly", String.format(genericTrSelector, "11"));
+        subAssemblyRowMap.put("4 Sub Assembly", String.format(genericTrSelector, "15"));
+        subAssemblyRowMap.put("5 Sub Assembly", String.format(genericTrSelector, "17"));
+        subAssemblyRowMap.put("6 Sub Assembly", String.format(genericTrSelector, "19"));
+        subAssemblyRowMap.put("Component Subtotal Sub Assembly", String.format(genericTrSelector, "23"));
+        subAssemblyRowMap.put("Assembly Processes Sub Assembly", String.format(genericTrSelector, "26"));
+        subAssemblyRowMap.put("Grand Total Sub Assembly", String.format(genericTrSelector, "28"));
     }
 
     /**
-     *
+     * Hash Map initialisation for columns in Sub-Sub-ASM export set report table
+     */
+    private void initialiseSubSubAsmRowMap() {
+        subSubAsmRowMap.put("1 Sub Sub ASM", String.format(genericTrSelector, "5"));
+        subSubAsmRowMap.put("2 Sub Sub ASM", String.format(genericTrSelector, "7"));
+        subSubAsmRowMap.put("Component Subtotal Sub Sub ASM", String.format(genericTrSelector, "11"));
+        subSubAsmRowMap.put("Assembly Processes Sub Sub ASM", String.format(genericTrSelector, "14"));
+        subSubAsmRowMap.put("Grand Total Sub Sub ASM", String.format(genericTrSelector, "16"));
+    }
+
+    /**
+     * Hash Map initialisation for columns in Top Level export set report table
      */
     private void initialiseTopLevelRowMap() {
         topLevelRowMap.put("1 Top Level", String.format(genericTrSelector, "5"));
@@ -288,31 +245,5 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         topLevelRowMap.put("Component Subtotal Top Level", String.format(genericTrSelector, "42"));
         topLevelRowMap.put("Assembly Processes Top Level", String.format(genericTrSelector, "45"));
         topLevelRowMap.put("Grand Total Top Level", String.format(genericTrSelector, "47"));
-    }
-
-    /**
-     *
-     */
-    private void initialiseSubSubAsmRowMap() {
-        subSubAsmRowMap.put("1 Sub Sub ASM", String.format(genericTrSelector, "5"));
-        subSubAsmRowMap.put("2 Sub Sub ASM", String.format(genericTrSelector, "7"));
-        subSubAsmRowMap.put("Component Subtotal Sub Sub ASM", String.format(genericTrSelector, "11"));
-        subSubAsmRowMap.put("Assembly Processes Sub Sub ASM", String.format(genericTrSelector, "14"));
-        subSubAsmRowMap.put("Grand Total Sub Sub ASM", String.format(genericTrSelector, "16"));
-    }
-
-    /**
-     *
-     */
-    private void initialiseSubAssemblyRowMap() {
-        subAssemblyRowMap.put("1 Sub Assembly", String.format(genericTrSelector, "5"));
-        subAssemblyRowMap.put("2 Sub Assembly", String.format(genericTrSelector, "7"));
-        subAssemblyRowMap.put("3 Sub Assembly", String.format(genericTrSelector, "11"));
-        subAssemblyRowMap.put("4 Sub Assembly", String.format(genericTrSelector, "15"));
-        subAssemblyRowMap.put("5 Sub Assembly", String.format(genericTrSelector, "17"));
-        subAssemblyRowMap.put("6 Sub Assembly", String.format(genericTrSelector, "19"));
-        subAssemblyRowMap.put("Component Subtotal Sub Assembly", String.format(genericTrSelector, "23"));
-        subAssemblyRowMap.put("Assembly Processes Sub Assembly", String.format(genericTrSelector, "26"));
-        subAssemblyRowMap.put("Grand Total Sub Assembly", String.format(genericTrSelector, "28"));
     }
 }
