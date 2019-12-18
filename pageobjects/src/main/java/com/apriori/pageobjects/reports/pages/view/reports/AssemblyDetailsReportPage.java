@@ -104,14 +104,14 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return BigDecimal
      */
     public BigDecimal getExpectedColumnGrandTotal(String assemblyType, String columnName) {
-        List<BigDecimal> values;
+        ArrayList<BigDecimal> values;
         values = getValuesByColumn(assemblyType, columnName);
 
         // 1 - get quantities
         // 2 - apply quantities to values in for loop
         // Will this work before making values list distinct?
         int i = 0;
-        List<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
+        ArrayList<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
         for (BigDecimal quantity : quantities) {
             //values.get(i).multiply(quantity);
             logger.debug(String.format("quantity at %d is: %s", i, quantity.setScale(2).toString()));
@@ -122,13 +122,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             logger.debug(String.format("value at %d is: %f", j, values.get(j)));
         }
 
-        List<BigDecimal> distinctTotalValues = values
+        // needs checked to ensure it will fulfil the intended purpose (possible scenarios exist in which it won't work)
+        return values
                 .stream()
                 .distinct()
-                .collect(Collectors.toList());
-
-        return distinctTotalValues
-                .stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
