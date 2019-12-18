@@ -87,7 +87,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "1922")
-    @Description("Currency Code works")
+    @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
         assemblyType = "Sub-Assembly";
         BigDecimal gbpGrandTotal;
@@ -120,7 +120,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3205")
-    @Description()
+    @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
         assemblyType = "Sub-Assembly";
         BigDecimal gbpGrandTotal;
