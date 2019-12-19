@@ -6,6 +6,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 
+import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
+import com.apriori.apibase.http.builder.common.response.common.ToleranceValues;
+import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
@@ -19,6 +22,7 @@ import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -31,10 +35,11 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+
+import java.util.HashMap;
 
 public class SettingsTests extends TestBase {
     private CIDLoginPage loginPage;
@@ -46,9 +51,71 @@ public class SettingsTests extends TestBase {
     private SelectionSettingsPage selectionSettingsPage;
     private WarningPage warningPage;
 
-    @After
+    //@After
     public void resetAllSettings() {
         new AfterTestUtil(driver).resetAllSettings();
+    }
+
+    @Test
+    @Description("Quick api test")
+    public void quickAPI() {
+        loginPage = new CIDLoginPage(driver);
+        loginPage.login(UserUtil.getUser());
+
+       // Map<String, String> credentials = new HashMap<>();
+        //credentials.put("cfrith@apriori.com", "TestEvent2018");
+
+        /*new HTTPRequest().unauthorized()
+            .customizeRequest()
+            .setHeaders(initAuthorizationHeader())
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults");*/
+
+        new HTTPRequest()
+            .unauthorized()
+            .customizeRequest()
+            .setHeaders(initAuthorizationHeader())
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+            .setAutoLogin(false)
+            .setReturnType(ToleranceValues.class)
+            .setStatusCode(200)
+            .commitChanges()
+            .connect()
+            .get();
+
+        /*new HTTPRequest()
+            .unauthorized()
+            .customizeRequest()
+            .setHeaders(initAuthorizationHeader())
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+            .setAutoLogin(false)
+            .setReturnType(NewClass.class)
+            .setStatusCode(200)
+            .commitChanges()
+            .connect()
+            .post();*/
+    }
+
+    private HashMap<String, String> initAuthorizationHeader() {
+
+        return new HashMap<String, String>() {{
+            put("Authorization", "Bearer " + authenticateUser("cfrith@apriori.com",
+                "cfrith")
+            );
+            put("apriori.tenantgroup", "default");
+            put("apriori.tenant", "default");
+            put("Content-Type", "application/vnd.apriori.v1+json");
+        }};
+    }
+
+    private String authenticateUser(String username, String password) {
+        return ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
+            .customizeRequest()
+            .setReturnType(AuthenticateJSON.class)
+            .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
+            .setAutoLogin(false)
+            .commitChanges()
+            .connect()
+            .post()).getAccessToken();
     }
 
     @Category(CustomerSmokeTests.class)
