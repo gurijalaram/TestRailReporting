@@ -62,13 +62,16 @@ public class SettingsTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
-       // Map<String, String> credentials = new HashMap<>();
-        //credentials.put("cfrith@apriori.com", "TestEvent2018");
-
-        /*new HTTPRequest().unauthorized()
+       new HTTPRequest()
+            .unauthorized()
             .customizeRequest()
             .setHeaders(initAuthorizationHeader())
-            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults");*/
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+            .setAutoLogin(false)
+            .setReturnType(ToleranceValues.class)
+            .commitChanges()
+            .connect()
+            .get();
 
         new HTTPRequest()
             .unauthorized()
@@ -76,23 +79,10 @@ public class SettingsTests extends TestBase {
             .setHeaders(initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
             .setAutoLogin(false)
-            .setReturnType(ToleranceValues.class)
-            .setStatusCode(200)
+            .setBody(null)
             .commitChanges()
             .connect()
-            .get();
-
-        /*new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(initAuthorizationHeader())
-            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
-            .setAutoLogin(false)
-            .setReturnType(NewClass.class)
-            .setStatusCode(200)
-            .commitChanges()
-            .connect()
-            .post();*/
+            .post();
     }
 
     private HashMap<String, String> initAuthorizationHeader() {

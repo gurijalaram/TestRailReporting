@@ -93,7 +93,7 @@
         },
         "toleranceMode": {
           "$id": "#/properties/propertyValueMap/properties/toleranceMode",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "The Tolerancemode Schema",
           "default": "",
           "examples": [

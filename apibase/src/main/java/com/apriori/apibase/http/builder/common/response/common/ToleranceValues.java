@@ -13,234 +13,255 @@ public class ToleranceValues {
     @JsonProperty
     private Object propertyInfoMap;
 
-//    @JsonProperty
-//    private Integer totalRunoutOverride;
-//
-//    @JsonProperty
-//    private Integer perpendicularityOverride;
-//
-//    @JsonProperty
-//    private Integer symmetryOverride;
-//
-//    @JsonProperty
-//    private Integer roughnessOverride;
-//
-//    @JsonProperty
-//    private Integer circularityOverride;
-//
-//    @JsonProperty
-//    private Integer minCadToleranceThreshhold;
-//
-//    @JsonProperty
-//    private Integer toleranceMode;
-//
-//    @JsonProperty
-//    private Integer bendAngleToleranceOverride;
-//
-//    @JsonProperty
-//    private Integer runoutOverride;
-//
     @JsonProperty
-    private Integer flatnessOverride;
-//
-//    @JsonProperty
-//    private Integer parallelismOverride;
-//
-//    @JsonProperty
-//    private Boolean useCadToleranceThreshhold;
-//
-//    @JsonProperty
-//    private Integer cadToleranceReplacement;
-//
-//    @JsonProperty
-//    private Integer straightnessOverride;
-//
-//    @JsonProperty
-//    private Integer positionToleranceOverride;
-//
-//    @JsonProperty
-//    private Integer profileOfSurfaceOverride;
-//
-//    @JsonProperty
-//    private Integer roughnessRzOverride;
+    private Double totalRunoutOverride;
 
     @JsonProperty
-    private Integer toleranceOverride;
-//
-//    @JsonProperty
-//    private Integer diamToleranceOverride;
-//
-//    @JsonProperty
-//    private Integer concentricityOverride;
-//
-//    @JsonProperty
-//    private Integer cylindricityOverride;
+    private Double perpendicularityOverride;
 
-//    public Integer getTotalRunoutOverride() {
-//        return totalRunoutOverride;
-//    }
-//
-//    public void setTotalRunoutOverride(Integer totalRunoutOverride) {
-//        this.totalRunoutOverride = totalRunoutOverride;
-//    }
-//
-//    public Integer getPerpendicularityOverride() {
-//        return perpendicularityOverride;
-//    }
-//
-//    public void setPerpendicularityOverride(Integer perpendicularityOverride) {
-//        this.perpendicularityOverride = perpendicularityOverride;
-//    }
-//
-//    public Integer getSymmetryOerride() {
-//        return symmetryOverride;
-//    }
-//
-//    public void setSymmetryOerride(Integer symmetryOverride) {
-//        this.symmetryOverride = symmetryOverride;
-//    }
-//
-//    public Integer getRoughnessOverride() {
-//        return roughnessOverride;
-//    }
-//
-//    public void setRoughnessOverride(Integer roughnessOverride) {
-//        this.roughnessOverride = roughnessOverride;
-//    }
-//
-//    public Integer getCircularityOverride() {
-//        return circularityOverride;
-//    }
-//
-//    public void setCircularityOverride(Integer circularityOverride) {
-//        this.circularityOverride = circularityOverride;
-//    }
-//
-//    public Integer getMinCadToleranceThreshhold() {
-//        return minCadToleranceThreshhold;
-//    }
-//
-//    public void setMinCadToleranceThreshhold(Integer minCadToleranceThreshhold) {
-//        this.minCadToleranceThreshhold = minCadToleranceThreshhold;
-//    }
-//
-//    public Integer getToleranceMode() {
-//        return toleranceMode;
-//    }
-//
-//    public void setToleranceMode(Integer toleranceMode) {
-//        this.toleranceMode = toleranceMode;
-//    }
-//
-//    public Integer getBendAngleToleranceOverride() {
-//        return bendAngleToleranceOverride;
-//    }
-//
-//    public void setBendAngleToleranceOverride(Integer bendAngleToleranceOverride) {
-//        this.bendAngleToleranceOverride = bendAngleToleranceOverride;
-//    }
-//
-//    public Integer getRunoutOverride() {
-//        return runoutOverride;
-//    }
-//
-//    public void setRunoutOverride(Integer runoutOverride) {
-//        this.runoutOverride = runoutOverride;
-//    }
-//
-    public Integer getFlatnessOverride() {
+    @JsonProperty
+    private Double symmetryOverride;
+
+    @JsonProperty
+    private Double roughnessOverride;
+
+    @JsonProperty
+    private Double circularityOverride;
+
+    @JsonProperty
+    private Double minCadToleranceThreshhold;
+
+    @JsonProperty
+    private Double toleranceMode;
+
+    @JsonProperty
+    private Double bendAngleToleranceOverride;
+
+    @JsonProperty
+    private Double runoutOverride;
+
+    @JsonProperty
+    private Double flatnessOverride;
+
+    @JsonProperty
+    private Double parallelismOverride;
+
+    @JsonProperty
+    private Boolean useCadToleranceThreshhold;
+
+    @JsonProperty
+    private Double cadToleranceReplacement;
+
+    @JsonProperty
+    private Double straightnessOverride;
+
+    @JsonProperty
+    private Double positionToleranceOverride;
+
+    @JsonProperty
+    private Double profileOfSurfaceOverride;
+
+    @JsonProperty
+    private Double roughnessRzOverride;
+
+    @JsonProperty
+    private Double toleranceOverride;
+
+    @JsonProperty
+    private Double diamToleranceOverride;
+
+    @JsonProperty
+    private Double concentricityOverride;
+
+    @JsonProperty
+    private Double cylindricityOverride;
+
+    public Double getTotalRunoutOverride() {
+        return totalRunoutOverride;
+    }
+
+    public ToleranceValues setTotalRunoutOverride(Double totalRunoutOverride) {
+        this.totalRunoutOverride = totalRunoutOverride;
+        return this;
+    }
+
+    public Double getPerpendicularityOverride() {
+        return perpendicularityOverride;
+    }
+
+    public ToleranceValues setPerpendicularityOverride(Double perpendicularityOverride) {
+        this.perpendicularityOverride = perpendicularityOverride;
+        return this;
+    }
+
+    public Double getSymmetryOerride() {
+        return symmetryOverride;
+    }
+
+    public ToleranceValues setSymmetryOerride(Double symmetryOverride) {
+        this.symmetryOverride = symmetryOverride;
+        return this;
+    }
+
+    public Double getRoughnessOverride() {
+        return roughnessOverride;
+    }
+
+    public ToleranceValues setRoughnessOverride(Double roughnessOverride) {
+        this.roughnessOverride = roughnessOverride;
+        return this;
+    }
+
+    public Double getCircularityOverride() {
+        return circularityOverride;
+    }
+
+    public ToleranceValues setCircularityOverride(Double circularityOverride) {
+        this.circularityOverride = circularityOverride;
+        return this;
+    }
+
+    public Double getMinCadToleranceThreshhold() {
+        return minCadToleranceThreshhold;
+    }
+
+    public ToleranceValues setMinCadToleranceThreshhold(Double minCadToleranceThreshhold) {
+        this.minCadToleranceThreshhold = minCadToleranceThreshhold;
+        return this;
+    }
+
+    public Double getToleranceMode() {
+        return toleranceMode;
+    }
+
+    public ToleranceValues setToleranceMode(Double toleranceMode) {
+        this.toleranceMode = toleranceMode;
+        return this;
+    }
+
+    public Double getBendAngleToleranceOverride() {
+        return bendAngleToleranceOverride;
+    }
+
+    public ToleranceValues setBendAngleToleranceOverride(Double bendAngleToleranceOverride) {
+        this.bendAngleToleranceOverride = bendAngleToleranceOverride;
+        return this;
+    }
+
+    public Double getRunoutOverride() {
+        return runoutOverride;
+    }
+
+    public ToleranceValues setRunoutOverride(Double runoutOverride) {
+        this.runoutOverride = runoutOverride;
+        return this;
+    }
+
+    public Double getFlatnessOverride() {
         return flatnessOverride;
     }
 
-    public void setFlatnessOverride(Integer flatnessOverride) {
+    public ToleranceValues setFlatnessOverride(Double flatnessOverride) {
         this.flatnessOverride = flatnessOverride;
+        return this;
     }
-//
-//    public Integer getParallelismOverride() {
-//        return parallelismOverride;
-//    }
-//
-//    public void setParallelismOverride(Integer parallelismOverride) {
-//        this.parallelismOverride = parallelismOverride;
-//    }
-//
-//    public Boolean getUseCadToleranceThreshhold() {
-//        return useCadToleranceThreshhold;
-//    }
-//
-//    public void setUseCadToleranceThreshhold(Boolean useCadToleranceThreshhold) {
-//        this.useCadToleranceThreshhold = useCadToleranceThreshhold;
-//    }
-//
-//    public Integer getCadToleranceReplacement() {
-//        return cadToleranceReplacement;
-//    }
-//
-//    public void setCadToleranceReplacement(Integer cadToleranceReplacement) {
-//        this.cadToleranceReplacement = cadToleranceReplacement;
-//    }
-//
-//    public Integer getStraightnessOverride() {
-//        return straightnessOverride;
-//    }
-//
-//    public void setStraightnessOverride(Integer straightnessOverride) {
-//        this.straightnessOverride = straightnessOverride;
-//    }
-//
-//    public Integer getPositionToleranceOverride() {
-//        return positionToleranceOverride;
-//    }
-//
-//    public void setPositionToleranceOverride(Integer positionToleranceOverride) {
-//        this.positionToleranceOverride = positionToleranceOverride;
-//    }
-//
-//    public Integer getProfileOfSurfaceOverride() {
-//        return profileOfSurfaceOverride;
-//    }
-//
-//    public void setProfileOfSurfaceOverride(Integer profileOfSurfaceOverride) {
-//        this.profileOfSurfaceOverride = profileOfSurfaceOverride;
-//    }
-//
-//    public Integer getRoughnessRzOverride() {
-//        return roughnessRzOverride;
-//    }
-//
-//    public void setRoughnessRzOverride(Integer roughnessRzOverride) {
-//        this.roughnessRzOverride = roughnessRzOverride;
-//    }
 
-    public Integer getToleranceOverride() {
+    public Double getParallelismOverride() {
+        return parallelismOverride;
+    }
+
+    public ToleranceValues setParallelismOverride(Double parallelismOverride) {
+        this.parallelismOverride = parallelismOverride;
+        return this;
+    }
+
+    public Boolean getUseCadToleranceThreshhold() {
+        return useCadToleranceThreshhold;
+    }
+
+    public ToleranceValues setUseCadToleranceThreshhold(Boolean useCadToleranceThreshhold) {
+        this.useCadToleranceThreshhold = useCadToleranceThreshhold;
+        return this;
+    }
+
+    public Double getCadToleranceReplacement() {
+        return cadToleranceReplacement;
+    }
+
+    public ToleranceValues setCadToleranceReplacement(Double cadToleranceReplacement) {
+        this.cadToleranceReplacement = cadToleranceReplacement;
+        return this;
+    }
+
+    public Double getStraightnessOverride() {
+        return straightnessOverride;
+    }
+
+    public ToleranceValues setStraightnessOverride(Double straightnessOverride) {
+        this.straightnessOverride = straightnessOverride;
+        return this;
+    }
+
+    public Double getPositionToleranceOverride() {
+        return positionToleranceOverride;
+    }
+
+    public ToleranceValues setPositionToleranceOverride(Double positionToleranceOverride) {
+        this.positionToleranceOverride = positionToleranceOverride;
+        return this;
+    }
+
+    public Double getProfileOfSurfaceOverride() {
+        return profileOfSurfaceOverride;
+    }
+
+    public ToleranceValues setProfileOfSurfaceOverride(Double profileOfSurfaceOverride) {
+        this.profileOfSurfaceOverride = profileOfSurfaceOverride;
+        return this;
+    }
+
+    public Double getRoughnessRzOverride() {
+        return roughnessRzOverride;
+    }
+
+    public ToleranceValues setRoughnessRzOverride(Double roughnessRzOverride) {
+        this.roughnessRzOverride = roughnessRzOverride;
+        return this;
+    }
+
+    public Double getToleranceOverride() {
         return toleranceOverride;
     }
 
-//    public void setToleranceOverride(Integer toleranceOverride) {
-//        this.toleranceOverride = toleranceOverride;
-//    }
-//
-//    public Integer getDiamToleranceOverride() {
-//        return diamToleranceOverride;
-//    }
-//
-//    public void setDiamToleranceOverride(Integer diamToleranceOverride) {
-//        this.diamToleranceOverride = diamToleranceOverride;
-//    }
-//
-//    public Integer getConcentricityOverride() {
-//        return concentricityOverride;
-//    }
-//
-//    public void setConcentricityOverride(Integer concentricityOverride) {
-//        this.concentricityOverride = concentricityOverride;
-//    }
-//
-//    public Integer getCylindricityOverride() {
-//        return cylindricityOverride;
-//    }
-//
-//    public void setCylindricityOverride(Integer cylindricityOverride) {
-//        this.cylindricityOverride = cylindricityOverride;
-//    }
+    public ToleranceValues setToleranceOverride(Double toleranceOverride) {
+        this.toleranceOverride = toleranceOverride;
+        return this;
+    }
+
+    public Double getDiamToleranceOverride() {
+        return diamToleranceOverride;
+    }
+
+    public ToleranceValues setDiamToleranceOverride(Double diamToleranceOverride) {
+        this.diamToleranceOverride = diamToleranceOverride;
+        return this;
+    }
+
+    public Double getConcentricityOverride() {
+        return concentricityOverride;
+    }
+
+    public ToleranceValues setConcentricityOverride(Double concentricityOverride) {
+        this.concentricityOverride = concentricityOverride;
+        return this;
+    }
+
+    public Double getCylindricityOverride() {
+        return cylindricityOverride;
+    }
+
+    public ToleranceValues setCylindricityOverride(Double cylindricityOverride) {
+        this.cylindricityOverride = cylindricityOverride;
+        return this;
+    }
 }
