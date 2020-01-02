@@ -57,7 +57,7 @@
       "properties": {
         "prod.info.default.material": {
           "$id": "#/properties/defaults/properties/prod.info.default.material",
-          "type": "null",
+          "type": ["null","string"],
           "title": "The Prod.info.default.material Schema",
           "default": null,
           "examples": [
@@ -66,7 +66,7 @@
         },
         "prod.info.default.annual.volume": {
           "$id": "#/properties/defaults/properties/prod.info.default.annual.volume",
-          "type": "string",
+          "type": ["null", "number"],
           "title": "The Prod.info.default.annual.volume Schema",
           "default": "",
           "examples": [
@@ -76,7 +76,7 @@
         },
         "prod.info.default.use.vpe.for.all.processes": {
           "$id": "#/properties/defaults/properties/prod.info.default.use.vpe.for.all.processes",
-          "type": "string",
+          "type": ["null","string"],
           "title": "The Prod.info.default.use.vpe.for.all.processes Schema",
           "default": "",
           "examples": [
@@ -86,7 +86,7 @@
         },
         "prod.info.default.material.catalog.name": {
           "$id": "#/properties/defaults/properties/prod.info.default.material.catalog.name",
-          "type": "null",
+          "type": ["null", "string"],
           "title": "The Prod.info.default.material.catalog.name Schema",
           "default": null,
           "examples": [
@@ -95,7 +95,7 @@
         },
         "prod.info.default.production.life": {
           "$id": "#/properties/defaults/properties/prod.info.default.production.life",
-          "type": "null",
+          "type": ["null", "number"],
           "title": "The Prod.info.default.production.life Schema",
           "default": null,
           "examples": [
@@ -104,7 +104,7 @@
         },
         "prod.info.default.batch.size": {
           "$id": "#/properties/defaults/properties/prod.info.default.batch.size",
-          "type": "null",
+          "type": ["null","number"],
           "title": "The Prod.info.default.batch.size Schema",
           "default": null,
           "examples": [
@@ -113,7 +113,7 @@
         },
         "prod.info.default.pg": {
           "$id": "#/properties/defaults/properties/prod.info.default.pg",
-          "type": "string",
+          "type": ["null","string"],
           "title": "The Prod.info.default.pg Schema",
           "default": "",
           "examples": [
@@ -123,7 +123,7 @@
         },
         "prod.info.default.vpe": {
           "$id": "#/properties/defaults/properties/prod.info.default.vpe",
-          "type": "null",
+          "type": ["null", "string"],
           "title": "The Prod.info.default.vpe Schema",
           "default": null,
           "examples": [
