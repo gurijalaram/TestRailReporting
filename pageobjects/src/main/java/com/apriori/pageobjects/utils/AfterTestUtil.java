@@ -1,5 +1,8 @@
 package com.apriori.pageobjects.utils;
 
+import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
+import com.apriori.apibase.http.builder.common.response.common.DisplayPreferencesEntity;
+import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
@@ -10,6 +13,8 @@ import com.apriori.utils.enums.ToleranceEnum;
 import com.apriori.utils.enums.UnitsEnum;
 
 import org.openqa.selenium.WebDriver;
+
+import java.util.HashMap;
 
 /**
  * @author mparker
@@ -134,5 +139,72 @@ public class AfterTestUtil {
         new ToleranceSettingsPage(driver).selectAssumeTolerance();
 
         new SettingsPage(driver).save(ExplorePage.class);
+    }
+
+    public void quickAPI() {
+
+//       new HTTPRequest()
+//            .unauthorized()
+//            .customizeRequest()
+//            .setHeaders(initAuthorizationHeader())
+//            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+//            .setAutoLogin(false)
+//            .setReturnType(ToleranceValuesEntity.class)
+//            .commitChanges()
+//            .connect()
+//            .get();
+//
+//        new HTTPRequest()
+//            .unauthorized()
+//            .customizeRequest()
+//            .setHeaders(initAuthorizationHeader())
+//            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+//            .setAutoLogin(false)
+//            .setBody(null)
+//            .commitChanges()
+//            .connect()
+//            .post();
+
+//        new HTTPRequest()
+//            .unauthorized()
+//            .customizeRequest()
+//            .setHeaders(initAuthorizationHeader())
+//            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
+//            .setAutoLogin(false)
+//            .setReturnType(DisplayPreferencesEntity.class)
+//            .commitChanges()
+//            .connect()
+//            .get();
+
+        new HTTPRequest()
+            .unauthorized()
+            .customizeRequest()
+            .setHeaders(initAuthorizationHeader())
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
+            .setAutoLogin(false)
+            .setBody(new DisplayPreferencesEntity().setSystemUnits(false))
+            .commitChanges()
+            .connect()
+            .post();
+    }
+
+    private HashMap<String, String> initAuthorizationHeader() {
+        return new HashMap<String, String>() {{
+            put("Authorization", "Bearer " + authenticateUser("cfrith@apriori.com", "cfrith"));
+            put("apriori.tenantgroup", "default");
+            put("apriori.tenant", "default");
+            put("Content-Type", "application/vnd.apriori.v1+json");
+        }};
+    }
+
+    private String authenticateUser(String username, String password) {
+        return ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
+            .customizeRequest()
+            .setReturnType(AuthenticateJSON.class)
+            .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
+            .setAutoLogin(false)
+            .commitChanges()
+            .connect()
+            .post()).getAccessToken();
     }
 }

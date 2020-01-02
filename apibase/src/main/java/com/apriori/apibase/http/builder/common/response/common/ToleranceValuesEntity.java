@@ -5,7 +5,7 @@ import com.apriori.apibase.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Schema(location = "ToleranceValuesSchema.json")
-public class ToleranceValues {
+public class ToleranceValuesEntity {
 
     @JsonProperty
     private Object propertyValueMap;
@@ -80,7 +80,7 @@ public class ToleranceValues {
         return totalRunoutOverride;
     }
 
-    public ToleranceValues setTotalRunoutOverride(Double totalRunoutOverride) {
+    public ToleranceValuesEntity setTotalRunoutOverride(Double totalRunoutOverride) {
         this.totalRunoutOverride = totalRunoutOverride;
         return this;
     }
@@ -89,7 +89,7 @@ public class ToleranceValues {
         return perpendicularityOverride;
     }
 
-    public ToleranceValues setPerpendicularityOverride(Double perpendicularityOverride) {
+    public ToleranceValuesEntity setPerpendicularityOverride(Double perpendicularityOverride) {
         this.perpendicularityOverride = perpendicularityOverride;
         return this;
     }
@@ -98,7 +98,7 @@ public class ToleranceValues {
         return symmetryOverride;
     }
 
-    public ToleranceValues setSymmetryOerride(Double symmetryOverride) {
+    public ToleranceValuesEntity setSymmetryOerride(Double symmetryOverride) {
         this.symmetryOverride = symmetryOverride;
         return this;
     }
@@ -107,7 +107,7 @@ public class ToleranceValues {
         return roughnessOverride;
     }
 
-    public ToleranceValues setRoughnessOverride(Double roughnessOverride) {
+    public ToleranceValuesEntity setRoughnessOverride(Double roughnessOverride) {
         this.roughnessOverride = roughnessOverride;
         return this;
     }
@@ -116,7 +116,7 @@ public class ToleranceValues {
         return circularityOverride;
     }
 
-    public ToleranceValues setCircularityOverride(Double circularityOverride) {
+    public ToleranceValuesEntity setCircularityOverride(Double circularityOverride) {
         this.circularityOverride = circularityOverride;
         return this;
     }
@@ -125,7 +125,7 @@ public class ToleranceValues {
         return minCadToleranceThreshhold;
     }
 
-    public ToleranceValues setMinCadToleranceThreshhold(Double minCadToleranceThreshhold) {
+    public ToleranceValuesEntity setMinCadToleranceThreshhold(Double minCadToleranceThreshhold) {
         this.minCadToleranceThreshhold = minCadToleranceThreshhold;
         return this;
     }
@@ -134,7 +134,7 @@ public class ToleranceValues {
         return toleranceMode;
     }
 
-    public ToleranceValues setToleranceMode(Double toleranceMode) {
+    public ToleranceValuesEntity setToleranceMode(Double toleranceMode) {
         this.toleranceMode = toleranceMode;
         return this;
     }
@@ -143,7 +143,7 @@ public class ToleranceValues {
         return bendAngleToleranceOverride;
     }
 
-    public ToleranceValues setBendAngleToleranceOverride(Double bendAngleToleranceOverride) {
+    public ToleranceValuesEntity setBendAngleToleranceOverride(Double bendAngleToleranceOverride) {
         this.bendAngleToleranceOverride = bendAngleToleranceOverride;
         return this;
     }
@@ -152,7 +152,7 @@ public class ToleranceValues {
         return runoutOverride;
     }
 
-    public ToleranceValues setRunoutOverride(Double runoutOverride) {
+    public ToleranceValuesEntity setRunoutOverride(Double runoutOverride) {
         this.runoutOverride = runoutOverride;
         return this;
     }
@@ -161,7 +161,7 @@ public class ToleranceValues {
         return flatnessOverride;
     }
 
-    public ToleranceValues setFlatnessOverride(Double flatnessOverride) {
+    public ToleranceValuesEntity setFlatnessOverride(Double flatnessOverride) {
         this.flatnessOverride = flatnessOverride;
         return this;
     }
@@ -170,7 +170,7 @@ public class ToleranceValues {
         return parallelismOverride;
     }
 
-    public ToleranceValues setParallelismOverride(Double parallelismOverride) {
+    public ToleranceValuesEntity setParallelismOverride(Double parallelismOverride) {
         this.parallelismOverride = parallelismOverride;
         return this;
     }
@@ -179,7 +179,7 @@ public class ToleranceValues {
         return useCadToleranceThreshhold;
     }
 
-    public ToleranceValues setUseCadToleranceThreshhold(Boolean useCadToleranceThreshhold) {
+    public ToleranceValuesEntity setUseCadToleranceThreshhold(Boolean useCadToleranceThreshhold) {
         this.useCadToleranceThreshhold = useCadToleranceThreshhold;
         return this;
     }
@@ -188,7 +188,7 @@ public class ToleranceValues {
         return cadToleranceReplacement;
     }
 
-    public ToleranceValues setCadToleranceReplacement(Double cadToleranceReplacement) {
+    public ToleranceValuesEntity setCadToleranceReplacement(Double cadToleranceReplacement) {
         this.cadToleranceReplacement = cadToleranceReplacement;
         return this;
     }
@@ -197,7 +197,7 @@ public class ToleranceValues {
         return straightnessOverride;
     }
 
-    public ToleranceValues setStraightnessOverride(Double straightnessOverride) {
+    public ToleranceValuesEntity setStraightnessOverride(Double straightnessOverride) {
         this.straightnessOverride = straightnessOverride;
         return this;
     }
@@ -206,7 +206,7 @@ public class ToleranceValues {
         return positionToleranceOverride;
     }
 
-    public ToleranceValues setPositionToleranceOverride(Double positionToleranceOverride) {
+    public ToleranceValuesEntity setPositionToleranceOverride(Double positionToleranceOverride) {
         this.positionToleranceOverride = positionToleranceOverride;
         return this;
     }
@@ -215,7 +215,7 @@ public class ToleranceValues {
         return profileOfSurfaceOverride;
     }
 
-    public ToleranceValues setProfileOfSurfaceOverride(Double profileOfSurfaceOverride) {
+    public ToleranceValuesEntity setProfileOfSurfaceOverride(Double profileOfSurfaceOverride) {
         this.profileOfSurfaceOverride = profileOfSurfaceOverride;
         return this;
     }
@@ -224,7 +224,7 @@ public class ToleranceValues {
         return roughnessRzOverride;
     }
 
-    public ToleranceValues setRoughnessRzOverride(Double roughnessRzOverride) {
+    public ToleranceValuesEntity setRoughnessRzOverride(Double roughnessRzOverride) {
         this.roughnessRzOverride = roughnessRzOverride;
         return this;
     }
@@ -233,7 +233,7 @@ public class ToleranceValues {
         return toleranceOverride;
     }
 
-    public ToleranceValues setToleranceOverride(Double toleranceOverride) {
+    public ToleranceValuesEntity setToleranceOverride(Double toleranceOverride) {
         this.toleranceOverride = toleranceOverride;
         return this;
     }
@@ -242,7 +242,7 @@ public class ToleranceValues {
         return diamToleranceOverride;
     }
 
-    public ToleranceValues setDiamToleranceOverride(Double diamToleranceOverride) {
+    public ToleranceValuesEntity setDiamToleranceOverride(Double diamToleranceOverride) {
         this.diamToleranceOverride = diamToleranceOverride;
         return this;
     }
@@ -251,7 +251,7 @@ public class ToleranceValues {
         return concentricityOverride;
     }
 
-    public ToleranceValues setConcentricityOverride(Double concentricityOverride) {
+    public ToleranceValuesEntity setConcentricityOverride(Double concentricityOverride) {
         this.concentricityOverride = concentricityOverride;
         return this;
     }
@@ -260,7 +260,7 @@ public class ToleranceValues {
         return cylindricityOverride;
     }
 
-    public ToleranceValues setCylindricityOverride(Double cylindricityOverride) {
+    public ToleranceValuesEntity setCylindricityOverride(Double cylindricityOverride) {
         this.cylindricityOverride = cylindricityOverride;
         return this;
     }
