@@ -9,8 +9,10 @@ import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
+import com.sun.tools.jxc.ap.Const;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
@@ -100,20 +102,20 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForPageLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
-                .checkCurrencySelected("USD")
+                .checkCurrencySelected(Constants.usdCurrencyCode)
                 .clickApplyAndOk()
-                .waitForCorrectCurrency("USD");
+                .waitForCorrectCurrency(Constants.usdCurrencyCode);
 
         usdGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total");
 
         assemblyDetailsReport.clickOptionsButton()
-                .checkCurrencySelected("GBP")
+                .checkCurrencySelected(Constants.gbpCurrencyCode)
                 .clickApplyAndOk()
-                .waitForCorrectCurrency("GBP");
+                .waitForCorrectCurrency(Constants.gbpCurrencyCode);
 
         gbpGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total");
 
-        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo("GBP")));
+        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(Constants.gbpCurrencyCode)));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
         assertThat(gbpGrandTotal, is(lessThan(usdGrandTotal)));
     }
@@ -133,26 +135,26 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForPageLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
-                .checkCurrencySelected("USD")
+                .checkCurrencySelected(Constants.usdCurrencyCode)
                 .clickApplyAndOk()
-                .waitForCorrectCurrency("USD");
+                .waitForCorrectCurrency(Constants.usdCurrencyCode);
 
         assemblyDetailsReport.clickOptionsButton()
-                .checkCurrencySelected("GBP")
+                .checkCurrencySelected(Constants.gbpCurrencyCode)
                 .clickApplyAndOk()
-                .waitForCorrectCurrency("GBP");
+                .waitForCorrectCurrency(Constants.gbpCurrencyCode);
 
         gbpGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total");
-        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo("GBP")));
+        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(Constants.gbpCurrencyCode)));
 
         assemblyDetailsReport.clickOptionsButton()
-                .checkCurrencySelected("USD")
+                .checkCurrencySelected(Constants.usdCurrencyCode)
                 .clickApplyAndOk()
-                .waitForCorrectCurrency("USD");
+                .waitForCorrectCurrency(Constants.usdCurrencyCode);
 
         usdGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total");
 
-        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo("USD")));
+        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(Constants.usdCurrencyCode)));
         assertThat(usdGrandTotal, is(not(equalTo(gbpGrandTotal))));
         assertThat(usdGrandTotal, is(greaterThan(gbpGrandTotal)));
     }
@@ -171,9 +173,9 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
                 .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
-                .checkCurrencySelected("GBP")
+                .checkCurrencySelected(Constants.gbpCurrencyCode)
                 .clickApplyAndOk()
-                .waitForCorrectCurrency("GBP");
+                .waitForCorrectCurrency(Constants.gbpCurrencyCode);
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Cycle Time"),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Cycle Time Total"))));
@@ -202,9 +204,9 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-                .checkCurrencySelected("USD")
+                .checkCurrencySelected(Constants.gbpCurrencyCode)
                 .clickApplyAndOk()
-                .waitForCorrectCurrency("USD");
+                .waitForCorrectCurrency(Constants.gbpCurrencyCode);
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Cycle Time"),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Cycle Time Total"))));
@@ -233,9 +235,9 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
                 .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
-                .checkCurrencySelected("USD")
+                .checkCurrencySelected(Constants.usdCurrencyCode)
                 .clickApplyAndOk()
-                .waitForCorrectCurrency("USD");
+                .waitForCorrectCurrency(Constants.usdCurrencyCode);
 
         assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Cycle Time"),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Cycle Time Total"))));
