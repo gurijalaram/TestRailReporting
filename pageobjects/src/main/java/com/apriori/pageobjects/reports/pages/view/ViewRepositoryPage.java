@@ -101,11 +101,11 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     /**
      * Get count of General Reports
-     * @return String
+     * @return Integer
      */
-    public String getCountOfGeneralReports() {
+    public Integer getCountOfGeneralReports() {
         pageUtils.waitForElementToAppear(generalReportsList);
-        return generalReportsList.getAttribute("childElementCount");
+        return Integer.parseInt(generalReportsList.getAttribute("childElementCount"));
     }
 
     /**
