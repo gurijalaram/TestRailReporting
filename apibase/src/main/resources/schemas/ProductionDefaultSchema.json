@@ -4,36 +4,77 @@
   "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
-  "required": [
-    "pg",
-    "annualVolume",
-    "useVpeForAllProcesses",
-    "defaults",
-    "batchSizeMode"
-  ],
   "properties": {
     "pg": {
       "$id": "#/properties/pg",
-      "type": "string",
+      "type": ["string", "null"],
       "title": "The Pg Schema",
       "default": "",
       "examples": [
-        "Bar & Tube Fab"
+        "Additive Manufacturing"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "vpe": {
+      "$id": "#/properties/vpe",
+      "type": ["string", "null"],
+      "title": "The Vpe Schema",
+      "default": "",
+      "examples": [
+        "aPriori Eastern Europe"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "material": {
+      "$id": "#/properties/material",
+      "type": ["string","null"],
+      "title": "The Material Schema",
+      "default": "",
+      "examples": [
+        "Accura 40"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "materialCatalogName": {
+      "$id": "#/properties/materialCatalogName",
+      "type": ["string","null"],
+      "title": "The Materialcatalogname Schema",
+      "default": "",
+      "examples": [
+        "aPriori Brazil"
       ],
       "pattern": "^(.*)$"
     },
     "annualVolume": {
       "$id": "#/properties/annualVolume",
-      "type": "integer",
+      "type": ["number","null"],
       "title": "The Annualvolume Schema",
       "default": 0,
       "examples": [
         1
       ]
     },
+    "productionLife": {
+      "$id": "#/properties/productionLife",
+      "type": ["number","null"],
+      "title": "The Productionlife Schema",
+      "default": 0,
+      "examples": [
+        1
+      ]
+    },
+    "batchSize": {
+      "$id": "#/properties/batchSize",
+      "type": ["number","null"],
+      "title": "The Batchsize Schema",
+      "default": 0,
+      "examples": [
+        2
+      ]
+    },
     "useVpeForAllProcesses": {
       "$id": "#/properties/useVpeForAllProcesses",
-      "type": "boolean",
+      "type": ["boolean","null"],
       "title": "The Usevpeforallprocesses Schema",
       "default": false,
       "examples": [
@@ -47,7 +88,6 @@
       "required": [
         "prod.info.default.material",
         "prod.info.default.annual.volume",
-        "prod.info.default.use.vpe.for.all.processes",
         "prod.info.default.material.catalog.name",
         "prod.info.default.production.life",
         "prod.info.default.batch.size",
@@ -57,16 +97,17 @@
       "properties": {
         "prod.info.default.material": {
           "$id": "#/properties/defaults/properties/prod.info.default.material",
-          "type": ["null","string"],
+          "type": ["string", "null"],
           "title": "The Prod.info.default.material Schema",
-          "default": null,
+          "default": "",
           "examples": [
-            null
-          ]
+            "Accura 40"
+          ],
+          "pattern": "^(.*)$"
         },
         "prod.info.default.annual.volume": {
           "$id": "#/properties/defaults/properties/prod.info.default.annual.volume",
-          "type": ["null", "number"],
+          "type": ["number", "null"],
           "title": "The Prod.info.default.annual.volume Schema",
           "default": "",
           "examples": [
@@ -76,7 +117,7 @@
         },
         "prod.info.default.use.vpe.for.all.processes": {
           "$id": "#/properties/defaults/properties/prod.info.default.use.vpe.for.all.processes",
-          "type": ["null","string"],
+          "type": ["string", "null"],
           "title": "The Prod.info.default.use.vpe.for.all.processes Schema",
           "default": "",
           "examples": [
@@ -86,59 +127,63 @@
         },
         "prod.info.default.material.catalog.name": {
           "$id": "#/properties/defaults/properties/prod.info.default.material.catalog.name",
-          "type": ["null", "string"],
+          "type": ["string", "null"],
           "title": "The Prod.info.default.material.catalog.name Schema",
-          "default": null,
+          "default": "",
           "examples": [
-            null
-          ]
+            "aPriori Brazil"
+          ],
+          "pattern": "^(.*)$"
         },
         "prod.info.default.production.life": {
           "$id": "#/properties/defaults/properties/prod.info.default.production.life",
-          "type": ["null", "number"],
+          "type": ["number", "null"],
           "title": "The Prod.info.default.production.life Schema",
-          "default": null,
+          "default": "",
           "examples": [
-            null
-          ]
+            "1.0"
+          ],
+          "pattern": "^(.*)$"
         },
         "prod.info.default.batch.size": {
           "$id": "#/properties/defaults/properties/prod.info.default.batch.size",
-          "type": ["null","number"],
+          "type": ["number", "null"],
           "title": "The Prod.info.default.batch.size Schema",
-          "default": null,
+          "default": "",
           "examples": [
-            null
-          ]
+            "2"
+          ],
+          "pattern": "^(.*)$"
         },
         "prod.info.default.pg": {
           "$id": "#/properties/defaults/properties/prod.info.default.pg",
-          "type": ["null","string"],
+          "type": ["string", "null"],
           "title": "The Prod.info.default.pg Schema",
           "default": "",
           "examples": [
-            "Bar & Tube Fab"
+            "Additive Manufacturing"
           ],
           "pattern": "^(.*)$"
         },
         "prod.info.default.vpe": {
           "$id": "#/properties/defaults/properties/prod.info.default.vpe",
-          "type": ["null", "string"],
+          "type": ["string", "null"],
           "title": "The Prod.info.default.vpe Schema",
-          "default": null,
+          "default": "",
           "examples": [
-            null
-          ]
+            "aPriori Eastern Europe"
+          ],
+          "pattern": "^(.*)$"
         }
       }
     },
     "batchSizeMode": {
       "$id": "#/properties/batchSizeMode",
-      "type": "boolean",
+      "type": ["boolean", "null"],
       "title": "The Batchsizemode Schema",
       "default": false,
       "examples": [
-        true
+        false
       ]
     }
   }
