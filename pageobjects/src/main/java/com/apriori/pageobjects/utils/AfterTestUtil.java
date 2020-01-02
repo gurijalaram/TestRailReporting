@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.utils;
 
 import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
-import com.apriori.apibase.http.builder.common.response.common.DisplayPreferencesEntity;
+import com.apriori.apibase.http.builder.common.response.common.SelectionEntity;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
@@ -176,13 +176,25 @@ public class AfterTestUtil {
 //            .connect()
 //            .get();
 
+//        new HTTPRequest()
+//            .unauthorized()
+//            .customizeRequest()
+//            .setHeaders(initAuthorizationHeader())
+//            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
+//            .setAutoLogin(false)
+//            .setBody(new DisplayPreferencesEntity().setSystemUnits(false))
+//            .commitChanges()
+//            .connect()
+//            .post();
+
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
             .setHeaders(initAuthorizationHeader())
-            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=selectionColor")
             .setAutoLogin(false)
-            .setBody(new DisplayPreferencesEntity().setSystemUnits(false))
+            .setBody(new SelectionEntity().setColour("#669900"))
+            //.setReturnType(SelectionEntity.class)
             .commitChanges()
             .connect()
             .post();

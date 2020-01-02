@@ -31,7 +31,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -46,9 +45,9 @@ public class SettingsTests extends TestBase {
     private SelectionSettingsPage selectionSettingsPage;
     private WarningPage warningPage;
 
-    @After
+    @Test
     public void resetAllSettings() {
-        new AfterTestUtil(driver).resetAllSettings();
+        new AfterTestUtil(driver).quickAPI();
     }
 
     @Category(CustomerSmokeTests.class)

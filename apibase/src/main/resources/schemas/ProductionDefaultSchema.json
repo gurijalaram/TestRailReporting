@@ -1,0 +1,145 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "pg",
+    "annualVolume",
+    "useVpeForAllProcesses",
+    "defaults",
+    "batchSizeMode"
+  ],
+  "properties": {
+    "pg": {
+      "$id": "#/properties/pg",
+      "type": "string",
+      "title": "The Pg Schema",
+      "default": "",
+      "examples": [
+        "Bar & Tube Fab"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "annualVolume": {
+      "$id": "#/properties/annualVolume",
+      "type": "integer",
+      "title": "The Annualvolume Schema",
+      "default": 0,
+      "examples": [
+        1
+      ]
+    },
+    "useVpeForAllProcesses": {
+      "$id": "#/properties/useVpeForAllProcesses",
+      "type": "boolean",
+      "title": "The Usevpeforallprocesses Schema",
+      "default": false,
+      "examples": [
+        true
+      ]
+    },
+    "defaults": {
+      "$id": "#/properties/defaults",
+      "type": "object",
+      "title": "The Defaults Schema",
+      "required": [
+        "prod.info.default.material",
+        "prod.info.default.annual.volume",
+        "prod.info.default.use.vpe.for.all.processes",
+        "prod.info.default.material.catalog.name",
+        "prod.info.default.production.life",
+        "prod.info.default.batch.size",
+        "prod.info.default.pg",
+        "prod.info.default.vpe"
+      ],
+      "properties": {
+        "prod.info.default.material": {
+          "$id": "#/properties/defaults/properties/prod.info.default.material",
+          "type": "null",
+          "title": "The Prod.info.default.material Schema",
+          "default": null,
+          "examples": [
+            null
+          ]
+        },
+        "prod.info.default.annual.volume": {
+          "$id": "#/properties/defaults/properties/prod.info.default.annual.volume",
+          "type": "string",
+          "title": "The Prod.info.default.annual.volume Schema",
+          "default": "",
+          "examples": [
+            "1"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "prod.info.default.use.vpe.for.all.processes": {
+          "$id": "#/properties/defaults/properties/prod.info.default.use.vpe.for.all.processes",
+          "type": "string",
+          "title": "The Prod.info.default.use.vpe.for.all.processes Schema",
+          "default": "",
+          "examples": [
+            "true"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "prod.info.default.material.catalog.name": {
+          "$id": "#/properties/defaults/properties/prod.info.default.material.catalog.name",
+          "type": "null",
+          "title": "The Prod.info.default.material.catalog.name Schema",
+          "default": null,
+          "examples": [
+            null
+          ]
+        },
+        "prod.info.default.production.life": {
+          "$id": "#/properties/defaults/properties/prod.info.default.production.life",
+          "type": "null",
+          "title": "The Prod.info.default.production.life Schema",
+          "default": null,
+          "examples": [
+            null
+          ]
+        },
+        "prod.info.default.batch.size": {
+          "$id": "#/properties/defaults/properties/prod.info.default.batch.size",
+          "type": "null",
+          "title": "The Prod.info.default.batch.size Schema",
+          "default": null,
+          "examples": [
+            null
+          ]
+        },
+        "prod.info.default.pg": {
+          "$id": "#/properties/defaults/properties/prod.info.default.pg",
+          "type": "string",
+          "title": "The Prod.info.default.pg Schema",
+          "default": "",
+          "examples": [
+            "Bar & Tube Fab"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "prod.info.default.vpe": {
+          "$id": "#/properties/defaults/properties/prod.info.default.vpe",
+          "type": "null",
+          "title": "The Prod.info.default.vpe Schema",
+          "default": null,
+          "examples": [
+            null
+          ]
+        }
+      }
+    },
+    "batchSizeMode": {
+      "$id": "#/properties/batchSizeMode",
+      "type": "boolean",
+      "title": "The Batchsizemode Schema",
+      "default": false,
+      "examples": [
+        true
+      ]
+    }
+  }
+}
