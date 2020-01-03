@@ -35,7 +35,7 @@ public class ProductionDefaultEntity {
     private String defaults;
 
     @JsonProperty
-    private boolean batchSizeMode;
+    private Boolean batchSizeMode;
 
     public String getPg() {
         return pg;
@@ -118,11 +118,11 @@ public class ProductionDefaultEntity {
         return this;
     }
 
-    public boolean isBatchSizeMode() {
+    public Boolean isBatchSizeMode() {
         return batchSizeMode;
     }
 
-    public ProductionDefaultEntity setBatchSizeMode(boolean batchSizeMode) {
+    public ProductionDefaultEntity setBatchSizeMode(Boolean batchSizeMode) {
         this.batchSizeMode = batchSizeMode;
         return this;
     }
