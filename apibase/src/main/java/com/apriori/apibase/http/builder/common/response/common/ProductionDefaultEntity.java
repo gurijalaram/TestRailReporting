@@ -8,6 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ProductionDefaultEntity {
 
     @JsonProperty
+    private Object propertyValueMap;
+
+    @JsonProperty
+    private Object propertyInfoMap;
+
+    @JsonProperty
     private String pg;
 
     @JsonProperty
