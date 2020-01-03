@@ -48,9 +48,4 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
     public String getReportName(String reportName) {
         return pageUtils.getReportNameText(reportName);
     }
-
-    public GenericReportPage waitForPageLoad() {
-        pageUtils.waitForElementToAppear(allAvailableFilterButton);
-        return new GenericReportPage(driver);
-    }
 }
