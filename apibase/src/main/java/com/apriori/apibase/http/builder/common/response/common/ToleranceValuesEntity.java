@@ -32,7 +32,7 @@ public class ToleranceValuesEntity {
     private Double minCadToleranceThreshhold;
 
     @JsonProperty
-    private Double toleranceMode;
+    private String toleranceMode;
 
     @JsonProperty
     private Double bendAngleToleranceOverride;
@@ -130,11 +130,11 @@ public class ToleranceValuesEntity {
         return this;
     }
 
-    public Double getToleranceMode() {
+    public String getToleranceMode() {
         return toleranceMode;
     }
 
-    public ToleranceValuesEntity setToleranceMode(Double toleranceMode) {
+    public ToleranceValuesEntity setToleranceMode(String toleranceMode) {
         this.toleranceMode = toleranceMode;
         return this;
     }
