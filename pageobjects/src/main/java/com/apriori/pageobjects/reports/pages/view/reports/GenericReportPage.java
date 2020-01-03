@@ -89,6 +89,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
 
+
     public GenericReportPage(WebDriver driver) {
         super(driver);
         this.driver = driver;

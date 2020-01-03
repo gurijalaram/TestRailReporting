@@ -164,7 +164,8 @@ public class PageUtils {
         }
     }
 
-    public boolean isPageLoaded() {
+    public boolean isPageLoaded(WebElement element) {
+        waitForElementToAppear(element);
         return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
     }
 
