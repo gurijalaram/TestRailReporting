@@ -22,14 +22,23 @@ public class LoginPage extends ReportsPageHeader {
     @FindBy(css = "input[name='email']")
     private WebElement email;
 
+    @FindBy(id = "j_username")
+    private WebElement localEmailInput;
+
     @FindBy(css = "input[name='password']")
     private WebElement password;
+
+    @FindBy(id = "j_password_pseudo")
+    private WebElement localPasswordInput;
 
     @FindBy(css = "a[href='javascript:void(0)']")
     private WebElement forgotPassword;
 
     @FindBy(css = "button[type='submit'")
     private WebElement submitButton;
+
+    @FindBy(id = "submitButton")
+    private WebElement submitLocalButton;
 
     @FindBy(css = "span[class='animated fadeInUp']")
     private WebElement loginMsg;
@@ -87,6 +96,16 @@ public class LoginPage extends ReportsPageHeader {
     }
 
     /**
+     *
+     * @param emailAddress
+     */
+    private void enterLocalEmail(String emailAddress) {
+        pageUtils.waitForElementToAppear(localEmailInput);
+        pageUtils.clearInput(localEmailInput);
+        localEmailInput.sendKeys(emailAddress);
+    }
+
+    /**
      * Enter email details
      *
      * @param emailAddress - user email address
@@ -96,6 +115,16 @@ public class LoginPage extends ReportsPageHeader {
         email.click();
         pageUtils.clearInput(email);
         email.sendKeys(emailAddress);
+    }
+
+    /**
+     *
+     * @param password
+     */
+    private void enterLocalPassword(String password) {
+        pageUtils.waitForElementToAppear(localPasswordInput);
+        pageUtils.clearInput(localPasswordInput);
+        localPasswordInput.sendKeys(password);
     }
 
     /**
@@ -114,7 +143,7 @@ public class LoginPage extends ReportsPageHeader {
      * Single action to submit login credentials
      */
     private void submitLogin() {
-        submitButton.click();
+        submitLocalButton.click();
     }
 
     /**
@@ -124,8 +153,8 @@ public class LoginPage extends ReportsPageHeader {
      * @param password - user password
      */
     private void executeLogin(String email, String password) {
-        enterEmail(email);
-        enterPassword(password);
+        enterLocalEmail(email);
+        enterLocalPassword(password);
         submitLogin();
     }
 
@@ -149,7 +178,7 @@ public class LoginPage extends ReportsPageHeader {
      * @return new page object
      */
     public HomePage login(UserCredentials userCredentials) {
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin("jasperadmin", "jasperadmin");
         return new HomePage(driver);
     }
 

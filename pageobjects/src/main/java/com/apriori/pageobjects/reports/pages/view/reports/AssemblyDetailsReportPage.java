@@ -224,9 +224,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         subAssemblyRowMap.put("4 Sub Assembly", String.format(genericTrSelector, "15"));
         subAssemblyRowMap.put("5 Sub Assembly", String.format(genericTrSelector, "17"));
         subAssemblyRowMap.put("6 Sub Assembly", String.format(genericTrSelector, "19"));
-        subAssemblyRowMap.put("Component Subtotal Sub Assembly", String.format(genericTrSelector, "23"));
-        subAssemblyRowMap.put("Assembly Processes Sub Assembly", String.format(genericTrSelector, "26"));
-        subAssemblyRowMap.put("Grand Total Sub Assembly", String.format(genericTrSelector, "28"));
+        subAssemblyRowMap.put("Component Subtotal Sub Assembly", String.format(genericTrSelector, "22"));
+        subAssemblyRowMap.put("Assembly Processes Sub Assembly", String.format(genericTrSelector, "25"));
+        subAssemblyRowMap.put("Grand Total Sub Assembly", String.format(genericTrSelector, "27"));
     }
 
     /**
