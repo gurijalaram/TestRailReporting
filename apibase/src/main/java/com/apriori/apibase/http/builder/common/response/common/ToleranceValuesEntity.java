@@ -94,11 +94,11 @@ public class ToleranceValuesEntity {
         return this;
     }
 
-    public Double getSymmetryOerride() {
+    public Double getSymmetryOverride() {
         return symmetryOverride;
     }
 
-    public ToleranceValuesEntity setSymmetryOerride(Double symmetryOverride) {
+    public ToleranceValuesEntity setSymmetryOverride(Double symmetryOverride) {
         this.symmetryOverride = symmetryOverride;
         return this;
     }
