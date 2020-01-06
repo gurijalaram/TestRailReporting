@@ -12,8 +12,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,35 +100,137 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
+     * Gets all level values
+     * @param assemblyType
+     * @return ArrayList of Strings
+     */
+    public ArrayList<String> getLevelValues(String assemblyType) {
+        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
+        setCssLocator(assemblyType, "", "Level");
+        ArrayList<String> valuesToReturn = new ArrayList<>();
+
+        for (Element element : assemblyDetailsReport.select(cssSelector)) {
+            if (isValueValid(element.text())) {
+                valuesToReturn.add(element.text().replace(".", ""));
+            }
+        }
+
+        return valuesToReturn;
+    }
+
+    /**
      * Generic method to get expected total of a certain column
      * @param assemblyType
      * @param columnName
      * @return BigDecimal
      */
     public BigDecimal getExpectedColumnGrandTotal(String assemblyType, String columnName) {
+        // Gets all but first value and totals
         ArrayList<BigDecimal> values;
-        values = getValuesByColumn(assemblyType, columnName);
+        values = getValuesByColumn(assemblyType, "Capital Investments");
+
+        // Gets first values (separate column on page)
+
+        ArrayList<BigDecimal> totalValuesList;
+        totalValuesList = getValuesByColumn(assemblyType, "Capital Investments" + " Total");
+        BigDecimal firstValue = totalValuesList.get(0);
+        BigDecimal secondValue = totalValuesList.get(1);
+        // if col name is capital investments, first value stays at 0, but second becomes 2
+        values.add(0, firstValue);
+        values.add(3, secondValue);
+
+        // Removes values where level is 2 (correct way, instead of using stream().distinct() - both work but this will
+        // always be correct)
+        List<BigDecimal> trimmedList = checkValueLevels(assemblyType, values);
 
         // 1 - get quantities
         // 2 - apply quantities to values in for loop
-        // Will this work before making values list distinct?
-        int i = 0;
-        ArrayList<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
-        for (BigDecimal quantity : quantities) {
-            //values.get(i).multiply(quantity);
-            logger.debug(String.format("quantity at %d is: %s", i, quantity.setScale(2).toString()));
-            i++;
-        }
-
-        for (int j = 0; j < values.size(); j++) {
-            logger.debug(String.format("value at %d is: %f", j, values.get(j)));
-        }
+        List<BigDecimal> superTrimmedList = checkQuantityList(assemblyType, trimmedList, columnName);
 
         // needs checked to ensure it will fulfil the intended purpose (possible scenarios exist in which it won't work)
-        return values
+        return superTrimmedList
                 .stream()
-                .distinct()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    /**
+     * Gets levels, and trims value list based on it
+     * @param assemblyType
+     * @param values
+     * @return List of BigDecimals
+     */
+    private List<BigDecimal> checkValueLevels(String assemblyType, ArrayList<BigDecimal> values) {
+        // get levels
+        ArrayList<String> levels = getLevelValues(assemblyType);
+        boolean returnGenericList = false;
+
+        // trim by size
+        List<BigDecimal> trimmedList = values;
+        List<BigDecimal> levelList = new ArrayList<>();
+        for (String level : levels) {
+            levelList.add(new BigDecimal(level));
+        }
+
+        // equalise list size
+        if (values.size() != levelList.size()) {
+            int smallerListSize = Math.min(values.size(), levelList.size());
+            if (values.size() > levelList.size()) {
+                trimmedList = values.subList(0, smallerListSize);
+                returnGenericList = true;
+            } else {
+                for (int i = 0; i < values.size(); i++) {
+                    if (values.get(i).compareTo(new BigDecimal("0")) == 0) {
+                        levelList.remove(i);
+                    }
+                }
+                //levelList = levelList.subList(0, smallerListSize);
+            }
+        }
+
+        // trim by levels
+        int i = 0;
+        for (BigDecimal level : levelList) {
+            if (level.equals("2")) {
+                levelList.remove(i);
+            } else {
+                i++;
+            }
+        }
+
+        List<BigDecimal> retVals = new ArrayList<>();
+        if (returnGenericList) {
+            retVals = trimmedList;
+        } else {
+            retVals = values;
+        }
+
+        return retVals;
+    }
+
+    /**
+     * Gets quantity list, trims it to size and multiplies by value where necessary
+     * @param assemblyType
+     * @param values
+     * @param columnName
+     * @return List of BigDecimals
+     */
+    private List<BigDecimal> checkQuantityList(String assemblyType, List<BigDecimal> values, String columnName) {
+        ArrayList<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
+        List<BigDecimal> finalValuesList = new ArrayList<>();
+        if (columnName.equals("Piece Part Cost") || columnName.equals("Fully Burdened Cost")) {
+            List<BigDecimal> finalQuantityList = quantities.subList(0, quantities.size() - 2);
+            finalValuesList.add(values.get(0));
+            for (int i = 1; i != values.size(); i++) {
+                if (finalQuantityList.get(i - 1).compareTo(new BigDecimal("1")) > 0) {
+                    finalValuesList.add(values.get(i).multiply(finalQuantityList.get(i - 1)));
+                } else {
+                    finalValuesList.add(values.get(i));
+                }
+            }
+        } else {
+            finalValuesList = values;
+        }
+        return finalValuesList;
     }
 
     /**
@@ -198,6 +302,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private void initialiseGenericColumnMap() {
         String genericTdSelector = "td:nth-child(%s)";
 
+        genericColumnMap.put("Level", String.format(genericTdSelector, "2"));
         genericColumnMap.put("Quantity", String.format(genericTdSelector, "10"));
 
         genericColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));

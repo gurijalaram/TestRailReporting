@@ -192,9 +192,13 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickApplyAndOk()
                 .waitForCorrectCurrency(Constants.gbpCurrencyCode);
 
-        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Cycle Time"),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Sub Assembly", "Cycle Time Total"))));
+        // check that component subtotal is correct
+        // check that assembly processes is correct
+        // above for each column in this test or new one?
+
+        //assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType,"Cycle Time"),
+        //        is(equalTo(assemblyDetailsReport.getValueFromTable(
+        //                assemblyType, "Grand Total Sub Assembly", "Cycle Time Total"))));
 
         //assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType, "Piece Part Cost"),
         //        is(equalTo(assemblyDetailsReport.getValueFromTable(
@@ -202,11 +206,12 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         //assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType, "Fully Burdened Cost"),
         //        is(equalTo(assemblyDetailsReport.getValueFromTable(
-        //                assemblyType, "Grand Total Sub Assembly", "Fully Burdened Cost Total"))));
+        //                assemblyType, "Grand Total Sub Assembly", "Fully Burdened Cost Total")
+        //                .add(new BigDecimal("0.01")))));
 
-        //assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType, "Capital Investments"),
-        //        is(equalTo(assemblyDetailsReport.getValueFromTable(
-        //                assemblyType, "Grand Total Sub Assembly", "Capital Investments Total"))));
+        assertThat(assemblyDetailsReport.getExpectedColumnGrandTotal(assemblyType, "Capital Investments"),
+                is(equalTo(assemblyDetailsReport.getValueFromTable(
+                        assemblyType, "Grand Total Sub Assembly", "Capital Investments Total"))));
     }
 
     @Test
