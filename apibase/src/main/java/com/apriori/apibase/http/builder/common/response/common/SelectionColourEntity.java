@@ -4,8 +4,8 @@ import com.apriori.apibase.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "SelectionSchema.json")
-public class SelectionEntity {
+@Schema(location = "SelectionColourSchema.json")
+public class SelectionColourEntity {
 
     @JsonProperty
     private String colour;
@@ -17,7 +17,7 @@ public class SelectionEntity {
         return colour;
     }
 
-    public SelectionEntity setColour(String colour) {
+    public SelectionColourEntity setColour(String colour) {
         this.colour = colour;
         return this;
     }
