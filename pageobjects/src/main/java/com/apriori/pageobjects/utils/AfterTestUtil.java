@@ -33,14 +33,6 @@ public class AfterTestUtil {
         this.driver = driver;
     }
 
-    public void resetToleranceSettings() {
-
-    }
-
-    public void resetDisplayPreferences() {
-
-    }
-
     public void resetAllSettings() {
         resetProductionDefaults();
         resetToleranceValues();
