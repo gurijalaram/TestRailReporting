@@ -256,6 +256,6 @@ public class DTCPlasticMouldingTests extends TestBase {
         investigationPage.selectInvestigationTopic("Special Mold Tooling");
 
         assertThat(investigationPage.getInvestigationCell("Threading Mechanisms", "GCD Count"), is(equalTo("8")));
-        assertThat(investigationPage.getInvestigationCell("Ribs", "GCD Count"), is(equalTo("3")));
+        assertThat(investigationPage.getInvestigationCell("Ribs", "GCD Count"), is(equalTo("1")));
     }
 }
