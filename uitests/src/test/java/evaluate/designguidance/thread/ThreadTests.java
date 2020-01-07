@@ -41,7 +41,7 @@ public class ThreadTests extends TestBase {
 
     @After
     public void resetDisplayPreferences() {
-        new AfterTestUtil(driver).resetDisplayPreferences();
+        new AfterTestUtil(driver).resetDisplayPreferencesUI();
     }
 
     @Test
