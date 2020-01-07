@@ -12,14 +12,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class AssemblyDetailsReportPage extends GenericReportPage {
 
@@ -99,23 +96,71 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return valuesToReturn;
     }
 
+    public ArrayList<BigDecimal> getEmptyQuantities(String assemblyType, String columnName) {
+        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
+        setCssLocator(assemblyType, "", columnName);
+        ArrayList<BigDecimal> valuesToReturn = new ArrayList<>();
+
+        for (Element element : assemblyDetailsReport.select(cssSelector)) {
+            valuesToReturn.add(new BigDecimal("0.00"));
+        }
+
+        return valuesToReturn;
+    }
+
     /**
      * Gets all level values
      * @param assemblyType
-     * @return ArrayList of Strings
+     * @return ArrayList of BigDecimals
      */
-    public ArrayList<String> getLevelValues(String assemblyType) {
+    public ArrayList<BigDecimal> getLevelValues(String assemblyType) {
         Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
         setCssLocator(assemblyType, "", "Level");
-        ArrayList<String> valuesToReturn = new ArrayList<>();
+        ArrayList<BigDecimal> valuesToReturn = new ArrayList<>();
 
         for (Element element : assemblyDetailsReport.select(cssSelector)) {
             if (isValueValid(element.text())) {
-                valuesToReturn.add(element.text().replace(".", ""));
+                valuesToReturn.add(new BigDecimal(element.text().replace(".", "")));
             }
         }
 
         return valuesToReturn;
+    }
+
+    /**
+     * Gets all part numbers
+     * @param assemblyType
+     * @return List of Strings
+     */
+    private List<String> checkPartNumber(String assemblyType) {
+        Document assemblyDetailsReport = Jsoup.parse(driver.getPageSource());
+        setCssLocator(assemblyType, "", "Part Number Main");
+        List<String> mainPartNums = new ArrayList<>();
+        ArrayList<String> secondaryPartNums = new ArrayList<>();
+
+        for (Element element : assemblyDetailsReport.select(cssSelector)) {
+            if (!element.text().isEmpty() && !element.text().equals("Part Number") && !element.text().equals("GRAND TOTAL") && !element.text().equals("Assembly Processes")) {
+                mainPartNums.add(element.text());
+            }
+        }
+        //mainPartNums = mainPartNums.stream().distinct().collect(Collectors.toList());
+
+        for (int i = 0; i < mainPartNums.size(); i++) {
+            mainPartNums.remove(i);
+        }
+
+        setCssLocator(assemblyType, "", "Part Number Secondary");
+        for (Element element : assemblyDetailsReport.select(cssSelector)) {
+            if (element.text().chars().noneMatch(Character::isDigit) &&
+                element.text().equals("Assembly Process")) {
+                secondaryPartNums.add(element.text());
+            }
+        }
+
+        mainPartNums.add(0, secondaryPartNums.get(0));
+        mainPartNums.add(7, secondaryPartNums.get(1));
+
+        return mainPartNums;
     }
 
     /**
@@ -137,74 +182,50 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         BigDecimal secondValue = totalValuesList.get(1);
         // if col name is capital investments, first value stays at 0, but second becomes 2
         values.add(0, firstValue);
-        values.add(3, secondValue);
+        values.add(7, secondValue);
 
         // Removes values where level is 2 (correct way, instead of using stream().distinct() - both work but this will
         // always be correct)
-        List<BigDecimal> trimmedList = checkValueLevels(assemblyType, values);
-
-        // 1 - get quantities
-        // 2 - apply quantities to values in for loop
-        List<BigDecimal> superTrimmedList = checkQuantityList(assemblyType, trimmedList, columnName);
+        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
+        List<BigDecimal> trimmedValueList = checkValues(assemblyType, levels, values);
+        List<BigDecimal> trimmedList = checkQuantityList(assemblyType, levels, columnName);
 
         // needs checked to ensure it will fulfil the intended purpose (possible scenarios exist in which it won't work)
-        return superTrimmedList
+        return trimmedValueList
                 .stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    /**
-     * Gets levels, and trims value list based on it
-     * @param assemblyType
-     * @param values
-     * @return List of BigDecimals
-     */
-    private List<BigDecimal> checkValueLevels(String assemblyType, ArrayList<BigDecimal> values) {
-        // get levels
-        ArrayList<String> levels = getLevelValues(assemblyType);
-        boolean returnGenericList = false;
+    private List<BigDecimal> checkValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+        List<String> partNums = checkPartNumber(assemblyType);
 
-        // trim by size
-        List<BigDecimal> trimmedList = values;
-        List<BigDecimal> levelList = new ArrayList<>();
-        for (String level : levels) {
-            levelList.add(new BigDecimal(level));
-        }
+        List<BigDecimal> trimmedValues = new ArrayList<>();
+        List<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
+        List<BigDecimal> quantitiesEmpty = getEmptyQuantities(assemblyType,"Quantity Empty");
+        quantities.add(0, quantitiesEmpty.get(0));
+        quantities.add(7, quantitiesEmpty.get(1));
 
-        // equalise list size
-        if (values.size() != levelList.size()) {
-            int smallerListSize = Math.min(values.size(), levelList.size());
-            if (values.size() > levelList.size()) {
-                trimmedList = values.subList(0, smallerListSize);
-                returnGenericList = true;
-            } else {
-                for (int i = 0; i < values.size(); i++) {
-                    if (values.get(i).compareTo(new BigDecimal("0")) == 0) {
-                        levelList.remove(i);
-                    }
+        List<String> partNums2 = new ArrayList<>();
+        List<BigDecimal> refinedQuantities = new ArrayList<>();
+
+        for (int n = 1; n < values.size(); n++) {
+            if (partNums.get(n - 1).equals("Assembly Process") || partNums.get(n - 1).equals("SUB-SUB-ASM")) {
+                if (levels.get(n - 1).compareTo(new BigDecimal("1")) == 0 && values.get(n).compareTo(new BigDecimal("0.00")) != 0) {
+                    refinedQuantities.add(quantities.get(n));
                 }
-                //levelList = levelList.subList(0, smallerListSize);
             }
         }
 
-        // trim by levels
-        int i = 0;
-        for (BigDecimal level : levelList) {
-            if (level.equals("2")) {
-                levelList.remove(i);
-            } else {
-                i++;
+        for (int i = 0; i < partNums.size(); i++) {
+            if (partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-SUB-ASM")) {
+                if (levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0) {
+                    partNums2.add(partNums.get(i));
+                    trimmedValues.add(values.get(i));
+                }
             }
         }
 
-        List<BigDecimal> retVals = new ArrayList<>();
-        if (returnGenericList) {
-            retVals = trimmedList;
-        } else {
-            retVals = values;
-        }
-
-        return retVals;
+        return trimmedValues;
     }
 
     /**
@@ -259,10 +280,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private boolean isValueValid(String valueToCheck) {
         boolean returnValue = false;
-        if (!valueToCheck.isEmpty() &&
-                !valueToCheck.equals("null") &&
-                !valueToCheck.equals("0.00") &&
-                valueToCheck.chars().noneMatch(Character::isLetter)) {
+        if (!valueToCheck.isEmpty() && valueToCheck.chars().noneMatch(Character::isLetter)) {
             returnValue = true;
         }
         return returnValue;
@@ -303,7 +321,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         String genericTdSelector = "td:nth-child(%s)";
 
         genericColumnMap.put("Level", String.format(genericTdSelector, "2"));
+        genericColumnMap.put("Part Number Main", String.format(genericTdSelector, "5"));
+        genericColumnMap.put("Part Number Secondary", String.format(genericTdSelector, "6"));
         genericColumnMap.put("Quantity", String.format(genericTdSelector, "10"));
+        genericColumnMap.put("Quantity Empty", String.format(genericTdSelector, "11"));
 
         genericColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
         genericColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
