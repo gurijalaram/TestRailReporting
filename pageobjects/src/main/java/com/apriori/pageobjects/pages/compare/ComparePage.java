@@ -96,7 +96,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     /**
-     * Checks if the comparison is locked
+     * Checks if the comparison is unlocked
      * @param text - the text
      * @return true/false
      */
