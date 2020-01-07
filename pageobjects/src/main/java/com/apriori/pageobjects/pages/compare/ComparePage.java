@@ -33,6 +33,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "[class='locked-status-icon fa fa-lock']")
     private WebElement lockedIcon;
 
+    @FindBy(css = "[class='locked-status-icon fa fa-unlock']")
+    private WebElement unlockedIcon;
+
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -90,5 +93,14 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      */
     public boolean isComparisonLocked(String text) {
         return pageUtils.checkElementAttribute(lockedIcon, "title", text);
+    }
+
+    /**
+     * Checks if the comparison is locked
+     * @param text - the text
+     * @return true/false
+     */
+    public boolean isComparisonUnlocked(String text) {
+        return pageUtils.checkElementAttribute(unlockedIcon, "title", text);
     }
 }
