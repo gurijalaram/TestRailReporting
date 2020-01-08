@@ -256,8 +256,6 @@ public class ConnectionManager<T> {
      * @return JSON POJO object instance of @returnType
      */
     public T get() {
-
-
         return resultOf(
             createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
                 .expect()
@@ -289,7 +287,6 @@ public class ConnectionManager<T> {
      * @return Headers object instance from response
      */
     public Headers getHeader() {
-
         return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
             .expect()
             .statusCode(isOneOf(requestEntity.getStatusCode()))
