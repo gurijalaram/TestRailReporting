@@ -280,6 +280,7 @@ public class ActionsTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"543"})
     @Description("Validate User can edit notes to a scenario")
+    @Issue("AP-57951")
     public void editNotes() {
 
         String testScenarioName = new Util().getScenarioName();
