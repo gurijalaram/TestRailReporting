@@ -46,7 +46,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @After
     public void resetToleranceSettings() {
-        new AfterTestUtil(driver).resetToleranceSettings();
+        new AfterTestUtil().resetToleranceSettings();
     }
 
     @Test

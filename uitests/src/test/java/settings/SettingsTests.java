@@ -48,7 +48,7 @@ public class SettingsTests extends TestBase {
 
     @After
     public void resetAllSettings() {
-        new AfterTestUtil(driver).resetAllSettings();
+        new AfterTestUtil().resetAllSettings();
     }
 
     @Category(CustomerSmokeTests.class)

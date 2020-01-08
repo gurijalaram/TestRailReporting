@@ -20,12 +20,22 @@ import java.util.HashMap;
 
 public class AfterTestUtil {
 
+    /**
+     * Resets all settings
+     */
     public void resetAllSettings() {
-        resetDisplayPreferences();
+        resetDisplay();
         resetColour();
         resetScenarioName();
         resetProductionDefaults();
         resetToleranceSettings();
+    }
+
+    /**
+     * Resets only display preferences
+     */
+    public void resetDisplayPreferences() {
+        resetDisplay();
     }
 
     /**
@@ -51,7 +61,7 @@ public class AfterTestUtil {
      * Resets the production default settings back to default
      */
     @Issue("AP-57904")
-    private void resetDisplayPreferences() {
+    private void resetDisplay() {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
