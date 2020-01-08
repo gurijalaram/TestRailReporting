@@ -3,20 +3,14 @@ package com.apriori.pageobjects.utils;
 import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.apibase.http.builder.common.response.common.DisplayPreferencesEntity;
 import com.apriori.apibase.http.builder.common.response.common.ProductionDefaultEntity;
-import com.apriori.apibase.http.builder.common.response.common.ScenarioNameEntity;
-import com.apriori.apibase.http.builder.common.response.common.SelectionColourEntity;
 import com.apriori.apibase.http.builder.common.response.common.ToleranceValuesEntity;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Issue;
-import org.openqa.selenium.WebDriver;
 
 import java.util.HashMap;
 
@@ -26,16 +20,10 @@ import java.util.HashMap;
 
 public class AfterTestUtil {
 
-    private WebDriver driver;
-    private ExplorePage explorePage;
-
-    public AfterTestUtil(WebDriver driver) {
-        this.driver = driver;
-    }
-
     public void resetAllSettings() {
         resetDisplayPreferences();
         resetColour();
+        resetScenarioName();
         resetProductionDefaults();
         resetToleranceSettings();
     }
@@ -57,41 +45,6 @@ public class AfterTestUtil {
             .post();
 
         resetToleranceValues();
-    }
-
-    /**
-     * Resets the production default settings back to default
-     */
-    public void resetProductionDefaultsUI() {
-        driver.navigate().to(Constants.cidURL);
-        explorePage = new ExplorePage(driver);
-        explorePage.openSettings()
-            .openProdDefaultTab()
-            .enterScenarioName("Initial");
-    }
-
-    /**
-     * Resets the display preference settings back to default
-     */
-    public void resetDisplayPreferencesUI() {
-        driver.navigate().to(Constants.cidURL);
-        explorePage = new ExplorePage(driver);
-        explorePage.openSettings()
-            .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
-            .changeCurrency(CurrencyEnum.USD.getCurrency());
-        new SettingsPage(driver).save(ExplorePage.class);
-    }
-
-    /**
-     * Resets the selection colour back to default
-     */
-    public void resetSelectionColourUI() {
-        driver.navigate().to(Constants.cidURL);
-        explorePage = new ExplorePage(driver);
-        explorePage.openSettings()
-            .openSelectionTab()
-            .setColour(ColourEnum.YELLOW.getColour());
-        new SettingsPage(driver).save(ExplorePage.class);
     }
 
     /**
@@ -123,7 +76,7 @@ public class AfterTestUtil {
             .setHeaders(initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=selectionColor")
             .setAutoLogin(false)
-            .setBody(new SelectionColourEntity().setColour(ColourEnum.YELLOW.getColour()))
+            .setBody(ColourEnum.YELLOW.getColour())
             .commitChanges()
             .connect()
             .post();
@@ -140,7 +93,7 @@ public class AfterTestUtil {
             .setHeaders(initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=defaultScenarioName")
             .setAutoLogin(false)
-            .setBody(new ScenarioNameEntity().setScenarioName("Initial"))
+            .setBody("Initial")
             .commitChanges()
             .connect()
             .post();

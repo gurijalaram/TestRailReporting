@@ -23,11 +23,9 @@ import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
 import io.restassured.http.Headers;
-import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-
 import org.openqa.selenium.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,7 +116,7 @@ public class ConnectionManager<T> {
         }
 
         if (body != null) {
-            builder.setBody(body, ObjectMapperType.JACKSON_2);
+            builder.setBody(body);
         }
 
         if (multiPartFiles != null) {
