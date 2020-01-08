@@ -71,6 +71,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectTopLevelExportSet() {
+        pageUtils.isPageLoaded(topLevelExportSet);
         pageUtils.waitForElementAndClick(topLevelExportSet);
         return this;
     }

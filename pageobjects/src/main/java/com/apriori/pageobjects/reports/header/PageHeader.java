@@ -350,6 +350,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementToBeClickable(searchInput);
         searchInput.sendKeys(textToType);
         searchButton.click();
+        pageUtils.isPageLoaded(homePageTitle);
         return new HomePage(driver);
     }
 }

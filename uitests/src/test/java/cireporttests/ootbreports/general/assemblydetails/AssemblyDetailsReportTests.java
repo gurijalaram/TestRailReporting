@@ -89,7 +89,6 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-                .waitForPageLoad()
                 .selectTopLevelExportSet()
                 .checkCurrencySelected("USD")
                 .clickApplyAndOk();
