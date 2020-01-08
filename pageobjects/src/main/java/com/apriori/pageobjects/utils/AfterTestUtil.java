@@ -164,14 +164,13 @@ public class AfterTestUtil {
             .post();
     }
 
-    @SuppressWarnings("CheckStyle")
     private HashMap<String, String> initAuthorizationHeader() {
         return new HashMap<String, String>() {{
-            put("Authorization", "Bearer " + authenticateUser(UserUtil.getUser().getUsername(), UserUtil.getUser().getUsername().split("@")[0]));
-            put("apriori.tenantgroup", "default");
-            put("apriori.tenant", "default");
-            put("Content-Type", "application/vnd.apriori.v1+json");
-        }};
+                    put("Authorization", "Bearer " + authenticateUser(UserUtil.getUser().getUsername(), UserUtil.getUser().getUsername().split("@")[0]));
+                    put("apriori.tenantgroup", "default");
+                    put("apriori.tenant", "default");
+                    put("Content-Type", "application/vnd.apriori.v1+json");
+            }};
     }
 
     private String authenticateUser(String username, String password) {
