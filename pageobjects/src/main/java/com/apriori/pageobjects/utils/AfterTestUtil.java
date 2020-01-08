@@ -34,7 +34,28 @@ public class AfterTestUtil {
     }
 
     public void resetAllSettings() {
+        resetDisplayPreferences();
+        resetColour();
         resetProductionDefaults();
+        resetToleranceSettings();
+    }
+
+    /**
+     * Resets the Tolerance settings back to default
+     */
+    public void resetToleranceSettings() {
+        new HTTPRequest()
+            .unauthorized()
+            .customizeRequest()
+            .setHeaders(initAuthorizationHeader())
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+            .setAutoLogin(false)
+            .setBody(new ToleranceValuesEntity().setToleranceMode("CAD")
+                .setUseCadToleranceThreshhold(false))
+            .commitChanges()
+            .connect()
+            .post();
+
         resetToleranceValues();
     }
 
@@ -77,7 +98,7 @@ public class AfterTestUtil {
      * Resets the production default settings back to default
      */
     @Issue("AP-57904")
-    private void resetDisplayPreferencesa() {
+    private void resetDisplayPreferences() {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
@@ -135,13 +156,7 @@ public class AfterTestUtil {
             .customizeRequest()
             .setHeaders(initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/production-defaults")
-            .setBody(new ProductionDefaultEntity().setPg(null)
-                .setVpe(null)
-                .setMaterialCatalogName(null)
-                .setMaterial(null)
-                .setAnnualVolume(null)
-                .setProductionLife(null)
-                .setBatchSizeMode(false))
+            .setBody(new ProductionDefaultEntity().setPg("Powder Metal"))
             .commitChanges()
             .connect()
             .post();
@@ -157,9 +172,7 @@ public class AfterTestUtil {
             .setHeaders(initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
             .setAutoLogin(false)
-            .setBody(new ToleranceValuesEntity().setToleranceMode("SYSTEMDEFAULT")
-                .setUseCadToleranceThreshhold(false)
-                .setMinCadToleranceThreshhold(5.55)
+            .setBody(new ToleranceValuesEntity().setMinCadToleranceThreshhold(5.55)
                 .setCadToleranceReplacement(5.55)
                 .setToleranceOverride(null)
                 .setRoughnessOverride(null)
