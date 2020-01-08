@@ -214,7 +214,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getBurdenedCost("1.56"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.61"), is(true));
 
         new EvaluatePage(driver).openProcessDetails()
             .selectRoutingsButton()
@@ -223,7 +223,7 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("1.95"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("2.00"), is(true));
     }
 
     @Test
