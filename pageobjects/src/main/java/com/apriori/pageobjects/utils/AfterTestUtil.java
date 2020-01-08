@@ -24,7 +24,7 @@ public class AfterTestUtil {
      * Resets all settings
      */
     public void resetAllSettings() {
-        resetUnits();
+        resetDisplayUnits();
         resetColour();
         resetScenarioName();
         resetProductionDefaults();
@@ -34,8 +34,8 @@ public class AfterTestUtil {
     /**
      * Resets only display preferences
      */
-    public void resetDisplayPreferences() {
-        resetUnits();
+    public void resetDisplayPreferencesUnits() {
+        resetDisplayUnits();
     }
 
     /**
@@ -61,7 +61,7 @@ public class AfterTestUtil {
      * Resets the production default settings back to default
      */
     @Issue("AP-57904")
-    private void resetUnits() {
+    private void resetDisplayUnits() {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()

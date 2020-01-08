@@ -48,7 +48,7 @@ public class SettingsTests extends TestBase {
 
     @After
     public void resetAllSettings() {
-        new AfterTestUtil().resetAllSettings();
+        new AfterTestUtil().resetDisplayPreferencesUnits();
     }
 
     @Category(CustomerSmokeTests.class)
