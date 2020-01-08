@@ -86,7 +86,7 @@ public class AfterTestUtil {
             .setHeaders(initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=selectionColor")
             .setAutoLogin(false)
-            .setBody(ColourEnum.YELLOW.getColour())
+            .setCustomBody(ColourEnum.YELLOW.getColour())
             .commitChanges()
             .connect()
             .post();
@@ -103,7 +103,7 @@ public class AfterTestUtil {
             .setHeaders(initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=defaultScenarioName")
             .setAutoLogin(false)
-            .setBody("Initial")
+            .setCustomBody("Initial")
             .commitChanges()
             .connect()
             .post();

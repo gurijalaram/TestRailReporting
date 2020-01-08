@@ -23,6 +23,7 @@ import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
 import io.restassured.http.Headers;
+import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
@@ -65,15 +66,21 @@ public class ConnectionManager<T> {
         RestAssured.defaultParser = Parser.JSON;
     }
 
+    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody) {
+        return createRequestSpecification(urlParams, body, customBody, null);
+    }
+
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body) {
+
         return createRequestSpecification(urlParams, body, null);
     }
 
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, MultiPartFiles multiPartFiles) {
-        return createRequestSpecification(urlParams, null, multiPartFiles);
+
+        return createRequestSpecification(urlParams, null, null, multiPartFiles);
     }
 
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, MultiPartFiles multiPartFiles) {
+    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody, MultiPartFiles multiPartFiles) {
         RequestSpecBuilder builder = new RequestSpecBuilder();
 
         if (requestEntity.isAutoLogin()) {
@@ -115,8 +122,12 @@ public class ConnectionManager<T> {
             requestEntity.getXwwwwFormUrlEncoded().forEach(builder::addFormParams);
         }
 
+        if (customBody != null) {
+            builder.setBody(customBody);
+        }
+
         if (body != null) {
-            builder.setBody(body);
+            builder.setBody(body, ObjectMapperType.JACKSON_2);
         }
 
         if (multiPartFiles != null) {
@@ -248,7 +259,7 @@ public class ConnectionManager<T> {
 
 
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
                 .expect()
                 .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
@@ -293,7 +304,7 @@ public class ConnectionManager<T> {
      */
     public T post() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
                 .expect()
                 .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
