@@ -28,6 +28,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private Map<String, String> subSubAsmRowMap = new HashMap<>();
     private Map<String, String> subAssemblyRowMap = new HashMap<>();
 
+    List<BigDecimal> refinedQuantities = new ArrayList<>();
+
     private String genericTrSelector = "tr:nth-child(%s)";
     private String columnSelector;
     private String rowSelector;
@@ -85,12 +87,12 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
         for (Element element : assemblyDetailsReport.select(cssSelector)) {
             if (isValueValid(element.text())) {
-                if (columnName.equals("Cycle Time") && element.text().equals("79,995.28")) {
-                    continue;
-                } else {
-                    valuesToReturn.add(new BigDecimal(element.text().replaceAll(",", "")));
-                }
+                valuesToReturn.add(new BigDecimal(element.text().replaceAll(",", "")));
             }
+        }
+
+        if (columnName.equals("Cycle Time")) {
+            valuesToReturn.remove(valuesToReturn.size() - 1);
         }
 
         return valuesToReturn;
@@ -102,7 +104,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         ArrayList<BigDecimal> valuesToReturn = new ArrayList<>();
 
         for (Element element : assemblyDetailsReport.select(cssSelector)) {
-            valuesToReturn.add(new BigDecimal("0.00"));
+            valuesToReturn.add(new BigDecimal("0"));
         }
 
         return valuesToReturn;
@@ -169,52 +171,128 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @param columnName
      * @return BigDecimal
      */
-    public BigDecimal getExpectedColumnGrandTotal(String assemblyType, String columnName) {
+    private List<BigDecimal> getColumnValuesForSum(String assemblyType, String columnName) {
         // Gets all but first value and totals
         ArrayList<BigDecimal> values;
-        values = getValuesByColumn(assemblyType, "Capital Investments");
+        values = getValuesByColumn(assemblyType, columnName);
 
         // Gets first values (separate column on page)
 
         ArrayList<BigDecimal> totalValuesList;
-        totalValuesList = getValuesByColumn(assemblyType, "Capital Investments" + " Total");
+        totalValuesList = getValuesByColumn(assemblyType, columnName + " Total");
         BigDecimal firstValue = totalValuesList.get(0);
         BigDecimal secondValue = totalValuesList.get(1);
-        // if col name is capital investments, first value stays at 0, but second becomes 2
         values.add(0, firstValue);
         values.add(7, secondValue);
 
-        // Removes values where level is 2 (correct way, instead of using stream().distinct() - both work but this will
-        // always be correct)
-        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> trimmedValueList = checkValues(assemblyType, levels, values);
-        List<BigDecimal> trimmedList = checkQuantityList(assemblyType, levels, columnName);
+        //ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
+        //List<BigDecimal> quantityList = checkQuantityList(assemblyType, levels, values);
+        //List<BigDecimal> trimmedValueList = checkValues(assemblyType, levels, values);
+        //List<BigDecimal> finalValues = applyQuantities(quantityList, trimmedValueList);
 
-        // needs checked to ensure it will fulfil the intended purpose (possible scenarios exist in which it won't work)
+        return values;
+        //        .stream()
+        //        .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    /**
+     * Gets expected Cycle Time grand total
+     * @param assemblyType
+     * @param columnName
+     * @return BigDecimal
+     */
+    public BigDecimal getExpectedCTGrandTotal(String assemblyType, String columnName) {
+        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
+        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
+        List<BigDecimal> trimmedValueList = checkCTValues(assemblyType, levels, allValues);
         return trimmedValueList
                 .stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private List<BigDecimal> checkValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
-        List<String> partNums = checkPartNumber(assemblyType);
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedPPCGrandTotal(String assemblyType, String columnName) {
+        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
+        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
+        List<BigDecimal> quantityList = checkQuantityList(assemblyType, levels, allValues);
+        List<BigDecimal> trimmedValueList = checkPPCValues(assemblyType, levels, allValues, quantityList);
+        List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
+        return finalValues
+                .stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedFBCGrandTotal(String assemblyType, String columnName) {
+        // sum = level 1 assembly process + sub-sub-asm + l2 assembly process
+        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
+        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
+        List<BigDecimal> quantityList = checkQuantityList(assemblyType, levels, allValues);
+        List<BigDecimal> trimmedValueList = checkPPCValues(assemblyType, levels, allValues, quantityList);
+        List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
+        return finalValues
+                .stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getExpectedCIGrandTotal(String assemblyType, String columnName) {
+        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
+        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
+        List<BigDecimal> trimmedValueList = checkCIValues(assemblyType, levels, allValues);
+        return trimmedValueList
+                .stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private List<BigDecimal> checkCTValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+        List<String> partNums = getPartNums(assemblyType);
         List<BigDecimal> trimmedValues = new ArrayList<>();
-        List<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
-        List<BigDecimal> quantitiesEmpty = getEmptyQuantities(assemblyType,"Quantity Empty");
-        quantities.add(0, quantitiesEmpty.get(0));
-        quantities.add(7, quantitiesEmpty.get(1));
-
         List<String> partNums2 = new ArrayList<>();
-        List<BigDecimal> refinedQuantities = new ArrayList<>();
 
-        for (int n = 1; n < values.size(); n++) {
-            if (partNums.get(n - 1).equals("Assembly Process") || partNums.get(n - 1).equals("SUB-SUB-ASM")) {
-                if (levels.get(n - 1).compareTo(new BigDecimal("1")) == 0 && values.get(n).compareTo(new BigDecimal("0.00")) != 0) {
-                    refinedQuantities.add(quantities.get(n));
+        for (int i = 0; i < partNums.size(); i++) {
+            if (partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-SUB-ASM")) {
+                if (values.get(i).compareTo(new BigDecimal("0.00")) != 0) {
+                    partNums2.add(partNums.get(i));
+                    trimmedValues.add(values.get(i));
                 }
             }
         }
+        return trimmedValues;
+    }
+
+    private List<BigDecimal> checkPPCValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values, List<BigDecimal> quantities) {
+        List<String> partNums = getPartNums(assemblyType);
+        List<BigDecimal> trimmedValues = new ArrayList<>();
+        List<String> partNums2 = new ArrayList<>();
+
+        if (!refinedQuantities.isEmpty()) {
+            refinedQuantities.clear();
+        }
+
+        for (int i = 0; i < partNums.size(); i++) {
+            if (levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0) {
+                partNums2.add(partNums.get(i));
+                trimmedValues.add(values.get(i));
+                refinedQuantities.add(quantities.get(i));
+            }
+        }
+        return trimmedValues;
+    }
+
+    private List<BigDecimal> checkCIValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+        List<String> partNums = getPartNums(assemblyType);
+        List<BigDecimal> trimmedValues = new ArrayList<>();
+        List<String> partNums2 = new ArrayList<>();
 
         for (int i = 0; i < partNums.size(); i++) {
             if (partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-SUB-ASM")) {
@@ -224,34 +302,52 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
                 }
             }
         }
-
         return trimmedValues;
+    }
+
+    private List<String> getPartNums(String assemblyType) {
+        return checkPartNumber(assemblyType);
     }
 
     /**
      * Gets quantity list, trims it to size and multiplies by value where necessary
      * @param assemblyType
      * @param values
-     * @param columnName
-     * @return List of BigDecimals
+     * @param levels
+     * @return
      */
-    private List<BigDecimal> checkQuantityList(String assemblyType, List<BigDecimal> values, String columnName) {
-        ArrayList<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
-        List<BigDecimal> finalValuesList = new ArrayList<>();
-        if (columnName.equals("Piece Part Cost") || columnName.equals("Fully Burdened Cost")) {
-            List<BigDecimal> finalQuantityList = quantities.subList(0, quantities.size() - 2);
-            finalValuesList.add(values.get(0));
-            for (int i = 1; i != values.size(); i++) {
-                if (finalQuantityList.get(i - 1).compareTo(new BigDecimal("1")) > 0) {
-                    finalValuesList.add(values.get(i).multiply(finalQuantityList.get(i - 1)));
-                } else {
-                    finalValuesList.add(values.get(i));
-                }
+    private List<BigDecimal> checkQuantityList(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+        List<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
+        List<BigDecimal> quantitiesEmpty = getEmptyQuantities(assemblyType,"Quantity Empty");
+        quantities.add(0, quantitiesEmpty.get(0));
+        quantities.add(7, quantitiesEmpty.get(1));
+
+        //List<BigDecimal> refinedQuantities = new ArrayList<>();
+        //List<String> partNums = getPartNums(assemblyType);
+
+        //for (int n = 0; n < values.size(); n++) {
+        //    if (partNums.get(n).equals("Assembly Process") || partNums.get(n).equals("SUB-SUB-ASM")) {
+        //        if (levels.get(n).compareTo(new BigDecimal("1")) == 0 && values.get(n).compareTo(new BigDecimal("0.00")) != 0) {
+        //            refinedQuantities.add(quantities.get(n));
+        //        }
+        //    }
+        //}
+        return quantities;
+    }
+
+    private List<BigDecimal> applyQuantities(List<BigDecimal> values) {
+        List<BigDecimal> finalValues = new ArrayList<>();
+
+        for (int i = 0; i < refinedQuantities.size(); i++) {
+            if (refinedQuantities.get(i).compareTo(new BigDecimal("0.00")) != 0) {
+                BigDecimal newVal = values.get(i).multiply(refinedQuantities.get(i));
+                finalValues.add(newVal);
+            } else {
+                BigDecimal newVal = values.get(i);
+                finalValues.add(newVal);
             }
-        } else {
-            finalValuesList = values;
         }
-        return finalValuesList;
+        return finalValues;
     }
 
     /**
