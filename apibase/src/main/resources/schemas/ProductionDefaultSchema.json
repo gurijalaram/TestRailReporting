@@ -81,7 +81,6 @@
         true
       ]
     },
-    "defaults": {
       "$id": "#/properties/defaults",
       "type": "object",
       "title": "The Defaults Schema",
@@ -176,7 +175,6 @@
           "pattern": "^(.*)$"
         }
       }
-    },
     "batchSizeMode": {
       "$id": "#/properties/batchSizeMode",
       "type": ["boolean", "null"],

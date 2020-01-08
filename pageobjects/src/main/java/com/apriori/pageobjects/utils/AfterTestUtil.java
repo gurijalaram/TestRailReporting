@@ -156,7 +156,12 @@ public class AfterTestUtil {
             .customizeRequest()
             .setHeaders(initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/production-defaults")
-            .setBody(new ProductionDefaultEntity().setPg("Powder Metal"))
+            .setBody(new ProductionDefaultEntity().setPg(null)
+                .setVpe(null)
+                .setMaterialCatalogName(null)
+                .setAnnualVolume(null)
+                .setProductionLife(null)
+                .setBatchSizeMode(false))
             .commitChanges()
             .connect()
             .post();
