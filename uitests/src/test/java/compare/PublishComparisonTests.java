@@ -84,7 +84,7 @@ public class PublishComparisonTests extends TestBase {
             .checkJobQueueRow("okay")
             .closeJobQueue(ComparePage.class);
 
-        assertThat(comparePage.isComparisonLocked("Locked"), CoreMatchers.is(true));
+        assertThat(comparePage.isComparisonUnlocked("Unlocked"), CoreMatchers.is(true));
     }
 
 
