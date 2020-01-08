@@ -160,7 +160,11 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         }
 
         mainPartNums.add(0, secondaryPartNums.get(0));
-        mainPartNums.add(7, secondaryPartNums.get(1));
+        if (assemblyType.equals("Sub-Assembly")) {
+            mainPartNums.add(7, secondaryPartNums.get(1));
+        } else if (assemblyType.equals("Top-Level")) {
+            BigDecimal ab = new BigDecimal("0");
+        }
 
         return mainPartNums;
     }
@@ -172,27 +176,23 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return BigDecimal
      */
     private List<BigDecimal> getColumnValuesForSum(String assemblyType, String columnName) {
-        // Gets all but first value and totals
         ArrayList<BigDecimal> values;
         values = getValuesByColumn(assemblyType, columnName);
 
-        // Gets first values (separate column on page)
-
         ArrayList<BigDecimal> totalValuesList;
         totalValuesList = getValuesByColumn(assemblyType, columnName + " Total");
-        BigDecimal firstValue = totalValuesList.get(0);
-        BigDecimal secondValue = totalValuesList.get(1);
-        values.add(0, firstValue);
-        values.add(7, secondValue);
 
-        //ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        //List<BigDecimal> quantityList = checkQuantityList(assemblyType, levels, values);
-        //List<BigDecimal> trimmedValueList = checkValues(assemblyType, levels, values);
-        //List<BigDecimal> finalValues = applyQuantities(quantityList, trimmedValueList);
+        BigDecimal firstValue = totalValuesList.get(0);
+        values.add(0, firstValue);
+
+        if (assemblyType.equals("Sub-Assembly")) {
+            BigDecimal secondValue = totalValuesList.get(1);
+            values.add(7, secondValue);
+        } else if (assemblyType.equals("Top Level")) {
+            BigDecimal abcd = new BigDecimal("0");
+        }
 
         return values;
-        //        .stream()
-        //        .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     /**
@@ -204,7 +204,14 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public BigDecimal getExpectedCTGrandTotal(String assemblyType, String columnName) {
         List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> trimmedValueList = checkCTValues(assemblyType, levels, allValues);
+        List<BigDecimal> trimmedValueList = new ArrayList<>();
+        if (assemblyType.equals("Sub-Assembly")) {
+            trimmedValueList = checkCTSubAssemblyValues(assemblyType, levels, allValues);
+        } else if (assemblyType.equals("Sub-Sub-ASM")) {
+            trimmedValueList = checkCTSubSubAsmValues(assemblyType, levels, allValues);
+        } else {
+            trimmedValueList = checkCTTopLevelValues(assemblyType, levels, allValues);
+        }
         return trimmedValueList
                 .stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -248,13 +255,20 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public BigDecimal getExpectedCIGrandTotal(String assemblyType, String columnName) {
         List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> trimmedValueList = checkCIValues(assemblyType, levels, allValues);
+        List<BigDecimal> trimmedValueList = new ArrayList<>();
+
+        if (assemblyType.equals("Sub-Assembly")) {
+            trimmedValueList = checkCISubAssemblyValues(assemblyType, levels, allValues);
+        } else if (assemblyType.equals("Sub-Sub-ASM")) {
+            // do stuff
+            trimmedValueList = checkCISubSubAsmValues(assemblyType, levels, allValues);
+        }
         return trimmedValueList
                 .stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private List<BigDecimal> checkCTValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+    private List<BigDecimal> checkCTSubAssemblyValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = getPartNums(assemblyType);
         List<BigDecimal> trimmedValues = new ArrayList<>();
         List<String> partNums2 = new ArrayList<>();
@@ -262,6 +276,36 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         for (int i = 0; i < partNums.size(); i++) {
             if (partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-SUB-ASM")) {
                 if (values.get(i).compareTo(new BigDecimal("0.00")) != 0) {
+                    partNums2.add(partNums.get(i));
+                    trimmedValues.add(values.get(i));
+                }
+            }
+        }
+        return trimmedValues;
+    }
+
+    private List<BigDecimal> checkCTSubSubAsmValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+        List<String> partNums = getPartNums(assemblyType);
+        List<BigDecimal> trimmedValues = new ArrayList<>();
+        List<String> partNums2 = new ArrayList<>();
+
+        for (int i = 0; i < partNums.size(); i++) {
+            if (levels.get(i).compareTo(new BigDecimal("1")) == 0) {
+                partNums2.add(partNums.get(i));
+                trimmedValues.add(values.get(i));
+            }
+        }
+        return trimmedValues;
+    }
+
+    private List<BigDecimal> checkCTTopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+        List<String> partNums = getPartNums(assemblyType);
+        List<BigDecimal> trimmedValues = new ArrayList<>();
+        List<String> partNums2 = new ArrayList<>();
+
+        for (int i = 0; i < partNums.size(); i++) {
+            if (!partNums.get(i).equals("Assembly Process")) {
+                if (levels.get(i).compareTo(new BigDecimal("1")) == 0) {
                     partNums2.add(partNums.get(i));
                     trimmedValues.add(values.get(i));
                 }
@@ -289,17 +333,31 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return trimmedValues;
     }
 
-    private List<BigDecimal> checkCIValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+    private List<BigDecimal> checkCISubAssemblyValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = getPartNums(assemblyType);
         List<BigDecimal> trimmedValues = new ArrayList<>();
-        List<String> partNums2 = new ArrayList<>();
+        //List<String> partNums2 = new ArrayList<>();
 
         for (int i = 0; i < partNums.size(); i++) {
             if (partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-SUB-ASM")) {
                 if (levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0) {
-                    partNums2.add(partNums.get(i));
+                    //partNums2.add(partNums.get(i));
                     trimmedValues.add(values.get(i));
                 }
+            }
+        }
+        return trimmedValues;
+    }
+
+    private List<BigDecimal> checkCISubSubAsmValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+        List<String> partNums = getPartNums(assemblyType);
+        List<BigDecimal> trimmedValues = new ArrayList<>();
+        //List<String> partNums2 = new ArrayList<>();
+
+        for (int i = 0; i < partNums.size(); i++) {
+            if (levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0) {
+                //partNums2.add(partNums.get(i));
+                trimmedValues.add(values.get(i));
             }
         }
         return trimmedValues;
@@ -319,8 +377,14 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private List<BigDecimal> checkQuantityList(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
         List<BigDecimal> quantitiesEmpty = getEmptyQuantities(assemblyType,"Quantity Empty");
+
         quantities.add(0, quantitiesEmpty.get(0));
-        quantities.add(7, quantitiesEmpty.get(1));
+
+        if (assemblyType.equals("Sub-Assembly")) {
+            quantities.add(7, quantitiesEmpty.get(1));
+        } else if (assemblyType.equals("Top-Level")) {
+            BigDecimal ab = new BigDecimal("0");
+        }
 
         //List<BigDecimal> refinedQuantities = new ArrayList<>();
         //List<String> partNums = getPartNums(assemblyType);
@@ -455,11 +519,11 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Sub-Sub-ASM export set report table
      */
     private void initialiseSubSubAsmRowMap() {
-        subSubAsmRowMap.put("1 Sub Sub ASM", String.format(genericTrSelector, "5"));
-        subSubAsmRowMap.put("2 Sub Sub ASM", String.format(genericTrSelector, "7"));
-        subSubAsmRowMap.put("Component Subtotal Sub Sub ASM", String.format(genericTrSelector, "11"));
-        subSubAsmRowMap.put("Assembly Processes Sub Sub ASM", String.format(genericTrSelector, "14"));
-        subSubAsmRowMap.put("Grand Total Sub Sub ASM", String.format(genericTrSelector, "16"));
+        subSubAsmRowMap.put("1 Sub Sub ASM", String.format(genericTrSelector, "4"));
+        subSubAsmRowMap.put("2 Sub Sub ASM", String.format(genericTrSelector, "6"));
+        subSubAsmRowMap.put("Component Subtotal Sub Sub ASM", String.format(genericTrSelector, "10"));
+        subSubAsmRowMap.put("Assembly Processes Sub Sub ASM", String.format(genericTrSelector, "13"));
+        subSubAsmRowMap.put("Grand Total Sub Sub ASM", String.format(genericTrSelector, "15"));
     }
 
     /**
@@ -481,6 +545,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         topLevelRowMap.put("13 Top Level", String.format(genericTrSelector, "38"));
         topLevelRowMap.put("Component Subtotal Top Level", String.format(genericTrSelector, "42"));
         topLevelRowMap.put("Assembly Processes Top Level", String.format(genericTrSelector, "45"));
-        topLevelRowMap.put("Grand Total Top Level", String.format(genericTrSelector, "47"));
+        topLevelRowMap.put("Grand Total Top Level", String.format(genericTrSelector, "43"));
     }
 }
