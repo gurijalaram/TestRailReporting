@@ -140,20 +140,27 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         List<String> mainPartNums = new ArrayList<>();
         ArrayList<String> secondaryPartNums = new ArrayList<>();
 
-        for (Element element : assemblyDetailsReport.select(cssSelector)) {
-            if (!element.text().isEmpty() && !element.text().equals("Part Number") && !element.text().equals("GRAND TOTAL") && !element.text().equals("Assembly Processes")) {
-                mainPartNums.add(element.text());
+        if (assemblyType.equals("Top Level")) {
+            for (Element element : assemblyDetailsReport.select(cssSelector)) {
+                if (!element.text().isEmpty() && !element.text().equals("Part Number") && !element.text().equals("GRAND TOTAL")) {
+                    mainPartNums.add(element.text());
+                }
+            }
+        } else {
+            for (Element element : assemblyDetailsReport.select(cssSelector)) {
+                if (!element.text().isEmpty() && !element.text().equals("Part Number") && !element.text().equals("GRAND TOTAL") && !element.text().equals("Assembly Processes")) {
+                    mainPartNums.add(element.text());
+                }
             }
         }
-        //mainPartNums = mainPartNums.stream().distinct().collect(Collectors.toList());
 
-        for (int i = 0; i < mainPartNums.size(); i++) {
-            mainPartNums.remove(i);
-        }
+        //for (int i = 0; i < mainPartNums.size(); i++) {
+        //    mainPartNums.remove(i);
+        //}
 
         setCssLocator(assemblyType, "", "Part Number Secondary");
         for (Element element : assemblyDetailsReport.select(cssSelector)) {
-            if (element.text().chars().noneMatch(Character::isDigit) &&
+            if (element.text().replace(" ", "").chars().allMatch(Character::isLetter) &&
                 element.text().equals("Assembly Process")) {
                 secondaryPartNums.add(element.text());
             }
@@ -162,8 +169,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         mainPartNums.add(0, secondaryPartNums.get(0));
         if (assemblyType.equals("Sub-Assembly")) {
             mainPartNums.add(7, secondaryPartNums.get(1));
-        } else if (assemblyType.equals("Top-Level")) {
-            BigDecimal ab = new BigDecimal("0");
+        } else if (assemblyType.equals("Top Level")) {
+            mainPartNums.add(8, secondaryPartNums.get(1));
+            mainPartNums.add(15, secondaryPartNums.get(2));
         }
 
         return mainPartNums;
@@ -183,13 +191,15 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         totalValuesList = getValuesByColumn(assemblyType, columnName + " Total");
 
         BigDecimal firstValue = totalValuesList.get(0);
+        BigDecimal secondValue = totalValuesList.get(1);
         values.add(0, firstValue);
 
         if (assemblyType.equals("Sub-Assembly")) {
-            BigDecimal secondValue = totalValuesList.get(1);
             values.add(7, secondValue);
         } else if (assemblyType.equals("Top Level")) {
-            BigDecimal abcd = new BigDecimal("0");
+            BigDecimal thirdValue = totalValuesList.get(2);
+            values.add(8, secondValue);
+            values.add(15, thirdValue);
         }
 
         return values;
@@ -204,7 +214,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public BigDecimal getExpectedCTGrandTotal(String assemblyType, String columnName) {
         List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> trimmedValueList = new ArrayList<>();
+        List<BigDecimal> trimmedValueList;
+
         if (assemblyType.equals("Sub-Assembly")) {
             trimmedValueList = checkCTSubAssemblyValues(assemblyType, levels, allValues);
         } else if (assemblyType.equals("Sub-Sub-ASM")) {
@@ -212,6 +223,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         } else {
             trimmedValueList = checkCTTopLevelValues(assemblyType, levels, allValues);
         }
+
         return trimmedValueList
                 .stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -260,9 +272,11 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         if (assemblyType.equals("Sub-Assembly")) {
             trimmedValueList = checkCISubAssemblyValues(assemblyType, levels, allValues);
         } else if (assemblyType.equals("Sub-Sub-ASM")) {
-            // do stuff
             trimmedValueList = checkCISubSubAsmValues(assemblyType, levels, allValues);
+        } else {
+            trimmedValueList = checkCITopLevelValues(assemblyType, levels, allValues);
         }
+
         return trimmedValueList
                 .stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -304,7 +318,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         List<String> partNums2 = new ArrayList<>();
 
         for (int i = 0; i < partNums.size(); i++) {
-            if (!partNums.get(i).equals("Assembly Process")) {
+            if (partNums.get(i).chars().allMatch(Character::isDigit) || partNums.get(i).equals("Assembly Process") ||
+                partNums.get(i).equals("SUB-ASSEMBLY")) {
                 if (levels.get(i).compareTo(new BigDecimal("1")) == 0) {
                     partNums2.add(partNums.get(i));
                     trimmedValues.add(values.get(i));
@@ -352,12 +367,24 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private List<BigDecimal> checkCISubSubAsmValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = getPartNums(assemblyType);
         List<BigDecimal> trimmedValues = new ArrayList<>();
-        //List<String> partNums2 = new ArrayList<>();
 
         for (int i = 0; i < partNums.size(); i++) {
             if (levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0) {
-                //partNums2.add(partNums.get(i));
                 trimmedValues.add(values.get(i));
+            }
+        }
+        return trimmedValues;
+    }
+
+    private List<BigDecimal> checkCITopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+        List<String> partNums = getPartNums(assemblyType);
+        List<BigDecimal> trimmedValues = new ArrayList<>();
+
+        for (int i = 0; i < partNums.size(); i++) {
+            if (partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-ASSEMBLY")) {
+                if (levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0) {
+                    trimmedValues.add(values.get(i));
+                }
             }
         }
         return trimmedValues;
@@ -382,8 +409,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
         if (assemblyType.equals("Sub-Assembly")) {
             quantities.add(7, quantitiesEmpty.get(1));
-        } else if (assemblyType.equals("Top-Level")) {
-            BigDecimal ab = new BigDecimal("0");
+        } else if (assemblyType.equals("Top Level")) {
+            quantities.add(8, quantitiesEmpty.get(1));
+            quantities.add(15, quantitiesEmpty.get(2));
         }
 
         //List<BigDecimal> refinedQuantities = new ArrayList<>();
@@ -468,6 +496,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         if (!rowIndex.isEmpty()) {
             String baseCssSelector = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s span";
             cssSelector = String.format(baseCssSelector, rowSelector, columnSelector);
+        } else if (rowIndex.isEmpty() && columnName.equals("Part Number Main")) {
+            String baseCssSelectorNoRowSpecified = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr %s span span";
+            cssSelector = String.format(baseCssSelectorNoRowSpecified, columnSelector);
         } else {
             String baseCssSelectorNoRowSpecified = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr %s span";
             cssSelector = String.format(baseCssSelectorNoRowSpecified, columnSelector);

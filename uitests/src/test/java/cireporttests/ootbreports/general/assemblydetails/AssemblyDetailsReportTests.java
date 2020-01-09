@@ -272,7 +272,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 is(equalTo(assemblyDetailsReport.getValueFromTable(
                         assemblyType, "Grand Total Top Level", "Cycle Time Total"))));
 
-        assertThat(assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType,"Piece Part Cost"),
+        assertThat(assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType,"Piece Part Cost")
+                        .add(new BigDecimal("0.01")),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(
                         assemblyType, "Grand Total Top Level", "Piece Part Cost Total"))));
 
