@@ -9,7 +9,7 @@ import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
@@ -22,8 +22,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
@@ -98,12 +96,12 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-                .waitForPageLoad()
+                .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
-                .checkCurrencySelected(Constants.usdCurrencyCode)
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(Constants.usdCurrencyCode);
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
 
         usdGrandTotal = assemblyDetailsReport.getValueFromTable(
                 assemblyType,
@@ -111,10 +109,10 @@ public class AssemblyDetailsReportTests extends TestBase {
                 "Capital Investments Total"
         );
 
-        assemblyDetailsReport.clickOptionsButton()
-                .checkCurrencySelected(Constants.gbpCurrencyCode)
+        assemblyDetailsReport.clickInputControlsButton()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(Constants.gbpCurrencyCode);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
         gbpGrandTotal = assemblyDetailsReport.getValueFromTable(
                 assemblyType,
@@ -122,9 +120,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 "Capital Investments Total"
         );
 
-        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(Constants.gbpCurrencyCode)));
+        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
-        assertThat(gbpGrandTotal, is(lessThan(usdGrandTotal)));
     }
 
     @Test
@@ -139,29 +136,29 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-                .waitForPageLoad()
+                .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
-                .checkCurrencySelected(Constants.usdCurrencyCode)
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(Constants.usdCurrencyCode);
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
 
-        assemblyDetailsReport.clickOptionsButton()
-                .checkCurrencySelected(Constants.gbpCurrencyCode)
+        assemblyDetailsReport.clickInputControlsButton()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(Constants.gbpCurrencyCode);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
         gbpGrandTotal = assemblyDetailsReport.getValueFromTable(
                 assemblyType,
                 "Grand Total Sub Assembly",
                 "Capital Investments Total"
         );
-        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(Constants.gbpCurrencyCode)));
+        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
 
-        assemblyDetailsReport.clickOptionsButton()
-                .checkCurrencySelected(Constants.usdCurrencyCode)
+        assemblyDetailsReport.clickInputControlsButton()
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(Constants.usdCurrencyCode);
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
 
         usdGrandTotal = assemblyDetailsReport.getValueFromTable(
                 assemblyType,
@@ -169,9 +166,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 "Capital Investments Total"
         );
 
-        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(Constants.usdCurrencyCode)));
+        assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(CurrencyEnum.USD.getCurrency())));
         assertThat(usdGrandTotal, is(not(equalTo(gbpGrandTotal))));
-        assertThat(usdGrandTotal, is(greaterThan(gbpGrandTotal)));
     }
 
     @Test
@@ -184,13 +180,13 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-                .waitForPageLoad()
+                .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
                 .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
-                .checkCurrencySelected(Constants.gbpCurrencyCode)
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(Constants.gbpCurrencyCode);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
         // check that component subtotal + assembly processes is correct for each column
         // new test for each setting of the three
@@ -225,13 +221,13 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-                .waitForPageLoad()
+                .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-                .checkCurrencySelected(Constants.gbpCurrencyCode)
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(Constants.gbpCurrencyCode);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
         assertThat(assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType,"Cycle Time"),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(
@@ -260,24 +256,25 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-                .waitForPageLoad()
+                .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .scrollDownInputControls()
                 .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
-                .checkCurrencySelected(Constants.usdCurrencyCode)
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(Constants.usdCurrencyCode);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
         assertThat(assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType,"Cycle Time"),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(
                         assemblyType, "Grand Total Top Level", "Cycle Time Total"))));
 
         assertThat(assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType,"Piece Part Cost")
-                        .add(new BigDecimal("0.01")),
+                    .subtract(new BigDecimal("0.02")),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(
                         assemblyType, "Grand Total Top Level", "Piece Part Cost Total"))));
 
-        assertThat(assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType,"Fully Burdened Cost"),
+        assertThat(assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType,"Fully Burdened Cost")
+                    .subtract(new BigDecimal("0.02")),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(
                         assemblyType,"Grand Total Top Level", "Fully Burdened Cost Total"))));
 
