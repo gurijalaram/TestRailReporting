@@ -15,11 +15,16 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.Inves
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.pages.settings.SettingsPage;
+import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
+import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
@@ -29,6 +34,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Test;
 
 public class ProcessRoutingTests extends TestBase {
@@ -41,9 +47,16 @@ public class ProcessRoutingTests extends TestBase {
     private GeometryPage geometryPage;
     private PropertiesDialogPage propertiesDialogPage;
     private FailuresPage failuresPage;
+    private ToleranceSettingsPage toleranceSettingsPage;
+    private SettingsPage settingsPage;
 
     public ProcessRoutingTests() {
         super();
+    }
+
+    @After
+    public void resetToleranceSettings() {
+        new AfterTestUtil().resetToleranceSettings();
     }
 
     @Test
@@ -654,5 +667,36 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton();
 
         assertThat(routingsPage.getRoutings(), containsInAnyOrder("3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1672"})
+    @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
+    public void routingTolerances() {
+        loginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+            .openSettings()
+            .changeCurrency(CurrencyEnum.USD.getCurrency())
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / Reciprocating Surface Grinder"), is(true));
+
+        processRoutingPage = evaluatePage.openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Gravity Die Cast")
+            .apply()
+            .closeProcessPanel()
+            .costScenario()
+            .openProcessDetails();
+
+        assertThat(processRoutingPage.getRoutingLabels(), hasItems("3 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder"));
     }
 }
