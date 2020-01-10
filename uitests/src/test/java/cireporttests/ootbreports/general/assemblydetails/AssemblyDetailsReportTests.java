@@ -191,6 +191,12 @@ public class AssemblyDetailsReportTests extends TestBase {
         // check that component subtotal + assembly processes is correct for each column
         // new test for each setting of the three
 
+        /*
+            The reason for the subtracting of small values below is that there is a rounding bug.
+            Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
+            Bug for this issue: https://jira.apriori.com/browse/AP-58059
+         */
+
         assertThat(assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType,"Cycle Time")
                         .subtract(new BigDecimal("0.15")),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(
@@ -263,6 +269,12 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+
+        /*
+            The reason for the subtracting of small values below is that there is a rounding bug.
+            Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
+            Bug for this issue: https://jira.apriori.com/browse/AP-58059
+         */
 
         assertThat(assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType,"Cycle Time"),
                 is(equalTo(assemblyDetailsReport.getValueFromTable(
