@@ -20,6 +20,9 @@ import java.util.HashMap;
 
 public class AfterTestUtil {
 
+    private final String apiUsername = UserUtil.getUser().getUsername();
+    private final String apiPassword = apiUsername.split("@")[0];
+
     /**
      * Resets all settings
      */
@@ -165,11 +168,12 @@ public class AfterTestUtil {
     }
 
     private HashMap<String, String> initAuthorizationHeader() {
+
         return new HashMap<String, String>() {{
-                    put("Authorization", "Bearer " + authenticateUser(UserUtil.getUser().getUsername(), UserUtil.getUser().getUsername().split("@")[0]));
-                    put("apriori.tenantgroup", "default");
-                    put("apriori.tenant", "default");
-                    put("Content-Type", "application/vnd.apriori.v1+json");
+                put("Authorization", "Bearer " + authenticateUser(apiUsername, apiPassword));
+                put("apriori.tenantgroup", "default");
+                put("apriori.tenant", "default");
+                put("Content-Type", "application/vnd.apriori.v1+json");
             }};
     }
 
