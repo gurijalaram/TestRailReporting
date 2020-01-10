@@ -67,7 +67,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         BigDecimal valueRequired = new BigDecimal("0.00");
         Element valueCell = assemblyDetailsReport.select(cssSelector).first();
 
-        if (isValueValid(valueCell.text())) {
+        if (valueCell != null && isValueValid(valueCell.text())) {
             valueRequired = new BigDecimal(valueCell.text().replaceAll(",", ""));
         }
 
