@@ -135,7 +135,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        assemblyMap.get(assemblyName).click();
+        pageUtils.waitForElementAndClick(assemblyMap.get(assemblyName));
+        //assemblyMap.get(assemblyName).click();
         return this;
     }
 
