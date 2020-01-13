@@ -306,9 +306,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementAndClick(cookieAgreeButton);
         pageUtils.waitForElementToAppear(logoImage);
 
-        // if 404 displayed, exception (+ stop)
-        // if 404 not found, catch exception and continue
-
         if (pageBody.getAttribute("className").startsWith("error404")) {
             throw new Exception("Link broken. Wrong page was opened - iframe wasn't found as a result");
         } else {
