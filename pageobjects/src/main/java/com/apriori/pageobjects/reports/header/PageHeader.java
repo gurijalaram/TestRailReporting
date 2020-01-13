@@ -127,6 +127,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(xpath = "//h1[contains(text(), '404')]")
     private WebElement errorTitle;
 
+    @FindBy(css = "body")
+    private WebElement pageBody;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -303,11 +306,15 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementAndClick(cookieAgreeButton);
         pageUtils.waitForElementToAppear(logoImage);
 
-        if (errorTitle.isDisplayed()) {
+        // if 404 displayed, exception (+ stop)
+        // if 404 not found, catch exception and continue
+
+        if (pageBody.getAttribute("className").startsWith("error404")) {
             throw new Exception("Link broken. Wrong page was opened - iframe wasn't found as a result");
+        } else {
+            driver.switchTo().frame(iframeId);
         }
 
-        driver.switchTo().frame(iframeId);
         return new CirUserGuidePage(driver);
     }
 
