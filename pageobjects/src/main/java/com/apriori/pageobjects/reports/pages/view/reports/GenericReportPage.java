@@ -20,30 +20,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
 
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='All Plastic']/div/a")
-    private WebElement allPlasticExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='All.Default Scenarios']/div/a")
-    private WebElement allDefaultScenariosExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='design outlier']/div/a")
-    private WebElement designOutlierExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='Design Outlier 2']/div/a")
-    private WebElement designOutlier2ExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC Machining Data']/div/a")
-    private WebElement dtcMachiningDataExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='qa test 1']/div/a")
-    private WebElement qatest1ExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='Sheet Metal DTC']/div/a")
-    private WebElement sheetMetalDtcExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='Test DTC']/div/a")
-    private WebElement testDtcExportSet;
-
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
     private WebElement topLevelExportSet;
 
@@ -136,7 +112,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
         pageUtils.waitForElementAndClick(assemblyMap.get(assemblyName));
-        //assemblyMap.get(assemblyName).click();
         return this;
     }
 
@@ -177,14 +152,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * Initialises export set hash map
      */
     private void initialiseExportSetHashMap() {
-        exportSetMap.put("All Plastic", allPlasticExportSet);
-        exportSetMap.put("All.Default Scenarios", allDefaultScenariosExportSet);
-        exportSetMap.put("design outlier", designOutlierExportSet);
-        exportSetMap.put("Design Outlier 2", designOutlier2ExportSet);
-        exportSetMap.put("DTC Machining Data", dtcMachiningDataExportSet);
-        exportSetMap.put("qa test 1", qatest1ExportSet);
-        exportSetMap.put("Sheet Metal DTC", sheetMetalDtcExportSet);
-        exportSetMap.put("Test DTC", testDtcExportSet);
         exportSetMap.put("top-level", topLevelExportSet);
     }
 
