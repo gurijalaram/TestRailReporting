@@ -33,7 +33,7 @@ public class FailuresWarningsTests extends TestBase {
 
     @After
     public void resetToleranceSettings() {
-        new AfterTestUtil(driver).resetToleranceSettings();
+        new AfterTestUtil().resetToleranceSettings();
     }
 
     @Category(CustomerSmokeTests.class)

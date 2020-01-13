@@ -120,6 +120,20 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
     }
 
     /**
+     * Finds the issue type
+     *
+     * @param issueTypeDropdown - the issue type parent
+     * @param issueTypeDropdown - the issue type
+     * @return current page object
+     */
+    public GuidancePage findIssueType(String issueTypeDropdown, String issueType) {
+        collapseIssueDropdown();
+        selectIssue(issueTypeDropdown);
+        findIssueType(issueType);
+        return this;
+    }
+
+    /**
      * Selects the gcd
      *
      * @param gcdType - the gcd
@@ -137,20 +151,6 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
      */
     public String getGuidanceMessage() {
         return pageUtils.waitForElementToAppear(gcdMessage).getText();
-    }
-
-    /**
-     * Finds the issue type
-     *
-     * @param issueTypeDropdown - the issue type parent
-     * @param issueTypeDropdown - the issue type
-     * @return current page object
-     */
-    public GuidancePage findIssueType(String issueTypeDropdown, String issueType) {
-        collapseIssueDropdown();
-        selectIssue(issueTypeDropdown);
-        findIssueType(issueType);
-        return this;
     }
 
     /**
