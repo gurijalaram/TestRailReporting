@@ -18,6 +18,7 @@ import com.apriori.pageobjects.reports.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -122,9 +123,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @FindBy(xpath = "//img[@alt='aPriori']")
     private WebElement logoImage;
-
-    @FindBy(xpath = "//h1[contains(text(), '404')]")
-    private WebElement errorElement;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -301,7 +299,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public CirUserGuidePage switchToIFrameUserGuide(String iframeId) throws Exception {
         pageUtils.waitForElementAndClick(cookieAgreeButton);
         pageUtils.waitForElementToAppear(logoImage);
-        if (errorElement.isDisplayed()) {
+
+        String errorElementLocator = "//h1[contains(text(), '44')]";
+        if (driver.findElement(By.xpath(errorElementLocator)).isDisplayed()) {
             throw new Exception("Link broken. Wrong page was opened");
         }
 

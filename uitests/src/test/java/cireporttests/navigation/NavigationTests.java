@@ -80,7 +80,7 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToReportLogout();
 
-        assertThat(logout.getHeaderText(), anyOf(equalTo("CID-TE"), equalTo("CI Design (AUTOMATIONENVIRONMENT)")));
+        assertThat(logout.getHeaderText(), anyOf(equalTo(Constants.cidTeHeaderText), equalTo(Constants.cidAutHeaderText)));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
