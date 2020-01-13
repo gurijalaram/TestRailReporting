@@ -27,7 +27,6 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-
 import org.openqa.selenium.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,15 +66,21 @@ public class ConnectionManager<T> {
         RestAssured.defaultParser = Parser.JSON;
     }
 
+    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody) {
+        return createRequestSpecification(urlParams, body, customBody, null);
+    }
+
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body) {
+
         return createRequestSpecification(urlParams, body, null);
     }
 
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, MultiPartFiles multiPartFiles) {
-        return createRequestSpecification(urlParams, null, multiPartFiles);
+
+        return createRequestSpecification(urlParams, null, null, multiPartFiles);
     }
 
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, MultiPartFiles multiPartFiles) {
+    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody, MultiPartFiles multiPartFiles) {
         RequestSpecBuilder builder = new RequestSpecBuilder();
 
         if (requestEntity.isAutoLogin()) {
@@ -115,6 +120,10 @@ public class ConnectionManager<T> {
         if (requestEntity.getXwwwwFormUrlEncoded() != null && !requestEntity.getXwwwwFormUrlEncoded().isEmpty()) {
             builder.setContentType(ContentType.URLENC);
             requestEntity.getXwwwwFormUrlEncoded().forEach(builder::addFormParams);
+        }
+
+        if (customBody != null) {
+            builder.setBody(customBody);
         }
 
         if (body != null) {
@@ -247,10 +256,8 @@ public class ConnectionManager<T> {
      * @return JSON POJO object instance of @returnType
      */
     public T get() {
-
-
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
                 .expect()
                 .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
@@ -280,7 +287,6 @@ public class ConnectionManager<T> {
      * @return Headers object instance from response
      */
     public Headers getHeader() {
-
         return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
             .expect()
             .statusCode(isOneOf(requestEntity.getStatusCode()))
@@ -295,7 +301,7 @@ public class ConnectionManager<T> {
      */
     public T post() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
                 .expect()
                 .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()

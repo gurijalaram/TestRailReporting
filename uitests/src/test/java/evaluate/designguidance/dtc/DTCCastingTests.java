@@ -48,7 +48,7 @@ public class DTCCastingTests extends TestBase {
 
     @After
     public void resetToleranceSettings() {
-        new AfterTestUtil(driver).resetToleranceSettings();
+        new AfterTestUtil().resetToleranceSettings();
     }
 
     @Test

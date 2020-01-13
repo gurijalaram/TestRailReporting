@@ -40,7 +40,7 @@ public class ProcessRoutingTestsAfter extends TestBase {
 
     @After
     public void resetToleranceSettings() {
-        new AfterTestUtil(driver).resetToleranceSettings();
+        new AfterTestUtil().resetToleranceSettings();
     }
 
     @Test
