@@ -27,7 +27,7 @@ public class MaterialPMITests extends TestBase {
 
     @After
     public void resetAllSettings() {
-        new AfterTestUtil(driver).resetAllSettings();
+        new AfterTestUtil().resetAllSettings();
     }
 
     public MaterialPMITests() {super();}

@@ -31,6 +31,7 @@ public class RequestEntity {
     private RequestInitService requestInitService;
 
 
+    private String customBody;
     private EndpointEnum endpoint;
     private String customEndpoint;
     private Map<String, String> headers = new HashMap<>();
@@ -280,6 +281,15 @@ public class RequestEntity {
 
     public RequestEntity setMultiPartFiles(MultiPartFiles multiPartFiles) {
         this.multiPartFiles = multiPartFiles;
+        return this;
+    }
+
+    public String getCustomBody() {
+        return customBody;
+    }
+
+    public RequestEntity setCustomBody(String customBody) {
+        this.customBody = customBody;
         return this;
     }
 
