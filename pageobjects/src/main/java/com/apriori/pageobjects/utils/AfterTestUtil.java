@@ -8,6 +8,7 @@ import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Issue;
@@ -20,7 +21,8 @@ import java.util.HashMap;
 
 public class AfterTestUtil {
 
-    private final String apiUsername = UserUtil.getUser().getUsername();
+    UserCredentials user = UserUtil.currentUser;
+    private final String apiUsername = user.getUsername();
     private final String apiPassword = apiUsername.split("@")[0];
 
     /**
