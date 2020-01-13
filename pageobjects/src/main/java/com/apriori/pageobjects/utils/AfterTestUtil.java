@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.utils;
 
-import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.apibase.http.builder.common.response.common.DisplayPreferencesEntity;
 import com.apriori.apibase.http.builder.common.response.common.ProductionDefaultEntity;
 import com.apriori.apibase.http.builder.common.response.common.ToleranceValuesEntity;
@@ -8,12 +7,8 @@ import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Issue;
-
-import java.util.HashMap;
 
 /**
  * @author mparker
@@ -21,9 +16,7 @@ import java.util.HashMap;
 
 public class AfterTestUtil {
 
-    UserCredentials user = UserUtil.currentUser;
-    private final String apiUsername = user.getUsername();
-    private final String apiPassword = apiUsername.split("@")[0];
+    private APIAuthentication apiAuthentication = new APIAuthentication();
 
     /**
      * Resets all settings
@@ -50,7 +43,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
             .setAutoLogin(false)
             .setBody(new ToleranceValuesEntity().setToleranceMode("CAD")
@@ -70,7 +63,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
             .setAutoLogin(false)
             .setBody(new DisplayPreferencesEntity().setSystemUnits(true)
@@ -88,7 +81,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=selectionColor")
             .setAutoLogin(false)
             .setCustomBody(ColourEnum.YELLOW.getColour())
@@ -105,7 +98,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=defaultScenarioName")
             .setAutoLogin(false)
             .setCustomBody("Initial")
@@ -122,7 +115,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/production-defaults")
             .setBody(new ProductionDefaultEntity().setPg(null)
                 .setVpe(null)
@@ -142,7 +135,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
             .setAutoLogin(false)
             .setBody(new ToleranceValuesEntity().setMinCadToleranceThreshhold(5.55)
@@ -167,26 +160,5 @@ public class AfterTestUtil {
             .commitChanges()
             .connect()
             .post();
-    }
-
-    private HashMap<String, String> initAuthorizationHeader() {
-
-        return new HashMap<String, String>() {{
-                put("Authorization", "Bearer " + authenticateUser(apiUsername, apiPassword));
-                put("apriori.tenantgroup", "default");
-                put("apriori.tenant", "default");
-                put("Content-Type", "application/vnd.apriori.v1+json");
-            }};
-    }
-
-    private String authenticateUser(String username, String password) {
-        return ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
-            .customizeRequest()
-            .setReturnType(AuthenticateJSON.class)
-            .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
-            .setAutoLogin(false)
-            .commitChanges()
-            .connect()
-            .post()).getAccessToken();
     }
 }
