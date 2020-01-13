@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -219,7 +220,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     private FilterCriteriaPage selectValue(String input) {
-        valueInputDropdown.sendKeys(input);
+        valueInputDropdown.click();
+        WebElement value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", input)));
+        value.click();
         valueInputDropdown.sendKeys(Keys.ESCAPE);
         return this;
     }
