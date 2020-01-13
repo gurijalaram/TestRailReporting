@@ -304,7 +304,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementToAppear(logoImage);
 
         if (errorTitle.isDisplayed()) {
-            throw new Exception("Link broken. Wrong page was opened");
+            throw new Exception("Link broken. Wrong page was opened - iframe wasn't found as a result");
         }
 
         driver.switchTo().frame(iframeId);
