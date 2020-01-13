@@ -47,8 +47,8 @@ public class UserUtil {
      */
     public static UserCredentials getUser() {
         UserCredentials user = UserCommonService.getUser();
-        logInfo(user);
         currentUser = user;
+        logInfo(user);
         return user;
     }
 
