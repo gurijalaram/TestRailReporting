@@ -58,7 +58,7 @@ public class NavigationTests extends TestBase {
     @Test
     @TestRail(testCaseId = "2987")
     @Description("Ensure that the CI Reports User Guide Link works")
-    public void testCIReportsUserGuideNavigation() {
+    public void testCIReportsUserGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToReportUserGuide()

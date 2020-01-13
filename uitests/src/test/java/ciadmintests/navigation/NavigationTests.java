@@ -57,7 +57,7 @@ public class NavigationTests extends TestBase {
     @Test
     @TestRail(testCaseId = "2982")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
-    public void testHelpCostInsightReportGuideNavigation() {
+    public void testHelpCostInsightReportGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToHelpReportsGuide()

@@ -26,6 +26,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 public class PageHeader extends LoadableComponent<PageHeader> {
 
     private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
@@ -114,6 +116,15 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @FindBy(css = "span[id='globalSearch'] > a")
     private WebElement searchButton;
+
+    @FindBy(xpath = "//div[@class='gdpr-popup white-popup-block']/button[contains(@class, 'cookie-agree-btn')]")
+    private WebElement cookieAgreeButton;
+
+    @FindBy(xpath = "//img[@alt='aPriori']")
+    private WebElement logoImage;
+
+    @FindBy(xpath = "//h1[contains(text(), '404')]")
+    private WebElement errorElement;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -284,11 +295,17 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Switches to iframe within a page by its "id" value
-     * @param iFrameId - iframe id attribute
+     * @param iframeId - iframe id attribute
      * @return new CirUserGuide page object
      */
-    public CirUserGuidePage switchToIFrameUserGuide(String iFrameId) {
-        driver.switchTo().frame(iFrameId);
+    public CirUserGuidePage switchToIFrameUserGuide(String iframeId) throws Exception {
+        pageUtils.waitForElementAndClick(cookieAgreeButton);
+        pageUtils.waitForElementToAppear(logoImage);
+        if (errorElement.isDisplayed()) {
+            throw new Exception("Link broken. Wrong page was opened");
+        }
+
+        driver.switchTo().frame(iframeId);
         return new CirUserGuidePage(driver);
     }
 
