@@ -124,6 +124,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(xpath = "//img[@alt='aPriori']")
     private WebElement logoImage;
 
+    @FindBy(xpath = "//h1[contains(text(), '404')]")
+    private WebElement errorTitle;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -300,8 +303,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementAndClick(cookieAgreeButton);
         pageUtils.waitForElementToAppear(logoImage);
 
-        String errorElementLocator = "//h1[contains(text(), '404')]";
-        if (driver.findElement(By.xpath(errorElementLocator)).isDisplayed()) {
+        if (errorTitle.isDisplayed()) {
             throw new Exception("Link broken. Wrong page was opened");
         }
 
