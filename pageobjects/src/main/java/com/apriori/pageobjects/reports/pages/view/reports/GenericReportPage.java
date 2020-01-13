@@ -19,6 +19,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
+    private Map<String, WebElement> currencyMap = new HashMap<>();
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
     private WebElement topLevelExportSet;
@@ -74,6 +75,7 @@ public class GenericReportPage extends ReportsPageHeader {
         PageFactory.initElements(driver, this);
         initialiseExportSetHashMap();
         initialiseAssemblyHashMap();
+        initialiseCurrencyMap();
     }
 
     @Override
@@ -111,7 +113,10 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        pageUtils.waitForElementAndClick(assemblyMap.get(assemblyName));
+        //pageUtils.waitForElementAndClick(assemblyMap.get(assemblyName));
+        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
+            assemblyMap.get(assemblyName).click();
+        }
         return this;
     }
 
@@ -123,14 +128,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage checkCurrencySelected(String currency) {
         currentCurrencyElement.click();
         if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
-            switch (currency) {
-                case "USD":
-                    usdCurrencyOption.click();
-                    break;
-                case "GBP":
-                    gbpCurrencyOption.click();
-                    break;
-            }
+            currencyMap.get(currency).click();
         }
         return this;
     }
@@ -140,12 +138,16 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Assembly Details Report page object
      */
     public AssemblyDetailsReportPage clickApplyAndOk() {
-        pageUtils.waitForElementToAppear(applyButton);
-        applyButton.click();
-        pageUtils.waitForElementToAppear(okButton);
+        pageUtils.waitForElementAndClick(applyButton);
+        pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
         return new AssemblyDetailsReportPage(driver);
+    }
+
+    private void initialiseCurrencyMap() {
+        currencyMap.put("GBP", gbpCurrencyOption);
+        currencyMap.put("USD", usdCurrencyOption);
     }
 
     /**
