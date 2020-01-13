@@ -15,6 +15,7 @@ import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
+import com.sun.tools.jxc.ap.Const;
 import io.qameta.allure.Description;
 import com.apriori.pageobjects.reports.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDomainPage;
@@ -25,6 +26,7 @@ import com.apriori.pageobjects.reports.pages.manage.ManageUsersPage;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -78,7 +80,7 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToReportLogout();
 
-        assertThat(logout.getHeaderText(), is(equalTo("CI Design (AUTOMATIONENVIRONMENT)")));
+        assertThat(logout.getHeaderText(), anyOf(equalTo("CID-TE"), equalTo("CI Design (AUTOMATIONENVIRONMENT)")));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
@@ -215,7 +217,7 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToCreateDomainPage();
 
-        assertThat(domain.getCurrentUrl(), is(equalTo(Constants.reportingDomainDesignerUrl)));
+        assertThat(domain.getCurrentUrl(), anyOf(equalTo(Constants.cidteReportingDomainDesignerUrl), equalTo(Constants.cidautReportingDomainDesignerUrl)));
         assertThat(domain.isDialogDisplayed(), is(equalTo(true)));
         assertThat(domain.isDialogEnabled(), is(equalTo(true)));
     }
