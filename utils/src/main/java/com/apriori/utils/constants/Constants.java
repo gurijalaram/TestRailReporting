@@ -27,9 +27,6 @@ public class Constants {
     public static final String reportingHelpUrl = "http://help.jaspersoft.com/Default";
     public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
 
-    public static final String usdCurrencyCode = "USD";
-    public static final String gbpCurrencyCode = "GBP";
-
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
 
