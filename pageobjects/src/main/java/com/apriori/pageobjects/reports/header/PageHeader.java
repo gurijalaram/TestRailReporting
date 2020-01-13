@@ -300,7 +300,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementAndClick(cookieAgreeButton);
         pageUtils.waitForElementToAppear(logoImage);
 
-        String errorElementLocator = "//h1[contains(text(), '44')]";
+        String errorElementLocator = "//h1[contains(text(), '404')]";
         if (driver.findElement(By.xpath(errorElementLocator)).isDisplayed()) {
             throw new Exception("Link broken. Wrong page was opened");
         }

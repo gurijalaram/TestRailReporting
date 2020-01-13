@@ -90,7 +90,9 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToScenarioExportChapterPage();
 
-        assertThat(homePage.getCurrentUrl(), is(equalTo(Constants.scenarioExportChapterUrl)));
+        String currentUrl = homePage.getCurrentUrl();
+        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartOne)));
+        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartTwo)));
         assertThat(homePage.getTabCount(), is(2));
     }
 

@@ -21,7 +21,8 @@ public class Constants {
     public static final String defaultEnvironmentKey = "env";
     public static final String defaultEnvironmentValue = "cid-aut";
 
-    public static final String scenarioExportChapterUrl = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/2019_R2/startHelp.html#context/CIA_UG/Scen_Expt_chap#page/CI_ADMIN_USER_GUIDE/Scen_Expt_chap.html#wwpID0E0UY0HA";
+    public static final String scenarioExportChapterUrlPartOne = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
+    public static final String scenarioExportChapterUrlPartTwo = "CIA_UG";
     public static final String cidteReportingDomainDesignerUrl = "https://cid-aut.awsdev.apriori.com/jasperserver-pro/domaindesigner.html";
     public static final String cidautReportingDomainDesignerUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/domaindesigner.html";
     public static final String reportsHomeUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/";
