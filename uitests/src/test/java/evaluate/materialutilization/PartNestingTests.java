@@ -39,7 +39,7 @@ public class PartNestingTests extends TestBase {
             .openMaterialComposition()
             .goToPartNestingTab();
         assertThat(partNestingPage.getSelectedSheet(), is(equalTo("4.00 mm x 1250 mm x 2500 mm")));
-        assertThat(partNestingPage.getBlankSize(), is(equalTo("468.5664 x 400")));
+        assertThat(partNestingPage.getBlankSize(), is(equalTo("470.7811 x 400.0018")));
         assertThat(partNestingPage.getPartsPerSheet(), is(equalTo("15")));
     }
 

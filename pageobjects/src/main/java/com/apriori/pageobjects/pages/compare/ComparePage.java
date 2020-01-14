@@ -64,7 +64,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return new page object
      */
     public ComparisonTablePage addScenario() {
-        addScenariosButton.click();
+        pageUtils.waitForElementAndClick(addScenariosButton);
         return new ComparisonTablePage(driver);
     }
 
