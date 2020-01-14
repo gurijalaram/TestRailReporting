@@ -66,8 +66,8 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      */
     public ComparisonTablePage selectScenario(String scenarioName, String partName) {
         findScenario(scenarioName, partName);
-        WebElement comparison = driver.findElement(By.xpath("//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]"));
-        pageUtils.waitForElementAndClick(comparison);
+        WebElement scenario = driver.findElement(By.xpath("//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]"));
+        pageUtils.javaScriptClick(scenario);
         return this;
     }
 
@@ -99,7 +99,7 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      * @return new page object
      */
     public ComparePage apply() {
-        applyButton.click();
+        pageUtils.waitForElementAndClick(applyButton);
         return new ComparePage(driver);
     }
 
@@ -109,7 +109,7 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      * @return new page object
      */
     public ComparePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new ComparePage(driver);
     }
 }
