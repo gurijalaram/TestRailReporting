@@ -57,7 +57,7 @@ public class NavigationTests extends TestBase {
     @Test
     @TestRail(testCaseId = "2982")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
-    public void testHelpCostInsightReportGuideNavigation() {
+    public void testHelpCostInsightReportGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToHelpReportsGuide()
@@ -90,7 +90,9 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToScenarioExportChapterPage();
 
-        assertThat(homePage.getCurrentUrl(), is(equalTo(Constants.scenarioExportChapterUrl)));
+        String currentUrl = homePage.getCurrentUrl();
+        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartOne)));
+        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartTwo)));
         assertThat(homePage.getTabCount(), is(2));
     }
 

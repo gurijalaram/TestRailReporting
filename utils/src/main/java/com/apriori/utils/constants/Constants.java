@@ -21,11 +21,16 @@ public class Constants {
     public static final String defaultEnvironmentKey = "env";
     public static final String defaultEnvironmentValue = "cid-te";
 
-    public static final String scenarioExportChapterUrl = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/2019_R2/startHelp.html#context/CIA_UG/Scen_Expt_chap#page/CI_ADMIN_USER_GUIDE/Scen_Expt_chap.html#wwpID0E0UY0HA";
-    public static final String reportingDomainDesignerUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/domaindesigner.html";
+    public static final String scenarioExportChapterUrlPartOne = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
+    public static final String scenarioExportChapterUrlPartTwo = "CIA_UG";
+    public static final String cidteReportingDomainDesignerUrl = "https://cid-aut.awsdev.apriori.com/jasperserver-pro/domaindesigner.html";
+    public static final String cidautReportingDomainDesignerUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/domaindesigner.html";
     public static final String reportsHomeUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/";
     public static final String reportingHelpUrl = "http://help.jaspersoft.com/Default";
     public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
+
+    public static final String cidTeHeaderText = "CID-TE";
+    public static final String cidAutHeaderText = "CI Design (AUTOMATIONENVIRONMENT)";
 
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
