@@ -86,7 +86,7 @@ public class MaterialStockTests extends TestBase {
         materialPage = new MaterialPage(driver);
         evaluatePage = materialPage.closeMaterialAndUtilizationPanel()
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("20.83")));
+        assertThat(evaluatePage.getPartCost(), is(equalTo("20.84")));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialComposition()

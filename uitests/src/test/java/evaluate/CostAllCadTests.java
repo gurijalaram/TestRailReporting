@@ -51,7 +51,7 @@ public class CostAllCadTests extends TestBase {
 
         assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("14.97"));
         assertThat(costDetailsPage.getCostContribution("Labor "), containsString("4.94"));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.31"));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.35"));
     }
 
     @Test
