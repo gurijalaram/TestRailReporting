@@ -235,8 +235,8 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
      *
      * @return current page object
      */
-    public String isOptimizeForMinimumCostSelected(String attribute) {
-        return pageUtils.waitForElementToAppear(optimizeRadioButton).getAttribute(attribute);
+    public boolean isOptimizeForMinimumCostSelected(String text) {
+        return pageUtils.checkElementAttribute(optimizeRadioButton, "outerHTML", text);
     }
 
     /**
