@@ -118,9 +118,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "span[id='globalSearch'] > a")
     private WebElement searchButton;
 
-    @FindBy(xpath = "//div[@class='gdpr-popup white-popup-block']/button[contains(@class, 'cookie-agree-btn')]")
-    private WebElement cookieAgreeButton;
-
     @FindBy(xpath = "//img[@alt='aPriori']")
     private WebElement logoImage;
 
@@ -303,7 +300,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new CirUserGuide page object
      */
     public CirUserGuidePage switchToIFrameUserGuide(String iframeId) throws Exception {
-        pageUtils.waitForElementAndClick(cookieAgreeButton);
         pageUtils.waitForElementToAppear(logoImage);
 
         if (pageBody.getAttribute("className").startsWith("error404")) {
