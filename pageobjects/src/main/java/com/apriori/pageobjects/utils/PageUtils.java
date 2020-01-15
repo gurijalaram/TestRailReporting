@@ -713,14 +713,10 @@ public class PageUtils {
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
-        try {
-            return new WebDriverWait(driver, timeOut)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        }
-        throw new AssertionError("\nWaited for: " + timeOut + "(s)\nExpected: " + text + "\nFound: " + locator.getAttribute(attribute).trim());
+        return new WebDriverWait(driver, timeOut)
+            .withMessage("\nExpected: " + text + "\t" + "\nFound: " + locator.getAttribute(attribute))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
     }
 
     /**
