@@ -83,7 +83,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("High Pressure Die Casting")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is(true));
         assertThat(processSetupOptionsPage.getMoldMaterial("AISI P20"), is(true));
         assertThat(processSetupOptionsPage.getSelectedPartTolerance("Low Tolerance +/-0.254 (+/-0.010\")"), is(true));
     }
@@ -112,7 +112,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Vertical Automatic")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is(true));
         assertThat(processSetupOptionsPage.getMoldMaterial("Plastic"), is(true));
     }
 
@@ -223,7 +223,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Injection Molding")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is(true));
         assertThat(processSetupOptionsPage.isNominalWallThicknessOverride("0.13"), is(true));
         assertThat(processSetupOptionsPage.isColorChargeOverride("0.68"), is(true));
 
