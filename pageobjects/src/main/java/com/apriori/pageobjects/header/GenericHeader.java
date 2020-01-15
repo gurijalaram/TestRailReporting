@@ -207,7 +207,7 @@ public class GenericHeader extends PageHeader {
      */
     public <T> T publishScenario(Class<T> className) {
         pageUtils.waitForElementToAppear(publishButton);
-        pageUtils.javaScriptClick(publishButton);
+        pageUtils.actionClick(publishButton);
         return PageFactory.initElements(driver, className);
     }
 

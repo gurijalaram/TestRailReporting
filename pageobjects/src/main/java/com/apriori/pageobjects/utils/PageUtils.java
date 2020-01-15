@@ -714,7 +714,7 @@ public class PageUtils {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, timeOut)
-            .withMessage("\nExpected: " + text + "\t")
+            .withMessage("\nExpected: " + text + "\t" + "\nFound: " + locator.getAttribute(attribute))
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
     }
@@ -732,7 +732,7 @@ public class PageUtils {
     }
 
     /**
-     * Waits the dropdown to be populated with the options
+     * Waits for the dropdown to be populated with the options
      *
      * @param locator - the locator
      * @param option  - the option
