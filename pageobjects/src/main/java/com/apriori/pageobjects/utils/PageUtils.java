@@ -713,10 +713,14 @@ public class PageUtils {
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
-        return new WebDriverWait(driver, timeOut)
-            .withMessage("\nExpected: " + text + "\t")
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
+        try {
+            return new WebDriverWait(driver, timeOut)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        throw new AssertionError("\nWaited for: " + timeOut + "(s)\nExpected: " + text + "\nFound: " + locator.getAttribute(attribute).trim());
     }
 
     /**
@@ -732,7 +736,7 @@ public class PageUtils {
     }
 
     /**
-     * Waits the dropdown to be populated with the options
+     * Waits for the dropdown to be populated with the options
      *
      * @param locator - the locator
      * @param option  - the option
