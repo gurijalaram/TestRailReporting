@@ -9,41 +9,50 @@ import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 
 import io.qameta.allure.Issue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author mparker
  */
-
 public class AfterTestUtil {
 
+    private static final Logger logger = LoggerFactory.getLogger(AfterTestUtil.class);
     private APIAuthentication apiAuthentication = new APIAuthentication();
 
     /**
      * Resets all settings
+     *
+     * @param userName - userName of logged user
      */
-    public void resetAllSettings() {
-        resetDisplayUnits();
-        resetColour();
-        resetScenarioName();
-        resetProductionDefaults();
-        resetToleranceSettings();
+    public void resetAllSettings(String userName) {
+        logger.info("Will reset settings for user {}",userName);
+        resetDisplayUnits(userName);
+        resetColour(userName);
+        resetScenarioName(userName);
+        resetProductionDefaults(userName);
+        resetToleranceSettings(userName);
     }
 
     /**
      * Resets only display preferences
+     *
+     * @param userName - userName of logged user
      */
-    public void resetDisplayPreferencesUnits() {
-        resetDisplayUnits();
+    public void resetDisplayPreferencesUnits(String userName) {
+        resetDisplayUnits(userName);
     }
 
     /**
      * Resets the Tolerance settings back to default
+     *
+     * @param userName - userName of logged user
      */
-    public void resetToleranceSettings() {
+    public void resetToleranceSettings(String userName) {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
             .setAutoLogin(false)
             .setBody(new ToleranceValuesEntity().setToleranceMode("CAD")
@@ -52,18 +61,20 @@ public class AfterTestUtil {
             .connect()
             .post();
 
-        resetToleranceValues();
+        resetToleranceValues(userName);
     }
 
     /**
      * Resets the production default settings back to default
+     *
+     * @param userName - userName of logged user
      */
     @Issue("AP-57904")
-    private void resetDisplayUnits() {
+    private void resetDisplayUnits(String userName) {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
             .setAutoLogin(false)
             .setBody(new DisplayPreferencesEntity().setSystemUnits(true)
@@ -75,13 +86,15 @@ public class AfterTestUtil {
 
     /**
      * Resets the Tolerance settings back to default
+     *
+     * @param userName - userName of logged user
      */
     @Issue("AP-57909")
-    private void resetColour() {
+    private void resetColour(String userName) {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=selectionColor")
             .setAutoLogin(false)
             .setCustomBody(ColourEnum.YELLOW.getColour())
@@ -92,13 +105,15 @@ public class AfterTestUtil {
 
     /**
      * Resets the scenario name back to default
+     *
+     * @param userName - userName of logged user
      */
     @Issue("AP-57908")
-    private void resetScenarioName() {
+    private void resetScenarioName(String userName) {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=defaultScenarioName")
             .setAutoLogin(false)
             .setCustomBody("Initial")
@@ -109,13 +124,15 @@ public class AfterTestUtil {
 
     /**
      * Resets the production default settings back to default
+     *
+     * @param userName - userName of logged user
      */
     @Issue("AP-57908")
-    private void resetProductionDefaults() {
+    private void resetProductionDefaults(String userName) {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/production-defaults")
             .setBody(new ProductionDefaultEntity().setPg(null)
                 .setVpe(null)
@@ -130,12 +147,14 @@ public class AfterTestUtil {
 
     /**
      * Resets the production default settings back to default
+     *
+     * @param userName - userName of logged user
      */
-    private void resetToleranceValues() {
+    private void resetToleranceValues(String userName) {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader())
+            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
             .setAutoLogin(false)
             .setBody(new ToleranceValuesEntity().setMinCadToleranceThreshhold(5.55)

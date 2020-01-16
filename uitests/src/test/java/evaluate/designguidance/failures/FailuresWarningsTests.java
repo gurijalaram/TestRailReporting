@@ -15,6 +15,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -30,10 +31,11 @@ public class FailuresWarningsTests extends TestBase {
     private SettingsPage settingsPage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private FailuresPage failuresPage;
+    private UserCredentials currentUser;
 
     @After
-    public void resetToleranceSettings() {
-        new AfterTestUtil().resetToleranceSettings();
+    public void resetSettings() {
+        new AfterTestUtil().resetAllSettings(currentUser.getUsername());
     }
 
     @Category(CustomerSmokeTests.class)
@@ -42,7 +44,9 @@ public class FailuresWarningsTests extends TestBase {
     @Description("Ensure that 'Failures/ Warnings tab includes: Messaging")
     public void failedCostingMessaging() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -68,7 +72,9 @@ public class FailuresWarningsTests extends TestBase {
     @Description("Ensure that 'Failures/ Warnings tab includes: - Issue type & count")
     public void failedCostingCount() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
