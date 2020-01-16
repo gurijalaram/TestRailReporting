@@ -20,6 +20,7 @@ import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -39,14 +40,15 @@ public class SecondaryProcessTests extends TestBase {
     private SecondaryProcessPage secondaryProcessPage;
     private ProcessRoutingPage processRoutingPage;
     private ProcessSetupOptionsPage processSetupOptionsPage;
+    private UserCredentials currentUser;
 
     public SecondaryProcessTests() {
         super();
     }
 
     @After
-    public void resetToleranceSettings() {
-        new AfterTestUtil().resetToleranceSettings();
+    public void resetSettings() {
+        new AfterTestUtil().resetAllSettings(currentUser.getUsername());
     }
 
     @Test
@@ -54,7 +56,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process leak test")
     public void secondaryProcessLeakTest() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -81,7 +85,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process xray")
     public void secondaryProcessXray() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
@@ -104,7 +110,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Carburize")
     public void secondaryProcessCarburize() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -138,7 +146,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Atmosphere Oil Harden")
     public void secondaryProcessAtmosphereOilHarden() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -162,7 +172,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Standard Anneal")
     public void secondaryProcessStandardAnneal() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -191,7 +203,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Vacuum Temper")
     public void secondaryProcessVacuumTemper() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -214,7 +228,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Stress Relief")
     public void secondaryProcessStressRelief() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -232,7 +248,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Anodize")
     public void secondaryProcessAnodize() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -250,7 +268,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Certification")
     public void secondaryProcessCertification() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -270,7 +290,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -294,7 +316,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process powder coat cart PSO")
     public void psoPowderCoatCart() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -326,7 +350,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process wet coat line PSO")
     public void psoWetCoatLine() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openSecondaryProcess()
@@ -359,7 +385,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Passivation")
     public void secondaryProcessPassivation() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -379,7 +407,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Multiple Secondary Processes before Costing")
     public void multiSecondaryProcessBeforeCost() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -400,7 +430,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -422,7 +454,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("secondary process automatically added by aPriori")
     public void cannotDeselectSP() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -443,7 +477,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Carbonitride")
     public void secondaryProcessCarbonitride() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -468,7 +504,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Vacuum air harden")
     public void secondaryProcessVacuumAirHarden() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -493,7 +531,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Vacuum Air Harden with High Temper")
     public void secondaryProcessVacuumAirHardenHighTemp() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -518,7 +558,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Spring steel")
     public void secondaryProcessSpringSteel() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -540,7 +582,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Stainless steel")
     public void secondaryProcessStainlessSteel() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -562,7 +606,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process High Speed Steel Harden")
     public void secondaryProcessHighSpeedSteel() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -584,7 +630,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Low Temp Vacuum Anneal")
     public void secondaryProcessLowTempVacuumAnneal() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -606,7 +654,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process High Temp Vacuum Anneal")
     public void secondaryProcessHighTempVacuumAnneal() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -628,7 +678,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Standard Temper")
     public void secondaryProcessStandardTemper() {
         loginPage = new CIDLoginPage(driver);
-        processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -650,7 +702,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Selections are cleared when user cancels changes")
     public void selectionsCleared() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openSecondaryProcess()
@@ -666,7 +720,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openSecondaryProcess()
@@ -682,7 +738,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetal.prt"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openSecondaryProcess()

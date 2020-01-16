@@ -38,16 +38,14 @@ import org.slf4j.LoggerFactory;
 public class UserUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(UserUtil.class);
-    public static UserCredentials currentUser;
 
     /**
      * Return common user
      *
-     * @return
+     * @return User
      */
     public static UserCredentials getUser() {
         UserCredentials user = UserCommonService.getUser();
-        currentUser = user;
         logInfo(user);
         return user;
     }
@@ -55,8 +53,8 @@ public class UserUtil {
     /**
      * Return user by access level
      *
-     * @param accessLevel
-     * @return
+     * @param accessLevel - access level of needed user
+     * @return User
      */
     public static UserCredentials getUser(String accessLevel) {
         UserCredentials user = UserSecurityService.getUser(accessLevel);
