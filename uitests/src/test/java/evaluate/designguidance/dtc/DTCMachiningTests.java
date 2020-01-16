@@ -16,6 +16,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -32,21 +33,24 @@ public class DTCMachiningTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
     private InvestigationPage investigationPage;
+    private UserCredentials currentUser;
 
     public DTCMachiningTests() {
         super();
     }
 
     @After
-    public void resetToleranceSettings() {
-        new AfterTestUtil().resetToleranceSettings();
+    public void resetSettings() {
+        new AfterTestUtil().resetAllSettings(currentUser.getUsername());
     }
 
     @Test
     @Description("Testing DTC Machining Keyseat Mill")
     public void testDTCKeyseat() {
         loginPage = new CIDLoginPage(driver);
-        guidancePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -62,7 +66,9 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Sharp Corner on a Curved Surface")
     public void testDTCCurvedSurface() {
         loginPage = new CIDLoginPage(driver);
-        guidancePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -78,7 +84,9 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Sharp Corner - Planar Face - Contouring")
     public void testDTCSharpCorner() {
         loginPage = new CIDLoginPage(driver);
-        guidancePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -94,7 +102,9 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Side Milling L/D Ratio")
     public void testDTCSideMilling() {
         loginPage = new CIDLoginPage(driver);
-        guidancePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -110,7 +120,9 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Missing Setups")
     public void testDTCMissingSetup() {
         loginPage = new CIDLoginPage(driver);
-        guidancePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -126,7 +138,9 @@ public class DTCMachiningTests extends TestBase {
     @Description("Verify obstructed surfaces on planar faces")
     public void obstructedSurfacePlanarFace() {
         loginPage = new CIDLoginPage(driver);
-        guidancePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -144,7 +158,9 @@ public class DTCMachiningTests extends TestBase {
     @Description("Ensure that  'Guidance' includes: - Issue type count - DTC Messaging for each guidance instance")
     public void stockMachiningDTC() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -175,7 +191,9 @@ public class DTCMachiningTests extends TestBase {
     @Description("Verify Sharp corners on curved walls are highlighted")
     public void sharpCornerCurvedWall() {
         loginPage = new CIDLoginPage(driver);
-        guidancePage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("1379344_BEFORE_DTC.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
@@ -191,7 +209,9 @@ public class DTCMachiningTests extends TestBase {
     @Description("Verify the investigate tab correctly presents features & conditions which impact cost")
     public void stockMachineDTC() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();

@@ -13,6 +13,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -24,10 +25,11 @@ public class MaterialPMITests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private UserCredentials currentUser;
 
     @After
     public void resetAllSettings() {
-        new AfterTestUtil().resetAllSettings();
+        new AfterTestUtil().resetAllSettings(currentUser.getUsername());
     }
 
     public MaterialPMITests() {super();}
@@ -37,7 +39,9 @@ public class MaterialPMITests extends TestBase {
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
