@@ -105,7 +105,7 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .filterCriteria()
-            .filterPrivateCriteria("Assembly", "Status", "is", "Nothing selected")
+            .filterPrivateCriteria("Assembly", "Status", "is", "clear selections")
             .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
@@ -152,7 +152,7 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .filterCriteria()
-            .filterPublicCriteria("Comparison", "Cost Maturity", "is", "Nothing selected")
+            .filterPublicCriteria("Comparison", "Cost Maturity", "is", "clear selections")
             .apply(ExplorePage.class);
         //Assert.assertTrue();
     }
