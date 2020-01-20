@@ -118,8 +118,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "span[id='globalSearch'] > a")
     private WebElement searchButton;
 
-    @FindBy(id = "toolbar_logo_link")
-    private WebElement pageTitle;
+    @FindBy(xpath = "//img[@alt='aPriori']")
+    private WebElement logoImage;
 
     @FindBy(xpath = "//h1[contains(text(), '404')]")
     private WebElement errorTitle;
@@ -300,7 +300,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new CirUserGuide page object
      */
     public CirUserGuidePage switchToIFrameUserGuide(String iframeId) throws Exception {
-        pageUtils.waitForElementToAppear(pageTitle);
+        pageUtils.waitForElementToAppear(logoImage);
 
         if (pageBody.getAttribute("className").startsWith("error404")) {
             throw new Exception("Link broken. Wrong page was opened - iframe wasn't found as a result");
