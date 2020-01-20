@@ -192,29 +192,30 @@ public class AssemblyDetailsReportTests extends TestBase {
         // new test for each setting of the three
 
         /*
-            The reason for the subtracting of small values below is that there is a rounding bug.
+            The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
             Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
             Bug for this issue: https://jira.apriori.com/browse/AP-58059
          */
 
-        assertThat(assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType,"Cycle Time")
-                        .subtract(new BigDecimal("0.15")),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Sub Assembly", "Cycle Time Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Cycle Time Total"),
+                assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
+        ), is(true));
 
-        assertThat(assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
-                        .add(new BigDecimal("0.01")),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Sub Assembly", "Piece Part Cost Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Piece Part Cost Total"),
+                assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
+        ), is(true));
 
-        assertThat(assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
-                        .add(new BigDecimal("0.01")),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Sub Assembly", "Fully Burdened Cost Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Fully Burdened Cost Total"),
+                assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
+        ), is(true));
 
-        assertThat(assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments"),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Sub Assembly", "Capital Investments Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total"),
+                assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
+        ), is(true));
     }
 
     @Test
@@ -235,21 +236,31 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickApplyAndOk()
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
-        assertThat(assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType,"Cycle Time"),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Sub Sub ASM", "Cycle Time Total"))));
+        /*
+            The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
+            Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
+            Bug for this issue: https://jira.apriori.com/browse/AP-58059
+         */
 
-        assertThat(assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType,"Piece Part Cost"),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType,"Grand Total Sub Sub ASM", "Piece Part Cost Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Cycle Time Total"),
+                assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
+        ), is(true));
 
-        assertThat(assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType,"Fully Burdened Cost"),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Sub Sub ASM", "Fully Burdened Cost Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Piece Part Cost Total"),
+                assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
+        ), is(true));
 
-        assertThat(assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType,"Capital Investments"),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType,"Grand Total Sub Sub ASM", "Capital Investments Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Fully Burdened Cost Total"),
+                assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
+        ), is(true));
+
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Capital Investments Total"),
+                assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
+        ), is(true));
     }
 
     @Test
@@ -271,27 +282,29 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
         /*
-            The reason for the subtracting of small values below is that there is a rounding bug.
+            The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
             Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
             Bug for this issue: https://jira.apriori.com/browse/AP-58059
          */
 
-        assertThat(assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType,"Cycle Time"),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Top Level", "Cycle Time Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Cycle Time Total"),
+                assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
+        ), is(true));
 
-        assertThat(assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType,"Piece Part Cost")
-                    .subtract(new BigDecimal("0.02")),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Top Level", "Piece Part Cost Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Piece Part Cost Total"),
+                assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
+        ), is(true));
 
-        assertThat(assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType,"Fully Burdened Cost")
-                    .subtract(new BigDecimal("0.02")),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType,"Grand Total Top Level", "Fully Burdened Cost Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Fully Burdened Cost Total"),
+                assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
+        ), is(true));
 
-        assertThat(assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType,"Capital Investments"),
-                is(equalTo(assemblyDetailsReport.getValueFromTable(
-                        assemblyType, "Grand Total Top Level", "Capital Investments Total"))));
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Capital Investments Total"),
+                assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
+        ), is(true));
     }
 }

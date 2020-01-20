@@ -292,11 +292,11 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return List of BigDecimals
      */
     private List<BigDecimal> checkCTSubAssemblyValues(String assemblyType, List<BigDecimal> values) {
-        List<String> partNums = checkPartNumber(assemblyType);
+        List<BigDecimal> levelValues = getLevelValues(assemblyType);
         List<BigDecimal> trimmedValues = new ArrayList<>();
 
-        for (int i = 0; i < partNums.size(); i++) {
-            if (partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-SUB-ASM")) {
+        for (int i = 0; i < levelValues.size(); i++) {
+            if (levelValues.get(i).compareTo(new BigDecimal("1")) == 0) {
                 if (values.get(i).compareTo(new BigDecimal("0.00")) != 0) {
                     trimmedValues.add(values.get(i));
                 }
@@ -503,6 +503,23 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             returnValue = true;
         }
         return returnValue;
+    }
+
+    /**
+     * Ensures two values are almost near (within 0.03)
+     * @param valueOne
+     * @param valueTwo
+     * @return boolean
+     */
+    public boolean areValuesAlmostEqual(BigDecimal valueOne, BigDecimal valueTwo) {
+        BigDecimal largerValue = valueOne.max(valueTwo);
+        BigDecimal smallerValue = valueOne.min(valueTwo);
+        BigDecimal difference = largerValue.subtract(smallerValue);
+        boolean retVal = false;
+        if (difference.compareTo(new BigDecimal("0.00")) >= 0 && difference.compareTo(new BigDecimal("0.03")) <= 0) {
+            retVal = true;
+        }
+        return retVal;
     }
 
     /**
