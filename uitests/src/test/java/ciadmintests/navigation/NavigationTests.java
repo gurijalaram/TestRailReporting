@@ -14,6 +14,9 @@ import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -120,8 +123,11 @@ public class NavigationTests extends TestBase {
                 .navigateToReports();
 
         String urlToCheck = homePage.getUrlToCheck();
+        homePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.reportsUrlSuffix));
+        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.reportsUrlSuffix + Constants.reportsLastSuffix));
         assertThat(homePage.getTabCount(), is(equalTo(2)));
+        assertThat(homePage.isReportsLogoutDisplayed(), is(true));
+        assertThat(homePage.isReportsLogoutEnabled(), is(true));
     }
 }
