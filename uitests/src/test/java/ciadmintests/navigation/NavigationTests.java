@@ -14,6 +14,7 @@ import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -104,7 +105,7 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToAdminLogout();
 
-        assertThat(logout.getHeaderText(), is(equalTo("CI Design (TE)")));
+        assertThat(logout.getHeaderText(), anyOf(equalTo(Constants.cidTeHeaderText), equalTo(Constants.cidAutHeaderText)));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
@@ -117,7 +118,7 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToReports();
 
-        assertThat(homePage.getCurrentUrl(), is(containsString(Constants.reportsHomeUrl)));
+        assertThat(homePage.getCurrentUrl(), anyOf(equalTo(Constants.reportsTeUrl), equalTo(Constants.reportsAutUrl)));
         assertThat(homePage.getTabCount(), is(equalTo(2)));
     }
 }

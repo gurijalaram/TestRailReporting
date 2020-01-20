@@ -25,7 +25,8 @@ public class Constants {
     public static final String scenarioExportChapterUrlPartTwo = "CIA_UG";
     public static final String cidteReportingDomainDesignerUrl = "https://cid-aut.awsdev.apriori.com/jasperserver-pro/domaindesigner.html";
     public static final String cidautReportingDomainDesignerUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/domaindesigner.html";
-    public static final String reportsHomeUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/";
+    public static final String reportsTeUrl = "https://cid-te.awsdev.apriori.com/jasperserver-pro/";
+    public static final String reportsAutUrl = "https://cid-aut.awsdev.apriori.com/jasperserver-pro/";
     public static final String reportingHelpUrl = "http://help.jaspersoft.com/Default";
     public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
 
