@@ -45,7 +45,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(id = "help")
     private WebElement helpButton;
 
-    @FindBy(id = "manage")
+    @FindBy(id = "main_manage")
     private WebElement manageMenuOption;
 
     @FindBy(id = "help.cost-insight_rep")
