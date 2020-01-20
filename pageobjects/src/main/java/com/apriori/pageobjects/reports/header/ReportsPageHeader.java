@@ -3,6 +3,7 @@ package com.apriori.pageobjects.reports.header;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import com.apriori.utils.constants.Constants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -89,5 +90,13 @@ public class ReportsPageHeader extends PageHeader {
         pageUtils.waitForElementToAppear(optionsButton);
         optionsButton.click();
         return new GenericReportPage(driver);
+    }
+
+    /**
+     * Returns header to check
+     * @return
+     */
+    public String getHeaderToCheck() {
+        return pageUtils.getHeaderToCheck();
     }
 }

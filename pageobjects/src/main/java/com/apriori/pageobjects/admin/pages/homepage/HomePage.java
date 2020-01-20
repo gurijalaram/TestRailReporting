@@ -77,4 +77,12 @@ public class HomePage extends PageHeader {
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
     }
+
+    /**
+     * Gets url to check
+     * @return String
+     */
+    public String getUrlToCheck() {
+        return pageUtils.getUrlToCheck();
+    }
 }

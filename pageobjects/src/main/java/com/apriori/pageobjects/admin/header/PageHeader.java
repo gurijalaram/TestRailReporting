@@ -7,6 +7,7 @@ import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -138,6 +139,14 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementToAppear(userButton);
         navigateToPage(userButton, logoutButton);
         return new Logout(driver);
+    }
+
+    /**
+     * Returns header to check
+     * @return
+     */
+    public String getHeaderToCheck() {
+        return pageUtils.getHeaderToCheck();
     }
 
     /**
