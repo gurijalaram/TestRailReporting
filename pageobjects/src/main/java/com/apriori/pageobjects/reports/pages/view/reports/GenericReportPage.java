@@ -11,8 +11,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
 
 public class GenericReportPage extends ReportsPageHeader {
 
@@ -116,9 +122,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        //pageUtils.waitForElementToAppear(assemblyMap.get(assemblyName));
         // search using text box
-        assemblyInput.sendKeys("TOP-LEVEL (Initial)");
+        assemblyInput.sendKeys(assemblyName);
         // click on only result
         assemblyMap.get(assemblyName).click();
         //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
