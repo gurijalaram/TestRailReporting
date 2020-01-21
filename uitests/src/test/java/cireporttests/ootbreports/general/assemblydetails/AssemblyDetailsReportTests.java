@@ -188,9 +188,6 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickApplyAndOk()
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
-        // check that component subtotal + assembly processes is correct for each column
-        // new test for each setting of the three
-
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
             Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
