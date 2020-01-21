@@ -27,6 +27,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
 
+    @FindBy(xpath = "//div[@id='assemblySelect']//input")
+    private WebElement assemblyInput;
+
     @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
     private WebElement subAssemblyOption;
 
@@ -113,10 +116,14 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        pageUtils.waitForElementToAppear(assemblyMap.get(assemblyName));
-        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            assemblyMap.get(assemblyName).click();
-        }
+        //pageUtils.waitForElementToAppear(assemblyMap.get(assemblyName));
+        // search using text box
+        assemblyInput.sendKeys("TOP-LEVEL (Initial)");
+        // click on only result
+        assemblyMap.get(assemblyName).click();
+        //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
+        //    assemblyMap.get(assemblyName).click();
+        //}
         return this;
     }
 
