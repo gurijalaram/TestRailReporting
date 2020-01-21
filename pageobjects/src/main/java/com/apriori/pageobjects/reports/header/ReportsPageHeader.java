@@ -90,4 +90,12 @@ public class ReportsPageHeader extends PageHeader {
         optionsButton.click();
         return new GenericReportPage(driver);
     }
+
+    /**
+     * Returns header to check
+     * @return
+     */
+    public String getHeaderToCheck() {
+        return pageUtils.getHeaderToCheck();
+    }
 }

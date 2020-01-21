@@ -3,6 +3,8 @@ package com.apriori.pageobjects.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
+import com.apriori.utils.constants.Constants;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -841,5 +843,39 @@ public class PageUtils {
         By reportLinkLocator = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
         waitForElementToAppear(reportLinkLocator);
         return driver.findElement(reportLinkLocator);
+    }
+
+    /**
+     * Checks if env is TE
+     * @return boolean
+     */
+    public boolean isEnvTE() {
+        boolean isEnvTE = false;
+        if (Constants.environment.equals("cid-te")) {
+            isEnvTE = true;
+        }
+        return isEnvTE;
+    }
+
+    /**
+     * Gets header to assert against
+     * @return String
+     */
+    public String getHeaderToCheck() {
+        String headerToCheck = "";
+        if (isEnvTE()) {
+            headerToCheck = Constants.cidTeHeaderText;
+        } else {
+            headerToCheck = Constants.cidAutHeaderText;
+        }
+        return headerToCheck;
+    }
+
+    /**
+     * Gets URL to assert against
+     * @return String
+     */
+    public String getUrlToCheck() {
+        return Constants.getBaseUrl();
     }
 }

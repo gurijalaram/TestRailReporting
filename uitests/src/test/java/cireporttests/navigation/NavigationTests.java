@@ -79,7 +79,9 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToReportLogout();
 
-        assertThat(logout.getHeaderText(), anyOf(equalTo(Constants.cidTeHeaderText), equalTo(Constants.cidAutHeaderText)));
+        String headerToCheck = logout.getHeaderToCheck();
+
+        assertThat(logout.getHeaderText(), equalTo(headerToCheck));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
@@ -216,7 +218,9 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToCreateDomainPage();
 
-        assertThat(domain.getCurrentUrl(), anyOf(equalTo(Constants.cidteReportingDomainDesignerUrl), equalTo(Constants.cidautReportingDomainDesignerUrl)));
+        String urlToCheck = domain.getUrlToCheck();
+
+        assertThat(domain.getCurrentUrl(), equalTo(String.format("%s%s", urlToCheck, Constants.domainDesignerUrlSuffix)));
         assertThat(domain.isDialogDisplayed(), is(equalTo(true)));
         assertThat(domain.isDialogEnabled(), is(equalTo(true)));
     }
