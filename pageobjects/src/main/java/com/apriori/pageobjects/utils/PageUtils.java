@@ -847,12 +847,11 @@ public class PageUtils {
 
     /**
      * Checks if env is TE
-     * @param currentUrl
      * @return boolean
      */
-    public boolean isEnvTE(String currentUrl) {
+    public boolean isEnvTE() {
         boolean isEnvTE = false;
-        if (currentUrl.contains("cid-te")) {
+        if (Constants.environment.equals("cid-te")) {
             isEnvTE = true;
         }
         return isEnvTE;
@@ -864,7 +863,7 @@ public class PageUtils {
      */
     public String getHeaderToCheck() {
         String headerToCheck = "";
-        if (isEnvTE(driver.getCurrentUrl())) {
+        if (isEnvTE()) {
             headerToCheck = Constants.cidTeHeaderText;
         } else {
             headerToCheck = Constants.cidAutHeaderText;
@@ -877,12 +876,6 @@ public class PageUtils {
      * @return String
      */
     public String getUrlToCheck() {
-        String urlToCheck = "";
-        if (isEnvTE(driver.getCurrentUrl())) {
-            urlToCheck = Constants.getBaseUrl();
-        } else {
-            urlToCheck = Constants.getBaseUrl();
-        }
-        return urlToCheck;
+        return Constants.getBaseUrl();
     }
 }
