@@ -4,6 +4,7 @@ import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -121,11 +122,16 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
+        // if not sub assembly (default), press up arrow once, down arrow once (sub-sub-asm) or twice (top level), then enter
         currentAssemblyElement.click();
-        // search using text box
-        assemblyInput.sendKeys(assemblyName);
-        // click on only result
-        assemblyMap.get(assemblyName).click();
+        if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
+            assemblyInput.sendKeys(Keys.DOWN);
+            assemblyInput.sendKeys(Keys.ENTER);
+        } else if (assemblyName.equals("TOP-LEVEL (Initial)")) {
+            assemblyInput.sendKeys(Keys.DOWN);
+            assemblyInput.sendKeys(Keys.DOWN);
+            assemblyInput.sendKeys(Keys.ENTER);
+        }
         //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
         //    assemblyMap.get(assemblyName).click();
         //}
