@@ -3,6 +3,7 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,12 +11,30 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GenericReportPage extends ReportsPageHeader {
 
     private static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private Map<String, WebElement> exportSetMap = new HashMap<>();
+    private Map<String, WebElement> assemblyMap = new HashMap<>();
+    private Map<String, WebElement> currencyMap = new HashMap<>();
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
     private WebElement topLevelExportSet;
+
+    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
+    private WebElement currentAssemblyElement;
+
+    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
+    private WebElement subAssemblyOption;
+
+    @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
+    private WebElement subSubAsmOption;
+
+    @FindBy(css = "li[title='TOP-LEVEL (Initial)'] > div > a")
+    private WebElement topLevelOption;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
     private WebElement currentCurrencyElement;
@@ -54,6 +73,9 @@ public class GenericReportPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseExportSetHashMap();
+        initialiseAssemblyHashMap();
+        initialiseCurrencyMap();
     }
 
     @Override
@@ -67,12 +89,34 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Selects top level export set
+     * Selects specified export set
      * @return current page object
      */
-    public GenericReportPage selectTopLevelExportSet() {
-        pageUtils.isPageLoaded(topLevelExportSet);
-        pageUtils.waitForElementAndClick(topLevelExportSet);
+    public GenericReportPage selectExportSet(String exportSet) {
+        pageUtils.waitForElementAndClick(exportSetMap.get(exportSet));
+        return this;
+    }
+
+    /**
+     * Generic scroll method
+     * @return current page object
+     */
+    public GenericReportPage scrollDownInputControls() {
+        pageUtils.waitForElementToAppear(currentCurrencyElement);
+        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
+        return this;
+    }
+
+    /**
+     * Sets specified assembly
+     * @return current page object
+     */
+    public GenericReportPage setAssembly(String assemblyName) {
+        currentAssemblyElement.click();
+        //pageUtils.waitForElementAndClick(assemblyMap.get(assemblyName));
+        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
+            assemblyMap.get(assemblyName).click();
+        }
         return this;
     }
 
@@ -82,18 +126,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage checkCurrencySelected(String currency) {
-        pageUtils.waitForElementToAppear(currentCurrencyElement);
-        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
+        currentCurrencyElement.click();
         if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
-            currentCurrencyElement.click();
-            switch (currency) {
-                case "USD":
-                    usdCurrencyOption.click();
-                    break;
-                case "GBP":
-                    gbpCurrencyOption.click();
-                    break;
-            }
+            currencyMap.get(currency).click();
         }
         return this;
     }
@@ -103,11 +138,31 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Assembly Details Report page object
      */
     public AssemblyDetailsReportPage clickApplyAndOk() {
-        pageUtils.waitForElementToAppear(applyButton);
-        applyButton.click();
-        pageUtils.waitForElementToAppear(okButton);
+        pageUtils.waitForElementAndClick(applyButton);
+        pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
         return new AssemblyDetailsReportPage(driver);
+    }
+
+    private void initialiseCurrencyMap() {
+        currencyMap.put("GBP", gbpCurrencyOption);
+        currencyMap.put("USD", usdCurrencyOption);
+    }
+
+    /**
+     * Initialises export set hash map
+     */
+    private void initialiseExportSetHashMap() {
+        exportSetMap.put("top-level", topLevelExportSet);
+    }
+
+    /**
+     * Initialises assembly hash map
+     */
+    private void initialiseAssemblyHashMap() {
+        assemblyMap.put("SUB-ASSEMBLY (Initial)", subAssemblyOption);
+        assemblyMap.put("SUB-SUB-ASM (Initial)", subSubAsmOption);
+        assemblyMap.put("TOP-LEVEL (Initial)", topLevelOption);
     }
 }
