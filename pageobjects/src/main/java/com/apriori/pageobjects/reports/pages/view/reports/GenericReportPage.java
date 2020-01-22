@@ -121,7 +121,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets specified assembly
      * @return current page object
      */
-    public GenericReportPage setAssembly(String assemblyName) {
+    public GenericReportPage setAssembly(String assemblyName) throws InterruptedException {
         // if not sub assembly (default), press up arrow once, down arrow once (sub-sub-asm) or twice (top level), then enter
         currentAssemblyElement.click();
         if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
@@ -130,6 +130,8 @@ public class GenericReportPage extends ReportsPageHeader {
         } else if (assemblyName.equals("TOP-LEVEL (Initial)")) {
             assemblyInput.sendKeys(Keys.DOWN);
             assemblyInput.sendKeys(Keys.DOWN);
+            assemblyInput.sendKeys(Keys.ENTER);
+        } else {
             assemblyInput.sendKeys(Keys.ENTER);
         }
         //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {

@@ -39,6 +39,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
+    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    private WebElement currentAssembly;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -404,7 +407,18 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Waits for correct current currency to appear on screen
+     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     * @param assemblyToCheck
+     * @return
+     */
+    public AssemblyDetailsReportPage waitForCorrectAssembly(String assemblyToCheck) {
+        pageUtils.waitForElementToAppear(currentAssembly);
+        pageUtils.checkElementAttribute(currentAssembly, "innerText", assemblyToCheck.toUpperCase());
+        return this;
+    }
+
+    /**
+     * Waits for correct current currency to appear on screen (not on Input Controls - on report itself)
      * @param currencyToCheck
      * @return current page object
      */
@@ -413,6 +427,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return this;
     }
+
 
     /**
      * Checks if value of current cell is a valid one

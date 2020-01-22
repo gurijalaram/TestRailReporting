@@ -173,7 +173,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "3067")
     @Description("Verify totals calculations for Sub Assembly")
-    public void testTotalCalculationsForSubAssembly() {
+    public void testTotalCalculationsForSubAssembly() throws InterruptedException {
         assemblyType = "Sub-Assembly";
 
         assemblyDetailsReport = new LoginPage(driver)
@@ -186,7 +186,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectAssembly(assemblyType);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -218,7 +219,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "3068")
     @Description("Verify totals calculations for Sub-Sub-ASM")
-    public void testTotalCalculationsForSubSubASM() {
+    public void testTotalCalculationsForSubSubASM() throws InterruptedException {
         assemblyType = "Sub-Sub-ASM";
 
         assemblyDetailsReport = new LoginPage(driver)
@@ -263,7 +264,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1934")
     @Description("Verify totals calculations for Top Level")
-    public void testTotalCalculationsForTopLevel() {
+    public void testTotalCalculationsForTopLevel() throws InterruptedException {
         assemblyType = "Top Level";
 
         assemblyDetailsReport = new LoginPage(driver)
