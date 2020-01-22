@@ -126,9 +126,8 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
         long timeLimitInSeconds = 5;
 
         if (pageUtils.isElementDisplayed(routingScroller)) {
-            routingScroller.sendKeys(Keys.TAB);
             do {
-                routingScroller.sendKeys(Keys.PAGE_DOWN);
+                routingScroller.sendKeys(Keys.DOWN);
                 routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
             } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
         }
