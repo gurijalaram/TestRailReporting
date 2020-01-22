@@ -356,6 +356,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-57941")
     @TestRail(testCaseId = {"723"})
     @Description("Validate tolerance edits when default values set")
     public void specificDefaultTolerances() {
@@ -437,7 +438,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57049")
+    @Issue("AP-57941")
     @TestRail(testCaseId = {"1286"})
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {

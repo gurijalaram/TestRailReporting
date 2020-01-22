@@ -29,6 +29,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -87,6 +88,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-918")
     @TestRail(testCaseId = {"274", "1609", "1602"})
     @Description("User can change the default Process group")
     public void defaultPG() {
