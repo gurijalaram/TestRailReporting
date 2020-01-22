@@ -100,7 +100,6 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
      */
     public ComparePage apply() {
         pageUtils.waitForElementAndClick(applyButton);
-        pageUtils.waitFor(45000);
         return new ComparePage(driver);
     }
 

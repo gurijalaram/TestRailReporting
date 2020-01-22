@@ -645,7 +645,7 @@ public class PageUtils {
      */
     public void waitForElementAndClick(WebElement locator) {
         waitForElementToBeClickable(locator);
-        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver webDriver) -> {
                 locator.click();
