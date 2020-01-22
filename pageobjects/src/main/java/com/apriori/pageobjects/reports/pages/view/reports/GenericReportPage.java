@@ -121,7 +121,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets specified assembly
      * @return current page object
      */
-    public GenericReportPage setAssembly(String assemblyName) throws InterruptedException {
+    public GenericReportPage setAssembly(String assemblyName) {
         // if not sub assembly (default), press up arrow once, down arrow once (sub-sub-asm) or twice (top level), then enter
         currentAssemblyElement.click();
         // wait for options to appear?

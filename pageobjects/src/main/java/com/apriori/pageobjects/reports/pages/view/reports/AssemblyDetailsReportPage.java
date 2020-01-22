@@ -415,10 +415,11 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         pageUtils.waitForElementToAppear(currentAssembly);
         // if top level, hyphon is needed
         if (assemblyToCheck.equals("Top Level")) {
-            String newVal = assemblyToCheck.toUpperCase().replace("-", " ");
+            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
             pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+        } else {
+            pageUtils.checkElementAttribute(currentAssembly, "innerText", assemblyToCheck.toUpperCase());
         }
-        pageUtils.checkElementAttribute(currentAssembly, "innerText", assemblyToCheck.toUpperCase());
         return this;
     }
 
