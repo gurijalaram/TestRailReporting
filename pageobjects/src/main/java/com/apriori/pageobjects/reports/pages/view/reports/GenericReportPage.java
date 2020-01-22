@@ -127,16 +127,16 @@ public class GenericReportPage extends ReportsPageHeader {
         // wait for options to appear?
         pageUtils.waitForElementToAppear(subSubAsmOption);
         if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
-            //assemblyInput.sendKeys(Keys.DOWN);
-            //assemblyInput.sendKeys(Keys.ENTER);
-            pageUtils.waitForElementToAppear(subSubAsmOption);
-            subSubAsmOption.click();
+            assemblyInput.sendKeys(Keys.DOWN);
+            assemblyInput.sendKeys(Keys.ENTER);
+            //pageUtils.waitForElementToAppear(subSubAsmOption);
+            //subSubAsmOption.click();
         } else if (assemblyName.equals("TOP-LEVEL (Initial)")) {
-            //assemblyInput.sendKeys(Keys.DOWN);
-            //assemblyInput.sendKeys(Keys.DOWN);
-            //assemblyInput.sendKeys(Keys.ENTER);
-            pageUtils.waitForElementToAppear(topLevelOption);
-            topLevelOption.click();
+            assemblyInput.sendKeys(Keys.DOWN);
+            assemblyInput.sendKeys(Keys.DOWN);
+            assemblyInput.sendKeys(Keys.ENTER);
+            //pageUtils.waitForElementToAppear(topLevelOption);
+            //topLevelOption.click();
         } else {
             assemblyInput.sendKeys(Keys.ENTER);
         }
