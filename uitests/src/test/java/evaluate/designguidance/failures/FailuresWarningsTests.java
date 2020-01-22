@@ -20,6 +20,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -68,6 +69,7 @@ public class FailuresWarningsTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
+    @Issue("AP-57941")
     @TestRail(testCaseId = {"1592"})
     @Description("Ensure that 'Failures/ Warnings tab includes: - Issue type & count")
     public void failedCostingCount() {

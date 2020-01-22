@@ -492,7 +492,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Description("Validate routings Additive")
-    public void routingsAddivite() {
+    public void routingsAdditive() {
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -542,6 +542,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-867")
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
         loginPage = new CIDLoginPage(driver);
