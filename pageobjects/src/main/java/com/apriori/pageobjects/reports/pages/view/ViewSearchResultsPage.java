@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.reports.pages.view;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -19,6 +20,9 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
 
     @FindBy(css = "body")
     private WebElement searchResultsPageTitle;
+
+    @FindBy(id = "accessTypeFilter_item1")
+    private WebElement allAvailableFilterButton;
 
     public ViewSearchResultsPage(WebDriver driver) {
         super(driver);

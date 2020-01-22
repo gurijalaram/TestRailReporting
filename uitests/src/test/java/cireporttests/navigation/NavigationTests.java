@@ -25,6 +25,7 @@ import com.apriori.pageobjects.reports.pages.manage.ManageUsersPage;
 import com.apriori.utils.TestRail;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -58,7 +59,7 @@ public class NavigationTests extends TestBase {
     @Test
     @TestRail(testCaseId = "2987")
     @Description("Ensure that the CI Reports User Guide Link works")
-    public void testCIReportsUserGuideNavigation() {
+    public void testCIReportsUserGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToReportUserGuide()
@@ -78,7 +79,9 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToReportLogout();
 
-        assertThat(logout.getHeaderText(), is(equalTo("CI Design (TE)")));
+        String headerToCheck = logout.getHeaderToCheck();
+
+        assertThat(logout.getHeaderText(), equalTo(headerToCheck));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
@@ -215,7 +218,9 @@ public class NavigationTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToCreateDomainPage();
 
-        assertThat(domain.getCurrentUrl(), is(equalTo(Constants.reportingDomainDesignerUrl)));
+        String urlToCheck = domain.getUrlToCheck();
+
+        assertThat(domain.getCurrentUrl(), equalTo(String.format("%s%s", urlToCheck, Constants.domainDesignerUrlSuffix)));
         assertThat(domain.isDialogDisplayed(), is(equalTo(true)));
         assertThat(domain.isDialogEnabled(), is(equalTo(true)));
     }

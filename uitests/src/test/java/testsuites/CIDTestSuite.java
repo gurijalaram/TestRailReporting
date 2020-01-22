@@ -18,7 +18,6 @@ import evaluate.ListProcessGroupTests;
 import evaluate.NewScenarioNameTests;
 import evaluate.ProcessGroupsTests;
 import evaluate.ProcessRoutingTests;
-import evaluate.ProcessRoutingTestsAfter;
 import evaluate.PsoEditTests;
 import evaluate.PublishExistingCostedTests;
 import evaluate.PublishNewCostedTests;
@@ -57,7 +56,6 @@ import settings.SettingsTests;
     DTCCastingTests.class,
     DTCMachiningTests.class,
     DTCPlasticMouldingTests.class,
-    DTCPlasticMouldingTests.class,
     SheetMetalDTCTests.class,
     FailuresWarningsTests.class,
     GeometryTests.class,
@@ -75,7 +73,6 @@ import settings.SettingsTests;
     NewScenarioNameTests.class,
     ProcessGroupsTests.class,
     ProcessRoutingTests.class,
-    ProcessRoutingTestsAfter.class,
     PsoEditTests.class,
     PublishExistingCostedTests.class,
     PublishNewCostedTests.class,

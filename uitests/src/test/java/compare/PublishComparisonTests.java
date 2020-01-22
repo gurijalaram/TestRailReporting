@@ -36,7 +36,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"421", "434"})
-    @Issue("AP-56845")
+    @Issue("BA-840")
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
 
@@ -84,7 +84,7 @@ public class PublishComparisonTests extends TestBase {
             .checkJobQueueRow("okay")
             .closeJobQueue(ComparePage.class);
 
-        assertThat(comparePage.isComparisonLocked("Locked"), CoreMatchers.is(true));
+        assertThat(comparePage.isComparisonUnlocked("Unlocked"), CoreMatchers.is(true));
     }
 
 

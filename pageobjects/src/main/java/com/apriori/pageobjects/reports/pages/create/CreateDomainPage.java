@@ -64,4 +64,12 @@ public class CreateDomainPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(domainDialog);
         return domainDialog.isEnabled();
     }
+
+    /**
+     * Gets URL to assert against
+     * @return String
+     */
+    public String getUrlToCheck() {
+        return pageUtils.getUrlToCheck();
+    }
 }

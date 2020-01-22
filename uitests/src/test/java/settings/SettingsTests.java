@@ -29,6 +29,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -45,10 +46,11 @@ public class SettingsTests extends TestBase {
     private MoreInputsPage moreInputsPage;
     private SelectionSettingsPage selectionSettingsPage;
     private WarningPage warningPage;
+    private UserCredentials currentUser;
 
     @After
     public void resetAllSettings() {
-        new AfterTestUtil(driver).resetAllSettings();
+        new AfterTestUtil().resetAllSettings(currentUser.getUsername());
     }
 
     @Category(CustomerSmokeTests.class)
@@ -58,7 +60,9 @@ public class SettingsTests extends TestBase {
     public void changeProductionDefaults() {
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .enterScenarioName("MP Auto Test")
@@ -84,6 +88,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-918")
     @TestRail(testCaseId = {"274", "1609", "1602"})
     @Description("User can change the default Process group")
     public void defaultPG() {
@@ -91,7 +96,9 @@ public class SettingsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup());
@@ -116,7 +123,9 @@ public class SettingsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe());
@@ -138,7 +147,9 @@ public class SettingsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .enterAnnualVolume("9524")
@@ -162,7 +173,9 @@ public class SettingsTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectBatchManual()
@@ -185,7 +198,9 @@ public class SettingsTests extends TestBase {
     public void differentMaterialCatalog() {
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -206,7 +221,9 @@ public class SettingsTests extends TestBase {
     public void defaultColor() {
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openSelectionTab()
             .setColour(ColourEnum.ELECTRIC_PURPLE.getColour());
@@ -224,7 +241,9 @@ public class SettingsTests extends TestBase {
     public void defaultMaterial() {
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
@@ -248,10 +267,10 @@ public class SettingsTests extends TestBase {
     @Description("Have the users defaults automatically loaded for each login")
     public void logoutSettings() {
 
-        UserCredentials testUser = UserUtil.getUser();
-
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(testUser)
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
@@ -265,7 +284,7 @@ public class SettingsTests extends TestBase {
             .selectLogOut();
 
         loginPage = new CIDLoginPage(driver);
-        productionDefaultPage = loginPage.login(testUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab();
 
@@ -281,7 +300,9 @@ public class SettingsTests extends TestBase {
     public void batchSize0() {
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectBatchManual()
@@ -298,7 +319,9 @@ public class SettingsTests extends TestBase {
     public void batchSizeJunk() {
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectBatchManual()
@@ -315,7 +338,9 @@ public class SettingsTests extends TestBase {
     public void batchSizeDecimal() {
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectBatchManual()
@@ -332,7 +357,9 @@ public class SettingsTests extends TestBase {
     public void saveAllTabs() {
 
         loginPage = new CIDLoginPage(driver);
-        productionDefaultPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
             .openProdDefaultTab()
@@ -362,7 +389,9 @@ public class SettingsTests extends TestBase {
     public void optionsFilter() {
 
         loginPage = new CIDLoginPage(driver);
-        productionDefaultPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())

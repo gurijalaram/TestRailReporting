@@ -1,0 +1,1122 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "propertyValueMap",
+    "propertyInfoMap"
+  ],
+  "properties": {
+    "propertyValueMap": {
+      "$id": "#/properties/propertyValueMap",
+      "type": "object",
+      "title": "The Propertyvaluemap Schema",
+      "required": [
+        "totalRunoutOverride",
+        "perpendicularityOverride",
+        "symmetryOverride",
+        "roughnessOverride",
+        "circularityOverride",
+        "minCadToleranceThreshhold",
+        "toleranceMode",
+        "bendAngleToleranceOverride",
+        "runoutOverride",
+        "flatnessOverride",
+        "parallelismOverride",
+        "useCadToleranceThreshhold",
+        "cadToleranceReplacement",
+        "straightnessOverride",
+        "positionToleranceOverride",
+        "profileOfSurfaceOverride",
+        "roughnessRzOverride",
+        "toleranceOverride",
+        "diamToleranceOverride",
+        "concentricityOverride",
+        "cylindricityOverride"
+      ],
+      "properties": {
+        "totalRunoutOverride": {
+          "$id": "#/properties/propertyValueMap/properties/totalRunoutOverride",
+          "type": ["number", "null"],
+          "title": "The Totalrunoutoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "perpendicularityOverride": {
+          "$id": "#/properties/propertyValueMap/properties/perpendicularityOverride",
+          "type": ["number", "null"],
+          "title": "The Perpendicularityoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "symmetryOverride": {
+          "$id": "#/properties/propertyValueMap/properties/symmetryOverride",
+          "type": ["number", "null"],
+          "title": "The Symmetryoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "roughnessOverride": {
+          "$id": "#/properties/propertyValueMap/properties/roughnessOverride",
+          "type": ["number", "null"],
+          "title": "The Roughnessoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "circularityOverride": {
+          "$id": "#/properties/propertyValueMap/properties/circularityOverride",
+          "type": ["number", "null"],
+          "title": "The Circularityoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "minCadToleranceThreshhold": {
+          "$id": "#/properties/propertyValueMap/properties/minCadToleranceThreshhold",
+          "type": ["number", "null"],
+          "title": "The Mincadtolerancethreshhold Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "toleranceMode": {
+          "$id": "#/properties/propertyValueMap/properties/toleranceMode",
+          "type": ["string", "null"],
+          "title": "The Tolerancemode Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "bendAngleToleranceOverride": {
+          "$id": "#/properties/propertyValueMap/properties/bendAngleToleranceOverride",
+          "type": ["number", "null"],
+          "title": "The Bendangletoleranceoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "runoutOverride": {
+          "$id": "#/properties/propertyValueMap/properties/runoutOverride",
+          "type": ["number", "null"],
+          "title": "The Runoutoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "flatnessOverride": {
+          "$id": "#/properties/propertyValueMap/propertie s/flatnessOverride",
+          "type": ["number", "null"],
+          "title": "The Flatnessoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "parallelismOverride": {
+          "$id": "#/properties/propertyValueMap/properties/parallelismOverride",
+          "type": ["number", "null"],
+          "title": "The Parallelismoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "useCadToleranceThreshhold": {
+          "$id": "#/properties/propertyValueMap/properties/useCadToleranceThreshhold",
+          "type": "boolean",
+          "title": "The Usecadtolerancethreshhold Schema",
+          "default": false,
+          "examples": [
+
+          ]
+        },
+        "cadToleranceReplacement": {
+          "$id": "#/properties/propertyValueMap/properties/cadToleranceReplacement",
+          "type": ["number", "null"],
+          "title": "The Cadtolerancereplacement Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "straightnessOverride": {
+          "$id": "#/properties/propertyValueMap/properties/straightnessOverride",
+          "type": ["number", "null"],
+          "title": "The Straightnessoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "positionToleranceOverride": {
+          "$id": "#/properties/propertyValueMap/properties/positionToleranceOverride",
+          "type": ["number", "null"],
+          "title": "The Positiontoleranceoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "profileOfSurfaceOverride": {
+          "$id": "#/properties/propertyValueMap/properties/profileOfSurfaceOverride",
+          "type": ["number", "null"],
+          "title": "The Profileofsurfaceoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "roughnessRzOverride": {
+          "$id": "#/properties/propertyValueMap/properties/roughnessRzOverride",
+          "type": ["number", "null"],
+          "title": "The Roughnessrzoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "toleranceOverride": {
+          "$id": "#/properties/propertyValueMap/properties/toleranceOverride",
+          "type": ["number", "null"],
+          "title": "The Toleranceoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "diamToleranceOverride": {
+          "$id": "#/properties/propertyValueMap/properties/diamToleranceOverride",
+          "type": ["number", "null"],
+          "title": "The Diamtoleranceoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "concentricityOverride": {
+          "$id": "#/properties/propertyValueMap/properties/concentricityOverride",
+          "type": ["number", "null"],
+          "title": "The Concentricityoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        },
+        "cylindricityOverride": {
+          "$id": "#/properties/propertyValueMap/properties/cylindricityOverride",
+          "type": ["number", "null"],
+          "title": "The Cylindricityoverride Schema",
+          "default": "",
+          "examples": [
+
+          ]
+        }
+      }
+    },
+    "propertyInfoMap": {
+      "$id": "#/properties/propertyInfoMap",
+      "type": "object",
+      "title": "The Propertyinfomap Schema",
+      "required": [
+        "totalRunoutOverride",
+        "perpendicularityOverride",
+        "symmetryOverride",
+        "roughnessOverride",
+        "circularityOverride",
+        "minCadToleranceThreshhold",
+        "toleranceMode",
+        "bendAngleToleranceOverride",
+        "runoutOverride",
+        "flatnessOverride",
+        "parallelismOverride",
+        "useCadToleranceThreshhold",
+        "cadToleranceReplacement",
+        "straightnessOverride",
+        "positionToleranceOverride",
+        "profileOfSurfaceOverride",
+        "roughnessRzOverride",
+        "toleranceOverride",
+        "diamToleranceOverride",
+        "concentricityOverride",
+        "cylindricityOverride"
+      ],
+      "properties": {
+        "totalRunoutOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/totalRunoutOverride",
+          "type": "object",
+          "title": "The Totalrunoutoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/totalRunoutOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "totalRunoutOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/totalRunoutOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/totalRunoutOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "perpendicularityOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/perpendicularityOverride",
+          "type": "object",
+          "title": "The Perpendicularityoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/perpendicularityOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "perpendicularityOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/perpendicularityOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/perpendicularityOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "symmetryOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/symmetryOverride",
+          "type": "object",
+          "title": "The Symmetryoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/symmetryOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "symmetryOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/symmetryOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/symmetryOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "roughnessOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/roughnessOverride",
+          "type": "object",
+          "title": "The Roughnessoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/roughnessOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "roughnessOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/roughnessOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "micron"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/roughnessOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "circularityOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/circularityOverride",
+          "type": "object",
+          "title": "The Circularityoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/circularityOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "circularityOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/circularityOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/circularityOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "minCadToleranceThreshhold": {
+          "$id": "#/properties/propertyInfoMap/properties/minCadToleranceThreshhold",
+          "type": "object",
+          "title": "The Mincadtolerancethreshhold Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/minCadToleranceThreshhold/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "minCadToleranceThreshhold"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/minCadToleranceThreshhold/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/minCadToleranceThreshhold/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "toleranceMode": {
+          "$id": "#/properties/propertyInfoMap/properties/toleranceMode",
+          "type": "object",
+          "title": "The Tolerancemode Schema",
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/toleranceMode/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "toleranceMode"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/toleranceMode/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "bendAngleToleranceOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/bendAngleToleranceOverride",
+          "type": "object",
+          "title": "The Bendangletoleranceoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/bendAngleToleranceOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "bendAngleToleranceOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/bendAngleToleranceOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "deg"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/bendAngleToleranceOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "runoutOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/runoutOverride",
+          "type": "object",
+          "title": "The Runoutoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/runoutOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "runoutOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/runoutOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/runoutOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "flatnessOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/flatnessOverride",
+          "type": "object",
+          "title": "The Flatnessoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/flatnessOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "flatnessOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/flatnessOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/flatnessOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "parallelismOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/parallelismOverride",
+          "type": "object",
+          "title": "The Parallelismoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/parallelismOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "parallelismOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/parallelismOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/parallelismOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "useCadToleranceThreshhold": {
+          "$id": "#/properties/propertyInfoMap/properties/useCadToleranceThreshhold",
+          "type": "object",
+          "title": "The Usecadtolerancethreshhold Schema",
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/useCadToleranceThreshhold/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "useCadToleranceThreshhold"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/useCadToleranceThreshhold/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "cadToleranceReplacement": {
+          "$id": "#/properties/propertyInfoMap/properties/cadToleranceReplacement",
+          "type": "object",
+          "title": "The Cadtolerancereplacement Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/cadToleranceReplacement/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "cadToleranceReplacement"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/cadToleranceReplacement/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/cadToleranceReplacement/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "straightnessOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/straightnessOverride",
+          "type": "object",
+          "title": "The Straightnessoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/straightnessOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "straightnessOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/straightnessOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/straightnessOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "positionToleranceOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/positionToleranceOverride",
+          "type": "object",
+          "title": "The Positiontoleranceoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/positionToleranceOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "positionToleranceOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/positionToleranceOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/positionToleranceOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "profileOfSurfaceOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/profileOfSurfaceOverride",
+          "type": "object",
+          "title": "The Profileofsurfaceoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/profileOfSurfaceOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "profileOfSurfaceOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/profileOfSurfaceOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/profileOfSurfaceOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "roughnessRzOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/roughnessRzOverride",
+          "type": "object",
+          "title": "The Roughnessrzoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/roughnessRzOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "roughnessRzOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/roughnessRzOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "micron"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/roughnessRzOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "toleranceOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/toleranceOverride",
+          "type": "object",
+          "title": "The Toleranceoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/toleranceOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "toleranceOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/toleranceOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/toleranceOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "diamToleranceOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/diamToleranceOverride",
+          "type": "object",
+          "title": "The Diamtoleranceoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/diamToleranceOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "diamToleranceOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/diamToleranceOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/diamToleranceOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "concentricityOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/concentricityOverride",
+          "type": "object",
+          "title": "The Concentricityoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/concentricityOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "concentricityOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/concentricityOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/concentricityOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "cylindricityOverride": {
+          "$id": "#/properties/propertyInfoMap/properties/cylindricityOverride",
+          "type": "object",
+          "title": "The Cylindricityoverride Schema",
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/propertyInfoMap/properties/cylindricityOverride/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "cylindricityOverride"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "unitTypeName": {
+              "$id": "#/properties/propertyInfoMap/properties/cylindricityOverride/properties/unitTypeName",
+              "type": "string",
+              "title": "The Unittypename Schema",
+              "default": "",
+              "examples": [
+                "mm"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "supportedSerializedType": {
+              "$id": "#/properties/propertyInfoMap/properties/cylindricityOverride/properties/supportedSerializedType",
+              "type": "string",
+              "title": "The Supportedserializedtype Schema",
+              "default": "",
+              "examples": [
+                "OBJECT"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

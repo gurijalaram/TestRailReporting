@@ -18,6 +18,7 @@ import com.apriori.pageobjects.reports.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,6 +26,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
@@ -114,6 +117,15 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @FindBy(css = "span[id='globalSearch'] > a")
     private WebElement searchButton;
+
+    @FindBy(id = "toolbar_logo_link")
+    private WebElement pageTitle;
+
+    @FindBy(xpath = "//h1[contains(text(), '404')]")
+    private WebElement errorTitle;
+
+    @FindBy(css = "body")
+    private WebElement pageBody;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -284,11 +296,18 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Switches to iframe within a page by its "id" value
-     * @param iFrameId - iframe id attribute
+     * @param iframeId - iframe id attribute
      * @return new CirUserGuide page object
      */
-    public CirUserGuidePage switchToIFrameUserGuide(String iFrameId) {
-        driver.switchTo().frame(iFrameId);
+    public CirUserGuidePage switchToIFrameUserGuide(String iframeId) throws Exception {
+        pageUtils.waitForElementToAppear(pageTitle);
+
+        if (pageBody.getAttribute("className").startsWith("error404")) {
+            throw new Exception("Link broken. Wrong page was opened - iframe wasn't found as a result");
+        } else {
+            driver.switchTo().frame(iframeId);
+        }
+
         return new CirUserGuidePage(driver);
     }
 
@@ -350,6 +369,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementToBeClickable(searchInput);
         searchInput.sendKeys(textToType);
         searchButton.click();
+        pageUtils.isPageLoaded(homePageTitle);
         return new HomePage(driver);
     }
 }

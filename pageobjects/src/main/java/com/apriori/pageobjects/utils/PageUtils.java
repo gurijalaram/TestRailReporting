@@ -3,6 +3,8 @@ package com.apriori.pageobjects.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
+import com.apriori.utils.constants.Constants;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -164,7 +166,8 @@ public class PageUtils {
         }
     }
 
-    public boolean isPageLoaded() {
+    public boolean isPageLoaded(WebElement element) {
+        waitForElementToAppear(element);
         return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
     }
 
@@ -497,7 +500,7 @@ public class PageUtils {
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
+                if (scroller.isDisplayed() && !isElementDisplayed(scenario)) {
                     do {
                         scroller.sendKeys(keyboardAction);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
@@ -537,7 +540,7 @@ public class PageUtils {
 
         while (count < 12) {
             try {
-                if (scroller.isDisplayed() && driver.findElements(scenario).size() < 1) {
+                if (scroller.isDisplayed() && !isElementDisplayed(scenario)) {
                     do {
                         scroller.sendKeys(keyboardAction);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
@@ -713,7 +716,7 @@ public class PageUtils {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, timeOut)
-            .withMessage("\nExpected: " + text + "\nFound: " + locator.getAttribute(attribute))
+            .withMessage("\nExpected: " + text + "\t" + "\nFound: " + locator.getAttribute(attribute))
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
     }
@@ -731,7 +734,7 @@ public class PageUtils {
     }
 
     /**
-     * Waits the dropdown to be populated with the options
+     * Waits for the dropdown to be populated with the options
      *
      * @param locator - the locator
      * @param option  - the option
@@ -840,5 +843,39 @@ public class PageUtils {
         By reportLinkLocator = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
         waitForElementToAppear(reportLinkLocator);
         return driver.findElement(reportLinkLocator);
+    }
+
+    /**
+     * Checks if env is TE
+     * @return boolean
+     */
+    public boolean isEnvTE() {
+        boolean isEnvTE = false;
+        if (Constants.environment.equals("cid-te")) {
+            isEnvTE = true;
+        }
+        return isEnvTE;
+    }
+
+    /**
+     * Gets header to assert against
+     * @return String
+     */
+    public String getHeaderToCheck() {
+        String headerToCheck = "";
+        if (isEnvTE()) {
+            headerToCheck = Constants.cidTeHeaderText;
+        } else {
+            headerToCheck = Constants.cidAutHeaderText;
+        }
+        return headerToCheck;
+    }
+
+    /**
+     * Gets URL to assert against
+     * @return String
+     */
+    public String getUrlToCheck() {
+        return Constants.getBaseUrl();
     }
 }

@@ -17,6 +17,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -33,14 +34,15 @@ public class SheetMetalDTCTests extends TestBase {
     private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
+    private UserCredentials currentUser;
 
     public SheetMetalDTCTests() {
         super();
     }
 
     @After
-    public void resetToleranceSettings() {
-        new AfterTestUtil(driver).resetToleranceSettings();
+    public void resetSettings() {
+        new AfterTestUtil().resetAllSettings(currentUser.getUsername());
     }
 
     @Test
@@ -49,7 +51,9 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -83,8 +87,9 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
         loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
 
-        guidancePage = loginPage.login(UserUtil.getUser())
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetalTray.SLDPRT"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
@@ -103,7 +108,9 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -131,7 +138,9 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -142,7 +151,7 @@ public class SheetMetalDTCTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getWarningsCount("6"), is(true));
+        assertThat(evaluatePage.getWarningsCount("5"), is(true));
         assertThat(evaluatePage.getGuidanceIssuesCount("9"), is(true));
         assertThat(evaluatePage.getGcdTolerancesCount("22"), is(true));
     }
@@ -152,7 +161,9 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -185,11 +196,14 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-57941")
     @TestRail(testCaseId = {"1845","719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
         loginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(UserUtil.getUser())
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();

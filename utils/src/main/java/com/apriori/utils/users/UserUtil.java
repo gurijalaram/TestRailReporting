@@ -27,9 +27,9 @@ import org.slf4j.LoggerFactory;
  * Example:
  * security collection - user1, user2, user3
  * common collection - user1, user2, user3
- *
+ * <p>
  * after getting the security user
- *
+ * <p>
  * security collection - user2, user3, user1
  * common collection - user1, user2, user3
  *
@@ -42,25 +42,23 @@ public class UserUtil {
     /**
      * Return common user
      *
-     * @return
+     * @return User
      */
     public static UserCredentials getUser() {
         UserCredentials user = UserCommonService.getUser();
         logInfo(user);
-
         return user;
     }
 
     /**
      * Return user by access level
      *
-     * @param accessLevel
-     * @return
+     * @param accessLevel - access level of needed user
+     * @return User
      */
     public static UserCredentials getUser(String accessLevel) {
         UserCredentials user = UserSecurityService.getUser(accessLevel);
         logInfo(user);
-
         return user;
     }
 
