@@ -76,7 +76,7 @@ public class ReportsPageHeader extends PageHeader {
      * Wait for page to load before continuing
      * @return current page object
      */
-    public GenericReportPage waitForPageLoad() {
+    public GenericReportPage waitForInputControlsLoad() {
         pageUtils.waitForElementToAppear(applyButton);
         return new GenericReportPage(driver);
     }
@@ -85,9 +85,17 @@ public class ReportsPageHeader extends PageHeader {
      * Click options button to bring up Input Controls
      * @return Input Controls page object
      */
-    public GenericReportPage clickOptionsButton() {
+    public GenericReportPage clickInputControlsButton() {
         pageUtils.waitForElementToAppear(optionsButton);
         optionsButton.click();
         return new GenericReportPage(driver);
+    }
+
+    /**
+     * Returns header to check
+     * @return
+     */
+    public String getHeaderToCheck() {
+        return pageUtils.getHeaderToCheck();
     }
 }
