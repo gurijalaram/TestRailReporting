@@ -630,7 +630,7 @@ public class PageUtils {
      */
     public boolean checkElementNotContain(WebElement locator, String text, int timeoutInMinutes) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
-            .withMessage("\nExpected: " + text + "\nFound: " + locator.getText())
+            .withMessage("\nNot expecting: " + text + "\nFound: " + locator.getText())
             .ignoreAll(ignoredWebDriverExceptions)
             .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
     }
@@ -643,6 +643,7 @@ public class PageUtils {
     public void waitForElementAndClick(WebElement locator) {
         waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .withMessage("Cannot click element locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver webDriver) -> {
                 locator.click();
@@ -658,6 +659,7 @@ public class PageUtils {
     public void waitForElementAndClick(By locator) {
         waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .withMessage("Cannot click element locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver webDriver) -> {
                 driver.findElement(locator).click();
