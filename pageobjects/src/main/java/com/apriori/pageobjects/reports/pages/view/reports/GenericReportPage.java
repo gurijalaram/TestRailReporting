@@ -7,8 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,11 +36,20 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
 
+    @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
+    private WebElement currentAssElement;
+
+    @FindBy(xpath = "//a[contains(text(), 'SUB-ASSEMBLY')]")
+    private WebElement subAssOption;
+
     @FindBy(xpath = "//div[@id='assemblySelect']//input")
     private WebElement assemblyInput;
 
     @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
     private WebElement subAssemblyOption;
+
+    @FindBy(xpath = "//label[@title='Assembly Select']//input")
+    private WebElement inputBox;
 
     @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
     private WebElement subSubAsmOption;
@@ -123,30 +134,27 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         // if not sub assembly (default), press up arrow once, down arrow once (sub-sub-asm) or twice (top level), then enter
-        currentAssemblyElement.click();
+        //currentAssemblyElement.click();
 
-        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            assemblyMap.get(assemblyName);
-        }
-        // wait for options to appear?
-        //pageUtils.waitForElementToAppear(subSubAsmOption);
-        //if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
-        //    assemblyInput.sendKeys(Keys.DOWN);
-        //    assemblyInput.sendKeys(Keys.ENTER);
-        //    pageUtils.waitForElementToAppear(subSubAsmOption);
-        //    subSubAsmOption.click();
-        //} else if (assemblyName.equals("TOP-LEVEL (Initial)")) {
-        //    pageUtils.waitFor(4000);
-        //    assemblyInput.sendKeys(Keys.DOWN);
-        //    assemblyInput.sendKeys(Keys.DOWN);
-        //    assemblyInput.sendKeys(Keys.ENTER);
-        //    pageUtils.waitForElementToAppear(topLevelOption);
-        //    pageUtils.waitFor(4000);
-        //    topLevelOption.click();
-        //} else {
-        //    assemblyInput.sendKeys(Keys.ENTER);
-        //    subAssemblyOption.click();
+        //currentAssElement.click();
+        //pageUtils.waitForElementToAppear(subAssOption);
+        //subAssOption.click();
+        //pageUtils.waitFor(2000);
+        //if (!currentAssElement.getAttribute("title").equals("SUB-ASSEMBLY")) {
+
         //}
+
+        currentAssemblyElement.click();
+        pageUtils.waitForElementToAppear(subSubAsmOption);
+        topLevelOption.click();
+        //inputBox.sendKeys(Keys.ARROW_DOWN);
+        //pageUtils.waitFor(1000);
+        //inputBox.sendKeys(Keys.ARROW_DOWN);
+        //pageUtils.waitFor(1000);
+        //inputBox.sendKeys(Keys.ENTER);
+        //topLevelOption.click();
+        pageUtils.waitFor(2000);
+
         //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
         //    assemblyMap.get(assemblyName).click();
         //}
