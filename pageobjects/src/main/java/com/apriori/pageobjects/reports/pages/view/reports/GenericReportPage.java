@@ -124,22 +124,29 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setAssembly(String assemblyName) {
         // if not sub assembly (default), press up arrow once, down arrow once (sub-sub-asm) or twice (top level), then enter
         currentAssemblyElement.click();
-        // wait for options to appear?
-        pageUtils.waitForElementToAppear(subSubAsmOption);
-        if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
-            assemblyInput.sendKeys(Keys.DOWN);
-            assemblyInput.sendKeys(Keys.ENTER);
-            //pageUtils.waitForElementToAppear(subSubAsmOption);
-            //subSubAsmOption.click();
-        } else if (assemblyName.equals("TOP-LEVEL (Initial)")) {
-            assemblyInput.sendKeys(Keys.DOWN);
-            assemblyInput.sendKeys(Keys.DOWN);
-            assemblyInput.sendKeys(Keys.ENTER);
-            //pageUtils.waitForElementToAppear(topLevelOption);
-            //topLevelOption.click();
-        } else {
-            assemblyInput.sendKeys(Keys.ENTER);
+
+        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
+            assemblyMap.get(assemblyName);
         }
+        // wait for options to appear?
+        //pageUtils.waitForElementToAppear(subSubAsmOption);
+        //if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
+        //    assemblyInput.sendKeys(Keys.DOWN);
+        //    assemblyInput.sendKeys(Keys.ENTER);
+        //    pageUtils.waitForElementToAppear(subSubAsmOption);
+        //    subSubAsmOption.click();
+        //} else if (assemblyName.equals("TOP-LEVEL (Initial)")) {
+        //    pageUtils.waitFor(4000);
+        //    assemblyInput.sendKeys(Keys.DOWN);
+        //    assemblyInput.sendKeys(Keys.DOWN);
+        //    assemblyInput.sendKeys(Keys.ENTER);
+        //    pageUtils.waitForElementToAppear(topLevelOption);
+        //    pageUtils.waitFor(4000);
+        //    topLevelOption.click();
+        //} else {
+        //    assemblyInput.sendKeys(Keys.ENTER);
+        //    subAssemblyOption.click();
+        //}
         //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
         //    assemblyMap.get(assemblyName).click();
         //}
