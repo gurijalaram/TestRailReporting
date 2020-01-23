@@ -1,5 +1,7 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
@@ -10,11 +12,14 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
@@ -651,105 +656,105 @@ public class ProcessRoutingTests extends TestBase {
         assertThat(routingsPage.getRoutings(), containsInAnyOrder("Stage Tooling", "Prog Die", "[CTL]/Shear/Press", "[CTL]/Shear/Chemical Mill", "Tandem Die", "[CTL]/Laser/[Bend]", "[CTL]/Laser Punch/[Bend]", "[CTL]/Plasma/[Deslag]/[Bend]", "[CTL]/Plasma Punch/[Deslag]/[Bend]", "[CTL]/Oxyfuel/[Deslag]/[Bend]", "[CTL]/Waterjet/[Bend]", "[CTL]/Turret/[Bend]", "[CTL]/[Bend]"));
     }
 
-//    @Test
-//    @Description("Validate routings Sheet Metal - Hydroforming")
-//    public void routingsHydroforming() {
-//        loginPage = new CIDLoginPage(driver);
-//        currentUser = UserUtil.getUser();
-//
-//        routingsPage = loginPage.login(currentUser)
-//            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroforming.stp"))
-//            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup())
-//            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-//            .costScenario()
-//            .openProcessDetails()
-//            .selectRoutingsButton();
-//
-//        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing", "Offline Blank - Fluid Cell Routing", "Laser Cut - Deep Draw Routing", "Router Cut - Deep Draw Routing", "Offline Blank - Deep Draw Routing"));
-//    }
-//
-//    @Test
-//    @Description("Validate routings Sheet Metal - Stretchforming")
-//    public void routingsStretchforming() {
-//        loginPage = new CIDLoginPage(driver);
-//        currentUser = UserUtil.getUser();
-//
-//        routingsPage = loginPage.login(currentUser)
-//            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroforming.stp"))
-//            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup())
-//            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-//            .costScenario()
-//            .openProcessDetails()
-//            .selectRoutingsButton();
-//
-//        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Stretch Form Transverse", "Stretch Form Longitudinal"));
-//    }
-//
-//    @Test
-//    @Description("Validate routings Sheet Plastic")
-//    public void routingsSheetPlastic() {
-//        loginPage = new CIDLoginPage(driver);
-//        currentUser = UserUtil.getUser();
-//
-//        routingsPage = loginPage.login(currentUser)
-//            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("sheet_plastic.STEP"))
-//            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
-//            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-//            .costScenario()
-//            .openProcessDetails()
-//            .selectRoutingsButton();
-//
-//        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Single Cavity Mold", "2x1-Cavity Mold", "2x2-Cavity Mold"));
-//    }
-//
-//    @Test
-//    @Issue("BA-867")
-//    @Description("Validate routings Stock Machining")
-//    public void routingsStockMachining() {
-//        loginPage = new CIDLoginPage(driver);
-//        currentUser = UserUtil.getUser();
-//
-//        routingsPage = loginPage.login(currentUser)
-//            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
-//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-//            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-//            .costScenario()
-//            .openProcessDetails()
-//            .selectRoutingsButton();
-//
-//        assertThat(routingsPage.getRoutings(), containsInAnyOrder("3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
-//    }
-//
-//    @Test
-//    @TestRail(testCaseId = {"1672"})
-//    @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
-//    public void routingTolerances() {
-//        loginPage = new CIDLoginPage(driver);
-//        currentUser = UserUtil.getUser();
-//
-//        toleranceSettingsPage = loginPage.login(currentUser)
-//            .openSettings()
-//            .changeCurrency(CurrencyEnum.USD.getCurrency())
-//            .openTolerancesTab()
-//            .selectUseCADModel();
-//
-//        settingsPage = new SettingsPage(driver);
-//        evaluatePage = settingsPage.save(ExplorePage.class)
-//            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
-//            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-//            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-//            .costScenario();
-//
-//        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / Reciprocating Surface Grinder"), is(true));
-//
-//        processRoutingPage = evaluatePage.openProcessDetails()
-//            .selectRoutingsButton()
-//            .selectRouting("Gravity Die Cast")
-//            .apply()
-//            .closeProcessPanel()
-//            .costScenario()
-//            .openProcessDetails();
-//
-//        assertThat(processRoutingPage.getRoutingLabels(), hasItems("3 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder"));
-//    }
+    @Test
+    @Description("Validate routings Sheet Metal - Hydroforming")
+    public void routingsHydroforming() {
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        routingsPage = loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroforming.stp"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing", "Offline Blank - Fluid Cell Routing", "Laser Cut - Deep Draw Routing", "Router Cut - Deep Draw Routing", "Offline Blank - Deep Draw Routing"));
+    }
+
+    @Test
+    @Description("Validate routings Sheet Metal - Stretchforming")
+    public void routingsStretchforming() {
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        routingsPage = loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroforming.stp"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Stretch Form Transverse", "Stretch Form Longitudinal"));
+    }
+
+    @Test
+    @Description("Validate routings Sheet Plastic")
+    public void routingsSheetPlastic() {
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        routingsPage = loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("sheet_plastic.STEP"))
+            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Single Cavity Mold", "2x1-Cavity Mold", "2x2-Cavity Mold"));
+    }
+
+    @Test
+    @Issue("BA-867")
+    @Description("Validate routings Stock Machining")
+    public void routingsStockMachining() {
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        routingsPage = loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openProcessDetails()
+            .selectRoutingsButton();
+
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("3 Axis Lathe Routing", "2AL+3AM Routing", "3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "3AM+Drill Press Routing", "3AM+4AM Routing", "3AM+5AM Routing", "MillTurn Routing", "2AL+4AM Routing", "2AL+5AM Routing", "2ABFL and 3AM routing", "3ABFL routing"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1672"})
+    @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
+    public void routingTolerances() {
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
+            .openSettings()
+            .changeCurrency(CurrencyEnum.USD.getCurrency())
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / Reciprocating Surface Grinder"), is(true));
+
+        processRoutingPage = evaluatePage.openProcessDetails()
+            .selectRoutingsButton()
+            .selectRouting("Gravity Die Cast")
+            .apply()
+            .closeProcessPanel()
+            .costScenario()
+            .openProcessDetails();
+
+        assertThat(processRoutingPage.getRoutingLabels(), hasItems("3 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder"));
+    }
 }
