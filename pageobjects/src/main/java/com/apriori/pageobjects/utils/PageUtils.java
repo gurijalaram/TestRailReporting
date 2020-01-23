@@ -196,6 +196,11 @@ public class PageUtils {
         executor.executeScript("arguments[0].click();", element);
     }
 
+    public void javaScriptWindowFocus() {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("window.focus();");
+    }
+
     public void actionClick(WebElement targetElement) {
         Actions builder = new Actions(driver);
         builder.click(targetElement).build().perform();
