@@ -127,7 +127,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
         if (pageUtils.isElementDisplayed(routingScroller)) {
             do {
-                routingScroller.sendKeys(Keys.DOWN);
+                routingScroller.sendKeys(Keys.ARROW_DOWN);
                 routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
             } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
         }
