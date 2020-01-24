@@ -5,10 +5,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.GenericHeader;
+import com.apriori.pageobjects.header.PageHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -28,6 +30,8 @@ public class DeleteComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private JobQueuePage jobQueuePage;
+    private PageHeader pageHeader;
 
     private final String noComponentMessage = "You have no components that match the selected filter";
 
@@ -98,7 +102,7 @@ public class DeleteComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
-    @Issue("AP-56845")
+    @Issue("BA-840")
     public void testPublicComparisonDeleteExplore() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -121,6 +125,10 @@ public class DeleteComparisonTests extends TestBase {
             .selectScenario(testScenarioName, "MACHINED BOX AMERICAS")
             .apply();
 
+        pageHeader = new PageHeader(driver);
+        jobQueuePage = pageHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
+
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -141,6 +149,7 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-840")
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
     public void deletePublicComparisonPage() {
@@ -164,6 +173,10 @@ public class DeleteComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
             .apply();
+
+        pageHeader = new PageHeader(driver);
+        jobQueuePage = pageHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)
@@ -189,7 +202,7 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-56845")
+    @Issue("BA-840")
     @TestRail(testCaseId = {"431"})
     @Description("In comparison view, the user can delete the currently open comparison and any matching public or private comparisons")
     public void deletePublicPrivateComparison() {
@@ -212,6 +225,10 @@ public class DeleteComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
             .apply();
+
+        pageHeader = new PageHeader(driver);
+        jobQueuePage = pageHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)

@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.GenericHeader;
+import com.apriori.pageobjects.header.PageHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -19,6 +20,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 
@@ -29,6 +31,7 @@ public class SaveAsComparisonTests extends TestBase {
     private ComparePage comparePage;
     private GenericHeader genericHeader;
     private JobQueuePage jobQueuePage;
+    private PageHeader pageHeader;
 
     public SaveAsComparisonTests() {
         super();
@@ -106,6 +109,7 @@ public class SaveAsComparisonTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-919")
     @TestRail(testCaseId = {"413"})
     @Description("Attempt to create a new comparison with a name that already exists")
     public void comparisonNameExists() {
@@ -124,6 +128,10 @@ public class SaveAsComparisonTests extends TestBase {
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
             .apply();
+
+        pageHeader = new PageHeader(driver);
+        jobQueuePage = pageHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
 
         genericHeader = new GenericHeader(driver);
         jobQueuePage = genericHeader.selectExploreButton()
