@@ -133,35 +133,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
-        // if not sub assembly (default), press up arrow once, down arrow once (sub-sub-asm) or twice (top level), then enter
-        //currentAssemblyElement.click();
-
-        //currentAssElement.click();
-        //pageUtils.waitForElementToAppear(subAssOption);
-        //subAssOption.click();
-        //pageUtils.waitFor(2000);
-        //if (!currentAssElement.getAttribute("title").equals("SUB-ASSEMBLY")) {
-
-        //}
-
         currentAssemblyElement.click();
-        //pageUtils.waitForElementToAppear(subSubAsmOption);
-        pageUtils.waitFor(2000);
-        topLevelOption.click();
-        //inputBox.sendKeys(Keys.ARROW_DOWN);
-        //pageUtils.waitFor(1000);
-        //inputBox.sendKeys(Keys.ARROW_DOWN);
-        //pageUtils.waitFor(1000);
-        //inputBox.sendKeys(Keys.ENTER);
-        //topLevelOption.click();
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            pageUtils.checkElementAttribute(currentAssemblyElement, "title", assemblyName);
+            assemblyMap.get(assemblyName).click();
         }
-        //pageUtils.waitFor(2000);
-
-        //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-        //    assemblyMap.get(assemblyName).click();
-        //}
         return this;
     }
 

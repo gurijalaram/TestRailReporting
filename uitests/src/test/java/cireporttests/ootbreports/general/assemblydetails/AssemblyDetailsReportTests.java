@@ -279,7 +279,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1934")
     @Description("Verify totals calculations for Top Level")
-    public void testTotalCalculationsForTopLevel() throws InterruptedException {
+    public void testTotalCalculationsForTopLevel() {
         assemblyType = "Top Level";
 
         assemblyDetailsReport = new LoginPage(driver)
