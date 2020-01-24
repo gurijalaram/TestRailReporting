@@ -145,7 +145,8 @@ public class GenericReportPage extends ReportsPageHeader {
         //}
 
         currentAssemblyElement.click();
-        pageUtils.waitForElementToAppear(subSubAsmOption);
+        //pageUtils.waitForElementToAppear(subSubAsmOption);
+        pageUtils.waitFor(2000);
         topLevelOption.click();
         //inputBox.sendKeys(Keys.ARROW_DOWN);
         //pageUtils.waitFor(1000);
@@ -153,7 +154,10 @@ public class GenericReportPage extends ReportsPageHeader {
         //pageUtils.waitFor(1000);
         //inputBox.sendKeys(Keys.ENTER);
         //topLevelOption.click();
-        pageUtils.waitFor(2000);
+        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
+            pageUtils.checkElementAttribute(currentAssemblyElement, "title", assemblyName);
+        }
+        //pageUtils.waitFor(2000);
 
         //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
         //    assemblyMap.get(assemblyName).click();
