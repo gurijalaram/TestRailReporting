@@ -125,6 +125,10 @@ public class DeleteComparisonTests extends TestBase {
             .selectScenario(testScenarioName, "MACHINED BOX AMERICAS")
             .apply();
 
+        pageHeader = new PageHeader(driver);
+        jobQueuePage = pageHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
+
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
