@@ -54,7 +54,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
     private WebElement subSubAsmOption;
 
-    @FindBy(css = "li[title='TOP-LEVEL (Initial)'] > div > a")
+    @FindBy(css = "li[title='TOP-LEVEL (Initial)']")
     private WebElement topLevelOption;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
@@ -134,13 +134,18 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        pageUtils.javaScriptClick(currentAssemblyElement);
-        currentAssemblyElement.click();
+        pageUtils.waitFor(100);
+        //pageUtils.javaScriptClick(currentAssemblyElement);
+        //currentAssemblyElement.click();
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             WebElement optionToPick = assemblyMap.get(assemblyName);
+            //Actions builder = new Actions(driver);
+            //builder.moveToElement(optionToPick)
+            //        .click()
+            //        .build()
+            //        .perform();
+            //pageUtils.javaScriptClick(optionToPick);
             optionToPick.click();
-            pageUtils.javaScriptClick(optionToPick);
-            //optionToPick.click();
         }
         return this;
     }
