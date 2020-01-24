@@ -134,18 +134,13 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        pageUtils.waitFor(1000);
+        //pageUtils.waitFor(1000);
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             if (assemblyName.equals("TOP-LEVEL (Initial)")) {
-                //inputBox.sendKeys(Keys.ARROW_DOWN);
-                //inputBox.sendKeys(Keys.ARROW_DOWN);
-                //inputBox.sendKeys(Keys.ARROW_DOWN);
                 for (int i = 0; i < 3; i++) {
                     inputBox.sendKeys(Keys.ARROW_DOWN);
                 }
             } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
-                //inputBox.sendKeys(Keys.ARROW_DOWN);
-                //inputBox.sendKeys(Keys.ARROW_DOWN);
                 for (int i = 0; i < 2; i++) {
                     inputBox.sendKeys(Keys.ARROW_DOWN);
                 }
