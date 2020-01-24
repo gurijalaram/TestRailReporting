@@ -135,8 +135,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
         pageUtils.waitFor(100);
-        //pageUtils.javaScriptClick(currentAssemblyElement);
-        //currentAssemblyElement.click();
+        pageUtils.javaScriptClick(currentAssemblyElement);
+        currentAssemblyElement.click();
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             WebElement optionToPick = assemblyMap.get(assemblyName);
             //Actions builder = new Actions(driver);
