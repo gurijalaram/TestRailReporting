@@ -45,16 +45,16 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='assemblySelect']//input")
     private WebElement assemblyInput;
 
-    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)']")
+    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div")
     private WebElement subAssemblyOption;
 
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement inputBox;
 
-    @FindBy(css = "li[title='SUB-SUB-ASM (Initial)']")
+    @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div")
     private WebElement subSubAsmOption;
 
-    @FindBy(css = "li[title='TOP-LEVEL (Initial)']")
+    @FindBy(css = "li[title='TOP-LEVEL (Initial)'] > div")
     private WebElement topLevelOption;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
