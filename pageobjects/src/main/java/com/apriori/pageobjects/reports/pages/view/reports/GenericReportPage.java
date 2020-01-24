@@ -134,7 +134,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        pageUtils.waitFor(1000);
+        //pageUtils.waitFor(1000);
         pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             if (assemblyName.equals("TOP-LEVEL (Initial)")) {
