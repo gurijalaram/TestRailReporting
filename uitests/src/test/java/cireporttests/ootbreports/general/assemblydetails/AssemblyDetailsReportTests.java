@@ -263,20 +263,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Description("Trial of different report")
-    public void testAssemblyCostReportDropdown() {
-        assemblyType = "Sub Assembly";
-
-        assemblyDetailsReport = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToLibraryPage()
-                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_COST_A4.getReportName())
-                .waitForInputControlsLoad()
-                .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
-                .clickApplyAndOk();
-    }
-
-    @Test
     @TestRail(testCaseId = "1934")
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
