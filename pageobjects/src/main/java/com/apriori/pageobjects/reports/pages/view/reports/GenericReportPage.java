@@ -137,7 +137,10 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.javaScriptClick(currentAssemblyElement);
         currentAssemblyElement.click();
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            assemblyMap.get(assemblyName).click();
+            WebElement optionToPick = assemblyMap.get(assemblyName);
+            optionToPick.click();
+            pageUtils.javaScriptClick(optionToPick);
+            //optionToPick.click();
         }
         return this;
     }
