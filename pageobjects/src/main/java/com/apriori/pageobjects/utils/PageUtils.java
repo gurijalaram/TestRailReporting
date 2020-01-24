@@ -437,7 +437,7 @@ public class PageUtils {
 
     public WebElement waitForElementToBeClickable(WebElement element) {
         int count = 0;
-        while (count < 1) {
+        while (count < 12) {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
                 return wait.until(ExpectedConditions.elementToBeClickable(element));
