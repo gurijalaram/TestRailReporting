@@ -143,6 +143,9 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.isPageLoaded(currentAssemblyElement);
         pageUtils.isPageLoaded(subSubAsmOption);
         pageUtils.isPageLoaded(topLevelOption);
+        pageUtils.waitForElementToBeClickable(inputBox);
+        pageUtils.waitForElementToBeClickable(subSubAsmOption);
+        pageUtils.waitForElementToBeClickable(topLevelOption);
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             if (assemblyName.equals("TOP-LEVEL (Initial)")) {
                 for (int i = 0; i < 3; i++) {
