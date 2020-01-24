@@ -134,23 +134,18 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        //currentAssemblyElement.click();
         pageUtils.waitFor(1000);
-        //pageUtils.javaScriptClick(currentAssemblyElement);
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            WebElement optionToPick = assemblyMap.get(assemblyName);
-            //Actions builder = new Actions(driver);
-            //builder.moveToElement(optionToPick)
-            //        .click()
-            //        .build()
-            //        .perform();
-            //pageUtils.javaScriptClick(optionToPick);
-            // Keys?
-            inputBox.sendKeys(Keys.ARROW_DOWN);
-            inputBox.sendKeys(Keys.ARROW_DOWN);
-            inputBox.sendKeys(Keys.ARROW_DOWN);
+            if (assemblyName.equals("TOP-LEVEL (Initial)")) {
+                inputBox.sendKeys(Keys.ARROW_DOWN);
+                inputBox.sendKeys(Keys.ARROW_DOWN);
+                inputBox.sendKeys(Keys.ARROW_DOWN);
+            } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
+                inputBox.sendKeys(Keys.ARROW_DOWN);
+                inputBox.sendKeys(Keys.ARROW_DOWN);
+            }
+
             inputBox.sendKeys(Keys.ENTER);
-            //optionToPick.click();
         }
         return this;
     }
