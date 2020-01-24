@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.GenericHeader;
+import com.apriori.pageobjects.header.PageHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -30,6 +31,7 @@ public class SaveAsComparisonTests extends TestBase {
     private ComparePage comparePage;
     private GenericHeader genericHeader;
     private JobQueuePage jobQueuePage;
+    private PageHeader pageHeader;
 
     public SaveAsComparisonTests() {
         super();
@@ -126,6 +128,10 @@ public class SaveAsComparisonTests extends TestBase {
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
             .apply();
+
+        pageHeader = new PageHeader(driver);
+        jobQueuePage = pageHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
 
         genericHeader = new GenericHeader(driver);
         jobQueuePage = genericHeader.selectExploreButton()
