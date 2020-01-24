@@ -139,11 +139,11 @@ public class GenericReportPage extends ReportsPageHeader {
         //pageUtils.waitForElementToAppear(topLevelOption);
         //pageUtils.waitForElementToAppear(subSubAsmOption);
         //pageUtils.waitForElementToAppear(subAssemblyOption);
-        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isOpen");
         pageUtils.waitForElementToBeClickable(inputBox);
         pageUtils.waitForElementToBeClickable(subSubAsmOption);
         pageUtils.waitForElementToBeClickable(topLevelOption);
         pageUtils.waitForElementToBeClickable(subAssemblyOption);
+        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isOpen");
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             if (assemblyName.equals("TOP-LEVEL (Initial)")) {
                 for (int i = 0; i < 3; i++) {
