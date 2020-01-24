@@ -139,7 +139,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(topLevelOption);
         pageUtils.waitForElementToAppear(subSubAsmOption);
         pageUtils.waitForElementToAppear(subAssemblyOption);
-        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "isOpen");
+        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isOpen");
         pageUtils.isPageLoaded(currentAssemblyElement);
         pageUtils.isPageLoaded(subSubAsmOption);
         pageUtils.isPageLoaded(topLevelOption);
