@@ -134,15 +134,15 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        //pageUtils.waitFor(1000);
+        pageUtils.waitFor(500);
         pageUtils.waitForElementToAppear(inputBox);
         pageUtils.waitForElementToAppear(topLevelOption);
         pageUtils.waitForElementToAppear(subSubAsmOption);
         pageUtils.waitForElementToAppear(subAssemblyOption);
         pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isOpen");
-        pageUtils.waitForElementToBeClickable(inputBox);
-        pageUtils.waitForElementToBeClickable(subSubAsmOption);
-        pageUtils.waitForElementToBeClickable(topLevelOption);
+        //pageUtils.waitForElementToBeClickable(inputBox);
+        //pageUtils.waitForElementToBeClickable(subSubAsmOption);
+        //pageUtils.waitForElementToBeClickable(topLevelOption);
         //pageUtils.waitForElementToBeClickable(subAssemblyOption);
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             if (assemblyName.equals("TOP-LEVEL (Initial)")) {
