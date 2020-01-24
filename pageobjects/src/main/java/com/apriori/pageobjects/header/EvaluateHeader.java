@@ -57,7 +57,7 @@ public class EvaluateHeader extends GenericHeader {
      * @return current page object
      */
     public EvaluatePage costScenario() {
-        return costScenario(2);
+        return costScenario(3);
     }
 
     /**
