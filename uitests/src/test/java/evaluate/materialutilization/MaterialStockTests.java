@@ -64,12 +64,11 @@ public class MaterialStockTests extends TestBase {
     public void materialPMIStock() {
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .openScenario("AutoScenario522-336728483698300", "bracket_basic_matPMI")
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("20.88")));
+        assertThat(evaluatePage.getPartCost(), is(equalTo("20.30")));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialComposition()
