@@ -561,17 +561,17 @@ public class PageUtils {
     }
 
     /**
-     * Checks the element's size on the page is less than 1 and returns true/false
+     * Checks the element is not visible
      *
-     * @param locator - the element as list
+     * @param locator - the element's locator
      * @return true/false
      */
-    public <T> boolean checkElementsNotVisibleByBoolean(List<T> locator) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 6;
+    public boolean waitForElementInvisible(WebElement locator) {
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nElement visible using locator: " + locator)
-            .until((ExpectedCondition<Boolean>) element -> (locator).size() < 1);
+            .withMessage("\nElement with locator should not be visible: " + locator)
+            .until((ExpectedConditions.invisibilityOf(locator)));
     }
 
     /**
