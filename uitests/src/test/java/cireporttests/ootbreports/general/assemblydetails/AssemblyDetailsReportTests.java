@@ -173,7 +173,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "3067")
     @Description("Verify totals calculations for Sub Assembly")
-    public void testTotalCalculationsForSubAssembly() throws InterruptedException {
+    public void testTotalCalculationsForSubAssembly() {
         assemblyType = "Sub-Assembly";
 
         assemblyDetailsReport = new LoginPage(driver)
@@ -219,7 +219,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "3068")
     @Description("Verify totals calculations for Sub-Sub-ASM")
-    public void testTotalCalculationsForSubSubASM() throws InterruptedException {
+    public void testTotalCalculationsForSubSubASM() {
         assemblyType = "Sub-Sub-ASM";
 
         assemblyDetailsReport = new LoginPage(driver)
