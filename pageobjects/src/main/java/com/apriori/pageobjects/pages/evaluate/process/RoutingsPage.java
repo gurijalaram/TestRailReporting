@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.process;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
+import com.google.common.collect.Iterables;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -126,7 +127,9 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
         long timeLimitInSeconds = 5;
 
         if (pageUtils.isElementDisplayed(routingScroller)) {
+            routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
             do {
+                pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//td[.='" + Iterables.getLast(routingCell) + "']")), true);
                 routingScroller.sendKeys(Keys.DOWN);
                 routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
             } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
