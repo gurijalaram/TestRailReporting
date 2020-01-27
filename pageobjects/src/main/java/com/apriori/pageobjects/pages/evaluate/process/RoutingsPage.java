@@ -136,7 +136,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
         }
         routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
 
-        return routingCell.stream().filter(cell -> !cell.equals("")).collect(Collectors.toSet());
+        return routingCell.stream().filter(cell -> !cell.isEmpty()).collect(Collectors.toSet());
     }
 
     /**
