@@ -3,7 +3,7 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,8 +27,20 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
 
+    @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
+    private WebElement currentAssElement;
+
+    @FindBy(xpath = "//a[contains(text(), 'SUB-ASSEMBLY')]")
+    private WebElement subAssOption;
+
+    @FindBy(xpath = "//div[@id='assemblySelect']//input")
+    private WebElement assemblyInput;
+
     @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
     private WebElement subAssemblyOption;
+
+    @FindBy(xpath = "//label[@title='Assembly Select']//input")
+    private WebElement inputBox;
 
     @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
     private WebElement subSubAsmOption;
@@ -113,9 +125,14 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        //pageUtils.waitForElementAndClick(assemblyMap.get(assemblyName));
+        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            assemblyMap.get(assemblyName).click();
+            if (assemblyName.equals("TOP-LEVEL (Initial)")) {
+                selectAssemblyOption(3);
+            } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
+                selectAssemblyOption(2);
+            }
+            inputBox.sendKeys(Keys.ENTER);
         }
         return this;
     }
@@ -145,6 +162,19 @@ public class GenericReportPage extends ReportsPageHeader {
         return new AssemblyDetailsReportPage(driver);
     }
 
+    /**
+     * Select Assembly option dropdown using send keys
+     * @param topIndex
+     */
+    private void selectAssemblyOption(int topIndex) {
+        for (int i = 0; i < topIndex; i++) {
+            inputBox.sendKeys(Keys.ARROW_DOWN);
+        }
+    }
+
+    /**
+     * Initialises export set hash map
+     */
     private void initialiseCurrencyMap() {
         currencyMap.put("GBP", gbpCurrencyOption);
         currencyMap.put("USD", usdCurrencyOption);
