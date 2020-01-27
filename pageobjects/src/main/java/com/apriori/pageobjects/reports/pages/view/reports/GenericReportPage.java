@@ -137,14 +137,8 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             if (assemblyName.equals("TOP-LEVEL (Initial)")) {
-                //for (int i = 0; i < 3; i++) {
-                //    inputBox.sendKeys(Keys.ARROW_DOWN);
-                //}
                 selectAssemblyOption(3);
             } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
-                //for (int i = 0; i < 2; i++) {
-                //    inputBox.sendKeys(Keys.ARROW_DOWN);
-                //}
                 selectAssemblyOption(2);
             }
             inputBox.sendKeys(Keys.ENTER);
