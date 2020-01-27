@@ -30,7 +30,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
@@ -112,7 +111,7 @@ public class SettingsTests extends TestBase {
             .openJobQueue()
             .openScenarioLink(testScenarioName, "bracket_basic", "publish");
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), CoreMatchers.is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
     }
 
     @Test
