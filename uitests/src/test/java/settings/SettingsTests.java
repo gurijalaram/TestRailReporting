@@ -399,4 +399,3 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getListOfMaterials(), containsInAnyOrder("<No default specified>", "F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
     }
 }
-
