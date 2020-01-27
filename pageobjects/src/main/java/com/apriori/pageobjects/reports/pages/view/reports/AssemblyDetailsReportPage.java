@@ -33,6 +33,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     List<BigDecimal> refinedQuantities = new ArrayList<>();
 
     private String genericTrSelector = "tr:nth-child(%s)";
+    private String genericTdSelector = "td:nth-child(%s)";
     private String rowSelector;
     private String cssSelector;
 
@@ -516,25 +517,27 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Top Level export set report table
      */
     private void initialiseGenericColumnMap() {
-        String genericTdSelector = "td:nth-child(%s)";
+        putItemIntoColumnMap("Level", "2");
+        putItemIntoColumnMap("Part Number Main", "5");
+        putItemIntoColumnMap("Part Number Secondary", "6");
+        putItemIntoColumnMap("Quantity", "10");
+        putItemIntoColumnMap("Quantity Empty", "11");
 
-        genericColumnMap.put("Level", String.format(genericTdSelector, "2"));
-        genericColumnMap.put("Part Number Main", String.format(genericTdSelector, "5"));
-        genericColumnMap.put("Part Number Secondary", String.format(genericTdSelector, "6"));
-        genericColumnMap.put("Quantity", String.format(genericTdSelector, "10"));
-        genericColumnMap.put("Quantity Empty", String.format(genericTdSelector, "11"));
+        putItemIntoColumnMap("Cycle Time", "24");
+        putItemIntoColumnMap("Cycle Time Sub Total", "15");
+        putItemIntoColumnMap("Cycle Time Total", "25");
 
-        genericColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
-        genericColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
+        putItemIntoColumnMap("Piece Part Cost", "27");
+        putItemIntoColumnMap("Piece Part Cost Sub Total", "18");
+        putItemIntoColumnMap("Piece Part Cost Total", "28");
 
-        genericColumnMap.put("Piece Part Cost", String.format(genericTdSelector, "27"));
-        genericColumnMap.put("Piece Part Cost Total", String.format(genericTdSelector, "28"));
+        putItemIntoColumnMap("Fully Burdened Cost", "30");
+        putItemIntoColumnMap("Fully Burdened Cost Sub Total", "21");
+        putItemIntoColumnMap("Fully Burdened Cost Total", "31");
 
-        genericColumnMap.put("Fully Burdened Cost", String.format(genericTdSelector, "30"));
-        genericColumnMap.put("Fully Burdened Cost Total", String.format(genericTdSelector, "31"));
-
-        genericColumnMap.put("Capital Investments", String.format(genericTdSelector, "33"));
-        genericColumnMap.put("Capital Investments Total", String.format(genericTdSelector, "34"));
+        putItemIntoColumnMap("Capital Investments", "33");
+        putItemIntoColumnMap("Capital Investments Sub Total", "24");
+        putItemIntoColumnMap("Capital Investments Total", "34");
     }
 
 
@@ -542,47 +545,63 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Sub Assembly export set report table
      */
     private void initialiseSubAssemblyRowMap() {
-        subAssemblyRowMap.put("1 Sub Assembly", String.format(genericTrSelector, "5"));
-        subAssemblyRowMap.put("2 Sub Assembly", String.format(genericTrSelector, "7"));
-        subAssemblyRowMap.put("3 Sub Assembly", String.format(genericTrSelector, "11"));
-        subAssemblyRowMap.put("4 Sub Assembly", String.format(genericTrSelector, "15"));
-        subAssemblyRowMap.put("5 Sub Assembly", String.format(genericTrSelector, "17"));
-        subAssemblyRowMap.put("6 Sub Assembly", String.format(genericTrSelector, "19"));
-        subAssemblyRowMap.put("Component Subtotal Sub Assembly", String.format(genericTrSelector, "22"));
-        subAssemblyRowMap.put("Assembly Processes Sub Assembly", String.format(genericTrSelector, "25"));
-        subAssemblyRowMap.put("Grand Total Sub Assembly", String.format(genericTrSelector, "27"));
+        putItemIntoSubAssemblyRowMap("1 Sub Assembly", "5");
+        putItemIntoSubAssemblyRowMap("2 Sub Assembly", "7");
+        putItemIntoSubAssemblyRowMap("3 Sub Assembly", "11");
+        putItemIntoSubAssemblyRowMap("4 Sub Assembly", "15");
+        putItemIntoSubAssemblyRowMap("5 Sub Assembly", "17");
+        putItemIntoSubAssemblyRowMap("6 Sub Assembly", "19");
+        putItemIntoSubAssemblyRowMap("Component Subtotal Sub Assembly", "22");
+        putItemIntoSubAssemblyRowMap("Assembly Processes Sub Assembly", "25");
+        putItemIntoSubAssemblyRowMap("Grand Total Sub Assembly", "27");
     }
 
     /**
      * Hash Map initialisation for columns in Sub-Sub-ASM export set report table
      */
     private void initialiseSubSubAsmRowMap() {
-        subSubAsmRowMap.put("1 Sub Sub ASM", String.format(genericTrSelector, "4"));
-        subSubAsmRowMap.put("2 Sub Sub ASM", String.format(genericTrSelector, "6"));
-        subSubAsmRowMap.put("Component Subtotal Sub Sub ASM", String.format(genericTrSelector, "10"));
-        subSubAsmRowMap.put("Assembly Processes Sub Sub ASM", String.format(genericTrSelector, "13"));
-        subSubAsmRowMap.put("Grand Total Sub Sub ASM", String.format(genericTrSelector, "15"));
+        putItemIntoSubSubAsmRowMap("1 Sub Sub ASM", "4");
+        putItemIntoSubSubAsmRowMap("2 Sub Sub ASM", "6");
+        putItemIntoSubSubAsmRowMap("Component Subtotal Sub Sub ASM", "10");
+        putItemIntoSubSubAsmRowMap("Assembly Processes Sub Sub ASM", "13");
+        putItemIntoSubSubAsmRowMap("Grand Total Sub Sub ASM", "15");
     }
 
     /**
      * Hash Map initialisation for columns in Top Level export set report table
      */
     private void initialiseTopLevelRowMap() {
-        topLevelRowMap.put("1 Top Level", String.format(genericTrSelector, "5"));
-        topLevelRowMap.put("2 Top Level", String.format(genericTrSelector, "8"));
-        topLevelRowMap.put("3 Top Level", String.format(genericTrSelector, "11"));
-        topLevelRowMap.put("4 Top Level", String.format(genericTrSelector, "14"));
-        topLevelRowMap.put("5 Top Level", String.format(genericTrSelector, "17"));
-        topLevelRowMap.put("6 Top Level", String.format(genericTrSelector, "19"));
-        topLevelRowMap.put("7 Top Level", String.format(genericTrSelector, "21"));
-        topLevelRowMap.put("8 Top Level", String.format(genericTrSelector, "23"));
-        topLevelRowMap.put("9 Top Level", String.format(genericTrSelector, "27"));
-        topLevelRowMap.put("10 Top Level", String.format(genericTrSelector, "31"));
-        topLevelRowMap.put("11 Top Level", String.format(genericTrSelector, "33"));
-        topLevelRowMap.put("12 Top Level", String.format(genericTrSelector, "35"));
-        topLevelRowMap.put("13 Top Level", String.format(genericTrSelector, "38"));
-        topLevelRowMap.put("Component Subtotal Top Level", String.format(genericTrSelector, "42"));
-        topLevelRowMap.put("Assembly Processes Top Level", String.format(genericTrSelector, "45"));
-        topLevelRowMap.put("Grand Total Top Level", String.format(genericTrSelector, "43"));
+        putItemIntoTopLevelRowMap("1 Top Level", "5");
+        putItemIntoTopLevelRowMap("2 Top Level", "8");
+        putItemIntoTopLevelRowMap("3 Top Level", "11");
+        putItemIntoTopLevelRowMap("4 Top Level", "14");
+        putItemIntoTopLevelRowMap("5 Top Level", "17");
+        putItemIntoTopLevelRowMap("6 Top Level", "19");
+        putItemIntoTopLevelRowMap("7 Top Level", "21");
+        putItemIntoTopLevelRowMap("8 Top Level", "23");
+        putItemIntoTopLevelRowMap("9 Top Level", "27");
+        putItemIntoTopLevelRowMap("10 Top Level", "31");
+        putItemIntoTopLevelRowMap("11 Top Level", "33");
+        putItemIntoTopLevelRowMap("12 Top Level", "35");
+        putItemIntoTopLevelRowMap("13 Top Level", "38");
+        putItemIntoTopLevelRowMap("Component Subtotal Top Level", "42");
+        putItemIntoTopLevelRowMap("Assembly Processes Top Level", "45");
+        putItemIntoTopLevelRowMap("Grand Total Top Level", "43");
+    }
+
+    private void putItemIntoColumnMap(String key, String value) {
+        genericColumnMap.put(key, String.format(genericTdSelector, value));
+    }
+
+    private void putItemIntoSubAssemblyRowMap(String key, String value) {
+        subAssemblyRowMap.put(key, String.format(genericTrSelector, value));
+    }
+
+    private void putItemIntoSubSubAsmRowMap(String key, String value) {
+        subSubAsmRowMap.put(key, String.format(genericTrSelector, value));
+    }
+
+    private void putItemIntoTopLevelRowMap(String key, String value) {
+        topLevelRowMap.put(key, String.format(genericTrSelector, value));
     }
 }

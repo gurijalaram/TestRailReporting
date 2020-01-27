@@ -307,4 +307,145 @@ public class AssemblyDetailsReportTests extends TestBase {
                 assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = "3231")
+    @Description("Verify sub total calculations for Sub Assembly")
+    public void testSubTotalCalculationsSubAssembly() {
+        assemblyType = "Sub-Assembly";
+
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .scrollDownInputControls()
+                .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickApplyAndOk()
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectAssembly(assemblyType);
+
+        BigDecimal ctComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Sub Assembly", "Cycle Time Sub Total");
+        BigDecimal ctAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Sub Assembly", "Cycle Time Total");
+        BigDecimal ctExpectedTotal = ctComponentSubTotal.add(ctAssemblyProcesses);
+        BigDecimal ctActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Cycle Time Total");
+        assertThat(ctExpectedTotal, is(equalTo(ctActualTotal)));
+
+        BigDecimal ppcComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Sub Assembly", "Piece Part Cost Sub Total");
+        BigDecimal ppcAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Sub Assembly", "Piece Part Cost Total");
+        BigDecimal ppcExpectedTotal = ppcComponentSubTotal.add(ppcAssemblyProcesses);
+        BigDecimal ppcActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Piece Part Cost Total");
+        assertThat(
+                assemblyDetailsReport.areValuesAlmostEqual(ppcExpectedTotal, ppcActualTotal),
+                is(true)
+        );
+
+        BigDecimal fbcComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Sub Assembly", "Fully Burdened Cost Sub Total");
+        BigDecimal fbcAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Sub Assembly", "Fully Burdened Cost Total");
+        BigDecimal fbcExpectedTotal = fbcComponentSubTotal.add(fbcAssemblyProcesses);
+        BigDecimal fbcActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Fully Burdened Cost Total");
+        assertThat(fbcExpectedTotal, is(equalTo(fbcActualTotal)));
+
+        BigDecimal ciComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Sub Assembly", "Capital Investments Sub Total");
+        BigDecimal ciAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Sub Assembly", "Capital Investments Total");
+        BigDecimal ciExpectedTotal = ciComponentSubTotal.add(ciAssemblyProcesses);
+        BigDecimal ciActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total");
+        assertThat(ciExpectedTotal, is(equalTo(ciActualTotal)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3232")
+    @Description("Verify sub total calculations for Sub Sub ASM")
+    public void testSubTotalCalculationsSubSubAsm() {
+        assemblyType = "Sub-Sub-ASM";
+
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .scrollDownInputControls()
+                .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickApplyAndOk()
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectAssembly(assemblyType);
+
+        BigDecimal ctComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Sub Sub ASM", "Cycle Time Sub Total");
+        BigDecimal ctAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Sub Sub ASM", "Cycle Time Total");
+        BigDecimal ctExpectedTotal = ctComponentSubTotal.add(ctAssemblyProcesses);
+        BigDecimal ctActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Cycle Time Total");
+        assertThat(ctExpectedTotal, is(equalTo(ctActualTotal)));
+
+        BigDecimal ppcComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Sub Sub ASM", "Piece Part Cost Sub Total");
+        BigDecimal ppcAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Sub Sub ASM", "Piece Part Cost Total");
+        BigDecimal ppcExpectedTotal = ppcComponentSubTotal.add(ppcAssemblyProcesses);
+        BigDecimal ppcActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Piece Part Cost Total");
+        assertThat(
+                assemblyDetailsReport.areValuesAlmostEqual(ppcExpectedTotal, ppcActualTotal),
+                is(true)
+        );
+
+        BigDecimal fbcComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Sub Sub ASM", "Fully Burdened Cost Sub Total");
+        BigDecimal fbcAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Sub Sub ASM", "Fully Burdened Cost Total");
+        BigDecimal fbcExpectedTotal = fbcComponentSubTotal.add(fbcAssemblyProcesses);
+        BigDecimal fbcActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Fully Burdened Cost Total");
+        assertThat(fbcExpectedTotal, is(equalTo(fbcActualTotal)));
+
+        BigDecimal ciComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Sub Sub ASM", "Capital Investments Sub Total");
+        BigDecimal ciAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Sub Sub ASM", "Capital Investments Total");
+        BigDecimal ciExpectedTotal = ciComponentSubTotal.add(ciAssemblyProcesses);
+        BigDecimal ciActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Capital Investments Total");
+        assertThat(ciExpectedTotal, is(equalTo(ciActualTotal)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3233")
+    @Description("Verify sub total calculations for Top Level")
+    public void testSubTotalCalculationsTopLevel() {
+        assemblyType = "Top Level";
+
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .scrollDownInputControls()
+                .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickApplyAndOk()
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectAssembly(assemblyType);
+
+        BigDecimal ctComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Top Level", "Cycle Time Sub Total");
+        BigDecimal ctAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Top Level", "Cycle Time Total");
+        BigDecimal ctExpectedTotal = ctComponentSubTotal.add(ctAssemblyProcesses);
+        BigDecimal ctActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Cycle Time Total");
+        assertThat(ctExpectedTotal, is(equalTo(ctActualTotal)));
+
+        BigDecimal ppcComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Top Level", "Piece Part Cost Sub Total");
+        BigDecimal ppcAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Top Level", "Piece Part Cost Total");
+        BigDecimal ppcExpectedTotal = ppcComponentSubTotal.add(ppcAssemblyProcesses);
+        BigDecimal ppcActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Piece Part Cost Total");
+        assertThat(
+                assemblyDetailsReport.areValuesAlmostEqual(ppcExpectedTotal, ppcActualTotal),
+                is(true)
+        );
+
+        BigDecimal fbcComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Top Level", "Fully Burdened Cost Sub Total");
+        BigDecimal fbcAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Top Level", "Fully Burdened Cost Total");
+        BigDecimal fbcExpectedTotal = fbcComponentSubTotal.add(fbcAssemblyProcesses);
+        BigDecimal fbcActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Fully Burdened Cost Total");
+        assertThat(fbcExpectedTotal, is(equalTo(fbcActualTotal)));
+
+        BigDecimal ciComponentSubTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Component Subtotal Top Level", "Capital Investments Sub Total");
+        BigDecimal ciAssemblyProcesses = assemblyDetailsReport.getValueFromTable(assemblyType, "Assembly Processes Top Level", "Capital Investments Total");
+        BigDecimal ciExpectedTotal = ciComponentSubTotal.add(ciAssemblyProcesses);
+        BigDecimal ciActualTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Capital Investments Total");
+        assertThat(ciExpectedTotal, is(equalTo(ciActualTotal)));
+    }
 }
