@@ -3,25 +3,16 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
 
 public class GenericReportPage extends ReportsPageHeader {
 
