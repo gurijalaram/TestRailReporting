@@ -30,7 +30,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
@@ -112,7 +111,7 @@ public class SettingsTests extends TestBase {
             .openJobQueue()
             .openScenarioLink(testScenarioName, "bracket_basic", "publish");
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), CoreMatchers.is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
     }
 
     @Test
@@ -400,4 +399,3 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getListOfMaterials(), containsInAnyOrder("<No default specified>", "F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
     }
 }
-
