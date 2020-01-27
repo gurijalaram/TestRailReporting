@@ -11,9 +11,7 @@ import org.junit.runners.Suite;
 @ProjectRunID("261")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses ({
-    LoginTests.class,
-    NavigationTests.class,
-    AssemblyDetailsReportTests.class
+    NavigationTests.class
 })
 public class ReportingSuite {
 }
