@@ -561,17 +561,17 @@ public class PageUtils {
     }
 
     /**
-     * Checks the element's size on the page is less than 1 and returns true/false
+     * Checks the element is not visible
      *
-     * @param locator - the element as list
+     * @param locator - the element's locator
      * @return true/false
      */
-    public <T> boolean checkElementsNotVisibleByBoolean(List<T> locator) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 6;
+    public boolean waitForElementInvisible(WebElement locator) {
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nElement visible using locator: " + locator)
-            .until((ExpectedCondition<Boolean>) element -> (locator).size() < 1);
+            .withMessage("\nElement with locator should not be visible: " + locator)
+            .until((ExpectedConditions.invisibilityOf(locator)));
     }
 
     /**
@@ -630,7 +630,7 @@ public class PageUtils {
      */
     public boolean checkElementNotContain(WebElement locator, String text, int timeoutInMinutes) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
-            .withMessage("\nExpected: " + text + "\nFound: " + locator.getText())
+            .withMessage("\nNot expecting: " + text + "\nFound: " + locator.getText())
             .ignoreAll(ignoredWebDriverExceptions)
             .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
     }
@@ -643,6 +643,7 @@ public class PageUtils {
     public void waitForElementAndClick(WebElement locator) {
         waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .withMessage("Cannot click element locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver webDriver) -> {
                 locator.click();
@@ -658,6 +659,7 @@ public class PageUtils {
     public void waitForElementAndClick(By locator) {
         waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+            .withMessage("Cannot click element locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver webDriver) -> {
                 driver.findElement(locator).click();
