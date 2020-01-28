@@ -170,6 +170,9 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
     @FindBy(css = "input[data-ap-field='partsPerLoadWindow.modeValues.user.value']")
     private WebElement componentsPerLoadInput;
 
+    @FindBy(css = "div.form-section")
+    private WebElement psoFormSection;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -188,6 +191,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(psoFormSection);
     }
 
     /**
