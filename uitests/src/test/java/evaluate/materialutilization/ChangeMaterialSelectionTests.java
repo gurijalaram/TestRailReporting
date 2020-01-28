@@ -101,7 +101,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(10);
+            .costScenario(5);
 
         assertThat(evaluatePage.isMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
 
