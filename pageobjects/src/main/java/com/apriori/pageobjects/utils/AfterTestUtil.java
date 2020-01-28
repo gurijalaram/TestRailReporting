@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 public class AfterTestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(AfterTestUtil.class);
-    private APIAuthentication apiAuthentication = new APIAuthentication();
 
     /**
      * Resets all settings
@@ -52,7 +51,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
+            .setHeaders(new APIAuthentication(userName).initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
             .setAutoLogin(false)
             .setBody(new ToleranceValuesEntity().setToleranceMode("CAD")
@@ -74,7 +73,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
+            .setHeaders(new APIAuthentication(userName).initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
             .setAutoLogin(false)
             .setBody(new DisplayPreferencesEntity().setSystemUnits(true)
@@ -94,7 +93,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
+            .setHeaders(new APIAuthentication(userName).initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=selectionColor")
             .setAutoLogin(false)
             .setCustomBody(ColourEnum.YELLOW.getColour())
@@ -113,7 +112,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
+            .setHeaders(new APIAuthentication(userName).initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=defaultScenarioName")
             .setAutoLogin(false)
             .setCustomBody("Initial")
@@ -132,7 +131,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
+            .setHeaders(new APIAuthentication(userName).initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/production-defaults")
             .setBody(new ProductionDefaultEntity().setPg(null)
                 .setVpe(null)
@@ -154,7 +153,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
+            .setHeaders(new APIAuthentication(userName).initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
             .setAutoLogin(false)
             .setBody(new ToleranceValuesEntity().setMinCadToleranceThreshhold(5.55)
