@@ -4,9 +4,9 @@ import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -124,17 +124,18 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
         long startTime = System.currentTimeMillis() / 1000;
         long timeLimitInSeconds = 5;
+        Actions scroll = new Actions(driver);
 
         if (pageUtils.isElementDisplayed(routingScroller)) {
-            routingScroller.sendKeys(Keys.TAB);
+            routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
             do {
-                routingScroller.sendKeys(Keys.PAGE_DOWN);
+                scroll.moveToElement(routingScroller).clickAndHold().moveByOffset(0, 40).release().build().perform();
                 routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
             } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
         }
         routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
 
-        return routingCell.stream().filter(cell -> !cell.equals("")).collect(Collectors.toSet());
+        return routingCell.stream().filter(cell -> !cell.isEmpty()).collect(Collectors.toSet());
     }
 
     /**
