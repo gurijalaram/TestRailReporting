@@ -466,6 +466,21 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return retVal;
     }
 
+    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String componentSubTotalRowKey, 
+                                                          String componentSubTotalColumnKey, String assemblyProcessRowKey,
+                                                          String assemblyProcessColumnKey, String actualTotalRowKey) {
+        ArrayList<BigDecimal> returnValues = new ArrayList<>();
+
+        BigDecimal subTotal = getValueFromTable(assemblyType, componentSubTotalRowKey, componentSubTotalColumnKey);
+        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, assemblyProcessRowKey, assemblyProcessColumnKey);
+        BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
+        BigDecimal actualTotal = getValueFromTable(assemblyType, actualTotalRowKey, assemblyProcessColumnKey);
+
+        returnValues.add(expectedTotal);
+        returnValues.add(actualTotal);
+        return returnValues;
+    }
+
     /**
      * Returns parsed markup of page and sets the CSS Locator
      * @param assemblyType
@@ -584,8 +599,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         putItemIntoTopLevelRowMap("11 Top Level", "33");
         putItemIntoTopLevelRowMap("12 Top Level", "35");
         putItemIntoTopLevelRowMap("13 Top Level", "38");
-        putItemIntoTopLevelRowMap("Component Subtotal Top Level", "42");
-        putItemIntoTopLevelRowMap("Assembly Processes Top Level", "45");
+        putItemIntoTopLevelRowMap("Component Subtotal Top Level", "38");
+        putItemIntoTopLevelRowMap("Assembly Processes Top Level", "41");
         putItemIntoTopLevelRowMap("Grand Total Top Level", "43");
     }
 
