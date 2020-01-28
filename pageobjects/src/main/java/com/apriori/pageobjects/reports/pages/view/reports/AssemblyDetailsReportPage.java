@@ -62,11 +62,14 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Generic method to get specific value from an Assembly Details Report table
      * @param assemblyType
-     * @param rowIndex
+     * @param rowName
      * @param columnName
-     * @return BigDecimal
+     * @return
      */
-    public BigDecimal getValueFromTable(String assemblyType, String rowIndex, String columnName) {
+    public BigDecimal getValueFromTable(String assemblyType, String rowName, String columnName) {
+        String rowIndex = rowName + " " + assemblyType;
+        columnName = columnName + " Total";
+
         Document assemblyDetailsReport = parsePageSetCss(assemblyType, rowIndex, columnName);
         BigDecimal valueRequired = new BigDecimal("0.00");
         Element valueCell = assemblyDetailsReport.select(cssSelector).first();
@@ -194,9 +197,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> trimmedValueList;
 
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals("Sub Assembly")) {
             trimmedValueList = checkCTSubAssemblyValues(assemblyType, allValues);
-        } else if (assemblyType.equals("Sub-Sub-ASM")) {
+        } else if (assemblyType.equals("Sub Sub ASM")) {
             trimmedValueList = checkCTSubSubAsmValues(assemblyType, levels, allValues);
         } else {
             trimmedValueList = checkCTTopLevelValues(assemblyType, levels, allValues);
@@ -250,9 +253,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> trimmedValueList;
 
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals("Sub Assembly")) {
             trimmedValueList = checkCISubAssemblyValues(assemblyType, levels, allValues);
-        } else if (assemblyType.equals("Sub-Sub-ASM")) {
+        } else if (assemblyType.equals("Sub Sub ASM")) {
             trimmedValueList = checkCISubSubAsmValues(assemblyType, levels, allValues);
         } else {
             trimmedValueList = checkCITopLevelValues(assemblyType, levels, allValues);
@@ -415,11 +418,16 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public AssemblyDetailsReportPage waitForCorrectAssembly(String assemblyToCheck) {
         pageUtils.waitForElementToAppear(currentAssembly);
         // if top level, hyphon is needed
-        if (assemblyToCheck.equals("Top Level")) {
+        //if (assemblyToCheck.equals("Top Level")) {
+        //    String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
+        //    pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+        //} else {
+        //    pageUtils.checkElementAttribute(currentAssembly, "innerText", assemblyToCheck.toUpperCase());
+        //}
+        // if not top level, add -
+        if (assemblyToCheck.equals("Sub Sub ASM") || assemblyToCheck.equals("Sub Assembly")) {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
             pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
-        } else {
-            pageUtils.checkElementAttribute(currentAssembly, "innerText", assemblyToCheck.toUpperCase());
         }
         return this;
     }
@@ -466,15 +474,19 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return retVal;
     }
 
-    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String componentSubTotalRowKey, 
-                                                          String componentSubTotalColumnKey, String assemblyProcessRowKey,
-                                                          String assemblyProcessColumnKey, String actualTotalRowKey) {
+    /**
+     *
+     * @param assemblyType
+     * @param column
+     * @return
+     */
+    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
         ArrayList<BigDecimal> returnValues = new ArrayList<>();
 
-        BigDecimal subTotal = getValueFromTable(assemblyType, componentSubTotalRowKey, componentSubTotalColumnKey);
-        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, assemblyProcessRowKey, assemblyProcessColumnKey);
+        BigDecimal subTotal = getValueFromTable(assemblyType, "Component Subtotal", column + " Sub");
+        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, "Assembly Processes", column);
         BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
-        BigDecimal actualTotal = getValueFromTable(assemblyType, actualTotalRowKey, assemblyProcessColumnKey);
+        BigDecimal actualTotal = getValueFromTable(assemblyType, "Grand Total", column);
 
         returnValues.add(expectedTotal);
         returnValues.add(actualTotal);
@@ -503,10 +515,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         String columnSelector;
 
         switch (assemblyType) {
-            case "Sub-Assembly":
+            case "Sub Assembly":
                 rowSelector = subAssemblyRowMap.get(rowIndex);
                 break;
-            case "Sub-Sub-ASM":
+            case "Sub Sub ASM":
                 rowSelector = subSubAsmRowMap.get(rowIndex);
                 break;
             case "Top Level":

@@ -89,7 +89,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1922")
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
-        assemblyType = "Sub-Assembly";
+        assemblyType = "Sub Assembly";
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
@@ -104,22 +104,14 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickApplyAndOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
 
-        usdGrandTotal = assemblyDetailsReport.getValueFromTable(
-                assemblyType,
-                "Grand Total Sub Assembly",
-                "Capital Investments Total"
-        );
+        usdGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
         assemblyDetailsReport.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
-        gbpGrandTotal = assemblyDetailsReport.getValueFromTable(
-                assemblyType,
-                "Grand Total Sub Assembly",
-                "Capital Investments Total"
-        );
+        gbpGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
         assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
@@ -129,7 +121,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3205")
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
-        assemblyType = "Sub-Assembly";
+        assemblyType = "Sub Assembly";
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
@@ -149,11 +141,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickApplyAndOk()
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
 
-        gbpGrandTotal = assemblyDetailsReport.getValueFromTable(
-                assemblyType,
-                "Grand Total Sub Assembly",
-                "Capital Investments Total"
-        );
+        gbpGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
         assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
 
         assemblyDetailsReport.clickInputControlsButton()
@@ -161,11 +149,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickApplyAndOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
 
-        usdGrandTotal = assemblyDetailsReport.getValueFromTable(
-                assemblyType,
-                "Grand Total Sub Assembly",
-                "Capital Investments Total"
-        );
+        usdGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
         assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(CurrencyEnum.USD.getCurrency())));
         assertThat(usdGrandTotal, is(not(equalTo(gbpGrandTotal))));
@@ -175,7 +159,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3067")
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
-        assemblyType = "Sub-Assembly";
+        assemblyType = "Sub Assembly";
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -197,22 +181,22 @@ public class AssemblyDetailsReportTests extends TestBase {
          */
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Cycle Time Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total","Cycle Time"),
                 assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Piece Part Cost Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Piece Part Cost"),
                 assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Fully Burdened Cost Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Fully Burdened Cost"),
                 assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Assembly", "Capital Investments Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total","Capital Investments"),
                 assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
@@ -221,7 +205,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3068")
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
-        assemblyType = "Sub-Sub-ASM";
+        assemblyType = "Sub Sub ASM";
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -243,22 +227,22 @@ public class AssemblyDetailsReportTests extends TestBase {
          */
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Cycle Time Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
                 assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Piece Part Cost Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Piece Part Cost"),
                 assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Fully Burdened Cost Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Fully Burdened Cost"),
                 assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Sub Sub ASM", "Capital Investments Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments"),
                 assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
@@ -289,22 +273,22 @@ public class AssemblyDetailsReportTests extends TestBase {
          */
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Cycle Time Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
                 assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Piece Part Cost Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Piece Part Cost"),
                 assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Fully Burdened Cost Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Fully Burdened Cost"),
                 assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
-                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total Top Level", "Capital Investments Total"),
+                assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments"),
                 assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
@@ -313,7 +297,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3231")
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
-        assemblyType = "Sub-Assembly";
+        assemblyType = "Sub Assembly";
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -328,48 +312,24 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
                 .waitForCorrectAssembly(assemblyType);
 
-        ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Sub Assembly",
-                "Cycle Time Sub Total", "Assembly Processes Sub Assembly",
-                "Cycle Time Total", "Grand Total Sub Assembly");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
 
-        ArrayList<BigDecimal> ppcValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Sub Assembly",
-                "Piece Part Cost Sub Total", "Assembly Processes Sub Assembly",
-                "Piece Part Cost Total", "Grand Total Sub Assembly");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> ppcValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Piece Part Cost");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)), is(true));
 
-        ArrayList<BigDecimal> fbcValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Sub Assembly",
-                "Fully Burdened Cost Sub Total", "Assembly Processes Sub Assembly",
-                "Fully Burdened Cost Total", "Grand Total Sub Assembly");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> fbcValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Fully Burdened Cost");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)), is(true));
 
-        ArrayList<BigDecimal> ciValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Sub Assembly",
-                "Capital Investments Sub Total", "Assembly Processes Sub Assembly",
-                "Capital Investments Total", "Grand Total Sub Assembly");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> ciValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Capital Investments");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)), is(true));
     }
 
     @Test
     @TestRail(testCaseId = "3232")
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
-        assemblyType = "Sub-Sub-ASM";
+        assemblyType = "Sub Sub ASM";
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -384,41 +344,17 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
                 .waitForCorrectAssembly(assemblyType);
 
-        ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Sub Sub ASM",
-                "Cycle Time Sub Total", "Assembly Processes Sub Sub ASM",
-                "Cycle Time Total", "Grand Total Sub Sub ASM");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
 
-        ArrayList<BigDecimal> ppcValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Sub Sub ASM",
-                "Piece Part Cost Sub Total", "Assembly Processes Sub Sub ASM",
-                "Piece Part Cost Total", "Grand Total Sub Sub ASM");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> ppcValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Piece Part Cost");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)), is(true));
 
-        ArrayList<BigDecimal> fbcValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Sub Sub ASM",
-                "Fully Burdened Cost Sub Total", "Assembly Processes Sub Sub ASM",
-                "Fully Burdened Cost Total", "Grand Total Sub Sub ASM");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> fbcValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Fully Burdened Cost");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)), is(true));
 
-        ArrayList<BigDecimal> ciValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Sub Sub ASM",
-                "Capital Investments Sub Total", "Assembly Processes Sub Sub ASM",
-                "Capital Investments Total", "Grand Total Sub Sub ASM");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> ciValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Capital Investments");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)), is(true));
     }
 
     @Test
@@ -440,40 +376,16 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
                 .waitForCorrectAssembly(assemblyType);
 
-        ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Top Level",
-                "Cycle Time Sub Total", "Assembly Processes Top Level",
-                "Cycle Time Total", "Grand Total Top Level");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
 
-        ArrayList<BigDecimal> ppcValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Top Level",
-                "Piece Part Cost Sub Total", "Assembly Processes Top Level",
-                "Piece Part Cost Total", "Grand Total Top Level");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> ppcValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Piece Part Cost");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)), is(true));
 
-        ArrayList<BigDecimal> fbcValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Top Level",
-                "Fully Burdened Cost Sub Total", "Assembly Processes Top Level",
-                "Fully Burdened Cost Total", "Grand Total Top Level");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> fbcValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Fully Burdened Cost");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)), is(true));
 
-        ArrayList<BigDecimal> ciValues = assemblyDetailsReport.getSubTotalAdditionValue(
-                assemblyType, "Component Subtotal Top Level",
-                "Capital Investments Sub Total", "Assembly Processes Top Level",
-                "Capital Investments Total", "Grand Total Top Level");
-        assertThat(
-                assemblyDetailsReport.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)),
-                is(true)
-        );
+        ArrayList<BigDecimal> ciValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Capital Investments");
+        assertThat(assemblyDetailsReport.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)), is(true));
     }
 }
