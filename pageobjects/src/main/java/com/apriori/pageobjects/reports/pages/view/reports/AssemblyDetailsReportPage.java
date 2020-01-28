@@ -64,7 +64,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @param assemblyType
      * @param rowName
      * @param columnName
-     * @return
+     * @return BigDecimal
      */
     public BigDecimal getValueFromTable(String assemblyType, String rowName, String columnName) {
         String rowIndex = rowName + " " + assemblyType;
@@ -417,13 +417,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     public AssemblyDetailsReportPage waitForCorrectAssembly(String assemblyToCheck) {
         pageUtils.waitForElementToAppear(currentAssembly);
-        // if top level, hyphon is needed
-        //if (assemblyToCheck.equals("Top Level")) {
-        //    String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
-        //    pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
-        //} else {
-        //    pageUtils.checkElementAttribute(currentAssembly, "innerText", assemblyToCheck.toUpperCase());
-        //}
         // if not top level, add -
         if (assemblyToCheck.equals("Sub Sub ASM") || assemblyToCheck.equals("Sub Assembly")) {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
