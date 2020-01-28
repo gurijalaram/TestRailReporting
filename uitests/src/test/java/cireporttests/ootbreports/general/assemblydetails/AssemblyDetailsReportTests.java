@@ -186,7 +186,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectAssembly(assemblyType);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -231,7 +232,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectAssembly(assemblyType);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -276,7 +278,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectAssembly(assemblyType);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
