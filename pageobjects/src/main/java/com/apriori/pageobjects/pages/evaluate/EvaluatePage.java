@@ -269,6 +269,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return the details as string
      */
     public boolean isProcessRoutingDetails(String text) {
+        pageUtils.scrollWithJavaScript(processRoutingName,true);
         pageUtils.waitForElementToAppear(processRoutingName);
         return pageUtils.checkElementAttribute(processRoutingName, "title", text);
     }

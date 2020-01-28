@@ -78,7 +78,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      */
     private FileUploadPage inputScenarioName(String scenarioName) {
         pageUtils.waitForElementAndClick(scenarioNameInput);
-        pageUtils.clearInput(scenarioNameInput);
+        scenarioNameInput.clear();
         scenarioNameInput.sendKeys(scenarioName);
         return this;
     }
@@ -111,7 +111,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return current page object
      */
     private ExplorePage selectCancelButton() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new ExplorePage(driver);
     }
 }

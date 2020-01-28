@@ -110,12 +110,4 @@ public class DeletePage extends LoadableComponent<DeletePage> {
         pageUtils.waitForElementToAppear(cancelButton).click();
         return new ExplorePage(driver);
     }
-
-    /**
-     * waits until notification popover displayed then no longer displayed
-     */
-    public void notificationPopoverNotDisplayed() {
-        pageUtils.checkElementVisibleByBoolean(notificationPopover);
-        pageUtils.checkElementsNotVisibleByBoolean(notificationPopover);
-    }
 }
