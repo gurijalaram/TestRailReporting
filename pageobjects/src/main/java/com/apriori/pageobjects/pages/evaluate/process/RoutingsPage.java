@@ -129,7 +129,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
         if (pageUtils.isElementDisplayed(routingScroller)) {
             routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
             do {
-                scroll.moveToElement(routingScroller).clickAndHold().moveByOffset(0, 20).release().build().perform();
+                scroll.moveToElement(routingScroller).clickAndHold().moveByOffset(0, 40).release().build().perform();
                 routingTableRows.forEach(routingRow -> routingCell.add(Arrays.asList(routingRow.getAttribute("innerText").split("\n")).get(0)));
             } while (((System.currentTimeMillis() / 1000) - startTime) < timeLimitInSeconds);
         }
