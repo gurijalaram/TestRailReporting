@@ -1,9 +1,8 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.utils.PageUtils;
-
 import com.apriori.utils.enums.AssemblyTypeEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -516,7 +515,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             rowSelector = topLevelRowMap.get(rowIndex);
         }
 
-        //switch (assemblyType) {
+        //switch (AssemblyTypeEnum) {
         //    case AssemblyTypeEnum.valueOf("Sub Assembly").toString():
         //        rowSelector = subAssemblyRowMap.get(rowIndex);
         //        break;
