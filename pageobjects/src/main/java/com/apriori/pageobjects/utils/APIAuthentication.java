@@ -57,19 +57,6 @@ public class APIAuthentication {
             : accessToken;
     }
 
-    private int getTimeToLive() {
-        return timeToLive = timeToLive < 1
-            ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(this.username, this.password)
-                .customizeRequest()
-                .setReturnType(AuthenticateJSON.class)
-                .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
-                .setAutoLogin(false)
-                .commitChanges()
-                .connect()
-                .post()).getExpiresIn()
-                : timeToLive;
-    }
-
     private String getCachedToken() {
         timeToLive = timeToLive < 1
             ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(this.username, this.password)
