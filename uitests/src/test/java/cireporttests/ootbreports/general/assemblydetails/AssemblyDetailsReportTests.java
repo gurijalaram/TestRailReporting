@@ -158,7 +158,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "3067")
+    @TestRail(testCaseId = {"3067", "1929"})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
@@ -204,7 +204,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "3068")
+    @TestRail(testCaseId = {"3068", "1929"})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
@@ -250,7 +250,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "1934")
+    @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
@@ -296,7 +296,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "3231")
+    @TestRail(testCaseId = {"3231", "1929"})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
@@ -328,7 +328,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "3232")
+    @TestRail(testCaseId = {"3232", "1929"})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
@@ -360,7 +360,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "3233")
+    @TestRail(testCaseId = {"3233", "1929"})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
