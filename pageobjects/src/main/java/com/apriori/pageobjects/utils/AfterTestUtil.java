@@ -23,7 +23,7 @@ public class AfterTestUtil {
      * @param username - username of logged user
      */
     public void resetAllSettings(String username) {
-        logger.info("Will reset settings for user {}",username);
+        logger.info("Will reset settings for user {}", username);
         resetDisplayUnits(username);
         resetColour(username);
         resetScenarioName(username);
@@ -46,7 +46,7 @@ public class AfterTestUtil {
      * @param username - username of logged user
      */
     public void resetToleranceSettings(String username) {
-        new APIAuthentication(username).requestAuthorisation("ws/workspace/users/me/tolerance-policy-defaults")
+        new APIAuthentication(username, "ws/workspace/users/me/tolerance-policy-defaults").requestAuthorisation()
             .setAutoLogin(false)
             .setBody(new ToleranceValuesEntity().setToleranceMode("CAD")
                 .setUseCadToleranceThreshhold(false))
@@ -64,7 +64,7 @@ public class AfterTestUtil {
      */
     @Issue("AP-57904")
     private void resetDisplayUnits(String username) {
-        new APIAuthentication(username).requestAuthorisation("ws/workspace/users/me/display-units")
+        new APIAuthentication(username, "ws/workspace/users/me/display-units").requestAuthorisation()
             .setAutoLogin(false)
             .setBody(new DisplayPreferencesEntity().setSystemUnits(true)
                 .setCurrencyCode(CurrencyEnum.USD.getCurrency()))
@@ -80,7 +80,7 @@ public class AfterTestUtil {
      */
     @Issue("AP-57909")
     private void resetColour(String username) {
-        new APIAuthentication(username).requestAuthorisation("ws/workspace/users/me/preferences/preference?key=selectionColor")
+        new APIAuthentication(username, "ws/workspace/users/me/preferences/preference?key=selectionColor").requestAuthorisation()
             .setAutoLogin(false)
             .setCustomBody(ColourEnum.YELLOW.getColour())
             .commitChanges()
@@ -95,7 +95,7 @@ public class AfterTestUtil {
      */
     @Issue("AP-57908")
     private void resetScenarioName(String username) {
-        new APIAuthentication(username).requestAuthorisation("ws/workspace/users/me/preferences/preference?key=defaultScenarioName")
+        new APIAuthentication(username, "ws/workspace/users/me/preferences/preference?key=defaultScenarioName").requestAuthorisation()
             .setAutoLogin(false)
             .setCustomBody("Initial")
             .commitChanges()
@@ -110,7 +110,7 @@ public class AfterTestUtil {
      */
     @Issue("AP-57908")
     private void resetProductionDefaults(String username) {
-        new APIAuthentication(username).requestAuthorisation("ws/workspace/users/me/production-defaults")
+        new APIAuthentication(username, "ws/workspace/users/me/production-defaults").requestAuthorisation()
             .setAutoLogin(false)
             .setBody(new ProductionDefaultEntity().setPg(null)
                 .setVpe(null)
@@ -129,7 +129,7 @@ public class AfterTestUtil {
      * @param username - username of logged user
      */
     private void resetToleranceValues(String username) {
-        new APIAuthentication(username).requestAuthorisation("ws/workspace/users/me/tolerance-policy-defaults")
+        new APIAuthentication(username, "ws/workspace/users/me/tolerance-policy-defaults").requestAuthorisation()
             .setAutoLogin(false)
             .setBody(new ToleranceValuesEntity().setMinCadToleranceThreshhold(5.55)
                 .setCadToleranceReplacement(5.55)

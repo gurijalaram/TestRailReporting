@@ -16,17 +16,19 @@ public class APIAuthentication {
     private static int timeToLive;
     private String username;
     private String password;
+    private String endPoint;
 
-    public APIAuthentication(String username) {
+    public APIAuthentication(String username, String endPoint) {
         this.username = username;
         this.password = this.username.split("@")[0];
+        this.endPoint = endPoint;
     }
 
-    public RequestEntity requestAuthorisation(String endPoint) {
+    public RequestEntity requestAuthorisation() {
         return new HTTPRequest()
             .unauthorized()
             .customizeRequest()
-            .setHeaders(new APIAuthentication(this.username).initAuthorizationHeader())
+            .setHeaders(initAuthorizationHeader())
             .setEndpoint(Constants.getBaseUrl() + endPoint);
     }
 
@@ -46,7 +48,7 @@ public class APIAuthentication {
 
     private String getAccessToken() {
         return accessToken = accessToken == null
-            ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(this.username, this.password)
+            ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
             .customizeRequest()
             .setReturnType(AuthenticateJSON.class)
             .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
@@ -59,7 +61,7 @@ public class APIAuthentication {
 
     private String getCachedToken() {
         timeToLive = timeToLive < 1
-            ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(this.username, this.password)
+            ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
             .customizeRequest()
             .setReturnType(AuthenticateJSON.class)
             .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
