@@ -34,7 +34,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     List<BigDecimal> refinedQuantities = new ArrayList<>();
 
     private String genericTrSelector = "tr:nth-child(%s)";
-    private String rowSelector;
     private String cssSelector;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
@@ -506,6 +505,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private void setCssLocator(String assemblyType, String rowIndex, String columnName) {
         String columnSelector;
+        String rowSelector;
 
         if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             rowSelector = subAssemblyRowMap.get(rowIndex);
