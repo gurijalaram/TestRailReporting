@@ -2,6 +2,8 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.utils.PageUtils;
 
+import com.apriori.utils.enums.AssemblyTypeEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -33,7 +35,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     List<BigDecimal> refinedQuantities = new ArrayList<>();
 
     private String genericTrSelector = "tr:nth-child(%s)";
-    private String genericTdSelector = "td:nth-child(%s)";
     private String rowSelector;
     private String cssSelector;
 
@@ -128,7 +129,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         List<String> mainPartNums = new ArrayList<>();
         ArrayList<String> secondaryPartNums;
 
-        if (assemblyType.equals("Top Level")) {
+        if (assemblyType.equals(AssemblyTypeEnum.TOP_LEVEL.getAssemblyType())) {
             mainPartNums = assemblyDetailsReport.select(cssSelector).stream().filter(element -> !element.text().isEmpty() && !element.text().equals("Part Number")
                 && !element.text().equals("GRAND TOTAL")).map(Element::text).collect(Collectors.toList());
         } else {
@@ -147,9 +148,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             element.text().equals("Assembly Process")).map(Element::text).collect(Collectors.toCollection(ArrayList::new));
 
         mainPartNums.add(0, secondaryPartNums.get(0));
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             mainPartNums.add(7, secondaryPartNums.get(1));
-        } else if (assemblyType.equals("Top Level")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.TOP_LEVEL.getAssemblyType())) {
             mainPartNums.add(8, secondaryPartNums.get(1));
             mainPartNums.add(15, secondaryPartNums.get(2));
         }
@@ -175,9 +176,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         BigDecimal secondValue = totalValuesList.get(1);
         values.add(0, firstValue);
 
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             values.add(7, secondValue);
-        } else if (assemblyType.equals("Top Level")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.TOP_LEVEL.getAssemblyType())) {
             BigDecimal thirdValue = totalValuesList.get(2);
             values.add(8, secondValue);
             values.add(15, thirdValue);
@@ -197,9 +198,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> trimmedValueList;
 
-        if (assemblyType.equals("Sub Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             trimmedValueList = checkCTSubAssemblyValues(assemblyType, allValues);
-        } else if (assemblyType.equals("Sub Sub ASM")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             trimmedValueList = checkCTSubSubAsmValues(assemblyType, levels, allValues);
         } else {
             trimmedValueList = checkCTTopLevelValues(assemblyType, levels, allValues);
@@ -253,9 +254,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> trimmedValueList;
 
-        if (assemblyType.equals("Sub Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             trimmedValueList = checkCISubAssemblyValues(assemblyType, levels, allValues);
-        } else if (assemblyType.equals("Sub Sub ASM")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             trimmedValueList = checkCISubSubAsmValues(assemblyType, levels, allValues);
         } else {
             trimmedValueList = checkCITopLevelValues(assemblyType, levels, allValues);
@@ -299,7 +300,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private List<BigDecimal> checkCTTopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
         return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).chars().allMatch(Character::isDigit) || partNums.get(i).equals("Assembly Process") ||
-            partNums.get(i).equals("SUB-ASSEMBLY")).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0).mapToObj(values::get).collect(Collectors.toList());
+            partNums.get(i).equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -334,7 +335,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private List<BigDecimal> checkCISubAssemblyValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-SUB-ASM")).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -358,7 +359,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private List<BigDecimal> checkCITopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-ASSEMBLY")).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -372,9 +373,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
         quantities.add(0, quantitiesEmpty.get(0));
 
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             quantities.add(7, quantitiesEmpty.get(1));
-        } else if (assemblyType.equals("Top Level")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.TOP_LEVEL.getAssemblyType())) {
             quantities.add(8, quantitiesEmpty.get(1));
             quantities.add(15, quantitiesEmpty.get(2));
         }
@@ -418,7 +419,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public AssemblyDetailsReportPage waitForCorrectAssembly(String assemblyToCheck) {
         pageUtils.waitForElementToAppear(currentAssembly);
         // if not top level, add -
-        if (assemblyToCheck.equals("Sub Sub ASM") || assemblyToCheck.equals("Sub Assembly")) {
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
             pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
         }
@@ -507,17 +508,25 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private void setCssLocator(String assemblyType, String rowIndex, String columnName) {
         String columnSelector;
 
-        switch (assemblyType) {
-            case "Sub Assembly":
-                rowSelector = subAssemblyRowMap.get(rowIndex);
-                break;
-            case "Sub Sub ASM":
-                rowSelector = subSubAsmRowMap.get(rowIndex);
-                break;
-            case "Top Level":
-                rowSelector = topLevelRowMap.get(rowIndex);
-                break;
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
+            rowSelector = subAssemblyRowMap.get(rowIndex);
+        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            rowSelector = subSubAsmRowMap.get(rowIndex);
+        } else {
+            rowSelector = topLevelRowMap.get(rowIndex);
         }
+
+        //switch (assemblyType) {
+        //    case AssemblyTypeEnum.valueOf("Sub Assembly").toString():
+        //        rowSelector = subAssemblyRowMap.get(rowIndex);
+        //        break;
+        //    case "Sub Sub ASM":
+        //        rowSelector = subSubAsmRowMap.get(rowIndex);
+        //        break;
+        //    case "Top Level":
+        //        rowSelector = topLevelRowMap.get(rowIndex);
+        //        break;
+        //}
 
         columnSelector = genericColumnMap.get(columnName);
 
@@ -610,6 +619,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     private void putItemIntoColumnMap(String key, String value) {
+        String genericTdSelector = "td:nth-child(%s)";
         genericColumnMap.put(key, String.format(genericTdSelector, value));
     }
 

@@ -1,5 +1,6 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
+import ch.qos.logback.core.net.AbstractSSLSocketAppender;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
@@ -9,6 +10,7 @@ import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
+import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
@@ -89,7 +91,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1922")
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
-        assemblyType = "Sub Assembly";
+        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
@@ -121,7 +123,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3205")
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
-        assemblyType = "Sub Assembly";
+        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
@@ -159,7 +161,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3067")
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
-        assemblyType = "Sub Assembly";
+        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -205,7 +207,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3068")
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
-        assemblyType = "Sub Sub ASM";
+        assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -251,7 +253,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1934")
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
-        assemblyType = "Top Level";
+        assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -297,7 +299,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3231")
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
-        assemblyType = "Sub Assembly";
+        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -329,7 +331,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3232")
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
-        assemblyType = "Sub Sub ASM";
+        assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
@@ -361,7 +363,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3233")
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
-        assemblyType = "Top Level";
+        assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
