@@ -515,18 +515,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             rowSelector = topLevelRowMap.get(rowIndex);
         }
 
-        //switch (AssemblyTypeEnum) {
-        //    case AssemblyTypeEnum.valueOf("Sub Assembly").toString():
-        //        rowSelector = subAssemblyRowMap.get(rowIndex);
-        //        break;
-        //    case "Sub Sub ASM":
-        //        rowSelector = subSubAsmRowMap.get(rowIndex);
-        //        break;
-        //    case "Top Level":
-        //        rowSelector = topLevelRowMap.get(rowIndex);
-        //        break;
-        //}
-
         columnSelector = genericColumnMap.get(columnName);
 
         if (!rowIndex.isEmpty()) {
