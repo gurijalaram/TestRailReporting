@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class APIAuthentication {
 
     private static String accessToken = null;
-    private static int expireTime;
+    private static int timeToLive;
     private String username;
     private String password;
 
@@ -58,7 +58,7 @@ public class APIAuthentication {
     }
 
     private int getTimeToLive() {
-        return expireTime = expireTime < 1
+        return timeToLive = timeToLive < 1
             ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(this.username, this.password)
                 .customizeRequest()
                 .setReturnType(AuthenticateJSON.class)
@@ -67,11 +67,22 @@ public class APIAuthentication {
                 .commitChanges()
                 .connect()
                 .post()).getExpiresIn()
-                : expireTime;
+                : timeToLive;
     }
 
     private String getCachedToken() {
-        PassiveExpiringMap<String, String> tokenCache = new PassiveExpiringMap<>(TimeUnit.SECONDS.toMillis(getTimeToLive()));
+        timeToLive = timeToLive < 1
+            ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(this.username, this.password)
+            .customizeRequest()
+            .setReturnType(AuthenticateJSON.class)
+            .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
+            .setAutoLogin(false)
+            .commitChanges()
+            .connect()
+            .post()).getExpiresIn()
+            : timeToLive;
+
+        PassiveExpiringMap<String, String> tokenCache = new PassiveExpiringMap<>(TimeUnit.SECONDS.toMillis(timeToLive));
         tokenCache.put("Token", getAccessToken());
 
         return tokenCache.isEmpty() ? tokenCache.put("Token", getAccessToken()) : tokenCache.get("Token");
