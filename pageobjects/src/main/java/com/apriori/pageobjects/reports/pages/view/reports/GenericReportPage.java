@@ -11,6 +11,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +24,9 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
+
+    @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
+    private WebElement latestExportDateInput;
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
     private WebElement topLevelExportSet;
@@ -159,6 +166,21 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
+        return new AssemblyDetailsReportPage(driver);
+    }
+
+    /**
+     * Ensures date is set to today
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage ensureDateIsToday() {
+        SimpleDateFormat formatterWithoutTime = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatterWithTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        if (!latestExportDateInput.getAttribute("value").contains(formatterWithoutTime.format(date).replace("/", "-"))) {
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(formatterWithTime.format(date).replace("/", "-"));
+        }
         return new AssemblyDetailsReportPage(driver);
     }
 

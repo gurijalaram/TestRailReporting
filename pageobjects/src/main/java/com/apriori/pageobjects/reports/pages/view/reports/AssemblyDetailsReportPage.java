@@ -435,7 +435,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return this;
     }
 
-
     /**
      * Checks if value of current cell is a valid one
      * @param valueToCheck

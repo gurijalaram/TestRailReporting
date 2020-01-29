@@ -390,4 +390,24 @@ public class AssemblyDetailsReportTests extends TestBase {
         ArrayList<BigDecimal> ciValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Capital Investments");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = "1919")
+    @Description("Ensuring latest export date filter works properly")
+    public void testLatestExportDateFilter() {
+        // 1. Get to Input Controls for Assembly Details
+        // 2. Ensure date is today and top_level export set is there
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .ensureDateIsToday();
+
+        // 3. Change 'Latest Export Date' to a month ago at 17:00
+        // 4. Ensure date changed and export top_level is not there
+        // 5. Check against CID
+    }
+
 }
