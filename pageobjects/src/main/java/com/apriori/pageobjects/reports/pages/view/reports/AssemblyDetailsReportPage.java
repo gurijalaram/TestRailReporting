@@ -3,7 +3,6 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
-import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,9 +16,9 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -528,11 +527,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return String
      */
     private String getDateTwoMonthsAgo() {
-        //Date date = new Date();
-        //DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        //LocalDateTime dateTime = LocalDateTime.parse(date, format);
-        DateTime dt = new DateTime().minusMonths(2);
-        return dt.toString().replace("T", " ").replace("Z", "").substring(0, 19);
+        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(2).withNano(0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(pastDate);
     }
 
     /**
