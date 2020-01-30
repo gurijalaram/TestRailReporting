@@ -59,8 +59,8 @@ public class APIAuthentication {
             : accessToken;
     }
 
-    private String getCachedToken() {
-        timeToLive = timeToLive < 1
+    private int getTimeToLive() {
+        return timeToLive = timeToLive < 1
             ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
             .customizeRequest()
             .setReturnType(AuthenticateJSON.class)
@@ -70,8 +70,11 @@ public class APIAuthentication {
             .connect()
             .post()).getExpiresIn()
             : timeToLive;
+    }
 
-        PassiveExpiringMap<String, String> tokenCache = new PassiveExpiringMap<>(TimeUnit.SECONDS.toMillis(timeToLive));
+    private String getCachedToken() {
+
+        PassiveExpiringMap<String, String> tokenCache = new PassiveExpiringMap<>(TimeUnit.SECONDS.toMillis(getTimeToLive()));
         tokenCache.put("Token", getAccessToken());
 
         return tokenCache.isEmpty() ? tokenCache.put("Token", getAccessToken()) : tokenCache.get("Token");
