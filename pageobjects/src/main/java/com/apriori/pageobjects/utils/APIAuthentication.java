@@ -73,7 +73,6 @@ public class APIAuthentication {
     }
 
     private String getCachedToken() {
-
         PassiveExpiringMap<String, String> tokenCache = new PassiveExpiringMap<>(TimeUnit.SECONDS.toMillis(getTimeToLive()));
         tokenCache.put("Token", getAccessToken());
 
