@@ -26,10 +26,10 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> currencyMap = new HashMap<>();
 
     @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
-    private WebElement latestExportDateInput;
+    protected WebElement latestExportDateInput;
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
-    private WebElement topLevelExportSet;
+    protected WebElement topLevelExportSet;
 
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;

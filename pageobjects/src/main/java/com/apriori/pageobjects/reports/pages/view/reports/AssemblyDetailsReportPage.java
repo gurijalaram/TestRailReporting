@@ -3,9 +3,12 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
+import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,9 +17,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -35,6 +46,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
+
+//    @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
+//    private WebElement latestExportDateInput;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -482,6 +496,49 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         returnValues.add(expectedTotal);
         returnValues.add(actualTotal);
         return returnValues;
+    }
+
+    /**
+     * Sets export set time and date to current time minus two months
+     */
+    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgo() {
+        String dtTwoMonthsAgo = getDateTwoMonthsAgo();
+
+        latestExportDateInput.clear();
+        latestExportDateInput.sendKeys(dtTwoMonthsAgo);
+
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
+        }
+        return this;
+    }
+
+    /**
+     * Ensures date has changed, before proceeding with test
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage ensureExportSetHasChanged() {
+        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateTwoMonthsAgo().substring(0, 10));
+        return this;
+    }
+
+    /**
+     * Ensures filtering worked correctly
+     * @return int size of element list
+     */
+    public int getAmountOfTopLevelExportSets() {
+        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
+        return list.size();
+    }
+
+    /**
+     * Gets date from two months ago
+     * @return String
+     */
+    private String getDateTwoMonthsAgo() {
+        DateTime dt = new DateTime().minusMonths(2);
+        return dt.toString().replace("T", " ").replace("Z", "").substring(0, 19);
     }
 
     /**
