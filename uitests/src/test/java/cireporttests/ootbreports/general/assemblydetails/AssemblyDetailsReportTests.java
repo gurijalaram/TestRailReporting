@@ -16,6 +16,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -393,6 +394,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "1919")
+    @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly")
     public void testLatestExportDateFilter() {
         assemblyDetailsReport = new LoginPage(driver)
