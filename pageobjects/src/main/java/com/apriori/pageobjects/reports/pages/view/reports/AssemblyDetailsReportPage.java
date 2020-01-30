@@ -38,9 +38,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
 
-//    @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
-//    private WebElement latestExportDateInput;
-
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
