@@ -1,6 +1,5 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
-import ch.qos.logback.core.net.AbstractSSLSocketAppender;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
