@@ -16,7 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -525,6 +528,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return String
      */
     private String getDateTwoMonthsAgo() {
+        //Date date = new Date();
+        //DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        //LocalDateTime dateTime = LocalDateTime.parse(date, format);
         DateTime dt = new DateTime().minusMonths(2);
         return dt.toString().replace("T", " ").replace("Z", "").substring(0, 19);
     }
