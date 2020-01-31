@@ -6,14 +6,19 @@ import com.apriori.utils.enums.AssemblyTypeEnum;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +40,15 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
+
+    @FindBy(css = "button[class='ui-datepicker-trigger']")
+    private WebElement datePickerTriggerBtn;
+
+    @FindBy(css = "select[class='ui-datepicker-month']")
+    private WebElement datePickerMonthSelect;
+
+    @FindBy(css = "select[class='ui-datepicker-year']")
+    private WebElement datePickerYearSelect;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -435,7 +449,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return this;
     }
 
-
     /**
      * Checks if value of current cell is a valid one
      * @param valueToCheck
@@ -483,6 +496,71 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         returnValues.add(expectedTotal);
         returnValues.add(actualTotal);
         return returnValues;
+    }
+
+    /**
+     * Sets export set time and date to current time minus two months using input field
+     */
+    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoInput() {
+        String dtTwoMonthsAgo = getDateTwoMonthsAgo();
+
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
+        }
+        return this;
+    }
+
+    /**
+     * Sets export set filter date using date picker
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoPicker() {
+        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
+        Select monthDropdown = new Select(datePickerMonthSelect);
+        Select yearDropdown = new Select(datePickerYearSelect);
+
+        int currentMonth = Integer.parseInt(datePickerMonthSelect.getAttribute("value"));
+        int indexToSelect;
+
+        if (currentMonth == 0) {
+            indexToSelect = 11;
+        } else {
+            indexToSelect = currentMonth - 1;
+        }
+
+        monthDropdown.selectByIndex(indexToSelect);
+        yearDropdown.selectByValue("2019");
+        datePickerTriggerBtn.click();
+        return this;
+    }
+
+    /**
+     * Ensures date has changed, before proceeding with test
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage ensureExportSetHasChanged() {
+        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateTwoMonthsAgo().substring(0, 10));
+        return this;
+    }
+
+    /**
+     * Ensures filtering worked correctly
+     * @return int size of element list
+     */
+    public int getAmountOfTopLevelExportSets() {
+        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
+        return list.size();
+    }
+
+    /**
+     * Gets date from two months ago
+     * @return String
+     */
+    private String getDateTwoMonthsAgo() {
+        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(1).withNano(0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(pastDate);
     }
 
     /**

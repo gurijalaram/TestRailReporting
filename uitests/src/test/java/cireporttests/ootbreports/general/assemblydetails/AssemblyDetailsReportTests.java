@@ -1,6 +1,5 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
-import ch.qos.logback.core.net.AbstractSSLSocketAppender;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
@@ -16,6 +15,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -390,4 +390,43 @@ public class AssemblyDetailsReportTests extends TestBase {
         ArrayList<BigDecimal> ciValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Capital Investments");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = "1919")
+    @Issue("AP-54036")
+    @Description("Ensuring latest export date filter works properly (uses date input field)")
+    public void testLatestExportDateFilterUsingInput() {
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .ensureDateIsToday()
+                .setExportDateToTwoMonthsAgoInput()
+                .ensureExportSetHasChanged();
+
+        // If this assertion fails, test fails as the export set is there because bug is not yet fixed
+        assertThat(assemblyDetailsReport.getAmountOfTopLevelExportSets(), is(0));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3244")
+    @Issue("AP-54036")
+    @Description("Ensuring latest export date filter works properly (using date picker)")
+    public void testLatestExportDateFilterUsingDatePicker() {
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .ensureDateIsToday()
+                .setExportDateToTwoMonthsAgoPicker()
+                .ensureExportSetHasChanged();
+
+        // If this assertion fails, test fails as the export set is there because bug is not yet fixed
+        assertThat(assemblyDetailsReport.getAmountOfTopLevelExportSets(), is(0));
+    }
+
 }
