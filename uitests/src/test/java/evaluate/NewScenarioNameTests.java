@@ -20,7 +20,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -90,7 +89,6 @@ public class NewScenarioNameTests extends TestBase {
     @Category(CustomerSmokeTests.class)
     @Test
     @TestRail(testCaseId = {"1588"})
-    @Issue("AP-56845")
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
     public void multipleUpload() {
 
