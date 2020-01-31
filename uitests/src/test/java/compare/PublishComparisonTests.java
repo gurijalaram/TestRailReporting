@@ -61,7 +61,12 @@ public class PublishComparisonTests extends TestBase {
              .apply(ComparisonTablePage.class)
              .selectScenario(testScenarioName, "Casting")
              .apply()
-            .checkComparisonUpdated("display: none;");
+             .checkComparisonUpdated("display: none;");
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class);
 
          new GenericHeader(driver).publishScenario(PublishPage.class)
              .selectPublishButton()
