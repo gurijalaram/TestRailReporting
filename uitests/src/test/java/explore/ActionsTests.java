@@ -25,7 +25,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -70,7 +69,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-893")
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
@@ -256,7 +254,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-892")
     @TestRail(testCaseId = {"532", "736", "734"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
@@ -280,7 +277,6 @@ public class ActionsTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"543"})
     @Description("Validate User can edit notes to a scenario")
-    @Issue("AP-57951")
     public void editNotes() {
 
         String testScenarioName = new Util().getScenarioName();
