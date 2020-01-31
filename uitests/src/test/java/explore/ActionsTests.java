@@ -25,6 +25,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -311,6 +312,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-932")
     @TestRail(testCaseId = {"542", "546"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
@@ -413,6 +415,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-932")
     @TestRail(testCaseId = {"740"})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
