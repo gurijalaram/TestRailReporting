@@ -198,8 +198,8 @@ public class ExplorePage extends ExploreHeader {
      * @return size of the element as int
      */
     public int getListOfAssemblies(String scenarioName, String partName) {
-        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElements(scenario, componentScroller, Constants.PAGE_DOWN).size();
+        By assembly = By.cssSelector("a[href*='#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "']");
+        return pageUtils.scrollToElements(assembly, componentScroller, Constants.PAGE_DOWN).size();
     }
 
     /**
