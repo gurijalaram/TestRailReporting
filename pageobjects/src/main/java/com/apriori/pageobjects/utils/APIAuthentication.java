@@ -46,36 +46,24 @@ public class APIAuthentication {
             }};
     }
 
-    private String getAccessToken() {
-        return accessToken = accessToken == null
-            ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
-            .customizeRequest()
-            .setReturnType(AuthenticateJSON.class)
-            .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
-            .setAutoLogin(false)
-            .commitChanges()
-            .connect()
-            .post()).getAccessToken()
-            : accessToken;
-    }
-
-    private int getTimeToLive() {
-        return timeToLive = timeToLive < 1
-            ? ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
-            .customizeRequest()
-            .setReturnType(AuthenticateJSON.class)
-            .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
-            .setAutoLogin(false)
-            .commitChanges()
-            .connect()
-            .post()).getExpiresIn()
-            : timeToLive;
-    }
-
     private String getCachedToken() {
-        PassiveExpiringMap<String, String> tokenCache = new PassiveExpiringMap<>(TimeUnit.SECONDS.toMillis(getTimeToLive()));
-        tokenCache.put("Token", getAccessToken());
+        if (accessToken == null && timeToLive < 1) {
+            AuthenticateJSON tokenDetails = ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
+                .customizeRequest()
+                .setReturnType(AuthenticateJSON.class)
+                .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
+                .setAutoLogin(false)
+                .commitChanges()
+                .connect()
+                .post());
 
-        return tokenCache.isEmpty() ? tokenCache.put("Token", getAccessToken()) : tokenCache.get("Token");
+            timeToLive = tokenDetails.getExpiresIn();
+            accessToken = tokenDetails.getAccessToken();
+        }
+
+        PassiveExpiringMap<String, String> tokenCache = new PassiveExpiringMap<>(TimeUnit.SECONDS.toMillis(timeToLive));
+        tokenCache.put("Token", accessToken);
+
+        return tokenCache.isEmpty() ? tokenCache.put("Token", accessToken) : tokenCache.get("Token");
     }
 }
