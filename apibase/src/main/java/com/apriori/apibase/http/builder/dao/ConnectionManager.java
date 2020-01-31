@@ -266,6 +266,7 @@ public class ConnectionManager<T> {
                 .log().all()
         );
     }
+    
 
     /**
      * Sends request to desired endpoint with the desired specifications using HTTP GET method
@@ -414,5 +415,20 @@ public class ConnectionManager<T> {
                 .then()
                 .log().all()
         );
+    }
+    
+    /**
+     * Url Strings with '#' need to be encoded before the request is sent. Rest-assured doesn't 
+     * handle this well and throws an URISyntaxException. To get around this we need to disable 
+     * the rest-assured encoder 
+     */
+    public ConnectionManager<?> disableEncoding() {
+        RestAssured.urlEncodingEnabled = false;
+        return new ConnectionManager<>(this.requestEntity, this.requestEntity.getReturnType());
+    }
+    
+    public ConnectionManager<?> enableEncoding() {
+        RestAssured.urlEncodingEnabled = true;
+        return new ConnectionManager<>(this.requestEntity, this.requestEntity.getReturnType());
     }
 }

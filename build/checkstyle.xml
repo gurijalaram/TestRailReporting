@@ -18,6 +18,9 @@
     <module name="FileTabCharacter">
         <property name="eachLine" value="true"/>
     </module>
+	
+
+		
     <!-- Excludes all 'module-info.java' files              -->
     <!-- See https://checkstyle.org/config_filefilters.html -->
     <module name="BeforeExecutionExclusionFileFilter">
@@ -40,12 +43,14 @@
             <property name="allowByTailComment" value="true"/>
             <property name="allowNonPrintableEscapes" value="true"/>
         </module>
+		
+			<module name="LineLength">
+        <property name="max" value="300"/>
+        <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+        <property name="severity" value="warning"/>
+    </module>
 
-        <module name="LineLength">
-            <property name="max" value="300"/>
-            <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
-            <property name="severity" value="warning"/>
-        </module>
+
         <module name="AvoidStarImport"/>
         <module name="OneTopLevelClass"/>
         <module name="NoLineWrap"/>
