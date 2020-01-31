@@ -3,12 +3,9 @@ package com.apriori.internalapi.setup;
 
 import com.apriori.apibase.http.builder.common.response.common.ColumnEntity;
 import com.apriori.apibase.http.builder.common.response.common.DisplayColumnsEntity;
-import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.pageobjects.utils.APIAuthentication;
-import com.apriori.utils.constants.Constants;
 
 import io.qameta.allure.Issue;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +15,13 @@ import java.util.List;
  */
 public class UISetup {
 
-    private APIAuthentication apiAuthentication = new APIAuthentication();
     private DisplayColumnsEntity displayColumns = new DisplayColumnsEntity();
     
     @Issue("BA-915")
     public void resetDisplayedColumns() {
         String userName = "qa-automation-01@apriori.com";
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
-            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/table-views/workspaceTable")
+
+        new APIAuthentication(userName,"ws/workspace/users/me/table-views/workspaceTable" ).requestAuthorisation()
             .setBody(displayColumns
                 .setChildren(generateDefaultColumnsList())
                 .setName("private"))
