@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.utils;
 
-import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.utils.constants.Constants;
@@ -12,41 +11,26 @@ import java.util.concurrent.TimeUnit;
 
 public class APIAuthentication {
 
-    private static String accessToken = null;
-    private static int timeToLive;
-    private String username;
-    private String password;
-    private String endPoint;
-
-    public APIAuthentication(String username, String endPoint) {
-        this.username = username;
-        this.password = this.username.split("@")[0];
-        this.endPoint = endPoint;
-    }
-
-    public RequestEntity requestAuthorisation() {
-        return new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(initAuthorizationHeader())
-            .setEndpoint(Constants.getBaseUrl() + endPoint);
-    }
+    private String accessToken = null;
+    private int timeToLive = 0;
 
     /**
      * Fetch Authorization header for user
      *
      * @return Authorization Header
      */
-    private HashMap<String, String> initAuthorizationHeader() {
+    public HashMap<String, String> initAuthorizationHeader(String username) {
         return new HashMap<String, String>() {{
-                put("Authorization", "Bearer " + getCachedToken());
+                put("Authorization", "Bearer " + getCachedToken(username));
                 put("apriori.tenantgroup", "default");
                 put("apriori.tenant", "default");
                 put("Content-Type", "application/vnd.apriori.v1+json");
             }};
     }
 
-    private String getCachedToken() {
+    private String getCachedToken(String username) {
+        String password = username.split("@")[0];
+
         if (accessToken == null && timeToLive < 1) {
             AuthenticateJSON tokenDetails = ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
                 .customizeRequest()
