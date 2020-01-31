@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
 import org.jsoup.Jsoup;
@@ -55,6 +56,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
     private WebElement currentAssembly;
+
+    @FindBy(xpath = "//tbody[@class='v-grid-body']/tr[1]")
+    private WebElement partTableRowOne;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -551,6 +555,18 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public int getAmountOfTopLevelExportSets() {
         List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
         return list.size();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public AssemblyDetailsReportPage openNewTabAndFocus() {
+        pageUtils.jsNewTab();
+        pageUtils.windowHandler();
+        driver.get(Constants.cidURL);
+        pageUtils.waitForElementToAppear(partTableRowOne);
+        return this;
     }
 
     /**

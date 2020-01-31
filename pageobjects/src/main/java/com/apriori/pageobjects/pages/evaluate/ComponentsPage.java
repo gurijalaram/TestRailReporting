@@ -36,6 +36,9 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     @FindBy(css = "button[data-ap-nav-dialog='showTableViewEditor']")
     private WebElement columnsButton;
 
+    @FindBy(css = "button[data-ap-scope='assemblyComponentsTableViewSelection']")
+    private WebElement columnSelectorButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -140,7 +143,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * @return new page object
      */
     public TableColumnsPage openColumnsTable() {
-        pageUtils.waitForElementToAppear(columnsButton).click();
+        pageUtils.waitForElementToAppear(columnSelectorButton).click();
         return new TableColumnsPage(driver);
     }
 }

@@ -1,5 +1,10 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
+import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.TableColumnsPage;
+import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
@@ -11,8 +16,10 @@ import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
+import groovy.util.Eval;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import io.qameta.allure.Issue;
@@ -427,6 +434,32 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
         assertThat(assemblyDetailsReport.getAmountOfTopLevelExportSets(), is(0));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1930")
+    @Description("Test Export Set with costing failures costing incomplete")
+    public void testExportSetWithCostingFailuresCostingIncomplete() {
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
+                .clickApplyAndOk()
+                .openNewTabAndFocus();
+
+        TableColumnsPage tableColumnsPage = new ExplorePage(driver)
+                .selectWorkSpace("Public Workspace")
+                .openAssembly("Initial", "PISTON_ASSEMBLY")
+                .openComponentsTable()
+                .openColumnsTable();
+
+        // Figure out why it throws an Assertion error on appearance of dialog's content (it does appear)
+        // change columns shown
+        // store values from table in an ArrayList
+        // Go to Reports, get values
+        // Assert that all are equal
     }
 
 }
