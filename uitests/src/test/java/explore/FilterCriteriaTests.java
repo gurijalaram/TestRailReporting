@@ -112,19 +112,33 @@ public class FilterCriteriaTests extends TestBase {
             .filterPrivateCriteria("Assembly", "Part Name", "Contains", "Piston_assembly")
             .apply(ExplorePage.class);
 
-        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
+        Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
 
     @Test
     @Issue("AP-56845")
     @Description("Test private criteria assembly status")
-    public void testPrivateCriteriaAssemblyStatus() {
+    public void testPublicCriteriaAssemblyStatus() {
+        String testScenarioName = new Util().getScenarioName();
+
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .filterCriteria()
-            .filterPrivateCriteria("Assembly", "Status", "is", "clear selections")
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .selectScenarioInfoNotes()
+            .enterScenarioInfoNotes("Analysis", "High", "Test Description", "Test Notes")
+            .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("piston_assembly", testScenarioName, "Update", "okay")
+            .closeJobQueue(EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .selectPublishButton();
+
+        explorePage = new ExplorePage(driver);
+        explorePage.filterCriteria()
+            .filterPublicCriteria("Assembly", "Status", "is", "Analysis")
             .apply(ExplorePage.class);
-        //Assert.assertTrue();
+
+        Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
 
     @Test
@@ -173,7 +187,7 @@ public class FilterCriteriaTests extends TestBase {
             .filterPublicCriteria("Assembly", "Description", "Contains", "Test Description")
             .apply(ExplorePage.class);
 
-        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
+        Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
 
     @Test
@@ -198,6 +212,6 @@ public class FilterCriteriaTests extends TestBase {
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
-        Assert.assertThat(explorePage.getListOfScenarios("Initial", testComparisonName), is(equalTo(1)));
+        Assert.assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));
     }
 }
