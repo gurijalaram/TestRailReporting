@@ -18,7 +18,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -157,7 +156,6 @@ public class DTCPlasticMouldingTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"1078", "1079", "1080"})
-    @Issue("BA-851")
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticMaxWallThickness() {
         loginPage = new CIDLoginPage(driver);
