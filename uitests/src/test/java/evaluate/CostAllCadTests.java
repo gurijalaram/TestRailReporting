@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.header.EvaluateHeader;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.ReferenceComparePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -30,6 +31,7 @@ public class CostAllCadTests extends TestBase {
     private CostDetailsPage costDetailsPage;
     private EvaluateHeader evaluateHeader;
     private WarningPage warningPage;
+    private ReferenceComparePage referenceComparePage;
 
     public CostAllCadTests() {
         super();
@@ -52,6 +54,28 @@ public class CostAllCadTests extends TestBase {
         assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("14.41"));
         assertThat(costDetailsPage.getCostContribution("Labor "), containsString("4.94"));
         assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.35"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"566"})
+    @Description("Be able to determine whether a decision has caused a cost increase or decrease")
+    public void costIncreaseDecrease() {
+        loginPage = new CIDLoginPage(driver);
+        referenceComparePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("powderMetal.stp"))
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .openMaterialCompositionTable()
+            .selectMaterialComposition("FN-0205")
+            .apply()
+            .costScenario()
+            .openReferenceCompare();
+
+        assertThat(referenceComparePage.materialCostDelta("up"), is(true));
+        assertThat(referenceComparePage.piecePartCostDelta("down"), is(true));
+        assertThat(referenceComparePage.fullyBurdenedCostDelta("down"), is(true));
+        assertThat(referenceComparePage.totalCapitalInvestmentsDelta("up"), is(true));
     }
 
     @Test

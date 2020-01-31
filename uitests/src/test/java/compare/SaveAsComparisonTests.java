@@ -22,6 +22,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdhocTests;
 
 
 public class SaveAsComparisonTests extends TestBase {
@@ -38,6 +40,7 @@ public class SaveAsComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"419"})
     @Description("Test a private comparison can be have Save As performed on it")
     public void testSaveAsPrivateComparison() {
@@ -57,7 +60,8 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ComparePage.class)
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
-            .apply();
+            .apply()
+            .checkComparisonUpdated("display: none;");
 
         new GenericHeader(driver).saveAs()
             .inputName(testSaveAsComparisonName)
@@ -109,6 +113,7 @@ public class SaveAsComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @Issue("BA-919")
     @TestRail(testCaseId = {"413"})
     @Description("Attempt to create a new comparison with a name that already exists")
@@ -127,11 +132,14 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ComparePage.class)
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
-            .apply();
+            .apply()
+            .checkComparisonUpdated("display: none;");
+
 
         pageHeader = new PageHeader(driver);
-        jobQueuePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
+        comparePage = pageHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         jobQueuePage = genericHeader.selectExploreButton()
