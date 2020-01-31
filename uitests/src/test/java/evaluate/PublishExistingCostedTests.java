@@ -20,7 +20,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class PublishExistingCostedTests extends TestBase {
@@ -66,7 +65,6 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57450")
     @TestRail(testCaseId = {"390", "569", "403"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
