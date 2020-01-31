@@ -129,7 +129,6 @@ public class ToleranceTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @Issue("AP-56493")
     @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
@@ -185,7 +184,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-56493")
     @TestRail(testCaseId = {"726", "712", "1295", "1297"})
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {

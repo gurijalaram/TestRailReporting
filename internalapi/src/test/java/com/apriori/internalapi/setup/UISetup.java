@@ -8,7 +8,6 @@ import com.apriori.pageobjects.utils.APIAuthentication;
 import com.apriori.utils.constants.Constants;
 
 import io.qameta.allure.Issue;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +19,11 @@ public class UISetup {
 
     private APIAuthentication apiAuthentication = new APIAuthentication();
     private DisplayColumnsEntity displayColumns = new DisplayColumnsEntity();
-    
+
     @Issue("BA-915")
     public void resetDisplayedColumns() {
         String userName = "qa-automation-01@apriori.com";
+
         new HTTPRequest()
             .unauthorized()
             .customizeRequest()
@@ -36,44 +36,44 @@ public class UISetup {
             .connect()
             .post();
     }
-    
+
     private List<ColumnEntity> generateDefaultColumnsList() {
         List<ColumnEntity> columns = new ArrayList<ColumnEntity>();
         ColumnEntity column;
 
         column = new ColumnEntity();
-        column.setEditable(false); 
-        column.setName("thumbnail"); 
+        column.setEditable(false);
+        column.setName("thumbnail");
         column.setDisplayName("Thumbnail");
         columns.add(column);
- 
+
         column = new ColumnEntity();
-        column.setEditable(false); 
-        column.setName("scenarioKey"); 
+        column.setEditable(false);
+        column.setName("scenarioKey");
         column.setDisplayName("Name / Scenario");
         columns.add(column);
 
         column = new ColumnEntity();
-        column.setEditable(false); 
-        column.setName("costStatus"); 
+        column.setEditable(false);
+        column.setName("costStatus");
         column.setDisplayName("Locked / Workspace");
         columns.add(column);
 
         column = new ColumnEntity();
-        column.setEditable(false); 
-        column.setName("properties.processGroupDisplayName"); 
+        column.setEditable(false);
+        column.setName("properties.processGroupDisplayName");
         column.setDisplayName("Process Group");
         columns.add(column);
 
         column = new ColumnEntity();
-        column.setEditable(false); 
-        column.setName("properties.vpeName"); 
+        column.setEditable(false);
+        column.setName("properties.vpeName");
         column.setDisplayName("VPE");
         columns.add(column);
 
         column = new ColumnEntity();
-        column.setEditable(false); 
-        column.setName("properties.lastModified"); 
+        column.setEditable(false);
+        column.setName("properties.lastModified");
         column.setDisplayName("Last Saved");
         columns.add(column);
 

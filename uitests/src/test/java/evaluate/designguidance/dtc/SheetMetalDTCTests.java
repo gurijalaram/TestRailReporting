@@ -46,7 +46,6 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-851")
     @TestRail(testCaseId = {"1839", "1842", "1843"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
