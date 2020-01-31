@@ -37,7 +37,6 @@ public class PublishExistingCostedTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"389", "1091"})
-    @Issue("AP-56845")
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 

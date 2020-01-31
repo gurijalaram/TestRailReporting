@@ -12,12 +12,11 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.WorkspaceEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class DeleteScenarioIterationsTests extends TestBase {
@@ -31,7 +30,6 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"588", "394", "581", "395"})
-    @Issue("AP-56845")
     @Description("Test a public scenario can be deleted from the evaluate page")
     public void testDeletePublicScenarioIteration() {
         String testScenarioName = new Util().getScenarioName();
@@ -64,7 +62,6 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"588", "572", "1089"})
-    @Issue("AP-56845")
     @Description("Test a private scenario can be deleted from the evaluate page")
     public void testDeletePrivateScenarioIteration() {
         String testScenarioName = new Util().getScenarioName();
