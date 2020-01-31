@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +40,15 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
+
+    @FindBy(css = "button[class='ui-datepicker-trigger']")
+    private WebElement datePickerTriggerBtn;
+
+    @FindBy(css = "select[class='ui-datepicker-month']")
+    private WebElement datePickerMonthSelect;
+
+    @FindBy(css = "select[class='ui-datepicker-year']")
+    private WebElement datePickerYearSelect;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -489,18 +499,39 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Sets export set time and date to current time minus two months
+     * Sets export set time and date to current time minus two months using input field
      */
-    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgo() {
+    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoInput() {
         String dtTwoMonthsAgo = getDateTwoMonthsAgo();
-
-        latestExportDateInput.clear();
-        latestExportDateInput.sendKeys(dtTwoMonthsAgo);
 
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
             latestExportDateInput.clear();
             latestExportDateInput.sendKeys(dtTwoMonthsAgo);
         }
+        return this;
+    }
+
+    /**
+     * Sets export set filter date using date picker
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoPicker() {
+        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
+        Select monthDropdown = new Select(datePickerMonthSelect);
+        Select yearDropdown = new Select(datePickerYearSelect);
+
+        int currentMonth = Integer.parseInt(datePickerMonthSelect.getAttribute("value"));
+        int indexToSelect;
+
+        if (currentMonth == 0) {
+            indexToSelect = 11;
+        } else {
+            indexToSelect = currentMonth - 1;
+        }
+
+        monthDropdown.selectByIndex(indexToSelect);
+        yearDropdown.selectByValue("2019");
+        datePickerTriggerBtn.click();
         return this;
     }
 
@@ -527,7 +558,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return String
      */
     private String getDateTwoMonthsAgo() {
-        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(2).withNano(0);
+        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(1).withNano(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return formatter.format(pastDate);
     }

@@ -394,8 +394,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1919")
     @Issue("AP-54036")
-    @Description("Ensuring latest export date filter works properly")
-    public void testLatestExportDateFilter() {
+    @Description("Ensuring latest export date filter works properly (uses date input field)")
+    public void testLatestExportDateFilterUsingInput() {
         assemblyDetailsReport = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
@@ -403,9 +403,29 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .ensureDateIsToday()
-                .setExportDateToTwoMonthsAgo()
+                .setExportDateToTwoMonthsAgoInput()
                 .ensureExportSetHasChanged();
 
+        // If this assertion fails, test fails as the export set is there because bug is not yet fixed
+        assertThat(assemblyDetailsReport.getAmountOfTopLevelExportSets(), is(0));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3244")
+    @Issue("AP-54036")
+    @Description("Ensuring latest export date filter works properly (using date picker)")
+    public void testLatestExportDateFilterUsingDatePicker() {
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .ensureDateIsToday()
+                .setExportDateToTwoMonthsAgoPicker()
+                .ensureExportSetHasChanged();
+
+        // If this assertion fails, test fails as the export set is there because bug is not yet fixed
         assertThat(assemblyDetailsReport.getAmountOfTopLevelExportSets(), is(0));
     }
 
