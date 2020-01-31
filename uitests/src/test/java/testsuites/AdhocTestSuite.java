@@ -1,5 +1,7 @@
 package testsuites;
 
+import com.apriori.utils.runner.CategorySuiteRunner;
+
 import compare.AddScenarioTests;
 import compare.DeleteComparisonTests;
 import compare.EditPublicComparisonTests;
@@ -41,12 +43,14 @@ import explore.PreviewPanelTests;
 import explore.TableHeadersTests;
 import login.LoginTests;
 import org.junit.experimental.categories.Categories;
+import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import settings.SettingsTests;
 import testsuites.suiteinterface.AdhocTests;
 
 //TODO: add project ID for TestRail
 //@ProjectRunID("999")
+@RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(AdhocTests.class)
 @Suite.SuiteClasses ({
     AddScenarioTests.class,
