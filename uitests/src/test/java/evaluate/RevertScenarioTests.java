@@ -9,13 +9,11 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class RevertScenarioTests extends TestBase {
@@ -48,7 +46,6 @@ public class RevertScenarioTests extends TestBase {
 
     @Test
     @Description("Test revert unsaved scenario")
-    @Issue("AP-57453")
     @TestRail(testCaseId = {"586"})
     public void testRevertUnsavedScenario() {
 

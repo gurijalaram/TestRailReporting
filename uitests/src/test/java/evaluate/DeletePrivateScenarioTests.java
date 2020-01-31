@@ -13,8 +13,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 public class DeletePrivateScenarioTests extends TestBase {
@@ -30,7 +28,6 @@ public class DeletePrivateScenarioTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"393", "587"})
-    @Issue("AP-56845")
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
 
