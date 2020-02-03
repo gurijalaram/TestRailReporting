@@ -383,7 +383,6 @@ public class ActionsTests extends TestBase {
         assertThat(scenarioNotesPage.isScenarioNotes(""), is(true));
     }
 
-
     @Test
     @TestRail(testCaseId = {"574"})
     @Description("Be able to view and read notes added by other users")
