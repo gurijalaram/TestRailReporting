@@ -558,7 +558,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     *
+     * Opens new tab and switches to it
      * @return
      */
     public AssemblyDetailsReportPage openNewTabAndFocus() {

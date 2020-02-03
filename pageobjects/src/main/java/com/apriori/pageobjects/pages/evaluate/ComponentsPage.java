@@ -142,8 +142,8 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      *
      * @return new page object
      */
-    public TableColumnsPage openColumnsTable() {
+    public ComponentTableColumnsPage openColumnsTable() {
         pageUtils.waitForElementToAppear(columnSelectorButton).click();
-        return new TableColumnsPage(driver);
+        return new ComponentTableColumnsPage(driver);
     }
 }

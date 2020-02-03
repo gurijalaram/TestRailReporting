@@ -762,13 +762,22 @@ public class PageUtils {
 
     /**
      * Gets a list of current windows and switches to the first child window only
-     * todo - this is a WIP and will be developed further in the further
+     * todo - this is a WIP and will be developed further in the future
      *
      * @return webdriver functions
      */
     public WebDriver windowHandler() {
         List<String> windowList = new ArrayList<>(driver.getWindowHandles());
         return driver.switchTo().window(windowList.get(1));
+    }
+
+    /**
+     * Gets list of current windows and switches back to first tab
+     * @return webdriver functions
+     */
+    public WebDriver switchBackToInitialTab() {
+        List<String> windowList = new ArrayList<>(driver.getWindowHandles());
+        return driver.switchTo().window(windowList.get(0));
     }
 
     /**

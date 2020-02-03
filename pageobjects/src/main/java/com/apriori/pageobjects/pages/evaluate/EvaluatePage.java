@@ -11,6 +11,9 @@ import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.Secondary
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,16 +21,22 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @author cfrith
+ * @author cfrith and bhegan
  */
 
 public class EvaluatePage extends EvaluateHeader {
 
     private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
+
+    private Map<String, String> columnSelectorMap = new HashMap<>();
 
     @FindBy(css = "thead[data-ap-comp='scenarioKey'] label[data-ap-field='masterName']")
     private WebElement partName;
@@ -173,6 +182,7 @@ public class EvaluatePage extends EvaluateHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseColumnSelectorMap();
         this.get();
     }
 
@@ -654,6 +664,37 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public boolean isReferencePanelExpanded() {
         return pageUtils.isElementDisplayed(chevron);
+    }
+
+    /**
+     * Gets table values for PPC, CI, FBC and CT
+     * @return List of BigDecimals
+     */
+    public ArrayList<BigDecimal> getTableValues(String column) {
+        Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
+        String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) td";
+        ArrayList<BigDecimal> figureValues = new ArrayList<>();
+
+        for (Element valueElement : evaluateComponentView.select(String.format(baseCssSelector, columnSelectorMap.get(column)))) {
+            if (!valueElement.text().isEmpty() && valueElement.text().contains(".")) {
+                figureValues.add(new BigDecimal(valueElement.text()));
+            }
+        }
+        return figureValues;
+    }
+
+    /**
+     * Switches to other tab
+     */
+    public void switchBackToTabOne() {
+        pageUtils.switchBackToInitialTab();
+    }
+
+    private void initialiseColumnSelectorMap() {
+        columnSelectorMap.put("Per Part Cost (USD)", "1");
+        columnSelectorMap.put("Capital Investment (USD)", "2");
+        columnSelectorMap.put("Fully Burdened Cost (USD)", "3");
+        columnSelectorMap.put("Cycle Time (s)", "4");
     }
 
 }

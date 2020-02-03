@@ -1,5 +1,6 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
+import com.apriori.pageobjects.pages.evaluate.ComponentTableColumnsPage;
 import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -16,6 +17,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
@@ -23,10 +25,15 @@ import groovy.util.Eval;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import io.qameta.allure.Issue;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -447,18 +454,36 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
                 .clickApplyAndOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency())
                 .openNewTabAndFocus();
 
-        TableColumnsPage tableColumnsPage = new ExplorePage(driver)
-                .selectWorkSpace("Public Workspace")
+        List<String> columnsToRemove = Arrays.asList("Qty", "Process Group", "VPE", "Last Saved", "Last Costed");
+        List<String> columnsToAdd = Arrays.asList("Per Part Cost (USD)", "Capital Investment (USD)",
+                "Fully Burdened Cost (USD)", "Cycle Time (s)");
+
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
                 .openAssembly("Initial", "PISTON_ASSEMBLY")
                 .openComponentsTable()
-                .openColumnsTable();
+                .openColumnsTable()
+                .checkColumnSettings(columnsToAdd, columnsToRemove)
+                .selectSaveButton();
 
-        // Figure out why it throws an Assertion error on appearance of dialog's content (it does appear)
-        // change columns shown
         // store values from table in an ArrayList
+        ArrayList<BigDecimal> rowOneCidValues = evaluatePage.getTableValues("Per Part Cost (USD)");
+        ArrayList<BigDecimal> rowTwoCidValues = evaluatePage.getTableValues("Capital Investment (USD)");
+        ArrayList<BigDecimal> rowThreeCidValues = evaluatePage.getTableValues("Fully Burdened Cost (USD)");
+        ArrayList<BigDecimal> rowFourCidValues = evaluatePage.getTableValues("Cycle Time (s)");
+
         // Go to Reports, get values
+        // TODO - use existing method for this (see AssemblyDetailsReportPage)
+        evaluatePage.switchBackToTabOne();
+        ArrayList<BigDecimal> rowOneReportsValues = assemblyDetailsReport.getValuesByColumn("", "Cycle Time");
+        rowOneReportsValues.remove(rowOneReportsValues.size() - 1);
+        ArrayList<BigDecimal> rowTwoReportsValues = assemblyDetailsReport.getValuesByColumn("", "Piece Part Cost");
+        ArrayList<BigDecimal> rowThreeReportsValues = assemblyDetailsReport.getValuesByColumn("", "Fully Burdened Cost");
+        ArrayList<BigDecimal> rowFourReportsValues = assemblyDetailsReport.getValuesByColumn("", "Capital Investments");
+
         // Assert that all are equal
     }
 
