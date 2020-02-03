@@ -61,7 +61,7 @@ public class SaveAsComparisonTests extends TestBase {
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
             .apply()
-            .checkComparisonUpdated("display: none;");
+            .checkComparisonUpdated();
 
         new GenericHeader(driver).saveAs()
             .inputName(testSaveAsComparisonName)
@@ -113,7 +113,6 @@ public class SaveAsComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @Issue("BA-919")
     @TestRail(testCaseId = {"413"})
     @Description("Attempt to create a new comparison with a name that already exists")
@@ -133,7 +132,7 @@ public class SaveAsComparisonTests extends TestBase {
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
             .apply()
-            .checkComparisonUpdated("display: none;");
+            .checkComparisonUpdated();
 
 
         pageHeader = new PageHeader(driver);

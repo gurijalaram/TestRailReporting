@@ -19,11 +19,8 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.AdhocTests;
 
 public class PublishComparisonTests extends TestBase {
 
@@ -37,7 +34,6 @@ public class PublishComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"421", "434"})
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
@@ -61,7 +57,7 @@ public class PublishComparisonTests extends TestBase {
              .apply(ComparisonTablePage.class)
              .selectScenario(testScenarioName, "Casting")
              .apply()
-             .checkComparisonUpdated("display: none;");
+             .checkComparisonUpdated();
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.openJobQueue()
@@ -95,7 +91,6 @@ public class PublishComparisonTests extends TestBase {
 
 
     @Test
-    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"421"})
     @Description("Test a private comparison can be published from explore page")
     public void testPublishComparisonExplorePage() {
@@ -119,7 +114,7 @@ public class PublishComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "CASTING")
             .apply()
-            .checkComparisonUpdated("display: none;");
+            .checkComparisonUpdated();
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()

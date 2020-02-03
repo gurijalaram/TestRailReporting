@@ -109,11 +109,10 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Checks if the comparison is being updated
-     * @param text - the text in the attribute
      * @return current page object
      */
-    public ComparePage checkComparisonUpdated(String text) {
-        pageUtils.checkElementAttribute(loadingComparisonData, "style", text);
+    public ComparePage checkComparisonUpdated() {
+        pageUtils.checkElementAttribute(loadingComparisonData, "style", "display: none;");
         return this;
     }
 }

@@ -20,10 +20,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.AdhocTests;
 
 
 public class DeleteComparisonTests extends TestBase {
@@ -42,7 +39,6 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"433"})
     @Description("Test a private comparison can be deleted from the explore page")
     public void testDeletePrivateComparisonExplore() {
@@ -64,7 +60,7 @@ public class DeleteComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "Machined Box AMERICAS")
             .apply()
-            .checkComparisonUpdated("display: none;");
+            .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
         jobQueuePage = pageHeader.openJobQueue()
@@ -107,7 +103,6 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDeleteExplore() {
@@ -131,7 +126,7 @@ public class DeleteComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "MACHINED BOX AMERICAS")
             .apply()
-            .checkComparisonUpdated("display: none;");
+            .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
         jobQueuePage = pageHeader.openJobQueue()
@@ -155,7 +150,6 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
     public void deletePublicComparisonPage() {
@@ -179,7 +173,7 @@ public class DeleteComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
             .apply()
-            .checkComparisonUpdated("display: none;");
+            .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
         jobQueuePage = pageHeader.openJobQueue()
@@ -207,7 +201,6 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"431"})
     @Description("In comparison view, the user can delete the currently open comparison and any matching public or private comparisons")
     public void deletePublicPrivateComparison() {
@@ -230,7 +223,7 @@ public class DeleteComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
             .apply()
-            .checkComparisonUpdated("display: none;");
+            .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
         jobQueuePage = pageHeader.openJobQueue()
