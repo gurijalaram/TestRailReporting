@@ -89,6 +89,18 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     @FindBy(css = "[data-ap-field='capitalInvestment.baseline']")
     private WebElement capitalInvestmentBaseline;
 
+    @FindBy(css = "[data-ap-field='capitalInvestment.indicator']")
+    private WebElement capitalInvestmentIndicator;
+
+    @FindBy(css = "[data-ap-field='fullyBurdenedCost.indicator']")
+    private WebElement fullyBurdenedCostIndicator;
+
+    @FindBy(css = "[data-ap-field='totalCost.indicator']")
+    private WebElement totalCostIndicator;
+
+    @FindBy(css = "[data-ap-field='materialCost.indicator']")
+    private WebElement materialCostIndicator;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -184,7 +196,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public boolean isReferenceProcessGroup(String text) {
-        return checkAttribute(processGroupBaseline, text);
+        return checkAttribute(processGroupBaseline,  "innerText", text);
     }
 
     /**
@@ -193,7 +205,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public boolean isReferenceVPE(String text) {
-        return checkAttribute(vpeBaseline, text);
+        return checkAttribute(vpeBaseline, "innerText", text);
     }
 
     /**
@@ -202,7 +214,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public boolean isReferenceSecondaryProcesses(String text) {
-        return checkAttribute(secondaryProcessesBaseline, text);
+        return checkAttribute(secondaryProcessesBaseline, "innerText", text);
     }
 
     /**
@@ -211,7 +223,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public boolean isReferenceAnnualVolume(String text) {
-        return checkAttribute(annualVolumeBaseline, text);
+        return checkAttribute(annualVolumeBaseline, "innerText", text);
     }
 
     /**
@@ -220,7 +232,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public boolean isReferenceProductionLife(String text) {
-        return checkAttribute(productionLifeBaseline, text);
+        return checkAttribute(productionLifeBaseline, "innerText", text);
     }
 
     /**
@@ -229,7 +241,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public boolean isReferenceMaterial(String text) {
-        return checkAttribute(materialBaseline, text);
+        return checkAttribute(materialBaseline, "innerText", text);
     }
 
     /**
@@ -238,7 +250,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public boolean isReferenceFinishMass(String text) {
-        return checkAttribute(finishMassBaseline, text);
+        return checkAttribute(finishMassBaseline, "innerText", text);
     }
 
     /**
@@ -247,7 +259,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public boolean isReferenceUtilization(String text) {
-        return checkAttribute(utilizationBaseline, text);
+        return checkAttribute(utilizationBaseline, "innerText", text);
     }
 
     /**
@@ -256,7 +268,43 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @param text - the text
      * @return true/false
      */
-    private boolean checkAttribute(WebElement locator, String text) {
-        return pageUtils.checkElementAttribute(locator, "innerText", text);
+    private boolean checkAttribute(WebElement locator, String attribute, String text) {
+        return pageUtils.checkElementAttribute(locator, attribute, text);
+    }
+
+    /**
+     * Gets Material Cost Delta
+     *
+     * @return as string
+     */
+    public boolean materialCostDelta(String text) {
+        return checkAttribute(materialCostIndicator, "innerHTML", text);
+    }
+
+    /**
+     * Gets Piece Part Cost Delta
+     *
+     * @return as string
+     */
+    public boolean piecePartCostDelta(String text) {
+        return checkAttribute(totalCostIndicator, "innerHTML", text);
+    }
+
+    /**
+     * Gets Fully Burdened Cost
+     *
+     * @return as string
+     */
+    public boolean fullyBurdenedCostDelta(String text) {
+        return checkAttribute(fullyBurdenedCostIndicator, "innerHTML", text);
+    }
+
+    /**
+     * Gets Total Capital Investments
+     *
+     * @return as string
+     */
+    public boolean totalCapitalInvestmentsDelta(String text) {
+        return checkAttribute(capitalInvestmentIndicator, "innerHTML", text);
     }
 }

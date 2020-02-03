@@ -20,7 +20,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 
@@ -60,7 +59,8 @@ public class DeleteComparisonTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "Machined Box AMERICAS")
-            .apply();
+            .apply()
+            .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
         jobQueuePage = pageHeader.openJobQueue()
@@ -105,7 +105,6 @@ public class DeleteComparisonTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
-    @Issue("BA-840")
     public void testPublicComparisonDeleteExplore() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -126,7 +125,8 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "MACHINED BOX AMERICAS")
-            .apply();
+            .apply()
+            .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
         jobQueuePage = pageHeader.openJobQueue()
@@ -139,8 +139,6 @@ public class DeleteComparisonTests extends TestBase {
             .highlightComparison(testComparisonName)
             .delete()
             .deleteExploreComparison()
-            // TODO: 22/11/2019 Remove refresh once issue fixed 
-            .refreshCurrentPage()
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
             .closeJobQueue(ExplorePage.class)
@@ -152,7 +150,6 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-840")
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
     public void deletePublicComparisonPage() {
@@ -175,7 +172,8 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
-            .apply();
+            .apply()
+            .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
         jobQueuePage = pageHeader.openJobQueue()
@@ -184,8 +182,6 @@ public class DeleteComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
-            // TODO: 22/11/2019 Remove refresh once issue fixed 
-            .refreshCurrentPage()
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
@@ -205,7 +201,6 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-840")
     @TestRail(testCaseId = {"431"})
     @Description("In comparison view, the user can delete the currently open comparison and any matching public or private comparisons")
     public void deletePublicPrivateComparison() {
@@ -227,7 +222,8 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
-            .apply();
+            .apply()
+            .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
         jobQueuePage = pageHeader.openJobQueue()
@@ -236,8 +232,6 @@ public class DeleteComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
-            // TODO: 22/11/2019 Remove refresh once issue fixed
-            .refreshCurrentPage()
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)

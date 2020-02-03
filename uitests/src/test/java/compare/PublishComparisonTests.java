@@ -19,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
@@ -36,7 +35,6 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"421", "434"})
-    @Issue("BA-840")
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
 
@@ -58,12 +56,16 @@ public class PublishComparisonTests extends TestBase {
              .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
              .apply(ComparisonTablePage.class)
              .selectScenario(testScenarioName, "Casting")
-             .apply();
+             .apply()
+             .checkComparisonUpdated();
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class);
 
          new GenericHeader(driver).publishScenario(PublishPage.class)
              .selectPublishButton()
-             // TODO: 22/11/2019 removed refresh once issue fixed
-             .refreshCurrentPage()
              .openJobQueue()
              .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
              .closeJobQueue(ExplorePage.class)
@@ -111,7 +113,8 @@ public class PublishComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "CASTING")
-            .apply();
+            .apply()
+            .checkComparisonUpdated();
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
