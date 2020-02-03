@@ -150,7 +150,7 @@ public class AfterTestUtil {
         new HTTPRequest()
             .unauthorized()
             .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
-            .setEndpoint(Constants.getBaseUrl() +"ws/workspace/users/me/tolerance-policy-defaults")
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
             .setAutoLogin(false)
             .setBody(new ToleranceValuesEntity().setMinCadToleranceThreshhold(5.55)
                 .setCadToleranceReplacement(5.55)
