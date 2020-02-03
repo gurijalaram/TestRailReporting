@@ -8,7 +8,6 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
-
 import org.junit.Test;
 
 public class APILoginTest {

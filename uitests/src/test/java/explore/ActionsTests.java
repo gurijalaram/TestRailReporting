@@ -257,7 +257,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-892")
     @TestRail(testCaseId = {"532", "736", "734"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
@@ -281,7 +280,6 @@ public class ActionsTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"543"})
     @Description("Validate User can edit notes to a scenario")
-    @Issue("AP-57951")
     public void editNotes() {
 
         String testScenarioName = new Util().getScenarioName();
@@ -349,6 +347,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-932")
     @TestRail(testCaseId = {"542", "546"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
@@ -451,6 +450,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-932")
     @TestRail(testCaseId = {"740"})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {

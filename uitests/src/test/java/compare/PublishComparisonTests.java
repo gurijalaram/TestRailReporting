@@ -97,7 +97,6 @@ public class PublishComparisonTests extends TestBase {
     @Test
     @Category(AdhocTests.class)
     @TestRail(testCaseId = {"421"})
-    @Issue("AP-56845")
     @Description("Test a private comparison can be published from explore page")
     public void testPublishComparisonExplorePage() {
 

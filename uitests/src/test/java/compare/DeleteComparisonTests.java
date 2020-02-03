@@ -66,6 +66,10 @@ public class DeleteComparisonTests extends TestBase {
             .apply()
             .checkComparisonUpdated("display: none;");
 
+        pageHeader = new PageHeader(driver);
+        jobQueuePage = pageHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
+
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
@@ -80,7 +84,6 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-56845")
     @TestRail(testCaseId = {"430"})
     @Description("Test a private comparison can be deleted from the comparison page")
     public void testDeletePrivateComparison() {

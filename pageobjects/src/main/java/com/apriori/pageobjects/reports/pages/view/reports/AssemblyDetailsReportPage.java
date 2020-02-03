@@ -1,18 +1,24 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.utils.PageUtils;
+import com.apriori.utils.enums.AssemblyTypeEnum;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +39,16 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     List<BigDecimal> refinedQuantities = new ArrayList<>();
 
     private String genericTrSelector = "tr:nth-child(%s)";
-    private String rowSelector;
     private String cssSelector;
+
+    @FindBy(css = "button[class='ui-datepicker-trigger']")
+    private WebElement datePickerTriggerBtn;
+
+    @FindBy(css = "select[class='ui-datepicker-month']")
+    private WebElement datePickerMonthSelect;
+
+    @FindBy(css = "select[class='ui-datepicker-year']")
+    private WebElement datePickerYearSelect;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -61,11 +75,14 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Generic method to get specific value from an Assembly Details Report table
      * @param assemblyType
-     * @param rowIndex
+     * @param rowName
      * @param columnName
      * @return BigDecimal
      */
-    public BigDecimal getValueFromTable(String assemblyType, String rowIndex, String columnName) {
+    public BigDecimal getValueFromTable(String assemblyType, String rowName, String columnName) {
+        String rowIndex = rowName + " " + assemblyType;
+        columnName = columnName + " Total";
+
         Document assemblyDetailsReport = parsePageSetCss(assemblyType, rowIndex, columnName);
         BigDecimal valueRequired = new BigDecimal("0.00");
         Element valueCell = assemblyDetailsReport.select(cssSelector).first();
@@ -124,7 +141,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         List<String> mainPartNums = new ArrayList<>();
         ArrayList<String> secondaryPartNums;
 
-        if (assemblyType.equals("Top Level")) {
+        if (assemblyType.equals(AssemblyTypeEnum.TOP_LEVEL.getAssemblyType())) {
             mainPartNums = assemblyDetailsReport.select(cssSelector).stream().filter(element -> !element.text().isEmpty() && !element.text().equals("Part Number")
                 && !element.text().equals("GRAND TOTAL")).map(Element::text).collect(Collectors.toList());
         } else {
@@ -143,9 +160,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             element.text().equals("Assembly Process")).map(Element::text).collect(Collectors.toCollection(ArrayList::new));
 
         mainPartNums.add(0, secondaryPartNums.get(0));
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             mainPartNums.add(7, secondaryPartNums.get(1));
-        } else if (assemblyType.equals("Top Level")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.TOP_LEVEL.getAssemblyType())) {
             mainPartNums.add(8, secondaryPartNums.get(1));
             mainPartNums.add(15, secondaryPartNums.get(2));
         }
@@ -171,9 +188,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         BigDecimal secondValue = totalValuesList.get(1);
         values.add(0, firstValue);
 
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             values.add(7, secondValue);
-        } else if (assemblyType.equals("Top Level")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.TOP_LEVEL.getAssemblyType())) {
             BigDecimal thirdValue = totalValuesList.get(2);
             values.add(8, secondValue);
             values.add(15, thirdValue);
@@ -193,9 +210,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> trimmedValueList;
 
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             trimmedValueList = checkCTSubAssemblyValues(assemblyType, allValues);
-        } else if (assemblyType.equals("Sub-Sub-ASM")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             trimmedValueList = checkCTSubSubAsmValues(assemblyType, levels, allValues);
         } else {
             trimmedValueList = checkCTTopLevelValues(assemblyType, levels, allValues);
@@ -249,9 +266,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> trimmedValueList;
 
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             trimmedValueList = checkCISubAssemblyValues(assemblyType, levels, allValues);
-        } else if (assemblyType.equals("Sub-Sub-ASM")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             trimmedValueList = checkCISubSubAsmValues(assemblyType, levels, allValues);
         } else {
             trimmedValueList = checkCITopLevelValues(assemblyType, levels, allValues);
@@ -295,7 +312,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private List<BigDecimal> checkCTTopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
         return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).chars().allMatch(Character::isDigit) || partNums.get(i).equals("Assembly Process") ||
-            partNums.get(i).equals("SUB-ASSEMBLY")).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0).mapToObj(values::get).collect(Collectors.toList());
+            partNums.get(i).equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -330,7 +347,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private List<BigDecimal> checkCISubAssemblyValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-SUB-ASM")).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -354,7 +371,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private List<BigDecimal> checkCITopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals("SUB-ASSEMBLY")).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -368,9 +385,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
         quantities.add(0, quantitiesEmpty.get(0));
 
-        if (assemblyType.equals("Sub-Assembly")) {
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
             quantities.add(7, quantitiesEmpty.get(1));
-        } else if (assemblyType.equals("Top Level")) {
+        } else if (assemblyType.equals(AssemblyTypeEnum.TOP_LEVEL.getAssemblyType())) {
             quantities.add(8, quantitiesEmpty.get(1));
             quantities.add(15, quantitiesEmpty.get(2));
         }
@@ -413,12 +430,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     public AssemblyDetailsReportPage waitForCorrectAssembly(String assemblyToCheck) {
         pageUtils.waitForElementToAppear(currentAssembly);
-        // if top level, hyphon is needed
-        if (assemblyToCheck.equals("Top Level")) {
+        // if not top level, add -
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
             pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
-        } else {
-            pageUtils.checkElementAttribute(currentAssembly, "innerText", assemblyToCheck.toUpperCase());
         }
         return this;
     }
@@ -433,7 +448,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return this;
     }
-
 
     /**
      * Checks if value of current cell is a valid one
@@ -466,6 +480,90 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
+     *
+     * @param assemblyType
+     * @param column
+     * @return
+     */
+    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
+        ArrayList<BigDecimal> returnValues = new ArrayList<>();
+
+        BigDecimal subTotal = getValueFromTable(assemblyType, "Component Subtotal", column + " Sub");
+        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, "Assembly Processes", column);
+        BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
+        BigDecimal actualTotal = getValueFromTable(assemblyType, "Grand Total", column);
+
+        returnValues.add(expectedTotal);
+        returnValues.add(actualTotal);
+        return returnValues;
+    }
+
+    /**
+     * Sets export set time and date to current time minus two months using input field
+     */
+    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoInput() {
+        String dtTwoMonthsAgo = getDateTwoMonthsAgo();
+
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
+        }
+        return this;
+    }
+
+    /**
+     * Sets export set filter date using date picker
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoPicker() {
+        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
+        Select monthDropdown = new Select(datePickerMonthSelect);
+        Select yearDropdown = new Select(datePickerYearSelect);
+
+        int currentMonth = Integer.parseInt(datePickerMonthSelect.getAttribute("value"));
+        int indexToSelect;
+
+        if (currentMonth == 0) {
+            indexToSelect = 11;
+        } else {
+            indexToSelect = currentMonth - 1;
+        }
+
+        monthDropdown.selectByIndex(indexToSelect);
+        yearDropdown.selectByValue("2019");
+        datePickerTriggerBtn.click();
+        return this;
+    }
+
+    /**
+     * Ensures date has changed, before proceeding with test
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage ensureExportSetHasChanged() {
+        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateTwoMonthsAgo().substring(0, 10));
+        return this;
+    }
+
+    /**
+     * Ensures filtering worked correctly
+     * @return int size of element list
+     */
+    public int getAmountOfTopLevelExportSets() {
+        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
+        return list.size();
+    }
+
+    /**
+     * Gets date from two months ago
+     * @return String
+     */
+    private String getDateTwoMonthsAgo() {
+        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(1).withNano(0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(pastDate);
+    }
+
+    /**
      * Returns parsed markup of page and sets the CSS Locator
      * @param assemblyType
      * @param rowIndex
@@ -485,17 +583,14 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private void setCssLocator(String assemblyType, String rowIndex, String columnName) {
         String columnSelector;
+        String rowSelector;
 
-        switch (assemblyType) {
-            case "Sub-Assembly":
-                rowSelector = subAssemblyRowMap.get(rowIndex);
-                break;
-            case "Sub-Sub-ASM":
-                rowSelector = subSubAsmRowMap.get(rowIndex);
-                break;
-            case "Top Level":
-                rowSelector = topLevelRowMap.get(rowIndex);
-                break;
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
+            rowSelector = subAssemblyRowMap.get(rowIndex);
+        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            rowSelector = subSubAsmRowMap.get(rowIndex);
+        } else {
+            rowSelector = topLevelRowMap.get(rowIndex);
         }
 
         columnSelector = genericColumnMap.get(columnName);
@@ -516,25 +611,27 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Top Level export set report table
      */
     private void initialiseGenericColumnMap() {
-        String genericTdSelector = "td:nth-child(%s)";
+        putItemIntoColumnMap("Level", "2");
+        putItemIntoColumnMap("Part Number Main", "5");
+        putItemIntoColumnMap("Part Number Secondary", "6");
+        putItemIntoColumnMap("Quantity", "10");
+        putItemIntoColumnMap("Quantity Empty", "11");
 
-        genericColumnMap.put("Level", String.format(genericTdSelector, "2"));
-        genericColumnMap.put("Part Number Main", String.format(genericTdSelector, "5"));
-        genericColumnMap.put("Part Number Secondary", String.format(genericTdSelector, "6"));
-        genericColumnMap.put("Quantity", String.format(genericTdSelector, "10"));
-        genericColumnMap.put("Quantity Empty", String.format(genericTdSelector, "11"));
+        putItemIntoColumnMap("Cycle Time", "24");
+        putItemIntoColumnMap("Cycle Time Sub Total", "15");
+        putItemIntoColumnMap("Cycle Time Total", "25");
 
-        genericColumnMap.put("Cycle Time", String.format(genericTdSelector, "24"));
-        genericColumnMap.put("Cycle Time Total", String.format(genericTdSelector, "25"));
+        putItemIntoColumnMap("Piece Part Cost", "27");
+        putItemIntoColumnMap("Piece Part Cost Sub Total", "18");
+        putItemIntoColumnMap("Piece Part Cost Total", "28");
 
-        genericColumnMap.put("Piece Part Cost", String.format(genericTdSelector, "27"));
-        genericColumnMap.put("Piece Part Cost Total", String.format(genericTdSelector, "28"));
+        putItemIntoColumnMap("Fully Burdened Cost", "30");
+        putItemIntoColumnMap("Fully Burdened Cost Sub Total", "21");
+        putItemIntoColumnMap("Fully Burdened Cost Total", "31");
 
-        genericColumnMap.put("Fully Burdened Cost", String.format(genericTdSelector, "30"));
-        genericColumnMap.put("Fully Burdened Cost Total", String.format(genericTdSelector, "31"));
-
-        genericColumnMap.put("Capital Investments", String.format(genericTdSelector, "33"));
-        genericColumnMap.put("Capital Investments Total", String.format(genericTdSelector, "34"));
+        putItemIntoColumnMap("Capital Investments", "33");
+        putItemIntoColumnMap("Capital Investments Sub Total", "24");
+        putItemIntoColumnMap("Capital Investments Total", "34");
     }
 
 
@@ -542,47 +639,64 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Sub Assembly export set report table
      */
     private void initialiseSubAssemblyRowMap() {
-        subAssemblyRowMap.put("1 Sub Assembly", String.format(genericTrSelector, "5"));
-        subAssemblyRowMap.put("2 Sub Assembly", String.format(genericTrSelector, "7"));
-        subAssemblyRowMap.put("3 Sub Assembly", String.format(genericTrSelector, "11"));
-        subAssemblyRowMap.put("4 Sub Assembly", String.format(genericTrSelector, "15"));
-        subAssemblyRowMap.put("5 Sub Assembly", String.format(genericTrSelector, "17"));
-        subAssemblyRowMap.put("6 Sub Assembly", String.format(genericTrSelector, "19"));
-        subAssemblyRowMap.put("Component Subtotal Sub Assembly", String.format(genericTrSelector, "22"));
-        subAssemblyRowMap.put("Assembly Processes Sub Assembly", String.format(genericTrSelector, "25"));
-        subAssemblyRowMap.put("Grand Total Sub Assembly", String.format(genericTrSelector, "27"));
+        putItemIntoSubAssemblyRowMap("1 Sub Assembly", "5");
+        putItemIntoSubAssemblyRowMap("2 Sub Assembly", "7");
+        putItemIntoSubAssemblyRowMap("3 Sub Assembly", "11");
+        putItemIntoSubAssemblyRowMap("4 Sub Assembly", "15");
+        putItemIntoSubAssemblyRowMap("5 Sub Assembly", "17");
+        putItemIntoSubAssemblyRowMap("6 Sub Assembly", "19");
+        putItemIntoSubAssemblyRowMap("Component Subtotal Sub Assembly", "22");
+        putItemIntoSubAssemblyRowMap("Assembly Processes Sub Assembly", "25");
+        putItemIntoSubAssemblyRowMap("Grand Total Sub Assembly", "27");
     }
 
     /**
      * Hash Map initialisation for columns in Sub-Sub-ASM export set report table
      */
     private void initialiseSubSubAsmRowMap() {
-        subSubAsmRowMap.put("1 Sub Sub ASM", String.format(genericTrSelector, "4"));
-        subSubAsmRowMap.put("2 Sub Sub ASM", String.format(genericTrSelector, "6"));
-        subSubAsmRowMap.put("Component Subtotal Sub Sub ASM", String.format(genericTrSelector, "10"));
-        subSubAsmRowMap.put("Assembly Processes Sub Sub ASM", String.format(genericTrSelector, "13"));
-        subSubAsmRowMap.put("Grand Total Sub Sub ASM", String.format(genericTrSelector, "15"));
+        putItemIntoSubSubAsmRowMap("1 Sub Sub ASM", "4");
+        putItemIntoSubSubAsmRowMap("2 Sub Sub ASM", "6");
+        putItemIntoSubSubAsmRowMap("Component Subtotal Sub Sub ASM", "10");
+        putItemIntoSubSubAsmRowMap("Assembly Processes Sub Sub ASM", "13");
+        putItemIntoSubSubAsmRowMap("Grand Total Sub Sub ASM", "15");
     }
 
     /**
      * Hash Map initialisation for columns in Top Level export set report table
      */
     private void initialiseTopLevelRowMap() {
-        topLevelRowMap.put("1 Top Level", String.format(genericTrSelector, "5"));
-        topLevelRowMap.put("2 Top Level", String.format(genericTrSelector, "8"));
-        topLevelRowMap.put("3 Top Level", String.format(genericTrSelector, "11"));
-        topLevelRowMap.put("4 Top Level", String.format(genericTrSelector, "14"));
-        topLevelRowMap.put("5 Top Level", String.format(genericTrSelector, "17"));
-        topLevelRowMap.put("6 Top Level", String.format(genericTrSelector, "19"));
-        topLevelRowMap.put("7 Top Level", String.format(genericTrSelector, "21"));
-        topLevelRowMap.put("8 Top Level", String.format(genericTrSelector, "23"));
-        topLevelRowMap.put("9 Top Level", String.format(genericTrSelector, "27"));
-        topLevelRowMap.put("10 Top Level", String.format(genericTrSelector, "31"));
-        topLevelRowMap.put("11 Top Level", String.format(genericTrSelector, "33"));
-        topLevelRowMap.put("12 Top Level", String.format(genericTrSelector, "35"));
-        topLevelRowMap.put("13 Top Level", String.format(genericTrSelector, "38"));
-        topLevelRowMap.put("Component Subtotal Top Level", String.format(genericTrSelector, "42"));
-        topLevelRowMap.put("Assembly Processes Top Level", String.format(genericTrSelector, "45"));
-        topLevelRowMap.put("Grand Total Top Level", String.format(genericTrSelector, "43"));
+        putItemIntoTopLevelRowMap("1 Top Level", "5");
+        putItemIntoTopLevelRowMap("2 Top Level", "8");
+        putItemIntoTopLevelRowMap("3 Top Level", "11");
+        putItemIntoTopLevelRowMap("4 Top Level", "14");
+        putItemIntoTopLevelRowMap("5 Top Level", "17");
+        putItemIntoTopLevelRowMap("6 Top Level", "19");
+        putItemIntoTopLevelRowMap("7 Top Level", "21");
+        putItemIntoTopLevelRowMap("8 Top Level", "23");
+        putItemIntoTopLevelRowMap("9 Top Level", "27");
+        putItemIntoTopLevelRowMap("10 Top Level", "31");
+        putItemIntoTopLevelRowMap("11 Top Level", "33");
+        putItemIntoTopLevelRowMap("12 Top Level", "35");
+        putItemIntoTopLevelRowMap("13 Top Level", "38");
+        putItemIntoTopLevelRowMap("Component Subtotal Top Level", "38");
+        putItemIntoTopLevelRowMap("Assembly Processes Top Level", "41");
+        putItemIntoTopLevelRowMap("Grand Total Top Level", "43");
+    }
+
+    private void putItemIntoColumnMap(String key, String value) {
+        String genericTdSelector = "td:nth-child(%s)";
+        genericColumnMap.put(key, String.format(genericTdSelector, value));
+    }
+
+    private void putItemIntoSubAssemblyRowMap(String key, String value) {
+        subAssemblyRowMap.put(key, String.format(genericTrSelector, value));
+    }
+
+    private void putItemIntoSubSubAsmRowMap(String key, String value) {
+        subSubAsmRowMap.put(key, String.format(genericTrSelector, value));
+    }
+
+    private void putItemIntoTopLevelRowMap(String key, String value) {
+        topLevelRowMap.put(key, String.format(genericTrSelector, value));
     }
 }

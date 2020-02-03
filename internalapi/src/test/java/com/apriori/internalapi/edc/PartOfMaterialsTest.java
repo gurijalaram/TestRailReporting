@@ -10,7 +10,6 @@ import com.apriori.internalapi.edc.util.UserTestDataUtil;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
