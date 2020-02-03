@@ -191,6 +191,18 @@ public class ExplorePage extends ExploreHeader {
     }
 
     /**
+     * Gets the number of elements present on the page
+     *
+     * @param scenarioName - scenario name
+     * @param partName     - part name
+     * @return size of the element as int
+     */
+    public int getListOfAssemblies(String scenarioName, String partName) {
+        By assembly = By.cssSelector("a[href*='#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "']");
+        return pageUtils.scrollToElements(assembly, componentScroller, Constants.PAGE_DOWN).size();
+    }
+
+    /**
      * Find specific scenario in the table
      *
      * @param comparisonName - name of the scenario

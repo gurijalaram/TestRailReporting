@@ -96,6 +96,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
         clearAllCheckBoxes()
+            .selectAttribute("<Select>")
             .setPrivateWorkSpace()
             .setScenarioType(type)
             .selectAttribute(attribute)
