@@ -120,8 +120,8 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
         Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
         int count = 0;
         for (Element header : evaluateComponentView.select("div[class='v-grid-tablewrapper'] > table > thead > tr:nth-child(1) > th")) {
-            if (header.text().equals("Per Part Cost (USD)") || header.text().equals("Capital Investment (USD)")
-                    || header.text().equals("Fully Burdened Cost (USD)") || header.text().equals("Cycle Time (s)")) {
+            if (header.text().equals("Cycle Time (s)") || header.text().equals("Per Part Cost (USD)")
+                    || header.text().equals("Fully Burdened Cost (USD)") || header.text().equals("Capital Investment (USD)")) {
                 count++;
             }
         }

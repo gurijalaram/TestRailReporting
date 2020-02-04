@@ -458,8 +458,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .openNewTabAndFocus();
 
         List<String> columnsToRemove = Arrays.asList("Qty", "Process Group", "VPE", "Last Saved", "Last Costed");
-        List<String> columnsToAdd = Arrays.asList("Per Part Cost (USD)", "Capital Investment (USD)",
-                "Fully Burdened Cost (USD)", "Cycle Time (s)");
+        List<String> columnsToAdd = Arrays.asList("Cycle Time (s)", "Per Part Cost (USD)", "Fully Burdened Cost (USD)",
+                "Capital Investment (USD)");
 
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -470,21 +470,23 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .selectSaveButton();
 
         // store values from table in an ArrayList
-        ArrayList<BigDecimal> rowOneCidValues = evaluatePage.getTableValues("Per Part Cost (USD)");
-        ArrayList<BigDecimal> rowTwoCidValues = evaluatePage.getTableValues("Capital Investment (USD)");
-        ArrayList<BigDecimal> rowThreeCidValues = evaluatePage.getTableValues("Fully Burdened Cost (USD)");
-        ArrayList<BigDecimal> rowFourCidValues = evaluatePage.getTableValues("Cycle Time (s)");
+        ArrayList<BigDecimal> cidCtValues = evaluatePage.getTableValues("Cycle Time (s)");
+        ArrayList<BigDecimal> cidPpcValues = evaluatePage.getTableValues("Per Part Cost (USD)");
+        ArrayList<BigDecimal> cidFbcValues = evaluatePage.getTableValues("Fully Burdened Cost (USD)");
+        ArrayList<BigDecimal> cidCiValues = evaluatePage.getTableValues("Capital Investment (USD)");
 
         // Go to Reports, get values
-        // TODO - use existing method for this (see AssemblyDetailsReportPage)
         evaluatePage.switchBackToTabOne();
-        ArrayList<BigDecimal> rowOneReportsValues = assemblyDetailsReport.getValuesByColumn("", "Cycle Time");
-        rowOneReportsValues.remove(rowOneReportsValues.size() - 1);
-        ArrayList<BigDecimal> rowTwoReportsValues = assemblyDetailsReport.getValuesByColumn("", "Piece Part Cost");
-        ArrayList<BigDecimal> rowThreeReportsValues = assemblyDetailsReport.getValuesByColumn("", "Fully Burdened Cost");
-        ArrayList<BigDecimal> rowFourReportsValues = assemblyDetailsReport.getValuesByColumn("", "Capital Investments");
+        ArrayList<BigDecimal> reportsCtValues = assemblyDetailsReport.getValuesByColumn("", "Cycle Time");
+        reportsCtValues.remove(reportsCtValues.size() - 1);
+        ArrayList<BigDecimal> reportsPpcValues = assemblyDetailsReport.getValuesByColumn("", "Piece Part Cost");
+        ArrayList<BigDecimal> reportsFbcValues = assemblyDetailsReport.getValuesByColumn("", "Fully Burdened Cost");
+        ArrayList<BigDecimal> reportsCiValues = assemblyDetailsReport.getValuesByColumn("", "Capital Investments");
 
         // Assert that all are equal
+        assertThat(cidCtValues.containsAll(reportsCtValues), is(true));
+        assertThat(cidPpcValues.containsAll(reportsPpcValues), is(true));
+        assertThat(cidFbcValues.containsAll(reportsFbcValues), is(true));
+        assertThat(cidCiValues.containsAll(reportsCiValues), is(true));
     }
-
 }
