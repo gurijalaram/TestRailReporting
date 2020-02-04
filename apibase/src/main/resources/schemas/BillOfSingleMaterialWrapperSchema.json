@@ -12,17 +12,6 @@
       "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
-      "required": [
-        "identity",
-        "createdAt",
-        "createdBy",
-        "name",
-        "numberOfLineItemsCannotCost",
-        "numberOfLineItemsNotCosted",
-        "numberOfLineItemsCosted",
-        "numberOfLineItemsReadyForExport",
-        "totalNumberOfLineItems"
-      ],
       "properties": {
         "identity": {
           "$id": "#/properties/response/properties/identity",

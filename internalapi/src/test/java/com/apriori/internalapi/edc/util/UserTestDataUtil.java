@@ -117,7 +117,7 @@ public class UserTestDataUtil {
 
     public void uploadTestData(final UserDataEDC userDataEDC) {
 
-        final File testData = Util.getLocalResourceFile("test-data/apriori-3-items.csv");
+        final File testData = Util.getLocalResourceFile("test-data/apriori-4-items.csv");
 
         new HTTPRequest()
             .unauthorized()
