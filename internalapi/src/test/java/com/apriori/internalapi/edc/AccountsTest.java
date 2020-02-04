@@ -41,7 +41,7 @@ public class AccountsTest {
     @After
     public void deleteUserIfFailed()
     {
-        if(!identity.equals("")) {
+        if(identity != null && !identity.isEmpty()) {
             activateDefaultUserAndDeleteAnotherByIdentity(identity);
         }
     }
