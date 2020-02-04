@@ -70,6 +70,8 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-893")
+    @TestRail(testCaseId = {"554", "555"})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
@@ -312,6 +314,39 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"544"})
+    @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
+    public void cancelEditNotes() {
+
+        String testScenarioName = new Util().getScenarioName();
+
+        loginPage = new CIDLoginPage(driver);
+        loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "BasicScenario_Forging");
+
+        genericHeader = new GenericHeader(driver);
+        scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
+            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openScenario(testScenarioName, "BasicScenario_Forging")
+            .selectInfoNotes()
+            .editNotes("Validating the ability to edit notes")
+            .cancel(EvaluatePage.class)
+            .selectInfoNotes();
+
+        assertThat(scenarioNotesPage.isScenarioNotes("Testing QA notes"), is(true));
+    }
+
+    @Test
     @Issue("BA-932")
     @TestRail(testCaseId = {"542", "546"})
     @Description("Validate User can delete notes to a scenario")
@@ -347,7 +382,6 @@ public class ActionsTests extends TestBase {
 
         assertThat(scenarioNotesPage.isScenarioNotes(""), is(true));
     }
-
 
     @Test
     @TestRail(testCaseId = {"574"})

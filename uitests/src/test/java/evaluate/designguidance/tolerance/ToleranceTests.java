@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ToleranceEditPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
@@ -21,9 +22,9 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ToleranceEnum;
-
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -47,6 +48,7 @@ public class ToleranceTests extends TestBase {
     private DesignGuidancePage designGuidancePage;
     private ToleranceValueSettingsPage toleranceValueSettingsPage;
     private UserCredentials currentUser;
+    private ExplorePage explorePage;
 
     public ToleranceTests() {
         super();
@@ -59,7 +61,7 @@ public class ToleranceTests extends TestBase {
 
     @Category(CustomerSmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"707", "1607"})
+    @TestRail(testCaseId = {"707", "1607", "1285"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
 
@@ -571,7 +573,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1296"})
+    @TestRail(testCaseId = {"1296", "1288"})
     @Description("Validate 'Replace values less than' button")
     public void replaceValuesButton() {
         loginPage = new CIDLoginPage(driver);
@@ -593,6 +595,43 @@ public class ToleranceTests extends TestBase {
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5");
 
-       assertThat(tolerancePage.getGCDCell("CurvedWall:5", "Current"), is(equalTo("0.35000")));
+        assertThat(tolerancePage.getGCDCell("CurvedWall:5", "Current"), is(equalTo("0.35000")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1299"})
+    @Description("Validate conditions used for original costing are maintained between different users")
+    public void tolerancesDiffUsers() {
+
+        String testScenarioName = new Util().getScenarioName();
+        UserCredentials testUser1 = UserUtil.getUser();
+        UserCredentials testUser2 = UserUtil.getUser();
+        currentUser = testUser1;
+
+        new CIDLoginPage(driver).login(testUser1)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        evaluatePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
+
+        new EvaluatePage(driver).publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .openAdminDropdown()
+            .selectLogOut();
+
+        new CIDLoginPage(driver).login(testUser2);
+
+        explorePage = new ExplorePage(driver);
+        evaluatePage = explorePage.selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
+
+        assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
     }
 }
