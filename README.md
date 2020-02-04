@@ -21,6 +21,7 @@ NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited
 	* Select the module where the test is as the base directory
 	* Enter the following goals `clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=LOCAL -DthreadCount=3`. To run more tests in parallel, change `-DthreadCount=10` number
 	* To see supported browsers, check `DriverFactory.java`
+	* To run an adhoc set of tests use "@Category(AdhocTests.class)". See testSaveAsPrivateComparison as an example. Ensure your test's class is listed within the AdhocTestSuite. You can use 'mvn clean test -Dtest=AdhocTestSuite.java' or push your branch and run on jenkins.
 	* **OPTIONAL environment configurations**:
 	    * `-Denv={environment name}` e.g. `-Denv=cid-te`, environment by default `cid-te`: which environment properties we need to use (URL, authorization users, etc.) you can find properties by `utils/resources/{environment}/{environment}.properties`
 	    * `-Durl={base url for properties}` e.g. `-Durl=http:\\my-base-url`, by default value from environment properties file `url.default` :  initialize base url by overriding `url.default`, from environment properties, to value inserted in `-Durl`, you can find properties by `utils/resources/{environment}/{environment}.properties`

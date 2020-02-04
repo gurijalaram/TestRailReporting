@@ -37,7 +37,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     @FindBy(css = "button.btn.btn-primary")
     private WebElement saveButton;
 
-    @FindBy(css = "button.btn.btn-default")
+    @FindBy(css = "[class='gwt-Button btn btn-default']")
     private WebElement cancelButton;
 
     @FindBy(css = "[data-ap-field='assignee']")
@@ -202,9 +202,9 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      *
      * @return new page object
      */
-    public ExplorePage cancel() {
-        cancelButton.click();
-        return new ExplorePage(driver);
+    public <T> T cancel(Class<T> className) {
+        pageUtils.waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
