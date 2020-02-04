@@ -469,24 +469,21 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .checkColumnSettings(columnsToAdd, columnsToRemove)
                 .selectSaveButton();
 
-        // store values from table in an ArrayList
-        ArrayList<BigDecimal> cidCtValues = evaluatePage.getTableValues("Cycle Time (s)");
-        ArrayList<BigDecimal> cidPpcValues = evaluatePage.getTableValues("Per Part Cost (USD)");
-        ArrayList<BigDecimal> cidFbcValues = evaluatePage.getTableValues("Fully Burdened Cost (USD)");
-        ArrayList<BigDecimal> cidCiValues = evaluatePage.getTableValues("Capital Investment (USD)");
+        ArrayList<BigDecimal> cidPartOneValues = evaluatePage.getTableValsByRow("1");
+        ArrayList<BigDecimal> cidPartTwoValues = evaluatePage.getTableValsByRow("2");
+        ArrayList<BigDecimal> cidPartThreeValues = evaluatePage.getTableValsByRow("3");
+        ArrayList<BigDecimal> cidPartFourValues = evaluatePage.getTableValsByRow("4");
 
-        // Go to Reports, get values
         evaluatePage.switchBackToTabOne();
-        ArrayList<BigDecimal> reportsCtValues = assemblyDetailsReport.getValuesByColumn("", "Cycle Time");
-        reportsCtValues.remove(reportsCtValues.size() - 1);
-        ArrayList<BigDecimal> reportsPpcValues = assemblyDetailsReport.getValuesByColumn("", "Piece Part Cost");
-        ArrayList<BigDecimal> reportsFbcValues = assemblyDetailsReport.getValuesByColumn("", "Fully Burdened Cost");
-        ArrayList<BigDecimal> reportsCiValues = assemblyDetailsReport.getValuesByColumn("", "Capital Investments");
+        ArrayList<BigDecimal> reportsPartOneValues = assemblyDetailsReport.getValuesByRow("5");
+        ArrayList<BigDecimal> reportsPartTwoValues = assemblyDetailsReport.getValuesByRow("8");
+        ArrayList<BigDecimal> reportsPartThreeValues = assemblyDetailsReport.getValuesByRow("10");
+        ArrayList<BigDecimal> reportsPartFourValues = assemblyDetailsReport.getValuesByRow("13");
 
-        // Assert that all are equal
-        assertThat(cidCtValues.containsAll(reportsCtValues), is(true));
-        assertThat(cidPpcValues.containsAll(reportsPpcValues), is(true));
-        assertThat(cidFbcValues.containsAll(reportsFbcValues), is(true));
-        assertThat(cidCiValues.containsAll(reportsCiValues), is(true));
+        // Assert that all are equal - explicit asserts?
+        assertThat(cidPartOneValues.equals(reportsPartFourValues), is(true));
+        assertThat(cidPartTwoValues.equals(reportsPartThreeValues), is(true));
+        assertThat(cidPartThreeValues.equals(reportsPartOneValues), is(true));
+        assertThat(cidPartFourValues.equals(reportsPartTwoValues), is(true));
     }
 }

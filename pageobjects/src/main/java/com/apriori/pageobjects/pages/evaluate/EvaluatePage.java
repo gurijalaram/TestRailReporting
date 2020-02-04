@@ -668,23 +668,27 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets table values for PPC, CI, FBC and CT
-     * @return List of BigDecimals
+     * Gets table values by specified row index
+     * @param row
+     * @return ArrayList of BigDecimals
      */
-    public ArrayList<BigDecimal> getTableValues(String column) {
+    public ArrayList<BigDecimal> getTableValsByRow(String row) {
+        ArrayList<BigDecimal> valsToReturn = new ArrayList<BigDecimal>();
         Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
-        ArrayList<BigDecimal> figureValues = new ArrayList<>();
 
-        for (int i = 1; i < 5; i++) {
-            String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) td:nth-child(%s)";
-            baseCssSelector = String.format(baseCssSelector, i, columnSelectorMap.get(column));
-            Element element = evaluateComponentView.selectFirst(baseCssSelector);
+        String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td";
+        ArrayList<Element> elements = new ArrayList<>();
+
+        baseCssSelector = String.format(baseCssSelector, row);
+        elements = evaluateComponentView.select(baseCssSelector);
+
+        for (Element element : elements) {
             if (!element.text().isEmpty() && element.text().contains(".")) {
-                figureValues.add(new BigDecimal(element.text()));
+                valsToReturn.add(new BigDecimal(element.text()));
             }
         }
 
-        return figureValues;
+        return valsToReturn;
     }
 
     /**
