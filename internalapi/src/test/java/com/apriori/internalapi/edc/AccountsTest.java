@@ -13,6 +13,7 @@ import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,8 +24,9 @@ import org.slf4j.LoggerFactory;
 public class AccountsTest {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountStatus.class);
-
     private static UserDataEDC userData;
+
+    private String identity = "";
 
     @BeforeClass
     public static void setUp() {
@@ -34,6 +36,14 @@ public class AccountsTest {
 
         userData.setIdentity(accountStatus.getIdentity());
         userData.setAccountId(accountStatus.getAccountId());
+    }
+
+    @After
+    public void deleteUserIfFailed()
+    {
+        if(!identity.equals("")) {
+            activateDefaultUserAndDeleteAnotherByIdentity(identity);
+        }
     }
 
     @Test
@@ -56,21 +66,19 @@ public class AccountsTest {
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateAccount() {
         final AccountStatus accountStatus = createAndActivateNewAccount("TestNameForUpd", "TestSecretForUpd");
+        final String newName = "ACCOUNT UPDATE VIA AUTOMATION";
 
-        try {
-            final String newName = "ACCOUNT UPDATE VIA AUTOMATION";
+        identity = accountStatus.getIdentity();
+        updateAccount(identity,
+            accountStatus.setName(newName)
+        );
 
-            updateAccount(accountStatus.getIdentity(),
-                accountStatus.setName(newName)
-            );
+        Assert.assertEquals("The user name, should be updated",
+            getActiveAccount().getName(),
+            newName);
 
-            Assert.assertEquals("The user name, should be updated",
-                getActiveAccount().getName(),
-                newName);
-
-        } catch (Exception e) {
-            activateDefaultUserAndDeleteAnotherByIdentity(accountStatus.getIdentity());
-        }
+        activateDefaultUserAndDeleteAnotherByIdentity(identity);
+        identity = "";
     }
 
     @Test
@@ -89,8 +97,10 @@ public class AccountsTest {
     @Severity(SeverityLevel.NORMAL)
     public void testCreateActivateAndDeleteNewAccount() {
         AccountStatus createdAccount = createAndActivateNewAccount("TestNameForActive", "ActiveSecret");
+        identity = createdAccount.getIdentity();
 
-        activateDefaultUserAndDeleteAnotherByIdentity(createdAccount.getIdentity());
+        activateDefaultUserAndDeleteAnotherByIdentity(identity);
+        identity = "";
     }
 
     @Test
@@ -168,7 +178,7 @@ public class AccountsTest {
         return accountsStatusWrapper.getAccountStatus();
     }
 
-    private AccountStatus createNewAccount(String testNameForActive, String activeSecret) {
+    private AccountStatus createNewAccount(String name, String secret) {
         final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
             .customizeRequest()
             .setHeaders(userData.getAuthorizationHeaders())
@@ -176,8 +186,8 @@ public class AccountsTest {
             .setBody(new AccountStatus()
                 .setAccountId("Apriori")
                 .setType("Silicon Expert")
-                .setName(testNameForActive)
-                .setAccountSecret(activeSecret))
+                .setName(name)
+                .setAccountSecret(secret))
             .setReturnType(AccountsStatusWrapper.class)
             .setStatusCode(HttpStatus.SC_CREATED)
             .commitChanges()
