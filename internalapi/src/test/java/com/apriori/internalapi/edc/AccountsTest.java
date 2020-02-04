@@ -56,21 +56,17 @@ public class AccountsTest {
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateAccount() {
         final AccountStatus accountStatus = createAndActivateNewAccount("TestNameForUpd", "TestSecretForUpd");
+        final String newName = "ACCOUNT UPDATE VIA AUTOMATION";
 
-        try {
-            final String newName = "ACCOUNT UPDATE VIA AUTOMATION";
+        updateAccount(accountStatus.getIdentity(),
+            accountStatus.setName(newName)
+        );
 
-            updateAccount(accountStatus.getIdentity(),
-                accountStatus.setName(newName)
-            );
+        Assert.assertEquals("The user name, should be updated",
+            getActiveAccount().getName(),
+            newName);
 
-            Assert.assertEquals("The user name, should be updated",
-                getActiveAccount().getName(),
-                newName);
-
-        } catch (Exception e) {
-            activateDefaultUserAndDeleteAnotherByIdentity(accountStatus.getIdentity());
-        }
+        activateDefaultUserAndDeleteAnotherByIdentity(accountStatus.getIdentity());
     }
 
     @Test
