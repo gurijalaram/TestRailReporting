@@ -119,7 +119,7 @@ public class DTCCastingTests extends TestBase {
         propertiesDialogPage = evaluatePage.selectAnalysis()
             .selectProperties()
             .expandDropdown("Properties");
-        assertThat(propertiesDialogPage.getProperties("Finished Area (mm^2)"), containsString("85.62"));
+        assertThat(propertiesDialogPage.getProperties("Finished Area (mm2)"), containsString("85.62"));
     }
 
     @Test
