@@ -14,6 +14,9 @@ public class MaterialPart implements PayloadJSON {
     private Boolean isUserPart;
 
     @JsonProperty
+    private Boolean isActionRequired;
+
+    @JsonProperty
     private Boolean isSaved;
 
     @JsonProperty
@@ -53,10 +56,19 @@ public class MaterialPart implements PayloadJSON {
     private String rohs;
 
     @JsonProperty
-    private String costingStatus;
+    private String status;
 
     @JsonProperty
     private String rohsVersion;
+
+    @JsonProperty
+    private String type;
+
+    @JsonProperty
+    private String mountType;
+
+    @JsonProperty
+    private Integer pinCount;
 
     public Boolean getReadyForExport() {
         return isReadyForExport;
@@ -202,12 +214,48 @@ public class MaterialPart implements PayloadJSON {
         return this;
     }
 
-    public String getCostingStatus() {
-        return costingStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public MaterialPart setCostingStatus(String costingStatus) {
-        this.costingStatus = costingStatus;
+    public MaterialPart setStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public Boolean getActionRequired() {
+        return isActionRequired;
+    }
+
+    public MaterialPart setActionRequired(Boolean actionRequired) {
+        isActionRequired = actionRequired;
+        return this;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public MaterialPart setType(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public String getMountType() {
+        return mountType;
+    }
+
+    public MaterialPart setMountType(String mountType) {
+        this.mountType = mountType;
+        return this;
+    }
+
+    public Integer getPinCount() {
+        return pinCount;
+    }
+
+    public MaterialPart setPinCount(Integer pinCount) {
+        this.pinCount = pinCount;
         return this;
     }
 }

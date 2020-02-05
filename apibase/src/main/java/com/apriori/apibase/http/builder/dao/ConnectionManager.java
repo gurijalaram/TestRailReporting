@@ -132,6 +132,7 @@ public class ConnectionManager<T> {
 
         if (multiPartFiles != null) {
             multiPartFiles.forEach(builder::addMultiPart);
+            builder.addFormParam("type", "pcba");
         }
 
         /*
