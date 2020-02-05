@@ -36,7 +36,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     private WebElement reportsFolder;
 
     @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[1]/p/b")
-    private  WebElement deploymentLeaderFolder;
+    private WebElement deploymentLeaderFolder;
 
     @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[2]/p/b")
     private WebElement dtcMetricsFolder;
@@ -68,6 +68,9 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     @FindBy(xpath = "//a[contains(text(), 'Scenario Comparison')]")
     private WebElement scenarioComparisonReport;
 
+    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[2]/ul/li[1]/p/b")
+    private WebElement castingFolder;
+
     public ViewRepositoryPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -80,6 +83,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     /**
      * Navigates to general folder
+     *
      * @return current page object
      */
     public ViewRepositoryPage navigateToGeneralFolder() {
@@ -92,6 +96,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     /**
      * Get page title text
+     *
      * @return String - page title text
      */
     public String getRepositoryTitleText() {
@@ -101,6 +106,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     /**
      * Get count of General Reports
+     *
      * @return Integer
      */
     public Integer getCountOfGeneralReports() {
@@ -110,6 +116,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     /**
      * Get name of a report
+     *
      * @return String - text of report name
      */
     public String getReportName(String reportName) {
@@ -118,12 +125,13 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     /**
      * Generic folder navigation method
+     *
      * @param folder to navigate to
      * @return current page object
      */
     private ViewRepositoryPage navigateToFolder(String folder) {
         pageUtils.waitForElementToAppear(folderElementMap.get(folder))
-                .click();
+            .click();
         return this;
     }
 
@@ -147,9 +155,24 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         folderElementMap.put("General", generalFolder);
         folderElementMap.put("Solutions", solutionsFolder);
         folderElementMap.put("Upgrade Process", upgradeProcessFolder);
+        folderElementMap.put("Casting", castingFolder);
 
         folderElementMap.put("Organization", organizationFolder);
         folderElementMap.put("aPriori", aprioriSubFolder);
         folderElementMap.put("Reports", reportsFolder);
+    }
+
+    /**
+     * Navigate to Casting folder
+     *
+     * @return current page object
+     */
+    public ViewRepositoryPage navigateToCastingFolder() {
+        navigateToFolder("Organization");
+        navigateToFolder("aPriori");
+        navigateToFolder("Reports");
+        navigateToFolder("DTC Metrics");
+        navigateToFolder("Casting");
+        return this;
     }
 }
