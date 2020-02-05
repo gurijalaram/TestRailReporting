@@ -12,15 +12,6 @@
       "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
-      "required": [
-        "isUserPart",
-        "isSaved",
-        "identity",
-        "lineItemIdentity",
-        "costingStatus",
-        "manufacturerPartNumber",
-        "averageCost"
-      ],
       "properties": {
         "isUserPart": {
           "$id": "#/properties/response/properties/isUserPart",
@@ -60,10 +51,10 @@
           ],
           "pattern": "^(.*)$"
         },
-        "costingStatus": {
-          "$id": "#/properties/response/properties/costingStatus",
+        "status": {
+          "$id": "#/properties/response/properties/status",
           "type": "string",
-          "title": "The Costingstatus Schema",
+          "title": "The status Schema",
           "default": "",
           "examples": [
             "Costed"

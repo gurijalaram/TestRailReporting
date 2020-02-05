@@ -26,6 +26,9 @@ public class MaterialLineItem {
     private String costingStatus;
 
     @JsonProperty
+    private String status;
+
+    @JsonProperty
     private String customerPartNumber;
 
     @JsonProperty
@@ -130,6 +133,15 @@ public class MaterialLineItem {
 
     public MaterialLineItem setMaterialParts(List<MaterialPart> materialParts) {
         this.materialParts = materialParts;
+        return this;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public MaterialLineItem setStatus(String status) {
+        this.status = status;
         return this;
     }
 }

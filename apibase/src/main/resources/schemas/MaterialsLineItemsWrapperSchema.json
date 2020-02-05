@@ -12,18 +12,6 @@
       "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
-      "required": [
-        "isFirstPage",
-        "isLastPage",
-        "pageNumber",
-        "pageSize",
-        "pageItemCount",
-        "totalItemCount",
-        "totalPageCount",
-        "hasNextPage",
-        "hasPreviousPage",
-        "items"
-      ],
       "properties": {
         "isFirstPage": {
           "$id": "#/properties/response/properties/isFirstPage",
@@ -114,18 +102,6 @@
             "$id": "#/properties/response/properties/items/items",
             "type": "object",
             "title": "The Items Schema",
-            "required": [
-              "identity",
-              "createdAt",
-              "createdBy",
-              "costingStatus",
-              "level",
-              "customerPartNumber",
-              "quantity",
-              "manufacturerPartNumber",
-              "manufacturer",
-              "parts"
-            ],
             "properties": {
               "identity": {
                 "$id": "#/properties/response/properties/items/items/properties/identity",
@@ -223,13 +199,6 @@
                   "$id": "#/properties/response/properties/items/items/properties/parts/items",
                   "type": "object",
                   "title": "The Items Schema",
-                  "required": [
-                    "isUserPart",
-                    "isSaved",
-                    "identity",
-                    "costingStatus",
-                    "manufacturerPartNumber"
-                  ],
                   "properties": {
                     "isUserPart": {
                       "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/isUserPart",

@@ -10,9 +10,9 @@ import org.junit.runners.Suite;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-       BillOfMaterialsTest.class,
-       PartOfMaterialsTest.class,
-       AccountsTest.class
+    PartOfMaterialsTest.class,
+    BillOfMaterialsTest.class,
+    AccountsTest.class
 })
 public class TestSuiteAPI {
 }
