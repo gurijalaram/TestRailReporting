@@ -39,6 +39,18 @@ public class BillOfMaterial {
     @JsonProperty
     private Integer totalNumberOfLineItems;
 
+    @JsonProperty
+    private Integer numberOfLineItemsNoPartsMatched;
+
+    @JsonProperty
+    private Integer numberOfLineItemsIncomplete;
+
+    @JsonProperty
+    private String filename;
+
+    @JsonProperty
+    private String type;
+
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -118,6 +130,42 @@ public class BillOfMaterial {
 
     public BillOfMaterial setNumberOfLineItemsCosted(Integer numberOfLineItemsCosted) {
         this.numberOfLineItemsCosted = numberOfLineItemsCosted;
+        return this;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public BillOfMaterial setFilename(String filename) {
+        this.filename = filename;
+        return this;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public BillOfMaterial setType(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public Integer getNumberOfLineItemsNoPartsMatched() {
+        return numberOfLineItemsNoPartsMatched;
+    }
+
+    public BillOfMaterial setNumberOfLineItemsNoPartsMatched(Integer numberOfLineItemsNoPartsMatched) {
+        this.numberOfLineItemsNoPartsMatched = numberOfLineItemsNoPartsMatched;
+        return this;
+    }
+
+    public Integer getNumberOfLineItemsIncomplete() {
+        return numberOfLineItemsIncomplete;
+    }
+
+    public BillOfMaterial setNumberOfLineItemsIncomplete(Integer numberOfLineItemsIncomplete) {
+        this.numberOfLineItemsIncomplete = numberOfLineItemsIncomplete;
         return this;
     }
 }
