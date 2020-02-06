@@ -54,14 +54,18 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
     private WebElement valueInputDropdown;
 
-    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.btn.btn-primary")
+    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button:nth-of-type(3)")
     private WebElement applyButton;
 
-    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.btn.btn-default")
+    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button:nth-of-type(2)")
     private WebElement cancelButton;
 
     @FindBy(css = "div[data-ap-comp='additionalSearchCriteria'] input")
     private List<WebElement> listOfCheckboxes;
+
+    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button:nth-of-type(1)")
+    private WebElement clearButton;
+
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -95,8 +99,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
-        clearAllCheckBoxes()
-            .selectAttribute("<Select>")
+        clear(FilterCriteriaPage.class)
             .setPrivateWorkSpace()
             .setScenarioType(type)
             .selectAttribute(attribute)
@@ -115,8 +118,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage filterPublicCriteria(String type, String attribute, String condition, String value) {
-        clearAllCheckBoxes()
-            .selectAttribute("<Select>")
+        clear(FilterCriteriaPage.class)
             .setPublicWorkspace()
             .setScenarioType(type)
             .selectAttribute(attribute)
@@ -249,6 +251,18 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     public <T> T cancel(Class<T> className) {
         cancelButton.click();
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Selects the clear button
+     *
+     * @param className - the class the method should return
+     * @param <T>       - the generic declaration type
+     * @return generic page object
+     */
+    public <T> T clear(Class<T> className) {
+        clearButton.click();
         return PageFactory.initElements(driver, className);
     }
 
