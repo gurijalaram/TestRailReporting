@@ -68,7 +68,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     @FindBy(xpath = "//a[contains(text(), 'Scenario Comparison')]")
     private WebElement scenarioComparisonReport;
 
-    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[2]/ul/li[1]/p/b")
+    @FindBy(css = "li[id='node21']")
     private WebElement castingFolder;
 
     public ViewRepositoryPage(WebDriver driver) {
