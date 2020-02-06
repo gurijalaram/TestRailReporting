@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.pages.explore.TableColumnsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 

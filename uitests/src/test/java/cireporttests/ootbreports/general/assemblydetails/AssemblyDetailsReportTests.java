@@ -1,11 +1,7 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
-import com.apriori.pageobjects.pages.evaluate.ComponentTableColumnsPage;
-import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.explore.TableColumnsPage;
-import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
@@ -20,17 +16,11 @@ import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
-import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
-import groovy.util.Eval;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import io.qameta.allure.Issue;
-import org.apache.poi.ss.formula.functions.Column;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.junit.Test;
 
 import java.math.BigDecimal;

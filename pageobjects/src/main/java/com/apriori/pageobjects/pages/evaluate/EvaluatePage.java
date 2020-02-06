@@ -11,7 +11,6 @@ import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.Secondary
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
-import org.codehaus.groovy.runtime.StringGroovyMethods;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
