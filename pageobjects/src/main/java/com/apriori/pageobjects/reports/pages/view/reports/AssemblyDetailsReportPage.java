@@ -57,8 +57,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
     private WebElement currentAssembly;
 
-    @FindBy(xpath = "//tbody[@class='v-grid-body']/tr[1]")
-    private WebElement partTableRowOne;
+    @FindBy(css = "a[id='logo']")
+    private WebElement cidLogo;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -586,7 +586,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         pageUtils.jsNewTab();
         pageUtils.windowHandler();
         driver.get(Constants.cidURL);
-        pageUtils.waitForElementToAppear(partTableRowOne);
+        pageUtils.waitForElementToAppear(cidLogo);
         return this;
     }
 

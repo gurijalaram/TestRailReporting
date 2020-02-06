@@ -494,7 +494,6 @@ public class AssemblyDetailsReportTests extends TestBase {
         ArrayList<BigDecimal> reportsPartFourValues =
                 assemblyDetailsReport.getValuesByRow(ColumnIndexEnum.CIR_PART_FOUR.getColumnIndex());
 
-        // Assert that all are equal - explicit asserts?
         assertThat(cidPartOneValues.equals(reportsPartFourValues), is(true));
         assertThat(cidPartTwoValues.equals(reportsPartThreeValues), is(true));
         assertThat(cidPartThreeValues.equals(reportsPartOneValues), is(true));

@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.utils.PageUtils;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

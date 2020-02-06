@@ -10,7 +10,7 @@ public enum ComponentInfoColumnEnum {
     CYCLE_TIME("Cycle Time (s)"),
     PER_PART_COST("Per Part Cost (USD)"),
     FULLY_BURDENED_COST("Fully Burdened Cost (USD)"),
-    CAPITAL_INVESTMENT("Capital Investment");
+    CAPITAL_INVESTMENT("Capital Investment (USD)");
 
     private final String columnName;
 
