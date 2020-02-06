@@ -12,6 +12,8 @@ import com.apriori.pageobjects.admin.pages.homepage.HomePage;
 import com.apriori.pageobjects.admin.pages.login.LoginPage;
 import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
+
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -59,6 +61,7 @@ public class NavigationTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "2982")
+    @Issue("AP-58758")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
@@ -74,6 +77,7 @@ public class NavigationTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "2983")
+    @Issue("AP-58758")
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
         ciaUserGuide = new LoginPage(driver)
