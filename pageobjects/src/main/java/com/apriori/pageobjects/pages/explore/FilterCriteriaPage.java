@@ -66,7 +66,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(xpath = "//button[contains(text(),'Clear')]")
     private WebElement clearButton;
 
-
     private WebDriver driver;
     private PageUtils pageUtils;
     private String attribute;
@@ -238,7 +237,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return generic page object
      */
     public <T> T apply(Class<T> className) {
-        pageUtils.waitForElementToAppear(applyButton).click();
+        pageUtils.waitForElementAndClick(applyButton);
         return PageFactory.initElements(driver, className);
     }
 
@@ -250,7 +249,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return generic page object
      */
     public <T> T cancel(Class<T> className) {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return PageFactory.initElements(driver, className);
     }
 
@@ -262,7 +261,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return generic page object
      */
     public <T> T clear(Class<T> className) {
-        clearButton.click();
+        pageUtils.waitForElementAndClick(clearButton);
         return PageFactory.initElements(driver, className);
     }
 
