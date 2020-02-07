@@ -23,6 +23,8 @@ import com.apriori.pageobjects.reports.pages.view.ViewMessagesPage;
 import com.apriori.pageobjects.reports.pages.manage.ManageRolesPage;
 import com.apriori.pageobjects.reports.pages.manage.ManageUsersPage;
 import com.apriori.utils.TestRail;
+
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.anyOf;
@@ -58,6 +60,7 @@ public class NavigationTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "2987")
+    @Issue("AP-58758")
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
