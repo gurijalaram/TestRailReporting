@@ -196,6 +196,11 @@ public class PageUtils {
         executor.executeScript("arguments[0].click();", element);
     }
 
+    public void jsNewTab() {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("window.open()");
+    }
+
     public void actionClick(WebElement targetElement) {
         Actions builder = new Actions(driver);
         builder.click(targetElement).build().perform();
@@ -757,13 +762,22 @@ public class PageUtils {
 
     /**
      * Gets a list of current windows and switches to the first child window only
-     * todo - this is a WIP and will be developed further in the further
+     * todo - this is a WIP and will be developed further in the future
      *
      * @return webdriver functions
      */
     public WebDriver windowHandler() {
         List<String> windowList = new ArrayList<>(driver.getWindowHandles());
         return driver.switchTo().window(windowList.get(1));
+    }
+
+    /**
+     * Gets list of current windows and switches back to first tab
+     * @return webdriver functions
+     */
+    public WebDriver switchBackToInitialTab() {
+        List<String> windowList = new ArrayList<>(driver.getWindowHandles());
+        return driver.switchTo().window(windowList.get(0));
     }
 
     /**

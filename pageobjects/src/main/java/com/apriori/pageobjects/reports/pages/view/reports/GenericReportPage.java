@@ -29,6 +29,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
     protected WebElement topLevelExportSet;
 
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='Piston Assembly']/div/a")
+    protected WebElement pistonAssemblyExportSet;
+
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
 
@@ -205,6 +208,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     private void initialiseExportSetHashMap() {
         exportSetMap.put("top-level", topLevelExportSet);
+        exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
     }
 
     /**

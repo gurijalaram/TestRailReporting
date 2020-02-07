@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.pages.explore.TableColumnsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
@@ -35,6 +34,9 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
     @FindBy(css = "button[data-ap-nav-dialog='showTableViewEditor']")
     private WebElement columnsButton;
+
+    @FindBy(css = "button[data-ap-scope='assemblyComponentsTableViewSelection']")
+    private WebElement columnSelectorButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -139,8 +141,8 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      *
      * @return new page object
      */
-    public TableColumnsPage openColumnsTable() {
-        pageUtils.waitForElementToAppear(columnsButton).click();
-        return new TableColumnsPage(driver);
+    public ComponentTableColumnsPage openColumnsTable() {
+        pageUtils.waitForElementToAppear(columnSelectorButton).click();
+        return new ComponentTableColumnsPage(driver);
     }
 }

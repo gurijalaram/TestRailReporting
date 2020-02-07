@@ -11,6 +11,9 @@ import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.Secondary
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,16 +21,22 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @author cfrith
+ * @author cfrith and bhegan
  */
 
 public class EvaluatePage extends EvaluateHeader {
 
     private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
+
+    private Map<String, String> columnSelectorMap = new HashMap<>();
 
     @FindBy(css = "thead[data-ap-comp='scenarioKey'] label[data-ap-field='masterName']")
     private WebElement partName;
@@ -173,6 +182,7 @@ public class EvaluatePage extends EvaluateHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseColumnSelectorMap();
         this.get();
     }
 
@@ -656,4 +666,41 @@ public class EvaluatePage extends EvaluateHeader {
         return pageUtils.isElementDisplayed(chevron);
     }
 
+    /**
+     * Gets table values by specified row index
+     * @param row
+     * @return ArrayList of BigDecimals
+     */
+    public ArrayList<BigDecimal> getTableValsByRow(String row) {
+        ArrayList<BigDecimal> valsToReturn = new ArrayList<BigDecimal>();
+        Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
+
+        String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td";
+        ArrayList<Element> elements = new ArrayList<>();
+
+        baseCssSelector = String.format(baseCssSelector, row);
+        elements = evaluateComponentView.select(baseCssSelector);
+
+        for (Element element : elements) {
+            if (!element.text().isEmpty() && element.text().contains(".")) {
+                valsToReturn.add(new BigDecimal(element.text()));
+            }
+        }
+
+        return valsToReturn;
+    }
+
+    /**
+     * Switches to other tab
+     */
+    public void switchBackToTabOne() {
+        pageUtils.switchBackToInitialTab();
+    }
+
+    private void initialiseColumnSelectorMap() {
+        columnSelectorMap.put("Cycle Time (s)", "5");
+        columnSelectorMap.put("Per Part Cost (USD)", "6");
+        columnSelectorMap.put("Fully Burdened Cost (USD)", "7");
+        columnSelectorMap.put("Capital Investment (USD)", "8");
+    }
 }
