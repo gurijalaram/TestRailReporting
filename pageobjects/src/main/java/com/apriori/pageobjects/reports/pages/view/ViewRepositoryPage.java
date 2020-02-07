@@ -4,6 +4,7 @@ import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.apache.commons.collections4.Get;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -71,6 +72,9 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     @FindBy(css = "li[id='node21']")
     private WebElement castingFolder;
 
+    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[2]/ul/li[2]/p/b")
+    private WebElement machiningDTCFolder;
+
     public ViewRepositoryPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -91,6 +95,42 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
         navigateToFolder("General");
+        return this;
+    }
+
+    /**
+     * Navigate to Machining DTC folder
+     * @return current page object
+     */
+    public ViewRepositoryPage navigateToMachiningDTCFolder() {
+        navigateToFolder("Organization");
+        navigateToFolder("aPriori");
+        navigateToFolder("Reports");
+        navigateToFolder("DTC Metrics");
+        navigateToFolder("Machining DTC");
+        return this;
+    }
+
+    /**
+     * Navigate to Casting folder
+     *
+     * @return current page object
+     */
+    public ViewRepositoryPage navigateToCastingFolder() {
+        navigateToFolder("Organization");
+        navigateToFolder("aPriori");
+        navigateToFolder("Reports");
+        navigateToFolder("DTC Metrics");
+        navigateToFolder("Casting");
+        return this;
+    }
+
+    /**
+     * Waits for Machining DTC reports to appear
+     * @return current page object
+     */
+    public ViewRepositoryPage waitForMachiningDTCReportsToAppear() {
+        pageUtils.checkElementAttribute(generalReportsList, "childElementCount", "3");
         return this;
     }
 
@@ -122,6 +162,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     public String getReportName(String reportName) {
         return pageUtils.getReportNameText(reportName);
     }
+
 
     /**
      * Generic folder navigation method
@@ -156,23 +197,11 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         folderElementMap.put("Solutions", solutionsFolder);
         folderElementMap.put("Upgrade Process", upgradeProcessFolder);
         folderElementMap.put("Casting", castingFolder);
+        folderElementMap.put("Machining DTC", machiningDTCFolder);
 
         folderElementMap.put("Organization", organizationFolder);
         folderElementMap.put("aPriori", aprioriSubFolder);
         folderElementMap.put("Reports", reportsFolder);
     }
 
-    /**
-     * Navigate to Casting folder
-     *
-     * @return current page object
-     */
-    public ViewRepositoryPage navigateToCastingFolder() {
-        navigateToFolder("Organization");
-        navigateToFolder("aPriori");
-        navigateToFolder("Reports");
-        navigateToFolder("DTC Metrics");
-        navigateToFolder("Casting");
-        return this;
-    }
 }
