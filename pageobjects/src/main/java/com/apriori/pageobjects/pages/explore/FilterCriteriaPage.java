@@ -54,14 +54,17 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
     private WebElement valueInputDropdown;
 
-    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.btn.btn-primary")
+    @FindBy(xpath = "//button[contains(text(),'Apply')]")
     private WebElement applyButton;
 
-    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] button.btn.btn-default")
+    @FindBy(xpath = "//button[contains(text(),'Cancel')]")
     private WebElement cancelButton;
 
     @FindBy(css = "div[data-ap-comp='additionalSearchCriteria'] input")
     private List<WebElement> listOfCheckboxes;
+
+    @FindBy(xpath = "//button[contains(text(),'Clear')]")
+    private WebElement clearButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -95,8 +98,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
-        clearAllCheckBoxes()
-            .selectAttribute("<Select>")
+        clear(FilterCriteriaPage.class)
             .setPrivateWorkSpace()
             .setScenarioType(type)
             .selectAttribute(attribute)
@@ -115,8 +117,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage filterPublicCriteria(String type, String attribute, String condition, String value) {
-        clearAllCheckBoxes()
-            .selectAttribute("<Select>")
+        clear(FilterCriteriaPage.class)
             .setPublicWorkspace()
             .setScenarioType(type)
             .selectAttribute(attribute)
@@ -236,7 +237,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return generic page object
      */
     public <T> T apply(Class<T> className) {
-        pageUtils.waitForElementToAppear(applyButton).click();
+        pageUtils.waitForElementAndClick(applyButton);
         return PageFactory.initElements(driver, className);
     }
 
@@ -248,7 +249,19 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return generic page object
      */
     public <T> T cancel(Class<T> className) {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Selects the clear button
+     *
+     * @param className - the class the method should return
+     * @param <T>       - the generic declaration type
+     * @return generic page object
+     */
+    public <T> T clear(Class<T> className) {
+        pageUtils.waitForElementAndClick(clearButton);
         return PageFactory.initElements(driver, className);
     }
 
