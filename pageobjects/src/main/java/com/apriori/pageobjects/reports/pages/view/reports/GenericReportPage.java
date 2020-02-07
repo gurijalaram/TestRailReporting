@@ -3,6 +3,9 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.AssemblyTypeEnum;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,6 +25,15 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
+
+    @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
+    private WebElement currentCurrency;
+
+    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    private WebElement currentAssembly;
+
+    @FindBy(css = "a[id='logo']")
+    private WebElement cidLogo;
 
     @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
     protected WebElement latestExportDateInput;
@@ -159,15 +171,53 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Opens new tab and switches to it
+     * @return
+     */
+    public GenericReportPage openNewTabAndFocus() {
+        pageUtils.jsNewTab();
+        pageUtils.windowHandler();
+        driver.get(Constants.cidURL);
+        pageUtils.waitForElementToAppear(cidLogo);
+        return new GenericReportPage(driver);
+    }
+
+    /**
      * Clicks apply and ok
      * @return Assembly Details Report page object
      */
-    public AssemblyDetailsReportPage clickApplyAndOk() {
+    public GenericReportPage clickApplyAndOk() {
         pageUtils.waitForElementAndClick(applyButton);
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
-        return new AssemblyDetailsReportPage(driver);
+        return this;
+    }
+
+    /**
+     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     * @param assemblyToCheck
+     * @return
+     */
+    public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
+        pageUtils.waitForElementToAppear(currentAssembly);
+        // if not top level, add -
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
+            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+        }
+        return new GenericReportPage(driver);
+    }
+
+    /**
+     * Waits for correct current currency to appear on screen (not on Input Controls - on report itself)
+     * @param currencyToCheck
+     * @return current page object
+     */
+    public GenericReportPage waitForCorrectCurrency(String currencyToCheck) {
+        pageUtils.waitForElementToAppear(currentCurrency);
+        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
+        return this;
     }
 
     /**
@@ -193,6 +243,14 @@ public class GenericReportPage extends ReportsPageHeader {
         for (int i = 0; i < topIndex; i++) {
             inputBox.sendKeys(Keys.ARROW_DOWN);
         }
+    }
+
+    /**
+     * Gets current currency setting
+     * @return String
+     */
+    public String getCurrentCurrency() {
+        return pageUtils.getElementText(currentCurrency);
     }
 
     /**

@@ -11,6 +11,7 @@ import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
@@ -22,6 +23,7 @@ import io.qameta.allure.Description;
 import com.apriori.utils.TestRail;
 import io.qameta.allure.Issue;
 import org.junit.Test;
+import sun.net.www.content.text.Generic;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ import static org.hamcrest.CoreMatchers.is;
 public class AssemblyDetailsReportTests extends TestBase {
 
     private AssemblyDetailsReportPage assemblyDetailsReport;
+    private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
     private LibraryPage library;
@@ -102,7 +105,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -134,7 +137,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -170,7 +173,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testTotalCalculationsForSubAssembly() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -216,7 +219,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testTotalCalculationsForSubSubASM() {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -262,7 +265,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testTotalCalculationsForTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -308,7 +311,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testSubTotalCalculationsSubAssembly() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -340,7 +343,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testSubTotalCalculationsSubSubAsm() {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -372,7 +375,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testSubTotalCalculationsTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -440,7 +443,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1930")
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())

@@ -6,18 +6,29 @@ import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
+import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.reports.pages.view.reports.MachiningDTCReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.AssemblyTypeEnum;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import sun.net.www.content.text.Generic;
+
+import java.math.BigDecimal;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MachiningDtcReportTests extends TestBase {
 
+    private MachiningDTCReportPage machiningDTCReportPage;
+    private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
     private LibraryPage library;
@@ -67,5 +78,36 @@ public class MachiningDtcReportTests extends TestBase {
         homePage.searchForReport(reportName);
 
         assertThat(searchResults.getReportName(reportName), is(equalTo(reportName)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3026")
+    @Description("Verify currency code input control functions correctly")
+    public void testCurrencyChange() {
+        BigDecimal gbpGrandTotal;
+        BigDecimal usdGrandTotal;
+
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(reportName)
+                .waitForInputControlsLoad()
+                .scrollDownInputControls()
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickApplyAndOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
+
+        //machiningDTCReportPage = new MachiningDTCReportPage();
+        usdGrandTotal = machiningDTCReportPage.getValueFromChart("", "");
+
+//        machiningDTCReportPage.clickInputControlsButton()
+//                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+//                .clickApplyAndOk()
+//                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+//
+//        gbpGrandTotal = machiningDTCReportPage.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
+//
+//        assertThat(machiningDTCReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+//        assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
     }
 }
