@@ -1,5 +1,7 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
@@ -10,7 +12,10 @@ import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.utils.enums.AssemblyTypeEnum;
+import com.apriori.utils.enums.ColumnIndexEnum;
+import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
@@ -20,6 +25,8 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -429,4 +436,57 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(assemblyDetailsReport.getAmountOfTopLevelExportSets(), is(0));
     }
 
+    @Test
+    @TestRail(testCaseId = "1930")
+    @Description("Test Export Set with costing failures costing incomplete")
+    public void testExportSetWithCostingFailuresCostingIncomplete() {
+        assemblyDetailsReport = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
+                .clickApplyAndOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency())
+                .openNewTabAndFocus();
+
+        List<String> columnsToRemove = Arrays.asList(ComponentInfoColumnEnum.QUANTITY.getColumnName(),
+                ComponentInfoColumnEnum.PROCESS_GROUP.getColumnName(), ComponentInfoColumnEnum.VPE.getColumnName(),
+                ComponentInfoColumnEnum.LAST_SAVED.getColumnName(), ComponentInfoColumnEnum.LAST_COSTED.getColumnName());
+        List<String> columnsToAdd = Arrays.asList(ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
+                ComponentInfoColumnEnum.PER_PART_COST.getColumnName(), ComponentInfoColumnEnum.FULLY_BURDENED_COST.getColumnName(),
+                ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName());
+
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .openAssembly("Initial", "PISTON_ASSEMBLY")
+                .openComponentsTable()
+                .openColumnsTable()
+                .checkColumnSettings(columnsToAdd, columnsToRemove)
+                .selectSaveButton();
+
+        ArrayList<BigDecimal> cidPartOneValues =
+                evaluatePage.getTableValsByRow(ColumnIndexEnum.CID_PART_ONE.getColumnIndex());
+        ArrayList<BigDecimal> cidPartTwoValues =
+                evaluatePage.getTableValsByRow(ColumnIndexEnum.CID_PART_TWO.getColumnIndex());
+        ArrayList<BigDecimal> cidPartThreeValues =
+                evaluatePage.getTableValsByRow(ColumnIndexEnum.CID_PART_THREE.getColumnIndex());
+        ArrayList<BigDecimal> cidPartFourValues =
+                evaluatePage.getTableValsByRow(ColumnIndexEnum.CID_PART_FOUR.getColumnIndex());
+
+        evaluatePage.switchBackToTabOne();
+        ArrayList<BigDecimal> reportsPartOneValues =
+                assemblyDetailsReport.getValuesByRow(ColumnIndexEnum.CIR_PART_ONE.getColumnIndex());
+        ArrayList<BigDecimal> reportsPartTwoValues =
+                assemblyDetailsReport.getValuesByRow(ColumnIndexEnum.CIR_PART_TWO.getColumnIndex());
+        ArrayList<BigDecimal> reportsPartThreeValues =
+                assemblyDetailsReport.getValuesByRow(ColumnIndexEnum.CIR_PART_THREE.getColumnIndex());
+        ArrayList<BigDecimal> reportsPartFourValues =
+                assemblyDetailsReport.getValuesByRow(ColumnIndexEnum.CIR_PART_FOUR.getColumnIndex());
+
+        assertThat(cidPartOneValues.equals(reportsPartFourValues), is(true));
+        assertThat(cidPartTwoValues.equals(reportsPartThreeValues), is(true));
+        assertThat(cidPartThreeValues.equals(reportsPartOneValues), is(true));
+        assertThat(cidPartFourValues.equals(reportsPartTwoValues), is(true));
+    }
 }

@@ -1,5 +1,6 @@
 package testsuites;
 
+import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import cireporttests.navigation.NavigationTests;
@@ -13,7 +14,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses ({
     LoginTests.class,
     NavigationTests.class,
-    AssemblyDetailsReportTests.class
+    AssemblyDetailsReportTests.class,
+    MachiningDtcReportTests.class
 })
 public class ReportingSuite {
 }
