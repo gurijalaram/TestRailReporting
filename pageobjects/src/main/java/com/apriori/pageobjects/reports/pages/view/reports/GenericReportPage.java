@@ -95,9 +95,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
-    @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
-    private WebElement currentCurrency;
-
     private WebDriver driver;
     private PageUtils pageUtils;
 

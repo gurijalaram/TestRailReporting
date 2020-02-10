@@ -42,6 +42,12 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
 
+    @FindBy(css = "a[id='logo']")
+    private WebElement cidLogo;
+
+    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    private WebElement currentAssembly;
+
     @FindBy(css = "button[class='ui-datepicker-trigger']")
     private WebElement datePickerTriggerBtn;
 
