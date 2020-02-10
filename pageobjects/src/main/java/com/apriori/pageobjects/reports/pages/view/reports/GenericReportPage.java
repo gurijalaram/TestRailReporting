@@ -86,10 +86,10 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
-    @FindBy(css = "li[title='Select All']")
+    @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Select All']/a")
     private WebElement exportSetSelectAll;
 
-    @FindBy(css = "div[id='exportSetName'] > div > div > div > div > div > span")
+    @FindBy(css = "div[id='exportSetName'] > div > div > div > div > div:nth-of-type(1) > span")
     private WebElement availableExportSets;
 
     @FindBy(css = "div[id='exportSetName'] > div > div > div > div > div:nth-of-type(2) > span")
@@ -98,10 +98,10 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr']")
     private WebElement exportSetList;
 
-    @FindBy(css = "li[title='Invert']")
+    @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Invert']/a")
     private WebElement exportSetInvert;
 
-    @FindBy(css = "li[title='Deselect All']")
+    @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Deselect All']/a")
     private WebElement exportSetDeselect;
 
 
@@ -290,8 +290,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage deselectExportSet(String exportSet) {
+        int expected = getSelectedExportSetCount() - 1;
         pageUtils.waitForElementAndClick(exportSetMap.get(exportSet));
-        pageUtils.checkElementAttribute(exportSetMap.get(exportSet), "class", "jr-mSelectlist-item jr-isHovered jr");
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
         return this;
     }
 
