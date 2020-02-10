@@ -87,27 +87,27 @@ public class MachiningDtcReportTests extends TestBase {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
-        genericReportPage = new LoginPage(driver)
+        machiningDTCReportPage = new LoginPage(driver)
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(reportName)
                 .waitForInputControlsLoad()
+                .selectExportSet("DTC_MachiningDataset")
                 .scrollDownInputControls()
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDTCReportPage.class);
 
-        //machiningDTCReportPage = new MachiningDTCReportPage();
-        usdGrandTotal = machiningDTCReportPage.getValueFromChart("", "");
+        usdGrandTotal = machiningDTCReportPage.getValueFromCentralCircleInChart();
 
-//        machiningDTCReportPage.clickInputControlsButton()
-//                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-//                .clickApplyAndOk()
-//                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
-//
-//        gbpGrandTotal = machiningDTCReportPage.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
-//
-//        assertThat(machiningDTCReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
-//        assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+        machiningDTCReportPage.clickInputControlsButton()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickApplyAndOk()
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), MachiningDTCReportPage.class);
+
+        gbpGrandTotal = machiningDTCReportPage.getValueFromCentralCircleInChart();
+
+        assertThat(machiningDTCReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
     }
 }

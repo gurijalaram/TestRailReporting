@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -34,14 +35,16 @@ public class MachiningDTCReportPage extends GenericReportPage {
 
     /**
      * Gets value from tooltip on chart
-     * @param blob
-     * @param valueName
+     * @return
      */
-    public BigDecimal getValueFromChart(String blob, String valueName) {
+    public BigDecimal getValueFromCentralCircleInChart() {
         pageUtils.waitForElementToAppear(currentBlob);
-        Actions builder = new Actions(driver);
-        builder.moveToElement(currentBlob).perform();
-        String value = tooltipValueElement.getAttribute("textContent").replace(",", "");
+        Actions builder = new Actions(driver).moveToElement(currentBlob);
+        builder.perform();
+        pageUtils.waitForElementToAppear(tooltipValueElement);
+        String value = tooltipValueElement.getAttribute("textContent")
+                .replace(",", "")
+                .replace(" ", "");
         return new BigDecimal(value);
     }
 }

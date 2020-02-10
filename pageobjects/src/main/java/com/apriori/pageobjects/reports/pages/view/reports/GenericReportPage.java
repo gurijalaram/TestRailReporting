@@ -44,6 +44,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='Piston Assembly']/div/a")
     protected WebElement pistonAssemblyExportSet;
 
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_MachiningDataset']/div/a")
+    protected WebElement machiningDtcDataSetExportSet;
+
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
 
@@ -186,7 +189,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Assembly Details Report page object
      */
     public GenericReportPage clickApplyAndOk() {
-        pageUtils.waitForElementAndClick(applyButton);
+        //pageUtils.waitForElementAndClick(applyButton);
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
@@ -206,17 +209,6 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
         }
         return new GenericReportPage(driver);
-    }
-
-    /**
-     * Waits for correct current currency to appear on screen (not on Input Controls - on report itself)
-     * @param currencyToCheck
-     * @return current page object
-     */
-    public GenericReportPage waitForCorrectCurrency(String currencyToCheck) {
-        pageUtils.waitForElementToAppear(currentCurrency);
-        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
-        return this;
     }
 
     /**
@@ -244,6 +236,13 @@ public class GenericReportPage extends ReportsPageHeader {
         }
     }
 
+    /**
+     * Generic method to wait for correct currency and return specified page object
+     * @param currencyToCheck
+     * @param className
+     * @param <T> return type - any page object that is specified
+     * @return new instance of page object
+     */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
         pageUtils.waitForElementToAppear(currentCurrency);
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
@@ -272,6 +271,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseExportSetHashMap() {
         exportSetMap.put("top-level", topLevelExportSet);
         exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
+        exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
     }
 
     /**
