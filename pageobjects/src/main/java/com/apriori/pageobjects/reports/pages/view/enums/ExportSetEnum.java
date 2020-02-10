@@ -2,7 +2,8 @@ package com.apriori.pageobjects.reports.pages.view.enums;
 
 public enum ExportSetEnum {
     TOP_LEVEL("top-level"),
-    PISTON_ASSEMBLY("Piston Assembly");
+    PISTON_ASSEMBLY("Piston Assembly"),
+    CASTING_DTC("DTC_Casting");
 
     private String exportSetName;
 
