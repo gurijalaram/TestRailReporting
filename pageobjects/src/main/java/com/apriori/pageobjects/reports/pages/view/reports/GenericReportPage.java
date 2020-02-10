@@ -189,7 +189,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Assembly Details Report page object
      */
     public GenericReportPage clickApplyAndOk() {
-        //pageUtils.waitForElementAndClick(applyButton);
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
@@ -201,14 +200,14 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param assemblyToCheck
      * @return
      */
-    public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
+    public <T> T waitForCorrectAssembly(String assemblyToCheck, Class<T> className) {
         pageUtils.waitForElementToAppear(currentAssembly);
         // if not top level, add -
         if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
             pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
         }
-        return new GenericReportPage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

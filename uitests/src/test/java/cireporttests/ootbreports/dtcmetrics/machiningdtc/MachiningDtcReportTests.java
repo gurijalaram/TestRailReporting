@@ -1,5 +1,6 @@
 package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
@@ -92,7 +93,7 @@ public class MachiningDtcReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName)
                 .waitForInputControlsLoad()
-                .selectExportSet("DTC_MachiningDataset")
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
                 .scrollDownInputControls()
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
