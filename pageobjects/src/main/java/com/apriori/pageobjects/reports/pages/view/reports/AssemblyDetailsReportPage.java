@@ -475,17 +475,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Waits for correct current currency to appear on screen (not on Input Controls - on report itself)
-     * @param currencyToCheck
-     * @return current page object
-     */
-    //public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
-    //    pageUtils.waitForElementToAppear(currentCurrency);
-    //    pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
-    //    return this;
-    //}
-
-    /**
      * Checks if value of current cell is a valid one
      * @param valueToCheck
      * @return boolean
