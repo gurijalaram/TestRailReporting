@@ -95,9 +95,11 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
+    @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
+    private WebElement currentCurrency;
+
     private WebDriver driver;
     private PageUtils pageUtils;
-
 
     public GenericReportPage(WebDriver driver) {
         super(driver);
@@ -243,6 +245,12 @@ public class GenericReportPage extends ReportsPageHeader {
         for (int i = 0; i < topIndex; i++) {
             inputBox.sendKeys(Keys.ARROW_DOWN);
         }
+    }
+
+    public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
+        pageUtils.waitForElementToAppear(currentCurrency);
+        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

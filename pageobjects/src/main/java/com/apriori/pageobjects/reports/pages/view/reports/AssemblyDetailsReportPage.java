@@ -446,6 +446,40 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
+     * Gets current currency setting
+     * @return String
+     */
+    public String getCurrentCurrency() {
+        return pageUtils.getElementText(currentCurrency);
+    }
+
+    /**
+     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     * @param assemblyToCheck
+     * @return
+     */
+    public AssemblyDetailsReportPage waitForCorrectAssembly(String assemblyToCheck) {
+        pageUtils.waitForElementToAppear(currentAssembly);
+        // if not top level, add -
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
+            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+        }
+        return this;
+    }
+
+    /**
+     * Waits for correct current currency to appear on screen (not on Input Controls - on report itself)
+     * @param currencyToCheck
+     * @return current page object
+     */
+    //public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
+    //    pageUtils.waitForElementToAppear(currentCurrency);
+    //    pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
+    //    return this;
+    //}
+
+    /**
      * Checks if value of current cell is a valid one
      * @param valueToCheck
      * @return boolean
@@ -547,6 +581,18 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public int getAmountOfTopLevelExportSets() {
         List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
         return list.size();
+    }
+
+    /**
+     * Opens new tab and switches to it
+     * @return
+     */
+    public AssemblyDetailsReportPage openNewTabAndFocus() {
+        pageUtils.jsNewTab();
+        pageUtils.windowHandler();
+        driver.get(Constants.cidURL);
+        pageUtils.waitForElementToAppear(cidLogo);
+        return this;
     }
 
     /**

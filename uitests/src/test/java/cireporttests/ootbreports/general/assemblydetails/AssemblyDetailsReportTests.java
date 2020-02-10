@@ -114,14 +114,14 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .scrollDownInputControls()
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
         assemblyDetailsReport.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
@@ -146,12 +146,12 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .scrollDownInputControls()
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReport.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
         assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
@@ -159,7 +159,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReport.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
@@ -183,7 +183,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(assemblyType);
 
         /*
@@ -229,7 +229,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(assemblyType);
 
         /*
@@ -275,7 +275,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(assemblyType);
 
         /*
@@ -321,7 +321,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(assemblyType);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
@@ -353,7 +353,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(assemblyType);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
@@ -385,7 +385,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(assemblyType);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
@@ -450,7 +450,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency())
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class)
                 .openNewTabAndFocus();
 
         List<String> columnsToRemove = Arrays.asList(ComponentInfoColumnEnum.QUANTITY.getColumnName(),
