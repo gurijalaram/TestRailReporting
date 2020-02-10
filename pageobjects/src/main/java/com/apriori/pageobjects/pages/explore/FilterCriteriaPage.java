@@ -54,16 +54,16 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
     private WebElement valueInputDropdown;
 
-    @FindBy(xpath = "//button[contains(text(),'Apply')]")
+    @FindBy(xpath = "//div[@data-ap-comp='scenarioSearchCriteria'] //button[contains(text(),'Apply')]")
     private WebElement applyButton;
 
-    @FindBy(xpath = "//button[contains(text(),'Cancel')]")
+    @FindBy(xpath = "//div[@data-ap-comp='scenarioSearchCriteria'] //button[contains(text(),'Cancel')]")
     private WebElement cancelButton;
 
     @FindBy(css = "div[data-ap-comp='additionalSearchCriteria'] input")
     private List<WebElement> listOfCheckboxes;
 
-    @FindBy(xpath = "//button[contains(text(),'Clear')]")
+    @FindBy(xpath = "//div[@data-ap-comp='scenarioSearchCriteria'] //button[contains(text(),'Clear')]")
     private WebElement clearButton;
 
     private WebDriver driver;
