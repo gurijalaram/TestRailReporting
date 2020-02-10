@@ -44,6 +44,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='Piston Assembly']/div/a")
     protected WebElement pistonAssemblyExportSet;
 
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_Casting']")
+    protected WebElement dtcCastingExportSet;
+
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_MachiningDataset']/div/a")
     protected WebElement machiningDtcDataSetExportSet;
 
@@ -98,8 +101,28 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
+    @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Select All']/a")
+    private WebElement exportSetSelectAll;
+
+    @FindBy(css = "div[id='exportSetName'] > div > div > div > div > div:nth-of-type(1) > span")
+    private WebElement availableExportSets;
+
+    @FindBy(css = "div[id='exportSetName'] > div > div > div > div > div:nth-of-type(2) > span")
+    private WebElement selectedExportSets;
+
+    @FindBy(xpath = "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr']")
+    private WebElement exportSetList;
+
+    @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Invert']/a")
+    private WebElement exportSetInvert;
+
+    @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Deselect All']/a")
+    private WebElement exportSetDeselect;
+
+
     private WebDriver driver;
     private PageUtils pageUtils;
+
 
     public GenericReportPage(WebDriver driver) {
         super(driver);
@@ -124,6 +147,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Selects specified export set
+     *
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
@@ -133,6 +157,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Generic scroll method
+     *
      * @return current page object
      */
     public GenericReportPage scrollDownInputControls() {
@@ -143,6 +168,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Sets specified assembly
+     *
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
@@ -270,6 +296,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseExportSetHashMap() {
         exportSetMap.put("top-level", topLevelExportSet);
         exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
+        exportSetMap.put("DTC_Casting", dtcCastingExportSet);
         exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
     }
 
@@ -281,4 +308,75 @@ public class GenericReportPage extends ReportsPageHeader {
         assemblyMap.put("SUB-SUB-ASM (Initial)", subSubAsmOption);
         assemblyMap.put("TOP-LEVEL (Initial)", topLevelOption);
     }
+
+    /**
+     * Click export set select all button
+     *
+     * @return current page object
+     */
+    public GenericReportPage exportSetSelectAll() {
+        pageUtils.waitForElementAndClick(exportSetSelectAll);
+        String exportSetCount = exportSetList.getAttribute("childElementCount");
+        pageUtils.checkElementAttribute(selectedExportSets, "title", exportSetCount);
+        return this;
+    }
+
+    /**
+     * Get number of available export sets
+     *
+     * @return int
+     */
+    public int getAvailableExportSetCount() {
+        String count = pageUtils.waitForElementToAppear(availableExportSets).getAttribute("title");
+        count = count.substring((count.lastIndexOf(" ") + 1));
+        return Integer.parseInt(count);
+    }
+
+    /**
+     * Get number of selected export sets
+     *
+     * @return int
+     */
+    public int getSelectedExportSetCount() {
+        String count = pageUtils.waitForElementToAppear(selectedExportSets).getAttribute("title");
+        count = count.substring((count.lastIndexOf(" ") + 1));
+        return Integer.parseInt(count);
+    }
+
+    /**
+     * Deselect export set
+     *
+     * @return current page object
+     */
+    public GenericReportPage deselectExportSet(String exportSet) {
+        int expected = getSelectedExportSetCount() - 1;
+        pageUtils.waitForElementAndClick(exportSetMap.get(exportSet));
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        return this;
+    }
+
+    /**
+     * Invert export set selection
+     *
+     * @return current page object
+     */
+    public GenericReportPage invertExportSetSelection() {
+        int expected = getAvailableExportSetCount() - getSelectedExportSetCount();
+        pageUtils.waitForElementAndClick(exportSetInvert);
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        return this;
+    }
+
+    /**
+     * Deselect all export sets
+     *
+     * @return current page object
+     */
+    public GenericReportPage exportSetDeselectAll() {
+        pageUtils.waitForElementAndClick(exportSetDeselect);
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + "0");
+        return this;
+    }
+
+
 }

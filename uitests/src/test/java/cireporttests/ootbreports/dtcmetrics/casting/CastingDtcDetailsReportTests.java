@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
-import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
@@ -16,38 +15,22 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
-public class CastingDtcReportTests extends TestBase {
+public class CastingDtcDetailsReportTests extends TestBase {
 
-    private ViewRepositoryPage repository;
     private GenericReportPage genericReportPage;
 
-    public CastingDtcReportTests() {
+    public CastingDtcDetailsReportTests() {
         super();
-    }
-
-    @Test
-    @TestRail(testCaseId = "1676")
-    @Description("validate report available by navigation")
-    public void testReportAvailabilityByMenu() {
-        repository = new LoginPage(driver)
-            .login(UserUtil.getUser())
-            .navigateToViewRepositoryPage()
-            .navigateToCastingFolder();
-
-        CastingReportsEnum[] reportNames = CastingReportsEnum.values();
-        for (CastingReportsEnum report : reportNames) {
-            assertThat(repository.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
-        }
     }
 
     @Test
     @TestRail(testCaseId = "1692")
     @Description("Verify export set input controls function correctly")
-    public void testCastingDtcExportSetInputControls() {
+    public void testCastingDtcDetailsExportSetInputControls() {
         genericReportPage = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
             .waitForInputControlsLoad()
             .exportSetSelectAll();
 
@@ -66,6 +49,4 @@ public class CastingDtcReportTests extends TestBase {
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
     }
-
-
 }
