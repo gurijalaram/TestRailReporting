@@ -116,12 +116,35 @@ public class MachiningDtcReportTests extends TestBase {
                 .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(reportName)
-                .waitForInputControlsLoad()
-                .setEarliestExportDateToTwoDaysAgoInput()
+                .waitForInputControlsLoad();
+
+        Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
+
+        genericReportPage.setEarliestExportDateToTwoDaysAgoInput()
                 .setLatestExportDateToTwoMonthsAgoInput()
                 .ensureEarliestExportSetHasChanged()
                 .ensureLatestExportSetHasChanged();
 
-        assertThat(true, is(true));
+        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3566")
+    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    public void testBothExportDatesUsingDatePicker() {
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(reportName)
+                .waitForInputControlsLoad();
+
+        Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
+
+        genericReportPage.setEarliestExportDateToTwoDaysAgoInput()
+                .setLatestExportDateToTwoMonthsAgoInput()
+                .ensureEarliestExportSetHasChanged()
+                .ensureLatestExportSetHasChanged();
+
+        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
     }
 }

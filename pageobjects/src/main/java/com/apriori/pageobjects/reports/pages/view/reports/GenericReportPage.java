@@ -274,6 +274,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setLatestExportDateToTwoMonthsAgoInput() {
         String dtTwoMonthsAgo = getDateTwoMonthsAgo();
 
+        pageUtils.waitForElementToAppear(latestExportDateInput);
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
             latestExportDateInput.clear();
             latestExportDateInput.sendKeys(dtTwoMonthsAgo);
@@ -287,9 +288,10 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setEarliestExportDateToTwoDaysAgoInput() {
         String dtTwoDaysAgo = getDateTwoDaysAgo();
 
-        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
-            latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(dtTwoDaysAgo);
+        pageUtils.waitForElementToAppear(earliestExportDateInput);
+        if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
+            earliestExportDateInput.clear();
+            earliestExportDateInput.sendKeys(dtTwoDaysAgo);
         }
         return this;
     }
@@ -342,6 +344,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage ensureLatestExportSetHasChanged() {
         pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateTwoMonthsAgo().substring(0, 10));
+        pageUtils.checkElementAttribute(exportSetList, "childElementCount", "0");
         return this;
     }
 
@@ -430,14 +433,21 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage exportSetSelectAll() {
         pageUtils.waitForElementAndClick(exportSetSelectAll);
-        String exportSetCount = exportSetList.getAttribute("childElementCount");
+        String exportSetCount = getCountOfExportSets();
         pageUtils.checkElementAttribute(selectedExportSets, "title", exportSetCount);
         return this;
     }
 
     /**
+     * Gets number of currently available export sets
+     * @return
+     */
+    public String getCountOfExportSets() {
+        return exportSetList.getAttribute("childElementCount");
+    }
+
+    /**
      * Get number of available export sets
-     *
      * @return int
      */
     public int getAvailableExportSetCount() {
