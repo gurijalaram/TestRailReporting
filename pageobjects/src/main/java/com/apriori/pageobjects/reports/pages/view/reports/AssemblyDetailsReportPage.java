@@ -545,17 +545,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         Select monthDropdown = new Select(datePickerMonthSelect);
         Select yearDropdown = new Select(datePickerYearSelect);
 
-        int currentMonth = Integer.parseInt(datePickerMonthSelect.getAttribute("value"));
-        int indexToSelect;
-
-        if (currentMonth == 0) {
-            indexToSelect = 11;
-        } else {
-            indexToSelect = currentMonth - 1;
-        }
-
-        monthDropdown.selectByIndex(indexToSelect);
-        yearDropdown.selectByValue("2019");
+        monthDropdown.selectByIndex(Integer.parseInt(getDateTwoMonthsAgo().substring(5, 7)) - 1);
+        yearDropdown.selectByValue(getDateTwoMonthsAgo().substring(0, 4));
         datePickerTriggerBtn.click();
         return this;
     }
@@ -595,7 +586,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return String
      */
     private String getDateTwoMonthsAgo() {
-        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(1).withNano(0);
+        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(2).withNano(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return formatter.format(pastDate);
     }
