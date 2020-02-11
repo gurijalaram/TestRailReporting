@@ -111,14 +111,14 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .scrollDownInputControls()
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
         assemblyDetailsReport.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
@@ -143,12 +143,12 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .scrollDownInputControls()
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReport.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
         assertThat(assemblyDetailsReport.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
@@ -156,7 +156,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReport.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency());
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
@@ -180,8 +180,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
-                .waitForCorrectAssembly(assemblyType);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
+                .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -226,8 +226,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
-                .waitForCorrectAssembly(assemblyType);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
+                .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -272,8 +272,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
-                .waitForCorrectAssembly(assemblyType);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
+                .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -318,8 +318,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
-                .waitForCorrectAssembly(assemblyType);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
+                .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
@@ -350,8 +350,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
-                .waitForCorrectAssembly(assemblyType);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
+                .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
@@ -382,8 +382,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency())
-                .waitForCorrectAssembly(assemblyType);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
+                .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
@@ -447,15 +447,23 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
                 .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency())
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class)
                 .openNewTabAndFocus();
 
-        List<String> columnsToRemove = Arrays.asList(ComponentInfoColumnEnum.QUANTITY.getColumnName(),
-                ComponentInfoColumnEnum.PROCESS_GROUP.getColumnName(), ComponentInfoColumnEnum.VPE.getColumnName(),
-                ComponentInfoColumnEnum.LAST_SAVED.getColumnName(), ComponentInfoColumnEnum.LAST_COSTED.getColumnName());
-        List<String> columnsToAdd = Arrays.asList(ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
-                ComponentInfoColumnEnum.PER_PART_COST.getColumnName(), ComponentInfoColumnEnum.FULLY_BURDENED_COST.getColumnName(),
-                ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName());
+        List<String> columnsToRemove = Arrays.asList(
+                ComponentInfoColumnEnum.QUANTITY.getColumnName(),
+                ComponentInfoColumnEnum.PROCESS_GROUP.getColumnName(),
+                ComponentInfoColumnEnum.VPE.getColumnName(),
+                ComponentInfoColumnEnum.LAST_SAVED.getColumnName(),
+                ComponentInfoColumnEnum.LAST_COSTED.getColumnName()
+        );
+
+        List<String> columnsToAdd = Arrays.asList(
+                ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
+                ComponentInfoColumnEnum.PER_PART_COST.getColumnName(),
+                ComponentInfoColumnEnum.FULLY_BURDENED_COST.getColumnName(),
+                ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName()
+        );
 
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -465,28 +473,56 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .checkColumnSettings(columnsToAdd, columnsToRemove)
                 .selectSaveButton();
 
-        ArrayList<BigDecimal> cidPartOneValues =
-                evaluatePage.getTableValsByRow(ColumnIndexEnum.CID_PART_ONE.getColumnIndex());
-        ArrayList<BigDecimal> cidPartTwoValues =
-                evaluatePage.getTableValsByRow(ColumnIndexEnum.CID_PART_TWO.getColumnIndex());
-        ArrayList<BigDecimal> cidPartThreeValues =
-                evaluatePage.getTableValsByRow(ColumnIndexEnum.CID_PART_THREE.getColumnIndex());
-        ArrayList<BigDecimal> cidPartFourValues =
-                evaluatePage.getTableValsByRow(ColumnIndexEnum.CID_PART_FOUR.getColumnIndex());
+        ArrayList<BigDecimal> cidPartOneValues = evaluatePage
+                .getTableValsByRow(
+                        ColumnIndexEnum.CID_PART_ONE.getColumnIndex()
+                );
+        ArrayList<BigDecimal> cidPartTwoValues = evaluatePage
+                .getTableValsByRow(
+                        ColumnIndexEnum.CID_PART_TWO.getColumnIndex()
+                );
+        ArrayList<BigDecimal> cidPartThreeValues = evaluatePage
+                .getTableValsByRow(
+                        ColumnIndexEnum.CID_PART_THREE.getColumnIndex()
+                );
+        ArrayList<BigDecimal> cidPartFourValues = evaluatePage
+                .getTableValsByRow(
+                        ColumnIndexEnum.CID_PART_FOUR.getColumnIndex()
+                );
 
         evaluatePage.switchBackToTabOne();
-        ArrayList<BigDecimal> reportsPartOneValues =
-                assemblyDetailsReport.getValuesByRow(ColumnIndexEnum.CIR_PART_ONE.getColumnIndex());
-        ArrayList<BigDecimal> reportsPartTwoValues =
-                assemblyDetailsReport.getValuesByRow(ColumnIndexEnum.CIR_PART_TWO.getColumnIndex());
-        ArrayList<BigDecimal> reportsPartThreeValues =
-                assemblyDetailsReport.getValuesByRow(ColumnIndexEnum.CIR_PART_THREE.getColumnIndex());
-        ArrayList<BigDecimal> reportsPartFourValues =
-                assemblyDetailsReport.getValuesByRow(ColumnIndexEnum.CIR_PART_FOUR.getColumnIndex());
+        ArrayList<BigDecimal> reportsPartOneValues = assemblyDetailsReport
+                .getValuesByRow(
+                        ColumnIndexEnum.CIR_PART_ONE.getColumnIndex()
+                );
+        ArrayList<BigDecimal> reportsPartTwoValues = assemblyDetailsReport
+                .getValuesByRow(
+                        ColumnIndexEnum.CIR_PART_TWO.getColumnIndex()
+                );
+        ArrayList<BigDecimal> reportsPartThreeValues = assemblyDetailsReport
+                .getValuesByRow(
+                        ColumnIndexEnum.CIR_PART_THREE.getColumnIndex()
+                );
+        ArrayList<BigDecimal> reportsPartFourValues = assemblyDetailsReport
+                .getValuesByRow(
+                        ColumnIndexEnum.CIR_PART_FOUR.getColumnIndex()
+                );
 
-        assertThat(cidPartOneValues.equals(reportsPartFourValues), is(true));
-        assertThat(cidPartTwoValues.equals(reportsPartThreeValues), is(true));
-        assertThat(cidPartThreeValues.equals(reportsPartOneValues), is(true));
-        assertThat(cidPartFourValues.equals(reportsPartTwoValues), is(true));
+        assertThat(
+                cidPartOneValues.equals(reportsPartFourValues),
+                is(true)
+        );
+        assertThat(
+                cidPartTwoValues.equals(reportsPartThreeValues),
+                is(true)
+        );
+        assertThat(
+                cidPartThreeValues.equals(reportsPartOneValues),
+                is(true)
+        );
+        assertThat(
+                cidPartFourValues.equals(reportsPartTwoValues),
+                is(true)
+        );
     }
 }

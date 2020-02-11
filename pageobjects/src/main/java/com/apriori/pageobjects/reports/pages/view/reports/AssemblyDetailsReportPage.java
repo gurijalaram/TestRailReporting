@@ -42,6 +42,12 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
 
+    @FindBy(css = "a[id='logo']")
+    private WebElement cidLogo;
+
+    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    private WebElement currentAssembly;
+
     @FindBy(css = "button[class='ui-datepicker-trigger']")
     private WebElement datePickerTriggerBtn;
 
@@ -53,12 +59,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
-
-    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
-    private WebElement currentAssembly;
-
-    @FindBy(css = "a[id='logo']")
-    private WebElement cidLogo;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -74,6 +74,17 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         initialiseGenericColumnMap();
         initialiseSubSubAsmRowMap();
         initialiseTopLevelRowMap();
+    }
+
+    /**
+     * Waits for correct current currency to appear on screen (not on Input Controls - on report itself)
+     * @param currencyToCheck
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
+        pageUtils.waitForElementToAppear(currentCurrency);
+        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
+        return this;
     }
 
     /**
@@ -460,17 +471,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
             pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
         }
-        return this;
-    }
-
-    /**
-     * Waits for correct current currency to appear on screen (not on Input Controls - on report itself)
-     * @param currencyToCheck
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
-        pageUtils.waitForElementToAppear(currentCurrency);
-        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return this;
     }
 

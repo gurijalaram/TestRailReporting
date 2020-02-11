@@ -3,6 +3,9 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.AssemblyTypeEnum;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,6 +26,15 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
 
+    @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
+    private WebElement currentCurrency;
+
+    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    private WebElement currentAssembly;
+
+    @FindBy(css = "a[id='logo']")
+    private WebElement cidLogo;
+
     @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
     protected WebElement latestExportDateInput;
 
@@ -34,6 +46,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_Casting']")
     protected WebElement dtcCastingExportSet;
+
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_MachiningDataset']/div/a")
+    protected WebElement machiningDtcDataSetExportSet;
 
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
@@ -172,7 +187,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Checks current currency selection, fixes if necessary
-     *
      * @param currency
      * @return current page object
      */
@@ -185,21 +199,45 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Opens new tab and switches to it
+     * @return
+     */
+    public GenericReportPage openNewTabAndFocus() {
+        pageUtils.jsNewTab();
+        pageUtils.windowHandler();
+        driver.get(Constants.cidURL);
+        pageUtils.waitForElementToAppear(cidLogo);
+        return new GenericReportPage(driver);
+    }
+
+    /**
      * Clicks apply and ok
-     *
      * @return Assembly Details Report page object
      */
-    public AssemblyDetailsReportPage clickApplyAndOk() {
-        pageUtils.waitForElementAndClick(applyButton);
+    public GenericReportPage clickApplyAndOk() {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
-        return new AssemblyDetailsReportPage(driver);
+        return this;
+    }
+
+    /**
+     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     * @param assemblyToCheck
+     * @return
+     */
+    public <T> T waitForCorrectAssembly(String assemblyToCheck, Class<T> className) {
+        pageUtils.waitForElementToAppear(currentAssembly);
+        // if not top level, add -
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
+            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+        }
+        return PageFactory.initElements(driver, className);
     }
 
     /**
      * Ensures date is set to today
-     *
      * @return current page object
      */
     public AssemblyDetailsReportPage ensureDateIsToday() {
@@ -215,13 +253,33 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Select Assembly option dropdown using send keys
-     *
      * @param topIndex
      */
     private void selectAssemblyOption(int topIndex) {
         for (int i = 0; i < topIndex; i++) {
             inputBox.sendKeys(Keys.ARROW_DOWN);
         }
+    }
+
+    /**
+     * Generic method to wait for correct currency and return specified page object
+     * @param currencyToCheck
+     * @param className
+     * @param <T> return type - any page object that is specified
+     * @return new instance of page object
+     */
+    public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
+        pageUtils.waitForElementToAppear(currentCurrency);
+        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Gets current currency setting
+     * @return String
+     */
+    public String getCurrentCurrency() {
+        return pageUtils.getElementText(currentCurrency);
     }
 
     /**
@@ -239,6 +297,7 @@ public class GenericReportPage extends ReportsPageHeader {
         exportSetMap.put("top-level", topLevelExportSet);
         exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
         exportSetMap.put("DTC_Casting", dtcCastingExportSet);
+        exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
     }
 
     /**
