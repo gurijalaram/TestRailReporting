@@ -524,61 +524,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Sets export set time and date to current time minus two months using input field
-     */
-    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoInput() {
-        String dtTwoMonthsAgo = getDateTwoMonthsAgo();
-
-        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
-            latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
-        }
-        return this;
-    }
-
-    /**
-     * Sets export set filter date using date picker
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoPicker() {
-        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
-        Select monthDropdown = new Select(datePickerMonthSelect);
-        Select yearDropdown = new Select(datePickerYearSelect);
-
-        int currentMonth = Integer.parseInt(datePickerMonthSelect.getAttribute("value"));
-        int indexToSelect;
-
-        if (currentMonth == 0) {
-            indexToSelect = 11;
-        } else {
-            indexToSelect = currentMonth - 1;
-        }
-
-        monthDropdown.selectByIndex(indexToSelect);
-        yearDropdown.selectByValue("2019");
-        datePickerTriggerBtn.click();
-        return this;
-    }
-
-    /**
-     * Ensures date has changed, before proceeding with test
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage ensureExportSetHasChanged() {
-        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateTwoMonthsAgo().substring(0, 10));
-        return this;
-    }
-
-    /**
-     * Ensures filtering worked correctly
-     * @return int size of element list
-     */
-    public int getAmountOfTopLevelExportSets() {
-        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
-        return list.size();
-    }
-
-    /**
      * Opens new tab and switches to it
      * @return
      */
@@ -588,16 +533,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         driver.get(Constants.cidURL);
         pageUtils.waitForElementToAppear(cidLogo);
         return this;
-    }
-
-    /**
-     * Gets date from two months ago
-     * @return String
-     */
-    private String getDateTwoMonthsAgo() {
-        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(1).withNano(0);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(pastDate);
     }
 
     /**

@@ -25,6 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class MachiningDtcReportTests extends TestBase {
 
     private MachiningDTCReportPage machiningDTCReportPage;
+    private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
     private LibraryPage library;
@@ -105,5 +106,22 @@ public class MachiningDtcReportTests extends TestBase {
 
         assertThat(machiningDTCReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3565")
+    @Description("Verify that earliest and latest export date fields function correctly using input field")
+    public void testBothExportDatesUsingInputField() {
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(reportName)
+                .waitForInputControlsLoad()
+                .setEarliestExportDateToTwoDaysAgoInput()
+                .setLatestExportDateToTwoMonthsAgoInput()
+                .ensureEarliestExportSetHasChanged()
+                .ensureLatestExportSetHasChanged();
+
+        assertThat(true, is(true));
     }
 }

@@ -6,17 +6,23 @@ import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GenericReportPage extends ReportsPageHeader {
@@ -34,6 +40,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(css = "a[id='logo']")
     private WebElement cidLogo;
+
+    @FindBy(xpath = "//label[contains(@title, 'Earliest Export Date')]/input")
+    protected WebElement earliestExportDateInput;
 
     @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
     protected WebElement latestExportDateInput;
@@ -119,6 +128,14 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Deselect All']/a")
     private WebElement exportSetDeselect;
 
+    @FindBy(css = "button[class='ui-datepicker-trigger']")
+    private WebElement datePickerTriggerBtn;
+
+    @FindBy(css = "select[class='ui-datepicker-month']")
+    private WebElement datePickerMonthSelect;
+
+    @FindBy(css = "select[class='ui-datepicker-year']")
+    private WebElement datePickerYearSelect;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -240,7 +257,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Ensures date is set to today
      * @return current page object
      */
-    public AssemblyDetailsReportPage ensureDateIsToday() {
+    public GenericReportPage ensureDateIsToday() {
         SimpleDateFormat formatterWithoutTime = new SimpleDateFormat("yyyy/MM/dd");
         SimpleDateFormat formatterWithTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
@@ -248,7 +265,104 @@ public class GenericReportPage extends ReportsPageHeader {
             latestExportDateInput.clear();
             latestExportDateInput.sendKeys(formatterWithTime.format(date).replace("/", "-"));
         }
-        return new AssemblyDetailsReportPage(driver);
+        return this;
+    }
+
+    /**
+     * Sets export set time and date to current time minus two months using input field
+     */
+    public GenericReportPage setLatestExportDateToTwoMonthsAgoInput() {
+        String dtTwoMonthsAgo = getDateTwoMonthsAgo();
+
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
+        }
+        return this;
+    }
+
+    /**
+     * Sets export set time and date to current time minus two months using input field
+     */
+    public GenericReportPage setEarliestExportDateToTwoDaysAgoInput() {
+        String dtTwoDaysAgo = getDateTwoDaysAgo();
+
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtTwoDaysAgo);
+        }
+        return this;
+    }
+
+    /**
+     * Sets export set filter date using date picker
+     * @return current page object
+     */
+    public GenericReportPage setExportDateToTwoMonthsAgoPicker() {
+        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
+        Select monthDropdown = new Select(datePickerMonthSelect);
+        Select yearDropdown = new Select(datePickerYearSelect);
+
+        int currentMonth = Integer.parseInt(datePickerMonthSelect.getAttribute("value"));
+        int indexToSelect;
+
+        if (currentMonth == 0) {
+            indexToSelect = 11;
+        } else {
+            indexToSelect = currentMonth - 1;
+        }
+
+        monthDropdown.selectByIndex(indexToSelect);
+        yearDropdown.selectByValue("2019");
+        datePickerTriggerBtn.click();
+        return this;
+    }
+
+    /**
+     * Ensures filtering worked correctly
+     * @return int size of element list
+     */
+    public int getAmountOfTopLevelExportSets() {
+        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
+        return list.size();
+    }
+
+    /**
+     * Ensures date has changed, before proceeding with test
+     * @return current page object
+     */
+    public GenericReportPage ensureEarliestExportSetHasChanged() {
+        pageUtils.checkElementAttribute(earliestExportDateInput, "value", getDateTwoDaysAgo().substring(0, 10));
+        return this;
+    }
+
+    /**
+     * Ensures date has changed, before proceeding with test
+     * @return current page object
+     */
+    public GenericReportPage ensureLatestExportSetHasChanged() {
+        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateTwoMonthsAgo().substring(0, 10));
+        return this;
+    }
+
+    /**
+     * Gets date from two months ago
+     * @return String
+     */
+    private String getDateTwoMonthsAgo() {
+        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(1).withNano(0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(pastDate);
+    }
+
+    /**
+     * Gets date from two days ago
+     * @return String
+     */
+    private String getDateTwoDaysAgo() {
+        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusDays(2).withNano(0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(pastDate);
     }
 
     /**
