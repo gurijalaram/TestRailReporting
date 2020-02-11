@@ -431,7 +431,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .ensureDateIsToday()
-                .setExportDateToTwoMonthsAgoPicker()
+                .setEarliestExportDateToTwoMonthsAgoPicker()
                 .ensureLatestExportSetHasChanged();
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed

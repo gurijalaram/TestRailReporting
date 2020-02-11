@@ -140,8 +140,8 @@ public class MachiningDtcReportTests extends TestBase {
 
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
 
-        genericReportPage.setEarliestExportDateToTwoDaysAgoInput()
-                .setLatestExportDateToTwoMonthsAgoInput()
+        genericReportPage.setEarliestExportDateToTwoMonthsAgoPicker()
+                .setLatestExportDateToTwoMonthsAgoPicker()
                 .ensureEarliestExportSetHasChanged()
                 .ensureLatestExportSetHasChanged();
 

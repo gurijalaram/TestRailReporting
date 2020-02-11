@@ -296,27 +296,36 @@ public class GenericReportPage extends ReportsPageHeader {
         return this;
     }
 
+
     /**
      * Sets export set filter date using date picker
      * @return current page object
      */
-    public GenericReportPage setExportDateToTwoMonthsAgoPicker() {
+    public GenericReportPage setEarliestExportDateToTwoMonthsAgoPicker() {
         pageUtils.waitForElementAndClick(datePickerTriggerBtn);
         Select monthDropdown = new Select(datePickerMonthSelect);
         Select yearDropdown = new Select(datePickerYearSelect);
 
-        int currentMonth = Integer.parseInt(datePickerMonthSelect.getAttribute("value"));
-        int indexToSelect;
-
-        if (currentMonth == 0) {
-            indexToSelect = 11;
-        } else {
-            indexToSelect = currentMonth - 1;
-        }
-
-        monthDropdown.selectByIndex(indexToSelect);
-        yearDropdown.selectByValue("2019");
+        monthDropdown.selectByIndex(Integer.parseInt(getDateTwoMonthsAgo().substring(5, 7)) - 1);
+        yearDropdown.selectByValue(getDateTwoMonthsAgo().substring(0, 4));
         datePickerTriggerBtn.click();
+
+        return this;
+    }
+
+    /**
+     * Sets export set filter date using date picker
+     * @return current page object
+     */
+    public GenericReportPage setLatestExportDateToTwoMonthsAgoPicker() {
+        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
+        Select monthDropdown = new Select(datePickerMonthSelect);
+        Select yearDropdown = new Select(datePickerYearSelect);
+
+        monthDropdown.selectByIndex(Integer.parseInt(getDateTwoMonthsAgo().substring(5, 7)) - 1);
+        yearDropdown.selectByValue(getDateTwoMonthsAgo().substring(0, 4));
+        datePickerTriggerBtn.click();
+
         return this;
     }
 

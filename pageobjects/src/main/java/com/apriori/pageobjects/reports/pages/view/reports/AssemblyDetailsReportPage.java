@@ -540,7 +540,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Sets export set filter date using date picker
      * @return current page object
      */
-    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoPicker() {
+    public AssemblyDetailsReportPage setEarliestExportDateToTwoMonthsAgoPicker() {
         pageUtils.waitForElementAndClick(datePickerTriggerBtn);
         Select monthDropdown = new Select(datePickerMonthSelect);
         Select yearDropdown = new Select(datePickerYearSelect);
