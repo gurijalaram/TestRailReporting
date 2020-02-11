@@ -8,6 +8,8 @@ import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
+import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
+import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
@@ -20,6 +22,7 @@ public class CastingDtcReportTests extends TestBase {
 
     private ViewRepositoryPage repository;
     private GenericReportPage genericReportPage;
+    private CastingDtcReportPage castingDtcReportPage;
 
     public CastingDtcReportTests() {
         super();
@@ -67,5 +70,20 @@ public class CastingDtcReportTests extends TestBase {
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
     }
 
+    @Test
+    @TestRail(testCaseId = "1694")
+    @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
+    public void testRollupDropDown() {
+        genericReportPage = new LoginPage(driver)
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .waitForInputControlsLoad()
+            .expandRollupDropDown()
+            .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
+            .clickApplyAndOk();
+
+        assertThat(castingDtcReportPage.getDisplayedRollup(), is(equalTo(RollupEnum.CASTING_DTC_ALL.getRollupName())));
+    }
 
 }
