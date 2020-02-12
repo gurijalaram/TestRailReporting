@@ -119,6 +119,12 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Deselect All']/a")
     private WebElement exportSetDeselect;
 
+    @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-input-expander jr']")
+    private WebElement rollupDropDown;
+
+    @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
+    private WebElement rollupSearch;
+
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -378,5 +384,22 @@ public class GenericReportPage extends ReportsPageHeader {
         return this;
     }
 
+    /**
+     * Expand rollup drop-down
+     * @return current page object
+     */
+    public GenericReportPage expandRollupDropDown() {
+        pageUtils.waitForElementAndClick(rollupDropDown);
+        return this;
+    }
 
+    /**
+     * Search for rollup in rollup drop-down search bar
+     * @return current page object
+     */
+    public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
+        pageUtils.waitForElementAndClick(rollupSearch);
+        rollupSearch.sendKeys(rollupName);
+        return this;
+    }
 }
