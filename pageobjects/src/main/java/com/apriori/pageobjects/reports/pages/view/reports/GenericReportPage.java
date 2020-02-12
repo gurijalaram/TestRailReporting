@@ -122,7 +122,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-input-expander jr']")
     private WebElement rollupDropDown;
 
-    @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mInput-search jr superfocus subfocus']")
+    @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
     private WebElement rollupSearch;
 
 

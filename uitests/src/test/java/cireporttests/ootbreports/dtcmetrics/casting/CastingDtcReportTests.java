@@ -12,6 +12,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -71,19 +72,20 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "1694")
+    //@TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
     public void testRollupDropDown() {
-        genericReportPage = new LoginPage(driver)
+        castingDtcReportPage = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
-            .clickApplyAndOk();
+            .clickApplyAndOk()
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class);
 
-        assertThat(castingDtcReportPage.getDisplayedRollup(), is(equalTo(RollupEnum.CASTING_DTC_ALL.getRollupName())));
+        assertThat(castingDtcReportPage.getDisplayedRollup(), is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
     }
 
 }
