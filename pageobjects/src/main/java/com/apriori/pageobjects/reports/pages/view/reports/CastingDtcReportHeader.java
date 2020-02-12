@@ -9,9 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CastingDtcReportPage extends GenericReportPage {
+public class CastingDtcReportHeader extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(CastingDtcReportPage.class);
+    private final Logger logger = LoggerFactory.getLogger(CastingDtcReportHeader.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -19,7 +19,7 @@ public class CastingDtcReportPage extends GenericReportPage {
     @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[4]/td[4]/span")
     private WebElement headerDisplayedRollup;
 
-    public CastingDtcReportPage(WebDriver driver) {
+    public CastingDtcReportHeader(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
