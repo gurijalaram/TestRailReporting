@@ -120,8 +120,8 @@ public class MachiningDtcReportTests extends TestBase {
 
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
 
-        genericReportPage.setEarliestExportDateToTwoDaysAgoInput()
-                .setLatestExportDateToTwoMonthsAgoInput()
+        genericReportPage.setEarliestExportDateToTodayInput()
+                .setLatestExportDateToTwoDaysFutureInput()
                 .ensureEarliestExportSetHasChanged()
                 .ensureLatestExportSetHasChanged();
 
@@ -140,10 +140,10 @@ public class MachiningDtcReportTests extends TestBase {
 
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
 
-        genericReportPage.setEarliestExportDateToTwoMonthsAgoPicker()
-                .setLatestExportDateToTwoMonthsAgoPicker()
-                .ensureEarliestExportSetHasChanged()
-                .ensureLatestExportSetHasChanged();
+//        genericReportPage.setEarliestExportDateToTwoMonthsAgoInput()
+//                .setLatestExportDateToTwoMonthsAgoPicker()
+//                .ensureEarliestExportSetHasChanged()
+//                .ensureLatestExportSetHasChanged();
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
     }

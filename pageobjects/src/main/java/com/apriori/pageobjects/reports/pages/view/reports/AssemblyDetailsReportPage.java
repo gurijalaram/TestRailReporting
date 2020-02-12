@@ -460,21 +460,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
-     * @param assemblyToCheck
-     * @return
-     */
-    public AssemblyDetailsReportPage waitForCorrectAssembly(String assemblyToCheck) {
-        pageUtils.waitForElementToAppear(currentAssembly);
-        // if not top level, add -
-        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
-            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
-            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
-        }
-        return this;
-    }
-
-    /**
      * Checks if value of current cell is a valid one
      * @param valueToCheck
      * @return boolean
@@ -521,19 +506,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         returnValues.add(expectedTotal);
         returnValues.add(actualTotal);
         return returnValues;
-    }
-
-    /**
-     * Sets export set time and date to current time minus two months using input field
-     */
-    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoInput() {
-        String dtTwoMonthsAgo = getDateTwoMonthsAgo();
-
-        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
-            latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
-        }
-        return this;
     }
 
     /**

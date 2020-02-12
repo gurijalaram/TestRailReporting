@@ -271,8 +271,8 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Sets export set time and date to current time minus two months using input field
      */
-    public GenericReportPage setLatestExportDateToTwoMonthsAgoInput() {
-        String dtTwoMonthsAgo = getDateTwoMonthsAgo();
+    public GenericReportPage setLatestExportDateToTwoDaysFutureInput() {
+        String dtTwoMonthsAgo = getDateNowPlusTwo();
 
         pageUtils.waitForElementToAppear(latestExportDateInput);
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
@@ -285,47 +285,63 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Sets export set time and date to current time minus two months using input field
      */
-    public GenericReportPage setEarliestExportDateToTwoDaysAgoInput() {
-        String dtTwoDaysAgo = getDateTwoDaysAgo();
+    public GenericReportPage setLatestExportDateToTwoMonthsAgoInput() {
+        String dtTwoMonthsAgo = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(getSpecifiedPastDate(false, 0).withNano(0));
+        //DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
 
-        pageUtils.waitForElementToAppear(earliestExportDateInput);
-        if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
-            earliestExportDateInput.clear();
-            earliestExportDateInput.sendKeys(dtTwoDaysAgo);
+        pageUtils.waitForElementToAppear(latestExportDateInput);
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
         }
         return this;
     }
 
-
     /**
-     * Sets export set filter date using date picker
-     * @return current page object
+     * Sets export set time and date to current time minus two months using input field
      */
-    public GenericReportPage setEarliestExportDateToTwoMonthsAgoPicker() {
-        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
-        Select monthDropdown = new Select(datePickerMonthSelect);
-        Select yearDropdown = new Select(datePickerYearSelect);
+    public GenericReportPage setEarliestExportDateToTodayInput() {
+        String dtToday = getCurrentDate();
 
-        monthDropdown.selectByIndex(Integer.parseInt(getDateTwoMonthsAgo().substring(5, 7)) - 1);
-        yearDropdown.selectByValue(getDateTwoMonthsAgo().substring(0, 4));
-        datePickerTriggerBtn.click();
-
+        pageUtils.waitForElementToAppear(earliestExportDateInput);
+        if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
+            earliestExportDateInput.clear();
+            earliestExportDateInput.sendKeys(dtToday.substring(0, 10));
+            earliestExportDateInput.sendKeys(dtToday.substring(10, 13));
+            pageUtils.checkElementAttribute(earliestExportDateInput, "value", dtToday.substring(0, 13));
+            earliestExportDateInput.sendKeys(dtToday.substring(13));
+        }
         return this;
     }
 
     /**
-     * Sets export set filter date using date picker
-     * @return current page object
+     * Sets export set time and date to current time minus two months using input field
      */
-    public GenericReportPage setLatestExportDateToTwoMonthsAgoPicker() {
-        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
-        Select monthDropdown = new Select(datePickerMonthSelect);
-        Select yearDropdown = new Select(datePickerYearSelect);
+    public GenericReportPage setLatestExportDateToTodayInput() {
+        String dtToday = getCurrentDate();
 
-        monthDropdown.selectByIndex(Integer.parseInt(getDateTwoMonthsAgo().substring(5, 7)) - 1);
-        yearDropdown.selectByValue(getDateTwoMonthsAgo().substring(0, 4));
-        datePickerTriggerBtn.click();
+        pageUtils.waitForElementToAppear(latestExportDateInput);
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtToday.substring(0, 10));
+            latestExportDateInput.sendKeys(dtToday.substring(10, 13));
+            pageUtils.checkElementAttribute(latestExportDateInput, "value", dtToday.substring(0, 13));
+            latestExportDateInput.sendKeys(dtToday.substring(13));
+        }
+        return this;
+    }
 
+    /**
+     * Sets export set time and date to current time minus two months using input field
+     */
+    public GenericReportPage setEarliestExportDateToTwoWeeksAgoInput() {
+        String dtToday = getDateTwoWeeksAgo();
+
+        pageUtils.waitForElementToAppear(earliestExportDateInput);
+        if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
+            earliestExportDateInput.clear();
+            earliestExportDateInput.sendKeys(dtToday);
+        }
         return this;
     }
 
@@ -343,7 +359,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureEarliestExportSetHasChanged() {
-        pageUtils.checkElementAttribute(earliestExportDateInput, "value", getDateTwoDaysAgo().substring(0, 10));
+        pageUtils.checkElementAttribute(earliestExportDateInput, "value", getCurrentDate().substring(0, 10));
         return this;
     }
 
@@ -352,29 +368,54 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureLatestExportSetHasChanged() {
-        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateTwoMonthsAgo().substring(0, 10));
+        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateNowPlusTwo().substring(0, 10));
         pageUtils.checkElementAttribute(exportSetList, "childElementCount", "0");
         return this;
     }
 
     /**
-     * Gets date from two months ago
-     * @return String
+     * Ensures date has changed, before proceeding with test
+     * @return current page object
      */
-    private String getDateTwoMonthsAgo() {
-        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(1).withNano(0);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(pastDate);
+    public GenericReportPage ensureLatestExportSetIsToday() {
+        //pageUtils.checkElementAttribute(latestExportDateInput, "value", getCurrentDate().substring(0, 10));
+        //pageUtils.checkElementAttribute(exportSetList, "childElementCount", "0");
+        return this;
     }
 
     /**
-     * Gets date from two days ago
+     * Gets today's date plus two
      * @return String
      */
-    private String getDateTwoDaysAgo() {
-        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusDays(2).withNano(0);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(pastDate);
+    private String getDateNowPlusTwo() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
+    }
+
+    /**
+     * Gets today's date plus two
+     * @return String
+     */
+    private String getDateTwoWeeksAgo() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now(ZoneOffset.UTC).minusDays(14).withNano(0));
+    }
+
+    /**
+     * Gets current date in correct format
+     * @return String
+     */
+    private String getCurrentDate() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now(ZoneOffset.UTC).withNano(0));
+    }
+
+    /**
+     * Method to return date based on day or month
+     * @param changeDay
+     * @return LocalDateTime
+     */
+    private LocalDateTime getSpecifiedPastDate(boolean changeDay, int daysToRemove) {
+        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC);
+        pastDate = changeDay ? pastDate.minusDays(daysToRemove) : pastDate.minusMonths(2);
+        return pastDate.withNano(0);
     }
 
     /**
