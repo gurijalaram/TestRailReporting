@@ -411,11 +411,13 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .ensureDateIsToday()
-                .setEarliestExportDateToTwoWeeksAgoInput()
+                .ensureLatestDateIsToday()
+                .setLatestExportDateToTodayInput()
                 .ensureLatestExportSetIsToday();
+                //.waitForCorrectExportSetListCount();
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
+        // Bring last method above back in once bug fixed
         assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 
@@ -430,11 +432,13 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .ensureDateIsToday()
-                //.setEarliestExportDateToTwoMonthsAgoPicker()
-                .ensureLatestExportSetHasChanged();
+                .ensureLatestExportSetIsToday()
+                .setLatestExportDateToTodayPlusTwoPicker()
+                .ensureLatestDateIsTodayPlusTwo();
+                //.waitForCorrectExportSetListCount();
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
+        // Bring last method above back in once bug fixed
         assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 
