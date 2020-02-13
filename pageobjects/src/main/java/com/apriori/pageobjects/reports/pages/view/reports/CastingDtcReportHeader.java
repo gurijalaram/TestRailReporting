@@ -16,8 +16,11 @@ public class CastingDtcReportHeader extends GenericReportPage {
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[4]/td[4]/span")
+    @FindBy(xpath = "//div[@id='reportContainer']//td[@colspan='4']/span")
     private WebElement headerDisplayedRollup;
+
+    @FindBy(id = "loading")
+    private WebElement loadingPopup;
 
     public CastingDtcReportHeader(WebDriver driver) {
         super(driver);
@@ -32,6 +35,7 @@ public class CastingDtcReportHeader extends GenericReportPage {
      * @return String name of displayed rollup
      */
     public String getDisplayedRollup() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(headerDisplayedRollup);
         return headerDisplayedRollup.getText();
     }
