@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
-public class  MachiningDTCReportPage extends GenericReportPage {
+public class MachiningDTCReportPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(MachiningDTCReportPage.class);
 
