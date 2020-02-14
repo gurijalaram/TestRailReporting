@@ -264,44 +264,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
 
-    /**
-     * Ensures latest date is set to today
-     * @return current page object
-     */
-    public GenericReportPage ensureEarliestDateIsToday() {
-        String currentDate = getDate(true);
-        if (!earliestExportDateInput.getAttribute("value").contains(currentDate)) {
-            earliestExportDateInput.clear();
-            earliestExportDateInput.sendKeys(currentDate);
-        }
-        return this;
-    }
-
-    /**
-     * Ensures latest date is set to today
-     * @return current page object
-     */
-    public GenericReportPage ensureLatestDateIsToday() {
-        String currentDate = getDate(true);
-        if (!latestExportDateInput.getAttribute("value").contains(currentDate)) {
-            latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(currentDate);
-        }
-        return this;
-    }
-
-    /**
-     * Ensures latest date is set to today
-     * @return current page object
-     */
-    public GenericReportPage ensureLatestDateIsTodayPlusTwo() {
-        String date = getDate(false);
-        if (!latestExportDateInput.getAttribute("value").contains(date)) {
-            latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(date);
-        }
-        return this;
-    }
 
     /**
      * Wait for export set list count to be zero
@@ -309,20 +271,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage waitForCorrectExportSetListCount() {
         pageUtils.checkElementAttribute(exportSetList, "childElementCount", "0");
-        return this;
-    }
-
-    /**
-     * Sets export set time and date to current time minus two months using input field
-     */
-    public GenericReportPage setLatestExportDateToTwoDaysFutureInput() {
-        String dtTwoMonthsAgo = getDate(false);
-
-        pageUtils.waitForElementToAppear(latestExportDateInput);
-        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
-            latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
-        }
         return this;
     }
 
@@ -339,6 +287,38 @@ public class GenericReportPage extends ReportsPageHeader {
             earliestExportDateInput.sendKeys(dtToday.substring(10, 13));
             pageUtils.checkElementAttribute(earliestExportDateInput, "value", dtToday.substring(0, 13));
             earliestExportDateInput.sendKeys(dtToday.substring(13));
+        }
+        return this;
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public GenericReportPage setEarliestExportDateToTodayPicker() {
+        LocalDateTime dtToday = getCurrentDateLDT();
+        pageUtils.waitForElementAndClick(earliestExportSetDatePickerTriggerBtn);
+
+        Select monthSelect = new Select(datePickerMonthSelect);
+        Select yearSelect = new Select(datePickerYearSelect);
+        monthSelect.selectByIndex(dtToday.getMonthValue() - 1);
+        yearSelect.selectByValue(String.format("%d", dtToday.getYear()));
+
+        earliestExportSetDatePickerTriggerBtn.click();
+        return this;
+    }
+
+    /**
+     * Sets export set time and date to current time minus two months using input field
+     */
+    public GenericReportPage setLatestExportDateToTwoDaysFutureInput() {
+        String dtTwoMonthsAgo = getDate(false);
+
+        pageUtils.waitForElementToAppear(latestExportDateInput);
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
         }
         return this;
     }
@@ -364,21 +344,6 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return
      */
-    public GenericReportPage setEarliestExportDateToTodayPicker() {
-        LocalDateTime dtToday = getCurrentDateLDT();
-        pageUtils.waitForElementAndClick(earliestExportSetDatePickerTriggerBtn);
-        Select monthSelect = new Select(datePickerMonthSelect);
-        Select yearSelect = new Select(datePickerYearSelect);
-        monthSelect.selectByIndex(dtToday.getMonthValue() - 1);
-        yearSelect.selectByValue(String.format("%d", dtToday.getYear()));
-        earliestExportSetDatePickerTriggerBtn.click();
-        return this;
-    }
-
-    /**
-     *
-     * @return
-     */
     public GenericReportPage setLatestExportDateToTodayPlusTwoPicker() {
         pageUtils.waitForElementAndClick(latestExportSetDatePickerTriggerBtn);
         pageUtils.waitForElementAndClick(nowPickerButton);
@@ -386,6 +351,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         String value = latestExportDateInput.getAttribute("value");
         int newDay = Integer.parseInt(value.substring(8, 10)) + 2;
+
         latestExportDateInput.clear();
         latestExportDateInput.sendKeys(value.substring(0, 8));
         latestExportDateInput.sendKeys(String.format("%s", newDay));
@@ -395,29 +361,29 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Ensures filtering worked correctly
-     * @return int size of element list
-     */
-    public int getAmountOfTopLevelExportSets() {
-        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
-        return list.size();
-    }
-
-    /**
-     * Ensures date has changed, before proceeding with test
+     * Ensures latest date is set to today
      * @return current page object
      */
-    public GenericReportPage ensureEarliestExportSetHasChanged() {
-        pageUtils.checkElementAttribute(earliestExportDateInput, "value", getDate(true).substring(0, 10));
-        return this;
-    }
+    public GenericReportPage ensureDatesAreCorrect(boolean areBothInputsPresent) {
+        WebElement dateElementToUse = null;
+        boolean getCurrent = true;
 
-    /**
-     * Ensures date has changed, before proceeding with test
-     * @return current page object
-     */
-    public GenericReportPage ensureLatestExportSetIsToday() {
-        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDate(true).substring(0, 10));
+        for (int j = 0; j < 2; j++) {
+            String currentDate = getDate(getCurrent);
+
+            if (areBothInputsPresent) {
+                dateElementToUse = getCurrent ? earliestExportDateInput : latestExportDateInput;
+            } else {
+                dateElementToUse = latestExportDateInput;
+            }
+
+            if (j == 1 && !dateElementToUse.getAttribute("value").contains(currentDate)) {
+                dateElementToUse.clear();
+                dateElementToUse.sendKeys(currentDate);
+            }
+
+            getCurrent = false;
+        }
         return this;
     }
 
@@ -431,7 +397,7 @@ public class GenericReportPage extends ReportsPageHeader {
         return getCurrent ? formatter
                 .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
                             : formatter
-                .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0));
+                .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
     }
 
     /**
@@ -443,14 +409,12 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Method to return date based on day or month
-     * @param changeDay
-     * @return LocalDateTime
+     * Ensures filtering worked correctly
+     * @return int size of element list
      */
-    private LocalDateTime getSpecifiedPastDate(boolean changeDay, int daysToRemove) {
-        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC);
-        pastDate = changeDay ? pastDate.minusDays(daysToRemove) : pastDate.minusMonths(2);
-        return pastDate.withNano(0);
+    public int getAmountOfTopLevelExportSets() {
+        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
+        return list.size();
     }
 
     /**

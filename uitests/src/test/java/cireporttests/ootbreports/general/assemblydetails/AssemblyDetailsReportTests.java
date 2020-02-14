@@ -411,9 +411,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .ensureLatestDateIsToday()
                 .setLatestExportDateToTodayInput()
-                .ensureLatestExportSetIsToday();
+                .ensureDatesAreCorrect(false);
                 //.waitForCorrectExportSetListCount();
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
@@ -432,9 +431,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .ensureLatestExportSetIsToday()
                 .setLatestExportDateToTodayPlusTwoPicker()
-                .ensureLatestDateIsTodayPlusTwo();
+                .ensureDatesAreCorrect(false);
                 //.waitForCorrectExportSetListCount();
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
