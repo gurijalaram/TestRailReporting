@@ -16,11 +16,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -271,7 +269,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureEarliestDateIsToday() {
-        String currentDate = getCurrentDate();
+        String currentDate = getDate(true);
         if (!earliestExportDateInput.getAttribute("value").contains(currentDate)) {
             earliestExportDateInput.clear();
             earliestExportDateInput.sendKeys(currentDate);
@@ -284,7 +282,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureLatestDateIsToday() {
-        String currentDate = getCurrentDate();
+        String currentDate = getDate(true);
         if (!latestExportDateInput.getAttribute("value").contains(currentDate)) {
             latestExportDateInput.clear();
             latestExportDateInput.sendKeys(currentDate);
@@ -297,7 +295,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureLatestDateIsTodayPlusTwo() {
-        String date = getDateNowPlusTwo();
+        String date = getDate(false);
         if (!latestExportDateInput.getAttribute("value").contains(date)) {
             latestExportDateInput.clear();
             latestExportDateInput.sendKeys(date);
@@ -318,7 +316,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets export set time and date to current time minus two months using input field
      */
     public GenericReportPage setLatestExportDateToTwoDaysFutureInput() {
-        String dtTwoMonthsAgo = getDateNowPlusTwo();
+        String dtTwoMonthsAgo = getDate(false);
 
         pageUtils.waitForElementToAppear(latestExportDateInput);
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
@@ -332,7 +330,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets export set time and date to current time minus two months using input field
      */
     public GenericReportPage setEarliestExportDateToTodayInput() {
-        String dtToday = getCurrentDate();
+        String dtToday = getDate(true);
 
         pageUtils.waitForElementToAppear(earliestExportDateInput);
         if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
@@ -349,7 +347,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets export set time and date to current time minus two months using input field
      */
     public GenericReportPage setLatestExportDateToTodayInput() {
-        String dtToday = getCurrentDate();
+        String dtToday = getDate(true);
 
         pageUtils.waitForElementToAppear(latestExportDateInput);
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
@@ -397,20 +395,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Sets export set time and date to current time minus two months using input field
-     */
-    public GenericReportPage setEarliestExportDateToTwoWeeksAgoInput() {
-        String dtToday = getDateTwoWeeksAgo();
-
-        pageUtils.waitForElementToAppear(earliestExportDateInput);
-        if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
-            earliestExportDateInput.clear();
-            earliestExportDateInput.sendKeys(dtToday);
-        }
-        return this;
-    }
-
-    /**
      * Ensures filtering worked correctly
      * @return int size of element list
      */
@@ -424,7 +408,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureEarliestExportSetHasChanged() {
-        pageUtils.checkElementAttribute(earliestExportDateInput, "value", getCurrentDate().substring(0, 10));
+        pageUtils.checkElementAttribute(earliestExportDateInput, "value", getDate(true).substring(0, 10));
         return this;
     }
 
@@ -433,32 +417,21 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureLatestExportSetIsToday() {
-        pageUtils.checkElementAttribute(latestExportDateInput, "value", getCurrentDate().substring(0, 10));
+        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDate(true).substring(0, 10));
         return this;
-    }
-
-    /**
-     * Gets today's date plus two
-     * @return String
-     */
-    private String getDateNowPlusTwo() {
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
-    }
-
-    /**
-     * Gets today's date plus two
-     * @return String
-     */
-    private String getDateTwoWeeksAgo() {
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now(ZoneOffset.UTC).minusDays(14).withNano(0));
     }
 
     /**
      * Gets current date in correct format
      * @return String
      */
-    private String getCurrentDate() {
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now(ZoneOffset.UTC).withNano(0));
+    private String getDate(boolean getCurrent) {
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return getCurrent ? formatter
+                .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
+                            : formatter
+                .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0));
     }
 
     /**
