@@ -285,7 +285,7 @@ public class GenericReportPage extends ReportsPageHeader {
             earliestExportDateInput.clear();
             earliestExportDateInput.sendKeys(dtToday.substring(0, 10));
             earliestExportDateInput.sendKeys(dtToday.substring(10, 13));
-            pageUtils.checkElementAttribute(earliestExportDateInput, "value", dtToday.substring(0, 13));
+            //pageUtils.checkElementAttribute(earliestExportDateInput, "value", dtToday.substring(0, 13));
             earliestExportDateInput.sendKeys(dtToday.substring(13));
         }
         return this;
