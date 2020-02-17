@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
+import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import com.apriori.utils.constants.Constants;
@@ -92,7 +93,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "reset")
     private WebElement resetButton;
 
-    @FindBy(id = "cancelButton")
+    @FindBy(id = "cancel")
     private WebElement cancelButton;
 
     @FindBy(id = "save")
@@ -128,6 +129,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private LibraryPage libraryPage;
 
 
     public GenericReportPage(WebDriver driver) {
@@ -218,7 +220,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Clicks apply and ok
-     * @return Assembly Details Report page object
+     * @return Current page object
      */
     public GenericReportPage clickApplyAndOk() {
         pageUtils.waitForElementAndClick(okButton);
@@ -400,6 +402,38 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
         pageUtils.waitForElementAndClick(rollupSearch);
         rollupSearch.sendKeys(rollupName);
+        return this;
+    }
+
+    /**
+     * Click apply
+     * @return current page object
+     */
+    public GenericReportPage clickApply() {
+        pageUtils.waitForElementAndClick(applyButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        applyButton.click();
+        return this;
+    }
+
+    /**
+     * Click cancel
+     * @return new library page object
+     */
+    public LibraryPage clickCancel() {
+        pageUtils.waitForElementAndClick(cancelButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return new LibraryPage(driver);
+    }
+
+    /**
+     * Click reset
+     * @return current page object
+     */
+    public GenericReportPage clickReset() {
+        pageUtils.waitForElementAndClick(resetButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + "0");
         return this;
     }
 }

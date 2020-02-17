@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
@@ -24,6 +25,7 @@ public class CastingDtcReportTests extends TestBase {
     private ViewRepositoryPage repository;
     private GenericReportPage genericReportPage;
     private CastingDtcReportHeader castingDtcReportHeader;
+    private LibraryPage libraryPage;
 
     public CastingDtcReportTests() {
         super();
@@ -86,7 +88,54 @@ public class CastingDtcReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
         assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC.getReportName()),
-                is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
+            is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
     }
 
+    @Test
+    @TestRail(testCaseId = "1693")
+    @Description("Verify apply button on Casting DTC input control panel functions correctly")
+    public void testApplyButton() {
+        castingDtcReportHeader = new LoginPage(driver)
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .waitForInputControlsLoad()
+            .expandRollupDropDown()
+            .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
+            .clickApply()
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
+
+        assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC.getReportName()),
+            is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1693")
+    @Description("Verify cancel button on Casting DTC input control panel works")
+    public void testCancelButton() {
+        libraryPage = new LoginPage(driver)
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .waitForInputControlsLoad()
+            .clickCancel();
+
+        assertThat(libraryPage.getLibraryTitleText(), is(equalTo("Library")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1693")
+    @Description("Verify reset button on Casting DTC input control panel works")
+    public void testResetButton() {
+        genericReportPage = new LoginPage(driver)
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .waitForInputControlsLoad()
+            .expandRollupDropDown()
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .clickReset();
+
+        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
+    }
 }
