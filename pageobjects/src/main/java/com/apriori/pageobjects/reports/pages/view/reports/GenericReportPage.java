@@ -270,9 +270,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return
      */
     public GenericReportPage waitForCorrectExportSetListCount() {
-        //pageUtils.waitFor(1000);
-        pageUtils.checkElementAttribute(selectedExportSets, "title", getCountOfExportSets());
         pageUtils.checkElementAttribute(exportSetList, "childElementCount", "0");
+        pageUtils.checkElementAttribute(selectedExportSets, "title", getCountOfExportSets());
         return this;
     }
 
