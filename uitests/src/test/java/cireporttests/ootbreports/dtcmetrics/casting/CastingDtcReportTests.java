@@ -105,8 +105,10 @@ public class CastingDtcReportTests extends TestBase {
             .clickApply()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
-        assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC.getReportName()),
-            is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
+        assertThat(castingDtcReportHeader.getDisplayedRollup(
+            CastingReportsEnum.CASTING_DTC.getReportName()),
+            is(equalTo(
+                RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
     }
 
     @Test
@@ -132,10 +134,30 @@ public class CastingDtcReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
             .clickReset();
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1693")
+    @Description("Verify save button on Casting DTC input control panel functions correctly")
+    public void testSaveButton() {
+        genericReportPage = new LoginPage(driver)
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .clickSave()
+            .enterSaveName("Saved Config")
+            .clickSaveAsButton()
+            .clickReset()
+            .selectSavedOptionByName("Saved Config");
+
+        assertThat(genericReportPage.getExportSetSelectionStatus(ExportSetEnum.CASTING_DTC.getExportSetName()), is(true));
+
+        genericReportPage.clickRemove();
     }
 }

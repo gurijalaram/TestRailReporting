@@ -7,17 +7,21 @@ import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class GenericReportPage extends ReportsPageHeader {
@@ -126,6 +130,21 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
     private WebElement rollupSearch;
 
+    @FindBy(css = "input[id='savedValuesName']")
+    private WebElement saveInput;
+
+    @FindBy(xpath = "//div[@id='saveValues']//button[@id='saveAsBtnSave']")
+    private WebElement saveAsButton;
+
+    @FindBy(css = "select[id='reportOptionsSelect']")
+    private WebElement savedOptionsDropDown;
+
+    @FindBy(xpath = "//button[@id='remove' and @class='button action up']")
+    private WebElement removeButton;
+
+    @FindBy(xpath = "//div[@class='jr-mDialog jr confirmationDialog open']//div[@class='jr-mDialog-footer jr']/button[1]")
+    private WebElement confirmRemove;
+
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -195,6 +214,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Checks current currency selection, fixes if necessary
+     *
      * @param currency
      * @return current page object
      */
@@ -208,6 +228,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Opens new tab and switches to it
+     *
      * @return
      */
     public GenericReportPage openNewTabAndFocus() {
@@ -220,6 +241,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Clicks apply and ok
+     *
      * @return Current page object
      */
     public GenericReportPage clickApplyAndOk() {
@@ -231,6 +253,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     *
      * @param assemblyToCheck
      * @return
      */
@@ -246,6 +269,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Ensures date is set to today
+     *
      * @return current page object
      */
     public AssemblyDetailsReportPage ensureDateIsToday() {
@@ -261,6 +285,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Select Assembly option dropdown using send keys
+     *
      * @param topIndex
      */
     private void selectAssemblyOption(int topIndex) {
@@ -271,9 +296,10 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Generic method to wait for correct currency and return specified page object
+     *
      * @param currencyToCheck
      * @param className
-     * @param <T> return type - any page object that is specified
+     * @param <T>             return type - any page object that is specified
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
@@ -284,6 +310,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets current currency setting
+     *
      * @return String
      */
     public String getCurrentCurrency() {
@@ -388,6 +415,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Expand rollup drop-down
+     *
      * @return current page object
      */
     public GenericReportPage expandRollupDropDown() {
@@ -397,6 +425,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Search for rollup in rollup drop-down search bar
+     *
      * @return current page object
      */
     public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
@@ -407,6 +436,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click apply
+     *
      * @return current page object
      */
     public GenericReportPage clickApply() {
@@ -418,6 +448,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click cancel
+     *
      * @return new library page object
      */
     public LibraryPage clickCancel() {
@@ -428,6 +459,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click reset
+     *
      * @return current page object
      */
     public GenericReportPage clickReset() {
@@ -436,4 +468,83 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + "0");
         return this;
     }
+
+    /**
+     * Click save
+     *
+     * @return current page object
+     */
+    public GenericReportPage clickSave() {
+        pageUtils.waitForElementAndClick(saveButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
+    }
+
+    /**
+     * Enter saved input control configuration name
+     *
+     * @return current page object
+     */
+    public GenericReportPage enterSaveName(String saveName) {
+        pageUtils.waitForElementAndClick(saveInput);
+        saveInput.sendKeys(Keys.CONTROL + "a");
+        saveInput.sendKeys(Keys.DELETE);
+        saveInput.sendKeys(saveName);
+        return this;
+    }
+
+    /**
+     * Click save as button to save input control configuration
+     *
+     * @return current page object
+     */
+    public GenericReportPage clickSaveAsButton() {
+        pageUtils.waitForElementAndClick(saveAsButton);
+        return this;
+    }
+
+    /**
+     * Select saved input control config by name
+     *
+     * @return current page object
+     */
+    public GenericReportPage selectSavedOptionByName(String optionsName) {
+        pageUtils.waitForElementToAppear(savedOptionsDropDown);
+        Select dropDown = new Select(savedOptionsDropDown);
+        dropDown.selectByVisibleText(optionsName);
+        return this;
+    }
+
+    /**
+     * Get export set selection status
+     *
+     * @return boolean
+     */
+    public Boolean getExportSetSelectionStatus(String exportSetName) {
+        pageUtils.waitForElementToAppear(exportSetList);
+        List<WebElement> childElements = exportSetList.findElements(By.tagName("li"));
+
+        Iterator<WebElement> iter = childElements.iterator();
+
+        while (iter.hasNext()) {
+            WebElement we = iter.next();
+
+            if (we.getAttribute("title").contains(exportSetName) && we.getAttribute("class").contains("isHovered")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Click remove button
+     *
+     * @return current page object
+     */
+    public GenericReportPage clickRemove() {
+        pageUtils.waitForElementAndClick(removeButton);
+        pageUtils.waitForElementAndClick(confirmRemove);
+        return this;
+    }
+
 }
