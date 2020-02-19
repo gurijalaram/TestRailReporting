@@ -305,7 +305,7 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @param currencyToCheck
      * @param className
-     * @param <T>             return type - any page object that is specified
+     * @param <T> return type - any page object that is specified
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
@@ -526,20 +526,12 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return boolean
      */
-    public Boolean getExportSetSelectionStatus(String exportSetName) {
+    public boolean isExportSetSelected(String exportSetName) {
         pageUtils.waitForElementToAppear(exportSetList);
         List<WebElement> childElements = exportSetList.findElements(By.tagName("li"));
 
-        Iterator<WebElement> iter = childElements.iterator();
-
-        while (iter.hasNext()) {
-            WebElement we = iter.next();
-
-            if (we.getAttribute("title").contains(exportSetName) && we.getAttribute("class").contains("isHovered")) {
-                return true;
-            }
-        }
-        return false;
+        return childElements.stream().anyMatch(we -> (we.getAttribute("title").contains(exportSetName)
+            && we.getAttribute("class").contains("isHovered")));
     }
 
     /**
@@ -560,8 +552,8 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return boolean
      */
-    public Boolean isOptionInDropDown(String optionName) {
-        Boolean isPresent;
+    public boolean isOptionInDropDown(String optionName) {
+        boolean isPresent;
         if (driver.findElements(By.xpath("//div[@id='inputControls']//div[@class='sub header hidden']")).size() > 0) {
             return false;
         } else {
@@ -569,13 +561,7 @@ public class GenericReportPage extends ReportsPageHeader {
             Select dropDown = new Select(savedOptionsDropDown);
             List<WebElement> options = dropDown.getOptions();
 
-            for (WebElement we : options) {
-                if (we.getText().equals(optionName)) {
-                    return true;
-                }
-            }
-            return false;
+            return options.stream().anyMatch(we -> we.getText().equals(optionName));
         }
-
     }
 }

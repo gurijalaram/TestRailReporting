@@ -156,7 +156,7 @@ public class CastingDtcReportTests extends TestBase {
             .clickReset()
             .selectSavedOptionByName("Saved Config");
 
-        assertThat(genericReportPage.getExportSetSelectionStatus(ExportSetEnum.CASTING_DTC.getExportSetName()), is(true));
+        assertThat(genericReportPage.isExportSetSelected(ExportSetEnum.CASTING_DTC.getExportSetName()), is(true));
 
         genericReportPage.clickRemove();
 
