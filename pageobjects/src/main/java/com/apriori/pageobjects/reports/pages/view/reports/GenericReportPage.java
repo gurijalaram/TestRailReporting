@@ -145,6 +145,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@class='jr-mDialog jr confirmationDialog open']//div[@class='jr-mDialog-footer jr']/button[1]")
     private WebElement confirmRemove;
 
+    @FindBy(xpath = "//select[@id='reportOptionsSelect']//*[text()[contains(.,'--None--')]]")
+    private WebElement noneOption;
+
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -544,7 +547,26 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage clickRemove() {
         pageUtils.waitForElementAndClick(removeButton);
         pageUtils.waitForElementAndClick(confirmRemove);
+        pageUtils.waitForElementToAppear(noneOption);
         return this;
     }
 
+    /**
+     * Option in dropdown
+     *
+     * @return boolean
+     */
+    public Boolean isOptionInDropDown(String optionName) {
+        pageUtils.waitForElementToAppear(savedOptionsDropDown);
+        Select dropDown = new Select(savedOptionsDropDown);
+        List<WebElement> options = dropDown.getOptions();
+
+        for (WebElement we : options) {
+            if (we.getText().equals(optionName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
