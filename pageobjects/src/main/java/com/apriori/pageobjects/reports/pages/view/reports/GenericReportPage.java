@@ -136,7 +136,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='saveValues']//button[@id='saveAsBtnSave']")
     private WebElement saveAsButton;
 
-    @FindBy(css = "select[id='reportOptionsSelect']")
+    @FindBy(xpath = "//select[@id='reportOptionsSelect']")
     private WebElement savedOptionsDropDown;
 
     @FindBy(xpath = "//button[@id='remove' and @class='button action up']")
@@ -145,8 +145,11 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@class='jr-mDialog jr confirmationDialog open']//div[@class='jr-mDialog-footer jr']/button[1]")
     private WebElement confirmRemove;
 
-    @FindBy(xpath = "//select[@id='reportOptionsSelect']//*[text()[contains(.,'--None--')]]")
+    @FindBy(xpath = "//select[@id='reportOptionsSelect']//option[@value='']")
     private WebElement noneOption;
+
+    @FindBy(xpath = "//div[@id='inputControls']//div[@class='sub header hidden']")
+    private WebElement hiddenSavedOptions;
 
 
     private WebDriver driver;
@@ -545,9 +548,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage clickRemove() {
+        int expected = Integer.parseInt(savedOptionsDropDown.getAttribute("childElementCount")) - 1;
         pageUtils.waitForElementAndClick(removeButton);
         pageUtils.waitForElementAndClick(confirmRemove);
-        pageUtils.waitForElementToAppear(noneOption);
+        pageUtils.checkElementAttribute(savedOptionsDropDown, "childElementCount", Integer.toString(expected));
         return this;
     }
 
@@ -557,16 +561,21 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return boolean
      */
     public Boolean isOptionInDropDown(String optionName) {
-        pageUtils.waitForElementToAppear(savedOptionsDropDown);
-        Select dropDown = new Select(savedOptionsDropDown);
-        List<WebElement> options = dropDown.getOptions();
+        Boolean isPresent;
+        if (driver.findElements(By.xpath("//div[@id='inputControls']//div[@class='sub header hidden']")).size() > 0) {
+            return false;
+        } else {
+            pageUtils.waitForElementToAppear(savedOptionsDropDown);
+            Select dropDown = new Select(savedOptionsDropDown);
+            List<WebElement> options = dropDown.getOptions();
 
-        for (WebElement we : options) {
-            if (we.getText().equals(optionName)) {
-                return true;
+            for (WebElement we : options) {
+                if (we.getText().equals(optionName)) {
+                    return true;
+                }
             }
+            return false;
         }
 
-        return false;
     }
 }

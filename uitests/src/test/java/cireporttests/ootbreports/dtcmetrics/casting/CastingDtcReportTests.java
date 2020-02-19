@@ -143,7 +143,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC input control panel functions correctly")
-    public void testSaveButton() {
+    public void testSaveAndRemoveButtons() {
         genericReportPage = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToLibraryPage()
