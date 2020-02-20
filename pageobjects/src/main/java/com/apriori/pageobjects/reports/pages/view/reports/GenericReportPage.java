@@ -305,8 +305,11 @@ public class GenericReportPage extends ReportsPageHeader {
         Select yearSelect = new Select(datePickerYearSelect);
         monthSelect.selectByIndex(dtToday.getMonthValue() - 1);
         yearSelect.selectByValue(String.format("%d", dtToday.getYear()));
-
         earliestExportSetDatePickerTriggerBtn.click();
+
+        String currentVal = earliestExportDateInput.getAttribute("value");
+        earliestExportDateInput.clear();
+        earliestExportDateInput.sendKeys(currentVal.replace("23", String.format("%d", dtToday.getDayOfMonth())));
         return this;
     }
 
@@ -365,27 +368,38 @@ public class GenericReportPage extends ReportsPageHeader {
      * Ensures latest date is set to today
      * @return current page object
      */
-    public GenericReportPage ensureDatesAreCorrect(boolean areBothInputsPresent) {
-        WebElement dateElementToUse = null;
-        boolean getCurrent = true;
+    public GenericReportPage ensureDatesAreCorrect(boolean areBothInputsPresent, boolean getCurrentDateInitially) {
+        WebElement dateElementToUse;
+        String date = removeTimeFromDate(getDate(getCurrentDateInitially));
 
-        for (int j = 0; j < 2; j++) {
-            String currentDate = getDate(getCurrent);
-
-            if (areBothInputsPresent) {
-                dateElementToUse = getCurrent ? earliestExportDateInput : latestExportDateInput;
-            } else {
-                dateElementToUse = latestExportDateInput;
+        if (areBothInputsPresent) {
+            for (int i = 0; i < 2; i++) {
+                String dateForBoth = getCurrentDateInitially ? date : removeTimeFromDate(getDate(getCurrentDateInitially));
+                dateElementToUse = getCurrentDateInitially ? earliestExportDateInput : latestExportDateInput;
+                checkDate(dateElementToUse, removeTimeFromDate(dateForBoth));
+                getCurrentDateInitially = false;
             }
-
-            if (j == 1 && !dateElementToUse.getAttribute("value").contains(currentDate)) {
-                dateElementToUse.clear();
-                dateElementToUse.sendKeys(currentDate);
-            }
-
-            getCurrent = false;
+        } else {
+            dateElementToUse = latestExportDateInput;
+            checkDate(dateElementToUse, date);
+            pageUtils.checkElementAttribute(dateElementToUse, "value", date);
         }
         return this;
+    }
+
+    /**
+     *
+     */
+    public void checkDate(WebElement elementToCheck, String dateToCheck) {
+        pageUtils.checkElementAttribute(elementToCheck, "value", dateToCheck);
+    }
+
+    /**
+     *
+     * @return
+     */
+    private String removeTimeFromDate(String dateToSubstring) {
+        return dateToSubstring.substring(0, 10);
     }
 
     /**

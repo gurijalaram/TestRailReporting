@@ -412,11 +412,11 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .setLatestExportDateToTodayInput()
-                .ensureDatesAreCorrect(false);
+                .ensureDatesAreCorrect(false, true);
                 //.waitForCorrectExportSetListCount();
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
-        // Bring last method above back in once bug fixed
+        // TODO: Bring last method above back in once bug fixed
         assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 
@@ -432,11 +432,11 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .setLatestExportDateToTodayPlusTwoPicker()
-                .ensureDatesAreCorrect(false);
+                .ensureDatesAreCorrect(false, false);
                 //.waitForCorrectExportSetListCount();
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
-        // Bring last method above back in once bug fixed
+        // TODO: Bring last method above back in once bug fixed
         assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 
