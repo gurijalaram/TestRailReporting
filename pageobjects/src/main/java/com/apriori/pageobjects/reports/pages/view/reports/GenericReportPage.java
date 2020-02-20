@@ -277,25 +277,26 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Sets export set time and date to current time minus two months using input field
+     * @return
      */
     public GenericReportPage setEarliestExportDateToTodayInput() {
         String dtToday = getDate(true);
-
         pageUtils.waitForElementToAppear(earliestExportDateInput);
+
         if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
             earliestExportDateInput.clear();
             earliestExportDateInput.sendKeys(dtToday.substring(0, 10));
             earliestExportDateInput.sendKeys(dtToday.substring(10, 13));
-            //pageUtils.checkElementAttribute(earliestExportDateInput, "value", dtToday.substring(0, 13));
             earliestExportDateInput.sendKeys(dtToday.substring(13));
         }
+
         return this;
     }
 
 
     /**
-     *
-     * @return
+     * Sets earliest export set date to today using picker
+     * @return current page object
      */
     public GenericReportPage setEarliestExportDateToTodayPicker() {
         LocalDateTime dtToday = getCurrentDateLDT();
@@ -345,8 +346,8 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     *
-     * @return
+     * Sets latest export date to two days from current (dynamic)
+     * @return current page object
      */
     public GenericReportPage setLatestExportDateToTodayPlusTwoPicker() {
         pageUtils.waitForElementAndClick(latestExportSetDatePickerTriggerBtn);
@@ -376,27 +377,19 @@ public class GenericReportPage extends ReportsPageHeader {
             for (int i = 0; i < 2; i++) {
                 String dateForBoth = getCurrentDateInitially ? date : removeTimeFromDate(getDate(getCurrentDateInitially));
                 dateElementToUse = getCurrentDateInitially ? earliestExportDateInput : latestExportDateInput;
-                checkDate(dateElementToUse, removeTimeFromDate(dateForBoth));
+                pageUtils.checkElementAttribute(dateElementToUse, "value", dateForBoth);
                 getCurrentDateInitially = false;
             }
         } else {
             dateElementToUse = latestExportDateInput;
-            checkDate(dateElementToUse, date);
             pageUtils.checkElementAttribute(dateElementToUse, "value", date);
         }
         return this;
     }
 
     /**
-     *
-     */
-    public void checkDate(WebElement elementToCheck, String dateToCheck) {
-        pageUtils.checkElementAttribute(elementToCheck, "value", dateToCheck);
-    }
-
-    /**
-     *
-     * @return
+     * Substrings date to remove time
+     * @return String
      */
     private String removeTimeFromDate(String dateToSubstring) {
         return dateToSubstring.substring(0, 10);
@@ -492,7 +485,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click export set select all button
-     *
      * @return current page object
      */
     public GenericReportPage exportSetSelectAll() {
@@ -512,7 +504,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get number of available export sets
-     *
      * @return int
      */
     public int getAvailableExportSetCount() {
@@ -523,7 +514,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get number of selected export sets
-     *
      * @return int
      */
     public int getSelectedExportSetCount() {
@@ -534,7 +524,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Deselect export set
-     *
      * @return current page object
      */
     public GenericReportPage deselectExportSet(String exportSet) {
@@ -546,7 +535,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Invert export set selection
-     *
      * @return current page object
      */
     public GenericReportPage invertExportSetSelection() {
@@ -558,7 +546,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Deselect all export sets
-     *
      * @return current page object
      */
     public GenericReportPage exportSetDeselectAll() {
