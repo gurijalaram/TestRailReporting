@@ -92,8 +92,7 @@ public class LoginPage extends ReportsPageHeader {
      * @param emailAddress - user email address
      */
     private void enterEmail(String emailAddress) {
-        pageUtils.waitForElementToAppear(email);
-        email.click();
+        pageUtils.waitForElementAndClick(email);
         pageUtils.clearInput(email);
         email.sendKeys(emailAddress);
     }
