@@ -148,7 +148,8 @@ public class DriverFactory {
                 System.setProperty("webdriver.chrome.verboseLogging", "true");
 
                 ChromeOptions options = getChromeOptions(downloadPath, locale);
-                options.addArguments("--allow-insecure-localhost");
+                //options.addArguments("--allow-insecure-localhost");
+                options.setAcceptInsecureCerts(true);
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
