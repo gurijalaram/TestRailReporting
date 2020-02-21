@@ -212,6 +212,7 @@ public class DriverFactory {
                 logger_DriverFactory.info("Starting ChromeDriver........ ");
                 ChromeOptions options = getChromeOptions(remoteDownloadPath, locale);
                 options.addArguments("--no-sandbox");
+                options.addArguments("--allow-insecure-localhost");
 
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
