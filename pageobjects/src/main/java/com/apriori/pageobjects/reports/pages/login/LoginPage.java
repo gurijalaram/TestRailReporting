@@ -19,16 +19,16 @@ public class LoginPage extends ReportsPageHeader {
     private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     private static String loginPageURL = Constants.cirURL;
 
-    @FindBy(css = "input[name='email']")
+    @FindBy(css = "input[name='j_username']")
     private WebElement email;
 
-    @FindBy(css = "input[name='password']")
+    @FindBy(css = "input[name='j_password_pseudo']")
     private WebElement password;
 
     @FindBy(css = "a[href='javascript:void(0)']")
     private WebElement forgotPassword;
 
-    @FindBy(css = "button[type='submit'")
+    @FindBy(css = "button[id='submitButton']")
     private WebElement submitButton;
 
     @FindBy(css = "span[class='animated fadeInUp']")
@@ -103,8 +103,7 @@ public class LoginPage extends ReportsPageHeader {
      * @param password - user password
      */
     private void enterPassword(String password) {
-        pageUtils.waitForElementToAppear(this.password);
-        this.password.click();
+        pageUtils.waitForElementAndClick(this.password);
         pageUtils.clearInput(this.password);
         this.password.sendKeys(password);
     }
@@ -113,7 +112,7 @@ public class LoginPage extends ReportsPageHeader {
      * Single action to submit login credentials
      */
     private void submitLogin() {
-        submitButton.click();
+        pageUtils.waitForElementAndClick(submitButton);
     }
 
     /**
