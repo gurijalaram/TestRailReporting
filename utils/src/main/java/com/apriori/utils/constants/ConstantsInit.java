@@ -36,4 +36,28 @@ public interface ConstantsInit extends Config {
 
     @Key("different.users")
     Boolean useDifferentUsers();
+  
+    @Key("service.host")
+    String serviceHost();  
+    
+    @Key("service.port")
+    String servicePort();  
+    
+    @Key("service.name")
+    String serviceName();
+    
+    @Key("secret.key")
+    String secretKey();
+    
+    @Key("cds.identity.role")
+    String cdsIdentityRole();
+    
+    @Key("cds.identity.user")
+    String cdsIdentityUser();
+    
+    @Key("cds.identity.customer")
+    String cdsIdentityCustomer();
+    
+    @Key("cds.identity.application")
+    String cdsIdentityApplication();
 }
