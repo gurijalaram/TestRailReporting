@@ -37,7 +37,7 @@ public class CdsApplications {
     @Test
     @TestRail(testCaseId = "3700")
     @Description("API returns an application's information based on the supplied identity")
-    public void getApplicationById() throws MalformedURLException, URISyntaxException { 
+    public void getApplicationById() {
         url = String.format(url, 
             String.format("applications/%s", ServiceConnector.urlEncode(Constants.getCdsIdentityApplication())));
         Application response = (Application)ServiceConnector.getServiceNoEncoding(url, Application.class);
@@ -54,7 +54,7 @@ public class CdsApplications {
     }
     
     private void validateApplication(Application applicationResponse) {
-        Application application = (Application)applicationResponse.getResponse();
+        Application application = applicationResponse.getResponse();
         validate(application);
     }
     

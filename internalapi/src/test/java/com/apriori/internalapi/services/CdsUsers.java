@@ -51,7 +51,7 @@ public class CdsUsers {
     }
    
     private void validateUser(User userResponse) {
-        User user = (User)userResponse.getResponse();
+        User user = userResponse.getResponse();
         validate(user);
     }
    

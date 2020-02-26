@@ -51,7 +51,7 @@ public class CdsRoles {
     }
     
     private void validateRole(Role roleResponse) {
-        Role role = (Role)roleResponse.getResponse();
+        Role role = roleResponse.getResponse();
         validate(role);
     }
     

@@ -64,7 +64,7 @@ public class CdsCustomers {
     }
     
     private void validateCustomer(Customer customerResponse) {
-        Customer customer = (Customer)customerResponse.getResponse();
+        Customer customer = customerResponse.getResponse();
         validate(customer);
     }
     
