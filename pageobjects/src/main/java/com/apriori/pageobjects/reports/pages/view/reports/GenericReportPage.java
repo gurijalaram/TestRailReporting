@@ -135,6 +135,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//button[contains(text(), 'Now')]")
     private WebElement nowPickerButton;
 
+    @FindBy(xpath = "//button[contains(text(), 'Close')]")
+    private WebElement closeButton;
+
     @FindBy(css = "select[class='ui-datepicker-month']")
     private WebElement datePickerMonthSelect;
 
@@ -149,7 +152,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-
 
     public GenericReportPage(WebDriver driver) {
         super(driver);
@@ -350,25 +352,14 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage setLatestExportDateToTodayPlusTwoPicker() {
-        //pageUtils.waitForElementAndClick(latestExportSetDatePickerTriggerBtn);
-        //pageUtils.waitForElementAndClick(nowPickerButton);
-        //latestExportSetDatePickerTriggerBtn.click();
-
-        //String value = latestExportDateInput.getAttribute("value");
-        //int newDay = Integer.parseInt(value.substring(8, 10)) + 2;
-
-        //latestExportDateInput.clear();
-        //latestExportDateInput.sendKeys(value.substring(0, 8));
-        //latestExportDateInput.sendKeys(String.format("%s", newDay));
-        //latestExportDateInput.sendKeys(value.substring(10));
-
         // 1 - Get current date programatically (not string, LocalDateTime)
         LocalDateTime currentLdt = getCurrentDateLDT();
+        LocalDateTime newDt = currentLdt.plusDays(2);
 
         // 2 - Get day from variable defined above
-        int monthValue = currentLdt.getMonthValue();
-        int dayValue = currentLdt.getDayOfMonth();
-        int yearValue = currentLdt.getYear();
+        int monthValue = newDt.getMonthValue();
+        int dayValue = newDt.getDayOfMonth();
+        int yearValue = newDt.getYear();
 
         // 3 - Set month and year in picker using month and year (code exists to do this, so use it)
         pageUtils.waitForElementAndClick(latestExportSetDatePickerTriggerBtn);
@@ -378,9 +369,9 @@ public class GenericReportPage extends ReportsPageHeader {
         yearSelect.selectByValue(String.format("%d", yearValue));
 
         // 4 - Set day based on value in anchor tag. Use date var in xpath to get anchor tag to click on
-        // //a[contains(text(), '30')]
-        String twoDaysAheadBtnLocator = String.format("//a[contains(text(), '')]", dayValue);
+        String twoDaysAheadBtnLocator = String.format("//a[contains(text(), '%d')]", dayValue);
         pageUtils.waitForElementAndClick(By.xpath(twoDaysAheadBtnLocator));
+        pageUtils.waitForElementAndClick(closeButton);
 
         return this;
     }
