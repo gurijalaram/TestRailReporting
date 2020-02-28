@@ -9,8 +9,6 @@ import org.junit.runners.Suite;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Categories.IncludeCategory(OracleTest.class)
-@Suite.SuiteClasses ({
-        LoginTests.class
-})
+
 public class OracleSuite {
 }
