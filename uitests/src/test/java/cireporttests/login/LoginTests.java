@@ -14,6 +14,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.MsSQLTest;
+import testsuites.suiteinterface.MySQLTest;
 import testsuites.suiteinterface.OracleTest;
 
 public class LoginTests extends TestBase {
@@ -48,6 +49,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(loginErrorMessage)));
     }
 
+    @Category(MySQLTest.class)
     @Test
     @TestRail(testCaseId = {"2697"})
     @Description("Forgotten password functionality")
