@@ -18,4 +18,5 @@ public class DateFormattingUtils {
     public static final DateTimeFormatter dtf_MMddyyyyHHmmAMPM = DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a");
     public static final DateTimeFormatter dtf_MMM = DateTimeFormatter.ofPattern("MMM");
     public static final DateTimeFormatter dtf_yyyyMMddTHHmmssZ = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    public static final DateTimeFormatter dtf_yyyyMMddTHHmmZ = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm'Z'");
 }

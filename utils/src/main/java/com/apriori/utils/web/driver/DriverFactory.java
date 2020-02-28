@@ -137,10 +137,6 @@ public class DriverFactory {
                 dc.setVersion("11");
                 result = new InternetExplorerDriver(dc);
                 break;
-            case "safari":
-                dc.setBrowserName(DesiredCapabilities.safari().getBrowserName());
-                result = new SafariDriver(dc);
-                break;
             default:
             case "chrome":
                 System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, driverLocation);
@@ -200,11 +196,6 @@ public class DriverFactory {
                 dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
                 break;
-            case "iexplorer10":
-                dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
-                dc.setVersion("10");
-                result = new RemoteWebDriver(new URL(server), dc);
-                break;
             case "iexplorer11":
                 dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
                 dc.setVersion("11");
@@ -218,10 +209,6 @@ public class DriverFactory {
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
-                result = new RemoteWebDriver(new URL(server), dc);
-                break;
-            case "safari":
-                dc.setBrowserName(DesiredCapabilities.safari().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
                 break;
             default:

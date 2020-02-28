@@ -1,0 +1,145 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "isFirstPage",
+        "isLastPage",
+        "pageNumber",
+        "pageSize",
+        "pageItemCount",
+        "totalItemCount",
+        "totalPageCount",
+        "hasNextPage",
+        "hasPreviousPage",
+        "items"
+      ],
+      "properties": {
+        "isFirstPage": {
+          "$id": "#/properties/response/properties/isFirstPage",
+          "type": "boolean"
+        },
+        "isLastPage": {
+          "$id": "#/properties/response/properties/isLastPage",
+          "type": "boolean"
+        },
+        "pageNumber": {
+          "$id": "#/properties/response/properties/pageNumber",
+          "type": "integer"
+        },
+        "pageSize": {
+          "$id": "#/properties/response/properties/pageSize",
+          "type": "integer"
+        },
+        "pageItemCount": {
+          "$id": "#/properties/response/properties/pageItemCount",
+          "type": "integer"
+        },
+        "totalItemCount": {
+          "$id": "#/properties/response/properties/totalItemCount",
+          "type": "integer"
+        },
+        "totalPageCount": {
+          "$id": "#/properties/response/properties/totalPageCount",
+          "type": "integer"
+        },
+        "hasNextPage": {
+          "$id": "#/properties/response/properties/hasNextPage",
+          "type": "boolean"
+        },
+        "hasPreviousPage": {
+          "$id": "#/properties/response/properties/hasPreviousPage",
+          "type": "boolean"
+        },
+        "items": {
+          "$id": "#/properties/response/properties/items",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/items/items",
+            "type": "object",
+            "required": [
+              "isCloudHomeApp",
+              "isSingleTenant",
+              "isPublic",
+              "identity",
+              "createdBy",
+              "createdAt",
+              "name",
+              "cloudReference",
+              "serviceName",
+              "version",
+              "description"
+            ],
+            "properties": {
+              "isCloudHomeApp": {
+                "$id": "#/properties/response/properties/items/items/properties/isCloudHomeApp",
+                "type": "boolean"
+              },
+              "isSingleTenant": {
+                "$id": "#/properties/response/properties/items/items/properties/isSingleTenant",
+                "type": "boolean"
+              },
+              "isPublic": {
+                "$id": "#/properties/response/properties/items/items/properties/isPublic",
+                "type": "boolean"
+              },
+              "identity": {
+                "$id": "#/properties/response/properties/items/items/properties/identity",
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
+              "createdBy": {
+                "$id": "#/properties/response/properties/items/items/properties/createdBy",
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
+              "createdAt": {
+                "$id": "#/properties/response/properties/items/items/properties/createdAt",
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
+              "name": {
+                "$id": "#/properties/response/properties/items/items/properties/name",
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
+              "cloudReference": {
+                "$id": "#/properties/response/properties/items/items/properties/cloudReference",
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
+              "serviceName": {
+                "$id": "#/properties/response/properties/items/items/properties/serviceName",
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
+              "version": {
+                "$id": "#/properties/response/properties/items/items/properties/version",
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
+              "description": {
+                "$id": "#/properties/response/properties/items/items/properties/description",
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
+	          "iconUrl": {
+	             "$id": "#/properties/response/properties/iconUrl",
+	             "type": "string",
+	             "pattern": "^(.*)$"
+	           }
+            }
+          }
+        }
+      }
+    }
+  }
+}
