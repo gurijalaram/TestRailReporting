@@ -1,0 +1,76 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "name",
+        "description",
+        "emailRegexPatterns",
+        "active",
+        "customerType"
+      ],
+      "properties": {
+        "identity": {
+          "$id": "#/properties/response/properties/identity",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "createdBy": {
+          "$id": "#/properties/response/properties/createdBy",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "createdAt": {
+          "$id": "#/properties/response/properties/createdAt",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "name": {
+          "$id": "#/properties/response/properties/name",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "cloudReference": {
+          "$id": "#/properties/response/properties/cloudReference",
+          "type": "string",
+          "pattern": "^(.*)$",
+          "optional": true
+        },
+        "description": {
+          "$id": "#/properties/response/properties/description",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "emailRegexPatterns": {
+          "$id": "#/properties/response/properties/emailRegexPatterns",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/emailRegexPatterns/items",
+            "type": "string",
+            "pattern": "^(.*)$"
+          }
+        },
+        "active": {
+          "$id": "#/properties/response/properties/active",
+          "type": "boolean"
+        },
+        "customerType": {
+          "$id": "#/properties/response/properties/customerType",
+          "type": "string",
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}

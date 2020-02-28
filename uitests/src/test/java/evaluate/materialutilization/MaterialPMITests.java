@@ -29,7 +29,9 @@ public class MaterialPMITests extends TestBase {
 
     @After
     public void resetAllSettings() {
-        new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+        if(currentUser != null) {
+            new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+        }
     }
 
     public MaterialPMITests() {super();}
