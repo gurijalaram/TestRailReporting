@@ -304,10 +304,8 @@ public class GenericReportPage extends ReportsPageHeader {
         LocalDateTime dtToday = getCurrentDateLDT();
         pageUtils.waitForElementAndClick(earliestExportSetDatePickerTriggerBtn);
 
-        Select monthSelect = new Select(datePickerMonthSelect);
-        Select yearSelect = new Select(datePickerYearSelect);
-        monthSelect.selectByIndex(dtToday.getMonthValue() - 1);
-        yearSelect.selectByValue(String.format("%d", dtToday.getYear()));
+        setMonthValuePicker(dtToday.getMonthValue() - 1);
+        setYearValuePicker(String.format("%d", dtToday.getYear()));
         earliestExportSetDatePickerTriggerBtn.click();
 
         String currentVal = earliestExportDateInput.getAttribute("value");
@@ -352,23 +350,16 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage setLatestExportDateToTodayPlusTwoPicker() {
-        // 1 - Get current date programatically (not string, LocalDateTime)
-        LocalDateTime currentLdt = getCurrentDateLDT();
-        LocalDateTime newDt = currentLdt.plusDays(2);
+        LocalDateTime newDt = getCurrentDateLDT().plusDays(2);
 
-        // 2 - Get day from variable defined above
         int monthValue = newDt.getMonthValue();
         int dayValue = newDt.getDayOfMonth();
         int yearValue = newDt.getYear();
 
-        // 3 - Set month and year in picker using month and year (code exists to do this, so use it)
         pageUtils.waitForElementAndClick(latestExportSetDatePickerTriggerBtn);
-        Select monthSelect = new Select(datePickerMonthSelect);
-        Select yearSelect = new Select(datePickerYearSelect);
-        monthSelect.selectByIndex(monthValue - 1);
-        yearSelect.selectByValue(String.format("%d", yearValue));
+        setMonthValuePicker(monthValue - 1);
+        setYearValuePicker(String.format("%d", yearValue));
 
-        // 4 - Set day based on value in anchor tag. Use date var in xpath to get anchor tag to click on
         String twoDaysAheadBtnLocator = String.format("//a[contains(text(), '%d')]", dayValue);
         pageUtils.waitForElementAndClick(By.xpath(twoDaysAheadBtnLocator));
         pageUtils.waitForElementAndClick(closeButton);
@@ -399,35 +390,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Substrings date to remove time
-     * @return String
-     */
-    private String removeTimeFromDate(String dateToSubstring) {
-        return dateToSubstring.substring(0, 10);
-    }
-
-    /**
-     * Gets current date in correct format
-     * @return String
-     */
-    private String getDate(boolean getCurrent) {
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return getCurrent ? formatter
-                .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
-                            : formatter
-                .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
-    }
-
-    /**
-     * Get current date as Local Date Time, rather than String
-     * @return LocalDateTime
-     */
-    private LocalDateTime getCurrentDateLDT() {
-        return LocalDateTime.now(ZoneOffset.UTC).withNano(0);
-    }
-
-    /**
      * Ensures filtering worked correctly
      * @return int size of element list
      */
@@ -436,15 +398,6 @@ public class GenericReportPage extends ReportsPageHeader {
         return list.size();
     }
 
-    /**
-     * Select Assembly option dropdown using send keys
-     * @param topIndex
-     */
-    private void selectAssemblyOption(int topIndex) {
-        for (int i = 0; i < topIndex; i++) {
-            inputBox.sendKeys(Keys.ARROW_DOWN);
-        }
-    }
 
     /**
      * Generic method to wait for correct currency and return specified page object
@@ -465,33 +418,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCurrentCurrency() {
         return pageUtils.getElementText(currentCurrency);
-    }
-
-    /**
-     * Initialises export set hash map
-     */
-    private void initialiseCurrencyMap() {
-        currencyMap.put("GBP", gbpCurrencyOption);
-        currencyMap.put("USD", usdCurrencyOption);
-    }
-
-    /**
-     * Initialises export set hash map
-     */
-    private void initialiseExportSetHashMap() {
-        exportSetMap.put("top-level", topLevelExportSet);
-        exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
-        exportSetMap.put("DTC_Casting", dtcCastingExportSet);
-        exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
-    }
-
-    /**
-     * Initialises assembly hash map
-     */
-    private void initialiseAssemblyHashMap() {
-        assemblyMap.put("SUB-ASSEMBLY (Initial)", subAssemblyOption);
-        assemblyMap.put("SUB-SUB-ASM (Initial)", subSubAsmOption);
-        assemblyMap.put("TOP-LEVEL (Initial)", topLevelOption);
     }
 
     /**
@@ -582,5 +508,90 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(rollupSearch);
         rollupSearch.sendKeys(rollupName);
         return this;
+    }
+
+    /**
+     * Substrings date to remove time
+     * @return String
+     */
+    private String removeTimeFromDate(String dateToSubstring) {
+        return dateToSubstring.substring(0, 10);
+    }
+
+    /**
+     * Gets current date in correct format
+     * @return String
+     */
+    private String getDate(boolean getCurrent) {
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return getCurrent ? formatter
+                .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
+                            : formatter
+                .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
+    }
+
+    /**
+     * Get current date as Local Date Time, rather than String
+     * @return LocalDateTime
+     */
+    private LocalDateTime getCurrentDateLDT() {
+        return LocalDateTime.now(ZoneOffset.UTC).withNano(0);
+    }
+
+
+    /**
+     * Select Assembly option dropdown using send keys
+     * @param topIndex
+     */
+    private void selectAssemblyOption(int topIndex) {
+        for (int i = 0; i < topIndex; i++) {
+            inputBox.sendKeys(Keys.ARROW_DOWN);
+        }
+    }
+
+    /**
+     * Initialises export set hash map
+     */
+    private void initialiseCurrencyMap() {
+        currencyMap.put("GBP", gbpCurrencyOption);
+        currencyMap.put("USD", usdCurrencyOption);
+    }
+
+    /**
+     * Initialises export set hash map
+     */
+    private void initialiseExportSetHashMap() {
+        exportSetMap.put("top-level", topLevelExportSet);
+        exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
+        exportSetMap.put("DTC_Casting", dtcCastingExportSet);
+        exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
+    }
+
+    /**
+     * Initialises assembly hash map
+     */
+    private void initialiseAssemblyHashMap() {
+        assemblyMap.put("SUB-ASSEMBLY (Initial)", subAssemblyOption);
+        assemblyMap.put("SUB-SUB-ASM (Initial)", subSubAsmOption);
+        assemblyMap.put("TOP-LEVEL (Initial)", topLevelOption);
+    }
+
+    /**
+     * Sets month dropdown value in date picker
+     * @param indexToSelect
+     */
+    private void setMonthValuePicker(int indexToSelect) {
+        Select monthSelect = new Select(datePickerMonthSelect);
+        monthSelect.selectByIndex(indexToSelect);
+    }
+
+    /**
+     * Sets year dropdown value in date picker
+     * @param valueToSelect
+     */
+    private void setYearValuePicker(String valueToSelect) {
+        Select yearSelect = new Select(datePickerYearSelect);
+        yearSelect.selectByValue(valueToSelect);
     }
 }
