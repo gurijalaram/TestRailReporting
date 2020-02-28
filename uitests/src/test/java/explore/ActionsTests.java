@@ -29,6 +29,7 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class ActionsTests extends TestBase {
     private CIDLoginPage loginPage;
@@ -71,6 +72,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Issue("BA-893")
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"554", "555"})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
@@ -107,7 +109,7 @@ public class ActionsTests extends TestBase {
             .selectSaveButton();
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1610", "592", "593"})
     @Description("User can lock and unlock a scenario")
@@ -196,6 +198,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"526", "529"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
@@ -226,6 +229,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"528", "527"})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
@@ -257,6 +261,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"532", "736", "734"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
@@ -278,6 +283,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"543"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
@@ -314,6 +320,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"544"})
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
@@ -347,6 +354,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Issue("BA-932")
     @TestRail(testCaseId = {"542", "546"})
     @Description("Validate User can delete notes to a scenario")
@@ -384,6 +392,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"574"})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
@@ -421,6 +430,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"556"})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {

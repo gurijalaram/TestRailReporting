@@ -20,6 +20,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class ProcessGroupsTests extends TestBase {
 
@@ -31,7 +32,7 @@ public class ProcessGroupsTests extends TestBase {
         super();
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"598", "1591"})
     @Description("Testing process group Forging")

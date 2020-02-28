@@ -22,6 +22,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class PublishComparisonTests extends TestBase {
 
@@ -36,6 +38,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @Issue("AP-58576")
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"421", "434"})
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
