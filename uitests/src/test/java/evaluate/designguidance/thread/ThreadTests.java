@@ -27,6 +27,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class ThreadTests extends TestBase {
 
@@ -338,6 +339,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"267", "268", "39", "294", "285"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {

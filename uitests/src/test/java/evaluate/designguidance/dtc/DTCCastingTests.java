@@ -31,6 +31,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class DTCCastingTests extends TestBase {
 
@@ -55,6 +56,7 @@ public class DTCCastingTests extends TestBase {
 
     @Test
     @Issue("AP-57941")
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {

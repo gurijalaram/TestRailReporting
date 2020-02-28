@@ -34,6 +34,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class SettingsTests extends TestBase {
     private CIDLoginPage loginPage;
@@ -51,7 +52,7 @@ public class SettingsTests extends TestBase {
         new AfterTestUtil().resetAllSettings(currentUser.getUsername());
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1609", "276"})
     @Description("User can change the default Production Defaults")
@@ -86,6 +87,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"274", "1609", "1602"})
     @Description("User can change the default Process group")
     public void defaultPG() {
@@ -113,6 +115,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"275"})
     @Description("User can change the default VPE")
     public void defaultVPE() {
@@ -137,6 +140,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"278", "279", "561"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
@@ -163,6 +167,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"280", "281"})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
@@ -190,6 +195,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"293"})
     @Description("User should be able to select a material catalogue from a different region than the VPE")
     public void differentMaterialCatalog() {
@@ -233,6 +239,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"277"})
     @Description("User can change the default Material")
     public void defaultMaterial() {

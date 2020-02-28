@@ -21,6 +21,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class AssemblyUploadTests extends TestBase {
 
@@ -37,6 +39,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2628", "2647", "2653"})
     @Description("Assembly File Upload - STEP")
     public void testAssemblyFormatSTEP() {
