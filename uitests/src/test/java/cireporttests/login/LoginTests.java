@@ -12,6 +12,8 @@ import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.MsSQLTest;
 
 public class LoginTests extends TestBase {
 
@@ -22,6 +24,7 @@ public class LoginTests extends TestBase {
         super();
     }
 
+    @Category(MsSQLTest.class)
     @Test
     @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
@@ -32,15 +35,16 @@ public class LoginTests extends TestBase {
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }
 
+    @Category(MsSQLTest.class)
     @Test
     @TestRail(testCaseId = {"2696"})
     @Description("Failed login to CI Report, wrong password")
     public void failedLogin() {
-        String loginErrorMessage = "Wrong email or password.";
+        String loginErrorMessage = "Invalid credentials supplied. Could not login to JasperReports Server.";
         loginPage = new LoginPage(driver);
         loginPage.failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(loginErrorMessage.toUpperCase())));
+        assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(loginErrorMessage)));
     }
 
     @Test
@@ -55,25 +59,27 @@ public class LoginTests extends TestBase {
         assertThat(loginPage.getLoginMessage(), is(equalTo(passwordResetMsg.toUpperCase())));
     }
 
+    @Category(MsSQLTest.class)
     @Test
     @TestRail(testCaseId = {"2698"})
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
-        String emptyFieldMsg = "Can't be blank";
+        String emptyFieldMsg = "Invalid credentials supplied. Could not login to JasperReports Server.";
         loginPage = new LoginPage(driver);
         loginPage.failedLogin("", "");
 
-        assertThat(loginPage.getInputErrorMsg(), is(equalTo(emptyFieldMsg)));
+        assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(emptyFieldMsg)));
     }
 
+    @Category(MsSQLTest.class)
     @Test
     @TestRail(testCaseId = {"2699"})
     @Description("Invalid email address, wrong format")
     public void invalidEmail() {
-        String invalidEmailMsg = "Invalid";
+        String invalidEmailMsg = "Invalid credentials supplied. Could not login to JasperReports Server.";
         loginPage = new LoginPage(driver);
         loginPage.failedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getInputErrorMsg(), is(equalTo(invalidEmailMsg)));
+        assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(invalidEmailMsg)));
     }
 }
