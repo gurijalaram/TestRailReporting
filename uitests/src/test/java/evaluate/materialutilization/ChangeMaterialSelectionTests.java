@@ -18,6 +18,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class ChangeMaterialSelectionTests extends TestBase {
 
@@ -30,6 +32,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Additive Manufacturing, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestAdditive() {
@@ -325,6 +328,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"864", "866", "867", "889"})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
@@ -417,6 +421,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"884", "888"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {

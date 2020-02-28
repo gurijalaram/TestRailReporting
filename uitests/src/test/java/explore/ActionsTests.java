@@ -40,7 +40,7 @@ public class ActionsTests extends TestBase {
     private AssignPage assignPage;
     private WarningPage warningPage;
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"545", "731", "738", "1610", "742"})
     @Description("Validate user can add notes to a scenario")
@@ -144,6 +144,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"733", "739", "743", "746"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
@@ -171,6 +172,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"732", "737", "741", "744"})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {

@@ -30,6 +30,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class SecondaryProcessTests extends TestBase {
 
@@ -52,6 +53,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"679", "653", "670"})
     @Description("Test secondary process leak test")
     public void secondaryProcessLeakTest() {
@@ -81,6 +83,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"658", "659", "661"})
     @Description("Test secondary process xray")
     public void secondaryProcessXray() {
@@ -401,7 +404,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isProcessRoutingDetails("Passivation"), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1614", "654"})
     @Description("Multiple Secondary Processes before Costing")
@@ -424,7 +427,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isProcessRoutingDetails("Passivation / Carton Forming / Pack & Load"), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1614", "655", "656"})
     @Description("Multiple Secondary Processes after Costing")
@@ -448,7 +451,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isProcessRoutingDetails("Anodize / Carton Forming / Pack & Load"), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1615", "669"})
     @Description("secondary process automatically added by aPriori")
@@ -650,6 +653,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"698", "667"})
     @Description("Test secondary process High Temp Vacuum Anneal")
     public void secondaryProcessHighTempVacuumAnneal() {
@@ -698,6 +702,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"660"})
     @Description("Selections are cleared when user cancels changes")
     public void selectionsCleared() {
@@ -716,6 +721,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"665"})
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
@@ -734,6 +740,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"671", "672"})
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {

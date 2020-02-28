@@ -64,7 +64,7 @@ public class ThreadTests extends TestBase {
         assertThat(investigationPage.getEditButton().isEnabled(), is(false));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"28", "1631"})
     @Description("C28 Test to check thread length persist")
@@ -119,6 +119,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
@@ -188,6 +189,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"32", "33"})
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     public void changeThreadValueCancel() {
@@ -279,6 +281,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"30"})
     @Description("Testing a public thread cannot be edited")
     public void cannotEditPublicThread() {
@@ -361,6 +364,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"42"})
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
@@ -386,6 +390,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"37", "41"})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
@@ -419,7 +424,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for DTC files")

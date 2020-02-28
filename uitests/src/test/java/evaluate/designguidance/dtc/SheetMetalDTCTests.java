@@ -25,6 +25,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class SheetMetalDTCTests extends TestBase {
 
@@ -196,6 +198,7 @@ public class SheetMetalDTCTests extends TestBase {
 
     @Test
     @Issue("AP-57941")
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1845","719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
