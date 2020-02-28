@@ -444,7 +444,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("10.00"), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for NX files")
@@ -464,7 +464,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("15.00"), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for Creo files")

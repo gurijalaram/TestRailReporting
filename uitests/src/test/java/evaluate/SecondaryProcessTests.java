@@ -287,7 +287,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isProcessRoutingDetails("Certification"), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1616"})
     @Description("Test secondary process Paint")

@@ -95,7 +95,7 @@ public class DTCCastingTests extends TestBase {
         assertThat(guidancePage.getGuidanceMessage(), containsString("Facing: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry."));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1596", "1261"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
@@ -125,6 +125,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1042", "1046", "1051", "1053", "1055", "1057"})
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
@@ -200,6 +201,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1044"})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {

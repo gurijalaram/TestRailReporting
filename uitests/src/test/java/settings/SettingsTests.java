@@ -217,7 +217,7 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_GERMANY.getVpe()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1609"})
     @Description("User can change the default selection colour")

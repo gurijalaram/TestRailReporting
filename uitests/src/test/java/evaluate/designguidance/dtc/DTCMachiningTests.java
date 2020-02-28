@@ -25,6 +25,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class DTCMachiningTests extends TestBase {
 
@@ -152,7 +153,7 @@ public class DTCMachiningTests extends TestBase {
         assertThat(guidancePage.getGuidanceMessage(), containsString("Feature is obstructed"));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1799", "1802", "1806", "1593"})
     @Description("Ensure that  'Guidance' includes: - Issue type count - DTC Messaging for each guidance instance")
@@ -205,6 +206,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1792", "1795", "1796"})
     @Description("Verify the investigate tab correctly presents features & conditions which impact cost")
     public void stockMachineDTC() {

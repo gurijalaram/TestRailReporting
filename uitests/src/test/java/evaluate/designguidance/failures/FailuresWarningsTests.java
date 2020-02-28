@@ -25,6 +25,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class FailuresWarningsTests extends TestBase {
 
@@ -39,7 +40,7 @@ public class FailuresWarningsTests extends TestBase {
         new AfterTestUtil().resetAllSettings(currentUser.getUsername());
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1592", "1059", "1831", "1791"})
     @Description("Ensure that 'Failures/ Warnings tab includes: Messaging")
@@ -67,7 +68,7 @@ public class FailuresWarningsTests extends TestBase {
         assertThat(failuresPage.getUncostedMessage(), containsString("Multiple bodies exist in the model. Only the largest body is used and the remainder are ignored"));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Issue("AP-57941")
     @TestRail(testCaseId = {"1592"})

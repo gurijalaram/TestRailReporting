@@ -228,7 +228,7 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.44"), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1595"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
@@ -420,6 +420,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1291"})
     @Description("Verify PMI data is not extracted ")
     public void assumeTolerances() {
@@ -443,6 +444,7 @@ public class ToleranceTests extends TestBase {
 
     @Test
     @Issue("AP-57941")
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1286"})
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {
@@ -517,6 +519,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1294"})
     @Description("Validate PMI is off when use specific is selected")
     public void specificTolerancesNoPMI() {
@@ -577,6 +580,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1296", "1288"})
     @Description("Validate 'Replace values less than' button")
     public void replaceValuesButton() {

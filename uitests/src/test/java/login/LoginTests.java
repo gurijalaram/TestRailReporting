@@ -24,6 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class LoginTests extends TestBase {
 
@@ -118,7 +119,7 @@ public class LoginTests extends TestBase {
         assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1590", "1583", "1180"})
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")

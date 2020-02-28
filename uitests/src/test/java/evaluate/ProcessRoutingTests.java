@@ -412,6 +412,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1658", "1254"})
     @Description("Validate the properties dialogue box updates with a newly selected and costed routing.")
     public void propertiesRouting() {
