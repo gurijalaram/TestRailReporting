@@ -48,7 +48,9 @@ public class SettingsTests extends TestBase {
 
     @After
     public void resetAllSettings() {
-        new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+        if(currentUser != null) {
+            new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+        }
     }
 
     @Category(CustomerSmokeTests.class)

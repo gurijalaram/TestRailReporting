@@ -36,7 +36,9 @@ public class FailuresWarningsTests extends TestBase {
 
     @After
     public void resetSettings() {
-        new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+        if(currentUser != null) {
+            new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+        }
     }
 
     @Category(CustomerSmokeTests.class)
