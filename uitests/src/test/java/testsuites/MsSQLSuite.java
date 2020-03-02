@@ -1,6 +1,7 @@
 package testsuites;
 
 import cireporttests.navigation.NavigationTests;
+import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import org.junit.experimental.categories.Categories;
 import testsuites.suiteinterface.MsSQLTest;
@@ -13,7 +14,8 @@ import testsuites.suiteinterface.MySQLTest;
 @Categories.IncludeCategory(MsSQLTest.class)
 @Suite.SuiteClasses ({
         LoginTests.class,
-        NavigationTests.class
+        NavigationTests.class,
+        AssemblyDetailsReportPage.class
 })
 public class MsSQLSuite {
 }

@@ -1,6 +1,7 @@
 package testsuites;
 
 import cireporttests.navigation.NavigationTests;
+import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import org.junit.experimental.categories.Categories;
 import testsuites.suiteinterface.OracleTest;
@@ -12,7 +13,8 @@ import org.junit.runners.Suite;
 @Categories.IncludeCategory(OracleTest.class)
 @Suite.SuiteClasses({
         LoginTests.class,
-        NavigationTests.class
+        NavigationTests.class,
+        AssemblyDetailsReportTests.class
 })
 
 public class OracleSuite {
