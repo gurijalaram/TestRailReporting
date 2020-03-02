@@ -49,19 +49,6 @@ public class LoginTests extends TestBase {
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(loginErrorMessage)));
     }
 
-    @Category(MySQLTest.class)
-    @Test
-    @TestRail(testCaseId = {"2697"})
-    @Description("Forgotten password functionality")
-    public void forgotPassword() {
-        String passwordResetMsg = "We've just sent you an email to reset your password.";
-        loginPage = new LoginPage(driver);
-        loginPage.clickForgotPassword()
-                .submitEmail("fakeEmail@apriori.com");
-
-        assertThat(loginPage.getLoginMessage(), is(equalTo(passwordResetMsg.toUpperCase())));
-    }
-
     @Category({MsSQLTest.class, OracleTest.class})
     @Test
     @TestRail(testCaseId = {"2698"})
