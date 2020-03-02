@@ -870,14 +870,20 @@ public class PageUtils {
      *
      * @return String
      */
-    public String getHeaderToCheck() {
-        String headerToCheck = "";
+    public String getHeaderToCheck(boolean isLocalEnv) {
+        String headerToInsert = "";
+        String headerToReturn = "";
+        String ciDesignTextPreFormat = "CI Design %s";
         if (isEnvTE()) {
-            headerToCheck = Constants.cidTeHeaderText;
+            headerToInsert = Constants.cidTeHeaderText;
+            headerToReturn = String.format(ciDesignTextPreFormat, headerToInsert);
+        } else if (isLocalEnv) {
+            headerToReturn = "aPriori Cost Insight Report";
         } else {
-            headerToCheck = Constants.cidAutHeaderText;
+            headerToInsert = Constants.cidAutHeaderText;
+            headerToReturn = String.format(ciDesignTextPreFormat, headerToInsert);
         }
-        return headerToCheck;
+        return headerToReturn;
     }
 
     /**

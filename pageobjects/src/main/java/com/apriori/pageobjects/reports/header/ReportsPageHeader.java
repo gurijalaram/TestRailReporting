@@ -96,6 +96,6 @@ public class ReportsPageHeader extends PageHeader {
      * @return
      */
     public String getHeaderToCheck() {
-        return pageUtils.getHeaderToCheck();
+        return pageUtils.getHeaderToCheck(true);
     }
 }

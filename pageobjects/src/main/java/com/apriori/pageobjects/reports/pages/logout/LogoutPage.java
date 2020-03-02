@@ -14,7 +14,7 @@ public class LogoutPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(LogoutPage.class);
 
-    @FindBy(css = "div[class='auth0-lock-header-welcome'] > div")
+    @FindBy(css = "h2[class='textAccent']")
     private WebElement loginPageTitle;
 
     private WebDriver driver;

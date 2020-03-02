@@ -146,7 +146,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return
      */
     public String getHeaderToCheck() {
-        return pageUtils.getHeaderToCheck();
+        return pageUtils.getHeaderToCheck(false);
     }
 
     /**
