@@ -39,10 +39,26 @@ public class Constants {
 
     public static String environment = System.getProperty(defaultEnvironmentKey, defaultEnvironmentValue);
 
+    private static String serviceHost;
+    private static String servicePort;
+    private static String serviceName;
+    private static String secretKey;
+    private static String cdsIdentityUser;
+    private static String cdsIdentityRole;
+    private static String cdsIdentityCustomer;
+    private static String cdsIdentityApplication;
+    public static final String defaultServiceHostKey = "serverHost";
+    public static final String defaultServicePortKey = "serverPort";
+    public static final String defaultServiceNameKey = "serverName";
+    public static final String defaultSecretKeyKey = "secretKey";
+    public static final String defaultCdsIdentityUserKey = "cdsIdentityUser";
+    public static final String defaultCdsIdentityRoleKey = "cdsIdentityRole";
+    public static final String defaultCdsIdentityCustomerKey = "cdsIdentityCustomer";
+    public static final String defaultCdsIdentityApplicationKey = "cdsIdentityApplication";
+
+
     private static final ConstantsInit constantsInit;
-
-    private static String buildMode;
-
+    
     static {
         System.setProperty(defaultEnvironmentKey, environment);
 
@@ -60,6 +76,8 @@ public class Constants {
     public static final String usersFile = constantsInit.usersCsvFileName();
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 
+    private static String buildMode;
+    
     public static String getBuildMode() {
         if (buildMode == null) {
             buildMode = System.getProperty(defaultBuildModeKey, defaultBuildModeValue);
@@ -74,6 +92,69 @@ public class Constants {
         }
 
         return baseUrl;
+    }
+    
+    public static String getServiceHost() {
+        if (serviceHost == null) {
+            serviceHost = System.getProperty(defaultServiceHostKey, constantsInit.serviceHost());
+        }
+
+        return serviceHost;
+    }
+    
+    public static String getServicePort() {
+        if (servicePort == null) {
+            servicePort = System.getProperty(defaultServicePortKey, constantsInit.servicePort());
+        }
+        return servicePort;
+    }
+    
+    public static String getServiceName() {
+        if (serviceName == null) {
+            serviceName = System.getProperty(defaultServiceNameKey, constantsInit.serviceName());
+        }
+
+        return serviceName;
+    }
+    
+    public static String getSecretKey() {
+        if (secretKey == null) {
+            secretKey = System.getProperty(defaultSecretKeyKey, constantsInit.secretKey());
+        }
+
+        return secretKey;
+    }
+    
+    public static String getCdsIdentityUser() {
+        if (cdsIdentityUser == null) {
+            cdsIdentityUser = System.getProperty(defaultCdsIdentityUserKey, constantsInit.cdsIdentityUser());
+        }
+
+        return cdsIdentityUser;
+    }
+    
+    public static String getCdsIdentityRole() {
+        if (cdsIdentityRole == null) {
+            cdsIdentityRole = System.getProperty(defaultCdsIdentityRoleKey, constantsInit.cdsIdentityRole());
+        }
+
+        return cdsIdentityRole;
+    }
+    
+    public static String getCdsIdentityCustomer() {
+        if (cdsIdentityCustomer == null) {
+            cdsIdentityCustomer = System.getProperty(defaultCdsIdentityCustomerKey, constantsInit.cdsIdentityCustomer());
+        }
+
+        return cdsIdentityCustomer;
+    }
+    
+    public static String getCdsIdentityApplication() {
+        if (cdsIdentityApplication == null) {
+            cdsIdentityApplication = System.getProperty(defaultCdsIdentityApplicationKey, constantsInit.cdsIdentityApplication());
+        }
+
+        return cdsIdentityApplication;
     }
 
 }
