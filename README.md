@@ -5,31 +5,26 @@
 3. Import all of the modules into an IDE of your choice
 4. You are ready to run the tests if you have chrome installed, install it in case you don't
 
-NOTE: By default, there is already chromedriver.exe and geckodriver.exe commited to repo so for local run, you don't need to point to anything. It will always take from repo
+## Building the project (you will need this for the very first time):
+1. Open Terminal to root `build` directory
+2. Right click `build.gradle` and `Import Gradle project`
 
-## Building the project (you will need this for the very first time after you clone repo):
+## Run Gradle tests with JVM args
+1. Open Terminal to root `build` directory
+2. Run `gradle clean :uitests:test --tests {modulename}:test --test "{parentFolder.nameOfTest}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite"`
+3. To pass in JVM args `gradle clean :uitests:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :uitests:test --tests "testsuites.CIDTestSuite" -DthreadCount=3 -Denv=cid-te`
 
-* Create a maven build config with apbuild as the base directory
-* Enter the following goals `clean install -DskipTests=true`
-
-## How to run a test:
-
-1. Running a single test or test class in your IDE
-	* Right click and Run on a test method or the test class
-2. Running multiple test in parallel using maven build(configuration):  NOTE: not working yet
-	* Building the project is required first. See section below
-	* Select the module where the test is as the base directory
-	* Enter the following goals `clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=LOCAL -DthreadCount=3`. To run more tests in parallel, change `-DthreadCount=10` number
-	* To see supported browsers, check `DriverFactory.java`
-	* To run an adhoc set of tests use "@Category(AdhocTests.class)". See testSaveAsPrivateComparison as an example. Ensure your test's class is listed within the AdhocTestSuite. You can use 'mvn clean test -Dtest=AdhocTestSuite.java' or push your branch and run on jenkins.
-	* **OPTIONAL environment configurations**:
-	    * `-Denv={environment name}` e.g. `-Denv=cid-te`, environment by default `cid-te`: which environment properties we need to use (URL, authorization users, etc.) you can find properties by `utils/resources/{environment}/{environment}.properties`
-	    * `-Durl={base url for properties}` e.g. `-Durl=http:\\my-base-url`, by default value from environment properties file `url.default` :  initialize base url by overriding `url.default`, from environment properties, to value inserted in `-Durl`, you can find properties by `utils/resources/{environment}/{environment}.properties`
-3. Running test on docker (and zalenium if required):
-    * Install docker
-    * Pull docker images for selenium hub, chrome and firefox (dosel/zalenium if required)
-    * In the terminal enter `docker-compose up -d`. For zalenium enter `docker run --rm -ti --name zalenium -p 4444:4444 -p 5555:5555 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos dosel/zalenium start`
-    * In the terminal go to the base directory (eg. C:\automation-qa\apriori-qa\uitests) and enter the following goals `mvn clean test -Dtest={TestName}.java -Dbrowser=chrome -Dmode=QA`
+## Build Gradle jar files
+1. Download and install Gradle 6.1.1 (this is the version that was first used on the project)
+2. Open Terminal to root `build` directory
+3. Run `gradle clean fatjar`
+    - if Gradle is not installed use `gradlew`
+    - `clean` deletes existing `build` folder in each module
+    - `fatjar` is the task that creates the zip file (nb. this task name is not a constant)
+4. When the jar is complete -> Open Terminal to `..\uitests\build\libs`
+5. Run `java -jar {nameOfJar}.jar` eg. `java -jar automation-qa-0.0.1-SNAPSHOT.jar`
+    - To pass command line arguments Run `java {arg} -jar {nameOfJar}.jar` eg. `java -Denv=cid-te -jar automation-qa-0.0.1-SNAPSHOT.jar`
+    
 ## Users functionality
 Get user functionality has reference to `{environment}.properties` file. 
 
@@ -75,8 +70,8 @@ Get user functionality has reference to `{environment}.properties` file.
     - {password}: required
     - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
 
-## Run Sonarqube static code analysis
-1. go to `build` directory, run `mvn sonar:sonar -Psonar` which will only run Sonarqube analysis and posts result to https://sonarqube.apriori.com dashboard
+## Run Checkstyle analysis from command line
+1. go to `build` directory, run `gradle check -x test`
 
 ## Add TestRail configuration to _Test Suite_
 Annotate suite class that needs ProjectRunID using following format: `@ProjectRunID("999")`

@@ -126,9 +126,9 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     /**
      * Checks the assembly thumbnail type
      *
-     * @param scenarioName - the scenario name
-     * @param assemblyName         - the part name
-     * @param thumbnailType    - the thumbnail type
+     * @param scenarioName  - the scenario name
+     * @param assemblyName  - the part name
+     * @param thumbnailType - the thumbnail type
      * @return true/false
      */
     public boolean isAssemblyThumbnail(String scenarioName, String assemblyName, String thumbnailType) {

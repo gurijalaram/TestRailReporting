@@ -39,6 +39,7 @@ public class SystemDataExport extends AdminHeader {
 
     /**
      * Gets isDisplayed value for header
+     *
      * @return boolean - isDisplayed
      */
     public boolean isHeaderDisplayed() {
@@ -48,6 +49,7 @@ public class SystemDataExport extends AdminHeader {
 
     /**
      * Gets isEnabled value for header
+     *
      * @return boolean - isEnabled
      */
     public boolean isHeaderEnabled() {

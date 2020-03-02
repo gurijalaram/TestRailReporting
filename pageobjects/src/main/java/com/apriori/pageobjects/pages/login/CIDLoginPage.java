@@ -222,6 +222,7 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
     /**
      * Checks apriori logo is displayed
+     *
      * @return true/false
      */
     public boolean isLogoDisplayed() {
@@ -230,6 +231,7 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
     /**
      * Checks the environment title
+     *
      * @return true/false
      */
     public boolean isEnvironmentDisplayed() {
@@ -238,6 +240,7 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
     /**
      * Gets marketing text
+     *
      * @return string
      */
     public String getMarketingText() {
@@ -246,6 +249,7 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
     /**
      * Gets welcome text
+     *
      * @return string
      */
     public String getWelcomeText() {
@@ -254,6 +258,7 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
     /**
      * Selects learn more
+     *
      * @return new page object
      */
     public LearnMorePage learnMore() {
@@ -263,6 +268,7 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
     /**
      * Selects forgotten password
+     *
      * @return new page object
      */
     public ForgottenPasswordPage forgottenPassword() {
@@ -272,6 +278,7 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
     /**
      * Selects privacy policy
+     *
      * @return new page object
      */
     public PrivacyPolicyPage privacyPolicy() {
@@ -281,6 +288,7 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
     /**
      * Select helps link
+     *
      * @return new page object
      */
     public HelpPage help() {

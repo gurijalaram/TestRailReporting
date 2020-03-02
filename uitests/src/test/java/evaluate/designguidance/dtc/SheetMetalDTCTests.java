@@ -42,7 +42,7 @@ public class SheetMetalDTCTests extends TestBase {
 
     @After
     public void resetSettings() {
-        if(currentUser != null) {
+        if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
         }
     }
@@ -198,7 +198,7 @@ public class SheetMetalDTCTests extends TestBase {
 
     @Test
     @Issue("AP-57941")
-    @TestRail(testCaseId = {"1845","719"})
+    @TestRail(testCaseId = {"1845", "719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
         loginPage = new CIDLoginPage(driver);
@@ -217,7 +217,7 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .expandGuidancePanel()
             .openGuidanceTab()
-           .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
+            .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 
         assertThat(guidancePage.getGCDGuidance("SimpleHole:2", "Current"), is(equalTo("0.02")));
         assertThat(guidancePage.getGCDGuidance("SimpleHole:2", "Basic Machining Threshold"), is(equalTo("0.06")));

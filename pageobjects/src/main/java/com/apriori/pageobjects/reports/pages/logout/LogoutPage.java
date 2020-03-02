@@ -41,6 +41,7 @@ public class LogoutPage extends ReportsPageHeader {
 
     /**
      * Gets isDisplayed value for header
+     *
      * @return boolean - isDisplayed
      */
     public boolean isHeaderDisplayed() {
@@ -50,6 +51,7 @@ public class LogoutPage extends ReportsPageHeader {
 
     /**
      * Gets isEnabled value for header
+     *
      * @return boolean - isEnabled
      */
     public boolean isHeaderEnabled() {
@@ -59,6 +61,7 @@ public class LogoutPage extends ReportsPageHeader {
 
     /**
      * Gets header text
+     *
      * @return String - header text
      */
     public String getHeaderText() {

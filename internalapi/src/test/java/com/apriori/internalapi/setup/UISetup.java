@@ -1,6 +1,5 @@
 package com.apriori.internalapi.setup;
 
-
 import com.apriori.apibase.http.builder.common.response.common.ColumnEntity;
 import com.apriori.apibase.http.builder.common.response.common.DisplayColumnsEntity;
 import com.apriori.apibase.http.builder.service.HTTPRequest;

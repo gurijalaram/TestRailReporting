@@ -1,38 +1,37 @@
 package cireporttests.navigation;
 
-import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
-import com.apriori.pageobjects.pages.login.HelpPage;
-import com.apriori.utils.constants.Constants;
-import com.apriori.utils.web.driver.TestBase;
-import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
-import com.apriori.pageobjects.reports.pages.logout.LogoutPage;
-import com.apriori.utils.users.UserUtil;
-import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
-import com.apriori.pageobjects.reports.pages.create.CreateDataSourcePage;
-import com.apriori.pageobjects.reports.pages.homepage.HomePage;
-import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewPage;
-import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
-import com.apriori.pageobjects.reports.pages.library.LibraryPage;
-import com.apriori.pageobjects.reports.pages.login.LoginPage;
-import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
-import io.qameta.allure.Description;
-import com.apriori.pageobjects.reports.pages.view.ViewSchedulesPage;
-import com.apriori.pageobjects.reports.pages.create.CreateDomainPage;
-import com.apriori.pageobjects.reports.pages.create.CreateReportPage;
-import com.apriori.pageobjects.reports.pages.view.ViewMessagesPage;
-import com.apriori.pageobjects.reports.pages.manage.ManageRolesPage;
-import com.apriori.pageobjects.reports.pages.manage.ManageUsersPage;
-import com.apriori.utils.TestRail;
-
-import io.qameta.allure.Issue;
-import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringStartsWith.startsWith;
+
+import com.apriori.pageobjects.pages.login.HelpPage;
+import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
+import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewPage;
+import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
+import com.apriori.pageobjects.reports.pages.create.CreateDataSourcePage;
+import com.apriori.pageobjects.reports.pages.create.CreateDomainPage;
+import com.apriori.pageobjects.reports.pages.create.CreateReportPage;
+import com.apriori.pageobjects.reports.pages.homepage.HomePage;
+import com.apriori.pageobjects.reports.pages.library.LibraryPage;
+import com.apriori.pageobjects.reports.pages.login.LoginPage;
+import com.apriori.pageobjects.reports.pages.logout.LogoutPage;
+import com.apriori.pageobjects.reports.pages.manage.ManageRolesPage;
+import com.apriori.pageobjects.reports.pages.manage.ManageUsersPage;
+import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
+import com.apriori.pageobjects.reports.pages.view.ViewMessagesPage;
+import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
+import com.apriori.pageobjects.reports.pages.view.ViewSchedulesPage;
+import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.web.driver.TestBase;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import org.junit.Test;
 
 public class NavigationTests extends TestBase {
 
@@ -64,10 +63,10 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToReportUserGuide()
-                .switchTab()
-                .switchToIFrameUserGuide("page_iframe");
+            .login(UserUtil.getUser())
+            .navigateToReportUserGuide()
+            .switchTab()
+            .switchToIFrameUserGuide("page_iframe");
 
         assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
@@ -79,8 +78,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the CI Reports Logout Link works")
     public void testCIReportsLogoutNavigation() {
         logout = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToReportLogout();
+            .login(UserUtil.getUser())
+            .navigateToReportLogout();
 
         String headerToCheck = logout.getHeaderToCheck();
 
@@ -94,8 +93,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Home works (doesn't navigate elsewhere - negative test)")
     public void testHomeNavigation() {
         homePage = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToHomePage();
+            .login(UserUtil.getUser())
+            .navigateToHomePage();
 
         assertThat(homePage.getHomeTitleText(), is(equalTo("Home")));
     }
@@ -105,8 +104,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
         library = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToLibraryPage();
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage();
 
         assertThat(library.getLibraryTitleText(), is(equalTo("Library")));
     }
@@ -116,8 +115,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to View Search Results works")
     public void testViewSearchResultsNavigation() {
         searchResults = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToViewSearchResultsPage();
+            .login(UserUtil.getUser())
+            .navigateToViewSearchResultsPage();
 
         assertThat(searchResults.getSearchResultsTitleText(), is(equalTo("repoSearch")));
     }
@@ -127,8 +126,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to View Repository works")
     public void testViewRepositoryNavigation() {
         repository = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToViewRepositoryPage();
+            .login(UserUtil.getUser())
+            .navigateToViewRepositoryPage();
 
         assertThat(repository.getRepositoryTitleText(), is(equalTo("Repository")));
     }
@@ -138,8 +137,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to View Schedules works")
     public void testViewSchedulesNavigation() {
         schedules = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToViewSchedulesPage();
+            .login(UserUtil.getUser())
+            .navigateToViewSchedulesPage();
 
         assertThat(schedules.getSchedulesTitleText(), is(equalTo("Schedules")));
     }
@@ -149,8 +148,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to View Messages works")
     public void testViewMessagesNavigation() {
         messages = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToViewMessagesPage();
+            .login(UserUtil.getUser())
+            .navigateToViewMessagesPage();
 
         assertThat(messages.getMessagesTitleText(), is(equalTo("Messages:")));
     }
@@ -160,8 +159,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
         users = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToManageUsersPage();
+            .login(UserUtil.getUser())
+            .navigateToManageUsersPage();
 
         assertThat(users.getUsersTitleText(), is(equalTo("Users")));
     }
@@ -171,8 +170,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
         roles = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToManageRolesPage();
+            .login(UserUtil.getUser())
+            .navigateToManageRolesPage();
 
         assertThat(roles.getRolesTitleText(), is(equalTo("Roles")));
     }
@@ -182,8 +181,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Ad Hoc View works")
     public void testCreateAdHocViewNavigation() {
         adHocView = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToCreateAdHocViewPage();
+            .login(UserUtil.getUser())
+            .navigateToCreateAdHocViewPage();
 
         assertThat(adHocView.getAdHocViewTitleText(), is(equalTo("New Ad Hoc View")));
         assertThat(adHocView.isDialogDisplayed(), is(equalTo(true)));
@@ -195,8 +194,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Report works")
     public void testCreateReportNavigation() {
         report = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToCreateReportPage();
+            .login(UserUtil.getUser())
+            .navigateToCreateReportPage();
 
         assertThat(report.isDialogDisplayed(), is(equalTo(true)));
         assertThat(report.isDialogEnabled(), is(equalTo(true)));
@@ -207,8 +206,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Dashboard works")
     public void testCreateDashboardNavigation() {
         dashboard = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToCreateDashboardPage();
+            .login(UserUtil.getUser())
+            .navigateToCreateDashboardPage();
 
         assertThat(dashboard.getAdHocViewTitleText(), is(equalTo("New Dashboard")));
     }
@@ -218,8 +217,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
         domain = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToCreateDomainPage();
+            .login(UserUtil.getUser())
+            .navigateToCreateDomainPage();
 
         String urlToCheck = domain.getUrlToCheck();
 
@@ -233,8 +232,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {
         dataSource = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToCreateDataSourcePage();
+            .login(UserUtil.getUser())
+            .navigateToCreateDataSourcePage();
 
         assertThat(dataSource.getDataSourceTitleText(), is(equalTo("New Data Source")));
     }
@@ -244,8 +243,8 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to the privacy policy works")
     public void testPrivacyPolicyNavigation() {
         privacyPolicyPage = new LoginPage(driver)
-                .waitForPrivacyPolicyLinkVisibility()
-                .goToPrivacyPolicy();
+            .waitForPrivacyPolicyLinkVisibility()
+            .goToPrivacyPolicy();
 
         assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
         assertThat(privacyPolicyPage.getChildWindowURL(), is(equalTo(Constants.privacyPolicyUrl)));
@@ -256,12 +255,12 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2701"})
     @Description("Ensure that the link to the help page works")
     public void testHelpNavigation() {
-        String iFrameId = "topic";
+        String iframeId = "topic";
         helpPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToHelpPage()
-                .switchToIFrameHelpPage(iFrameId)
-                .ensurePageIsLoaded();
+            .login(UserUtil.getUser())
+            .navigateToHelpPage()
+            .switchToIFrameHelpPage(iframeId)
+            .ensurePageIsLoaded();
 
         assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
         assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.reportingHelpUrl)));

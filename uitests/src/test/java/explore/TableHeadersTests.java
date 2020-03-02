@@ -26,8 +26,8 @@ public class TableHeadersTests extends TestBase {
     private ExplorePage explorePage;
     private TableColumnsPage tableColumnsPage;
 
-    private final String ASCENDING = "sort-asc";
-    private final String DESCENDING = "sort-desc";
+    private final String ascending = "sort-asc";
+    private final String descending = "sort-desc";
 
     public TableHeadersTests() {
         super();
@@ -124,15 +124,15 @@ public class TableHeadersTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .sortColumnDescending(ColumnsEnum.NAME_SCENARIO.getColumns());
-        assertThat(explorePage.getColumnOrder(ColumnsEnum.NAME_SCENARIO.getColumns()), containsString(DESCENDING));
+        assertThat(explorePage.getColumnOrder(ColumnsEnum.NAME_SCENARIO.getColumns()), containsString(descending));
 
         explorePage.sortColumnAscending(ColumnsEnum.PROCESS_GROUP.getColumns());
-        assertThat(explorePage.getColumnOrder(ColumnsEnum.PROCESS_GROUP.getColumns()), containsString(ASCENDING));
+        assertThat(explorePage.getColumnOrder(ColumnsEnum.PROCESS_GROUP.getColumns()), containsString(ascending));
 
         explorePage.sortColumnAscending(ColumnsEnum.VPE.getColumns());
-        assertThat(explorePage.getColumnOrder(ColumnsEnum.VPE.getColumns()), containsString(ASCENDING));
+        assertThat(explorePage.getColumnOrder(ColumnsEnum.VPE.getColumns()), containsString(ascending));
 
         explorePage.sortColumnDescending(ColumnsEnum.LAST_SAVED.getColumns());
-        assertThat(explorePage.getColumnOrder(ColumnsEnum.LAST_SAVED.getColumns()), containsString(DESCENDING));
+        assertThat(explorePage.getColumnOrder(ColumnsEnum.LAST_SAVED.getColumns()), containsString(descending));
     }
 }

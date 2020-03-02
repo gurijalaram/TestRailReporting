@@ -71,7 +71,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
         assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName()),
-                is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
+            is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
     }
 
     @Test

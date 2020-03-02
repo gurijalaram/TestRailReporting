@@ -47,6 +47,7 @@ public class CirUserGuidePage extends ReportsPageHeader {
 
     /**
      * Gets current URL of new tab
+     *
      * @return String
      */
     public String getCurrentUrl() {
@@ -55,6 +56,7 @@ public class CirUserGuidePage extends ReportsPageHeader {
 
     /**
      * Gets count of open tabs
+     *
      * @return int
      */
     public int getTabCount() {
@@ -63,6 +65,7 @@ public class CirUserGuidePage extends ReportsPageHeader {
 
     /**
      * Gets page heading of Reports Help page
+     *
      * @return String - page title
      */
     public String getReportsUserGuidePageHeading() {

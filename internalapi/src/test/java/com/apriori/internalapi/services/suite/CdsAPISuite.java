@@ -1,6 +1,5 @@
 package com.apriori.internalapi.services.suite;
 
-
 import com.apriori.internalapi.services.CdsApplications;
 import com.apriori.internalapi.services.CdsCustomers;
 import com.apriori.internalapi.services.CdsRoles;

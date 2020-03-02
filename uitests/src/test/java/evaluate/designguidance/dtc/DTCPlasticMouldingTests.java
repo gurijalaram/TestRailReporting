@@ -73,7 +73,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"1067", "1593", "1068"})
     @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
-    public void StructuralFoamMouldDraft() {
+    public void structuralFoamMouldDraft() {
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))

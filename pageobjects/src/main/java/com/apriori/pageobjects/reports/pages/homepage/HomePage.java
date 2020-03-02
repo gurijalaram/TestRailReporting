@@ -53,6 +53,7 @@ public class HomePage extends ReportsPageHeader {
 
     /**
      * Gets current URL of new tab
+     *
      * @return String
      */
     public String getCurrentUrl() {
@@ -61,6 +62,7 @@ public class HomePage extends ReportsPageHeader {
 
     /**
      * Gets count of open tabs
+     *
      * @return int
      */
     public int getTabCount() {

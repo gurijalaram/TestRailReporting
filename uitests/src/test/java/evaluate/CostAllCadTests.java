@@ -20,7 +20,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.hamcrest.Matchers;
 import org.junit.Test;
 

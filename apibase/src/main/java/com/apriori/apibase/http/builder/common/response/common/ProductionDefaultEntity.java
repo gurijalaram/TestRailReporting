@@ -20,7 +20,7 @@ public class ProductionDefaultEntity {
     private String vpe;
 
     @JsonProperty
-    private String  material;
+    private String material;
 
     @JsonProperty
     private String materialCatalogName;

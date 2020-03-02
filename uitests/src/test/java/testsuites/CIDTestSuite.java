@@ -49,7 +49,7 @@ import settings.SettingsTests;
 
 @ProjectRunID("177")
 @RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses ({
+@Suite.SuiteClasses({
     AddScenarioTests.class,
     DeleteComparisonTests.class,
     EditPublicComparisonTests.class,

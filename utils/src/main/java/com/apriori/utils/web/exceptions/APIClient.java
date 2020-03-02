@@ -31,16 +31,16 @@ import java.net.URL;
 import java.util.Base64;
 
 public class APIClient {
-    private String m_user;
-    private String m_password;
-    private String m_url;
+    private String myUser;
+    private String myPassword;
+    private String myUrl;
 
-    public APIClient(String base_url) {
-        if (!base_url.endsWith("/")) {
-            base_url += "/";
+    public APIClient(String baseUrl) {
+        if (!baseUrl.endsWith("/")) {
+            baseUrl += "/";
         }
 
-        this.m_url = base_url + "index.php?/api/v2/";
+        this.myUrl = baseUrl + "index.php?/api/v2/";
     }
 
     /**
@@ -49,11 +49,11 @@ public class APIClient {
      * Returns/sets the user used for authenticating the API requests.
      */
     public String getUser() {
-        return this.m_user;
+        return this.myUser;
     }
 
     public void setUser(String user) {
-        this.m_user = user;
+        this.myUser = user;
     }
 
     /**
@@ -62,11 +62,11 @@ public class APIClient {
      * Returns/sets the password used for authenticating the API requests.
      */
     public String getPassword() {
-        return this.m_password;
+        return this.myPassword;
     }
 
     public void setPassword(String password) {
-        this.m_password = password;
+        this.myPassword = password;
     }
 
     /**
@@ -87,12 +87,12 @@ public class APIClient {
      * If 'get_attachment/:attachment_id', returns a String
      */
     public Object sendGet(String uri, String data)
-            throws MalformedURLException, IOException, APIException {
+        throws MalformedURLException, IOException, APIException {
         return this.sendRequest("GET", uri, data);
     }
 
     public Object sendGet(String uri) throws MalformedURLException,
-            IOException, APIException {
+        IOException, APIException {
         return this.sendRequest("GET", uri, null);
     }
 
@@ -114,18 +114,18 @@ public class APIClient {
      * same as java.util.Map.
      */
     public Object sendPost(String uri, Object data)
-            throws MalformedURLException, IOException, APIException {
+        throws MalformedURLException, IOException, APIException {
         return this.sendRequest("POST", uri, data);
     }
 
     private Object sendRequest(String method, String uri, Object data)
-            throws MalformedURLException, IOException, APIException {
-        URL url = new URL(this.m_url + uri);
+        throws MalformedURLException, IOException, APIException {
+        URL url = new URL(this.myUrl + uri);
         // Create the connection object and set the required HTTP method
         // (GET/POST) and headers (content type and basic auth).
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        String auth = getAuthorization(this.m_user, this.m_password);
+        String auth = getAuthorization(this.myUser, this.myPassword);
         conn.addRequestProperty("Authorization", "Basic " + auth);
 
         if (method.equals("POST")) {
@@ -143,16 +143,16 @@ public class APIClient {
 
                     conn.setDoOutput(true);
                     conn.addRequestProperty("Content-Type",
-                            "multipart/form-data; boundary=" + boundary);
+                        "multipart/form-data; boundary=" + boundary);
 
                     OutputStream ostreamBody = conn.getOutputStream();
                     BufferedWriter bodyWriter = new BufferedWriter(
-                            new OutputStreamWriter(ostreamBody));
+                        new OutputStreamWriter(ostreamBody));
 
                     bodyWriter.write("\n\n--" + boundary + "\r\n");
                     bodyWriter
-                            .write("Content-Disposition: form-data; name=\"attachment\"; filename=\""
-                                    + uploadFile.getName() + "\"");
+                        .write("Content-Disposition: form-data; name=\"attachment\"; filename=\""
+                            + uploadFile.getName() + "\"");
                     bodyWriter.write("\r\n\r\n");
                     bodyWriter.flush();
 
@@ -177,7 +177,7 @@ public class APIClient {
                 } else { // Not an attachment
                     conn.addRequestProperty("Content-Type", "application/json");
                     byte[] block = JSONValue.toJSONString(data).getBytes(
-                            "UTF-8");
+                        "UTF-8");
 
                     conn.setDoOutput(true);
                     OutputStream ostream = conn.getOutputStream();
@@ -199,7 +199,7 @@ public class APIClient {
             istream = conn.getErrorStream();
             if (istream == null) {
                 throw new APIException("TestRail API return HTTP " + status
-                        + " (No additional error message received)");
+                    + " (No additional error message received)");
             }
         } else {
             istream = conn.getInputStream();
@@ -225,7 +225,7 @@ public class APIClient {
         String text = "";
         if (istream != null) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    istream, "UTF-8"));
+                istream, "UTF-8"));
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -256,7 +256,7 @@ public class APIClient {
             }
 
             throw new APIException("TestRail API returned HTTP " + status + "("
-                    + error + ")");
+                + error + ")");
         }
 
         return result;
@@ -265,7 +265,7 @@ public class APIClient {
     private static String getAuthorization(String user, String password) {
         try {
             return new String(Base64.getEncoder().encode(
-                    (user + ":" + password).getBytes()));
+                (user + ":" + password).getBytes()));
         } catch (IllegalArgumentException e) {
             // Not thrown
         }

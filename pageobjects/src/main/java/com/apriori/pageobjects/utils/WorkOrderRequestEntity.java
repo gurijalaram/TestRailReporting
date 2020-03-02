@@ -80,7 +80,7 @@ public class WorkOrderRequestEntity {
     }
 
     public WorkOrderRequestEntity setWorkspace(WorkspaceEnum workspace) {
-        this.workspace =  Collections.singletonList(workspace);
+        this.workspace = Collections.singletonList(workspace);
         return this;
     }
 

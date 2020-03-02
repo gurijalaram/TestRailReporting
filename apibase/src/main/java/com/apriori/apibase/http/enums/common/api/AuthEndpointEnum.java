@@ -7,7 +7,7 @@ import com.apriori.apibase.http.enums.common.ExternalEndpointEnum;
  */
 public enum AuthEndpointEnum implements ExternalEndpointEnum {
 
-    POST_AUTH("/auth/token"),;
+    POST_AUTH("/auth/token");
 
     private final String endpoint;
 

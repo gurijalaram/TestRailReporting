@@ -41,6 +41,7 @@ public class AnalysisPage extends LoadableComponent<AnalysisPage> {
 
     /**
      * Selects the properties button
+     *
      * @return new page object
      */
     public PropertiesDialogPage selectProperties() {
@@ -50,6 +51,7 @@ public class AnalysisPage extends LoadableComponent<AnalysisPage> {
 
     /**
      * Selects the properties button to close
+     *
      * @return new page object
      */
     public EvaluatePage closeProperties() {

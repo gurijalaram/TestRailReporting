@@ -9,10 +9,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class ServiceConnector {
-    
+
     /**
      * Use this function to send a request url with out Rest Assured encoding the string first
-     * 
+     *
      * @param url
      * @param klass
      * @return
@@ -30,10 +30,10 @@ public class ServiceConnector {
             .disableEncoding()
             .get();
     }
-    
+
     /**
      * Send a url encoded request
-     * 
+     *
      * @param url
      * @param klass
      * @return
@@ -51,20 +51,20 @@ public class ServiceConnector {
             .enableEncoding()
             .get();
     }
-    
+
     /**
      * Generate a url for a micro-service using default parameters
-     * 
+     *
      * @return
      */
     public static String getServiceUrl() {
         return getServiceUrl(null, null, null);
     }
-    
-    
+
+
     /**
      * Generate a url for a micro-service
-     * 
+     *
      * @param service
      * @return
      */
@@ -72,29 +72,29 @@ public class ServiceConnector {
         if (host == null || host.isEmpty()) {
             host = Constants.getServiceHost();
         }
-        
+
         if (port == null || port.isEmpty()) {
             port = Constants.getServicePort();
         }
-        
+
         if (secretKey == null || secretKey.isEmpty()) {
             secretKey = Constants.getSecretKey();
         }
-        
+
         StringBuilder url = new StringBuilder();
         url.append(String.format("http://%s", host));
-        
+
         if (port != null) {
             url.append(String.format(":%s", port));
         }
 
-        url.append("/%s?key=" + secretKey);       
+        url.append("/%s?key=" + secretKey);
         return url.toString();
     }
-    
+
     /**
      * Encode a url string using the Java encoder instead of the Rest-Assured encoder
-     * 
+     *
      * @param url
      * @param klass
      * @return
@@ -105,12 +105,12 @@ public class ServiceConnector {
         } catch (UnsupportedEncodingException e) {
             throw new AssertionError("Unknown encoding" + e);
         }
-        
+
     }
-    
+
     /**
      * Only spaces are encoded in url parameters
-     */    
+     */
     public static String encodeSpaces(String url) {
         return url.replace(" ", "%20");
     }

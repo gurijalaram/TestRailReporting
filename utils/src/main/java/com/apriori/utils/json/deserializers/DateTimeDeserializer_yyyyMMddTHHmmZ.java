@@ -20,7 +20,7 @@ public class DateTimeDeserializer_yyyyMMddTHHmmZ extends JsonDeserializer<LocalD
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-            throws IOException {
+        throws IOException {
 
         if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_STRING)) {
             LocalDateTime temp = LocalDateTime.parse(jsonParser.getText(), formatter);

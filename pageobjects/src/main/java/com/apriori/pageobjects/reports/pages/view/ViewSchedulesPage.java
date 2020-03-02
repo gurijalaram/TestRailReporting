@@ -40,6 +40,7 @@ public class ViewSchedulesPage extends ReportsPageHeader {
 
     /**
      * Get page title text
+     *
      * @return String - page title text
      */
     public String getSchedulesTitleText() {
