@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -175,6 +174,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(okButton);
 
     }
 
@@ -305,7 +305,7 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @param currencyToCheck
      * @param className
-     * @param <T> return type - any page object that is specified
+     * @param <T>             return type - any page object that is specified
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
@@ -471,7 +471,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage clickReset() {
         pageUtils.waitForElementAndClick(resetButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + "0");
         return this;
     }
 
@@ -543,7 +542,6 @@ public class GenericReportPage extends ReportsPageHeader {
         int expected = Integer.parseInt(savedOptionsDropDown.getAttribute("childElementCount")) - 1;
         pageUtils.waitForElementAndClick(removeButton);
         pageUtils.waitForElementAndClick(confirmRemove);
-        pageUtils.checkElementAttribute(savedOptionsDropDown, "childElementCount", Integer.toString(expected));
         return this;
     }
 
@@ -552,16 +550,27 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return boolean
      */
-    public boolean isOptionInDropDown(String optionName) {
-        boolean isPresent;
+    public boolean isOptionInDropDown(String optionName, int expected) {
+        String optionXpath = "//select[@id='reportOptionsSelect']//option[@value=\'" + optionName + "\']";
+        pageUtils.checkElementAttribute(savedOptionsDropDown, "childElementCount", Integer.toString(expected));
         if (driver.findElements(By.xpath("//div[@id='inputControls']//div[@class='sub header hidden']")).size() > 0) {
             return false;
         } else {
             pageUtils.waitForElementToAppear(savedOptionsDropDown);
+            //pageUtils.waitForElementToAppear(By.xpath(optionXpath));
             Select dropDown = new Select(savedOptionsDropDown);
             List<WebElement> options = dropDown.getOptions();
 
             return options.stream().anyMatch(we -> we.getText().equals(optionName));
         }
+    }
+
+    /**
+     * Wait for expected export count
+     *
+     */
+    public GenericReportPage waitForExpectedExportCount(String expected) {
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        return this;
     }
 }

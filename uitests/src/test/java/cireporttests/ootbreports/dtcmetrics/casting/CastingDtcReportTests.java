@@ -135,7 +135,8 @@ public class CastingDtcReportTests extends TestBase {
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
-            .clickReset();
+            .clickReset()
+            .waitForExpectedExportCount("0");
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
     }
@@ -160,6 +161,6 @@ public class CastingDtcReportTests extends TestBase {
 
         genericReportPage.clickRemove();
 
-        assertThat(genericReportPage.isOptionInDropDown("Saved Config"), is(false));
+        assertThat(genericReportPage.isOptionInDropDown("Saved Config", 1), is(false));
     }
 }
