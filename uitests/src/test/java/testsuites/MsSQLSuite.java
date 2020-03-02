@@ -9,8 +9,8 @@ import org.junit.runners.Suite;
 import testsuites.suiteinterface.MySQLTest;
 
 @RunWith(ConcurrentSuiteRunner.class)
-@Categories.IncludeCategory(MsSQLTest.class)
 @Categories.ExcludeCategory(MySQLTest.class)
+@Categories.IncludeCategory(MsSQLTest.class)
 @Suite.SuiteClasses ({
         LoginTests.class
 })
