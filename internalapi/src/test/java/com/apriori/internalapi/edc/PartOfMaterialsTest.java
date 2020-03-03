@@ -11,7 +11,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -22,11 +21,11 @@ public class PartOfMaterialsTest {
     private static UserTestDataUtil userTestDataUtil;
     private static UserDataEDC userData;
 
-    @BeforeClass
-    public static void setUp() {
-        userTestDataUtil = new UserTestDataUtil();
-        userData = userTestDataUtil.initBillOfMaterials();
-    }
+//    @BeforeClass
+//    public static void setUp() {
+//        userTestDataUtil = new UserTestDataUtil();
+//        userData = userTestDataUtil.initBillOfMaterials();
+//    }
 
     @AfterClass
     public static void clearTestData() {
@@ -37,6 +36,8 @@ public class PartOfMaterialsTest {
     @Description("Get list of parts")
     @Severity(SeverityLevel.NORMAL)
     public void getParts() {
+        userTestDataUtil = new UserTestDataUtil();
+        userData = userTestDataUtil.initBillOfMaterials();
         new HTTPRequest().unauthorized()
             .customizeRequest()
             .setEndpoint(PartsAPIEnum.GET_PARTS_BY_BILL_AND_LINE_IDENTITY)
@@ -53,7 +54,8 @@ public class PartOfMaterialsTest {
     @Description("Post the part to environment")
     @Severity(SeverityLevel.NORMAL)
     public void postPart() {
-
+        userTestDataUtil = new UserTestDataUtil();
+        userData = userTestDataUtil.initBillOfMaterials();
         new HTTPRequest().unauthorized()
             .customizeRequest()
             .setHeaders(userData.getAuthorizationHeaders())
@@ -73,7 +75,8 @@ public class PartOfMaterialsTest {
     @Description("Get list bill of materials")
     @Severity(SeverityLevel.NORMAL)
     public void costPart() {
-
+        userTestDataUtil = new UserTestDataUtil();
+        userData = userTestDataUtil.initBillOfMaterials();
         List<String> costingIdentity = userData.getLineItem().getMaterialParts().stream()
             .map(MaterialPart::getIdentity)
             .collect(Collectors.toList());
@@ -95,6 +98,8 @@ public class PartOfMaterialsTest {
     @Description("Patch the part to environment")
     @Severity(SeverityLevel.NORMAL)
     public void updatePart() {
+        userTestDataUtil = new UserTestDataUtil();
+        userData = userTestDataUtil.initBillOfMaterials();
         doUpdatePart();
     }
 
