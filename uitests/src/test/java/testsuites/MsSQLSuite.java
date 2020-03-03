@@ -2,6 +2,7 @@ package testsuites;
 
 import cireporttests.navigation.NavigationTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
+import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
 import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
@@ -22,7 +23,8 @@ import testsuites.suiteinterface.MySQLTest;
         AssemblyDetailsReportTests.class,
         MachiningDtcReportTests.class,
         CastingDtcReportTests.class,
-        CastingDtcComparisonReportTests.class
+        CastingDtcComparisonReportTests.class,
+        CastingDtcDetailsReportTests.class
 })
 
 public class MsSQLSuite {
