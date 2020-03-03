@@ -6,14 +6,12 @@ import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
 import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
-import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import org.junit.experimental.categories.Categories;
 import testsuites.suiteinterface.MsSQLTest;
 import cireporttests.login.LoginTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuites.suiteinterface.MySQLTest;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Categories.IncludeCategory(MsSQLTest.class)
@@ -24,7 +22,8 @@ import testsuites.suiteinterface.MySQLTest;
         MachiningDtcReportTests.class,
         CastingDtcReportTests.class,
         CastingDtcComparisonReportTests.class,
-        CastingDtcDetailsReportTests.class
+        CastingDtcDetailsReportTests.class,
+        ciadmintests.navigation.NavigationTests.class
 })
 
 public class MsSQLSuite {

@@ -22,7 +22,8 @@ import org.junit.runners.Suite;
         MachiningDtcReportTests.class,
         CastingDtcReportTests.class,
         CastingDtcComparisonReportTests.class,
-        CastingDtcDetailsReportTests.class
+        CastingDtcDetailsReportTests.class,
+        ciadmintests.navigation.NavigationTests.class
 })
 
 public class OracleSuite {
