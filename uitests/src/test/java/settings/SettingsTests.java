@@ -49,7 +49,7 @@ public class SettingsTests extends TestBase {
 
     @After
     public void resetAllSettings() {
-        if(currentUser != null) {
+        if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
         }
     }

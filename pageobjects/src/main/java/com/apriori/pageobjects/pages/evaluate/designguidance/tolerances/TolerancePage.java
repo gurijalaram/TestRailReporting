@@ -125,8 +125,9 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     /**
      * Gets the cell details
+     *
      * @param toleranceType - tolerance type
-     * @param column - the column
+     * @param column        - the column
      * @return string
      */
     public String getToleranceCell(String toleranceType, String column) {
@@ -136,7 +137,8 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
 
     /**
      * Gets the cell details
-     * @param gcd - gcd
+     *
+     * @param gcd    - gcd
      * @param column - the column
      * @return string
      */

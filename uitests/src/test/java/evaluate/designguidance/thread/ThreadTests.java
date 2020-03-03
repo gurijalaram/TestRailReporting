@@ -44,7 +44,7 @@ public class ThreadTests extends TestBase {
 
     @After
     public void resetPreferences() {
-        if(currentUser != null) {
+        if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
         }
     }

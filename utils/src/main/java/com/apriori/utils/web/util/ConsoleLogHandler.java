@@ -25,12 +25,12 @@ public class ConsoleLogHandler implements WebDriverEventListener {
     private static final Logger logger = LoggerFactory.getLogger(ConsoleLogHandler.class);
     private Level levelOfThrowingAssertion;
     private List<String> blacklistedURLs = Arrays.asList(
-            "pbs.twimg.com",
-            "doubleclick.net",
-            "chrome-extension://invalid/",
-            "bootstrap.min.js",
-            "secure.gravatar.com",
-            "cid-te.awsdev.apriori.com/apriori/cost/session/ws/userbean"
+        "pbs.twimg.com",
+        "doubleclick.net",
+        "chrome-extension://invalid/",
+        "bootstrap.min.js",
+        "secure.gravatar.com",
+        "cid-te.awsdev.apriori.com/apriori/cost/session/ws/userbean"
     );
 
     /**

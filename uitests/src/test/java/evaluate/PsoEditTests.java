@@ -4,8 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -61,7 +61,7 @@ public class PsoEditTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"771", "772", "773"})
     @Description("Die Casting edit PSO")
-    public void DieCastPSO() {
+    public void dieCastPSO() {
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting-Die.stp"))
@@ -91,7 +91,7 @@ public class PsoEditTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"769", "770"})
     @Description("Sand Casting edit PSO")
-    public void SandCastPSO() {
+    public void sandCastPSO() {
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SandCast.x_t"))
@@ -119,7 +119,7 @@ public class PsoEditTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"768"})
     @Description("Machining - Validate the user can edit bundle sawing count")
-    public void MachiningPSO() {
+    public void machiningPSO() {
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
@@ -146,7 +146,7 @@ public class PsoEditTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"774"})
     @Description("Powder Metal - Validate the user can edit the material allowance")
-    public void PowderMetalPSO() {
+    public void powderMetalPSO() {
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
@@ -173,7 +173,7 @@ public class PsoEditTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"775"})
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
-    public void SheetPlasticPSO() {
+    public void sheetPlasticPSO() {
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("sheet_plastic.STEP"))

@@ -94,6 +94,7 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
 
     /**
      * Gets table values for PPC, CI, FBC and CT
+     *
      * @return List of BigDecimals
      */
     public ArrayList<BigDecimal> getTableValues(String column) {
@@ -111,6 +112,7 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
 
     /**
      * Checks if columns are already set properly
+     *
      * @param columnsToAdd
      * @param columnsToRemove
      * @return current page object
@@ -120,7 +122,7 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
         int count = 0;
         for (Element header : evaluateComponentView.select("div[class='v-grid-tablewrapper'] > table > thead > tr:nth-child(1) > th")) {
             if (header.text().equals("Cycle Time (s)") || header.text().equals("Per Part Cost (USD)")
-                    || header.text().equals("Fully Burdened Cost (USD)") || header.text().equals("Capital Investment (USD)")) {
+                || header.text().equals("Fully Burdened Cost (USD)") || header.text().equals("Capital Investment (USD)")) {
                 count++;
             }
         }
@@ -135,6 +137,7 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
 
     /**
      * Adds multiple columns
+     *
      * @param columnsToAdd - list of columns to add
      * @return current page object
      */
@@ -164,6 +167,7 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
 
     /**
      * Removes multiple columns
+     *
      * @param columnsToRemove - list of columns to remove
      * @return current page object
      */

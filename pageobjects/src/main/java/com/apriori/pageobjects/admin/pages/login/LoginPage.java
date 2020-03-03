@@ -207,6 +207,7 @@ public class LoginPage extends AdminHeader {
 
     /**
      * Wait for privacy policy link visibility
+     *
      * @return current page object
      */
     public LoginPage waitForPrivacyPolicyLinkVisibility() {
@@ -216,6 +217,7 @@ public class LoginPage extends AdminHeader {
 
     /**
      * Clicks Privacy Policy link
+     *
      * @return Privacy Policy page object
      */
     public PrivacyPolicyPage goToPrivacyPolicy() {

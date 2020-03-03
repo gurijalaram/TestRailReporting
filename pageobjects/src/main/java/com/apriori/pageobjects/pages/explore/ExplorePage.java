@@ -343,8 +343,9 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Sets the column order
+     *
      * @param columnName - column name
-     * @param order - column order
+     * @param order      - column order
      * @return current page object
      */
     private ExplorePage setColumn(String columnName, String order) {

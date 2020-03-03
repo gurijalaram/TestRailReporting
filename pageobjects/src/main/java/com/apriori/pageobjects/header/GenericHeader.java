@@ -115,8 +115,9 @@ public class GenericHeader extends PageHeader {
 
     /**
      * Fails to upload a file and navigates to warning page
+     *
      * @param scenarioName - the name of the scenario
-     * @param filePath - location of the file
+     * @param filePath     - location of the file
      * @return new page object
      */
     public WarningPage failedUploadFile(String scenarioName, File filePath) {
@@ -222,8 +223,8 @@ public class GenericHeader extends PageHeader {
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
         pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectStatus(status)
-                .selectCostMaturity(costMaturity)
-                .selectAssignee(assignee);
+            .selectCostMaturity(costMaturity)
+            .selectAssignee(assignee);
         return new PublishPage(driver);
     }
 

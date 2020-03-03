@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
-import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -34,6 +33,7 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
 
     /**
      * Get page title text
+     *
      * @return String - page title text
      */
     public String getSearchResultsTitleText() {
@@ -43,6 +43,7 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
 
     /**
      * Get name of a report
+     *
      * @return String - text of report name
      */
     public String getReportName(String reportName) {

@@ -4,7 +4,6 @@
   "$id": "htdsffroot.json",
   "type": "object",
   "title": "The Root Schema",
-
   "properties": {
     "isReadyForExport": {
       "$id": "#/properties/isReadyForExport",

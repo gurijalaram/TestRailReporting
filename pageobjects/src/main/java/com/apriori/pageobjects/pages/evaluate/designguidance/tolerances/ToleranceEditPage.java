@@ -108,7 +108,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
      * Checks the value is correct
      *
      * @param toleranceName - the tolerance
-     * @param text      - the string value
+     * @param text          - the string value
      * @return true/false
      */
     public boolean isTolerance(String toleranceName, String text) {
@@ -168,6 +168,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
     /**
      * Checks if the tolerance field is displayed and editable
+     *
      * @param toleranceName - tolerance name
      * @return true/false
      */

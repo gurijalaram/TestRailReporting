@@ -154,8 +154,8 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     /**
      * Gets the cell details
      *
-     * @param issueType         - tolerance type
-     * @param column            - the column
+     * @param issueType - tolerance type
+     * @param column    - the column
      * @return string
      */
     public String getInvestigationCell(String issueType, String column) {

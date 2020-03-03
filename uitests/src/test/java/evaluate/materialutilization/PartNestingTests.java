@@ -85,12 +85,12 @@ public class PartNestingTests extends TestBase {
             .goToPartNestingTab();
 
         assertThat(partNestingPage.isTruePartNesting("checked"), is("true"));
-        }
+    }
 
-        @Test
-        @TestRail(testCaseId = {})
-        @Description("Select Machine Default method of Part Nesting and cost")
-        public void partNestingTabMachineDefaultNesting() {
+    @Test
+    @TestRail(testCaseId = {})
+    @Description("Select Machine Default method of Part Nesting and cost")
+    public void partNestingTabMachineDefaultNesting() {
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))

@@ -1,26 +1,26 @@
 package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
-import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.MachiningDTCReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MachiningDtcReportTests extends TestBase {
 
@@ -42,10 +42,10 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
         repository = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToViewRepositoryPage()
-                .navigateToMachiningDTCFolder()
-                .waitForMachiningDTCReportsToAppear();
+            .login(UserUtil.getUser())
+            .navigateToViewRepositoryPage()
+            .navigateToMachiningDTCFolder()
+            .waitForMachiningDTCReportsToAppear();
 
         assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
 
@@ -57,8 +57,8 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
         library = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToLibraryPage();
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage();
 
         assertThat(reportName, is(equalTo(library.getReportName(reportName))));
     }
@@ -68,7 +68,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
         homePage = new LoginPage(driver)
-                .login(UserUtil.getUser());
+            .login(UserUtil.getUser());
 
         searchResults = new ViewSearchResultsPage(driver);
         homePage.searchForReport(reportName);
@@ -84,22 +84,22 @@ public class MachiningDtcReportTests extends TestBase {
         BigDecimal usdGrandTotal;
 
         machiningDTCReportPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToLibraryPage()
-                .navigateToReport(reportName)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
-                .scrollDownInputControls()
-                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-                .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDTCReportPage.class);
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(reportName)
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+            .scrollDownInputControls()
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+            .clickApplyAndOk()
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDTCReportPage.class);
 
         usdGrandTotal = machiningDTCReportPage.getValueFromCentralCircleInChart();
 
         machiningDTCReportPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-                .clickApplyAndOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), MachiningDTCReportPage.class);
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+            .clickApplyAndOk()
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), MachiningDTCReportPage.class);
 
         gbpGrandTotal = machiningDTCReportPage.getValueFromCentralCircleInChart();
 

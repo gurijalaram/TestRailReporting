@@ -40,6 +40,7 @@ public class ManageRolesPage extends ReportsPageHeader {
 
     /**
      * Get page title text
+     *
      * @return String - page title text
      */
     public String getRolesTitleText() {

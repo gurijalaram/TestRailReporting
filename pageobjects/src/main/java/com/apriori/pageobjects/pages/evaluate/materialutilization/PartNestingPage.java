@@ -69,6 +69,7 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     /**
      * Selects Rectangular radio button
+     *
      * @return current page object
      */
     public PartNestingPage selectRectangularNesting() {
@@ -78,6 +79,7 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     /**
      * Selects True-Part Shape radio button
+     *
      * @return current page object
      */
     public PartNestingPage selectTrue_PartShapeNesting() {
@@ -87,6 +89,7 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     /**
      * Selects Machine Default radio button
+     *
      * @return current page object
      */
     public PartNestingPage selectMachineDefaultNesting() {
@@ -96,6 +99,7 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     /**
      * Closes the material & utilization
+     *
      * @return new page object
      */
     public EvaluatePage closePartNestingPanel() {
@@ -105,6 +109,7 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     /**
      * Gets Selected Stock Sheet
+     *
      * @return string
      */
     public String getSelectedSheet() {
@@ -113,6 +118,7 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     /**
      * Gets computed Blank Size
+     *
      * @return string
      */
     public String getBlankSize() {
@@ -121,6 +127,7 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     /**
      * Gets Number of Parts Per Sheet
+     *
      * @return string
      */
     public String getPartsPerSheet() {
@@ -156,7 +163,8 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     /**
      * Expands the panel
-     *@return current page object
+     *
+     * @return current page object
      */
     public PartNestingPage expandPanel() {
         pageUtils.waitForElementAndClick(chevronButton);

@@ -25,8 +25,8 @@ public class ColumnUtils {
     /**
      * Maps the column header to the cell value based on the webElement
      *
-     * @param table       - the table
-     * @param column      - the column
+     * @param table      - the table
+     * @param column     - the column
      * @param rowLocator - the locator of the cell
      * @return string
      */

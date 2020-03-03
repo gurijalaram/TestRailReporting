@@ -15,7 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
-public class CdsApplications {    
+public class CdsApplications {
     private String url;
 
     @Before
@@ -29,10 +29,10 @@ public class CdsApplications {
     @Description("API returns a list of all the available applications in the CDS DB")
     public void getAllApplications() {
         url = String.format(url, "applications");
-        Applications response = (Applications)ServiceConnector.getService(url, Applications.class);   
+        Applications response = (Applications) ServiceConnector.getService(url, Applications.class);
         validateApplications(response);
     }
-    
+
 
     @Test
     @TestRail(testCaseId = "3700")
@@ -40,10 +40,10 @@ public class CdsApplications {
     public void getApplicationById() {
         url = String.format(url, 
             String.format("applications/%s", ServiceConnector.urlEncode(Constants.getCdsIdentityApplication())));
-        Application response = (Application)ServiceConnector.getServiceNoEncoding(url, Application.class);
+        Application response = (Application) ServiceConnector.getServiceNoEncoding(url, Application.class);
         validateApplication(response);
     }
-    
+
     /*
      * Application Validation
      */
@@ -52,14 +52,14 @@ public class CdsApplications {
         Arrays.stream(applications)
             .forEach(a -> validate(a));
     }
-    
+
     private void validateApplication(Application applicationResponse) {
         Application application = applicationResponse.getResponse();
         validate(application);
     }
-    
+
     private void validate(Object applicationObj) {
-        Application application = (Application)applicationObj;
+        Application application = (Application) applicationObj;
         Assert.assertTrue(application.getIdentity().matches("^#[a-zA-Z0-9]+@[a-zA-Z0-9]+#$"));
     }
 }

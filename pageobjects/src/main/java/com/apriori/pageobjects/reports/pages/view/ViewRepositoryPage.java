@@ -4,7 +4,6 @@ import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.utils.PageUtils;
 
-import org.apache.commons.collections4.Get;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -100,6 +99,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     /**
      * Navigate to Machining DTC folder
+     *
      * @return current page object
      */
     public ViewRepositoryPage navigateToMachiningDTCFolder() {
@@ -127,6 +127,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     /**
      * Waits for Machining DTC reports to appear
+     *
      * @return current page object
      */
     public ViewRepositoryPage waitForMachiningDTCReportsToAppear() {

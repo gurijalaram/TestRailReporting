@@ -7,7 +7,7 @@ import com.apriori.apibase.http.enums.common.InternalEndpointEnum;
  */
 public enum CommonEndpointEnum implements InternalEndpointEnum {
 
-    POST_SESSIONID("/login"),;
+    POST_SESSIONID("/login");
 
     private final String endpoint;
 

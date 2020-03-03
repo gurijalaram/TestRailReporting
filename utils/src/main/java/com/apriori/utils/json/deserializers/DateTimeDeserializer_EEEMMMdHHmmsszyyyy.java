@@ -15,11 +15,11 @@ import java.time.format.DateTimeFormatter;
 public class DateTimeDeserializer_EEEMMMdHHmmsszyyyy extends JsonDeserializer<LocalDateTime> {
 
     private static DateTimeFormatter formatter =
-            DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss z yyyy");
+        DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss z yyyy");
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-            throws IOException {
+        throws IOException {
 
         if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_STRING)) {
             return LocalDateTime.parse(jsonParser.getText(), formatter);

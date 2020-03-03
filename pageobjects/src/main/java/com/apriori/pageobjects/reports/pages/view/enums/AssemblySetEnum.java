@@ -13,6 +13,7 @@ public enum AssemblySetEnum {
 
     /**
      * Gets assembly set name
+     *
      * @return String
      */
     public String getAssemblySetName() {

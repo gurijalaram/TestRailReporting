@@ -140,8 +140,8 @@ public class MaterialStockTests extends TestBase {
             .openMaterialComposition();
 
         materialUtilizationPage = new MaterialUtilizationPage(driver)
-                .toggleMaterialPropertiesPanel()
-                .toggleUtilizationPanel();
+            .toggleMaterialPropertiesPanel()
+            .toggleUtilizationPanel();
 
         assertThat(materialUtilizationPage.utilizationPanelExpanded(), is("collapsed"));
         assertThat(materialUtilizationPage.materialPanelExpanded(), is("collapsed"));

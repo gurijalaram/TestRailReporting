@@ -49,7 +49,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @After
     public void resetSettings() {
-        if(currentUser != null) {
+        if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
         }
     }
@@ -738,7 +738,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-       assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), CoreMatchers.is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), CoreMatchers.is(true));
     }
 
     @Test

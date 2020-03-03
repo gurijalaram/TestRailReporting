@@ -58,7 +58,7 @@ public class Constants {
 
 
     private static final ConstantsInit constantsInit;
-    
+
     static {
         System.setProperty(defaultEnvironmentKey, environment);
 
@@ -77,7 +77,7 @@ public class Constants {
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 
     private static String buildMode;
-    
+
     public static String getBuildMode() {
         if (buildMode == null) {
             buildMode = System.getProperty(defaultBuildModeKey, defaultBuildModeValue);
@@ -93,7 +93,7 @@ public class Constants {
 
         return baseUrl;
     }
-    
+
     public static String getServiceHost() {
         if (serviceHost == null) {
             serviceHost = System.getProperty(defaultServiceHostKey, constantsInit.serviceHost());
@@ -101,14 +101,14 @@ public class Constants {
 
         return serviceHost;
     }
-    
+
     public static String getServicePort() {
         if (servicePort == null) {
             servicePort = System.getProperty(defaultServicePortKey, constantsInit.servicePort());
         }
         return servicePort;
     }
-    
+
     public static String getServiceName() {
         if (serviceName == null) {
             serviceName = System.getProperty(defaultServiceNameKey, constantsInit.serviceName());
@@ -116,7 +116,7 @@ public class Constants {
 
         return serviceName;
     }
-    
+
     public static String getSecretKey() {
         if (secretKey == null) {
             secretKey = System.getProperty(defaultSecretKeyKey, constantsInit.secretKey());
@@ -124,7 +124,7 @@ public class Constants {
 
         return secretKey;
     }
-    
+
     public static String getCdsIdentityUser() {
         if (cdsIdentityUser == null) {
             cdsIdentityUser = System.getProperty(defaultCdsIdentityUserKey, constantsInit.cdsIdentityUser());
@@ -132,7 +132,7 @@ public class Constants {
 
         return cdsIdentityUser;
     }
-    
+
     public static String getCdsIdentityRole() {
         if (cdsIdentityRole == null) {
             cdsIdentityRole = System.getProperty(defaultCdsIdentityRoleKey, constantsInit.cdsIdentityRole());
@@ -140,7 +140,7 @@ public class Constants {
 
         return cdsIdentityRole;
     }
-    
+
     public static String getCdsIdentityCustomer() {
         if (cdsIdentityCustomer == null) {
             cdsIdentityCustomer = System.getProperty(defaultCdsIdentityCustomerKey, constantsInit.cdsIdentityCustomer());
@@ -148,7 +148,7 @@ public class Constants {
 
         return cdsIdentityCustomer;
     }
-    
+
     public static String getCdsIdentityApplication() {
         if (cdsIdentityApplication == null) {
             cdsIdentityApplication = System.getProperty(defaultCdsIdentityApplicationKey, constantsInit.cdsIdentityApplication());

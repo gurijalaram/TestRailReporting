@@ -45,7 +45,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialInfo("Aluminum AlSi10Mg"), is(true));
 
-            evaluatePage.openMaterialCompositionTable()
+        evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Duraform ProX GF")
             .apply()
             .costScenario();
@@ -333,11 +333,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
 
-        String ScenarioName = new Util().getScenarioName();
+        String scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(ScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
@@ -351,7 +351,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(ScenarioName, "bracket_basic");
+            .openScenario(scenarioName, "bracket_basic");
 
         assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
     }

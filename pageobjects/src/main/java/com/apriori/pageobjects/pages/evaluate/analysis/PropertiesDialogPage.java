@@ -58,6 +58,7 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
 
     /**
      * Closes the dropdown
+     *
      * @param dropdown - the dropdown to be selected
      * @return current page object
      */
@@ -71,6 +72,7 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
 
     /**
      * Opens the dropdown
+     *
      * @param dropdown - the dropdown to be selected
      * @return current page object
      */
@@ -90,6 +92,7 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
 
     /**
      * Check the GCD name is displayed
+     *
      * @param gcdName - the gcd name
      * @return true/false
      */
@@ -98,8 +101,10 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
         return driver.findElement(gcd).isDisplayed();
     }
 
-    /** Gets the properties
+    /**
+     * Gets the properties
      * The fully qualified name of the property must be entered as the locator looks for an exact match eg. "Finished Area (mm^2)"
+     *
      * @param properties
      * @return string
      */

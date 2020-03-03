@@ -15,6 +15,7 @@ public enum AssemblyReportsEnum {
 
     /**
      * Gets report name from Enum
+     *
      * @return String
      */
     public String getReportName() {

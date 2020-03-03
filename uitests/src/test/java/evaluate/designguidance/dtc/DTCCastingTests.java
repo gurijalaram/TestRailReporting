@@ -51,7 +51,7 @@ public class DTCCastingTests extends TestBase {
 
     @After
     public void resetSettings() {
-        if(currentUser != null) {
+        if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
         }
     }

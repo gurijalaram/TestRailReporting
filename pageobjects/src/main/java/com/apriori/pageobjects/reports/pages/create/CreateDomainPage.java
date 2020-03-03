@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,14 +40,16 @@ public class CreateDomainPage extends ReportsPageHeader {
 
     /**
      * Gets current URL of new tab
+     *
      * @return String
      */
     public String getCurrentUrl() {
         return pageUtils.getCurrentUrl();
     }
 
-    /**]
+    /**
      * Gets dialog isDisplayed value
+     *
      * @return boolean - isDisplayed
      */
     public boolean isDialogDisplayed() {
@@ -58,6 +59,7 @@ public class CreateDomainPage extends ReportsPageHeader {
 
     /**
      * Gets dialog isEnabled value
+     *
      * @return boolean - is Enabled
      */
     public boolean isDialogEnabled() {
@@ -67,6 +69,7 @@ public class CreateDomainPage extends ReportsPageHeader {
 
     /**
      * Gets URL to assert against
+     *
      * @return String
      */
     public String getUrlToCheck() {

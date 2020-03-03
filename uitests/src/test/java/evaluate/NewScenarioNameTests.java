@@ -93,26 +93,26 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
     public void multipleUpload() {
 
-        String ScenarioA = new Util().getScenarioName();
-        String ScenarioB = new Util().getScenarioName();
-        String ScenarioC = new Util().getScenarioName();
+        String scenarioA = new Util().getScenarioName();
+        String scenarioB = new Util().getScenarioName();
+        String scenarioC = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
         explorePage = new ExplorePage(driver);
-        explorePage = explorePage.uploadFile(ScenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+        explorePage = explorePage.uploadFile(scenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .refreshCurrentPage()
-            .uploadFile(ScenarioB, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .uploadFile(scenarioB, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .refreshCurrentPage()
-            .uploadFile(ScenarioC, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .uploadFile(scenarioC, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -121,8 +121,8 @@ public class NewScenarioNameTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "MultiUpload")
             .apply(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(ScenarioA, "MultiUpload"), equalTo(1));
-        assertThat(explorePage.getListOfScenarios(ScenarioB, "MultiUpload"), equalTo(1));
-        assertThat(explorePage.getListOfScenarios(ScenarioC, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(scenarioA, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(scenarioB, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(scenarioC, "MultiUpload"), equalTo(1));
     }
 }

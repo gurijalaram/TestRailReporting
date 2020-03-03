@@ -46,6 +46,7 @@ public class CiaUserGuide extends PageHeader {
 
     /**
      * Gets count of open tabs
+     *
      * @return int - open tab count
      */
     public int getTabCount() {
@@ -54,6 +55,7 @@ public class CiaUserGuide extends PageHeader {
 
     /**
      * Gets current URL of new tab
+     *
      * @return String
      */
     public String getCurrentUrl() {
@@ -62,6 +64,7 @@ public class CiaUserGuide extends PageHeader {
 
     /**
      * Gets page heading of Admin User Guide page
+     *
      * @return String - page title
      */
     public String getAdminUserGuidePageHeading() {

@@ -6,7 +6,6 @@ import com.apriori.utils.web.driver.TestType;
 import com.apriori.utils.web.util.ConsoleLogger;
 
 import io.qameta.allure.Attachment;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.rules.MethodRule;
@@ -96,9 +95,9 @@ public class TestRule implements MethodRule {
                         }
                     }
                     logger.debug("Closing driver" + " for "
-                            + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "."
-                            + frameworkMethod.getName() + ": " +
-                            (testBaseNew.getDriver() != null ? testBaseNew.getDriver().hashCode() : "null"));
+                        + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "."
+                        + frameworkMethod.getName() + ": " +
+                        (testBaseNew.getDriver() != null ? testBaseNew.getDriver().hashCode() : "null"));
 
                     if (testBaseNew.getDriver() == null) {
                         logger.debug("Driver object was not created");
@@ -175,10 +174,11 @@ public class TestRule implements MethodRule {
             } else {
                 screenshot = ((TakesScreenshot) testBase.getDriver()).getScreenshotAs(OutputType.FILE);
             }
-            filename = "." + File.separator + "target" + File.separator + "screenshots" + File.separator + "screenshot-" + className + "-" + testName + "-" + testBase.getBrowser() + errorNumber + ".png";
+            filename = File.separator + "target" + File.separator + "screenshots" + File.separator + "screenshot-" + className + "-" + testName + "-" + testBase.getBrowser() + errorNumber + ".png";
             filePath = new File(filename).getCanonicalPath();
             FileUtils.copyFile(screenshot, new File(filename));
         } catch (Exception e) {
+            logger.debug(e.getMessage());
         }
         return filePath;
     }
