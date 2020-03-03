@@ -1,6 +1,7 @@
 package testsuites;
 
 import cireporttests.navigation.NavigationTests;
+import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
 import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
@@ -18,7 +19,8 @@ import testsuites.suiteinterface.MySQLTest;
         LoginTests.class,
         NavigationTests.class,
         AssemblyDetailsReportTests.class,
-        MachiningDtcReportTests.class
+        MachiningDtcReportTests.class,
+        CastingDtcReportTests.class
 })
 
 public class MsSQLSuite {
