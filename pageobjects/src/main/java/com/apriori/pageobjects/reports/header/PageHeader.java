@@ -18,6 +18,7 @@ import com.apriori.pageobjects.reports.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,6 +40,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     protected void isLoaded() throws Error {
 
     }
+
+    @FindBy(xpath = "//div[contains(text(), 'Repository')]")
+    private WebElement repositoryLink;
 
     @FindBy(id = "helpLink")
     private WebElement helpButton;
@@ -365,8 +369,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public HomePage searchForReport(String textToType) {
         pageUtils.waitForElementToBeClickable(searchInput);
         searchInput.sendKeys(textToType);
-        searchButton.click();
+        pageUtils.waitForElementAndClick(searchButton);
         pageUtils.isPageLoaded(homePageTitle);
+        pageUtils.isPageLoaded(repositoryLink);
         return new HomePage(driver);
     }
 }
