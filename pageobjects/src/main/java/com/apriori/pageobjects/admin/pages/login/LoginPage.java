@@ -19,17 +19,17 @@ public class LoginPage extends AdminHeader {
     private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     private static String loginPageURL = Constants.ciaURL;
 
-    @FindBy(css = "input[name='email']")
-    private WebElement email;
+    @FindBy(css = "input[name='username']")
+    private WebElement emailInput;
 
     @FindBy(css = "input[name='password']")
-    private WebElement password;
+    private WebElement passwordInput;
 
     @FindBy(css = "a[href='javascript:void(0)']")
     private WebElement forgotPassword;
 
-    @FindBy(css = "button[type='submit'")
-    private WebElement submitButton;
+    @FindBy(css = "button[id='login']")
+    private WebElement loginButton;
 
     @FindBy(css = "span[class='animated fadeInUp']")
     private WebElement loginMsg;
@@ -92,10 +92,9 @@ public class LoginPage extends AdminHeader {
      * @param emailAddress - user email address
      */
     private void enterEmail(String emailAddress) {
-        pageUtils.waitForElementToAppear(email);
-        email.click();
-        pageUtils.clearInput(email);
-        email.sendKeys(emailAddress);
+        pageUtils.waitForElementAndClick(emailInput);
+        pageUtils.clearInput(emailInput);
+        emailInput.sendKeys(emailAddress);
     }
 
     /**
@@ -104,17 +103,16 @@ public class LoginPage extends AdminHeader {
      * @param password - user password
      */
     private void enterPassword(String password) {
-        pageUtils.waitForElementToAppear(this.password);
-        this.password.click();
-        pageUtils.clearInput(this.password);
-        this.password.sendKeys(password);
+        pageUtils.waitForElementAndClick(passwordInput);
+        pageUtils.clearInput(this.passwordInput);
+        this.passwordInput.sendKeys(password);
     }
 
     /**
      * Single action to submit login credentials
      */
     private void submitLogin() {
-        submitButton.click();
+        loginButton.click();
     }
 
     /**
