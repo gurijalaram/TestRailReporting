@@ -37,6 +37,8 @@ import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class ProcessRoutingTests extends TestBase {
 
@@ -119,6 +121,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1649", "1656"})
     @Description("Validate the user can Change the process routing")
     public void changeRouting() {
@@ -145,6 +148,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1667", "1668"})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testRoutingCheckBox() {
@@ -173,6 +177,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1665", "1666"})
     @Description("Validate the information updates in the routing modal box")
     public void testlastRouting() {
@@ -236,6 +241,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1659"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
@@ -408,6 +414,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1658", "1254"})
     @Description("Validate the properties dialogue box updates with a newly selected and costed routing.")
     public void propertiesRouting() {
@@ -473,6 +480,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1657"})
     @Description("Validate routing out of date message appears")
     public void routingOutOfDate() {

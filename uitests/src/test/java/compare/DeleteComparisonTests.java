@@ -21,6 +21,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 
 public class DeleteComparisonTests extends TestBase {
@@ -80,6 +82,7 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"430"})
     @Description("Test a private comparison can be deleted from the comparison page")
     public void testDeletePrivateComparison() {
@@ -103,6 +106,7 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDeleteExplore() {
@@ -150,6 +154,7 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
     public void deletePublicComparisonPage() {

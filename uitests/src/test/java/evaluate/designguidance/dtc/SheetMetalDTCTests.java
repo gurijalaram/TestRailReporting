@@ -25,6 +25,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class SheetMetalDTCTests extends TestBase {
 
@@ -135,6 +137,7 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1829"})
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
@@ -158,6 +161,7 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1834", "1835", "1836", "1837"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
@@ -198,6 +202,7 @@ public class SheetMetalDTCTests extends TestBase {
 
     @Test
     @Issue("AP-57941")
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1845", "719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {

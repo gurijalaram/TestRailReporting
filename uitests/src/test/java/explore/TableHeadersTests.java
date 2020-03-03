@@ -19,6 +19,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class TableHeadersTests extends TestBase {
 
@@ -76,6 +77,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1095", "531"})
     @Description("Test added columns are displayed in the private workspace")
     public void testPrivateAddColumnHeaders() {
@@ -93,7 +95,7 @@ public class TableHeadersTests extends TestBase {
             .selectSaveButton();
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1611", "1094"})
     @Description("Test remove thumbnails")
@@ -115,7 +117,7 @@ public class TableHeadersTests extends TestBase {
         assertThat(tableColumnsPage.getIncludedList(), containsString(ColumnsEnum.THUMBNAIL.getColumns()));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1611", "1086"})
     @Description("Test sort all columns")

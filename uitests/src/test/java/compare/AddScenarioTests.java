@@ -21,6 +21,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class AddScenarioTests extends TestBase {
 
@@ -32,6 +34,7 @@ public class AddScenarioTests extends TestBase {
     private ComparisonPage comparisonPage;
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"412", "1171"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
