@@ -23,7 +23,8 @@
     - `fatjar` is the task that creates the zip file (nb. this task name is not a constant)
 4. When the jar is complete -> Open Terminal to `..\uitests\build\libs`
 5. Run `java -jar {nameOfJar}.jar` eg. `java -jar automation-qa-0.0.1-SNAPSHOT.jar`
-    - To pass command line arguments Run `java {arg} -jar {nameOfJar}.jar` eg. `java -Denv=cid-te -jar automation-qa-0.0.1-SNAPSHOT.jar`
+    - To pass command line arguments: `java {arg} -jar {nameOfJar}.jar` eg. `java -Denv=cid-te -jar automation-qa-0.0.1-SNAPSHOT.jar`
+    - To run jar with single test class: `java -jar {namOfJar}` eg. `java -jar automation-qa-0.0.1-SNAPSHOT.jar -test evaluate.ListOfVPETests`
     
 ## Users functionality
 Get user functionality has reference to `{environment}.properties` file. 
