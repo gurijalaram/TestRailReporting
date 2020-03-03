@@ -32,4 +32,4 @@ RUN gradle clean fatJar
 # App image.
 FROM runtime AS final
 COPY --from=sdk automation-workspace/uitests/build/libs/automation-qa*.jar ./automation-tests.jar
-CMD ["java", "-jar", "automation-tests.jar"]
+ENTRYPOINT ["java", "-jar", "automation-tests.jar"]
