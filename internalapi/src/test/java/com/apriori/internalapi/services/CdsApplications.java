@@ -11,8 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 
 public class CdsApplications {
