@@ -136,4 +136,15 @@ public class ComparePage extends LoadableComponent<ComparePage> {
         pageUtils.scrollHorizontally(removeComparisonButton, horizontalScroller).click();
         return this;
     }
+
+    /**
+     * Selects the basis button
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
+    public ComparePage setBasis(String scenarioName) {
+        By basisButton = By.xpath(String.format("//a[contains(text(),'%s')]/ancestor::th//button", scenarioName));
+        pageUtils.scrollHorizontally(basisButton, horizontalScroller).click();
+        return this;
+    }
 }
