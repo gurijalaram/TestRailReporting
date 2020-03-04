@@ -149,7 +149,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     /**
-     * Gets list of comparisons
+     * Gets list of scenarios in comparison view
      * @param scenarioName
      * @param partName
      * @return
