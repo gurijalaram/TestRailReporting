@@ -40,6 +40,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "[data-ap-comp='loadingComparisonData']")
     private WebElement loadingComparisonData;
 
+    @FindBy(css = "div[data-ap-comp='scenarioTiles'] div.v-grid-scroller-horizontal")
+    private WebElement horizontalScroller;
+
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -129,8 +132,8 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      */
     public ComparePage removeComparison(String partName, String scenarioName) {
         By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
-            partName.replace(" ", "_"), scenarioName.replace("-", "_")));
-        pageUtils.waitForElementAndClick(removeComparisonButton);
+            partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
+        pageUtils.scrollHorizontally(removeComparisonButton, horizontalScroller).click();
         return this;
     }
 }

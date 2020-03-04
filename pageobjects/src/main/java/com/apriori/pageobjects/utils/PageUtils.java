@@ -566,6 +566,46 @@ public class PageUtils {
     }
 
     /**
+     * Finds element in a table by scrolling.
+     *
+     * @param scenario - the locator for the scenario
+     * @param scroller - the scroller to scroll the element into view
+     * @return - the element as a webelement
+     */
+    public WebElement scrollHorizontally(By scenario, WebElement scroller) {
+        long startTime = System.currentTimeMillis() / 1000;
+        int count = 0;
+        Keys keyboardAction = Keys.RIGHT;
+
+        while (count < 12) {
+            try {
+                if (scroller.isDisplayed() && !isElementDisplayed(scenario)) {
+                    do {
+                        scroller.sendKeys(keyboardAction);
+                    } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
+
+                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+                    processCoordinates.inViewPort();
+
+                    return driver.findElement(scenario);
+                } else {
+                    return driver.findElement(scenario);
+                }
+            } catch (ElementNotInteractableException e) {
+                logger.debug("Trying to recover from an element not interactable exception");
+                count = count + 1;
+            } catch (NoSuchElementException e) {
+                logger.debug("Trying to recover from no such element exception");
+                count = count + 1;
+            } catch (StaleElementReferenceException e) {
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            }
+        }
+        return driver.findElement(scenario);
+    }
+
+    /**
      * Checks the element is not visible
      *
      * @param locator - the element's locator
