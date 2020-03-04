@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     PartOfMaterialsTest.class,
     BillOfMaterialsTest.class,
-    AccountsTest.class,
+    AccountsTest.class
 })
 public class TestSuiteAPI {
 }
