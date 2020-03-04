@@ -35,8 +35,10 @@ subprojects {
         options.encoding = encodingType
     }
 
+    //set project name and jar name
     project.ext.set('jar_name', 'automation-qa')
 
+    //compile jar file
     task fatJar(type: Jar) {
         archiveBaseName = project.jar_name
         zip64 = true
@@ -51,19 +53,44 @@ subprojects {
         with jar
     }
 
+    //set jar directories for including resources
+    sourceSets {
+        main {
+            java {
+                srcDir 'src'
+            }
+            resources {
+                srcDir 'tests'
+            }
+        }
+
+        test {
+            java {
+                srcDir 'src'
+            }
+            resources {
+                srcDir 'resources'
+            }
+        }
+    }
+
+    //define checkstyle xml and version
     checkstyle {
         configFile file("${project.rootDir}/checkstyle.xml")
         toolVersion '8.24'
         ignoreFailures = false
     }
 
+    //set checkstyle main class
     checkstyleMain {
         source = 'src/main/java'
     }
+    //set checkstyle test class
     checkstyleTest {
         source = 'src/test/java'
     }
 
+    //define sonarqube properties
     sonarqube {
         properties {
             System.setProperty('sonar.host.url', 'https://sonarqube.apriori.com')
@@ -76,10 +103,12 @@ subprojects {
         }
     }
 
+    //clean allure results directory
     clean.doFirst {
         delete "${projectDir}${File.separator}target${File.separator}allure-results"
     }
 
+    //set allure and working directory
     allure {
         version = '2.8.1'
         aspectjweaver = true
@@ -88,10 +117,12 @@ subprojects {
         downloadLink = 'http://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.8.1/allure-commandline-2.8.1.zip'
     }
 
+    //get all system properties
     test {
         systemProperties(System.getProperties())
     }
 
+    //declare all dependencies
     dependencies {
         implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
         implementation 'org.seleniumhq.selenium:selenium-server:3.141.59'
