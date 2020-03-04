@@ -37,11 +37,17 @@ public class HomePage extends PageHeader {
     @FindBy(id = "user")
     private WebElement userMenuOption;
 
+    @FindBy(css = "input[name='j_username']")
+    private WebElement email;
+
     @FindBy(id = "user.log-out")
     private WebElement logoutMenuOption;
 
     @FindBy(id = "main_logOut_link")
     private WebElement reportsLogoutOption;
+
+    @FindBy(xpath = "//div[contains(text(), 'Welcome to')]")
+    private WebElement adminHomePageWelcomeText;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -62,7 +68,10 @@ public class HomePage extends PageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.isElementDisplayed(adminHomePageWelcomeText);
+        pageUtils.isElementEnabled(adminHomePageWelcomeText);
+        //pageUtils.isElementDisplayed(manageScenarioExportMenuOption);
+        //pageUtils.isElementDisplayed(manageScenarioExportMenuOption);
     }
 
     /**
@@ -94,7 +103,14 @@ public class HomePage extends PageHeader {
      */
     public void waitForReportsLogoutDisplayedToAppear() {
         pageUtils.windowHandler();
-        pageUtils.waitForElementToAppear(reportsLogoutOption);
+        isLoadedNow();
+        //pageUtils.waitForElementToAppear(reportsLogoutOption);
+    }
+
+    public void isLoadedNow() {
+        //pageUtils.waitForElementToAppear(reportsLogoutOption);
+        pageUtils.windowHandler();
+        pageUtils.waitForElementToAppear(email);
     }
 
     /**

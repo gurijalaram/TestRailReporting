@@ -28,8 +28,15 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.isElementDisplayed(adminHomePageWelcomeText);
+        pageUtils.isElementEnabled(adminHomePageWelcomeText);
     }
+
+    @FindBy(css = "input[name='j_username']")
+    private WebElement email;
+
+    @FindBy(xpath = "//div[contains(text(), 'Welcome to')]")
+    private WebElement adminHomePageWelcomeText;
 
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;
@@ -54,6 +61,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @FindBy(id = "help.cost-insight_adm")
     private WebElement adminGuideButton;
+
+    @FindBy(id = "main_logOut_link")
+    private WebElement reportsLogoutOption;
 
     @FindBy(id = "help.scenario-expt")
     private WebElement scenarioExportButton;
@@ -100,8 +110,15 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return Reports Page Object Model
      */
     public HomePage navigateToReports() {
+        isLoaded();
         navigateToPage(reportButton);
+        isLoadedNow();
         return new HomePage(driver);
+    }
+
+    public void isLoadedNow() {
+        pageUtils.waitForElementToAppear(email);
+        //return pageUtils.isElementEnabled(reportsLogoutOption);
     }
 
     /**
@@ -173,9 +190,18 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @param childPage
      */
     private void navigateToPage(WebElement parentPage, WebElement childPage) {
+        this.isLoaded();
         pageUtils.waitForElementToAppear(parentPage);
         parentPage.click();
-        pageUtils.waitForElementToAppear(childPage);
-        childPage.click();
+        if (isElementLoaded()) {
+            pageUtils.waitForElementToAppear(childPage);
+            childPage.click();
+        }
+    }
+
+    public boolean isElementLoaded() {
+        boolean resultOne = pageUtils.isElementDisplayed(manageScenarioExportMenuOption);
+        boolean resultTwo = pageUtils.isElementEnabled(manageScenarioExportMenuOption);
+        return resultOne && resultTwo;
     }
 }

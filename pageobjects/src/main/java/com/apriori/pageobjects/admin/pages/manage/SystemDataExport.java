@@ -46,6 +46,8 @@ public class SystemDataExport extends AdminHeader {
         return pageUtils.isElementDisplayed(manageSystemDataExportTitle);
     }
 
+    // Generic version of above, to solve having all these wrapper methods?
+
     /**
      * Gets isEnabled value for header
      * @return boolean - isEnabled
