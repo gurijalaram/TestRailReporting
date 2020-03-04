@@ -147,4 +147,15 @@ public class ComparePage extends LoadableComponent<ComparePage> {
         pageUtils.scrollHorizontally(basisButton, horizontalScroller).click();
         return this;
     }
+
+    /**
+     * Gets list of comparisons
+     * @param scenarioName
+     * @param partName
+     * @return
+     */
+    public int getScenariosInComparisonView(String scenarioName, String partName) {
+        By scenario = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
+        return driver.findElements(scenario).size();
+    }
 }
