@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.compare;
 
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -117,6 +118,19 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      */
     public ComparePage checkComparisonUpdated() {
         pageUtils.checkElementAttribute(loadingComparisonData, "style", "display: none;");
+        return this;
+    }
+
+    /**
+     * Removes the scenario from the comparison view
+     * @param partName - the part name
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
+    public ComparePage removeComparison(String partName, String scenarioName) {
+        By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
+            partName.replace(" ", "_"), scenarioName.replace("-", "_")));
+        pageUtils.waitForElementAndClick(removeComparisonButton);
         return this;
     }
 }
