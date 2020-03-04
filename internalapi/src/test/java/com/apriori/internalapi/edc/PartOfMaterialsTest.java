@@ -135,5 +135,4 @@ public class PartOfMaterialsTest {
             .connect()
             .post();
     }
-
 }

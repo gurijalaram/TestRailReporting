@@ -11,7 +11,7 @@
 
 ## Run Gradle tests with JVM args
 1. Open Terminal to root `build` directory
-2. Run `gradle clean :uitests:test --tests {modulename}:test --test "{parentFolder.nameOfTest}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite"`
+2. Run `gradle clean :uitests:test --tests "{parentFolder.nameOfTest}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite"`
 3. To pass in JVM args `gradle clean :uitests:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :uitests:test --tests "testsuites.CIDTestSuite" -DthreadCount=3 -Denv=cid-te`
 
 ## Build Gradle jar files
