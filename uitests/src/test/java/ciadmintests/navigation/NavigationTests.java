@@ -92,14 +92,15 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = "2984")
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
-        homePage = new LoginPage(driver)
+        ciaUserGuide = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToScenarioExportChapterPage();
 
-        String currentUrl = homePage.getCurrentUrl();
+        String currentUrl = ciaUserGuide.getCurrentUrl();
+        assertThat(ciaUserGuide.getTabCount(), is(2));
         assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartOne)));
         assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartTwo)));
-        assertThat(homePage.getTabCount(), is(2));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo("2 Scenario and System Data Exports")));
     }
 
     @Test
