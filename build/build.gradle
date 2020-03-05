@@ -53,27 +53,6 @@ subprojects {
         with jar
     }
 
-    //set jar directories for including resources
-    sourceSets {
-        main {
-            java {
-                srcDir 'src'
-            }
-            resources {
-                srcDir 'tests'
-            }
-        }
-
-        test {
-            java {
-                srcDir 'src'
-            }
-            resources {
-                srcDir 'resources'
-            }
-        }
-    }
-
     //define checkstyle xml and version
     checkstyle {
         configFile file("${project.rootDir}/checkstyle.xml")
