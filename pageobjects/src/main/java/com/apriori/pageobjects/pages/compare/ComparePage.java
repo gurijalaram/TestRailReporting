@@ -130,10 +130,11 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    public ComparePage removeComparison(String partName, String scenarioName) {
+    public ComparePage removeScenarioFromComparisonView(String partName, String scenarioName) {
         By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
             partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
-        pageUtils.scrollHorizontally(removeComparisonButton, horizontalScroller).click();
+        pageUtils.scrollHorizontally(removeComparisonButton, horizontalScroller);
+        pageUtils.waitForElementAndClick(removeComparisonButton);
         return this;
     }
 
