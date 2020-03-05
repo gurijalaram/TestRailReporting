@@ -15,6 +15,12 @@ public class HomePage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
+    @FindBy(css = "input[name='j_username']")
+    private WebElement email;
+
+    @FindBy(css = "h2[class='textAccent']")
+    private WebElement reportsHomePageWelcomeText;
+
     private PageUtils pageUtils;
     private HelpPage helpPage;
     private WebDriver driver;
@@ -61,11 +67,53 @@ public class HomePage extends ReportsPageHeader {
     }
 
     /**
+     * Gets url to check
+     *
+     * @return String
+     */
+    public String getUrlToCheck() {
+        return pageUtils.getUrlToCheck();
+    }
+
+    /**
      * Gets count of open tabs
      *
      * @return int
      */
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
+    }
+
+    /**
+     * Wait for element to appear
+     */
+    public void waitForReportsLogoutDisplayedToAppear() {
+        pageUtils.windowHandler();
+        isLoadedNow();
+        //pageUtils.waitForElementToAppear(reportsLogoutOption);
+    }
+
+    /**
+     * Checks if Reports Logout button element is displayed
+     *
+     * @return boolean
+     */
+    public boolean isReportsLogoutDisplayed() {
+        return pageUtils.isElementDisplayed(reportsHomePageWelcomeText);
+    }
+
+    /**
+     * Checks if Reports Logout button element is enabled
+     *
+     * @return boolean
+     */
+    public boolean isReportsLogoutEnabled() {
+        return pageUtils.isElementEnabled(reportsHomePageWelcomeText);
+    }
+
+    private void isLoadedNow() {
+        //pageUtils.waitForElementToAppear(reportsLogoutOption);
+        pageUtils.windowHandler();
+        pageUtils.waitForElementToAppear(email);
     }
 }

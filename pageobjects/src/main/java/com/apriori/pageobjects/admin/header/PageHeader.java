@@ -37,6 +37,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(xpath = "//div[contains(text(), 'Welcome to')]")
     private WebElement adminHomePageWelcomeText;
 
+    @FindBy(xpath = "//div[contains(text(), 'Cost Insight | Admin')]")
+    private WebElement adminHomePageMainText;
+
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;
 
@@ -111,14 +114,17 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return Reports Page Object Model
      */
-    public HomePage navigateToReports() {
-        isLoaded();
+    public com.apriori.pageobjects.reports.pages.homepage.HomePage navigateToReports() {
+        //isLoaded();
+        pageUtils.waitForElementToAppear(adminHomePageWelcomeText);
+        pageUtils.waitForElementToAppear(adminHomePageMainText);
         navigateToPage(reportButton);
-        isLoadedNow();
-        return new HomePage(driver);
+        //isLoadedNow();
+        return new com.apriori.pageobjects.reports.pages.homepage.HomePage(driver);
     }
 
     public void isLoadedNow() {
+        pageUtils.windowHandler();
         pageUtils.waitForElementToAppear(email);
         //return pageUtils.isElementEnabled(reportsLogoutOption);
     }
@@ -189,8 +195,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @param parentPage
      */
     private void navigateToPage(WebElement parentPage) {
-        pageUtils.waitForElementToAppear(parentPage);
-        parentPage.click();
+        //pageUtils.waitForElementToAppear(parentPage);
+        //parentPage.click();
+        //pageUtils.waitFor(2000);
+        //pageUtils.waitForElementToAppear(adminHomePageMainText);
+        pageUtils.waitForElementAndClick(parentPage);
     }
 
     /**

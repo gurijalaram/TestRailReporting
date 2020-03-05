@@ -16,8 +16,8 @@ import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
-import com.apriori.utils.TestRail;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
@@ -415,7 +415,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .ensureLatestDateIsToday()
                 .setLatestExportDateToTodayInput()
                 .ensureLatestExportSetIsToday();
-                //.waitForCorrectExportSetListCount();
+        //.waitForCorrectExportSetListCount();
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
         // Bring last method above back in once bug fixed
@@ -436,7 +436,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .ensureLatestExportSetIsToday()
                 .setLatestExportDateToTodayPlusTwoPicker()
                 .ensureLatestDateIsTodayPlusTwo();
-                //.waitForCorrectExportSetListCount();
+        //.waitForCorrectExportSetListCount();
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
         // Bring last method above back in once bug fixed

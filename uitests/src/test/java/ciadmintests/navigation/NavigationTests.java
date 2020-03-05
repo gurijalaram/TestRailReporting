@@ -23,11 +23,12 @@ import org.junit.Test;
 
 public class NavigationTests extends TestBase {
 
+    private com.apriori.pageobjects.reports.pages.homepage.HomePage reportsHomePage;
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
     private CiaUserGuide ciaUserGuide;
-    private HomePage homePage;
+    private HomePage adminHomePage;
     private Logout logout;
 
     public NavigationTests() {
@@ -92,14 +93,14 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = "2984")
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
-        homePage = new LoginPage(driver)
+        adminHomePage = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToScenarioExportChapterPage();
 
-        String currentUrl = homePage.getCurrentUrl();
+        String currentUrl = adminHomePage.getCurrentUrl();
         assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartOne)));
         assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartTwo)));
-        assertThat(homePage.getTabCount(), is(2));
+        assertThat(adminHomePage.getTabCount(), is(2));
     }
 
     @Test
@@ -121,16 +122,16 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
-        homePage = new LoginPage(driver)
+        reportsHomePage = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToReports();
 
-        String urlToCheck = homePage.getUrlToCheck();
-        homePage.waitForReportsLogoutDisplayedToAppear();
+        String urlToCheck = reportsHomePage.getUrlToCheck();
+        reportsHomePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.reportsUrlSuffix + Constants.reportsLastSuffix));
-        assertThat(homePage.getTabCount(), is(equalTo(2)));
-        assertThat(homePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(homePage.isReportsLogoutEnabled(), is(true));
+        assertThat(reportsHomePage.getCurrentUrl(), equalTo(urlToCheck + Constants.reportsUrlSuffix + Constants.reportsLoginLocalSuffix));
+        assertThat(reportsHomePage.getTabCount(), is(equalTo(2)));
+        assertThat(reportsHomePage.isReportsLogoutDisplayed(), is(true));
+        assertThat(reportsHomePage.isReportsLogoutEnabled(), is(true));
     }
 }
