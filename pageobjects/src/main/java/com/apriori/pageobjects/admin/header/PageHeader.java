@@ -210,17 +210,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      */
     private void navigateToPage(WebElement parentPage, WebElement childPage) {
         this.isLoaded();
-        pageUtils.waitForElementToAppear(parentPage);
-        parentPage.click();
-        if (isElementLoaded()) {
-            pageUtils.waitForElementToAppear(childPage);
-            childPage.click();
+        pageUtils.waitForElementAndClick(parentPage);
+        if (pageUtils.isElementEnabled(manageScenarioExportMenuOption)) {
+            pageUtils.waitForElementAndClick(childPage);
         }
-    }
-
-    public boolean isElementLoaded() {
-        boolean resultOne = pageUtils.isElementDisplayed(manageScenarioExportMenuOption);
-        boolean resultTwo = pageUtils.isElementEnabled(manageScenarioExportMenuOption);
-        return resultOne && resultTwo;
     }
 }
