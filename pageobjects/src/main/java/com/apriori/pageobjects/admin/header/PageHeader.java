@@ -154,9 +154,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return Scenario Export Chapter Page Object Model
      */
-    public HomePage navigateToScenarioExportChapterPage() {
+    public CiaUserGuide navigateToScenarioExportChapterPage() {
         navigateToPage(helpButton, scenarioExportButton);
-        return new HomePage(driver);
+        return new CiaUserGuide(driver);
     }
 
     /**

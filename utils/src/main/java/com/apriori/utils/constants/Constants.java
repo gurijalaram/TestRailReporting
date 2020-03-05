@@ -23,6 +23,7 @@ public class Constants {
 
     public static final String scenarioExportChapterUrlPartOne = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
     public static final String scenarioExportChapterUrlPartTwo = "CIA_UG";
+    public static final String scenarioExportChapterPageTitle = "2 Scenario and System Data Exports";
     public static final String reportsUrlSuffix = "jasperserver-pro/";
     public static final String domainDesignerUrlSuffix = String.format("%sdomaindesigner.html", reportsUrlSuffix);
     public static final String reportsLastSuffix = "flow.html?_flowId=homeFlow";
