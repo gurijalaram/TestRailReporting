@@ -16,15 +16,15 @@ import testsuites.suiteinterface.MsSQLTest;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Categories.IncludeCategory(MsSQLTest.class)
-@Suite.SuiteClasses ({
-        LoginTests.class,
-        NavigationTests.class,
-        AssemblyDetailsReportTests.class,
-        MachiningDtcReportTests.class,
-        CastingDtcReportTests.class,
-        CastingDtcComparisonReportTests.class,
-        CastingDtcDetailsReportTests.class,
-        ciadmintests.navigation.NavigationTests.class
+@Suite.SuiteClasses({
+    LoginTests.class,
+    NavigationTests.class,
+    AssemblyDetailsReportTests.class,
+    MachiningDtcReportTests.class,
+    CastingDtcReportTests.class,
+    CastingDtcComparisonReportTests.class,
+    CastingDtcDetailsReportTests.class,
+    ciadmintests.navigation.NavigationTests.class
 })
 
 public class MsSQLSuite {
