@@ -60,6 +60,7 @@ public class HelpPage extends ReportsPageHeader {
 
     /**
      * Gets page heading
+     *
      * @return - string
      */
     public String getPageHeading() {
@@ -68,6 +69,7 @@ public class HelpPage extends ReportsPageHeader {
 
     /**
      * Gets window url
+     *
      * @return - string
      */
     public String getChildWindowURL() {
@@ -76,6 +78,7 @@ public class HelpPage extends ReportsPageHeader {
 
     /**
      * Gets number of open tabs
+     *
      * @return int - number of tabs
      */
     public int getTabCount() {

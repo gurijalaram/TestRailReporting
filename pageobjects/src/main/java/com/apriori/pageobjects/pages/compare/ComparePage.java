@@ -82,6 +82,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Checks the comparison name
+     *
      * @param text - the text
      * @return true/false
      */
@@ -91,6 +92,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Checks if the comparison is locked
+     *
      * @param text - the text
      * @return true/false
      */
@@ -100,6 +102,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Checks if the comparison is unlocked
+     *
      * @param text - the text
      * @return true/false
      */
@@ -109,6 +112,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Checks if the comparison is being updated
+     *
      * @return current page object
      */
     public ComparePage checkComparisonUpdated() {

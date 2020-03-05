@@ -16,6 +16,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class PartNestingTests extends TestBase {
 
@@ -28,6 +30,7 @@ public class PartNestingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"906"})
     @Description("Validate Part Nesting Tab can be accessed")
     public void partNestingTabAccessible() {
@@ -82,12 +85,12 @@ public class PartNestingTests extends TestBase {
             .goToPartNestingTab();
 
         assertThat(partNestingPage.isTruePartNesting("checked"), is("true"));
-        }
+    }
 
-        @Test
-        @TestRail(testCaseId = {})
-        @Description("Select Machine Default method of Part Nesting and cost")
-        public void partNestingTabMachineDefaultNesting() {
+    @Test
+    @TestRail(testCaseId = {})
+    @Description("Select Machine Default method of Part Nesting and cost")
+    public void partNestingTabMachineDefaultNesting() {
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
@@ -105,6 +108,7 @@ public class PartNestingTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"907"})
     @Description("Validate Part Nesting Tab can not be accessed for inappropriate Process Groups")
     public void partNestingTabDisabled() {

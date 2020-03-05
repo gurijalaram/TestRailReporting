@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
+import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import com.apriori.utils.constants.Constants;
@@ -101,7 +102,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "reset")
     private WebElement resetButton;
 
-    @FindBy(id = "cancelButton")
+    @FindBy(id = "cancel")
     private WebElement cancelButton;
 
     @FindBy(id = "save")
@@ -149,9 +150,30 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
     private WebElement rollupSearch;
 
+    @FindBy(css = "input[id='savedValuesName']")
+    private WebElement saveInput;
+
+    @FindBy(xpath = "//div[@id='saveValues']//button[@id='saveAsBtnSave']")
+    private WebElement saveAsButton;
+
+    @FindBy(xpath = "//select[@id='reportOptionsSelect']")
+    private WebElement savedOptionsDropDown;
+
+    @FindBy(xpath = "//button[@id='remove' and @class='button action up']")
+    private WebElement removeButton;
+
+    @FindBy(xpath = "//div[@class='jr-mDialog jr confirmationDialog open']//div[@class='jr-mDialog-footer jr']/button[1]")
+    private WebElement confirmRemove;
+
+    @FindBy(xpath = "//select[@id='reportOptionsSelect']//option[@value='']")
+    private WebElement noneOption;
+
+    @FindBy(xpath = "//div[@id='inputControls']//div[@class='sub header hidden']")
+    private WebElement hiddenSavedOptions;
+
     private WebDriver driver;
     private PageUtils pageUtils;
-
+    private LibraryPage libraryPage;
 
     public GenericReportPage(WebDriver driver) {
         super(driver);
@@ -171,6 +193,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(okButton);
 
     }
 
@@ -264,7 +287,6 @@ public class GenericReportPage extends ReportsPageHeader {
         }
         return PageFactory.initElements(driver, className);
     }
-
 
     /**
      * Ensures latest date is set to today
@@ -631,6 +653,140 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
         pageUtils.waitForElementAndClick(rollupSearch);
         rollupSearch.sendKeys(rollupName);
+        return this;
+    }
+
+    /**
+     * Click apply
+     *
+     * @return current page object
+     */
+    public GenericReportPage clickApply() {
+        pageUtils.waitForElementAndClick(applyButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        applyButton.click();
+        return this;
+    }
+
+    /**
+     * Click cancel
+     *
+     * @return new library page object
+     */
+    public LibraryPage clickCancel() {
+        pageUtils.waitForElementAndClick(cancelButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return new LibraryPage(driver);
+    }
+
+    /**
+     * Click reset
+     *
+     * @return current page object
+     */
+    public GenericReportPage clickReset() {
+        pageUtils.waitForElementAndClick(resetButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
+    }
+
+    /**
+     * Click save
+     *
+     * @return current page object
+     */
+    public GenericReportPage clickSave() {
+        pageUtils.waitForElementAndClick(saveButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
+    }
+
+    /**
+     * Enter saved input control configuration name
+     *
+     * @return current page object
+     */
+    public GenericReportPage enterSaveName(String saveName) {
+        pageUtils.waitForElementAndClick(saveInput);
+        saveInput.sendKeys(Keys.CONTROL + "a");
+        saveInput.sendKeys(Keys.DELETE);
+        saveInput.sendKeys(saveName);
+        return this;
+    }
+
+    /**
+     * Click save as button to save input control configuration
+     *
+     * @return current page object
+     */
+    public GenericReportPage clickSaveAsButton() {
+        pageUtils.waitForElementAndClick(saveAsButton);
+        return this;
+    }
+
+    /**
+     * Select saved input control config by name
+     *
+     * @return current page object
+     */
+    public GenericReportPage selectSavedOptionByName(String optionsName) {
+        pageUtils.waitForElementToAppear(savedOptionsDropDown);
+        Select dropDown = new Select(savedOptionsDropDown);
+        dropDown.selectByVisibleText(optionsName);
+        return this;
+    }
+
+    /**
+     * Get export set selection status
+     *
+     * @return boolean
+     */
+    public boolean isExportSetSelected(String exportSetName) {
+        pageUtils.waitForElementToAppear(exportSetList);
+        List<WebElement> childElements = exportSetList.findElements(By.tagName("li"));
+
+        return childElements.stream().anyMatch(we -> (we.getAttribute("title").contains(exportSetName)
+            && we.getAttribute("class").contains("isHovered")));
+    }
+
+    /**
+     * Click remove button
+     *
+     * @return current page object
+     */
+    public GenericReportPage clickRemove() {
+        int expected = Integer.parseInt(savedOptionsDropDown.getAttribute("childElementCount")) - 1;
+        pageUtils.waitForElementAndClick(removeButton);
+        pageUtils.waitForElementAndClick(confirmRemove);
+        return this;
+    }
+
+    /**
+     * Option in dropdown
+     *
+     * @return boolean
+     */
+    public boolean isOptionInDropDown(String optionName, int expected) {
+        String optionXpath = "//select[@id='reportOptionsSelect']//option[@value=\'" + optionName + "\']";
+        pageUtils.checkElementAttribute(savedOptionsDropDown, "childElementCount", Integer.toString(expected));
+        if (driver.findElements(By.xpath("//div[@id='inputControls']//div[@class='sub header hidden']")).size() > 0) {
+            return false;
+        } else {
+            pageUtils.waitForElementToAppear(savedOptionsDropDown);
+            //pageUtils.waitForElementToAppear(By.xpath(optionXpath));
+            Select dropDown = new Select(savedOptionsDropDown);
+            List<WebElement> options = dropDown.getOptions();
+
+            return options.stream().anyMatch(we -> we.getText().equals(optionName));
+        }
+    }
+
+    /**
+     * Wait for expected export count
+     *
+     */
+    public GenericReportPage waitForExpectedExportCount(String expected) {
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
         return this;
     }
 }

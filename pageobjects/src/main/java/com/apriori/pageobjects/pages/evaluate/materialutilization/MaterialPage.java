@@ -112,7 +112,8 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
 
     /**
      * Gets material information
-     *The fully qualified name of the property must be entered as the locator looks for an exact match eg. "(kg / m^3)"
+     * The fully qualified name of the property must be entered as the locator looks for an exact match eg. "(kg / m^3)"
+     *
      * @param info
      * @return string
      */
@@ -125,7 +126,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     /**
      * Expands the panel
      *
-     *@return current page object
+     * @return current page object
      */
     public MaterialPage expandPanel() {
         pageUtils.waitForElementAndClick(chevronButton);

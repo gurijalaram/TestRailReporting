@@ -74,6 +74,7 @@ public class ReportsPageHeader extends PageHeader {
 
     /**
      * Wait for page to load before continuing
+     *
      * @return current page object
      */
     public GenericReportPage waitForInputControlsLoad() {
@@ -83,6 +84,7 @@ public class ReportsPageHeader extends PageHeader {
 
     /**
      * Click options button to bring up Input Controls
+     *
      * @return Input Controls page object
      */
     public GenericReportPage clickInputControlsButton() {
@@ -93,6 +95,7 @@ public class ReportsPageHeader extends PageHeader {
 
     /**
      * Returns header to check
+     *
      * @return
      */
     public String getHeaderToCheck() {

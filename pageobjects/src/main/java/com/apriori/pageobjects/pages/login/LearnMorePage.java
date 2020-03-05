@@ -46,6 +46,7 @@ public class LearnMorePage extends LoadableComponent<LearnMorePage> {
 
     /**
      * Gets page heading
+     *
      * @return - string
      */
     public String getPageHeading() {
@@ -54,6 +55,7 @@ public class LearnMorePage extends LoadableComponent<LearnMorePage> {
 
     /**
      * Gets window url
+     *
      * @return - string
      */
     public String getChildWindowURL() {

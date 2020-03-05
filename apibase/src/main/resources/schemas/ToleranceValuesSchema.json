@@ -39,101 +39,123 @@
       "properties": {
         "totalRunoutOverride": {
           "$id": "#/properties/propertyValueMap/properties/totalRunoutOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Totalrunoutoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "perpendicularityOverride": {
           "$id": "#/properties/propertyValueMap/properties/perpendicularityOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Perpendicularityoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "symmetryOverride": {
           "$id": "#/properties/propertyValueMap/properties/symmetryOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Symmetryoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "roughnessOverride": {
           "$id": "#/properties/propertyValueMap/properties/roughnessOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Roughnessoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "circularityOverride": {
           "$id": "#/properties/propertyValueMap/properties/circularityOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Circularityoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "minCadToleranceThreshhold": {
           "$id": "#/properties/propertyValueMap/properties/minCadToleranceThreshhold",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Mincadtolerancethreshhold Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "toleranceMode": {
           "$id": "#/properties/propertyValueMap/properties/toleranceMode",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "The Tolerancemode Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "bendAngleToleranceOverride": {
           "$id": "#/properties/propertyValueMap/properties/bendAngleToleranceOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Bendangletoleranceoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "runoutOverride": {
           "$id": "#/properties/propertyValueMap/properties/runoutOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Runoutoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "flatnessOverride": {
           "$id": "#/properties/propertyValueMap/propertie s/flatnessOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Flatnessoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "parallelismOverride": {
           "$id": "#/properties/propertyValueMap/properties/parallelismOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Parallelismoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "useCadToleranceThreshhold": {
@@ -142,88 +164,105 @@
           "title": "The Usecadtolerancethreshhold Schema",
           "default": false,
           "examples": [
-
           ]
         },
         "cadToleranceReplacement": {
           "$id": "#/properties/propertyValueMap/properties/cadToleranceReplacement",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Cadtolerancereplacement Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "straightnessOverride": {
           "$id": "#/properties/propertyValueMap/properties/straightnessOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Straightnessoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "positionToleranceOverride": {
           "$id": "#/properties/propertyValueMap/properties/positionToleranceOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Positiontoleranceoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "profileOfSurfaceOverride": {
           "$id": "#/properties/propertyValueMap/properties/profileOfSurfaceOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Profileofsurfaceoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "roughnessRzOverride": {
           "$id": "#/properties/propertyValueMap/properties/roughnessRzOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Roughnessrzoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "toleranceOverride": {
           "$id": "#/properties/propertyValueMap/properties/toleranceOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Toleranceoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "diamToleranceOverride": {
           "$id": "#/properties/propertyValueMap/properties/diamToleranceOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Diamtoleranceoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "concentricityOverride": {
           "$id": "#/properties/propertyValueMap/properties/concentricityOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Concentricityoverride Schema",
           "default": "",
           "examples": [
-
           ]
         },
         "cylindricityOverride": {
           "$id": "#/properties/propertyValueMap/properties/cylindricityOverride",
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "The Cylindricityoverride Schema",
           "default": "",
           "examples": [
-
           ]
         }
       }

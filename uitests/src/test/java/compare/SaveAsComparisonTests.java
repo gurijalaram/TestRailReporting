@@ -24,6 +24,7 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.AdhocTests;
+import testsuites.suiteinterface.SmokeTests;
 
 
 public class SaveAsComparisonTests extends TestBase {
@@ -40,7 +41,7 @@ public class SaveAsComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
+    @Category({AdhocTests.class, SmokeTests.class})
     @TestRail(testCaseId = {"419"})
     @Description("Test a private comparison can be have Save As performed on it")
     public void testSaveAsPrivateComparison() {

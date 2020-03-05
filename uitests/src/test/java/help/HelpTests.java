@@ -19,6 +19,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class HelpTests extends TestBase {
 
@@ -31,6 +33,7 @@ public class HelpTests extends TestBase {
     private CostDetailsPage costDetailsPage;
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"263"})
     @Description("Be able to access help information in the application header")
     public void onlineHelpTest() {
@@ -105,7 +108,7 @@ public class HelpTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
-    public void CostResultsHelp() {
+    public void costResultsHelp() {
         loginPage = new CIDLoginPage(driver);
         costDetailsPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))

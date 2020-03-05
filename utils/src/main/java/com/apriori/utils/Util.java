@@ -99,6 +99,7 @@ public class Util {
 
     /**
      * Get file from resource folder current module.
+     *
      * @param resourceFileName
      * @return
      */
@@ -118,6 +119,7 @@ public class Util {
 
     /**
      * Get resource file stream from a jar file. {getResource}
+     *
      * @param resourceFileName
      * @return
      */

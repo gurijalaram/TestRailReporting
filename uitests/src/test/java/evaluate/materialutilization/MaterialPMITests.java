@@ -27,14 +27,16 @@ public class MaterialPMITests extends TestBase {
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
 
+    public MaterialPMITests() {
+        super();
+    }
+
     @After
     public void resetAllSettings() {
-        if(currentUser != null) {
+        if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
         }
     }
-
-    public MaterialPMITests() {super();}
 
     @Test
     @TestRail(testCaseId = {"901"})

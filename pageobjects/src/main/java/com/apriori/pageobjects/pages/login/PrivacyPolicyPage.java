@@ -46,6 +46,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
     /**
      * Gets page heading
+     *
      * @return - string
      */
     public String getPageHeading() {
@@ -55,6 +56,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
     /**
      * Gets window url
+     *
      * @return - string
      */
     public String getChildWindowURL() {
@@ -63,6 +65,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
     /**
      * Gets count of open tabs
+     *
      * @return int - open tab count
      */
     public int getTabCount() {

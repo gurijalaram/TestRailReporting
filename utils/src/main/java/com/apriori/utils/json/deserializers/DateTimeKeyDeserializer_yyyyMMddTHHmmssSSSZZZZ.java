@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 public class DateTimeKeyDeserializer_yyyyMMddTHHmmssSSSZZZZ extends KeyDeserializer {
 
     private static DateTimeFormatter formatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     @Override
     public Object deserializeKey(String s, DeserializationContext deserializationContext) {

@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class CdsUsers {
     private String url;
-    
+
     @Before
     public void setServiceUrl() {
         url = ServiceConnector.getServiceUrl();
@@ -25,8 +25,8 @@ public class CdsUsers {
     @TestRail(testCaseId = "3697")
     @Description("API returns a list of all the available users in the CDS DB")
     public void getUsers() {
-        url = String.format(url, "users"); 
-        Users response = (Users)ServiceConnector.getService(url, Users.class); 
+        url = String.format(url, "users");
+        Users response = (Users) ServiceConnector.getService(url, Users.class);
         validateUsers(response);
     }
 
@@ -34,29 +34,29 @@ public class CdsUsers {
     @TestRail(testCaseId = "3698")
     @Description("API returns a user's information based on the supplied identity")
     public void getUserById() {
-        url = String.format(url, 
-             String.format("users/%s", Constants.getCdsIdentityUser())); 
-        User response = (User)ServiceConnector.getService(url, User.class);
+        url = String.format(url,
+            String.format("users/%s", Constants.getCdsIdentityUser()));
+        User response = (User) ServiceConnector.getService(url, User.class);
         validateUser(response);
     }
-    
-       
+
+
     /*
-    * User Validation
-    */
+     * User Validation
+     */
     private void validateUsers(Users usersResponse) {
         Object[] users = usersResponse.getResponse().getItems().toArray();
         Arrays.stream(users)
             .forEach(u -> validate(u));
     }
-   
+
     private void validateUser(User userResponse) {
         User user = userResponse.getResponse();
         validate(user);
     }
-   
+
     private void validate(Object userObj) {
-        User user = (User)userObj;
+        User user = (User) userObj;
         Assert.assertTrue(user.getIdentity().matches("^[a-zA-Z0-9]+$"));
         Assert.assertTrue(user.getEmail().matches("^[a-zA-Z0-9]+@apriori.com$"));
     }

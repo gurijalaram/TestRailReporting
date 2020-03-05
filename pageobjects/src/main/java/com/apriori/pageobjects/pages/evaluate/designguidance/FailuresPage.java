@@ -49,7 +49,7 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
     /**
      * Selects both issue type and gcd details
      *
-     * @param gcd               - the gcd
+     * @param gcd - the gcd
      * @return current page object
      */
     public FailuresPage selectIssueTypeAndGCD(String issueType, String gcd) {
@@ -91,8 +91,9 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
 
     /**
      * Gets the cell details
+     *
      * @param issueType - tolerance type
-     * @param column - the column
+     * @param column    - the column
      * @return string
      */
     public String getFailuresCell(String issueType, String column) {

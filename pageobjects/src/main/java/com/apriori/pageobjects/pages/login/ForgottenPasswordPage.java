@@ -63,6 +63,7 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
 
     /**
      * Clicks the link to send the email
+     *
      * @return new page object
      */
     public CIDLoginPage sendEmail() {
@@ -72,6 +73,7 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
 
     /**
      * Get reset password text
+     *
      * @return - string
      */
     public String getResetPassword() {

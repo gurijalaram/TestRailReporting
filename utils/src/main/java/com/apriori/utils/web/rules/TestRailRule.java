@@ -81,7 +81,7 @@ public class TestRailRule extends TestWatcher {
      * @throws APIException This method adds result to TestRail for test cases
      */
     public void addResultForCase(Map<String, Object> parameterData)
-            throws IOException, APIException {
+        throws IOException, APIException {
 
         if (!Constants.getBuildMode().equals(TestMode.QA.value())) {
             return;

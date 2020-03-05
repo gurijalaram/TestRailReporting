@@ -20,6 +20,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class ProcessGroupsTests extends TestBase {
 
@@ -31,7 +32,7 @@ public class ProcessGroupsTests extends TestBase {
         super();
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"598", "1591"})
     @Description("Testing process group Forging")
@@ -46,7 +47,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"598"})
     @Description("Testing process group Stock Machining")
@@ -61,7 +62,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Bar and Tube")
     @TestRail(testCaseId = {"1591"})
@@ -87,7 +88,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Casting")
     @TestRail(testCaseId = {"1591"})
@@ -113,7 +114,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Extrusion")
     @TestRail(testCaseId = {"1591"})
@@ -139,7 +140,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Filleting")
     @TestRail(testCaseId = {"1591"})
@@ -165,7 +166,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Gear Making")
     @TestRail(testCaseId = {"1591"})
@@ -191,7 +192,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Machining-Contouring")
     @TestRail(testCaseId = {"1591"})
@@ -217,7 +218,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Machining-Gage Parts")
     @TestRail(testCaseId = {"1591"})
@@ -243,7 +244,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Machining-Milling-4 Axis Mill")
     @TestRail(testCaseId = {"1591"})
@@ -269,7 +270,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Machining-Milling-5 Axis Mill")
     @TestRail(testCaseId = {"1591"})
@@ -295,7 +296,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Machining-Milling-Mill Turn")
     @TestRail(testCaseId = {"1591"})
@@ -321,7 +322,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Partially Automated Machining")
     @TestRail(testCaseId = {"1591"})
@@ -347,7 +348,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Perimeter Milling")
     @TestRail(testCaseId = {"1591"})
@@ -373,7 +374,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Pocket Recognition - shared walls")
     @TestRail(testCaseId = {"1591"})
@@ -399,7 +400,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Rough Milling")
     @TestRail(testCaseId = {"1591"})
@@ -425,7 +426,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Slot Examples")
     @TestRail(testCaseId = {"1591"})
@@ -451,7 +452,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Turning")
     @TestRail(testCaseId = {"1591"})
@@ -477,7 +478,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Blow Molding")
     @TestRail(testCaseId = {"1591"})
@@ -503,7 +504,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Powder Metal")
     @TestRail(testCaseId = {"1591"})
@@ -529,7 +530,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Roll Bending")
     @TestRail(testCaseId = {"1591"})
@@ -555,7 +556,7 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Sheet Metal-Transfer Die")
     @TestRail(testCaseId = {"1591"})

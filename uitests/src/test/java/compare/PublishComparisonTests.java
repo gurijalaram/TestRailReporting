@@ -22,6 +22,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class PublishComparisonTests extends TestBase {
 
@@ -36,6 +38,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @Issue("AP-58576")
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"421", "434"})
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
@@ -45,33 +48,33 @@ public class PublishComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
-             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-             .costScenario()
-             .publishScenario(PublishPage.class)
-             .selectPublishButton()
-             .createNewComparison()
-             .enterComparisonName(testComparisonName)
-             .save(ComparePage.class)
-             .addScenario()
-             .filterCriteria()
-             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
-             .apply(ComparisonTablePage.class)
-             .selectScenario(testScenarioName, "Casting")
-             .apply()
-             .checkComparisonUpdated();
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
+            .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName, "Casting")
+            .apply()
+            .checkComparisonUpdated();
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
             .closeJobQueue(ComparePage.class);
 
-         new GenericHeader(driver).publishScenario(PublishPage.class)
-             .selectPublishButton()
-             .openJobQueue()
-             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
-             .closeJobQueue(ExplorePage.class)
-             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+        new GenericHeader(driver).publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .openComparison(testComparisonName);
 
         genericHeader = new GenericHeader(driver);
@@ -82,8 +85,8 @@ public class PublishComparisonTests extends TestBase {
 
         assertThat(comparePage.isComparisonLocked("Locked"), CoreMatchers.is(true));
 
-       genericHeader = new GenericHeader(driver);
-       comparePage = genericHeader.toggleLock()
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.toggleLock()
             .openJobQueue()
             .checkJobQueueRow("okay")
             .closeJobQueue(ComparePage.class);

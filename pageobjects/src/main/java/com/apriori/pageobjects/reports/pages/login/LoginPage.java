@@ -224,6 +224,7 @@ public class LoginPage extends ReportsPageHeader {
 
     /**
      * Wait for privacy policy link visibility
+     *
      * @return current page object
      */
     public LoginPage waitForPrivacyPolicyLinkVisibility() {
@@ -233,6 +234,7 @@ public class LoginPage extends ReportsPageHeader {
 
     /**
      * Clicks Privacy Policy link
+     *
      * @return Privacy Policy page object
      */
     public PrivacyPolicyPage goToPrivacyPolicy() {

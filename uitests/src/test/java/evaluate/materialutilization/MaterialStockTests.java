@@ -19,6 +19,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class MaterialStockTests extends TestBase {
 
@@ -33,6 +35,7 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"862", "871"})
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {
@@ -59,6 +62,7 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
@@ -97,6 +101,7 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"968", "969", "876"})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
@@ -122,6 +127,7 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"869"})
     @Description("validate the user can collapse and expand material properties")
     public void materialProperties() {
@@ -134,8 +140,8 @@ public class MaterialStockTests extends TestBase {
             .openMaterialComposition();
 
         materialUtilizationPage = new MaterialUtilizationPage(driver)
-                .toggleMaterialPropertiesPanel()
-                .toggleUtilizationPanel();
+            .toggleMaterialPropertiesPanel()
+            .toggleUtilizationPanel();
 
         assertThat(materialUtilizationPage.utilizationPanelExpanded(), is("collapsed"));
         assertThat(materialUtilizationPage.materialPanelExpanded(), is("collapsed"));

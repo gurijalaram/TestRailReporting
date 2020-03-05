@@ -31,120 +31,120 @@ public class Roles {
 
     @JsonProperty
     private Boolean hasNextPage;
-    
+
     @JsonProperty
     private Boolean hasPreviousPage;
-    
+
     @JsonProperty
     private List<Role> items;
-    
+
     @JsonProperty
     private Roles response;
-    
+
     public Roles getResponse() {
         return this.response;
     }
-    
+
     public Roles setResponse(Roles response) {
         this.response = response;
         return this;
     }
-    
-    public Roles setIsFirstPage(Boolean isFirstPage) { 
+
+    public Roles setIsFirstPage(Boolean isFirstPage) {
         this.isFirstPage = isFirstPage;
         return this;
     }
-    
-    public Boolean getIsFirstPage() { 
+
+    public Boolean getIsFirstPage() {
         return this.isFirstPage;
     }
-    
-    public Roles setIsLastPage(Boolean isLastPage) { 
+
+    public Roles setIsLastPage(Boolean isLastPage) {
         this.isLastPage = isLastPage;
         return this;
-        
+
     }
-    
-    public Boolean getIsLastPage() { 
+
+    public Boolean getIsLastPage() {
         return this.isLastPage;
-        
+
     }
-    
-    public Roles setPageNumber(Integer pageNumber) { 
+
+    public Roles setPageNumber(Integer pageNumber) {
         this.pageNumber = pageNumber;
         return this;
-        
+
     }
-    
-    public Integer getPageNumber() { 
+
+    public Integer getPageNumber() {
         return this.pageNumber;
-        
+
     }
-    
-    public Roles setPageSize(Integer pageSize) { 
+
+    public Roles setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
         return this;
-        
+
     }
-    
-    public Integer getPageSize() { 
+
+    public Integer getPageSize() {
         return this.pageSize;
-        
+
     }
-    
-    public Roles setPageItemCount(Integer pageItemCount) { 
+
+    public Roles setPageItemCount(Integer pageItemCount) {
         this.pageItemCount = pageItemCount;
         return this;
-        
+
     }
-    
-    public Integer getPageItemCount() { 
+
+    public Integer getPageItemCount() {
         return this.pageItemCount;
-        
+
     }
-    
-    public Roles setTotalItemCount(Integer totalItemCount) { 
+
+    public Roles setTotalItemCount(Integer totalItemCount) {
         this.totalItemCount = totalItemCount;
         return this;
-        
+
     }
-    
-    public Integer getTotalItemCount() { 
+
+    public Integer getTotalItemCount() {
         return this.totalItemCount;
-        
+
     }
-    
+
     public Roles setTotalPageCount(Integer totalPageCount) {
         this.totalPageCount = totalPageCount;
         return this;
     }
 
-    public Integer getTotalPageCount() { 
+    public Integer getTotalPageCount() {
         return this.totalPageCount;
-        
+
     }
-    
-    public Roles setHasNextPage(Boolean hasNextPage) { 
+
+    public Roles setHasNextPage(Boolean hasNextPage) {
         this.hasNextPage = hasNextPage;
         return this;
-        
+
     }
-    
-    public Boolean getHasNextPage() { 
+
+    public Boolean getHasNextPage() {
         return this.hasNextPage;
-        
+
     }
-    
+
     public Roles setHasPreviousPage(Boolean hasPreviousPage) {
         this.hasPreviousPage = hasPreviousPage;
         return this;
 
     }
-    
+
     public Boolean getHasPreviousPage() {
         return this.hasPreviousPage;
     }
-    
+
     public Roles setItems(List<Role> items) {
         this.items = items;
         return this;
@@ -153,6 +153,6 @@ public class Roles {
     public List<Role> getItems() {
         return this.items;
     }
-    
+
 
 }
