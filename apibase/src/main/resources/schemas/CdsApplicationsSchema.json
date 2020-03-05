@@ -131,11 +131,11 @@
                 "type": "string",
                 "pattern": "^(.*)$"
               },
-	          "iconUrl": {
-	             "$id": "#/properties/response/properties/iconUrl",
-	             "type": "string",
-	             "pattern": "^(.*)$"
-	           }
+              "iconUrl": {
+                "$id": "#/properties/response/properties/iconUrl",
+                "type": "string",
+                "pattern": "^(.*)$"
+              }
             }
           }
         }

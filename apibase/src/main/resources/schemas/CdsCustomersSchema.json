@@ -135,11 +135,11 @@
                 ],
                 "pattern": "^(.*)$"
               },
-		        "createdBy": {
-		          "$id": "#/properties/response/properties/createdBy",
-		          "type": "string",
-		          "pattern": "^(.*)$"
-		        },
+              "createdBy": {
+                "$id": "#/properties/response/properties/createdBy",
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
               "createdBy": {
                 "$id": "#/properties/response/properties/items/items/properties/createdBy",
                 "type": "string",

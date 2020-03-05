@@ -45,11 +45,6 @@ public class AccountStatus {
         return isValid;
     }
 
-    public AccountStatus setValid(Boolean valid) {
-        isValid = valid;
-        return this;
-    }
-
     public Boolean getActive() {
         return isActive;
     }
@@ -142,6 +137,11 @@ public class AccountStatus {
 
     public boolean isValid() {
         return isValid;
+    }
+
+    public AccountStatus setValid(Boolean valid) {
+        isValid = valid;
+        return this;
     }
 
     public AccountStatus setValid(boolean valid) {

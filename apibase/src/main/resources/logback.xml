@@ -20,7 +20,7 @@
                     <maxHistory>30</maxHistory>
                 </rollingPolicy>
                 <layout class="ch.qos.logback.classic.PatternLayout">
-                    <Pattern>%d{ISO8601} - %-5level %C{1} [%M:%L] [%thread] - %msg%n%ex{full} </Pattern>
+                    <Pattern>%d{ISO8601} - %-5level %C{1} [%M:%L] [%thread] - %msg%n%ex{full}</Pattern>
                 </layout>
             </appender>
         </sift>
@@ -32,23 +32,23 @@
         -->
     </logger>
 
-    <logger name="org.hibernate.SQL" level="OFF" />
-    <logger name="org.hibernate.type" level="OFF" />
-    <logger name="org.apache.http" level="info" />
+    <logger name="org.hibernate.SQL" level="OFF"/>
+    <logger name="org.hibernate.type" level="OFF"/>
+    <logger name="org.apache.http" level="info"/>
 
     <!-- if the mode is empty the tests are running localy. If the mode is defined usually it is given by a Jenkins job -->
     <if condition='property("mode").equals("")'>
         <then>
             <root level="trace">
-                <appender-ref ref="STDOUT" />
-                <appender-ref ref="FILE-THREAD" />
+                <appender-ref ref="STDOUT"/>
+                <appender-ref ref="FILE-THREAD"/>
             </root>
         </then>
 
         <else>
             <root level="debug">
-                <appender-ref ref="STDOUT" />
-                <appender-ref ref="FILE-THREAD" />
+                <appender-ref ref="STDOUT"/>
+                <appender-ref ref="FILE-THREAD"/>
             </root>
         </else>
     </if>

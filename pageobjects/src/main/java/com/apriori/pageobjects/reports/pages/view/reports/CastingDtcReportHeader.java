@@ -35,6 +35,7 @@ public class CastingDtcReportHeader extends GenericReportPage {
 
     /**
      * Get roll-up displayed in header
+     *
      * @return String name of displayed rollup
      */
     public String getDisplayedRollup(String reportName) {
@@ -44,6 +45,7 @@ public class CastingDtcReportHeader extends GenericReportPage {
 
     /**
      * Method to wait on correct header, based on report name
+     *
      * @param reportName
      * @return String of header text
      */

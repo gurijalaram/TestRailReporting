@@ -5,7 +5,6 @@ import com.apriori.utils.runner.ConcurrentTestRunner;
 import com.apriori.utils.web.rules.TestRailRule;
 import com.apriori.utils.web.rules.TestRule;
 import com.apriori.utils.web.util.ConsoleLogHandler;
-import com.apriori.utils.web.util.MaximizeBrowserOnUnix;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
@@ -83,7 +82,8 @@ public class TestBase {
         logger.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth());
 
         if (!df.isHeadless() && mode.equals(TestMode.LOCAL) && (os.toLowerCase().contains("linux") || os.toLowerCase().contains("mac"))) {
-            MaximizeBrowserOnUnix.maximizeOnUnixSystems(driver);
+            // Todo 28/02/2020 - Commented out because this is causing headless on linux to crash with error message 'No X11 display...' this will be reworked in the future
+            //MaximizeBrowserOnUnix.maximizeOnUnixSystems(driver);
         } else {
             driver.manage().window().maximize();
         }

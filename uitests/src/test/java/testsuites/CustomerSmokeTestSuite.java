@@ -1,5 +1,7 @@
 package testsuites;
 
+import com.apriori.utils.runner.CategorySuiteRunner;
+
 import evaluate.NewScenarioNameTests;
 import evaluate.ProcessGroupsTests;
 import evaluate.PublishNewCostedTests;
@@ -11,22 +13,17 @@ import evaluate.designguidance.tolerance.ToleranceTests;
 import explore.ActionsTests;
 import explore.TableHeadersTests;
 import login.LoginTests;
-import settings.SettingsTests;
-import testsuites.suiteinterface.CustomerSmokeTests;
-
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
-
-import org.junit.BeforeClass;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import settings.SettingsTests;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 //TODO: add project ID for TestRail
 //@ProjectRunID("999")
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CustomerSmokeTests.class)
-@Suite.SuiteClasses( {
+@Suite.SuiteClasses({
     NewScenarioNameTests.class,
     ThreadTests.class,
     ProcessGroupsTests.class,

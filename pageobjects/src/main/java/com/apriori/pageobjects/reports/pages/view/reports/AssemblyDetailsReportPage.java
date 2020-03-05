@@ -30,14 +30,11 @@ import java.util.stream.IntStream;
 public class AssemblyDetailsReportPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
-
+    List<BigDecimal> refinedQuantities = new ArrayList<>();
     private Map<String, String> genericColumnMap = new HashMap<>();
-
     private Map<String, String> topLevelRowMap = new HashMap<>();
     private Map<String, String> subSubAsmRowMap = new HashMap<>();
     private Map<String, String> subAssemblyRowMap = new HashMap<>();
-
-    List<BigDecimal> refinedQuantities = new ArrayList<>();
 
     private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
@@ -119,7 +116,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         Document assemblyDetailsReport = parsePageSetCss(assemblyType, "", columnName);
         List<Element> valueElements = assemblyDetailsReport.select(cssSelector);
 
-        return IntStream.range(0, valueElements.size()).filter(i -> isValueValid(valueElements.get(i).text()) || columnName.equals("Cycle Time") && i <= (valueElements.size() - 2)).mapToObj(i -> new BigDecimal(valueElements.get(i).text().replaceAll(",", ""))).collect(Collectors.toCollection(ArrayList::new));
+        return IntStream.range(0, valueElements.size()).filter(i -> isValueValid(valueElements.get(i).text()) || columnName.equals("Cycle Time") && i <= (valueElements.size() - 2))
+            .mapToObj(i -> new BigDecimal(valueElements.get(i).text().replaceAll(",", ""))).collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -183,8 +181,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         } else {
             for (Element element : assemblyDetailsReport.select(cssSelector)) {
                 if (!element.text().isEmpty() && !element.text().equals("Part Number")
-                        && !element.text().equals("GRAND TOTAL")
-                        && !element.text().equals("Assembly Processes")) {
+                    && !element.text().equals("GRAND TOTAL")
+                    && !element.text().equals("Assembly Processes")) {
                     mainPartNums.add(element.text());
                 }
             }
@@ -255,8 +253,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         }
 
         return trimmedValueList
-                .stream()
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .stream()
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     /**
@@ -272,8 +270,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
 
         return finalValues
-                .stream()
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .stream()
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     /**
@@ -289,8 +287,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
 
         return finalValues
-                .stream()
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .stream()
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     /**
@@ -311,8 +309,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         }
 
         return trimmedValueList
-                .stream()
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .stream()
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     /**
@@ -323,7 +321,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private List<BigDecimal> checkCTSubAssemblyValues(String assemblyType, List<BigDecimal> values) {
         List<BigDecimal> levelValues = getLevelValues(assemblyType);
-        return IntStream.range(0, levelValues.size()).filter(i -> levelValues.get(i).compareTo(new BigDecimal("1")) == 0).filter(i -> values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, levelValues.size()).filter(i -> levelValues.get(i).compareTo(new BigDecimal("1")) == 0).filter(i -> values.get(i)
+            .compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -348,7 +347,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private List<BigDecimal> checkCTTopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
         return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).chars().allMatch(Character::isDigit) || partNums.get(i).equals("Assembly Process") ||
-            partNums.get(i).equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0).mapToObj(values::get).collect(Collectors.toList());
+            partNums.get(i).equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i)
+            .compareTo(new BigDecimal("1")) == 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -383,7 +383,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private List<BigDecimal> checkCISubAssemblyValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i)
+            .equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i)
+            .compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -395,7 +397,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private List<BigDecimal> checkCISubSubAsmValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i)
+            .compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -407,7 +410,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private List<BigDecimal> checkCITopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i).equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i)
+            .equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-")))
+            .filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0)
+            .mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
@@ -417,7 +423,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private List<BigDecimal> checkQuantityList(String assemblyType) {
         List<BigDecimal> quantities = getValuesByColumn(assemblyType, "Quantity");
-        List<BigDecimal> quantitiesEmpty = getEmptyQuantities(assemblyType,"Quantity Empty");
+        List<BigDecimal> quantitiesEmpty = getEmptyQuantities(assemblyType, "Quantity Empty");
 
         quantities.add(0, quantitiesEmpty.get(0));
 
@@ -457,6 +463,22 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     public String getCurrentCurrency() {
         return pageUtils.getElementText(currentCurrency);
+    }
+
+    /**
+     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     *
+     * @param assemblyToCheck
+     * @return
+     */
+    public AssemblyDetailsReportPage waitForCorrectAssembly(String assemblyToCheck) {
+        pageUtils.waitForElementToAppear(currentAssembly);
+        // if not top level, add -
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
+            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+        }
+        return this;
     }
 
     /**

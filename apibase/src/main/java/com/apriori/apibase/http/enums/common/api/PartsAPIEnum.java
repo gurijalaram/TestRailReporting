@@ -10,8 +10,7 @@ public enum PartsAPIEnum implements EdcQaAPI {
     POST_COST_PARTS_BY_BILL_AND_LINE_IDENTITY("bill-of-materials/%s/line-items/%s/parts/cost"),
     PATCH_UPDATE_PART_BY_BILL_LINE_AND_PART_IDENTITY("bill-of-materials/%s/line-items/%s/parts/%s"),
     POST_SELECT_PART_BY_BILL_LINE_AND_PART_IDENTITY("bill-of-materials/%s/line-items/%s/parts/%s/select"),
-    POST_AUTH("/auth/token"),;
-
+    POST_AUTH("/auth/token");
 
     private final String endpoint;
 
@@ -19,10 +18,8 @@ public enum PartsAPIEnum implements EdcQaAPI {
         this.endpoint = endpoint;
     }
 
-
     @Override
     public String getEndpointString() {
         return endpoint;
     }
-
 }

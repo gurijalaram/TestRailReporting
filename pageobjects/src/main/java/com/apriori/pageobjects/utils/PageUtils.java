@@ -703,9 +703,9 @@ public class PageUtils {
     /**
      * Waits for the element's specified attribute to contain the specified text
      *
-     * @param - element to get attribute of
-     * @param - attribute to get from element
-     * @param - expected value
+     * @param locator - element to get attribute of
+     * @param attribute - attribute to get from element
+     * @param text - expected value
      * @return - boolean
      */
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
@@ -773,6 +773,7 @@ public class PageUtils {
 
     /**
      * Gets list of current windows and switches back to first tab
+     *
      * @return webdriver functions
      */
     public WebDriver switchBackToInitialTab() {

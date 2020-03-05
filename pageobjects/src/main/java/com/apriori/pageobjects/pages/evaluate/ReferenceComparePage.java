@@ -196,7 +196,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      * @return as string
      */
     public boolean isReferenceProcessGroup(String text) {
-        return checkAttribute(processGroupBaseline,  "innerText", text);
+        return checkAttribute(processGroupBaseline, "innerText", text);
     }
 
     /**
@@ -264,8 +264,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
 
     /**
      * Refactored method to check element attribute
+     *
      * @param locator - the locator
-     * @param text - the text
+     * @param text    - the text
      * @return true/false
      */
     private boolean checkAttribute(WebElement locator, String attribute, String text) {

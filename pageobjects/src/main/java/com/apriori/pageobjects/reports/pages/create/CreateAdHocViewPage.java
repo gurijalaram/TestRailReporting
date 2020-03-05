@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +43,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
     /**
      * Get page title text
+     *
      * @return String - page title text
      */
     public String getAdHocViewTitleText() {
@@ -51,8 +51,10 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
         return adHocViewPageTitle.getText();
     }
 
-    /**]
+    /**
+     * ]
      * Gets dialog isDisplayed value
+     *
      * @return boolean - isDisplayed
      */
     public boolean isDialogDisplayed() {
@@ -62,6 +64,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
     /**
      * Gets dialog isEnabled value
+     *
      * @return boolean - is Enabled
      */
     public boolean isDialogEnabled() {

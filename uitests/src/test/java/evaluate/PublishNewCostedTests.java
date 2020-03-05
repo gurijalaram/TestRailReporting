@@ -17,6 +17,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class PublishNewCostedTests extends TestBase {
 
@@ -28,6 +29,7 @@ public class PublishNewCostedTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Publish a new scenario from the Private Workspace to the Public Workspace")
     @TestRail(testCaseId = {"386", "388"})
     public void testPublishNewCostedScenario() {
@@ -46,7 +48,7 @@ public class PublishNewCostedTests extends TestBase {
         assertThat(explorePage.getListOfScenarios(testScenarioName, partName) > 0, is(true));
     }
 
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"400", "401", "402", "404", "525", "1610"})
     @Description("Publish a part and add an assignee, cost maturity and status")

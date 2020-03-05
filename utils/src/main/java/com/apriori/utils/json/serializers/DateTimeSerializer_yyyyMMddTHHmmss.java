@@ -11,11 +11,11 @@ import java.time.format.DateTimeFormatter;
 public class DateTimeSerializer_yyyyMMddTHHmmss extends JsonSerializer<LocalDateTime> {
 
     private static DateTimeFormatter formatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Override
     public void serialize(LocalDateTime localDateTime, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-            throws IOException {
+        throws IOException {
         jsonGenerator.writeString(localDateTime.format(formatter));
     }
 }

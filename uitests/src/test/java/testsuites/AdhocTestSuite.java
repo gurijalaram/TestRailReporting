@@ -52,7 +52,7 @@ import testsuites.suiteinterface.AdhocTests;
 //@ProjectRunID("999")
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(AdhocTests.class)
-@Suite.SuiteClasses ({
+@Suite.SuiteClasses({
     AddScenarioTests.class,
     DeleteComparisonTests.class,
     EditPublicComparisonTests.class,

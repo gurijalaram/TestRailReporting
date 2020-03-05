@@ -67,6 +67,7 @@ public class HomePage extends PageHeader {
 
     /**
      * Gets current URL of new tab
+     *
      * @return String
      */
     public String getCurrentUrl() {
@@ -75,6 +76,7 @@ public class HomePage extends PageHeader {
 
     /**
      * Gets count of open tabs
+     *
      * @return int
      */
     public int getTabCount() {
@@ -83,6 +85,7 @@ public class HomePage extends PageHeader {
 
     /**
      * Gets url to check
+     *
      * @return String
      */
     public String getUrlToCheck() {
@@ -99,6 +102,7 @@ public class HomePage extends PageHeader {
 
     /**
      * Checks if Reports Logout button element is displayed
+     *
      * @return boolean
      */
     public boolean isReportsLogoutDisplayed() {
@@ -107,6 +111,7 @@ public class HomePage extends PageHeader {
 
     /**
      * Checks if Reports Logout button element is enabled
+     *
      * @return boolean
      */
     public boolean isReportsLogoutEnabled() {

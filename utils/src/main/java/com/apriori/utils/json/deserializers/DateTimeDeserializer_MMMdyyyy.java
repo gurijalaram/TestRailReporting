@@ -19,7 +19,7 @@ public class DateTimeDeserializer_MMMdyyyy extends JsonDeserializer<LocalDateTim
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-            throws IOException {
+        throws IOException {
 
         if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_STRING)) {
             return LocalDate.parse(jsonParser.getText(), formatter).atStartOfDay();

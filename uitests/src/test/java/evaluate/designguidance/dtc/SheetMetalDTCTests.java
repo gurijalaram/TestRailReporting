@@ -25,6 +25,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class SheetMetalDTCTests extends TestBase {
 
@@ -42,7 +44,7 @@ public class SheetMetalDTCTests extends TestBase {
 
     @After
     public void resetSettings() {
-        if(currentUser != null) {
+        if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
         }
     }
@@ -135,6 +137,7 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1829"})
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
@@ -158,6 +161,7 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1834", "1835", "1836", "1837"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
@@ -198,7 +202,8 @@ public class SheetMetalDTCTests extends TestBase {
 
     @Test
     @Issue("AP-57941")
-    @TestRail(testCaseId = {"1845","719"})
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"1845", "719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
         loginPage = new CIDLoginPage(driver);
@@ -217,7 +222,7 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .expandGuidancePanel()
             .openGuidanceTab()
-           .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
+            .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 
         assertThat(guidancePage.getGCDGuidance("SimpleHole:2", "Current"), is(equalTo("0.02")));
         assertThat(guidancePage.getGCDGuidance("SimpleHole:2", "Basic Machining Threshold"), is(equalTo("0.06")));

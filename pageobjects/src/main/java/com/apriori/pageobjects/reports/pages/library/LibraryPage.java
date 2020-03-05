@@ -41,6 +41,7 @@ public class LibraryPage extends ReportsPageHeader {
 
     /**
      * Get page title text
+     *
      * @return String - page title text
      */
     public String getLibraryTitleText() {
@@ -50,6 +51,7 @@ public class LibraryPage extends ReportsPageHeader {
 
     /**
      * Get name of a report
+     *
      * @return String - text of report name
      */
     public String getReportName(String reportName) {
@@ -58,6 +60,7 @@ public class LibraryPage extends ReportsPageHeader {
 
     /**
      * Navigate to a particular report
+     *
      * @param reportName
      * @return new page object
      */

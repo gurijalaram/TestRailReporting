@@ -21,12 +21,12 @@
     </appender>
 
     <root level="debug">
-        <appender-ref ref="startupDailyRolloverAppender" />
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="startupDailyRolloverAppender"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 
     <logger name="org.hibernate">
-        <level value="info" />
+        <level value="info"/>
     </logger>
     <!--
     <logger name="org.hibernate.SQL" level="DEBUG" />

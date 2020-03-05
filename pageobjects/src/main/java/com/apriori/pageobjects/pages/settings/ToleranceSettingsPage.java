@@ -119,6 +119,7 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
 
     /**
      * Unchecks the replace less values option
+     *
      * @return current page object
      */
     public ToleranceSettingsPage uncheckReplaceLessValuesButton() {

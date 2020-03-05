@@ -2,13 +2,12 @@ package com.apriori.utils.web.driver;
 
 import com.apriori.utils.reader.BaseReader;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -20,7 +19,6 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,9 +93,9 @@ public class DriverFactory {
         WebDriver result = null;
         DesiredCapabilities dc = new DesiredCapabilities();
 
-        File downloaDir = new File(downloadPath);
-        if (!downloaDir.exists()) {
-            downloaDir.mkdir();
+        File downloadDir = new File(downloadPath);
+        if (!downloadDir.exists()) {
+            downloadDir.mkdir();
         }
 
         if (proxy != null) {
@@ -106,22 +104,21 @@ public class DriverFactory {
 
         setDriverBrowserLogging(dc);
 
-        String driverLocation = getDriverLocation(browser);
-
         switch (browser) {
             case "firefox":
+                WebDriverManager.firefoxdriver().setup();
                 FirefoxProfile fp = new FirefoxProfile();
-                System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, driverLocation);
+                System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, WebDriverManager.firefoxdriver().getBinaryPath());
                 fp.setPreference("browser.search.geoip.url", "http://127.0.0.1");
                 fp.setPreference("browser.download.folderList", 2);
                 fp.setPreference("browser.download.manager.showWhenStarting", false);
                 fp.setPreference("browser.download.dir", downloadPath);
                 fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/msword, application/csv, "
-                        + "application/vnd.ms-powerpoint, application/ris, text/csv, image/png, application/pdf, "
-                        + "text/html, text/plain, application/zip, application/x-zip, application/x-zip-compressed, "
-                        + "application/download, application/octet-stream, application/xls, application/vnd.ms-excel, "
-                        + "application/x-xls, application/x-ms-excel, application/msexcel, application/x-msexcel, "
-                        + "application/x-excel");
+                    + "application/vnd.ms-powerpoint, application/ris, text/csv, image/png, application/pdf, "
+                    + "text/html, text/plain, application/zip, application/x-zip, application/x-zip-compressed, "
+                    + "application/download, application/octet-stream, application/xls, application/vnd.ms-excel, "
+                    + "application/x-xls, application/x-ms-excel, application/msexcel, application/x-msexcel, "
+                    + "application/x-excel");
 
                 if (StringUtils.isNotEmpty(locale)) {
                     fp.setPreference("intl.accept_languages", locale);
@@ -139,7 +136,7 @@ public class DriverFactory {
                 break;
             default:
             case "chrome":
-                System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, driverLocation);
+                WebDriverManager.chromedriver().setup();
                 System.setProperty("webdriver.chrome.logfile", System.getProperty("java.io.tmpdir") + File.separator + "chromedriver.log");
                 System.setProperty("webdriver.chrome.verboseLogging", "true");
 
@@ -174,9 +171,9 @@ public class DriverFactory {
         DesiredCapabilities dc = new DesiredCapabilities();
 
         if (downloadPath != null) {
-            File downloaDir = new File(downloadPath);
-            if (!downloaDir.exists()) {
-                downloaDir.mkdir();
+            File downloadDir = new File(downloadPath);
+            if (!downloadDir.exists()) {
+                downloadDir.mkdir();
             }
         }
 
@@ -225,23 +222,6 @@ public class DriverFactory {
         return headless;
     }
 
-    private String getDriverLocation(String browser) {
-        String driverLocation = null;
-        logger_DriverFactory.info("OS: " + System.getProperty("os.name"));
-        String osLowerCase = StringUtils.deleteWhitespace(System.getProperty("os.name").toLowerCase());
-
-        if (browser.equalsIgnoreCase("firefox")) {
-            if (osLowerCase.contains(Platform.WINDOWS.name().toLowerCase())) {
-                driverLocation = new File("../utils/src/main/resources/geckodriver.exe").getAbsolutePath();
-            }
-        } else if (browser.equalsIgnoreCase("chrome")) {
-            if (osLowerCase.contains(Platform.WINDOWS.name().toLowerCase())) {
-                driverLocation = new File("../utils/src/main/resources/chromedriver.exe").getAbsolutePath();
-            }
-        }
-        return driverLocation;
-    }
-
     private ChromeOptions getChromeOptions(String downloadPath, String locale) {
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
         // Set Custom Download Dir for downloads in chrome
@@ -255,6 +235,14 @@ public class DriverFactory {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--allow-outdated-plugins");
         options.setExperimentalOption("prefs", chromePrefs);
+
+        // TODO: 28/02/2020 quick fix for running on linux. this will be reworked with major changes in the near future
+        if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+            options.addArguments("--no-sandbox");
+            options.addArguments("--headless");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--disable-dev-shm-usage");
+        }
 
         headless = StringUtils.isEmpty(System.getProperty("headless")) ? false : Boolean.parseBoolean(System.getProperty("headless"));
 

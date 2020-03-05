@@ -7,7 +7,6 @@ import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.pageobjects.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -65,7 +64,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     private WebElement logoutButton;
 
     @FindBy(xpath = "//h2[contains(text(), 'Admin')]")
-    private  WebElement adminTitle;
+    private WebElement adminTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -79,6 +78,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Manage Scenario Export
+     *
      * @return Manage Scenario Export Page Object Model
      */
     public ScenarioExport navigateToManageScenarioExport() {
@@ -88,6 +88,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Manage System Data Export
+     *
      * @return System Data Export Page Object Model
      */
     public SystemDataExport navigateToManageSystemDataExport() {
@@ -97,6 +98,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Reports System
+     *
      * @return Reports Page Object Model
      */
     public HomePage navigateToReports() {
@@ -106,6 +108,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Reports System User Guide
+     *
      * @return Home Page Page Object Model (since help is external to system)
      */
     public CirUserGuidePage navigateToHelpReportsGuide() {
@@ -115,6 +118,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Admin System User Guide
+     *
      * @return Home Page Page Object Model (since help is external to system)
      */
     public CiaUserGuide navigateToHelpAdminGuide() {
@@ -124,6 +128,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Scenario Export Chapter Page
+     *
      * @return Scenario Export Chapter Page Object Model
      */
     public HomePage navigateToScenarioExportChapterPage() {
@@ -133,6 +138,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Logout/Login page
+     *
      * @return Logout Page Object Model
      */
     public Logout navigateToAdminLogout() {
@@ -143,6 +149,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Returns header to check
+     *
      * @return
      */
     public String getHeaderToCheck() {
@@ -151,6 +158,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Get page title text
+     *
      * @return String - page title text
      */
     public String getHomeTitleText() {
@@ -160,6 +168,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * General navigation method
+     *
      * @param parentPage
      */
     private void navigateToPage(WebElement parentPage) {
@@ -169,6 +178,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Another general navigation method
+     *
      * @param parentPage
      * @param childPage
      */

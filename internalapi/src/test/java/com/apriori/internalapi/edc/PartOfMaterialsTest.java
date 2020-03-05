@@ -38,15 +38,15 @@ public class PartOfMaterialsTest {
     @Severity(SeverityLevel.NORMAL)
     public void getParts() {
         new HTTPRequest().unauthorized()
-                .customizeRequest()
-                .setEndpoint(PartsAPIEnum.GET_PARTS_BY_BILL_AND_LINE_IDENTITY)
-                .setHeaders(userData.getAuthorizationHeaders())
-                .setInlineVariables(
-                        userData.getBillOfMaterial().getIdentity(),
-                        userData.getLineItem().getIdentity())
-                .commitChanges()
-                .connect()
-                .get();
+            .customizeRequest()
+            .setEndpoint(PartsAPIEnum.GET_PARTS_BY_BILL_AND_LINE_IDENTITY)
+            .setHeaders(userData.getAuthorizationHeaders())
+            .setInlineVariables(
+                userData.getBillOfMaterial().getIdentity(),
+                userData.getLineItem().getIdentity())
+            .commitChanges()
+            .connect()
+            .get();
     }
 
     @Test
@@ -55,18 +55,18 @@ public class PartOfMaterialsTest {
     public void postPart() {
 
         new HTTPRequest().unauthorized()
-                .customizeRequest()
-                .setHeaders(userData.getAuthorizationHeaders())
-                .setEndpoint(PartsAPIEnum.POST_PARTS_BY_BILL_AND_LINE_IDENTITY)
-                .setReturnType(MaterialPartWrapper.class)
-                .setStatusCode(201)
-                .setInlineVariables(
-                        userData.getBillOfMaterial().getIdentity(),
-                        userData.getLineItem().getIdentity())
-                .setBody(userData.getMaterialPart())
-                .commitChanges()
-                .connect()
-                .post();
+            .customizeRequest()
+            .setHeaders(userData.getAuthorizationHeaders())
+            .setEndpoint(PartsAPIEnum.POST_PARTS_BY_BILL_AND_LINE_IDENTITY)
+            .setReturnType(MaterialPartWrapper.class)
+            .setStatusCode(201)
+            .setInlineVariables(
+                userData.getBillOfMaterial().getIdentity(),
+                userData.getLineItem().getIdentity())
+            .setBody(userData.getMaterialPart())
+            .commitChanges()
+            .connect()
+            .post();
     }
 
     @Test
@@ -75,20 +75,20 @@ public class PartOfMaterialsTest {
     public void costPart() {
 
         List<String> costingIdentity = userData.getLineItem().getMaterialParts().stream()
-                .map(MaterialPart::getIdentity)
-                .collect(Collectors.toList());
+            .map(MaterialPart::getIdentity)
+            .collect(Collectors.toList());
 
         new HTTPRequest().unauthorized()
-                .customizeRequest()
-                .setEndpoint(PartsAPIEnum.POST_COST_PARTS_BY_BILL_AND_LINE_IDENTITY)
-                .setHeaders(userData.getAuthorizationHeaders())
-                .setInlineVariables(
-                        userData.getBillOfMaterial().getIdentity(),
-                        userData.getLineItem().getIdentity())
-                .setBody(costingIdentity)
-                .commitChanges()
-                .connect()
-                .post();
+            .customizeRequest()
+            .setEndpoint(PartsAPIEnum.POST_COST_PARTS_BY_BILL_AND_LINE_IDENTITY)
+            .setHeaders(userData.getAuthorizationHeaders())
+            .setInlineVariables(
+                userData.getBillOfMaterial().getIdentity(),
+                userData.getLineItem().getIdentity())
+            .setBody(costingIdentity)
+            .commitChanges()
+            .connect()
+            .post();
     }
 
     @Test
@@ -99,19 +99,19 @@ public class PartOfMaterialsTest {
     }
 
     private MaterialPart doUpdatePart() {
-        MaterialPartWrapper materialPartWrapper =  (MaterialPartWrapper) new HTTPRequest().unauthorized()
-                .customizeRequest()
-                .setEndpoint(PartsAPIEnum.POST_PARTS_BY_BILL_AND_LINE_IDENTITY)
-                .setReturnType(MaterialPartWrapper.class)
-                .setHeaders(userData.getAuthorizationHeaders())
-                .setInlineVariables(
-                        userData.getBillOfMaterial().getIdentity(),
-                        userData.getLineItem().getIdentity())
-                .setBody(userData.getMaterialPart().setAverageCost(5f))
-                .setStatusCode(201)
-                .commitChanges()
-                .connect()
-                .post();
+        MaterialPartWrapper materialPartWrapper = (MaterialPartWrapper) new HTTPRequest().unauthorized()
+            .customizeRequest()
+            .setEndpoint(PartsAPIEnum.POST_PARTS_BY_BILL_AND_LINE_IDENTITY)
+            .setReturnType(MaterialPartWrapper.class)
+            .setHeaders(userData.getAuthorizationHeaders())
+            .setInlineVariables(
+                userData.getBillOfMaterial().getIdentity(),
+                userData.getLineItem().getIdentity())
+            .setBody(userData.getMaterialPart().setAverageCost(5f))
+            .setStatusCode(201)
+            .commitChanges()
+            .connect()
+            .post();
         return materialPartWrapper.getMaterialPart();
     }
 
@@ -123,17 +123,16 @@ public class PartOfMaterialsTest {
         MaterialPart materialPart = doUpdatePart();
 
         new HTTPRequest().unauthorized()
-                .customizeRequest()
-                .setEndpoint(PartsAPIEnum.POST_SELECT_PART_BY_BILL_LINE_AND_PART_IDENTITY)
-                .setStatusCode(204)
-                .setHeaders(userData.getAuthorizationHeaders())
-                .setInlineVariables(
-                        userData.getBillOfMaterial().getIdentity(),
-                        materialPart.getLineItemIdentity(),
-                        materialPart.getIdentity())
-                .commitChanges()
-                .connect()
-                .post();
+            .customizeRequest()
+            .setEndpoint(PartsAPIEnum.POST_SELECT_PART_BY_BILL_LINE_AND_PART_IDENTITY)
+            .setStatusCode(204)
+            .setHeaders(userData.getAuthorizationHeaders())
+            .setInlineVariables(
+                userData.getBillOfMaterial().getIdentity(),
+                materialPart.getLineItemIdentity(),
+                materialPart.getIdentity())
+            .commitChanges()
+            .connect()
+            .post();
     }
-
 }

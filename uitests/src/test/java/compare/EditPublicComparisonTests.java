@@ -16,6 +16,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class EditPublicComparisonTests extends TestBase {
 
@@ -51,6 +53,7 @@ public class EditPublicComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"427"})
     @Description("Test editing a published comparison shows the comparison view")
     public void testEditPublicComparison() {

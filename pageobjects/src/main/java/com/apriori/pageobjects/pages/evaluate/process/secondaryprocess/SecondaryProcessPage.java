@@ -86,8 +86,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     /**
      * Finds the secondary process, selects the checkbox and highlights the process
      *
-      * @param processType - the process type
-      * @param processName - the process name
+     * @param processType - the process type
+     * @param processName - the process name
      * @return new page object
      */
     public ProcessSetupOptionsPage selectHighlightSecondaryProcess(String processType, String processName) {

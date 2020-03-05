@@ -129,7 +129,7 @@ public class EvaluatePage extends EvaluateHeader {
     private WebElement assemblyProcessCost;
 
     @FindBy(css = "td[data-ap-field='totalCost']")
-    private WebElement pPartCost;
+    private WebElement partCost;
 
     @FindBy(css = "td[data-ap-field='fullyBurdenedCost']")
     private WebElement burdenedCost;
@@ -279,7 +279,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return the details as string
      */
     public boolean isProcessRoutingDetails(String text) {
-        pageUtils.scrollWithJavaScript(processRoutingName,true);
+        pageUtils.scrollWithJavaScript(processRoutingName, true);
         pageUtils.waitForElementToAppear(processRoutingName);
         return pageUtils.checkElementAttribute(processRoutingName, "title", text);
     }
@@ -470,7 +470,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public String getPartCost() {
-        return pageUtils.waitForElementToAppear(pPartCost).getText();
+        return pageUtils.waitForElementToAppear(partCost).getText();
     }
 
     /**
@@ -668,6 +668,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Gets table values by specified row index
+     *
      * @param row
      * @return ArrayList of BigDecimals
      */

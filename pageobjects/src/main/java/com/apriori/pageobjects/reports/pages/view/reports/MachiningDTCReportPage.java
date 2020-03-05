@@ -35,6 +35,7 @@ public class MachiningDTCReportPage extends GenericReportPage {
 
     /**
      * Gets value from tooltip on chart
+     *
      * @return
      */
     public BigDecimal getValueFromCentralCircleInChart() {
@@ -43,8 +44,8 @@ public class MachiningDTCReportPage extends GenericReportPage {
         builder.perform();
         pageUtils.waitForElementToAppear(tooltipValueElement);
         String value = tooltipValueElement.getAttribute("textContent")
-                .replace(",", "")
-                .replace(" ", "");
+            .replace(",", "")
+            .replace(" ", "");
         return new BigDecimal(value);
     }
 }

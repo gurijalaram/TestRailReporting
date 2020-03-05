@@ -38,14 +38,14 @@ public class BillOfMaterialsTest {
     @Severity(SeverityLevel.NORMAL)
     public void getBillOfMaterials() {
         new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setHeaders(userData.getAuthorizationHeaders())
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
-                .setReturnType(BillOfMaterialsWrapper.class)
-                .commitChanges()
-                .connect()
-                .get();
+            .unauthorized()
+            .customizeRequest()
+            .setHeaders(userData.getAuthorizationHeaders())
+            .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
+            .setReturnType(BillOfMaterialsWrapper.class)
+            .commitChanges()
+            .connect()
+            .get();
     }
 
     @Test
@@ -53,15 +53,15 @@ public class BillOfMaterialsTest {
     @Severity(SeverityLevel.NORMAL)
     public void getBillOfMaterialsByIdentity() {
         new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setHeaders(userData.getAuthorizationHeaders())
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY)
-                .setInlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity())
-                .setReturnType(BillOfSingleMaterialWrapper.class)
-                .commitChanges()
-                .connect()
-                .get();
+            .unauthorized()
+            .customizeRequest()
+            .setHeaders(userData.getAuthorizationHeaders())
+            .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY)
+            .setInlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity())
+            .setReturnType(BillOfSingleMaterialWrapper.class)
+            .commitChanges()
+            .connect()
+            .get();
 
     }
 
@@ -72,15 +72,15 @@ public class BillOfMaterialsTest {
         final int deleteIndex = new Random().nextInt(userData.getBillOfMaterials().size());
 
         new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setHeaders(userData.getAuthorizationHeaders())
-                .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY)
-                .setInlineVariables(userData.getBillOfMaterials().get(deleteIndex).getIdentity())
-                .setStatusCode(204)
-                .commitChanges()
-                .connect()
-                .delete();
+            .unauthorized()
+            .customizeRequest()
+            .setHeaders(userData.getAuthorizationHeaders())
+            .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY)
+            .setInlineVariables(userData.getBillOfMaterials().get(deleteIndex).getIdentity())
+            .setStatusCode(204)
+            .commitChanges()
+            .connect()
+            .delete();
 
         userData.getBillOfMaterials().remove(deleteIndex);
     }
@@ -90,14 +90,14 @@ public class BillOfMaterialsTest {
     @Severity(SeverityLevel.NORMAL)
     public void exportBillOfMaterialsByIdentity() {
         new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setHeaders(userData.getAuthorizationHeaders())
-                .setEndpoint(BillOfMaterialsAPIEnum.EXPORT_BILL_OF_MATERIALS_IDENTITY)
-                .setInlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity())
-                .commitChanges()
-                .connect()
-                .post();
+            .unauthorized()
+            .customizeRequest()
+            .setHeaders(userData.getAuthorizationHeaders())
+            .setEndpoint(BillOfMaterialsAPIEnum.EXPORT_BILL_OF_MATERIALS_IDENTITY)
+            .setInlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity())
+            .commitChanges()
+            .connect()
+            .post();
     }
 
     @Test

@@ -40,6 +40,7 @@ public class Logout extends AdminHeader {
 
     /**
      * Gets isDisplayed value for header
+     *
      * @return boolean - isDisplayed
      */
     public boolean isHeaderDisplayed() {
@@ -49,6 +50,7 @@ public class Logout extends AdminHeader {
 
     /**
      * Gets isEnabled value for header
+     *
      * @return boolean - isEnabled
      */
     public boolean isHeaderEnabled() {
@@ -58,6 +60,7 @@ public class Logout extends AdminHeader {
 
     /**
      * Gets header text
+     *
      * @return String - header text
      */
     public String getHeaderText() {

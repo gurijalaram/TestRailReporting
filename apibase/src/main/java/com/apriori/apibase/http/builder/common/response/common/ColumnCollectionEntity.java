@@ -12,11 +12,10 @@ import java.util.List;
 @JsonTypeName("tableViewColumnGroupInfo")
 @JsonPropertyOrder({"children", "displayName"})
 public class ColumnCollectionEntity {
-    @JsonProperty("children")
-    private List<ColumnEntity> children;
-
     @JsonProperty
     final String displayName = "TableView.rootDisplayName";
+    @JsonProperty("children")
+    private List<ColumnEntity> children;
 
     public ColumnCollectionEntity(List<ColumnEntity> columns) {
         this.children = columns;

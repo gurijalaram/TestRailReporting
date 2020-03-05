@@ -10,7 +10,7 @@ public enum AccountEndpointEnum implements EdcQaAPI {
     DELETE_ACCOUNTS_BY_IDENTITY("accounts/%s"),
     GET_ACCOUNTS_BY_IDENTITY("accounts/%s"),
     UPDATE_ACCOUNTS_BY_IDENTITY("accounts/%s"),
-    ACTIVATE_ACCOUNTS_BY_IDENTITY("accounts/%s/activate"),;
+    ACTIVATE_ACCOUNTS_BY_IDENTITY("accounts/%s/activate");
 
     private final String endpoint;
 
