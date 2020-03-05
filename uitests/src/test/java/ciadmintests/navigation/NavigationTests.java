@@ -17,6 +17,7 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.sun.tools.jxc.ap.Const;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -100,7 +101,7 @@ public class NavigationTests extends TestBase {
         assertThat(ciaUserGuide.getTabCount(), is(2));
         assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartOne)));
         assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartTwo)));
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo("2 Scenario and System Data Exports")));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.scenarioExportChapterPageTitle)));
     }
 
     @Test
