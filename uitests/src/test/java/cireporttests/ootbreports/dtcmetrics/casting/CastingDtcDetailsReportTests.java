@@ -117,7 +117,8 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
-            .clickReset();
+            .clickReset()
+            .waitForExpectedExportCount("0");
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
     }
