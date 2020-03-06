@@ -512,10 +512,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     *
+     * Gets sub total of values to add
      * @param assemblyType
      * @param column
-     * @return
+     * @return Array List of BigDecimals
      */
     public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
         ArrayList<BigDecimal> returnValues = new ArrayList<>();
@@ -528,21 +528,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         returnValues.add(expectedTotal);
         returnValues.add(actualTotal);
         return returnValues;
-    }
-
-    /**
-     * Sets export set filter date using date picker
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage setEarliestExportDateToTwoMonthsAgoPicker() {
-        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
-        Select monthDropdown = new Select(datePickerMonthSelect);
-        Select yearDropdown = new Select(datePickerYearSelect);
-
-        monthDropdown.selectByIndex(Integer.parseInt(getDateTwoMonthsAgo().substring(5, 7)) - 1);
-        yearDropdown.selectByValue(getDateTwoMonthsAgo().substring(0, 4));
-        datePickerTriggerBtn.click();
-        return this;
     }
 
     /**
@@ -565,7 +550,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Opens new tab and switches to it
-     * @return
+     * @return current page object
      */
     public AssemblyDetailsReportPage openNewTabAndFocus() {
         pageUtils.jsNewTab();
