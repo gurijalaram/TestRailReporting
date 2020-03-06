@@ -17,11 +17,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,6 +136,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//button[contains(text(), 'Now')]")
     private WebElement nowPickerButton;
 
+    @FindBy(xpath = "//button[contains(text(), 'Close')]")
+    private WebElement closeButton;
+
     @FindBy(css = "select[class='ui-datepicker-month']")
     private WebElement datePickerMonthSelect;
 
@@ -239,6 +240,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Checks current currency selection, fixes if necessary
+     *
      * @param currency
      * @return current page object
      */
@@ -252,6 +254,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Opens new tab and switches to it
+     *
      * @return
      */
     public GenericReportPage openNewTabAndFocus() {
@@ -264,7 +267,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Clicks apply and ok
-     * @return Assembly Details Report page object
+     * @return Generic Report page object
      */
     public GenericReportPage clickApplyAndOk() {
         pageUtils.waitForElementAndClick(okButton);
@@ -275,6 +278,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     *
      * @param assemblyToCheck
      * @return
      */
@@ -289,50 +293,47 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Ensures latest date is set to today
-     * @return current page object
-     */
-    public GenericReportPage ensureEarliestDateIsToday() {
-        String currentDate = getCurrentDate();
-        if (!earliestExportDateInput.getAttribute("value").contains(currentDate)) {
-            earliestExportDateInput.clear();
-            earliestExportDateInput.sendKeys(currentDate);
-        }
-        return this;
-    }
-
-    /**
-     * Ensures latest date is set to today
-     * @return current page object
-     */
-    public GenericReportPage ensureLatestDateIsToday() {
-        String currentDate = getCurrentDate();
-        if (!latestExportDateInput.getAttribute("value").contains(currentDate)) {
-            latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(currentDate);
-        }
-        return this;
-    }
-
-    /**
-     * Ensures latest date is set to today
-     * @return current page object
-     */
-    public GenericReportPage ensureLatestDateIsTodayPlusTwo() {
-        String date = getDateNowPlusTwo();
-        if (!latestExportDateInput.getAttribute("value").contains(date)) {
-            latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(date);
-        }
-        return this;
-    }
-
-    /**
      * Wait for export set list count to be zero
-     * @return
+     * @return current page object
      */
-    public GenericReportPage waitForCorrectExportSetListCount() {
-        pageUtils.checkElementAttribute(exportSetList, "childElementCount", "0");
+    public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
+        pageUtils.checkElementAttribute(exportSetList, "childElementCount", expectedCount);
+        pageUtils.checkElementAttribute(selectedExportSets, "title", getCountOfExportSets());
+        return this;
+    }
+
+    /**
+     * Ensures latest date is set to today
+     * @return current page object
+     */
+    public GenericReportPage setEarliestExportDateToTodayInput() {
+        String dtToday = getDate(true);
+        pageUtils.waitForElementToAppear(earliestExportDateInput);
+
+        if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
+            earliestExportDateInput.clear();
+            earliestExportDateInput.sendKeys(dtToday.substring(0, 10));
+            earliestExportDateInput.sendKeys(dtToday.substring(10, 13));
+            earliestExportDateInput.sendKeys(dtToday.substring(13));
+        }
+        return this;
+    }
+
+    /**
+     * Sets earliest export set date to today using picker
+     * @return current page object
+     */
+    public GenericReportPage setEarliestExportDateToTodayPicker() {
+        LocalDateTime dtToday = getCurrentDateLDT();
+        pageUtils.waitForElementAndClick(earliestExportSetDatePickerTriggerBtn);
+
+        setMonthValuePicker(dtToday.getMonthValue() - 1);
+        setYearValuePicker(String.format("%d", dtToday.getYear()));
+        earliestExportSetDatePickerTriggerBtn.click();
+
+        String currentVal = earliestExportDateInput.getAttribute("value");
+        earliestExportDateInput.clear();
+        earliestExportDateInput.sendKeys(currentVal.replace("23", String.format("%d", dtToday.getDayOfMonth())));
         return this;
     }
 
@@ -340,7 +341,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets export set time and date to current time minus two months using input field
      */
     public GenericReportPage setLatestExportDateToTwoDaysFutureInput() {
-        String dtTwoMonthsAgo = getDateNowPlusTwo();
+        String dtTwoMonthsAgo = getDate(false);
 
         pageUtils.waitForElementToAppear(latestExportDateInput);
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
@@ -353,25 +354,8 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Sets export set time and date to current time minus two months using input field
      */
-    public GenericReportPage setEarliestExportDateToTodayInput() {
-        String dtToday = getCurrentDate();
-
-        pageUtils.waitForElementToAppear(earliestExportDateInput);
-        if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
-            earliestExportDateInput.clear();
-            earliestExportDateInput.sendKeys(dtToday.substring(0, 10));
-            earliestExportDateInput.sendKeys(dtToday.substring(10, 13));
-            pageUtils.checkElementAttribute(earliestExportDateInput, "value", dtToday.substring(0, 13));
-            earliestExportDateInput.sendKeys(dtToday.substring(13));
-        }
-        return this;
-    }
-
-    /**
-     * Sets export set time and date to current time minus two months using input field
-     */
     public GenericReportPage setLatestExportDateToTodayInput() {
-        String dtToday = getCurrentDate();
+        String dtToday = getDate(true);
 
         pageUtils.waitForElementToAppear(latestExportDateInput);
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
@@ -385,49 +369,45 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     *
-     * @return
-     */
-    public GenericReportPage setEarliestExportDateToTodayPicker() {
-        LocalDateTime dtToday = getCurrentDateLDT();
-        pageUtils.waitForElementAndClick(earliestExportSetDatePickerTriggerBtn);
-        Select monthSelect = new Select(datePickerMonthSelect);
-        Select yearSelect = new Select(datePickerYearSelect);
-        monthSelect.selectByIndex(dtToday.getMonthValue() - 1);
-        yearSelect.selectByValue(String.format("%d", dtToday.getYear()));
-        earliestExportSetDatePickerTriggerBtn.click();
-        return this;
-    }
-
-    /**
-     *
-     * @return
+     * Sets latest export date to two days from current (dynamic)
+     * @return current page object
      */
     public GenericReportPage setLatestExportDateToTodayPlusTwoPicker() {
-        pageUtils.waitForElementAndClick(latestExportSetDatePickerTriggerBtn);
-        pageUtils.waitForElementAndClick(nowPickerButton);
-        latestExportSetDatePickerTriggerBtn.click();
+        LocalDateTime newDt = getCurrentDateLDT().plusDays(2);
 
-        String value = latestExportDateInput.getAttribute("value");
-        int newDay = Integer.parseInt(value.substring(8, 10)) + 2;
-        latestExportDateInput.clear();
-        latestExportDateInput.sendKeys(value.substring(0, 8));
-        latestExportDateInput.sendKeys(String.format("%s", newDay));
-        latestExportDateInput.sendKeys(value.substring(10));
+        int monthValue = newDt.getMonthValue();
+        int dayValue = newDt.getDayOfMonth();
+        int yearValue = newDt.getYear();
+
+        pageUtils.waitForElementAndClick(latestExportSetDatePickerTriggerBtn);
+        setMonthValuePicker(monthValue - 1);
+        setYearValuePicker(String.format("%d", yearValue));
+
+        String twoDaysAheadBtnLocator = String.format("//a[contains(text(), '%d')]", dayValue);
+        pageUtils.waitForElementAndClick(By.xpath(twoDaysAheadBtnLocator));
+        pageUtils.waitForElementAndClick(closeButton);
 
         return this;
     }
 
     /**
-     * Sets export set time and date to current time minus two months using input field
+     * Ensures latest date is set to today
+     * @return current page object
      */
-    public GenericReportPage setEarliestExportDateToTwoWeeksAgoInput() {
-        String dtToday = getDateTwoWeeksAgo();
+    public GenericReportPage ensureDatesAreCorrect(boolean areBothInputsPresent, boolean getCurrentDateInitially) {
+        WebElement dateElementToUse;
+        String date = removeTimeFromDate(getDate(getCurrentDateInitially));
 
-        pageUtils.waitForElementToAppear(earliestExportDateInput);
-        if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
-            earliestExportDateInput.clear();
-            earliestExportDateInput.sendKeys(dtToday);
+        if (areBothInputsPresent) {
+            for (int i = 0; i < 2; i++) {
+                String dateForBoth = getCurrentDateInitially ? date : removeTimeFromDate(getDate(getCurrentDateInitially));
+                dateElementToUse = getCurrentDateInitially ? earliestExportDateInput : latestExportDateInput;
+                pageUtils.checkElementAttribute(dateElementToUse, "value", dateForBoth);
+                getCurrentDateInitially = false;
+            }
+        } else {
+            dateElementToUse = latestExportDateInput;
+            pageUtils.checkElementAttribute(dateElementToUse, "value", date);
         }
         return this;
     }
@@ -484,14 +464,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Get current date as Local Date Time, rather than String
-     * @return LocalDateTime
-     */
-    private LocalDateTime getCurrentDateLDT() {
-        return LocalDateTime.now(ZoneOffset.UTC).withNano(0);
-    }
-
-    /**
      * Method to return date based on day or month
      * @param changeDay
      * @return LocalDateTime
@@ -503,20 +475,11 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Select Assembly option dropdown using send keys
-     * @param topIndex
-     */
-    private void selectAssemblyOption(int topIndex) {
-        for (int i = 0; i < topIndex; i++) {
-            inputBox.sendKeys(Keys.ARROW_DOWN);
-        }
-    }
-
-    /**
      * Generic method to wait for correct currency and return specified page object
+     *
      * @param currencyToCheck
      * @param className
-     * @param <T> return type - any page object that is specified
+     * @param <T>             return type - any page object that is specified
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
@@ -527,6 +490,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets current currency setting
+     *
      * @return String
      */
     public String getCurrentCurrency() {
@@ -654,6 +618,64 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(rollupSearch);
         rollupSearch.sendKeys(rollupName);
         return this;
+    }
+
+    /**
+     * Substrings date to remove time
+     * @return String
+     */
+    private String removeTimeFromDate(String dateToSubstring) {
+        return dateToSubstring.substring(0, 10);
+    }
+
+    /**
+     * Gets current date in correct format
+     * @return String
+     */
+    private String getDate(boolean getCurrent) {
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return getCurrent ? formatter
+                .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
+                            : formatter
+                .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
+    }
+
+    /**
+     * Get current date as Local Date Time, rather than String
+     * @return LocalDateTime
+     */
+    private LocalDateTime getCurrentDateLDT() {
+        return LocalDateTime.now(ZoneOffset.UTC).withNano(0);
+    }
+
+
+    /**
+     * Select Assembly option dropdown using send keys
+     * @param topIndex
+     */
+    private void selectAssemblyOption(int topIndex) {
+        for (int i = 0; i < topIndex; i++) {
+            inputBox.sendKeys(Keys.ARROW_DOWN);
+        }
+    }
+
+    /**
+     * Sets month dropdown value in date picker
+     * @param indexToSelect
+     */
+    private void setMonthValuePicker(int indexToSelect) {
+        Select monthSelect = new Select(datePickerMonthSelect);
+        monthSelect.selectByIndex(indexToSelect);
+    }
+
+    /**
+     * Sets year dropdown value in date picker
+     * @param valueToSelect
+     */
+    private void setYearValuePicker(String valueToSelect) {
+        Select yearSelect = new Select(datePickerYearSelect);
+        yearSelect.selectByValue(valueToSelect);
     }
 
     /**

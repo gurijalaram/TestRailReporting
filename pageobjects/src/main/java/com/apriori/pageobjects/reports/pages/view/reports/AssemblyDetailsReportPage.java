@@ -35,6 +35,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private Map<String, String> topLevelRowMap = new HashMap<>();
     private Map<String, String> subSubAsmRowMap = new HashMap<>();
     private Map<String, String> subAssemblyRowMap = new HashMap<>();
+
     private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
 
@@ -511,10 +512,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     *
+     * Gets sub total of values to add
      * @param assemblyType
      * @param column
-     * @return
+     * @return Array List of BigDecimals
      */
     public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
         ArrayList<BigDecimal> returnValues = new ArrayList<>();
@@ -564,7 +565,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Opens new tab and switches to it
-     * @return
+     * @return current page object
      */
     public AssemblyDetailsReportPage openNewTabAndFocus() {
         pageUtils.jsNewTab();
