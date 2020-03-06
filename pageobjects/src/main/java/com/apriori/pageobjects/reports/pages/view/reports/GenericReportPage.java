@@ -743,7 +743,6 @@ public class GenericReportPage extends ReportsPageHeader {
             return false;
         } else {
             pageUtils.waitForElementToAppear(savedOptionsDropDown);
-            //pageUtils.waitForElementToAppear(By.xpath(optionXpath));
             Select dropDown = new Select(savedOptionsDropDown);
             List<WebElement> options = dropDown.getOptions();
 
