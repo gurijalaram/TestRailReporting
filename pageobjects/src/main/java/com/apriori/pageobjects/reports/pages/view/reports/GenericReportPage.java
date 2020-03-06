@@ -305,10 +305,9 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(earliestExportDateInput);
 
         if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
+            earliestExportDateInput.click();
             earliestExportDateInput.clear();
-            earliestExportDateInput.sendKeys(dtToday.substring(0, 10));
-            earliestExportDateInput.sendKeys(dtToday.substring(10, 13));
-            earliestExportDateInput.sendKeys(dtToday.substring(13));
+            earliestExportDateInput.sendKeys(dtToday);
         }
         return this;
     }
@@ -326,6 +325,7 @@ public class GenericReportPage extends ReportsPageHeader {
         earliestExportSetDatePickerTriggerBtn.click();
 
         String currentVal = earliestExportDateInput.getAttribute("value");
+        earliestExportDateInput.click();
         earliestExportDateInput.clear();
         earliestExportDateInput.sendKeys(currentVal.replace("23", String.format("%d", dtToday.getDayOfMonth())));
         return this;
@@ -339,6 +339,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         pageUtils.waitForElementToAppear(latestExportDateInput);
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.click();
             latestExportDateInput.clear();
             latestExportDateInput.sendKeys(dtTwoMonthsAgo);
         }
@@ -350,14 +351,12 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setLatestExportDateToTodayInput() {
         String dtToday = getDate(true);
-
         pageUtils.waitForElementToAppear(latestExportDateInput);
+
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.click();
             latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(dtToday.substring(0, 10));
-            latestExportDateInput.sendKeys(dtToday.substring(10, 13));
-            pageUtils.checkElementAttribute(latestExportDateInput, "value", dtToday.substring(0, 13));
-            latestExportDateInput.sendKeys(dtToday.substring(13));
+            latestExportDateInput.sendKeys(dtToday);
         }
         return this;
     }
