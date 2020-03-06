@@ -602,7 +602,7 @@ public class PageUtils {
                 count = count + 1;
             }
         }
-        return driver.findElement(scenario);
+        return waitForElementToAppear(scenario);
     }
 
     /**

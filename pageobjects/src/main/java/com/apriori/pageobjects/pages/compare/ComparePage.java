@@ -145,7 +145,8 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      */
     public ComparePage setBasis(String scenarioName) {
         By basisButton = By.xpath(String.format("//a[contains(text(),'%s')]/ancestor::th//button", scenarioName));
-        pageUtils.scrollHorizontally(basisButton, horizontalScroller).click();
+        pageUtils.scrollHorizontally(basisButton, horizontalScroller);
+        pageUtils.waitForElementAndClick(basisButton);
         return this;
     }
 
