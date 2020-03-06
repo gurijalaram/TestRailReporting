@@ -124,7 +124,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.setEarliestExportDateToTodayInput()
                 .setLatestExportDateToTwoDaysFutureInput()
                 .ensureDatesAreCorrect(true, false)
-                .waitForCorrectExportSetListCount();
+                .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
     }
@@ -144,7 +144,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.setEarliestExportDateToTodayPicker()
                 .setLatestExportDateToTodayPlusTwoPicker()
                 .ensureDatesAreCorrect(true, false)
-                .waitForCorrectExportSetListCount();
+                .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
     }
