@@ -17,7 +17,6 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.sun.tools.jxc.ap.Const;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
