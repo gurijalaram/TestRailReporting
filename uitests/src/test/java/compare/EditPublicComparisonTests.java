@@ -178,6 +178,6 @@ public class EditPublicComparisonTests extends TestBase {
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
             .closeJobQueue(ComparePage.class);
 
-        assertThat(comparePage.
+        //assertThat(comparePage.
     }
 }
