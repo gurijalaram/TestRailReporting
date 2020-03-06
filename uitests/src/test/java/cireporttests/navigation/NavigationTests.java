@@ -239,19 +239,6 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2700"})
-    @Description("Ensure that the link to the privacy policy works")
-    public void testPrivacyPolicyNavigation() {
-        privacyPolicyPage = new LoginPage(driver)
-            .waitForPrivacyPolicyLinkVisibility()
-            .goToPrivacyPolicy();
-
-        assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
-        assertThat(privacyPolicyPage.getChildWindowURL(), is(equalTo(Constants.privacyPolicyUrl)));
-        assertThat(privacyPolicyPage.getTabCount(), is(2));
-    }
-
-    @Test
     @TestRail(testCaseId = {"2701"})
     @Description("Ensure that the link to the help page works")
     public void testHelpNavigation() {
