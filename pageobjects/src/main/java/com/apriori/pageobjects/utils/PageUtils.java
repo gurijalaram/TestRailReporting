@@ -577,7 +577,7 @@ public class PageUtils {
         int count = 0;
         Keys keyboardAction = Keys.RIGHT;
 
-        while (count < 1200) {
+        while (count < 12) {
             try {
                 if (scroller.isDisplayed() && !isElementDisplayed(scenario)) {
                     do {
