@@ -43,6 +43,8 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "div[data-ap-comp='scenarioTiles'] div.v-grid-scroller-horizontal")
     private WebElement horizontalScroller;
 
+    @FindBy(css = ".panel-body.white-panel-element")
+    private WebElement loadingInfo;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -120,7 +122,8 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return current page object
      */
     public ComparePage checkComparisonUpdated() {
-        pageUtils.checkElementAttribute(loadingComparisonData, "style", "display: none;");
+        pageUtils.waitForElementToAppear(loadingInfo);
+        pageUtils.waitForElementInvisible(loadingInfo);
         return this;
     }
 
