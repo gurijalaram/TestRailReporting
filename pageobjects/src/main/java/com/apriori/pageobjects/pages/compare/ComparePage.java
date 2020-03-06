@@ -144,10 +144,18 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return current page object
      */
     public ComparePage setBasis(String scenarioName) {
-        By basisButton = By.xpath(String.format("//a[contains(text(),'%s')]/ancestor::th//button", scenarioName));
-        pageUtils.scrollHorizontally(basisButton, horizontalScroller);
-        pageUtils.waitForElementAndClick(basisButton);
+        pageUtils.scrollHorizontally(findBasis(scenarioName), horizontalScroller);
+        pageUtils.waitForElementAndClick(findBasis(scenarioName));
         return this;
+    }
+
+    /**
+     * Gets the size of the basis button
+     * @param scenarioName - the scenario name
+     * @return size of the element as int
+     */
+    public int getBasis(String scenarioName) {
+        return driver.findElements(findBasis(scenarioName)).size();
     }
 
     /**
@@ -159,5 +167,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     public int getScenariosInComparisonView(String scenarioName, String partName) {
         By scenario = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
         return driver.findElements(scenario).size();
+    }
+
+    private By findBasis(String scenarioName) {
+        return By.xpath(String.format("//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", scenarioName));
     }
 }

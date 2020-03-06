@@ -2,6 +2,7 @@ package compare;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
@@ -173,11 +174,6 @@ public class EditPublicComparisonTests extends TestBase {
             .setBasis(testScenarioName2)
             .checkComparisonUpdated();
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class);
-
-        assertThat(comparePage.
+        assertThat(comparePage.getBasis(testScenarioName2), is(equalTo(0)));
     }
 }
