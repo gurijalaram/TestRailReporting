@@ -294,7 +294,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Wait for export set list count to be zero
-     * @return
+     * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
         pageUtils.checkElementAttribute(exportSetList, "childElementCount", expectedCount);
@@ -304,7 +304,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Sets export set time and date to current time minus two months using input field
-     * @return
+     * @return current page object
      */
     public GenericReportPage setEarliestExportDateToTodayInput() {
         String dtToday = getDate(true);

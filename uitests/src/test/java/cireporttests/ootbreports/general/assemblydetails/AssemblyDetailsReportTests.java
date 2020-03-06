@@ -1,10 +1,5 @@
 package cireporttests.ootbreports.general.assemblydetails;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
@@ -16,8 +11,8 @@ import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
-import com.apriori.utils.TestRail;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
@@ -25,7 +20,6 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -34,6 +28,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
@@ -414,7 +413,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .setLatestExportDateToTodayInput()
                 .ensureDatesAreCorrect(false, true);
-                //.waitForCorrectExportSetListCount("0");
+        //.waitForCorrectExportSetListCount("0");
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
         // TODO: Bring last method above back in once bug fixed
@@ -434,7 +433,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .setLatestExportDateToTodayPlusTwoPicker()
                 .ensureDatesAreCorrect(false, false);
-                //.waitForCorrectExportSetListCount("0");
+        //.waitForCorrectExportSetListCount("0");
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
         // TODO: Bring last method above back in once bug fixed
