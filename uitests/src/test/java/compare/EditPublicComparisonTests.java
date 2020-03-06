@@ -5,11 +5,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
+import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -25,6 +29,7 @@ public class EditPublicComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private EvaluatePage evaluatePage;
 
     public EditPublicComparisonTests() {
         super();
@@ -77,5 +82,102 @@ public class EditPublicComparisonTests extends TestBase {
         comparePage = genericHeader.editScenario(ComparePage.class);
 
         assertThat(comparePage.isComparisonName(testComparisonName.toUpperCase()), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"458"})
+    @Description("Delete private scenarios included in comparison from private workspace")
+    public void testRemoveFromComparison() {
+
+        String testScenarioName = new Util().getScenarioName();
+        String testComparisonName = new Util().getComparisonName();
+
+        loginPage = new CIDLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .filterCriteria()
+            .filterPublicCriteria("Part", "Part Name", "Contains", "PowderMetalShaft")
+            .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName, "PowderMetalShaft")
+            .apply()
+            .checkComparisonUpdated();
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class)
+            .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName)
+            .checkComparisonUpdated();
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class);
+
+        assertThat(comparePage.getScenariosInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
+    }
+
+    @Test
+    @Description("Test you can change the basis of your comparison")
+    public void testChangeComparisonBasis() {
+
+        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName2 = new Util().getScenarioName();
+        String testComparisonName = new Util().getComparisonName();
+        String testPartName = "SANDCAST";
+
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("SandCast.x_t"))
+            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .costScenario();
+
+        new GenericHeader(driver).createNewScenario()
+            .enterScenarioName(testScenarioName2)
+            .save()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
+            .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName, testPartName)
+            .apply()
+            .checkComparisonUpdated();
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class)
+            .addScenario()
+            .filterCriteria()
+            .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
+            .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName2, testPartName)
+            .apply()
+            .checkComparisonUpdated();
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class)
+            .setBasis(testScenarioName2)
+            .checkComparisonUpdated();
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class);
+
+        assertThat(comparePage.
     }
 }
