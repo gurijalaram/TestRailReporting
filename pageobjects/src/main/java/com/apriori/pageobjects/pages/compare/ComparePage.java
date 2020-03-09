@@ -147,32 +147,32 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return current page object
      */
     public ComparePage setBasis(String scenarioName) {
-        pageUtils.scrollHorizontally(findBasis(scenarioName), horizontalScroller);
-        pageUtils.waitForElementAndClick(findBasis(scenarioName));
+        pageUtils.scrollHorizontally(findBasisButton(scenarioName), horizontalScroller);
+        pageUtils.waitForElementAndClick(findBasisButton(scenarioName));
         return this;
     }
 
     /**
-     * Gets the size of the basis button
+     * Checks if the basis button exist
      * @param scenarioName - the scenario name
-     * @return size of the element as int
+     * @return true/false
      */
-    public int getBasis(String scenarioName) {
-        return driver.findElements(findBasis(scenarioName)).size();
+    public boolean isComparisonBasis(String scenarioName) {
+        return pageUtils.waitForElementInvisible(driver.findElements(findBasisButton(scenarioName)));
     }
 
     /**
      * Gets list of scenarios in comparison view
-     * @param scenarioName
-     * @param partName
-     * @return
+     * @param scenarioName - the scenario name
+     * @param partName the part name
+     * @return size of element as int
      */
     public int getScenariosInComparisonView(String scenarioName, String partName) {
         By scenario = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
         return driver.findElements(scenario).size();
     }
 
-    private By findBasis(String scenarioName) {
+    private By findBasisButton(String scenarioName) {
         return By.xpath(String.format("//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", scenarioName));
     }
 }
