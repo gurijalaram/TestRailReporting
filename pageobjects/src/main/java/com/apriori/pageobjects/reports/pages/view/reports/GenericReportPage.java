@@ -226,7 +226,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
+        //pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             if (assemblyName.equals("TOP-LEVEL (Initial)")) {
                 selectAssemblyOption(3);
@@ -278,7 +278,7 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
      * @param assemblyToCheck
-     * @return
+     * @return Generic - instance of specified class
      */
     public <T> T waitForCorrectAssembly(String assemblyToCheck, Class<T> className) {
         pageUtils.waitForElementToAppear(currentAssembly);
