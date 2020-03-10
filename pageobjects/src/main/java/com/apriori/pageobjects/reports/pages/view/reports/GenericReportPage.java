@@ -174,7 +174,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private LibraryPage libraryPage;
 
     public GenericReportPage(WebDriver driver) {
         super(driver);
