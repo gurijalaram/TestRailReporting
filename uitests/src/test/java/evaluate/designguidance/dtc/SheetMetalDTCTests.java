@@ -215,11 +215,16 @@ public class SheetMetalDTCTests extends TestBase {
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        guidancePage = settingsPage.save(ExplorePage.class)
+        evaluatePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1"))
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
+        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        guidancePage = evaluatePage.openDesignGuidance()
             .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");

@@ -173,6 +173,13 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-field='userOverridesCount']")
     private WebElement secondaryProcesses;
 
+    @FindBy(css = "[data-ap-field='dfmRisk']")
+    private WebElement dfmRisk;
+
+    @FindBy(css = "[data-ap-comp='dfmRiskIcon']")
+    private WebElement dfmRiskIcon;
+
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -703,5 +710,24 @@ public class EvaluatePage extends EvaluateHeader {
         columnSelectorMap.put("Per Part Cost (USD)", "6");
         columnSelectorMap.put("Fully Burdened Cost (USD)", "7");
         columnSelectorMap.put("Capital Investment (USD)", "8");
+    }
+
+    /**
+     * Checks the dfm risk score
+     *
+     * @param value - the value
+     * @return true/false
+     */
+    public boolean isDfmRisk(String value) {
+        return pageUtils.checkElementAttribute(dfmRisk, "innerText", value);
+    }
+
+    /**
+     * Gets the dfm risk Icon
+     *
+     * @return Risk Level
+     */
+    public String getDFMRiskIcon() {
+        return pageUtils.waitForElementToAppear(dfmRiskIcon).getAttribute("outerHTML");
     }
 }
