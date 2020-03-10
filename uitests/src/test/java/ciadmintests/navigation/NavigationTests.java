@@ -119,24 +119,23 @@ public class NavigationTests extends TestBase {
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
 
-    @Test
-    @TestRail(testCaseId = {"2966"})
-    @Description("Ensure that the link from Admin to Reports works")
-    public void testAdminToReportNavigation() {
-        reportsHomePage = new LoginPage(driver)
-            .login(UserUtil.getUser())
-            .navigateToReports();
+    //@Test
+    //@TestRail(testCaseId = {"2966"})
+    //@Description("Ensure that the link from Admin to Reports works")
+    //public void testAdminToReportNavigation() {
+    //    reportsHomePage = new LoginPage(driver)
+    //        .login(UserUtil.getUser())
+    //        .navigateToReports();
 
-        String urlToCheck = reportsHomePage.getUrlToCheck();
-        reportsHomePage.waitForReportsLogoutDisplayedToAppear();
+    //    String urlToCheck = reportsHomePage.getUrlToCheck();
+    //    reportsHomePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(reportsHomePage.getTabCount(), is(equalTo(2)));
-        assertThat(reportsHomePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(reportsHomePage.isReportsLogoutEnabled(), is(true));
+    //    assertThat(reportsHomePage.getTabCount(), is(equalTo(2)));
+    //    assertThat(reportsHomePage.isReportsLogoutDisplayed(), is(true));
+    //    assertThat(reportsHomePage.isReportsLogoutEnabled(), is(true));
 
-        assertThat(reportsHomePage.getCurrentUrl(), containsString(urlToCheck));
-        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.reportsUrlSuffix));
-        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.reportsLoginLocalSuffix));
-
-    }
+    //    assertThat(reportsHomePage.getCurrentUrl(), containsString(urlToCheck));
+    //    assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.reportsUrlSuffix));
+    //    assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.reportsLoginLocalSuffix));
+    //}
 }
