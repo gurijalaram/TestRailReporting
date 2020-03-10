@@ -871,15 +871,17 @@ public class PageUtils {
      *
      * @return String
      */
-    public String getHeaderToCheck(boolean isLocalEnv) {
+    public String getHeaderToCheck(boolean isLocalEnv, boolean isAdmin) {
         String headerToInsert = "";
         String headerToReturn = "";
         String ciDesignTextPreFormat = "CI Design %s";
         if (isEnvTE()) {
             headerToInsert = Constants.cidTeHeaderText;
             headerToReturn = String.format(ciDesignTextPreFormat, headerToInsert);
-        } else if (isLocalEnv) {
+        } else if (isLocalEnv && !isAdmin) {
             headerToReturn = "aPriori Cost Insight Report";
+        } else if (isLocalEnv && isAdmin) {
+            headerToReturn = "Log in to Cost Insight | Admin";
         } else {
             headerToInsert = Constants.cidAutHeaderText;
             headerToReturn = String.format(ciDesignTextPreFormat, headerToInsert);

@@ -176,7 +176,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return
      */
     public String getHeaderToCheck() {
-        return pageUtils.getHeaderToCheck(false);
+        return pageUtils.getHeaderToCheck(true, true);
     }
 
     /**
@@ -209,9 +209,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @param childPage
      */
     private void navigateToPage(WebElement parentPage, WebElement childPage) {
-        this.isLoaded();
-        pageUtils.waitForElementAndClick(parentPage);
-        if (pageUtils.isElementEnabled(manageScenarioExportMenuOption)) {
+        //this.isLoaded();
+        if (pageUtils.isElementEnabled(parentPage)) {
+            pageUtils.waitForElementAndClick(parentPage);
+        }
+        if (pageUtils.isElementEnabled(childPage)) {
             pageUtils.waitForElementAndClick(childPage);
         }
     }
