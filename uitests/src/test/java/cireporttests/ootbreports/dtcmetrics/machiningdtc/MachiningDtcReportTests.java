@@ -11,6 +11,7 @@ import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.MachiningDTCReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -25,6 +26,7 @@ import java.math.BigDecimal;
 public class MachiningDtcReportTests extends TestBase {
 
     private MachiningDTCReportPage machiningDTCReportPage;
+    private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
     private LibraryPage library;
@@ -105,5 +107,45 @@ public class MachiningDtcReportTests extends TestBase {
 
         assertThat(machiningDTCReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3565")
+    @Description("Verify that earliest and latest export date fields function correctly using input field")
+    public void testBothExportDatesUsingInputField() {
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(reportName)
+                .waitForInputControlsLoad();
+
+        Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
+
+        genericReportPage.setEarliestExportDateToTodayInput()
+                .setLatestExportDateToTwoDaysFutureInput()
+                .ensureDatesAreCorrect(true, false)
+                .waitForCorrectExportSetListCount("0");
+
+        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3566")
+    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    public void testBothExportDatesUsingDatePicker() {
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(reportName)
+                .waitForInputControlsLoad();
+
+        Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
+
+        genericReportPage.setEarliestExportDateToTodayPicker()
+                .setLatestExportDateToTodayPlusTwoPicker()
+                .ensureDatesAreCorrect(true, false)
+                .waitForCorrectExportSetListCount("0");
+
+        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
     }
 }

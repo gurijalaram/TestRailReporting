@@ -35,6 +35,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private Map<String, String> topLevelRowMap = new HashMap<>();
     private Map<String, String> subSubAsmRowMap = new HashMap<>();
     private Map<String, String> subAssemblyRowMap = new HashMap<>();
+
     private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
 
@@ -74,7 +75,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Waits for correct current currency to appear on screen (not on Input Controls - on report itself)
-     *
      * @param currencyToCheck
      * @return current page object
      */
@@ -86,7 +86,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Generic method to get specific value from an Assembly Details Report table
-     *
      * @param assemblyType
      * @param rowName
      * @param columnName
@@ -109,7 +108,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Generic method to get values in a given column
-     *
      * @param assemblyType
      * @param columnName
      * @return ArrayList of BigDecimals
@@ -145,7 +143,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets quantities that are blank and returns them as 0
-     *
      * @param assemblyType
      * @param columnName
      * @return ArrayList of BigDecimals
@@ -159,7 +156,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets all level values
-     *
      * @param assemblyType
      * @return ArrayList of BigDecimals
      */
@@ -170,7 +166,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets all part numbers
-     *
      * @param assemblyType
      * @return List of Strings
      */
@@ -211,7 +206,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Generic method to get expected total of a certain column
-     *
      * @param assemblyType
      * @param columnName
      * @return BigDecimal
@@ -241,7 +235,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets expected Cycle Time grand total
-     *
      * @param assemblyType
      * @param columnName
      * @return BigDecimal
@@ -266,7 +259,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets expected Piece Part Cost grand total
-     *
      * @return BigDecimal
      */
     public BigDecimal getExpectedPPCGrandTotal(String assemblyType, String columnName) {
@@ -284,7 +276,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets expected Fully Burdened Cost grand total
-     *
      * @return BigDecimal
      */
     public BigDecimal getExpectedFBCGrandTotal(String assemblyType, String columnName) {
@@ -302,7 +293,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets expected Capital Investment grand total
-     *
      * @return BigDecimal
      */
     public BigDecimal getExpectedCIGrandTotal(String assemblyType, String columnName) {
@@ -325,7 +315,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets Cycle Time values for Sub Assembly grand total
-     *
      * @param assemblyType
      * @param values
      * @return List of BigDecimals
@@ -338,7 +327,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets Cycle Time values for Sub-Sub-Assembly grand total
-     *
      * @param assemblyType
      * @param levels
      * @param values
@@ -351,7 +339,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets Cycle Time values for Top Level grand total
-     *
      * @param assemblyType
      * @param levels
      * @param values
@@ -366,7 +353,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets Piece Part Cost values for Sub Assembly grand total
-     *
      * @param assemblyType
      * @param levels
      * @param values
@@ -390,7 +376,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets Capital Investment values for Sub Assembly grand total
-     *
      * @param assemblyType
      * @param levels
      * @param values
@@ -405,7 +390,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets Capital Investment values for Sub-Sub-Assembly grand total
-     *
      * @param assemblyType
      * @param levels
      * @param values
@@ -419,7 +403,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets Capital Investment values for Top Level grand total
-     *
      * @param assemblyType
      * @param levels
      * @param values
@@ -435,7 +418,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets quantity list, trims it to size and multiplies by value where necessary
-     *
      * @param assemblyType
      * @return List of BigDecimals
      */
@@ -457,7 +439,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Applies quantities to values (final stage before sum, usually)
-     *
      * @param values
      * @return List of BigDecimals
      */
@@ -478,7 +459,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets current currency setting
-     *
      * @return String
      */
     public String getCurrentCurrency() {
@@ -503,7 +483,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Checks if value of current cell is a valid one
-     *
      * @param valueToCheck
      * @return boolean
      */
@@ -517,7 +496,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Ensures two values are almost near (within 0.03)
-     *
      * @param valueOne
      * @param valueTwo
      * @return boolean
@@ -534,9 +512,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
+     * Gets sub total of values to add
      * @param assemblyType
      * @param column
-     * @return
+     * @return Array List of BigDecimals
      */
     public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
         ArrayList<BigDecimal> returnValues = new ArrayList<>();
@@ -552,37 +531,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Sets export set time and date to current time minus two months using input field
-     */
-    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoInput() {
-        String dtTwoMonthsAgo = getDateTwoMonthsAgo();
-
-        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
-            latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
-        }
-        return this;
-    }
-
-    /**
-     * Sets export set filter date using date picker
-     *
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage setExportDateToTwoMonthsAgoPicker() {
-        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
-        Select monthDropdown = new Select(datePickerMonthSelect);
-        Select yearDropdown = new Select(datePickerYearSelect);
-
-        monthDropdown.selectByIndex(Integer.parseInt(getDateTwoMonthsAgo().substring(5, 7)) - 1);
-        yearDropdown.selectByValue(getDateTwoMonthsAgo().substring(0, 4));
-        datePickerTriggerBtn.click();
-        return this;
-    }
-
-    /**
      * Ensures date has changed, before proceeding with test
-     *
      * @return current page object
      */
     public AssemblyDetailsReportPage ensureExportSetHasChanged() {
@@ -592,7 +541,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Ensures filtering worked correctly
-     *
      * @return int size of element list
      */
     public int getAmountOfTopLevelExportSets() {
@@ -602,8 +550,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Opens new tab and switches to it
-     *
-     * @return
+     * @return current page object
      */
     public AssemblyDetailsReportPage openNewTabAndFocus() {
         pageUtils.jsNewTab();
@@ -615,7 +562,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets date from two months ago
-     *
      * @return String
      */
     private String getDateTwoMonthsAgo() {
@@ -626,7 +572,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Returns parsed markup of page and sets the CSS Locator
-     *
      * @param assemblyType
      * @param rowIndex
      * @param columnName
@@ -639,7 +584,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Sets css locator based on parameters
-     *
      * @param assemblyType
      * @param rowIndex
      * @param columnName
