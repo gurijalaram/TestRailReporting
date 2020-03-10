@@ -191,28 +191,26 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * General navigation method
-     *
      * @param parentPage
      */
     private void navigateToPage(WebElement parentPage) {
-        //pageUtils.waitForElementToAppear(parentPage);
-        //parentPage.click();
-        //pageUtils.waitFor(2000);
-        //pageUtils.waitForElementToAppear(adminHomePageMainText);
-        pageUtils.waitForElementAndClick(parentPage);
+        if (pageUtils.isElementEnabled(parentPage)) {
+            pageUtils.waitForElementAndClick(parentPage);
+        }
     }
 
     /**
      * Another general navigation method
-     *
      * @param parentPage
      * @param childPage
      */
     private void navigateToPage(WebElement parentPage, WebElement childPage) {
         //this.isLoaded();
+        pageUtils.waitForElementToAppear(parentPage);
         if (pageUtils.isElementEnabled(parentPage)) {
             pageUtils.waitForElementAndClick(parentPage);
         }
+        pageUtils.waitForElementToAppear(childPage);
         if (pageUtils.isElementEnabled(childPage)) {
             pageUtils.waitForElementAndClick(childPage);
         }
