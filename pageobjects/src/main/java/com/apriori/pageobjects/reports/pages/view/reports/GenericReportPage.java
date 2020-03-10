@@ -297,7 +297,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
-        pageUtils.waitFor(1000);
         pageUtils.checkElementAttribute(exportSetList, "childElementCount", expectedCount);
         pageUtils.checkElementAttribute(selectedExportSets, "title", getCountOfExportSets());
         return this;
