@@ -905,7 +905,7 @@ public class PageUtils {
     public String getLocalUrlToCheck() {
         String returnVal = Constants.getBaseUrl();
         if (returnVal.contains("localhost")) {
-            returnVal = returnVal.replace("localhost", "conqbaci0");
+            returnVal = returnVal.replace("localhost/", "conqbaci0");
         }
         return returnVal;
     }
