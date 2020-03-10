@@ -108,22 +108,11 @@ public class EditPublicComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "PowderMetalShaft")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "PowderMetalShaft")
-            .apply()
-            .checkComparisonUpdated();
+            .apply();
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class)
-            .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName)
-            .checkComparisonUpdated();
+        new ComparePage(driver).removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class);
-
-        assertThat(comparePage.getScenariosInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
+        assertThat(new ComparePage(driver).getScenariosInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
     }
 
     @Test

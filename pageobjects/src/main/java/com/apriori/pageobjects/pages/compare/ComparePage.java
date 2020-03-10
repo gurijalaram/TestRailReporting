@@ -126,8 +126,8 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return current page object
      */
     public ComparePage checkComparisonUpdated() {
-        pageUtils.waitForElementToAppear(loadingInfo);
-        pageUtils.waitForElementInvisible(loadingInfo);
+//        pageUtils.waitForElementToAppear(loadingInfo);
+        pageUtils.waitForElementInvisible(driver.findElement(By.cssSelector(".panel-body.white-panel-element")));
         return this;
     }
 
