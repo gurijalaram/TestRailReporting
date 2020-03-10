@@ -3,6 +3,7 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.utils.PageUtils;
+
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
@@ -171,10 +172,8 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='inputControls']//div[@class='sub header hidden']")
     private WebElement hiddenSavedOptions;
 
-
     private WebDriver driver;
     private PageUtils pageUtils;
-    private LibraryPage libraryPage;
 
     public GenericReportPage(WebDriver driver) {
         super(driver);
@@ -200,7 +199,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Selects specified export set
-     *
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
@@ -210,7 +208,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Generic scroll method
-     *
      * @return current page object
      */
     public GenericReportPage scrollDownInputControls() {
@@ -221,7 +218,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Sets specified assembly
-     *
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
@@ -265,8 +261,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Clicks apply and ok
-     *
-     * @return Current page object
+     * @return Generic Report page object
      */
     public GenericReportPage clickApplyAndOk() {
         pageUtils.waitForElementAndClick(okButton);
@@ -290,8 +285,6 @@ public class GenericReportPage extends ReportsPageHeader {
         return PageFactory.initElements(driver, className);
     }
 
-
-
     /**
      * Wait for export set list count to be zero
      * @return current page object
@@ -303,7 +296,7 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Sets export set time and date to current time minus two months using input field
+     * Ensures latest date is set to today
      * @return current page object
      */
     public GenericReportPage setEarliestExportDateToTodayInput() {
@@ -311,15 +304,12 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(earliestExportDateInput);
 
         if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
+            earliestExportDateInput.click();
             earliestExportDateInput.clear();
-            earliestExportDateInput.sendKeys(dtToday.substring(0, 10));
-            earliestExportDateInput.sendKeys(dtToday.substring(10, 13));
-            earliestExportDateInput.sendKeys(dtToday.substring(13));
+            earliestExportDateInput.sendKeys(dtToday);
         }
-
         return this;
     }
-
 
     /**
      * Sets earliest export set date to today using picker
@@ -334,6 +324,7 @@ public class GenericReportPage extends ReportsPageHeader {
         earliestExportSetDatePickerTriggerBtn.click();
 
         String currentVal = earliestExportDateInput.getAttribute("value");
+        earliestExportDateInput.click();
         earliestExportDateInput.clear();
         earliestExportDateInput.sendKeys(currentVal.replace("23", String.format("%d", dtToday.getDayOfMonth())));
         return this;
@@ -347,6 +338,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         pageUtils.waitForElementToAppear(latestExportDateInput);
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.click();
             latestExportDateInput.clear();
             latestExportDateInput.sendKeys(dtTwoMonthsAgo);
         }
@@ -358,14 +350,12 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setLatestExportDateToTodayInput() {
         String dtToday = getDate(true);
-
         pageUtils.waitForElementToAppear(latestExportDateInput);
+
         if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.click();
             latestExportDateInput.clear();
-            latestExportDateInput.sendKeys(dtToday.substring(0, 10));
-            latestExportDateInput.sendKeys(dtToday.substring(10, 13));
-            pageUtils.checkElementAttribute(latestExportDateInput, "value", dtToday.substring(0, 13));
-            latestExportDateInput.sendKeys(dtToday.substring(13));
+            latestExportDateInput.sendKeys(dtToday);
         }
         return this;
     }
@@ -423,7 +413,6 @@ public class GenericReportPage extends ReportsPageHeader {
         return list.size();
     }
 
-
     /**
      * Generic method to wait for correct currency and return specified page object
      * @param currencyToCheck
@@ -474,7 +463,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click export set select all button
-     *
      * @return current page object
      */
     public GenericReportPage exportSetSelectAll() {
@@ -486,7 +474,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets number of currently available export sets
-     * @return
+     * @return String - count of export sets
      */
     public String getCountOfExportSets() {
         return exportSetList.getAttribute("childElementCount");
@@ -494,7 +482,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get number of available export sets
-     *
      * @return int
      */
     public int getAvailableExportSetCount() {
@@ -505,7 +492,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get number of selected export sets
-     *
      * @return int
      */
     public int getSelectedExportSetCount() {
@@ -516,7 +502,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Deselect export set
-     *
      * @return current page object
      */
     public GenericReportPage deselectExportSet(String exportSet) {
@@ -528,7 +513,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Invert export set selection
-     *
      * @return current page object
      */
     public GenericReportPage invertExportSetSelection() {
@@ -628,7 +612,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click apply
-     *
      * @return current page object
      */
     public GenericReportPage clickApply() {
@@ -640,7 +623,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click cancel
-     *
      * @return new library page object
      */
     public LibraryPage clickCancel() {
@@ -651,7 +633,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click reset
-     *
      * @return current page object
      */
     public GenericReportPage clickReset() {
@@ -662,7 +643,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click save
-     *
      * @return current page object
      */
     public GenericReportPage clickSave() {
@@ -673,7 +653,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Enter saved input control configuration name
-     *
      * @return current page object
      */
     public GenericReportPage enterSaveName(String saveName) {
@@ -686,7 +665,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click save as button to save input control configuration
-     *
      * @return current page object
      */
     public GenericReportPage clickSaveAsButton() {
@@ -696,7 +674,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Select saved input control config by name
-     *
      * @return current page object
      */
     public GenericReportPage selectSavedOptionByName(String optionsName) {
@@ -708,7 +685,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get export set selection status
-     *
      * @return boolean
      */
     public boolean isExportSetSelected(String exportSetName) {
@@ -721,11 +697,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click remove button
-     *
      * @return current page object
      */
     public GenericReportPage clickRemove() {
-        int expected = Integer.parseInt(savedOptionsDropDown.getAttribute("childElementCount")) - 1;
         pageUtils.waitForElementAndClick(removeButton);
         pageUtils.waitForElementAndClick(confirmRemove);
         return this;
@@ -733,11 +707,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Option in dropdown
-     *
      * @return boolean
      */
     public boolean isOptionInDropDown(String optionName, int expected) {
-        //String optionXpath = "//select[@id='reportOptionsSelect']//option[@value=\'" + optionName + "\']";
         pageUtils.checkElementAttribute(savedOptionsDropDown, "childElementCount", Integer.toString(expected));
         if (driver.findElements(By.xpath("//div[@id='inputControls']//div[@class='sub header hidden']")).size() > 0) {
             return false;
@@ -752,7 +724,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Wait for expected export count
-     *
      */
     public GenericReportPage waitForExpectedExportCount(String expected) {
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
