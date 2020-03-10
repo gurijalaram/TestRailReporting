@@ -130,9 +130,13 @@ public class NavigationTests extends TestBase {
         String urlToCheck = reportsHomePage.getUrlToCheck();
         reportsHomePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(reportsHomePage.getCurrentUrl(), equalTo(urlToCheck + Constants.reportsUrlSuffix + Constants.reportsLoginLocalSuffix));
         assertThat(reportsHomePage.getTabCount(), is(equalTo(2)));
         assertThat(reportsHomePage.isReportsLogoutDisplayed(), is(true));
         assertThat(reportsHomePage.isReportsLogoutEnabled(), is(true));
+
+        assertThat(reportsHomePage.getCurrentUrl(), containsString(urlToCheck));
+        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.reportsUrlSuffix));
+        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.reportsLoginLocalSuffix));
+
     }
 }

@@ -897,4 +897,16 @@ public class PageUtils {
     public String getUrlToCheck() {
         return Constants.getBaseUrl();
     }
+
+    /**
+     * Gets url of MSSQL or Oracle install
+     * @return String of main part of url, minus 1 or 2 at end as can't tel which it is
+     */
+    public String getLocalUrlToCheck() {
+        String returnVal = Constants.getBaseUrl();
+        if (returnVal.contains("localhost")) {
+            returnVal = returnVal.replace("localhost", "conqbaci0");
+        }
+        return returnVal;
+    }
 }

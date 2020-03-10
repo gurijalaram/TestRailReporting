@@ -72,7 +72,7 @@ public class HomePage extends ReportsPageHeader {
      * @return String
      */
     public String getUrlToCheck() {
-        return pageUtils.getUrlToCheck();
+        return pageUtils.getLocalUrlToCheck();
     }
 
     /**
