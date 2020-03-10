@@ -121,17 +121,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     /**
-     * Checks if the comparison is being updated
-     *
-     * @return current page object
-     */
-    public ComparePage checkComparisonUpdated() {
-//        pageUtils.waitForElementToAppear(loadingInfo);
-        pageUtils.waitForElementInvisible(driver.findElement(By.cssSelector(".panel-body.white-panel-element")));
-        return this;
-    }
-
-    /**
      * Removes the scenario from the comparison view
      * @param partName - the part name
      * @param scenarioName - the scenario name
