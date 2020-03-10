@@ -16,7 +16,13 @@ import org.junit.runners.Suite;
 @ProjectRunID("261")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    MachiningDtcReportTests.class
+    LoginTests.class,
+    NavigationTests.class,
+    AssemblyDetailsReportTests.class,
+    MachiningDtcReportTests.class,
+    CastingDtcReportTests.class,
+    CastingDtcComparisonReportTests.class,
+    CastingDtcDetailsReportTests.class
 })
 public class ReportingSuite {
 }
