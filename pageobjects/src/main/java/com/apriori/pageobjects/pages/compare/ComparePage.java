@@ -22,9 +22,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "table.comparison-table-header-widget-table")
     private WebElement scenarioTable;
 
-    @FindBy(xpath = "//a[.='Info and Notes']")
-    private WebElement infoNotes;
-
     @FindBy(css = "div.gwt-Label.comparison-table-header-part-number")
     private WebElement comparisonName;
 
@@ -46,9 +43,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "div[data-ap-comp='scenarioTiles'] div.v-grid-scroller-horizontal")
     private WebElement horizontalScroller;
 
-    @FindBy(css = ".panel-body.white-panel-element")
-    private WebElement loadingInfo;
-
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -68,7 +62,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(scenarioTable);
-        pageUtils.steadinessOfElementLocated(By.xpath("//a[.='Info and Notes']"));
+        pageUtils.waitForSteadinessOfElement(By.xpath("//a[.='Info and Notes']"));
     }
 
     /**

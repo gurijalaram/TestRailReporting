@@ -234,7 +234,7 @@ public class PageUtils {
      * @param locator - the locator
      * @return webelement
      */
-    public WebElement steadinessOfElementLocated(By locator) {
+    public WebElement waitForSteadinessOfElement(By locator) {
         int count = 0;
         while (count < 12) {
             try {
