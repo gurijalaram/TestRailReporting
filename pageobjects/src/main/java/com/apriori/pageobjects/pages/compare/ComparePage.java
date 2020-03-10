@@ -162,7 +162,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return true/false
      */
     public boolean isComparisonBasis(String scenarioName) {
-        return pageUtils.waitForElementInvisible(driver.findElements(findBasisButton(scenarioName)));
+        return pageUtils.isElementDisplayed(findBasisButton(scenarioName));
     }
 
     /**

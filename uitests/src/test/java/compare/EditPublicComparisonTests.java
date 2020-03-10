@@ -2,7 +2,6 @@ package compare;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
@@ -14,6 +13,7 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
@@ -139,12 +139,16 @@ public class EditPublicComparisonTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("SandCast.x_t"))
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario();
-
-        new GenericHeader(driver).createNewScenario()
+            .costScenario()
+            .createNewScenario()
             .enterScenarioName(testScenarioName2)
-            .save()
-            .createNewComparison()
+            .save();
+
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.SAVING_NEW_SCENARIO.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        comparePage = evaluatePage.createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
@@ -152,28 +156,17 @@ public class EditPublicComparisonTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, testPartName)
-            .apply()
-            .checkComparisonUpdated();
+            .apply();
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class)
-            .addScenario()
+        new ComparePage(driver).addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName2, testPartName)
-            .apply()
-            .checkComparisonUpdated();
+            .apply();
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class)
-            .setBasis(testScenarioName2)
-            .checkComparisonUpdated();
+        new ComparePage(driver).setBasis(testScenarioName2);
 
-        assertThat(comparePage.getBasis(testScenarioName2), is(equalTo(0)));
+        assertThat(new ComparePage(driver).isComparisonBasis(testScenarioName2), is(false));
     }
 }
