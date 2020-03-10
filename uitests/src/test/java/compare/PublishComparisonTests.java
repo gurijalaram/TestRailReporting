@@ -23,7 +23,6 @@ import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
 public class PublishComparisonTests extends TestBase {
@@ -39,7 +38,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @Issue("AP-58576")
-    @Category({SmokeTests.class, AdhocTests.class})
+    @Category({SmokeTests.class})
     @TestRail(testCaseId = {"421", "434"})
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
@@ -91,7 +90,7 @@ public class PublishComparisonTests extends TestBase {
 
 
     @Test
-    @Category(AdhocTests.class)
+
     @Issue("AP-58576")
     @TestRail(testCaseId = {"421"})
     @Description("Test a private comparison can be published from explore page")
@@ -116,6 +115,11 @@ public class PublishComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "CASTING")
             .apply();
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
