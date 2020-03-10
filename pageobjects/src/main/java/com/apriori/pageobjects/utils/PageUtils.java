@@ -42,14 +42,12 @@ import java.util.List;
  */
 public class PageUtils {
 
-    private WebDriver driver;
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
+    protected static final Logger steps_logger = LoggerFactory.getLogger("steps_logger");
+    static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
+    private WebDriver driver;
     private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
         StaleElementReferenceException.class, ElementNotInteractableException.class);
-
-    static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
-    protected static final Logger steps_logger = LoggerFactory.getLogger("steps_logger");
-
     private String currentlyOn = "CURRENTLY_ON_PAGE:";
 
     public PageUtils(WebDriver driver) {
@@ -229,6 +227,29 @@ public class PageUtils {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(" + scrollDown + ");", element);
         // waitFor(500);
         return element;
+    }
+
+    /**
+     * Wait until element is on top and interactable
+     * @param locator - the locator
+     * @return webelement
+     */
+    public WebElement steadinessOfElementLocated(By locator) {
+        int count = 0;
+        while (count < 12) {
+            try {
+                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
+                return wait.until(steadinessOfElementLocated(locator, true));
+            } catch (StaleElementReferenceException e) {
+                // e.toString();
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            } catch (TimeoutException e) {
+                count = count + 1;
+            }
+        }
+
+        throw new AssertionError("Element is not clickable: " + locator);
     }
 
     /**
@@ -743,9 +764,9 @@ public class PageUtils {
     /**
      * Waits for the element's specified attribute to contain the specified text
      *
-     * @param locator - element to get attribute of
+     * @param locator   - element to get attribute of
      * @param attribute - attribute to get from element
-     * @param text - expected value
+     * @param text      - expected value
      * @return - boolean
      */
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
