@@ -15,15 +15,7 @@ import org.junit.runners.Suite;
 import testsuites.suiteinterface.OracleTest;
 
 @RunWith(ConcurrentSuiteRunner.class)
-@Categories.IncludeCategory(OracleTest.class)
 @Suite.SuiteClasses({
-    LoginTests.class,
-    NavigationTests.class,
-    AssemblyDetailsReportTests.class,
-    MachiningDtcReportTests.class,
-    CastingDtcReportTests.class,
-    CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class,
     ciadmintests.navigation.NavigationTests.class
 })
 
