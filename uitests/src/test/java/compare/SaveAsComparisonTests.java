@@ -61,8 +61,7 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ComparePage.class)
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
-            .apply()
-            .checkComparisonUpdated();
+            .apply();
 
         new GenericHeader(driver).saveAs()
             .inputName(testSaveAsComparisonName)
@@ -114,6 +113,7 @@ public class SaveAsComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @Issue("BA-919")
     @TestRail(testCaseId = {"413"})
     @Description("Attempt to create a new comparison with a name that already exists")
@@ -132,14 +132,7 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ComparePage.class)
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
-            .apply()
-            .checkComparisonUpdated();
-
-
-        pageHeader = new PageHeader(driver);
-        comparePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class);
+            .apply();
 
         genericHeader = new GenericHeader(driver);
         jobQueuePage = genericHeader.selectExploreButton()

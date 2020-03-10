@@ -23,6 +23,7 @@ import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
 public class PublishComparisonTests extends TestBase {
@@ -38,7 +39,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @Issue("AP-58576")
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, AdhocTests.class})
     @TestRail(testCaseId = {"421", "434"})
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
@@ -61,13 +62,7 @@ public class PublishComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "Casting")
-            .apply()
-            .checkComparisonUpdated();
-
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class);
+            .apply();
 
         new GenericHeader(driver).publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -96,6 +91,7 @@ public class PublishComparisonTests extends TestBase {
 
 
     @Test
+    @Category(AdhocTests.class)
     @Issue("AP-58576")
     @TestRail(testCaseId = {"421"})
     @Description("Test a private comparison can be published from explore page")
@@ -119,8 +115,7 @@ public class PublishComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "CASTING")
-            .apply()
-            .checkComparisonUpdated();
+            .apply();
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
