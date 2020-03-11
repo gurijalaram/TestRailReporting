@@ -8,13 +8,10 @@ import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
-import testsuites.suiteinterface.MySQLTest;
 
 @RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory(MsSQLOracleLocalInstallTest.class)
 @Suite.SuiteClasses({
-    AssemblyDetailsReportTests.class,
-    MachiningDtcReportTests.class
+    AssemblyDetailsReportTests.class
 })
 
 public class MsSQLOracleLocalInstallSuite {
