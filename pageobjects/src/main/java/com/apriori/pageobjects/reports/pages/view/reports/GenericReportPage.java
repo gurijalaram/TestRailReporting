@@ -266,14 +266,13 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage clickApplyAndOk() {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        okButton.click();
         return this;
     }
 
     /**
      * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
      * @param assemblyToCheck
-     * @return
+     * @return Instance of class that was passed in as a parameter
      */
     public <T> T waitForCorrectAssembly(String assemblyToCheck, Class<T> className) {
         pageUtils.waitForElementToAppear(currentAssembly);
