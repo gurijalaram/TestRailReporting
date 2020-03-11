@@ -12,7 +12,6 @@ import testsuites.suiteinterface.MySQLTest;
 
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(MsSQLOracleLocalInstallTest.class)
-//@Categories.ExcludeCategory(MySQLTest.class)
 @Suite.SuiteClasses({
     AssemblyDetailsReportTests.class,
     MachiningDtcReportTests.class
