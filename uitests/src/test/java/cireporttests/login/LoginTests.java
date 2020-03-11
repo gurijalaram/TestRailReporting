@@ -13,6 +13,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 public class LoginTests extends TestBase {
 
@@ -23,7 +24,7 @@ public class LoginTests extends TestBase {
         super();
     }
 
-    @Category({MsSQLOracleLocalInstallTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @Test
     @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
@@ -34,7 +35,7 @@ public class LoginTests extends TestBase {
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }
 
-    @Category({MsSQLOracleLocalInstallTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @Test
     @TestRail(testCaseId = {"2696"})
     @Description("Failed login to CI Report, wrong password")
@@ -46,7 +47,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(loginErrorMessage)));
     }
 
-    @Category({MsSQLOracleLocalInstallTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @Test
     @TestRail(testCaseId = {"2698"})
     @Description("Empty email/password field message displayed")
@@ -58,7 +59,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(emptyFieldMsg)));
     }
 
-    @Category({MsSQLOracleLocalInstallTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @Test
     @TestRail(testCaseId = {"2699"})
     @Description("Invalid email address, wrong format")
