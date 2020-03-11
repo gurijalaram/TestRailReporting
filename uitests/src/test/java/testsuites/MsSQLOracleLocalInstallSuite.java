@@ -9,7 +9,7 @@ import org.junit.runners.Suite;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 @RunWith(CategorySuiteRunner.class)
-@Categories.ExcludeCategory(MsSQLOracleLocalInstallTest.class)
+@Categories.IncludeCategory(MsSQLOracleLocalInstallTest.class)
 @Suite.SuiteClasses({
     AssemblyDetailsReportTests.class
 })
