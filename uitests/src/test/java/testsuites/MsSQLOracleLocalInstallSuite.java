@@ -1,16 +1,15 @@
 package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
-@RunWith(ConcurrentSuiteRunner.class)
+@RunWith(CategorySuiteRunner.class)
+@Categories.IncludeCategory(MsSQLOracleLocalInstallTest.class)
 @Suite.SuiteClasses({
     AssemblyDetailsReportTests.class
 })
