@@ -7,6 +7,7 @@ import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTe
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 import testsuites.suiteinterface.MySQLTest;
 
 @RunWith(CategorySuiteRunner.class)
