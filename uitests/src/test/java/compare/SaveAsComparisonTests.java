@@ -61,7 +61,7 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ComparePage.class)
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
-            .apply()
+            .apply(ComparePage.class)
             .checkComparisonUpdated();
 
         new GenericHeader(driver).saveAs()
@@ -132,7 +132,7 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ComparePage.class)
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
-            .apply()
+            .apply(ComparePage.class)
             .checkComparisonUpdated();
 
 

@@ -36,6 +36,9 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
     @FindBy(css = "button[data-ap-nav-dialog='showScenarioSearchCriteria']")
     private WebElement filterButton;
 
+    @FindBy(css = "select.form-control.input-md.auto-width")
+    private WebElement workspaceDropdown;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -96,11 +99,13 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
     /**
      * Selects the apply button
      *
+     * @param className - the class the method should return
+     * @param <T>       - the return type
      * @return new page object
      */
-    public ComparePage apply() {
-        pageUtils.waitForElementAndClick(applyButton);
-        return new ComparePage(driver);
+    public <T> T apply(Class<T> className) {
+        applyButton.click();
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -111,5 +116,30 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
     public ComparePage cancel() {
         pageUtils.waitForElementAndClick(cancelButton);
         return new ComparePage(driver);
+    }
+
+    /**
+     * Highlights the scenario in the table
+     *
+     * @param scenarioName - scenario name
+     * @param partName     - name of the part
+     */
+    public ComparisonTablePage highlightScenario(String scenarioName, String partName) {
+        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
+        pageUtils.scrollToElement(scenario, comparisonScroller, Constants.PAGE_DOWN);
+        pageUtils.waitForElementToAppear(scenario);
+        pageUtils.javaScriptClick(driver.findElement(scenario));
+        return this;
+    }
+
+    /**
+     * Selects the workspace from the dropdown
+     *
+     * @param workspace - workspace dropdown
+     * @return current page object
+     */
+    public ComparisonTablePage selectWorkSpace(String workspace) {
+        pageUtils.selectDropdownOption(workspaceDropdown, workspace);
+        return this;
     }
 }

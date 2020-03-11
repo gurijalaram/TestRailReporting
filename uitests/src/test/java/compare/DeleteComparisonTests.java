@@ -61,7 +61,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "Machined Box AMERICAS")
-            .apply()
+            .apply(ComparePage.class)
             .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
@@ -129,7 +129,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "MACHINED BOX AMERICAS")
-            .apply()
+            .apply(ComparePage.class)
             .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
@@ -177,7 +177,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
-            .apply()
+            .apply(ComparePage.class)
             .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);
@@ -227,7 +227,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
-            .apply()
+            .apply(ComparePage.class)
             .checkComparisonUpdated();
 
         pageHeader = new PageHeader(driver);

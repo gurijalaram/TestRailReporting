@@ -61,7 +61,7 @@ public class PublishComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "Casting")
-            .apply()
+            .apply(ComparePage.class)
             .checkComparisonUpdated();
 
         genericHeader = new GenericHeader(driver);
@@ -119,7 +119,7 @@ public class PublishComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "CASTING")
-            .apply()
+            .apply(ComparePage.class)
             .checkComparisonUpdated();
 
         genericHeader = new GenericHeader(driver);

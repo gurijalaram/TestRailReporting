@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.header.EvaluateHeader;
+import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
@@ -172,6 +173,21 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "[data-ap-field='userOverridesCount']")
     private WebElement secondaryProcesses;
+
+    @FindBy(css = "[data-ap-region='sourceAndUtilizationTile']")
+    private WebElement sourceAndUtilTile;
+
+    @FindBy(css = "[data-ap-field='sourceModelPartName']")
+    private WebElement sourceModelPartName;
+
+    @FindBy(css = "[data-ap-comp='selectSource']")
+    private WebElement selectSourceButton;
+
+    @FindBy(css = "[data-ap-field='sourceModelScenario']")
+    private WebElement sourceModelScenarioName;
+
+    @FindBy(css = "[data-ap-field='materialName']")
+    private WebElement sourceMaterial;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -703,5 +719,55 @@ public class EvaluatePage extends EvaluateHeader {
         columnSelectorMap.put("Per Part Cost (USD)", "6");
         columnSelectorMap.put("Fully Burdened Cost (USD)", "7");
         columnSelectorMap.put("Capital Investment (USD)", "8");
+    }
+
+    /**
+     * Opens the Source Scenario
+     *
+     * @return new page object
+     */
+    public EvaluatePage openSourceScenario() {
+        pageUtils.waitForElementAndClick(sourceModelScenarioName);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Checks source part name
+     *
+     * @param text - the value
+     * @return true/false
+     */
+    public boolean isSourcePartName(String text) {
+        return pageUtils.checkElementAttribute(sourceModelPartName, "title", text);
+    }
+
+    /**
+     * Checks source Scenario name
+     *
+     * @param text - the value
+     * @return true/false
+     */
+    public boolean isSourceScenarioName(String text) {
+        return pageUtils.checkElementAttribute(sourceModelScenarioName, "title", text);
+    }
+
+    /**
+     * Checks source Scenario Material
+     *
+     * @param text - the value
+     * @return true/false
+     */
+    public boolean isSourceMaterial(String text) {
+        return pageUtils.checkElementAttribute(sourceMaterial, "innerText", text);
+    }
+
+    /**
+     * Opens the Scenario Selection Page
+     *
+     * @return new page object
+     */
+    public ComparisonTablePage selectSourcePart() {
+        pageUtils.waitForElementAndClick(selectSourceButton);
+        return new ComparisonTablePage(driver);
     }
 }
