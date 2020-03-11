@@ -30,9 +30,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.MsSQLTest;
+import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 import testsuites.suiteinterface.MySQLTest;
-import testsuites.suiteinterface.OracleTest;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1915")
     @Description("validate report is available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -73,7 +72,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -88,7 +87,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearch() {
@@ -105,7 +104,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1922")
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -138,7 +137,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3205")
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
@@ -177,7 +176,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"3067", "1929"})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -224,7 +223,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"3068", "1929"})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -271,7 +270,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
@@ -318,7 +317,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"3231", "1929"})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
@@ -351,7 +350,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"3232", "1929"})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
@@ -384,7 +383,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"3233", "1929"})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
@@ -417,7 +416,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1919")
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (uses date input field)")
@@ -438,7 +437,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLTest.class, OracleTest.class})
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3244")
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (using date picker)")
@@ -459,6 +458,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MySQLTest.class)
     @TestRail(testCaseId = "1930")
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
