@@ -28,7 +28,6 @@ public class NavigationTests extends TestBase {
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
     private CiaUserGuide ciaUserGuide;
-    private HomePage adminHomePage;
     private Logout logout;
 
     public NavigationTests() {

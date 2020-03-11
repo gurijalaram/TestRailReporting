@@ -16,14 +16,8 @@ import testsuites.suiteinterface.MsSQLTest;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    LoginTests.class,
-    NavigationTests.class,
     AssemblyDetailsReportTests.class,
-    MachiningDtcReportTests.class,
-    CastingDtcReportTests.class,
-    CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class,
-    ciadmintests.navigation.NavigationTests.class
+    MachiningDtcReportTests.class
 })
 
 public class MsSQLSuite {
