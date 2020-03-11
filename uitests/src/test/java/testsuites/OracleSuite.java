@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.utils.runner.CategorySuiteRunner;
 
 import cireporttests.login.LoginTests;
 import cireporttests.navigation.NavigationTests;
@@ -14,7 +14,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import testsuites.suiteinterface.OracleTest;
 
-@RunWith(ConcurrentSuiteRunner.class)
+@RunWith(CategorySuiteRunner.class)
+@Categories.IncludeCategory(OracleTest.class)
 @Suite.SuiteClasses({
     AssemblyDetailsReportTests.class,
     MachiningDtcReportTests.class
