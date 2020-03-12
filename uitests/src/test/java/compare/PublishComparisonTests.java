@@ -38,7 +38,7 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @Issue("AP-58576")
-    @Category({SmokeTests.class})
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"421", "434"})
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
