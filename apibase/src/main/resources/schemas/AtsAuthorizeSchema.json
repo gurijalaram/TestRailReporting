@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "customerIdentity",
+        "email",
+        "username",
+        "active",
+        "userProfile",
+        "userType"
+      ],
+      "properties": {
+        "identity": {
+          "$id": "#/properties/response/properties/identity",
+          "type": "string"
+        },
+        "createdBy": {
+          "$id": "#/properties/response/properties/createdBy",
+          "type": "string"
+        },
+        "createdAt": {
+          "$id": "#/properties/response/properties/createdAt",
+          "type": "string"
+        },
+        "customerIdentity": {
+          "$id": "#/properties/response/properties/customerIdentity",
+          "type": "string"
+        },
+        "email": {
+          "$id": "#/properties/response/properties/email",
+          "type": "string"
+        },
+        "username": {
+          "$id": "#/properties/response/properties/username",
+          "type": "string"
+        },
+        "active": {
+          "$id": "#/properties/response/properties/active",
+          "type": "boolean"
+        },
+        "userProfile": {
+          "$id": "#/properties/response/properties/userProfile",
+          "type": "object",
+          "required": [
+            "identity",
+            "createdBy",
+            "createdAt",
+            "givenName",
+            "familyName"
+          ],
+          "properties": {
+            "identity": {
+              "$id": "#/properties/response/properties/userProfile/properties/identity",
+              "type": "string"
+            },
+            "createdBy": {
+              "$id": "#/properties/response/properties/userProfile/properties/createdBy",
+              "type": "string"
+            },
+            "createdAt": {
+              "$id": "#/properties/response/properties/userProfile/properties/createdAt",
+              "type": "string"
+            },
+            "givenName": {
+              "$id": "#/properties/response/properties/userProfile/properties/givenName",
+              "type": "string"
+            },
+            "familyName": {
+              "$id": "#/properties/response/properties/userProfile/properties/familyName",
+              "type": "string"
+            }
+          }
+        },
+        "userType": {
+          "$id": "#/properties/response/properties/userType",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
