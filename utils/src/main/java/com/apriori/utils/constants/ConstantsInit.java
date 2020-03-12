@@ -60,4 +60,25 @@ public interface ConstantsInit extends Config {
 
     @Key("cds.identity.application")
     String cdsIdentityApplication();
+
+    @Key("ats.service.host")
+    String atsServiceHost();
+
+    @Key("ats.token.username")
+    String atsTokenUsername();
+
+    @Key("ats.token.email")
+    String atsTokenEmail();
+
+    @Key("ats.token.issuer")
+    String atsTokenIssuer();
+
+    @Key("ats.token.subject")
+    String atsTokenSubject();
+
+    @Key("ats.auth.application")
+    String atsAuthApplication();
+
+    @Key("ats.auth.targetCloudContext")
+    String atsAuthTargetCloudContext();
 }

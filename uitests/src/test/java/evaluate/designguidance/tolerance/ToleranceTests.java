@@ -64,6 +64,7 @@ public class ToleranceTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Issue("AP-59432")
     @TestRail(testCaseId = {"707", "1607", "1285"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
@@ -134,6 +135,7 @@ public class ToleranceTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Issue("AP-59432")
     @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
@@ -162,6 +164,7 @@ public class ToleranceTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Issue("AP-59432")
     @TestRail(testCaseId = {"717", "1608"})
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
@@ -232,6 +235,7 @@ public class ToleranceTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Issue("AP-59432")
     @TestRail(testCaseId = {"1595"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
@@ -362,7 +366,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57941")
+    @Issue("AP-57941, AP-59432")
     @TestRail(testCaseId = {"723"})
     @Description("Validate tolerance edits when default values set")
     public void specificDefaultTolerances() {
@@ -422,6 +426,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1291"})
     @Description("Verify PMI data is not extracted ")
@@ -445,7 +450,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57941")
+    @Issue("AP-57941, AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1286"})
     @Description(" All tolerances types can be selected & edited")
@@ -521,6 +526,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1294"})
     @Description("Validate PMI is off when use specific is selected")
@@ -550,6 +556,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59432")
     @TestRail(testCaseId = {"1289"})
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
@@ -582,6 +589,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1296", "1288"})
     @Description("Validate 'Replace values less than' button")
