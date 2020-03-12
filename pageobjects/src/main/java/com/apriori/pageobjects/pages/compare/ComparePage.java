@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.compare;
 
 import com.apriori.pageobjects.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,6 +40,8 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "[data-ap-comp='loadingComparisonData']")
     private WebElement loadingComparisonData;
 
+    @FindBy(css = "div[data-ap-comp='scenarioTiles'] div.v-grid-scroller-horizontal")
+    private WebElement horizontalScroller;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -59,6 +62,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(scenarioTable);
+        pageUtils.waitForSteadinessOfElement(By.xpath("//a[.='Info and Notes']"));
     }
 
     /**
@@ -111,12 +115,51 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     /**
-     * Checks if the comparison is being updated
-     *
+     * Removes the scenario from the comparison view
+     * @param partName - the part name
+     * @param scenarioName - the scenario name
      * @return current page object
      */
-    public ComparePage checkComparisonUpdated() {
-        pageUtils.checkElementAttribute(loadingComparisonData, "style", "display: none;");
+    public ComparePage removeScenarioFromCompareView(String partName, String scenarioName) {
+        By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
+            partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
+        pageUtils.scrollHorizontally(removeComparisonButton, horizontalScroller);
+        pageUtils.waitForElementAndClick(removeComparisonButton);
         return this;
+    }
+
+    /**
+     * Selects the basis button
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
+    public ComparePage setBasis(String scenarioName) {
+        pageUtils.scrollHorizontally(findBasisButton(scenarioName), horizontalScroller);
+        pageUtils.waitForElementAndClick(findBasisButton(scenarioName));
+        return this;
+    }
+
+    /**
+     * Checks if the basis button exist
+     * @param scenarioName - the scenario name
+     * @return true/false
+     */
+    public boolean isComparisonBasis(String scenarioName) {
+        return pageUtils.isElementDisplayed(findBasisButton(scenarioName));
+    }
+
+    /**
+     * Gets list of scenarios in comparison view
+     * @param scenarioName - the scenario name
+     * @param partName the part name
+     * @return size of element as int
+     */
+    public int getScenariosInComparisonView(String scenarioName, String partName) {
+        By scenario = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
+        return driver.findElements(scenario).size();
+    }
+
+    private By findBasisButton(String scenarioName) {
+        return By.xpath("//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']" + scenarioName);
     }
 }
