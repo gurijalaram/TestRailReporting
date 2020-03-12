@@ -38,7 +38,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(homePageTitle);
     }
 
     @FindBy(xpath = "//div[contains(text(), 'Repository')]")
@@ -386,7 +386,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Search for Report
-     *
      * @param textToType
      * @return current page object
      */
@@ -395,7 +394,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         searchInput.sendKeys(textToType);
         pageUtils.waitForElementAndClick(searchButton);
         pageUtils.isPageLoaded(homePageTitle);
-        pageUtils.isPageLoaded(repositoryLink);
         return new HomePage(driver);
     }
 }
