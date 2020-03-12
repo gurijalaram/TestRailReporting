@@ -85,7 +85,7 @@ public class ComparisonPage extends CompareHeader {
      * @return new page object
      */
     public <T> T save(Class<T> className) {
-        saveButton.click();
+        pageUtils.waitForElementAndClick(saveButton);
         return PageFactory.initElements(driver, className);
     }
 
@@ -95,7 +95,7 @@ public class ComparisonPage extends CompareHeader {
      * @return new page object
      */
     public ExplorePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new ExplorePage(driver);
     }
 }

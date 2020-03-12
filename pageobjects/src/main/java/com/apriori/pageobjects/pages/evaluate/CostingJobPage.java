@@ -65,7 +65,7 @@ public class CostingJobPage extends LoadableComponent<CostingJobPage> {
      * @return new page object
      */
     public EvaluatePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new EvaluatePage(driver);
     }
 }
