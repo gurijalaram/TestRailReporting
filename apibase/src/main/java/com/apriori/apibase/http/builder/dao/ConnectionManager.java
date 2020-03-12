@@ -6,8 +6,10 @@ import static org.hamcrest.Matchers.isOneOf;
 import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
+import com.apriori.apibase.http.builder.common.response.common.ErrorRequestResponse;
 import com.apriori.apibase.http.builder.common.response.common.LoginJSON;
 import com.apriori.apibase.http.builder.common.response.common.PayloadJSON;
+import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.apibase.http.builder.service.RequestInitService;
 import com.apriori.apibase.http.enums.Schema;
@@ -31,6 +33,7 @@ import org.openqa.selenium.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -46,14 +49,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * GET ({@link #get()}), POST ({@link #post()}), PUT ({@link #put()}), PATCH ({@link #patch()}) and DELETE ({@link #delete()}) methods
  * - Converts response JSON into the desired POJO object
  */
-//INFO z: Now ALL operations are going with requestEntity....
-// because of this, when somebody now all request data, he may write e.g new ConnectionManager<Response>(requestEntity, returnType).post() ;
-// because of this ConnectionManager has not references to another objects and all that we need is only RequestEntity
 public class ConnectionManager<T> {
 
     private static Map<String, String> sessionIds = new ConcurrentHashMap<>();
     private static Map<String, String> authTokens = new ConcurrentHashMap<>();
-    Class<T> returnType;
+    private Class<T> returnType;
 
 
     private RequestEntity requestEntity;
@@ -149,17 +149,26 @@ public class ConnectionManager<T> {
          *                          after connection is established.
          */
         builder.setConfig(RestAssuredConfig.config().httpClient(
-            HttpClientConfig.httpClientConfig()
-                .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
-                .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
+                HttpClientConfig.httpClientConfig()
+                        .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
+                        .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
         ))
-            .setBaseUri(requestEntity.buildEndpoint());
+                .setBaseUri(requestEntity.buildEndpoint());
 
-        return RestAssured.given()
-            .spec(builder.build())
-            .redirects().follow(requestEntity.isFollowRedirection())
-            .log()
-            .all();
+
+        if(requestEntity.getStatusCode() == null) {
+            return RestAssured.given()
+                    .spec(builder.build())
+                    .redirects().follow(requestEntity.isFollowRedirection())
+                    .log()
+                    .all();
+        }
+
+        return  RestAssured.given()
+                    .spec(builder.build())
+                    .redirects().follow(requestEntity.isFollowRedirection())
+                    .log()
+                    .all();
     }
 
     private String getSessionId() {
@@ -177,17 +186,17 @@ public class ConnectionManager<T> {
                 UserAuthenticationEntity userAuthenticationEntity = requestEntity.getUserAuthenticationEntity();
 
                 String sessionId = LoginJSON.class.cast(
-                    new HTTPRequest().userAuthorizationData(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
-                        .customizeRequest()
-                        .setEndpoint(CommonEndpointEnum.POST_SESSIONID)
-                        .setAutoLogin(false)
-                        .setUrlParams(URLParams.params()
-                            .use("username", requestEntity.getUserAuthenticationEntity().getEmailAddress())
-                            .use("password", requestEntity.getUserAuthenticationEntity().getPassword()))
-                        .setReturnType(LoginJSON.class)
-                        .commitChanges()
-                        .connect()
-                        .post()
+                        new HTTPRequest().userAuthorizationData(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
+                                .customizeRequest()
+                                .setEndpoint(CommonEndpointEnum.POST_SESSIONID)
+                                .setAutoLogin(false)
+                                .setUrlParams(URLParams.params()
+                                        .use("username", requestEntity.getUserAuthenticationEntity().getEmailAddress())
+                                        .use("password", requestEntity.getUserAuthenticationEntity().getPassword()))
+                                .setReturnType(LoginJSON.class)
+                                .commitChanges()
+                                .connect()
+                                .post()
                 ).getSessionId();
                 sessionIds.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), sessionId);
             }
@@ -204,15 +213,15 @@ public class ConnectionManager<T> {
             logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
 
             String authToken = AuthenticateJSON.class.cast(
-                new HTTPRequest().defaultFormAuthorization(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
-                    .customizeRequest()
-                    .setEndpoint(AuthEndpointEnum.POST_AUTH)
-                    .setAutoLogin(false)
-                    .setFollowRedirection(false)
-                    .setReturnType(AuthenticateJSON.class)
-                    .commitChanges()
-                    .connect()
-                    .post()
+                    new HTTPRequest().defaultFormAuthorization(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
+                            .customizeRequest()
+                            .setEndpoint(AuthEndpointEnum.POST_AUTH)
+                            .setAutoLogin(false)
+                            .setFollowRedirection(false)
+                            .setReturnType(AuthenticateJSON.class)
+                            .commitChanges()
+                            .connect()
+                            .post()
             ).getAccessToken();
 
             authTokens.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), authToken);
@@ -222,15 +231,14 @@ public class ConnectionManager<T> {
 
     }
 
-    private T resultOf(ValidatableResponse response) {
+    private <T> ResponseWrapper<T> resultOf(ValidatableResponse response) {
+
+        final int responseCode = response.extract().statusCode();
+        final String responseBody = response.extract().body().asString();
 
         if (returnType != null) {
-
-            if (returnType.isAssignableFrom(Boolean.class)) {
-                return response.extract().response().as(returnType);
-            }
-
             String schemaLocation;
+
             try {
                 schemaLocation = returnType.getAnnotation(Schema.class).location();
             } catch (NullPointerException ex) {
@@ -240,15 +248,20 @@ public class ConnectionManager<T> {
             final URL resource = Thread.currentThread().getContextClassLoader().getResource(Constants.schemaBasePath + schemaLocation);
             if (resource == null) {
                 throw new RuntimeException(
-                    String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
-                        returnType.getName()));
+                        String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
+                                returnType.getName()));
             }
 
-            return response.assertThat().body(matchesJsonSchema(resource))
-                .extract()
-                .response().as(returnType);
+            T responseEntity = response.assertThat()
+                    .body(matchesJsonSchema(resource))
+                    .extract()
+                    .response()
+                    .as((Type) returnType);
+
+            return ResponseWrapper.build(responseCode, responseBody, responseEntity);
+        } else {
+            return ResponseWrapper.build(responseCode, responseBody, null);
         }
-        return null;
     }
 
     /**
@@ -256,44 +269,14 @@ public class ConnectionManager<T> {
      *
      * @return JSON POJO object instance of @returnType
      */
-    public T get() {
+    public <T> ResponseWrapper<T> get() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
-                .expect()
-                .statusCode(isOneOf(requestEntity.getStatusCode()))
-                .when()
-                .get(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
+                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
+                        .when()
+                        .get(requestEntity.buildEndpoint())
+                        .then()
+                        .log().all()
         );
-    }
-
-
-    /**
-     * Sends request to desired endpoint with the desired specifications using HTTP GET method
-     *
-     * @return raw JSON string
-     */
-    public String getJSON() {
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-            .expect()
-            .statusCode(isOneOf(requestEntity.getStatusCode()))
-            .when()
-            .get(requestEntity.buildEndpoint())
-            .asString();
-    }
-
-    /**
-     * Sends request to desired endpoint with the desired specifications using HTTP GET method
-     *
-     * @return Headers object instance from response
-     */
-    public Headers getHeader() {
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-            .expect()
-            .statusCode(isOneOf(requestEntity.getStatusCode()))
-            .when()
-            .get(requestEntity.buildEndpoint()).headers();
     }
 
     /**
@@ -301,43 +284,14 @@ public class ConnectionManager<T> {
      *
      * @return JSON POJO object instance of @returnType
      */
-    public T post() {
+    public <T> ResponseWrapper<T> post() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
-                .expect()
-                .statusCode(isOneOf(requestEntity.getStatusCode()))
-                .when()
-                .post(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
+                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
+                        .when()
+                        .post(requestEntity.buildEndpoint())
+                        .then()
+                        .log().all()
         );
-    }
-
-    /**
-     * Sends request to desired endpoint with the desired specifications using HTTP POST method
-     *
-     * @return Headers object instance from response
-     */
-    public Headers postHeader() {
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-            .expect()
-            .statusCode(isOneOf(requestEntity.getStatusCode()))
-            .when()
-            .post(requestEntity.buildEndpoint()).headers();
-    }
-
-    /**
-     * gets header from PATCH request
-     *
-     * @return header
-     */
-    public Headers patchHeader() {
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-            .expect()
-            .statusCode(isOneOf(requestEntity.getStatusCode()))
-            .when()
-            .patch(requestEntity.buildEndpoint())
-            .headers();
     }
 
     /**
@@ -346,15 +300,13 @@ public class ConnectionManager<T> {
      *
      * @return JSON POJO object instance of @returnType
      */
-    public T postMultiPart() {
+    public <T> ResponseWrapper<T> postMultiPart() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getMultiPartFiles())
-                .expect()
-                .statusCode(isOneOf(requestEntity.getStatusCode()))
-                .when()
-                .post(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
+                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getMultiPartFiles())
+                        .when()
+                        .post(requestEntity.buildEndpoint())
+                        .then()
+                        .log().all()
         );
     }
 
@@ -363,42 +315,25 @@ public class ConnectionManager<T> {
      *
      * @return JSON POJO object instance of @returnType
      */
-    public T put() {
+    public <T> ResponseWrapper<T> put() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-                .expect()
-                .statusCode(isOneOf(requestEntity.getStatusCode()))
-                .when()
-                .put(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
+                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+                        .when()
+                        .put(requestEntity.buildEndpoint())
+                        .then()
+                        .log().all()
         );
     }
 
-    public T patch() {
+    public <T> ResponseWrapper<T> patch() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-                .expect()
-                .statusCode(isOneOf(requestEntity.getStatusCode()))
-                .when()
-                .patch(requestEntity.buildEndpoint())
-                .then()
-                .log()
-                .all()
+                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+                        .when()
+                        .patch(requestEntity.buildEndpoint())
+                        .then()
+                        .log()
+                        .all()
         );
-    }
-
-    /**
-     * Sends request to desired endpoint with the desired specifications using HTTP PUT method
-     *
-     * @return Headers object instance from response
-     */
-    public Headers putHeader() {
-        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-            .expect()
-            .statusCode(isOneOf(requestEntity.getStatusCode()))
-            .when()
-            .put(requestEntity.buildEndpoint()).headers();
     }
 
     /**
@@ -406,15 +341,13 @@ public class ConnectionManager<T> {
      *
      * @return JSON POJO object instance of @returnType
      */
-    public T delete() {
+    public <T> ResponseWrapper<T> delete() {
         return resultOf(
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-                .expect()
-                .statusCode(isOneOf(requestEntity.getStatusCode()))
-                .when()
-                .delete(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
+                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+                        .when()
+                        .delete(requestEntity.buildEndpoint())
+                        .then()
+                        .log().all()
         );
     }
 
@@ -432,4 +365,108 @@ public class ConnectionManager<T> {
         RestAssured.urlEncodingEnabled = true;
         return new ConnectionManager<>(this.requestEntity, this.requestEntity.getReturnType());
     }
+
+
+    //    /**
+//     * Sends request to desired endpoint with the desired specifications using HTTP POST method
+//     *
+//     * @return Headers object instance from response
+//     */
+//    public Headers postHeader() {
+//        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+//                .expect()
+//                .statusCode(isOneOf(requestEntity.getStatusCode()))
+//                .when()
+//                .post(requestEntity.buildEndpoint()).headers();
+//    }
+
+//    /**
+//     * gets header from PATCH request
+//     *
+//     * @return header
+//     */
+//    public Headers patchHeader() {
+//        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+//                .expect()
+//                .statusCode(isOneOf(requestEntity.getStatusCode()))
+//                .when()
+//                .patch(requestEntity.buildEndpoint())
+//                .headers();
+//    }
+    //    /**
+//     * Sends request to desired endpoint with the desired specifications using HTTP PUT method
+//     *
+//     * @return Headers object instance from response
+//     */
+//    public Headers putHeader() {
+//        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+//                .expect()
+//                .statusCode(isOneOf(requestEntity.getStatusCode()))
+//                .when()
+//                .put(requestEntity.buildEndpoint()).headers();
+//    }
+    //    /**
+//     * Sends request to desired endpoint with the desired specifications using HTTP GET method
+//     *
+//     * @return Headers object instance from response
+//     */
+//    public Headers getHeader() {
+//        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+//                .expect()
+//                .statusCode(isOneOf(requestEntity.getStatusCode()))
+//                .when()
+//                .get(requestEntity.buildEndpoint()).headers();
+//    }
+    //    /**
+//     * Sends request to desired endpoint with the desired specifications using HTTP GET method
+//     *
+//     * @return JSON POJO object instance of @returnType
+//     */
+//    public T get() {
+//        return resultOf(
+//                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
+//                        .expect()
+//                        .statusCode(isOneOf(requestEntity.getStatusCode()))
+//                        .when()
+//                        .get(requestEntity.buildEndpoint())
+//                        .then()
+//                        .log().all()
+//        );
+//    }
+    //    private T resultOf(ValidatableResponse response) {
+//
+//        final int responseCode = response.extract().statusCode();
+//        final String responseBody = response.extract().body().asString();
+//
+//        if (returnType != null) {
+//            String schemaLocation;
+//
+//            try {
+//                schemaLocation = returnType.getAnnotation(Schema.class).location();
+//            } catch (NullPointerException ex) {
+//                throw new RuntimeException(String.format("Your returnType %s is not annotated with @Schema annotation", returnType.getName()));
+//            }
+//
+//            final URL resource = Thread.currentThread().getContextClassLoader().getResource(Constants.schemaBasePath + schemaLocation);
+//            if (resource == null) {
+//                throw new RuntimeException(
+//                        String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
+//                                returnType.getName()));
+//            }
+//
+//            Class<T> responseEntity = response.assertThat()
+//                    .body(matchesJsonSchema(resource))
+//                    .extract()
+//                    .response()
+//                    .as((Type) returnType);
+//
+////            return ResponseWrapper.build(responseCode, responseBody, responseEntity);
+//        }
+////        else {
+////            return ResponseWrapper.build(responseCode, responseBody, null);
+////        }
+//            return null;
+//    }
+
 }
+

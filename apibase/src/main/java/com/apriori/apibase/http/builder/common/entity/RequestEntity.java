@@ -8,6 +8,7 @@ import com.apriori.apibase.http.enums.common.InternalEndpointEnum;
 import com.apriori.apibase.utils.MultiPartFiles;
 import com.apriori.utils.Util;
 
+import com.apriori.utils.users.UserCredentials;
 import org.apache.http.HttpStatus;
 import org.openqa.selenium.WebDriver;
 
@@ -35,7 +36,7 @@ public class RequestEntity {
     private EndpointEnum endpoint;
     private String customEndpoint;
     private Map<String, String> headers = new HashMap<>();
-    private Integer[] statusCode = {HttpStatus.SC_OK};
+    private Integer[] statusCode;
     private boolean useCookie = false;
     private boolean autoLogin = true;
     private boolean defaultAuthorizationData = false;
@@ -49,6 +50,19 @@ public class RequestEntity {
     private Class<?> returnType;
     private int connectionTimeout = 60000;
     private int socketTimeout = 60000;
+    private boolean urlEncodingEnabled = true;
+
+    public static RequestEntity initRequest(String endpoint, final UserCredentials userCredentials, Class<?> returnType) {
+        return new RequestEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()), null)
+                .setReturnType(returnType)
+                .setEndpoint(endpoint);
+    }
+
+    public static RequestEntity initRequest(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
+        return new RequestEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()), null)
+                .setReturnType(returnType)
+                .setEndpoint(endpoint);
+    }
 
     public static RequestEntity initDefaultFormAuthorizationData(final String username, final String password) {
         return new RequestEntity(new UserAuthenticationEntity(username, password), null, true, true);
@@ -345,5 +359,21 @@ public class RequestEntity {
         }
 
         return this.inlineVariables != null ? endpoint.getEndpoint(inlineVariables) : endpoint.getEndpoint();
+    }
+
+    public String getCustomEndpoint() {
+        return customEndpoint;
+    }
+
+    public void setCustomEndpoint(String customEndpoint) {
+        this.customEndpoint = customEndpoint;
+    }
+
+    public boolean isUrlEncodingEnabled() {
+        return urlEncodingEnabled;
+    }
+
+    public void setUrlEncodingEnabled(boolean urlEncodingEnabled) {
+        this.urlEncodingEnabled = urlEncodingEnabled;
     }
 }

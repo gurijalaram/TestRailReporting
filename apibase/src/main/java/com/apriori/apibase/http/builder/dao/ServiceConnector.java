@@ -1,8 +1,11 @@
 package com.apriori.apibase.http.builder.dao;
 
+import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
+import com.apriori.apibase.http.builder.service.RequestAreaByUiAuth;
 import com.apriori.utils.constants.Constants;
 
+import com.apriori.utils.users.UserUtil;
 import org.apache.http.HttpStatus;
 
 import java.io.UnsupportedEncodingException;
@@ -18,6 +21,9 @@ public class ServiceConnector {
      * @return
      */
     public static Object getServiceNoEncoding(String url, Class klass) {
+//        return GenericRequestUtil.get(RequestEntity.initRequest(url, UserUtil.getUser(), klass)
+//                .setFollowRedirection(true)
+//                .);
         return new HTTPRequest()
             .unauthorized()
             .customizeRequest()
@@ -39,17 +45,21 @@ public class ServiceConnector {
      * @return
      */
     public static Object getService(String url, Class klass) {
-        return new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setEndpoint(url)
-            .setReturnType(klass)
-            .setStatusCode(HttpStatus.SC_OK, HttpStatus.SC_MOVED_PERMANENTLY)
-            .setFollowRedirection(true)
-            .commitChanges()
-            .connect()
-            .enableEncoding()
-            .get();
+        return GenericRequestUtil.get(
+                RequestEntity.initRequest(url, UserUtil.getUser(), klass).setFollowRedirection(true),
+                new RequestAreaByUiAuth()
+        );
+//        return new HTTPRequest()
+//            .unauthorized()
+//            .customizeRequest()
+//            .setEndpoint(url)
+//            .setReturnType(klass)
+//            .setStatusCode(HttpStatus.SC_OK, HttpStatus.SC_MOVED_PERMANENTLY)
+//            .setFollowRedirection(true)
+//            .commitChanges()
+//            .connect()
+//            .enableEncoding()
+//            .get();
     }
 
     /**

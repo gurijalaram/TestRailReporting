@@ -3,6 +3,7 @@ package com.apriori.internalapi.edc;
 import com.apriori.apibase.http.builder.common.response.common.AccountStatus;
 import com.apriori.apibase.http.builder.common.response.common.Accounts;
 import com.apriori.apibase.http.builder.common.response.common.AccountsStatusWrapper;
+import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.apibase.http.enums.common.api.AccountEndpointEnum;
 import com.apriori.internalapi.edc.util.UserDataEDC;
@@ -121,7 +122,7 @@ public class AccountsTest {
     }
 
     private static AccountStatus getActiveAccount() {
-        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
             .customizeRequest()
             .setHeaders(userData.getAuthorizationHeaders())
             .setEndpoint(AccountEndpointEnum.GET_ACTIVE_USER)
@@ -130,11 +131,11 @@ public class AccountsTest {
             .connect()
             .get();
 
-        return accountsStatusWrapper.getAccountStatus();
+        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
     }
 
     private AccountStatus getAccountByIdentity(String identity) {
-        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
             .customizeRequest()
             .setHeaders(userData.getAuthorizationHeaders())
             .setEndpoint(AccountEndpointEnum.GET_ACCOUNTS_BY_IDENTITY)
@@ -144,11 +145,11 @@ public class AccountsTest {
             .connect()
             .get();
 
-        return accountsStatusWrapper.getAccountStatus();
+        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
     }
 
     private AccountStatus activateAccount(String identity) {
-        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
             .customizeRequest()
             .setHeaders(userData.getAuthorizationHeaders())
             .setEndpoint(AccountEndpointEnum.ACTIVATE_ACCOUNTS_BY_IDENTITY)
@@ -159,11 +160,11 @@ public class AccountsTest {
             .connect()
             .post();
 
-        return accountsStatusWrapper.getAccountStatus();
+        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
     }
 
     private AccountStatus updateAccount(final String identity, final AccountStatus accountStatus) {
-        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
             .customizeRequest()
             .setHeaders(userData.getAuthorizationHeaders())
             .setEndpoint(AccountEndpointEnum.UPDATE_ACCOUNTS_BY_IDENTITY)
@@ -174,11 +175,11 @@ public class AccountsTest {
             .connect()
             .patch();
 
-        return accountsStatusWrapper.getAccountStatus();
+        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
     }
 
     private AccountStatus createNewAccount(String name, String secret) {
-        final AccountsStatusWrapper accountsStatusWrapper = (AccountsStatusWrapper) new HTTPRequest().unauthorized()
+        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
             .customizeRequest()
             .setHeaders(userData.getAuthorizationHeaders())
             .setEndpoint(AccountEndpointEnum.POST_ACCOUNTS)
@@ -193,7 +194,7 @@ public class AccountsTest {
             .connect()
             .post();
 
-        return accountsStatusWrapper.getAccountStatus();
+        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
     }
 
     private void deleteAccountByIdentity(String identity) {

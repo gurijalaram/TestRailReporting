@@ -13,6 +13,7 @@ import com.apriori.utils.Util;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,10 +77,11 @@ public class UserTestDataUtil {
             .setInlineVariables(userDataEDC.getBillOfMaterial().getIdentity())
             .setHeaders(userDataEDC.getAuthorizationHeaders())
             .setEndpoint(PartsAPIEnum.GET_LINE_ITEMS)
+            .setStatusCode(HttpStatus.SC_OK)
             .setReturnType(MaterialsLineItemsWrapper.class)
             .commitChanges()
             .connect()
-            .get();
+            .get().getResponseEntity();
     }
 
     private BillOfMaterial getBillOfMaterial(List<BillOfMaterial> billOfMaterials) {
@@ -96,10 +98,11 @@ public class UserTestDataUtil {
             .customizeRequest()
             .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
             .setReturnType(BillOfMaterialsWrapper.class)
+            .setStatusCode(HttpStatus.SC_OK)
             .setHeaders(authorizationHeaders)
             .commitChanges()
             .connect()
-            .get();
+            .get().getResponseEntity();
     }
 
     public void clearTestData(final UserDataEDC userDataEDC) {

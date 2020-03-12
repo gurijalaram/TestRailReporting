@@ -4,6 +4,7 @@ import com.apriori.apibase.http.builder.common.response.common.MaterialPart;
 import com.apriori.apibase.http.builder.common.response.common.MaterialPartWrapper;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.apibase.http.enums.common.api.PartsAPIEnum;
+import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.internalapi.edc.util.UserDataEDC;
 import com.apriori.internalapi.edc.util.UserTestDataUtil;
 
@@ -99,7 +100,7 @@ public class PartOfMaterialsTest {
     }
 
     private MaterialPart doUpdatePart() {
-        MaterialPartWrapper materialPartWrapper = (MaterialPartWrapper) new HTTPRequest().unauthorized()
+        ResponseWrapper<MaterialPartWrapper> materialPartWrapper = new HTTPRequest().unauthorized()
             .customizeRequest()
             .setEndpoint(PartsAPIEnum.POST_PARTS_BY_BILL_AND_LINE_IDENTITY)
             .setReturnType(MaterialPartWrapper.class)
@@ -112,7 +113,7 @@ public class PartOfMaterialsTest {
             .commitChanges()
             .connect()
             .post();
-        return materialPartWrapper.getMaterialPart();
+        return materialPartWrapper.getResponseEntity().getMaterialPart();
     }
 
     @Test
