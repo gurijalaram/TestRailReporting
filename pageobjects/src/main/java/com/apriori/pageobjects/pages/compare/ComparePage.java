@@ -160,6 +160,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     private By findBasisButton(String scenarioName) {
-        return By.xpath(String.format("//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", scenarioName));
+        return By.xpath("//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']" + scenarioName);
     }
 }

@@ -108,11 +108,10 @@ public class EditPublicComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "PowderMetalShaft")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "PowderMetalShaft")
-            .apply();
+            .apply()
+            .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
 
-        new ComparePage(driver).removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
-
-        assertThat(new ComparePage(driver).getScenariosInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
+        assertThat(comparePage.getScenariosInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
     }
 
     @Test
@@ -145,17 +144,15 @@ public class EditPublicComparisonTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, testPartName)
-            .apply();
-
-        new ComparePage(driver).addScenario()
+            .apply()
+            .addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName2, testPartName)
-            .apply();
+            .apply()
+            .setBasis(testScenarioName2);
 
-        new ComparePage(driver).setBasis(testScenarioName2);
-
-        assertThat(new ComparePage(driver).isComparisonBasis(testScenarioName2), is(false));
+        assertThat(comparePage.isComparisonBasis(testScenarioName2), is(false));
     }
 }
