@@ -719,7 +719,8 @@ public class EvaluatePage extends EvaluateHeader {
      * @return true/false
      */
     public boolean isDfmRisk(String value) {
-        return pageUtils.checkElementAttribute(dfmRisk, "innerText", value);
+        pageUtils.waitForElementAppear(dfmRisk);
+        return dfmRisk.getText().contains(value);
     }
 
     /**
@@ -728,6 +729,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return Risk Level
      */
     public String getDFMRiskIcon() {
-        return pageUtils.waitForElementToAppear(dfmRiskIcon).getAttribute("outerHTML");
+        pageUtils.waitForElementToAppear(dfmRiskIcon);
+        return dfmRiskIcon.getAttribute("outerHTML");
     }
 }
