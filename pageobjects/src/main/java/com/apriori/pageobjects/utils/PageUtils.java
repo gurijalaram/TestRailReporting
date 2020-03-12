@@ -30,9 +30,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,14 +39,11 @@ import java.util.List;
  */
 public class PageUtils {
 
-    private WebDriver driver;
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
+    static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
+    private WebDriver driver;
     private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
         StaleElementReferenceException.class, ElementNotInteractableException.class);
-
-    static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
-    protected static final Logger steps_logger = LoggerFactory.getLogger("steps_logger");
-
     private String currentlyOn = "CURRENTLY_ON_PAGE:";
 
     public PageUtils(WebDriver driver) {
@@ -225,10 +219,31 @@ public class PageUtils {
      *                   of the screen)
      */
     public WebElement scrollWithJavaScript(WebElement element, boolean scrollDown) {
-        steps_logger.debug("Scroll down");
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(" + scrollDown + ");", element);
-        // waitFor(500);
         return element;
+    }
+
+    /**
+     * Wait until element is on top and interactable
+     * @param locator - the locator
+     * @return webelement
+     */
+    public WebElement waitForSteadinessOfElement(By locator) {
+        int count = 0;
+        while (count < 12) {
+            try {
+                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
+                return wait.until(steadinessOfElementLocated(locator, true));
+            } catch (StaleElementReferenceException e) {
+                // e.toString();
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            } catch (TimeoutException e) {
+                count = count + 1;
+            }
+        }
+
+        throw new AssertionError("Element is not clickable: " + locator);
     }
 
     /**
@@ -507,6 +522,46 @@ public class PageUtils {
     }
 
     /**
+     * Finds element in a table by scrolling.
+     *
+     * @param scenario - the locator for the scenario
+     * @param scroller - the scroller to scroll the element into view
+     * @return - the element as a webelement
+     */
+    public WebElement scrollHorizontally(By scenario, WebElement scroller) {
+        long startTime = System.currentTimeMillis() / 1000;
+        int count = 0;
+        Keys keyboardAction = Keys.RIGHT;
+
+        while (count < 12) {
+            try {
+                if (scroller.isDisplayed() && !isElementDisplayed(scenario)) {
+                    do {
+                        scroller.sendKeys(keyboardAction);
+                    } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
+
+                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
+                    processCoordinates.inViewPort();
+
+                    return driver.findElement(scenario);
+                } else {
+                    return driver.findElement(scenario);
+                }
+            } catch (ElementNotInteractableException e) {
+                logger.debug("Trying to recover from an element not interactable exception");
+                count = count + 1;
+            } catch (NoSuchElementException e) {
+                logger.debug("Trying to recover from no such element exception");
+                count = count + 1;
+            } catch (StaleElementReferenceException e) {
+                logger.debug("Trying to recover from a stale element reference exception");
+                count = count + 1;
+            }
+        }
+        return waitForElementToAppear(scenario);
+    }
+
+    /**
      * Checks the element is not visible
      *
      * @param locator - the element's locator
@@ -644,9 +699,9 @@ public class PageUtils {
     /**
      * Waits for the element's specified attribute to contain the specified text
      *
-     * @param locator - element to get attribute of
+     * @param locator   - element to get attribute of
      * @param attribute - attribute to get from element
-     * @param text - expected value
+     * @param text      - expected value
      * @return - boolean
      */
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
@@ -720,19 +775,6 @@ public class PageUtils {
     public WebDriver switchBackToInitialTab() {
         List<String> windowList = new ArrayList<>(driver.getWindowHandles());
         return driver.switchTo().window(windowList.get(0));
-    }
-
-    /**
-     * Get link response code
-     *
-     * @param linkURL - URL of link
-     * @return String response code
-     */
-    public int urlRespCode(String linkURL) throws IOException {
-        HttpURLConnection httpURLConnection = (HttpURLConnection) (new URL(linkURL).openConnection());
-        httpURLConnection.setRequestMethod("HEAD");
-        httpURLConnection.connect();
-        return httpURLConnection.getResponseCode();
     }
 
     /**
