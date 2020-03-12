@@ -18,6 +18,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
@@ -30,6 +32,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1692")
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcDetailsExportSetInputControls() {
@@ -57,6 +60,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC Details report")
     public void testRollupDropDown() {
@@ -75,6 +79,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC Details input control panel functions correctly")
     public void testApplyButton() {
@@ -93,6 +98,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Details input control panel works")
     public void testCancelButton() {
@@ -107,6 +113,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC Details input control panel works")
     public void testResetButton() {
