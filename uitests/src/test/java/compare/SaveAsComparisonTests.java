@@ -61,8 +61,7 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ComparePage.class)
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
-            .apply()
-            .checkComparisonUpdated();
+            .apply();
 
         new GenericHeader(driver).saveAs()
             .inputName(testSaveAsComparisonName)
@@ -132,13 +131,11 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ComparePage.class)
             .addScenario()
             .selectScenario(scenarioName, "Push Pin")
-            .apply()
-            .checkComparisonUpdated();
+            .apply();
 
-
-        pageHeader = new PageHeader(driver);
-        comparePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", " Set Children to Comparison", "okay")
             .closeJobQueue(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);

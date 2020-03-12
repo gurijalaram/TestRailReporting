@@ -36,6 +36,10 @@
           "type": "string",
           "pattern": "^(.*)$"
         },
+        "updatedAt": {
+          "$id": "#/properties/response/properties/updatedAt",
+          "type": "string"
+        },
         "name": {
           "$id": "#/properties/response/properties/name",
           "type": "string",
