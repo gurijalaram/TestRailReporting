@@ -49,6 +49,20 @@ public class Customer {
     @JsonProperty
     private String salesforceId;
 
+    @JsonProperty
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public Customer setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+        return this;
+    }
+
     public String getSalesforceId() {
         return this.salesforceId;
     }
