@@ -17,6 +17,7 @@ services:
       - HUB_PORT=4444
       - NODE_MAX_INSTANCES=3
       - NODE_MAX_SESSION=3
+    restart: on-failure
     ports:
       - "5900:5900"
 
@@ -31,5 +32,6 @@ services:
       - HUB_PORT=4444
       - NODE_MAX_INSTANCES=3
       - NODE_MAX_SESSION=3
+    restart: on-failure
     ports:
       - "5901:5900"
