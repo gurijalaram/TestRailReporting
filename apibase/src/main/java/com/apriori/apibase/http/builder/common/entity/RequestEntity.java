@@ -38,7 +38,7 @@ public class RequestEntity {
     private Map<String, String> headers = new HashMap<>();
     private Integer[] statusCode;
     private boolean useCookie = false;
-    private boolean autoLogin = true;
+    private boolean autoLogin = false;
     private boolean defaultAuthorizationData = false;
     private EndpointType endpointType;
     private boolean followRedirection = false;
@@ -52,13 +52,13 @@ public class RequestEntity {
     private int socketTimeout = 60000;
     private boolean urlEncodingEnabled = true;
 
-    public static RequestEntity initRequest(String endpoint, final UserCredentials userCredentials, Class<?> returnType) {
+    public static RequestEntity init(String endpoint, final UserCredentials userCredentials, Class<?> returnType) {
         return new RequestEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()), null)
                 .setReturnType(returnType)
                 .setEndpoint(endpoint);
     }
 
-    public static RequestEntity initRequest(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
+    public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
         return new RequestEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()), null)
                 .setReturnType(returnType)
                 .setEndpoint(endpoint);

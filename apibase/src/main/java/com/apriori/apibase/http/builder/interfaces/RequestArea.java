@@ -14,4 +14,6 @@ public interface RequestArea {
     <T> ResponseWrapper<T> put(RequestEntity requestEntity);
 
     <T> ResponseWrapper<T> delete(RequestEntity requestEntity);
+
+    <T> ResponseWrapper<T> patch(RequestEntity requestEntity);
 }

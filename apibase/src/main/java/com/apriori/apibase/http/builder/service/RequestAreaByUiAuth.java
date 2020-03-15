@@ -45,8 +45,16 @@ public class RequestAreaByUiAuth implements RequestArea {
                 .delete();
     }
 
+    @Override
+    public <T> ResponseWrapper<T> patch(RequestEntity requestEntity) {
+        return RequestInitService.build(authValidation(requestEntity))
+                .connect()
+                .patch();
+    }
+
+
     private RequestEntity authValidation(RequestEntity requestEntity) {
-        if(requestEntity.getHeaders() == null) {
+        if(requestEntity.getHeaders() == null || requestEntity.getHeaders().size() == 0) {
             requestEntity.setHeaders(doUiAuth(requestEntity));
         }
 
@@ -62,7 +70,7 @@ public class RequestAreaByUiAuth implements RequestArea {
 
         return new HashMap<String, String>() {{
             put("Authorization", "Bearer " + token);
-            put("ap-cloud-context", "EDC");
+//            put("ap-cloud-context", "EDC");
         }};
     }
 }

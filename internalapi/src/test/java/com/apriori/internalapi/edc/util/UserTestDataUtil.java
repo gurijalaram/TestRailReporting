@@ -1,10 +1,13 @@
 package com.apriori.internalapi.edc.util;
 
+import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.response.common.BillOfMaterial;
 import com.apriori.apibase.http.builder.common.response.common.BillOfMaterialsWrapper;
 import com.apriori.apibase.http.builder.common.response.common.MaterialLineItem;
 import com.apriori.apibase.http.builder.common.response.common.MaterialsLineItemsWrapper;
+import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
+import com.apriori.apibase.http.builder.service.RequestAreaByUiAuth;
 import com.apriori.apibase.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.apibase.http.enums.common.api.PartsAPIEnum;
 import com.apriori.apibase.utils.MultiPartFiles;
@@ -29,16 +32,16 @@ public class UserTestDataUtil {
     public UserDataEDC initEmptyUser() {
         UserCredentials userNamePass = UserUtil.getUser();
 
-        UserDataEDC userDataEDC = new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
+      return new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
 
-        userDataEDC.setTokenAndInitAuthorizationHeaders(
-            new WebDriverUtils()
-                .getToken(userNamePass.getUsername(),
-                    userNamePass.getPassword()
-                )
-        );
-
-        return userDataEDC;
+//        userDataEDC.setTokenAndInitAuthorizationHeaders(
+//            new WebDriverUtils()
+//                .getToken(userNamePass.getUsername(),
+//                    userNamePass.getPassword()
+//                )
+//        );
+//
+//        return userDataEDC;
     }
 
     public UserDataEDC initBillOfMaterials() {
@@ -122,18 +125,27 @@ public class UserTestDataUtil {
 
         final File testData = Util.getLocalResourceFile("test-data/apriori-4-items.csv");
 
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(userDataEDC.getAuthorizationHeaders())
-            .setMultiPartFiles(
-                new MultiPartFiles().use("multiPartFile", testData)
-            )
-            .setStatusCode(201)
-            .setEndpoint(BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS)
-            .commitChanges()
-            .connect()
-            .postMultiPart();
+        RequestEntity requestEntity = RequestEntity.init(
+                BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS, userDataEDC.getUserCredentials(), null)
+                .setMultiPartFiles(new MultiPartFiles().use("multiPartFile", testData));
+
+
+        String body = GenericRequestUtil.postMultipart(requestEntity, new RequestAreaByUiAuth()).getBody();
+
+        System.out.println("--------------------------------------");
+        System.out.println(body);
+//        new HTTPRequest()
+//            .unauthorized()
+//            .customizeRequest()
+//            .setHeaders(userDataEDC.getAuthorizationHeaders())
+//            .setMultiPartFiles(
+//                new MultiPartFiles().use("multiPartFile", testData)
+//            )
+////            .setStatusCode(201)
+//            .setEndpoint(BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS)
+//            .commitChanges()
+//            .connect()
+//            .postMultiPart();
     }
 
     private MaterialLineItem getRandomLineItemWithParts(MaterialsLineItemsWrapper materialsLineItemsWrapper) {

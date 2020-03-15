@@ -1,28 +1,33 @@
 package com.apriori.internalapi.edc;
 
+import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.response.common.AccountStatus;
 import com.apriori.apibase.http.builder.common.response.common.Accounts;
 import com.apriori.apibase.http.builder.common.response.common.AccountsStatusWrapper;
-import com.apriori.apibase.utils.ResponseWrapper;
+import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
+import com.apriori.apibase.http.builder.service.RequestAreaByUiAuth;
 import com.apriori.apibase.http.enums.common.api.AccountEndpointEnum;
+import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.internalapi.edc.util.UserDataEDC;
 import com.apriori.internalapi.edc.util.UserTestDataUtil;
-
+import com.apriori.internalapi.util.TestUtil;
+import com.apriori.utils.users.UserCredentials;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.http.HttpStatus;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.assertEquals;
 
-public class AccountsTest {
+
+public class AccountsTest extends TestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountStatus.class);
     private static UserDataEDC userData;
@@ -50,14 +55,12 @@ public class AccountsTest {
     @Description("Test get accounts")
     @Severity(SeverityLevel.NORMAL)
     public void testGetAccounts() {
-        new HTTPRequest().unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(AccountEndpointEnum.GET_ACCOUNTS)
-            .setReturnType(Accounts.class)
-            .commitChanges()
-            .connect()
-            .get();
+
+        ResponseWrapper<Accounts> accountsResponseWrapper = GenericRequestUtil.get(
+                RequestEntity.init(AccountEndpointEnum.GET_ACCOUNTS, UserCredentials.init(userData.getUsername(), userData.getPassword()), Accounts.class),
+                new RequestAreaByUiAuth());
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountsResponseWrapper.getStatusCode());
     }
 
     @Test
@@ -70,12 +73,12 @@ public class AccountsTest {
 
         identity = accountStatus.getIdentity();
         updateAccount(identity,
-            accountStatus.setName(newName)
+                accountStatus.setName(newName)
         );
 
-        Assert.assertEquals("The user name, should be updated",
-            getActiveAccount().getName(),
-            newName);
+        assertEquals("The user name, should be updated",
+                getActiveAccount().getName(),
+                newName);
 
         activateDefaultUserAndDeleteAnotherByIdentity(identity);
         identity = "";
@@ -87,9 +90,9 @@ public class AccountsTest {
     public void testGetAccountByIdentity() {
         final AccountStatus receivedAccountsStatus = getAccountByIdentity(userData.getIdentity());
 
-        Assert.assertEquals("Search identity and received identity, should be the same",
-            userData.getIdentity(),
-            receivedAccountsStatus.getIdentity());
+        assertEquals("Search identity and received identity, should be the same",
+                userData.getIdentity(),
+                receivedAccountsStatus.getIdentity());
     }
 
     @Test
@@ -112,7 +115,7 @@ public class AccountsTest {
 
     private AccountStatus createAndActivateNewAccount(String name, String secret) {
         return activateAccount(
-            createNewAccount(name, secret).getIdentity()
+                createNewAccount(name, secret).getIdentity()
         );
     }
 
@@ -122,90 +125,72 @@ public class AccountsTest {
     }
 
     private static AccountStatus getActiveAccount() {
-        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(AccountEndpointEnum.GET_ACTIVE_USER)
-            .setReturnType(AccountsStatusWrapper.class)
-            .commitChanges()
-            .connect()
-            .get();
 
-        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
+        RequestEntity requestEntity = RequestEntity.init(
+                AccountEndpointEnum.GET_ACTIVE_USER, userData.getUserCredentials(), AccountsStatusWrapper.class)
+                .setStatusCode(HttpStatus.SC_OK);
+
+        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaByUiAuth()).getResponseEntity()).getAccountStatus();
     }
 
     private AccountStatus getAccountByIdentity(String identity) {
-        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(AccountEndpointEnum.GET_ACCOUNTS_BY_IDENTITY)
-            .setInlineVariables(identity)
-            .setReturnType(AccountsStatusWrapper.class)
-            .commitChanges()
-            .connect()
-            .get();
 
-        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
+        final RequestEntity requestEntity = RequestEntity.init(
+                AccountEndpointEnum.GET_ACCOUNTS_BY_IDENTITY,
+                userData.getUserCredentials(),
+                AccountsStatusWrapper.class)
+                .setInlineVariables(identity)
+                .setStatusCode(HttpStatus.SC_OK);
+
+        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaByUiAuth())
+                .getResponseEntity()).getAccountStatus();
     }
 
     private AccountStatus activateAccount(String identity) {
-        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(AccountEndpointEnum.ACTIVATE_ACCOUNTS_BY_IDENTITY)
-            .setInlineVariables(identity)
-            .setReturnType(AccountsStatusWrapper.class)
-            .setStatusCode(HttpStatus.SC_OK)
-            .commitChanges()
-            .connect()
-            .post();
+        RequestEntity requestEntity = RequestEntity.init(
+                AccountEndpointEnum.ACTIVATE_ACCOUNTS_BY_IDENTITY, userData.getUserCredentials(), AccountsStatusWrapper.class)
+                .setInlineVariables(identity)
+                .setStatusCode(HttpStatus.SC_OK);
 
-        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
+        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaByUiAuth()).getResponseEntity()).getAccountStatus();
     }
 
     private AccountStatus updateAccount(final String identity, final AccountStatus accountStatus) {
-        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(AccountEndpointEnum.UPDATE_ACCOUNTS_BY_IDENTITY)
-            .setInlineVariables(identity)
-            .setBody(accountStatus)
-            .setReturnType(AccountsStatusWrapper.class)
-            .commitChanges()
-            .connect()
-            .patch();
 
-        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
+        RequestEntity requestEntity = RequestEntity.init(
+                AccountEndpointEnum.UPDATE_ACCOUNTS_BY_IDENTITY, userData.getUserCredentials(), AccountsStatusWrapper.class)
+                .setStatusCode(HttpStatus.SC_OK)
+                .setInlineVariables(identity)
+                .setBody(accountStatus);
+
+        return ((AccountsStatusWrapper) GenericRequestUtil.patch(requestEntity, new RequestAreaByUiAuth())
+                .getResponseEntity()).getAccountStatus();
     }
 
     private AccountStatus createNewAccount(String name, String secret) {
-        final ResponseWrapper<AccountsStatusWrapper> accountsStatusWrapper = new HTTPRequest().unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(AccountEndpointEnum.POST_ACCOUNTS)
-            .setBody(new AccountStatus()
+
+        final AccountStatus accountStatus = new AccountStatus()
                 .setAccountId("Apriori")
                 .setType("Silicon Expert")
                 .setName(name)
-                .setAccountSecret(secret))
-            .setReturnType(AccountsStatusWrapper.class)
-            .setStatusCode(HttpStatus.SC_CREATED)
-            .commitChanges()
-            .connect()
-            .post();
+                .setAccountSecret(secret);
 
-        return accountsStatusWrapper.getResponseEntity().getAccountStatus();
+        final RequestEntity requestEntity = RequestEntity.init(
+                AccountEndpointEnum.POST_ACCOUNTS, userData.getUserCredentials(), AccountsStatusWrapper.class)
+                .setBody(accountStatus)
+                .setStatusCode(HttpStatus.SC_CREATED);
+
+        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaByUiAuth())
+                .getResponseEntity()).getAccountStatus();
     }
 
     private void deleteAccountByIdentity(String identity) {
-        new HTTPRequest().unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(AccountEndpointEnum.DELETE_ACCOUNTS_BY_IDENTITY)
-            .setInlineVariables(identity)
-            .setStatusCode(HttpStatus.SC_NO_CONTENT)
-            .commitChanges()
-            .connect()
-            .delete();
+
+        RequestEntity requestEntity = RequestEntity.init(
+                AccountEndpointEnum.DELETE_ACCOUNTS_BY_IDENTITY, userData.getUserCredentials(), null)
+                .setInlineVariables(identity)
+                .setStatusCode(HttpStatus.SC_NO_CONTENT);
+
+        GenericRequestUtil.delete(requestEntity, new RequestAreaByUiAuth());
     }
 }

@@ -45,7 +45,8 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser() {
-        UserCredentials user = UserCommonService.getUser();
+//        TODO z: change before merge
+        UserCredentials user = new UserCredentials("cfrith@apriori.com", "TestEvent2018"); // UserCommonService.getUser();
         logInfo(user);
         return user;
     }

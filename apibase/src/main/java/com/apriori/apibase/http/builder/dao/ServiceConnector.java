@@ -46,7 +46,7 @@ public class ServiceConnector {
      */
     public static Object getService(String url, Class klass) {
         return GenericRequestUtil.get(
-                RequestEntity.initRequest(url, UserUtil.getUser(), klass).setFollowRedirection(true),
+                RequestEntity.init(url, UserUtil.getUser(), klass).setFollowRedirection(true),
                 new RequestAreaByUiAuth()
         );
 //        return new HTTPRequest()

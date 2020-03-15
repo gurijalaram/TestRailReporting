@@ -42,7 +42,7 @@ public class APILoginTest {
     public void testTokenAutoLoginFiledIfIncorrectLoginProcess() {
 
         ResponseWrapper<ErrorRequestResponse> accountStatusResponseWrapper =
-                GenericRequestUtil.get(RequestEntity.initRequest(AuthEndpointEnum.POST_AUTH, UserUtil.getUser(), ErrorRequestResponse.class),
+                GenericRequestUtil.get(RequestEntity.init(AuthEndpointEnum.POST_AUTH, UserUtil.getUser(), ErrorRequestResponse.class),
                 new RequestAreaByUiAuth()
         );
 

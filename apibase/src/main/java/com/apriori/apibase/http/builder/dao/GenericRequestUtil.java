@@ -22,4 +22,11 @@ public class GenericRequestUtil {
         return  requestArea.delete(requestEntity);
     }
 
+    public static <T> ResponseWrapper<T> patch(RequestEntity requestEntity, RequestArea requestArea) {
+        return  requestArea.patch(requestEntity);
+    }
+
+    public static <T> ResponseWrapper<T> postMultipart(RequestEntity requestEntity, RequestArea requestArea) {
+        return  requestArea.patch(requestEntity);
+    }
 }

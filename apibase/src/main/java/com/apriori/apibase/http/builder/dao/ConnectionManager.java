@@ -29,6 +29,7 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import org.apache.http.HttpStatus;
 import org.openqa.selenium.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,9 +157,10 @@ public class ConnectionManager<T> {
                 .setBaseUri(requestEntity.buildEndpoint());
 
 
-        if(requestEntity.getStatusCode() == null) {
+        if(requestEntity.getStatusCode() != null) {
             return RestAssured.given()
                     .spec(builder.build())
+                    .expect().statusCode(isOneOf(requestEntity.getStatusCode())).request()
                     .redirects().follow(requestEntity.isFollowRedirection())
                     .log()
                     .all();
@@ -190,6 +192,7 @@ public class ConnectionManager<T> {
                                 .customizeRequest()
                                 .setEndpoint(CommonEndpointEnum.POST_SESSIONID)
                                 .setAutoLogin(false)
+                                .setStatusCode(HttpStatus.SC_OK)
                                 .setUrlParams(URLParams.params()
                                         .use("username", requestEntity.getUserAuthenticationEntity().getEmailAddress())
                                         .use("password", requestEntity.getUserAuthenticationEntity().getPassword()))
