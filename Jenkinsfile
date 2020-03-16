@@ -12,15 +12,6 @@ pipeline {
         gradle "Gradle"
     }
 
-    stages {
-        stage('Checkout GIT Branch') {
-    	    steps {
-        	    echo 'Checking out branch....'
-        		git branch: 'ba-881', credentialsId: '4a8bc0e7-4651-461a-843c-ed16c4fbef0e', poll: false, url: 'git@github.com:aPrioriTechnologies/apriori-qa'
-
-    	    }
-    	}
-
     	stage('Setup Workspace') {
     	    steps {
         	    echo 'Setting up workspace....'
