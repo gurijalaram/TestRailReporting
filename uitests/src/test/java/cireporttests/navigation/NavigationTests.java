@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
 import com.apriori.pageobjects.pages.login.HelpPage;
-import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDataSourcePage;
@@ -259,11 +258,11 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2701"})
     @Description("Ensure that the link to the help page works")
     public void testHelpNavigation() {
-        String iFrameId = "topic";
+        String iframeId = "topic";
         helpPage = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToHelpPage()
-            .switchToIFrameHelpPage(iFrameId)
+            .switchToIFrameHelpPage(iframeId)
             .ensurePageIsLoaded();
 
         assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
