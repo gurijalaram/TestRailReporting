@@ -1,7 +1,6 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -9,7 +8,6 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
       "required": [
@@ -26,7 +24,6 @@
       ],
       "properties": {
         "isFirstPage": {
-          "$id": "#/properties/response/properties/isFirstPage",
           "type": "boolean",
           "title": "The Isfirstpage Schema",
           "default": false,
@@ -35,7 +32,6 @@
           ]
         },
         "isLastPage": {
-          "$id": "#/properties/response/properties/isLastPage",
           "type": "boolean",
           "title": "The Islastpage Schema",
           "default": false,
@@ -44,7 +40,6 @@
           ]
         },
         "pageNumber": {
-          "$id": "#/properties/response/properties/pageNumber",
           "type": "integer",
           "title": "The Pagenumber Schema",
           "default": 0,
@@ -53,7 +48,6 @@
           ]
         },
         "pageSize": {
-          "$id": "#/properties/response/properties/pageSize",
           "type": "integer",
           "title": "The Pagesize Schema",
           "default": 0,
@@ -62,7 +56,6 @@
           ]
         },
         "pageItemCount": {
-          "$id": "#/properties/response/properties/pageItemCount",
           "type": "integer",
           "title": "The Pageitemcount Schema",
           "default": 0,
@@ -71,7 +64,6 @@
           ]
         },
         "totalItemCount": {
-          "$id": "#/properties/response/properties/totalItemCount",
           "type": "integer",
           "title": "The Totalitemcount Schema",
           "default": 0,
@@ -80,7 +72,6 @@
           ]
         },
         "totalPageCount": {
-          "$id": "#/properties/response/properties/totalPageCount",
           "type": "integer",
           "title": "The Totalpagecount Schema",
           "default": 0,
@@ -89,7 +80,6 @@
           ]
         },
         "hasNextPage": {
-          "$id": "#/properties/response/properties/hasNextPage",
           "type": "boolean",
           "title": "The Hasnextpage Schema",
           "default": false,
@@ -98,7 +88,6 @@
           ]
         },
         "hasPreviousPage": {
-          "$id": "#/properties/response/properties/hasPreviousPage",
           "type": "boolean",
           "title": "The Haspreviouspage Schema",
           "default": false,
@@ -107,11 +96,9 @@
           ]
         },
         "items": {
-          "$id": "#/properties/response/properties/items",
           "type": "array",
           "title": "The Items Schema",
           "items": {
-            "$id": "#/properties/response/properties/items/items",
             "type": "object",
             "title": "The Items Schema",
             "required": [
@@ -125,7 +112,6 @@
             ],
             "properties": {
               "isValid": {
-                "$id": "#/properties/response/properties/items/items/properties/isValid",
                 "type": "boolean",
                 "title": "The Isvalid Schema",
                 "default": false,
@@ -134,7 +120,6 @@
                 ]
               },
               "isActive": {
-                "$id": "#/properties/response/properties/items/items/properties/isActive",
                 "type": "boolean",
                 "title": "The Isactive Schema",
                 "default": false,
@@ -143,7 +128,6 @@
                 ]
               },
               "identity": {
-                "$id": "#/properties/response/properties/items/items/properties/identity",
                 "type": "string",
                 "title": "The Identity Schema",
                 "default": "",
@@ -153,7 +137,6 @@
                 "pattern": "^(.*)$"
               },
               "name": {
-                "$id": "#/properties/response/properties/items/items/properties/name",
                 "type": "string",
                 "title": "The Name Schema",
                 "default": "",
@@ -163,7 +146,6 @@
                 "pattern": "^(.*)$"
               },
               "type": {
-                "$id": "#/properties/response/properties/items/items/properties/type",
                 "type": "string",
                 "title": "The Type Schema",
                 "default": "",
@@ -173,7 +155,6 @@
                 "pattern": "^(.*)$"
               },
               "accountId": {
-                "$id": "#/properties/response/properties/items/items/properties/accountId",
                 "type": "string",
                 "title": "The Accountid Schema",
                 "default": "",
@@ -183,7 +164,6 @@
                 "pattern": "^(.*)$"
               },
               "accountSecret": {
-                "$id": "#/properties/response/properties/items/items/properties/accountSecret",
                 "type": "string",
                 "title": "The Accountsecret Schema",
                 "default": "",

@@ -140,170 +140,138 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Home page navigation method
-     *
      * @return Home Page page object
      */
     public HomePage navigateToHomePage() {
-        navigateToPage(homeMenuOption);
-        return new HomePage(driver);
+        return navigateToPage(homeMenuOption, HomePage.class);
     }
 
     /**
      * Library page navigation method
-     *
      * @return Library Page page object
      */
     public LibraryPage navigateToLibraryPage() {
-        navigateToPage(libraryMenuOption);
-        return new LibraryPage(driver);
+        return navigateToPage(libraryMenuOption, LibraryPage.class);
     }
 
     /**
      * View Search Results page navigation method
-     *
      * @return Search Results Page page object
      */
     public ViewSearchResultsPage navigateToViewSearchResultsPage() {
-        navigateToPage(viewMenuOption, viewSearchResultsMenuOption);
-        return new ViewSearchResultsPage(driver);
+        return navigateToSubPage(viewMenuOption, viewSearchResultsMenuOption, ViewSearchResultsPage.class);
     }
 
     /**
      * View Repository page navigation method
-     *
      * @return Repository Page page object
      */
     public ViewRepositoryPage navigateToViewRepositoryPage() {
-        navigateToPage(viewMenuOption, viewRepositoryMenuOption);
-        return new ViewRepositoryPage(driver);
+        return navigateToSubPage(viewMenuOption, viewRepositoryMenuOption, ViewRepositoryPage.class);
     }
 
     /**
      * View Schedules page navigation method
-     *
      * @return Schedules Page page object
      */
     public ViewSchedulesPage navigateToViewSchedulesPage() {
-        navigateToPage(viewMenuOption, viewSchedulesMenuOption);
-        return new ViewSchedulesPage(driver);
+        return navigateToSubPage(viewMenuOption, viewSchedulesMenuOption, ViewSchedulesPage.class);
     }
 
     /**
      * View Messages page navigation method
-     *
      * @return Messages Page page object
      */
     public ViewMessagesPage navigateToViewMessagesPage() {
-        navigateToPage(viewMenuOption, viewMessagesMenuOption);
-        return new ViewMessagesPage(driver);
+        return navigateToSubPage(viewMenuOption, viewMessagesMenuOption, ViewMessagesPage.class);
     }
 
     /**
      * Manage Users page navigation method
-     *
      * @return Users Page page object
      */
     public ManageUsersPage navigateToManageUsersPage() {
-        navigateToPage(manageMenuOption, manageUsersMenuOption);
-        return new ManageUsersPage(driver);
+        return navigateToSubPage(manageMenuOption, manageUsersMenuOption, ManageUsersPage.class);
     }
 
     /**
      * Manage Roles page navigation method
-     *
      * @return Roles Page page object
      */
     public ManageRolesPage navigateToManageRolesPage() {
-        navigateToPage(manageMenuOption, manageRolesMenuOption);
-        return new ManageRolesPage(driver);
+        return navigateToSubPage(manageMenuOption, manageRolesMenuOption, ManageRolesPage.class);
     }
 
     /**
      * Create Ad Hoc View page navigation method
-     *
      * @return Ad Hoc View Page page object
      */
     public CreateAdHocViewPage navigateToCreateAdHocViewPage() {
-        navigateToPage(createMenuOption, createAdHocViewMenuOption);
-        return new CreateAdHocViewPage(driver);
+        return navigateToSubPage(createMenuOption, createAdHocViewMenuOption, CreateAdHocViewPage.class);
     }
 
     /**
      * Create Report page navigation method
-     *
      * @return Report Page page object
      */
     public CreateReportPage navigateToCreateReportPage() {
-        navigateToPage(createMenuOption, createReportMenuOption);
-        return new CreateReportPage(driver);
+        return navigateToSubPage(createMenuOption, createReportMenuOption, CreateReportPage.class);
     }
 
     /**
      * Create Dashboard page navigation method
-     *
      * @return Dashboard Page page object
      */
     public CreateDashboardPage navigateToCreateDashboardPage() {
-        navigateToPage(createMenuOption, createDashboardMenuOption);
-        return new CreateDashboardPage(driver);
+        return navigateToSubPage(createMenuOption, createDashboardMenuOption, CreateDashboardPage.class);
     }
 
     /**
      * Create Domain page navigation method
-     *
      * @return Domain Page page object
      */
     public CreateDomainPage navigateToCreateDomainPage() {
-        navigateToPage(createMenuOption, createDomainMenuOption);
-        return new CreateDomainPage(driver);
+        return navigateToSubPage(createMenuOption, createDomainMenuOption, CreateDomainPage.class);
     }
 
     /**
      * Create Data Source page navigation method
-     *
      * @return Data Source Page page object
      */
     public CreateDataSourcePage navigateToCreateDataSourcePage() {
-        navigateToPage(createMenuOption, createDataSourceMenuOption);
-        return new CreateDataSourcePage(driver);
+        return navigateToSubPage(createMenuOption, createDataSourceMenuOption, CreateDataSourcePage.class);
     }
 
     /**
      * Navigate to Reports from Admin
-     *
      * @return Reports Page page object model
      */
     public CreateReportPage navigateToReports() {
-        navigateToPage(reportsMenuOption);
-        return new CreateReportPage(driver);
+        return navigateToPage(reportsMenuOption, CreateReportPage.class);
     }
 
     /**
      * Navigates to Reports User Guide
-     *
      * @return Home Page page object model
      */
     public CirUserGuidePage navigateToReportUserGuide() {
-        navigateToPage(reportUserGuide);
-        return new CirUserGuidePage(driver);
+        return navigateToPage(reportUserGuide, CirUserGuidePage.class);
     }
 
     /**
      * Navigates to help page
-     *
      * @return Help Page page object
      */
     public HelpPage navigateToHelpPage() {
         pageUtils.waitForElementToAppear(adminTitle);
-        navigateToPage(helpButton);
+        HelpPage helpPage = navigateToPage(helpButton, HelpPage.class);
         pageUtils.windowHandler();
         pageUtils.waitForElementToAppear(jasperLogo);
-        return new HelpPage(driver);
+        return helpPage;
     }
 
     /**
      * Switches to iframe within a page by its "id" value
-     *
      * @param iframeId - iframe id attribute
      * @return new HelpPage object
      */
@@ -314,7 +282,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Switches to iframe within a page by its "id" value
-     *
      * @param iframeId - iframe id attribute
      * @return new CirUserGuide page object
      */
@@ -332,7 +299,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Switches tab using window handler
-     *
      * @return new CirUserGuide page object
      */
     public CirUserGuidePage switchTab() {
@@ -342,18 +308,15 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to log out screen
-     *
      * @return Logout page object model
      */
     public LogoutPage navigateToReportLogout() {
         pageUtils.waitForElementToAppear(adminTitle);
-        navigateToPage(logoutMenuOption);
-        return new LogoutPage(driver);
+        return navigateToPage(logoutMenuOption, LogoutPage.class);
     }
 
     /**
      * Get page title text
-     *
      * @return String - page title text
      */
     public String getHomeTitleText() {
@@ -362,26 +325,24 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     }
 
     /**
-     * General navigation method
-     *
-     * @param parentPage
+     * Navigates to a particular page and returns an instance of the specified page object
+     * @param <T>
+     * @return Instance of relevant page object class
      */
-    private void navigateToPage(WebElement parentPage) {
-        pageUtils.waitForElementToAppear(parentPage);
-        parentPage.click();
+    private <T> T navigateToPage(WebElement parentPageButton, Class<T> className) {
+        pageUtils.waitForElementAndClick(parentPageButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
      * Another general navigation method
-     *
      * @param parentPage
      * @param childPage
      */
-    private void navigateToPage(WebElement parentPage, WebElement childPage) {
-        pageUtils.waitForElementToAppear(parentPage);
-        parentPage.click();
-        pageUtils.waitForElementToAppear(childPage);
-        childPage.click();
+    private <T> T navigateToSubPage(WebElement parentPage, WebElement childPage, Class<T> className) {
+        pageUtils.waitForElementAndClick(parentPage);
+        pageUtils.waitForElementAndClick(childPage);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

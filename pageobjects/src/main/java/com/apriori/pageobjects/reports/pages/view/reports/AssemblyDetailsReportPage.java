@@ -74,17 +74,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Waits for correct current currency to appear on screen (not on Input Controls - on report itself)
-     * @param currencyToCheck
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage waitForCorrectCurrency(String currencyToCheck) {
-        pageUtils.waitForElementToAppear(currentCurrency);
-        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
-        return this;
-    }
-
-    /**
      * Generic method to get specific value from an Assembly Details Report table
      * @param assemblyType
      * @param rowName
@@ -463,22 +452,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     public String getCurrentCurrency() {
         return pageUtils.getElementText(currentCurrency);
-    }
-
-    /**
-     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
-     *
-     * @param assemblyToCheck
-     * @return
-     */
-    public AssemblyDetailsReportPage waitForCorrectAssembly(String assemblyToCheck) {
-        pageUtils.waitForElementToAppear(currentAssembly);
-        // if not top level, add -
-        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
-            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
-            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
-        }
-        return this;
     }
 
     /**

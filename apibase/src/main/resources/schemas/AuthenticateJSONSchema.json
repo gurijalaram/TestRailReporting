@@ -1,7 +1,6 @@
 {
   "definitions": {},
   "$schema": "Authorization",
-  "$id": "token_authorization",
   "type": "object",
   "title": "Common token authorization response ",
   "required": [
@@ -10,14 +9,12 @@
   ],
   "properties": {
     "access_token": {
-      "$id": "#/properties/access_token",
       "type": "string",
       "title": "The Access_token Schema",
       "default": "",
       "pattern": "^(.*)$"
     },
     "expires_in": {
-      "$id": "#/properties/expires_in",
       "type": "integer",
       "default": 0
     }

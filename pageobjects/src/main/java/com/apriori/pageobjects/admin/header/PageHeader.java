@@ -91,88 +91,63 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Manage Scenario Export
-     *
      * @return Manage Scenario Export Page Object Model
      */
     public ScenarioExport navigateToManageScenarioExport() {
-        navigateToPage(manageMenuOption, manageScenarioExportMenuOption);
-        return new ScenarioExport(driver);
+        return navigateToSubPage(manageMenuOption, manageScenarioExportMenuOption, ScenarioExport.class);
     }
 
     /**
      * Navigates to Manage System Data Export
-     *
      * @return System Data Export Page Object Model
      */
     public SystemDataExport navigateToManageSystemDataExport() {
-        navigateToPage(manageMenuOption, manageScenarioExportMenuOption);
-        return new SystemDataExport(driver);
+        return navigateToSubPage(manageMenuOption, manageSystemDataExportMenuOption, SystemDataExport.class);
     }
 
     /**
      * Navigates to Reports System
-     *
      * @return Reports Page Object Model
      */
-    public com.apriori.pageobjects.reports.pages.homepage.HomePage navigateToReports() {
-        //isLoaded();
-        pageUtils.waitForElementToAppear(adminHomePageWelcomeText);
-        pageUtils.waitForElementToAppear(adminHomePageMainText);
-        navigateToPage(reportButton);
-        //isLoadedNow();
-        return new com.apriori.pageobjects.reports.pages.homepage.HomePage(driver);
-    }
-
-    public void isLoadedNow() {
-        pageUtils.windowHandler();
-        pageUtils.waitForElementToAppear(email);
-        //return pageUtils.isElementEnabled(reportsLogoutOption);
+    public HomePage navigateToReports() {
+        return navigateToPage(reportButton, HomePage.class);
     }
 
     /**
      * Navigates to Reports System User Guide
-     *
      * @return Home Page Page Object Model (since help is external to system)
      */
     public CirUserGuidePage navigateToHelpReportsGuide() {
-        navigateToPage(helpButton, reportGuideButton);
-        return new CirUserGuidePage(driver);
+        return navigateToSubPage(helpButton, reportGuideButton, CirUserGuidePage.class);
     }
 
     /**
      * Navigates to Admin System User Guide
-     *
      * @return Home Page Page Object Model (since help is external to system)
      */
     public CiaUserGuide navigateToHelpAdminGuide() {
-        navigateToPage(helpButton, adminGuideButton);
-        return new CiaUserGuide(driver);
+        return navigateToSubPage(helpButton, adminGuideButton, CiaUserGuide.class);
     }
 
     /**
      * Navigates to Scenario Export Chapter Page
-     *
      * @return Scenario Export Chapter Page Object Model
      */
     public CiaUserGuide navigateToScenarioExportChapterPage() {
-        navigateToPage(helpButton, scenarioExportButton);
-        return new CiaUserGuide(driver);
+        return navigateToSubPage(helpButton, scenarioExportButton, CiaUserGuide.class);
     }
 
     /**
      * Navigates to Logout/Login page
-     *
      * @return Logout Page Object Model
      */
     public Logout navigateToAdminLogout() {
         pageUtils.waitForElementToAppear(userButton);
-        navigateToPage(userButton, logoutButton);
-        return new Logout(driver);
+        return navigateToSubPage(userButton, logoutButton, Logout.class);
     }
 
     /**
      * Returns header to check
-     *
      * @return
      */
     public String getHeaderToCheck() {
@@ -181,7 +156,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Get page title text
-     *
      * @return String - page title text
      */
     public String getHomeTitleText() {
@@ -192,11 +166,13 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     /**
      * General navigation method
      * @param parentPage
+     * @param className
+     * @param <T>
+     * @return Instance of specified page object class
      */
-    private void navigateToPage(WebElement parentPage) {
-        if (pageUtils.isElementEnabled(parentPage)) {
-            pageUtils.waitForElementAndClick(parentPage);
-        }
+    private <T> T navigateToPage(WebElement parentPage, Class<T> className) {
+        pageUtils.waitForElementAndClick(parentPage);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -204,15 +180,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @param parentPage
      * @param childPage
      */
-    private void navigateToPage(WebElement parentPage, WebElement childPage) {
-        //this.isLoaded();
-        pageUtils.waitForElementToAppear(parentPage);
-        if (pageUtils.isElementEnabled(parentPage)) {
-            pageUtils.waitForElementAndClick(parentPage);
-        }
-        pageUtils.waitForElementToAppear(childPage);
-        if (pageUtils.isElementEnabled(childPage)) {
-            pageUtils.waitForElementAndClick(childPage);
-        }
+    private <T> T navigateToSubPage(WebElement parentPage, WebElement childPage, Class<T> className) {
+        pageUtils.waitForElementAndClick(parentPage);
+        pageUtils.waitForElementAndClick(childPage);
+        return PageFactory.initElements(driver, className);
     }
 }
