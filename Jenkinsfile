@@ -12,6 +12,8 @@ pipeline {
         gradle "Gradle"
     }
 
+    stages {
+
     	stage('Setup Workspace') {
     	    steps {
         	    echo 'Setting up workspace....'
