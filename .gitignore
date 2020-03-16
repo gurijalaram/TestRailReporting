@@ -110,3 +110,4 @@ logs/
 allure-results/
 screenshots/
 /uitests/git
+build/
