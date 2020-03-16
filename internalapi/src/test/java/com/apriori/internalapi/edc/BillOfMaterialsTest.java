@@ -1,15 +1,20 @@
 package com.apriori.internalapi.edc;
 
+import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.response.common.BillOfMaterialsWrapper;
 import com.apriori.apibase.http.builder.common.response.common.BillOfSingleMaterialWrapper;
+import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
+import com.apriori.apibase.http.builder.service.RequestAreaUiAuth;
 import com.apriori.apibase.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.internalapi.edc.util.UserDataEDC;
 import com.apriori.internalapi.edc.util.UserTestDataUtil;
 
+import com.apriori.internalapi.util.TestUtil;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,7 +22,7 @@ import org.junit.Test;
 import java.util.Random;
 
 
-public class BillOfMaterialsTest {
+public class BillOfMaterialsTest extends TestUtil {
 
     private static UserTestDataUtil userTestDataUtil;
     private static UserDataEDC userData;
@@ -37,32 +42,23 @@ public class BillOfMaterialsTest {
     @Description("Get list bill of materials")
     @Severity(SeverityLevel.NORMAL)
     public void getBillOfMaterials() {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
-            .setReturnType(BillOfMaterialsWrapper.class)
-            .commitChanges()
-            .connect()
-            .get();
+        RequestEntity requestEntity = RequestEntity.init(
+                BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userData.getUserCredentials(), BillOfMaterialsWrapper.class);
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+                GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth()).getStatusCode());
     }
 
     @Test
     @Description("Get list bill of materials by identity")
     @Severity(SeverityLevel.NORMAL)
     public void getBillOfMaterialsByIdentity() {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY)
-            .setInlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity())
-            .setReturnType(BillOfSingleMaterialWrapper.class)
-            .commitChanges()
-            .connect()
-            .get();
+        RequestEntity requestEntity = RequestEntity.init(
+                BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userData.getUserCredentials(), BillOfSingleMaterialWrapper.class)
+                .setInlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity());
 
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+                GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth()).getStatusCode());
     }
 
     @Test
@@ -71,16 +67,12 @@ public class BillOfMaterialsTest {
     public void deleteBillOfMaterialsByIdentity() {
         final int deleteIndex = new Random().nextInt(userData.getBillOfMaterials().size());
 
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY)
-            .setInlineVariables(userData.getBillOfMaterials().get(deleteIndex).getIdentity())
-            .setStatusCode(204)
-            .commitChanges()
-            .connect()
-            .delete();
+        RequestEntity requestEntity = RequestEntity.init(
+                BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userData.getUserCredentials(), BillOfSingleMaterialWrapper.class)
+                .setInlineVariables(userData.getBillOfMaterials().get(deleteIndex).getIdentity());
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+                GenericRequestUtil.delete(requestEntity, new RequestAreaUiAuth()).getStatusCode());
 
         userData.getBillOfMaterials().remove(deleteIndex);
     }
@@ -89,15 +81,13 @@ public class BillOfMaterialsTest {
     @Description("Export bill of material by identity")
     @Severity(SeverityLevel.NORMAL)
     public void exportBillOfMaterialsByIdentity() {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(userData.getAuthorizationHeaders())
-            .setEndpoint(BillOfMaterialsAPIEnum.EXPORT_BILL_OF_MATERIALS_IDENTITY)
-            .setInlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity())
-            .commitChanges()
-            .connect()
-            .post();
+
+        RequestEntity requestEntity = RequestEntity.init(
+                BillOfMaterialsAPIEnum.EXPORT_BILL_OF_MATERIALS_IDENTITY, userData.getUserCredentials(), null)
+                .setInlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity());
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+                GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth()).getStatusCode());
     }
 
     @Test

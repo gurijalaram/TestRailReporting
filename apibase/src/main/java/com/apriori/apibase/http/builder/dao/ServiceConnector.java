@@ -2,7 +2,7 @@ package com.apriori.apibase.http.builder.dao;
 
 import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
-import com.apriori.apibase.http.builder.service.RequestAreaByUiAuth;
+import com.apriori.apibase.http.builder.service.RequestAreaUiAuth;
 import com.apriori.utils.constants.Constants;
 
 import com.apriori.utils.users.UserUtil;
@@ -47,7 +47,7 @@ public class ServiceConnector {
     public static Object getService(String url, Class klass) {
         return GenericRequestUtil.get(
                 RequestEntity.init(url, UserUtil.getUser(), klass).setFollowRedirection(true),
-                new RequestAreaByUiAuth()
+                new RequestAreaUiAuth()
         );
 //        return new HTTPRequest()
 //            .unauthorized()

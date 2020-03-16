@@ -5,7 +5,7 @@ import com.apriori.apibase.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.apibase.http.builder.common.response.common.AccountStatus;
 import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.apibase.http.builder.common.response.common.ErrorRequestResponse;
-import com.apriori.apibase.http.builder.service.RequestAreaByUiAuth;
+import com.apriori.apibase.http.builder.service.RequestAreaUiAuth;
 import com.apriori.apibase.http.enums.common.api.AccountEndpointEnum;
 import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
@@ -43,7 +43,7 @@ public class APILoginTest {
 
         ResponseWrapper<ErrorRequestResponse> accountStatusResponseWrapper =
                 GenericRequestUtil.get(RequestEntity.init(AuthEndpointEnum.POST_AUTH, UserUtil.getUser(), ErrorRequestResponse.class),
-                new RequestAreaByUiAuth()
+                new RequestAreaUiAuth()
         );
 
         System.out.println("--------------------------------");

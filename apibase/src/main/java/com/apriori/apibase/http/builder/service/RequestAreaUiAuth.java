@@ -7,8 +7,10 @@ import com.apriori.apibase.utils.WebDriverUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class RequestAreaByUiAuth implements RequestArea {
+public class RequestAreaUiAuth implements RequestArea {
+    private static Map<String, String> authTokens = new ConcurrentHashMap<>();
 
     @Override
     public <T> ResponseWrapper<T> get(RequestEntity requestEntity) {
@@ -62,15 +64,19 @@ public class RequestAreaByUiAuth implements RequestArea {
     }
 
     private Map<String, String> doUiAuth(RequestEntity requestEntity) {
+        final String userEmail = requestEntity.getUserAuthenticationEntity().getEmailAddress();
 
-        String token = new WebDriverUtils()
-                .getToken(requestEntity.getUserAuthenticationEntity().getEmailAddress(),
-                        requestEntity.getUserAuthenticationEntity().getPassword()
-                );
+        if( authTokens.get(userEmail) == null ) {
+            String token = new WebDriverUtils()
+                    .getToken(requestEntity.getUserAuthenticationEntity().getEmailAddress(),
+                            requestEntity.getUserAuthenticationEntity().getPassword()
+                    );
+
+            authTokens.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), token);
+        }
 
         return new HashMap<String, String>() {{
-            put("Authorization", "Bearer " + token);
-//            put("ap-cloud-context", "EDC");
+            put("Authorization", "Bearer " + authTokens.get(userEmail));
         }};
     }
 }

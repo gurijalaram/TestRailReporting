@@ -27,6 +27,6 @@ public class GenericRequestUtil {
     }
 
     public static <T> ResponseWrapper<T> postMultipart(RequestEntity requestEntity, RequestArea requestArea) {
-        return  requestArea.patch(requestEntity);
+        return  requestArea.postMultipart(requestEntity);
     }
 }

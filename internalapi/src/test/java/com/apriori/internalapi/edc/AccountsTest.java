@@ -5,8 +5,7 @@ import com.apriori.apibase.http.builder.common.response.common.AccountStatus;
 import com.apriori.apibase.http.builder.common.response.common.Accounts;
 import com.apriori.apibase.http.builder.common.response.common.AccountsStatusWrapper;
 import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
-import com.apriori.apibase.http.builder.service.HTTPRequest;
-import com.apriori.apibase.http.builder.service.RequestAreaByUiAuth;
+import com.apriori.apibase.http.builder.service.RequestAreaUiAuth;
 import com.apriori.apibase.http.enums.common.api.AccountEndpointEnum;
 import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.internalapi.edc.util.UserDataEDC;
@@ -58,7 +57,7 @@ public class AccountsTest extends TestUtil {
 
         ResponseWrapper<Accounts> accountsResponseWrapper = GenericRequestUtil.get(
                 RequestEntity.init(AccountEndpointEnum.GET_ACCOUNTS, UserCredentials.init(userData.getUsername(), userData.getPassword()), Accounts.class),
-                new RequestAreaByUiAuth());
+                new RequestAreaUiAuth());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountsResponseWrapper.getStatusCode());
     }
@@ -130,7 +129,7 @@ public class AccountsTest extends TestUtil {
                 AccountEndpointEnum.GET_ACTIVE_USER, userData.getUserCredentials(), AccountsStatusWrapper.class)
                 .setStatusCode(HttpStatus.SC_OK);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaByUiAuth()).getResponseEntity()).getAccountStatus();
+        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth()).getResponseEntity()).getAccountStatus();
     }
 
     private AccountStatus getAccountByIdentity(String identity) {
@@ -142,7 +141,7 @@ public class AccountsTest extends TestUtil {
                 .setInlineVariables(identity)
                 .setStatusCode(HttpStatus.SC_OK);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaByUiAuth())
+        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth())
                 .getResponseEntity()).getAccountStatus();
     }
 
@@ -152,7 +151,7 @@ public class AccountsTest extends TestUtil {
                 .setInlineVariables(identity)
                 .setStatusCode(HttpStatus.SC_OK);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaByUiAuth()).getResponseEntity()).getAccountStatus();
+        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth()).getResponseEntity()).getAccountStatus();
     }
 
     private AccountStatus updateAccount(final String identity, final AccountStatus accountStatus) {
@@ -163,7 +162,7 @@ public class AccountsTest extends TestUtil {
                 .setInlineVariables(identity)
                 .setBody(accountStatus);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.patch(requestEntity, new RequestAreaByUiAuth())
+        return ((AccountsStatusWrapper) GenericRequestUtil.patch(requestEntity, new RequestAreaUiAuth())
                 .getResponseEntity()).getAccountStatus();
     }
 
@@ -180,7 +179,7 @@ public class AccountsTest extends TestUtil {
                 .setBody(accountStatus)
                 .setStatusCode(HttpStatus.SC_CREATED);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaByUiAuth())
+        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth())
                 .getResponseEntity()).getAccountStatus();
     }
 
@@ -191,6 +190,6 @@ public class AccountsTest extends TestUtil {
                 .setInlineVariables(identity)
                 .setStatusCode(HttpStatus.SC_NO_CONTENT);
 
-        GenericRequestUtil.delete(requestEntity, new RequestAreaByUiAuth());
+        GenericRequestUtil.delete(requestEntity, new RequestAreaUiAuth());
     }
 }
