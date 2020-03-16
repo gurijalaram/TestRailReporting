@@ -1,7 +1,6 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -9,12 +8,10 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
       "properties": {
         "identity": {
-          "$id": "#/properties/response/properties/identity",
           "type": "string",
           "title": "The Identity Schema",
           "default": "",
@@ -24,7 +21,6 @@
           "pattern": "^(.*)$"
         },
         "createdAt": {
-          "$id": "#/properties/response/properties/createdAt",
           "type": "string",
           "title": "The Createdat Schema",
           "default": "",
@@ -34,7 +30,6 @@
           "pattern": "^(.*)$"
         },
         "createdBy": {
-          "$id": "#/properties/response/properties/createdBy",
           "type": "string",
           "title": "The Createdby Schema",
           "default": "",
@@ -44,7 +39,6 @@
           "pattern": "^(.*)$"
         },
         "name": {
-          "$id": "#/properties/response/properties/name",
           "type": "string",
           "title": "The Name Schema",
           "default": "",
@@ -54,7 +48,6 @@
           "pattern": "^(.*)$"
         },
         "numberOfLineItemsCannotCost": {
-          "$id": "#/properties/response/properties/numberOfLineItemsCannotCost",
           "type": "integer",
           "title": "The Numberoflineitemscannotcost Schema",
           "default": 0,
@@ -63,7 +56,6 @@
           ]
         },
         "numberOfLineItemsNotCosted": {
-          "$id": "#/properties/response/properties/numberOfLineItemsNotCosted",
           "type": "integer",
           "title": "The Numberoflineitemsnotcosted Schema",
           "default": 0,
@@ -72,7 +64,6 @@
           ]
         },
         "numberOfLineItemsCosted": {
-          "$id": "#/properties/response/properties/numberOfLineItemsCosted",
           "type": "integer",
           "title": "The Numberoflineitemscosted Schema",
           "default": 0,
@@ -81,7 +72,6 @@
           ]
         },
         "numberOfLineItemsReadyForExport": {
-          "$id": "#/properties/response/properties/numberOfLineItemsReadyForExport",
           "type": "integer",
           "title": "The Numberoflineitemsreadyforexport Schema",
           "default": 0,
@@ -90,7 +80,6 @@
           ]
         },
         "totalNumberOfLineItems": {
-          "$id": "#/properties/response/properties/totalNumberOfLineItems",
           "type": "integer",
           "title": "The Totalnumberoflineitems Schema",
           "default": 0,

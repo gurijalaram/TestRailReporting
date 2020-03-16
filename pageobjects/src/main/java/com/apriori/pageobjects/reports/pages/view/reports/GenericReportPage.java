@@ -273,7 +273,7 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
      * @param assemblyToCheck
-     * @return
+     * @return Generic - instance of specified class
      */
     public <T> T waitForCorrectAssembly(String assemblyToCheck, Class<T> className) {
         pageUtils.waitForElementToAppear(currentAssembly);
