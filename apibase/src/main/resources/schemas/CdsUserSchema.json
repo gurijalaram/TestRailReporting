@@ -1,14 +1,12 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
   "type": "object",
   "required": [
     "response"
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "required": [
         "identity",
@@ -24,27 +22,22 @@
       ],
       "properties": {
         "identity": {
-          "$id": "#/properties/response/properties/identity",
           "type": "string",
           "pattern": "^(.*)$"
         },
         "createdBy": {
-          "$id": "#/properties/response/properties/createdBy",
           "type": "string",
           "pattern": "^(.*)$"
         },
         "createdAt": {
-          "$id": "#/properties/response/properties/createdAt",
           "type": "string",
           "pattern": "^(.*)$"
         },
         "userType": {
-          "$id": "#/properties/response/properties/userType",
           "type": "string",
           "pattern": "^(.*)$"
         },
         "userProfile": {
-          "$id": "#/properties/response/properties/userProfile",
           "type": "object",
           "required": [
             "identity",
@@ -55,51 +48,41 @@
           ],
           "properties": {
             "identity": {
-              "$id": "#/properties/response/properties/userProfile/properties/identity",
               "type": "string",
               "pattern": "^(.*)$"
             },
             "createdBy": {
-              "$id": "#/properties/response/properties/userProfile/properties/createdBy",
               "type": "string",
               "pattern": "^(.*)$"
             },
             "createdAt": {
-              "$id": "#/properties/response/properties/userProfile/properties/createdAt",
               "type": "string",
               "pattern": "^(.*)$"
             },
             "givenName": {
-              "$id": "#/properties/response/properties/userProfile/properties/givenName",
               "type": "string",
               "pattern": "^(.*)$"
             },
             "familyName": {
-              "$id": "#/properties/response/properties/userProfile/properties/familyName",
               "type": "string",
               "pattern": "^(.*)$"
             }
           }
         },
         "email": {
-          "$id": "#/properties/response/properties/email",
           "type": "string",
           "pattern": "^(.*)$"
         },
         "username": {
-          "$id": "#/properties/response/properties/username",
           "type": "string",
           "pattern": "^(.*)$"
         },
         "active": {
-          "$id": "#/properties/response/properties/active",
           "type": "boolean"
         },
         "sites": {
-          "$id": "#/properties/response/properties/sites",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/sites/items",
             "type": "object",
             "required": [
               "identity",
@@ -109,22 +92,18 @@
             ],
             "properties": {
               "identity": {
-                "$id": "#/properties/response/properties/sites/items/properties/identity",
                 "type": "string",
                 "pattern": "^(.*)$"
               },
               "createdBy": {
-                "$id": "#/properties/response/properties/sites/items/properties/createdBy",
                 "type": "string",
                 "pattern": "^(.*)$"
               },
               "createdAt": {
-                "$id": "#/properties/response/properties/sites/items/properties/createdAt",
                 "type": "string",
                 "pattern": "^(.*)$"
               },
               "siteIdentity": {
-                "$id": "#/properties/response/properties/sites/items/properties/siteIdentity",
                 "type": "string",
                 "pattern": "^(.*)$"
               }
@@ -132,7 +111,6 @@
           }
         },
         "customerIdentity": {
-          "$id": "#/properties/response/properties/customerIdentity",
           "type": "string",
           "pattern": "^(.*)$"
         }

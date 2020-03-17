@@ -7,6 +7,8 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 
 import io.qameta.allure.Description;
+
+import org.apache.commons.validator.routines.EmailValidator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,9 +58,10 @@ public class CdsUsers {
     }
 
     private void validate(Object userObj) {
+        EmailValidator validator = EmailValidator.getInstance();
         User user = (User) userObj;
         Assert.assertTrue(user.getIdentity().matches("^[a-zA-Z0-9]+$"));
-        Assert.assertTrue(user.getEmail().matches("^[a-zA-Z0-9]+@apriori.com$"));
+        Assert.assertTrue(validator.isValid(user.getEmail()));
     }
 
 }

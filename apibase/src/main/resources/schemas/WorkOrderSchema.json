@@ -1,7 +1,6 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -13,7 +12,6 @@
   ],
   "properties": {
     "version": {
-      "$id": "#/properties/version",
       "type": "integer",
       "title": "The Version Schema",
       "default": 0,
@@ -22,7 +20,6 @@
       ]
     },
     "id": {
-      "$id": "#/properties/id",
       "type": "string",
       "title": "The Id Schema",
       "default": "",
@@ -32,7 +29,6 @@
       "pattern": "^(.*)$"
     },
     "status": {
-      "$id": "#/properties/status",
       "type": "string",
       "title": "The Status Schema",
       "default": "",
@@ -42,7 +38,6 @@
       "pattern": "^(.*)$"
     },
     "searchKey": {
-      "$id": "#/properties/searchKey",
       "type": "string",
       "title": "The Searchkey Schema",
       "default": "",
@@ -52,7 +47,6 @@
       "pattern": "^(.*)$"
     },
     "command": {
-      "$id": "#/properties/command",
       "type": "object",
       "title": "The Command Schema",
       "required": [
@@ -61,7 +55,6 @@
       ],
       "properties": {
         "commandType": {
-          "$id": "#/properties/command/properties/commandType",
           "type": "string",
           "title": "The Commandtype Schema",
           "default": "",
@@ -71,7 +64,6 @@
           "pattern": "^(.*)$"
         },
         "inputs": {
-          "$id": "#/properties/command/properties/inputs",
           "type": "object",
           "title": "The Inputs Schema",
           "required": [
@@ -80,7 +72,6 @@
           ],
           "properties": {
             "scenarioIterationKey": {
-              "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey",
               "type": "object",
               "title": "The Scenarioiterationkey Schema",
               "required": [
@@ -89,7 +80,6 @@
               ],
               "properties": {
                 "scenarioKey": {
-                  "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey",
                   "type": "object",
                   "title": "The Scenariokey Schema",
                   "required": [
@@ -100,7 +90,6 @@
                   ],
                   "properties": {
                     "workspaceID": {
-                      "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/workspaceID",
                       "type": "integer",
                       "title": "The Workspaceid Schema",
                       "default": 0,
@@ -109,7 +98,6 @@
                       ]
                     },
                     "stateName": {
-                      "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/stateName",
                       "type": "string",
                       "title": "The Statename Schema",
                       "default": "",
@@ -119,7 +107,6 @@
                       "pattern": "^(.*)$"
                     },
                     "masterName": {
-                      "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/masterName",
                       "type": "string",
                       "title": "The Mastername Schema",
                       "default": "",
@@ -129,7 +116,6 @@
                       "pattern": "^(.*)$"
                     },
                     "typeName": {
-                      "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/typeName",
                       "type": "string",
                       "title": "The Typename Schema",
                       "default": "",
@@ -141,7 +127,6 @@
                   }
                 },
                 "iteration": {
-                  "$id": "#/properties/command/properties/inputs/properties/scenarioIterationKey/properties/iteration",
                   "type": "integer",
                   "title": "The Iteration Schema",
                   "default": 0,
@@ -152,7 +137,6 @@
               }
             },
             "inputSetId": {
-              "$id": "#/properties/command/properties/inputs/properties/inputSetId",
               "type": "integer",
               "title": "The Inputsetid Schema",
               "default": 0,
@@ -165,7 +149,6 @@
       }
     },
     "dateSubmitted": {
-      "$id": "#/properties/dateSubmitted",
       "type": "string",
       "title": "The Datesubmitted Schema",
       "default": "",

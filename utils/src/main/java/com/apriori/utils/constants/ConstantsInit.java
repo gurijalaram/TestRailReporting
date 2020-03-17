@@ -81,4 +81,10 @@ public interface ConstantsInit extends Config {
 
     @Key("ats.auth.targetCloudContext")
     String atsAuthTargetCloudContext();
+
+    @Key("fms.service.host")
+    String fmsServiceHost();
+
+    @Key("fms.file.identity")
+    String fmsFileIdentity();
 }

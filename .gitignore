@@ -110,3 +110,9 @@ logs/
 allure-results/
 screenshots/
 /uitests/git
+/internalapi/build/
+/apibase/build/
+/uitests/build/
+/pageobjects/build/
+/utils/build/
+build/

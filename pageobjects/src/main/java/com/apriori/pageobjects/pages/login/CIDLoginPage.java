@@ -13,8 +13,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
 /**
  * @author cfrith
  */
@@ -294,15 +292,5 @@ public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
     public HelpPage help() {
         pageUtils.waitForElementAndClick(helpLink);
         return new HelpPage(driver);
-    }
-
-    /**
-     * Get link response code
-     *
-     * @param linkURL - URL of link
-     * @return String response code
-     */
-    public int getResponseCode(String linkURL) throws IOException {
-        return pageUtils.urlRespCode(linkURL);
     }
 }
