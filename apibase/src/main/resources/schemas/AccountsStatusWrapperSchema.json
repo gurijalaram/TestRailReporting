@@ -1,7 +1,6 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -9,7 +8,6 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
       "required": [
@@ -23,7 +21,6 @@
       ],
       "properties": {
         "isValid": {
-          "$id": "#/properties/response/properties/isValid",
           "type": "boolean",
           "title": "The Isvalid Schema",
           "default": false,
@@ -32,7 +29,6 @@
           ]
         },
         "isActive": {
-          "$id": "#/properties/response/properties/isActive",
           "type": "boolean",
           "title": "The Isactive Schema",
           "default": false,
@@ -41,7 +37,6 @@
           ]
         },
         "identity": {
-          "$id": "#/properties/response/properties/identity",
           "type": "string",
           "title": "The Identity Schema",
           "default": "",
@@ -51,7 +46,6 @@
           "pattern": "^(.*)$"
         },
         "name": {
-          "$id": "#/properties/response/properties/name",
           "type": "string",
           "title": "The Name Schema",
           "default": "",
@@ -61,7 +55,6 @@
           "pattern": "^(.*)$"
         },
         "type": {
-          "$id": "#/properties/response/properties/type",
           "type": "string",
           "title": "The Type Schema",
           "default": "",
@@ -71,7 +64,6 @@
           "pattern": "^(.*)$"
         },
         "accountId": {
-          "$id": "#/properties/response/properties/accountId",
           "type": "string",
           "title": "The Accountid Schema",
           "default": "",
@@ -81,7 +73,6 @@
           "pattern": "^(.*)$"
         },
         "accountSecret": {
-          "$id": "#/properties/response/properties/accountSecret",
           "type": "string",
           "title": "The Accountsecret Schema",
           "default": "",
@@ -91,7 +82,6 @@
           "pattern": "^(.*)$"
         },
         "licenseLimit": {
-          "$id": "#/properties/response/properties/licenseLimit",
           "type": "integer",
           "title": "The Licenselimit Schema",
           "default": 0,
@@ -100,7 +90,6 @@
           ]
         },
         "licenseUsage": {
-          "$id": "#/properties/response/properties/licenseUsage",
           "type": "integer",
           "title": "The Licenseusage Schema",
           "default": 0,
@@ -109,7 +98,6 @@
           ]
         },
         "validFrom": {
-          "$id": "#/properties/response/properties/validFrom",
           "type": "string",
           "title": "The Validfrom Schema",
           "default": "",
@@ -119,7 +107,6 @@
           "pattern": "^(.*)$"
         },
         "validTo": {
-          "$id": "#/properties/response/properties/validTo",
           "type": "string",
           "title": "The Validto Schema",
           "default": "",

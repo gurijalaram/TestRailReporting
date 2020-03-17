@@ -1,7 +1,6 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "MaterialPart",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -9,12 +8,10 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
       "properties": {
         "isUserPart": {
-          "$id": "#/properties/response/properties/isUserPart",
           "type": "boolean",
           "title": "The Isuserpart Schema",
           "default": false,
@@ -23,7 +20,6 @@
           ]
         },
         "isSaved": {
-          "$id": "#/properties/response/properties/isSaved",
           "type": "boolean",
           "title": "The Issaved Schema",
           "default": false,
@@ -32,7 +28,6 @@
           ]
         },
         "identity": {
-          "$id": "#/properties/response/properties/identity",
           "type": "string",
           "title": "The Identity Schema",
           "default": "",
@@ -42,7 +37,6 @@
           "pattern": "^(.*)$"
         },
         "lineItemIdentity": {
-          "$id": "#/properties/response/properties/lineItemIdentity",
           "type": "string",
           "title": "The Lineitemidentity Schema",
           "default": "",
@@ -52,7 +46,6 @@
           "pattern": "^(.*)$"
         },
         "status": {
-          "$id": "#/properties/response/properties/status",
           "type": "string",
           "title": "The status Schema",
           "default": "",
@@ -62,7 +55,6 @@
           "pattern": "^(.*)$"
         },
         "manufacturerPartNumber": {
-          "$id": "#/properties/response/properties/manufacturerPartNumber",
           "type": "string",
           "title": "The Manufacturerpartnumber Schema",
           "default": "",
@@ -72,7 +64,6 @@
           "pattern": "^(.*)$"
         },
         "averageCost": {
-          "$id": "#/properties/averageCost",
           "type": "number",
           "title": "The Averagecost Schema",
           "default": 0.0,

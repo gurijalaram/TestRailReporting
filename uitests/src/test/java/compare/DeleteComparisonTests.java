@@ -61,12 +61,12 @@ public class DeleteComparisonTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "Machined Box AMERICAS")
-            .apply()
-            .checkComparisonUpdated();
+            .apply();
 
-        pageHeader = new PageHeader(driver);
-        jobQueuePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+            .closeJobQueue(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
@@ -106,7 +106,7 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class})
     @TestRail(testCaseId = {"430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDeleteExplore() {
@@ -129,12 +129,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "MACHINED BOX AMERICAS")
-            .apply()
-            .checkComparisonUpdated();
-
-        pageHeader = new PageHeader(driver);
-        jobQueuePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
+            .apply();
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.publishScenario(PublishPage.class)
@@ -154,7 +149,7 @@ public class DeleteComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class})
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
     public void deletePublicComparisonPage() {
@@ -177,12 +172,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
-            .apply()
-            .checkComparisonUpdated();
-
-        pageHeader = new PageHeader(driver);
-        jobQueuePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
+            .apply();
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)
@@ -227,12 +217,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
-            .apply()
-            .checkComparisonUpdated();
-
-        pageHeader = new PageHeader(driver);
-        jobQueuePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
+            .apply();
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)

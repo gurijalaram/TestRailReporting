@@ -1,12 +1,10 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
   "properties": {
     "pg": {
-      "$id": "#/properties/pg",
       "type": [
         "string",
         "null"
@@ -19,7 +17,6 @@
       "pattern": "^(.*)$"
     },
     "vpe": {
-      "$id": "#/properties/vpe",
       "type": [
         "string",
         "null"
@@ -32,7 +29,6 @@
       "pattern": "^(.*)$"
     },
     "material": {
-      "$id": "#/properties/material",
       "type": [
         "string",
         "null"
@@ -45,7 +41,6 @@
       "pattern": "^(.*)$"
     },
     "materialCatalogName": {
-      "$id": "#/properties/materialCatalogName",
       "type": [
         "string",
         "null"
@@ -58,7 +53,6 @@
       "pattern": "^(.*)$"
     },
     "annualVolume": {
-      "$id": "#/properties/annualVolume",
       "type": [
         "number",
         "null"
@@ -70,7 +64,6 @@
       ]
     },
     "productionLife": {
-      "$id": "#/properties/productionLife",
       "type": [
         "number",
         "null"
@@ -82,7 +75,6 @@
       ]
     },
     "batchSize": {
-      "$id": "#/properties/batchSize",
       "type": [
         "number",
         "null"
@@ -94,7 +86,6 @@
       ]
     },
     "useVpeForAllProcesses": {
-      "$id": "#/properties/useVpeForAllProcesses",
       "type": [
         "boolean",
         "null"
@@ -105,7 +96,6 @@
         true
       ]
     },
-    "$id": "#/properties/defaults",
     "type": "object",
     "title": "The Defaults Schema",
     "required": [
@@ -119,7 +109,6 @@
     ],
     "properties": {
       "prod.info.default.material": {
-        "$id": "#/properties/defaults/properties/prod.info.default.material",
         "type": [
           "string",
           "null"
@@ -132,7 +121,6 @@
         "pattern": "^(.*)$"
       },
       "prod.info.default.annual.volume": {
-        "$id": "#/properties/defaults/properties/prod.info.default.annual.volume",
         "type": [
           "number",
           "null"
@@ -145,7 +133,6 @@
         "pattern": "^(.*)$"
       },
       "prod.info.default.use.vpe.for.all.processes": {
-        "$id": "#/properties/defaults/properties/prod.info.default.use.vpe.for.all.processes",
         "type": [
           "string",
           "null"
@@ -158,7 +145,6 @@
         "pattern": "^(.*)$"
       },
       "prod.info.default.material.catalog.name": {
-        "$id": "#/properties/defaults/properties/prod.info.default.material.catalog.name",
         "type": [
           "string",
           "null"
@@ -171,7 +157,6 @@
         "pattern": "^(.*)$"
       },
       "prod.info.default.production.life": {
-        "$id": "#/properties/defaults/properties/prod.info.default.production.life",
         "type": [
           "number",
           "null"
@@ -184,7 +169,6 @@
         "pattern": "^(.*)$"
       },
       "prod.info.default.batch.size": {
-        "$id": "#/properties/defaults/properties/prod.info.default.batch.size",
         "type": [
           "number",
           "null"
@@ -197,7 +181,6 @@
         "pattern": "^(.*)$"
       },
       "prod.info.default.pg": {
-        "$id": "#/properties/defaults/properties/prod.info.default.pg",
         "type": [
           "string",
           "null"
@@ -210,7 +193,6 @@
         "pattern": "^(.*)$"
       },
       "prod.info.default.vpe": {
-        "$id": "#/properties/defaults/properties/prod.info.default.vpe",
         "type": [
           "string",
           "null"
@@ -224,7 +206,6 @@
       }
     },
     "batchSizeMode": {
-      "$id": "#/properties/batchSizeMode",
       "type": [
         "boolean",
         "null"

@@ -1,31 +1,25 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
   "properties": {
     "scenarioInfos": {
-      "$id": "#/properties/scenarioInfos",
       "type": "array",
       "title": "The Scenarioinfos Schema",
       "items": {
-        "$id": "#/properties/scenarioInfos/items",
         "type": "object",
         "title": "The Items Schema",
         "properties": {
           "scenarioIterationKey": {
-            "$id": "#/properties/scenarioInfos/items/properties/scenarioIterationKey",
             "type": "object",
             "title": "The Scenarioiterationkey Schema",
             "properties": {
               "scenarioKey": {
-                "$id": "#/properties/scenarioInfos/items/properties/scenarioIterationKey/properties/scenarioKey",
                 "type": "object",
                 "title": "The Scenariokey Schema",
                 "properties": {
                   "workspaceID": {
-                    "$id": "#/properties/scenarioInfos/items/properties/scenarioIterationKey/properties/scenarioKey/properties/workspaceID",
                     "type": "integer",
                     "title": "The Workspaceid Schema",
                     "default": 0,
@@ -34,7 +28,6 @@
                     ]
                   },
                   "stateName": {
-                    "$id": "#/properties/scenarioInfos/items/properties/scenarioIterationKey/properties/scenarioKey/properties/stateName",
                     "type": "string",
                     "title": "The Statename Schema",
                     "default": "",
@@ -44,7 +37,6 @@
                     "pattern": "^(.*)$"
                   },
                   "masterName": {
-                    "$id": "#/properties/scenarioInfos/items/properties/scenarioIterationKey/properties/scenarioKey/properties/masterName",
                     "type": "string",
                     "title": "The Mastername Schema",
                     "default": "",
@@ -54,7 +46,6 @@
                     "pattern": "^(.*)$"
                   },
                   "typeName": {
-                    "$id": "#/properties/scenarioInfos/items/properties/scenarioIterationKey/properties/scenarioKey/properties/typeName",
                     "type": "string",
                     "title": "The Typename Schema",
                     "default": "",
@@ -66,7 +57,6 @@
                 }
               },
               "iteration": {
-                "$id": "#/properties/scenarioInfos/items/properties/scenarioIterationKey/properties/iteration",
                 "type": "integer",
                 "title": "The Iteration Schema",
                 "default": 0,
@@ -77,7 +67,6 @@
             }
           },
           "lastModified": {
-            "$id": "#/properties/scenarioInfos/items/properties/lastModified",
             "type": "string",
             "title": "The Lastmodified Schema",
             "default": "",
@@ -87,7 +76,6 @@
             "pattern": "^(.*)$"
           },
           "lastModifiedBy": {
-            "$id": "#/properties/scenarioInfos/items/properties/lastModifiedBy",
             "type": "string",
             "title": "The Lastmodifiedby Schema",
             "default": "",
@@ -97,7 +85,6 @@
             "pattern": "^(.*)$"
           },
           "lastModifiedByFullName": {
-            "$id": "#/properties/scenarioInfos/items/properties/lastModifiedByFullName",
             "type": "string",
             "title": "The Lastmodifiedbyfullname Schema",
             "default": "",
@@ -107,7 +94,6 @@
             "pattern": "^(.*)$"
           },
           "initialized": {
-            "$id": "#/properties/scenarioInfos/items/properties/initialized",
             "type": "boolean",
             "title": "The Initialized Schema",
             "default": false,
@@ -116,7 +102,6 @@
             ]
           },
           "locked": {
-            "$id": "#/properties/scenarioInfos/items/properties/locked",
             "type": "boolean",
             "title": "The Locked Schema",
             "default": false,
@@ -125,7 +110,6 @@
             ]
           },
           "annualVolume": {
-            "$id": "#/properties/scenarioInfos/items/properties/annualVolume",
             "type": "integer",
             "title": "The Annualvolume Schema",
             "default": 0,
@@ -134,7 +118,6 @@
             ]
           },
           "scenarioKey": {
-            "$id": "#/properties/scenarioInfos/items/properties/scenarioKey",
             "type": "object",
             "title": "The Scenariokey Schema",
             "required": [
@@ -145,7 +128,6 @@
             ],
             "properties": {
               "workspaceID": {
-                "$id": "#/properties/scenarioInfos/items/properties/scenarioKey/properties/workspaceID",
                 "type": "integer",
                 "title": "The Workspaceid Schema",
                 "default": 0,
@@ -154,7 +136,6 @@
                 ]
               },
               "stateName": {
-                "$id": "#/properties/scenarioInfos/items/properties/scenarioKey/properties/stateName",
                 "type": "string",
                 "title": "The Statename Schema",
                 "default": "",
@@ -164,7 +145,6 @@
                 "pattern": "^(.*)$"
               },
               "masterName": {
-                "$id": "#/properties/scenarioInfos/items/properties/scenarioKey/properties/masterName",
                 "type": "string",
                 "title": "The Mastername Schema",
                 "default": "",
@@ -174,7 +154,6 @@
                 "pattern": "^(.*)$"
               },
               "typeName": {
-                "$id": "#/properties/scenarioInfos/items/properties/scenarioKey/properties/typeName",
                 "type": "string",
                 "title": "The Typename Schema",
                 "default": "",
@@ -186,7 +165,6 @@
             }
           },
           "scenarioType": {
-            "$id": "#/properties/scenarioInfos/items/properties/scenarioType",
             "type": "string",
             "title": "The Scenariotype Schema",
             "default": "",
@@ -199,7 +177,6 @@
       }
     },
     "totalAvailableCount": {
-      "$id": "#/properties/totalAvailableCount",
       "type": "integer",
       "title": "The Totalavailablecount Schema",
       "default": 0,
