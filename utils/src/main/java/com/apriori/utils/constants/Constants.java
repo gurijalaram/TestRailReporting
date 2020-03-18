@@ -57,6 +57,8 @@ public class Constants {
     private static String atsTokenSubject;
     private static String atsAuthApplication;
     private static String atsAuthTargetCloudContext;
+    private static String fmsServiceHost;
+    private static String fmsFileIdentity;
     public static final String defaultServiceHostKey = "serverHost";
     public static final String defaultServicePortKey = "serverPort";
     public static final String defaultServiceNameKey = "serverName";
@@ -173,6 +175,22 @@ public class Constants {
         }
 
         return atsServiceHost;
+    }
+
+    public static String getFmsServiceHost() {
+        if (fmsServiceHost == null) {
+            fmsServiceHost = System.getProperty("fmsServiceHost", constantsInit.fmsServiceHost());
+        }
+
+        return fmsServiceHost;
+    }
+
+    public static String getFmsFileIdentity() {
+        if (fmsFileIdentity == null) {
+            fmsFileIdentity = System.getProperty("fmsFileIdentity", constantsInit.fmsFileIdentity());
+        }
+
+        return fmsFileIdentity;
     }
 
     public static String getAtsTokenUsername() {
