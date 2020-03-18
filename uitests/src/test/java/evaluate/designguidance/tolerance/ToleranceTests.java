@@ -37,6 +37,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class ToleranceTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -50,6 +52,8 @@ public class ToleranceTests extends TestBase {
     private ToleranceValueSettingsPage toleranceValueSettingsPage;
     private UserCredentials currentUser;
     private ExplorePage explorePage;
+
+    private File resourceFile;
 
     public ToleranceTests() {
         super();
@@ -69,6 +73,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -79,7 +84,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -109,6 +114,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"708", "1607"})
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -119,7 +126,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         toleranceEditPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -139,6 +146,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -149,7 +158,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         warningPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -168,6 +177,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"717", "1608"})
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -178,7 +189,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         warningPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -196,6 +207,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"726", "712", "1295", "1297"})
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -206,7 +219,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -239,6 +252,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1595"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -249,7 +264,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -273,6 +288,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"724", "725", "729"})
     @Description("Validate applied tolerances are maintained after changing the scenario process group")
     public void testMaintainingToleranceChangePG() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -283,7 +300,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -314,6 +331,7 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"730", "709", "713", "714", "722"})
     @Description("Validate tolerance edits are maintained when user adds a secondary process group")
     public void testMaintainingSecondaryPG() {
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -324,7 +342,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -370,6 +388,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"723"})
     @Description("Validate tolerance edits when default values set")
     public void specificDefaultTolerances() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -384,7 +404,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -431,6 +451,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1291"})
     @Description("Verify PMI data is not extracted ")
     public void assumeTolerances() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -441,7 +463,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
@@ -455,6 +477,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1286"})
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -482,7 +506,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -531,6 +555,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1294"})
     @Description("Validate PMI is off when use specific is selected")
     public void specificTolerancesNoPMI() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -543,7 +569,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -594,6 +620,8 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1296", "1288"})
     @Description("Validate 'Replace values less than' button")
     public void replaceValuesButton() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -605,7 +633,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -625,6 +653,7 @@ public class ToleranceTests extends TestBase {
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
         currentUser = testUser1;
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
 
         new CIDLoginPage(driver).login(testUser1)
             .openSettings()
@@ -633,7 +662,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
