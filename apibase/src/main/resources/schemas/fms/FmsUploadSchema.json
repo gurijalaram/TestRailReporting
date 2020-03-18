@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "required": [
+    "identity",
+    "createdBy",
+    "updatedBy",
+    "deletedBy",
+    "createdAt",
+    "updatedAt",
+    "deletedAt",
+    "customerIdentity",
+    "deploymentIdentity",
+    "installationIdentity",
+    "applicationIdentity",
+    "userIdentity",
+    "filename",
+    "folder",
+    "filesize",
+    "md5hash"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": ["string", "null"]
+    },
+    "deletedBy": {
+      "type": ["string", "null"]
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": ["string", "null"]
+    },
+    "deletedAt": {
+      "type": ["string", "null"]
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "deploymentIdentity": {
+      "type": "string"
+    },
+    "installationIdentity": {
+      "type": "string"
+    },
+    "applicationIdentity": {
+      "type": "string"
+    },
+    "userIdentity": {
+      "type": "string"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "folder": {
+      "type": "string"
+    },
+    "filesize": {
+      "type": "integer"
+    },
+    "md5hash": {
+      "type": "string"
+    }
+  }
+}

@@ -13,6 +13,7 @@ import com.apriori.apibase.http.builder.service.RequestInitService;
 import com.apriori.apibase.http.enums.Schema;
 import com.apriori.apibase.http.enums.common.api.AuthEndpointEnum;
 import com.apriori.apibase.http.enums.common.api.CommonEndpointEnum;
+import com.apriori.apibase.utils.FormParams;
 import com.apriori.apibase.utils.MultiPartFiles;
 import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.apibase.utils.URLParams;
@@ -43,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * {@link ConnectionManager} class has the following purposes:
  * - Holds your request parameters what you can set up using {@link RequestInitService} class.
- * - Creates {@link RequestSpecification} using {{@link #createRequestSpecification(List, PayloadJSON)}}
+ * - Creates {@link RequestSpecification}
  * - Connects to desired endpoint using
  * GET ({@link #get()}), POST ({@link #post()}), PUT ({@link #put()}), PATCH ({@link #patch()}) and DELETE ({@link #delete()}) methods
  * - Converts response JSON into the desired POJO object
@@ -66,7 +67,7 @@ public class ConnectionManager<T> {
     }
 
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody) {
-        return createRequestSpecification(urlParams, body, customBody, null);
+        return createRequestSpecification(urlParams, body, customBody, null, null);
     }
 
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body) {
@@ -74,12 +75,12 @@ public class ConnectionManager<T> {
         return createRequestSpecification(urlParams, body, null);
     }
 
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, MultiPartFiles multiPartFiles) {
+    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, MultiPartFiles multiPartFiles, FormParams formParams) {
 
-        return createRequestSpecification(urlParams, null, null, multiPartFiles);
+        return createRequestSpecification(urlParams, null, null, multiPartFiles, formParams);
     }
 
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody, MultiPartFiles multiPartFiles) {
+    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody, MultiPartFiles multiPartFiles, FormParams formParams) {
         RequestSpecBuilder builder = new RequestSpecBuilder();
 
         if (requestEntity.isAutoLogin()) {
@@ -106,8 +107,13 @@ public class ConnectionManager<T> {
 
         if (multiPartFiles != null) {
             builder.setContentType("multipart/form-data");
+            multiPartFiles.forEach(builder::addMultiPart);
         } else {
             builder.setContentType(ContentType.JSON);
+        }
+
+        if (formParams != null) {
+            formParams.forEach(builder::addFormParam);
         }
 
         if (urlParams != null) {
@@ -129,11 +135,6 @@ public class ConnectionManager<T> {
 
         if (body != null) {
             builder.setBody(body, ObjectMapperType.JACKSON_2);
-        }
-
-        if (multiPartFiles != null) {
-            multiPartFiles.forEach(builder::addMultiPart);
-            builder.addFormParam("type", "pcba");
         }
 
         /*
@@ -305,11 +306,14 @@ public class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> postMultiPart() {
         return resultOf(
-                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getMultiPartFiles())
-                        .when()
-                        .post(requestEntity.buildEndpoint())
-                        .then()
-                        .log().all()
+
+            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getMultiPartFiles(), requestEntity.getFormParams())
+                .expect()
+                .statusCode(isOneOf(requestEntity.getStatusCode()))
+                .when()
+                .post(requestEntity.buildEndpoint())
+                .then()
+                .log().all()
         );
     }
 

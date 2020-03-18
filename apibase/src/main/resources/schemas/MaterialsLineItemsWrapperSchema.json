@@ -1,7 +1,6 @@
 {
   "definitions": {},
   "$schema": "http://json-s-07/schema#",
-  "$id": "ItemsWrapper",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -9,12 +8,10 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
       "properties": {
         "isFirstPage": {
-          "$id": "#/properties/response/properties/isFirstPage",
           "type": "boolean",
           "title": "The Isfirstpage Schema",
           "default": false,
@@ -23,7 +20,6 @@
           ]
         },
         "isLastPage": {
-          "$id": "#/properties/response/properties/isLastPage",
           "type": "boolean",
           "title": "The Islastpage Schema",
           "default": false,
@@ -32,7 +28,6 @@
           ]
         },
         "pageNumber": {
-          "$id": "#/properties/response/properties/pageNumber",
           "type": "integer",
           "title": "The Pagenumber Schema",
           "default": 0,
@@ -41,7 +36,6 @@
           ]
         },
         "pageSize": {
-          "$id": "#/properties/response/properties/pageSize",
           "type": "integer",
           "title": "The Pagesize Schema",
           "default": 0,
@@ -50,7 +44,6 @@
           ]
         },
         "pageItemCount": {
-          "$id": "#/properties/response/properties/pageItemCount",
           "type": "integer",
           "title": "The Pageitemcount Schema",
           "default": 0,
@@ -59,7 +52,6 @@
           ]
         },
         "totalItemCount": {
-          "$id": "#/properties/response/properties/totalItemCount",
           "type": "integer",
           "title": "The Totalitemcount Schema",
           "default": 0,
@@ -68,7 +60,6 @@
           ]
         },
         "totalPageCount": {
-          "$id": "#/properties/response/properties/totalPageCount",
           "type": "integer",
           "title": "The Totalpagecount Schema",
           "default": 0,
@@ -77,7 +68,6 @@
           ]
         },
         "hasNextPage": {
-          "$id": "#/properties/response/properties/hasNextPage",
           "type": "boolean",
           "title": "The Hasnextpage Schema",
           "default": false,
@@ -86,7 +76,6 @@
           ]
         },
         "hasPreviousPage": {
-          "$id": "#/properties/response/properties/hasPreviousPage",
           "type": "boolean",
           "title": "The Haspreviouspage Schema",
           "default": false,
@@ -95,16 +84,13 @@
           ]
         },
         "items": {
-          "$id": "#/properties/response/properties/items",
           "type": "array",
           "title": "The Items Schema",
           "items": {
-            "$id": "#/properties/response/properties/items/items",
             "type": "object",
             "title": "The Items Schema",
             "properties": {
               "identity": {
-                "$id": "#/properties/response/properties/items/items/properties/identity",
                 "type": "string",
                 "title": "The Identity Schema",
                 "default": "",
@@ -114,7 +100,6 @@
                 "pattern": "^(.*)$"
               },
               "createdAt": {
-                "$id": "#/properties/response/properties/items/items/properties/createdAt",
                 "type": "string",
                 "title": "The Createdat Schema",
                 "default": "",
@@ -124,7 +109,6 @@
                 "pattern": "^(.*)$"
               },
               "createdBy": {
-                "$id": "#/properties/response/properties/items/items/properties/createdBy",
                 "type": "string",
                 "title": "The Createdby Schema",
                 "default": "",
@@ -134,7 +118,6 @@
                 "pattern": "^(.*)$"
               },
               "costingStatus": {
-                "$id": "#/properties/response/properties/items/items/properties/costingStatus",
                 "type": "string",
                 "title": "The Costingstatus Schema",
                 "default": "",
@@ -144,7 +127,6 @@
                 "pattern": "^(.*)$"
               },
               "level": {
-                "$id": "#/properties/response/properties/items/items/properties/level",
                 "type": "integer",
                 "title": "The Level Schema",
                 "default": 0,
@@ -153,7 +135,6 @@
                 ]
               },
               "customerPartNumber": {
-                "$id": "#/properties/response/properties/items/items/properties/customerPartNumber",
                 "type": "string",
                 "title": "The Customerpartnumber Schema",
                 "default": "",
@@ -163,7 +144,6 @@
                 "pattern": "^(.*)$"
               },
               "quantity": {
-                "$id": "#/properties/response/properties/items/items/properties/quantity",
                 "type": "integer",
                 "title": "The Quantity Schema",
                 "default": 0,
@@ -172,7 +152,6 @@
                 ]
               },
               "manufacturerPartNumber": {
-                "$id": "#/properties/response/properties/items/items/properties/manufacturerPartNumber",
                 "type": "string",
                 "title": "The Manufacturerpartnumber Schema",
                 "default": "",
@@ -182,7 +161,6 @@
                 "pattern": "^(.*)$"
               },
               "manufacturer": {
-                "$id": "#/properties/response/properties/items/items/properties/manufacturer",
                 "type": "string",
                 "title": "The Manufacturer Schema",
                 "default": "",
@@ -192,16 +170,13 @@
                 "pattern": "^(.*)$"
               },
               "parts": {
-                "$id": "#/properties/response/properties/items/items/properties/parts",
                 "type": "array",
                 "title": "The Parts Schema",
                 "items": {
-                  "$id": "#/properties/response/properties/items/items/properties/parts/items",
                   "type": "object",
                   "title": "The Items Schema",
                   "properties": {
                     "isUserPart": {
-                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/isUserPart",
                       "type": "boolean",
                       "title": "The Isuserpart Schema",
                       "default": false,
@@ -210,7 +185,6 @@
                       ]
                     },
                     "isSaved": {
-                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/isSaved",
                       "type": "boolean",
                       "title": "The Issaved Schema",
                       "default": false,
@@ -219,7 +193,6 @@
                       ]
                     },
                     "identity": {
-                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/identity",
                       "type": "string",
                       "title": "The Identity Schema",
                       "default": "",
@@ -229,7 +202,6 @@
                       "pattern": "^(.*)$"
                     },
                     "lineItemIdentity": {
-                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/lineItemIdentity",
                       "type": "string",
                       "title": "The Lineitemidentity Schema",
                       "default": "",
@@ -239,7 +211,6 @@
                       "pattern": "^(.*)$"
                     },
                     "costingStatus": {
-                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/costingStatus",
                       "type": "string",
                       "title": "The Costingstatus Schema",
                       "default": "",
@@ -249,7 +220,6 @@
                       "pattern": "^(.*)$"
                     },
                     "manufacturerPartNumber": {
-                      "$id": "#/properties/response/properties/items/items/properties/parts/items/properties/manufacturerPartNumber",
                       "type": "string",
                       "title": "The Manufacturerpartnumber Schema",
                       "default": "",
@@ -259,7 +229,6 @@
                       "pattern": "^(.*)$"
                     },
                     "averageCost": {
-                      "$id": "#/properties/averageCost",
                       "type": "number",
                       "title": "The Averagecost Schema",
                       "default": 0.0,

@@ -70,7 +70,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
      * @return new page object
      */
     public EvaluatePage save() {
-        saveButton.click();
+        pageUtils.waitForElementAndClick(saveButton);
         return new EvaluatePage(driver);
     }
 
@@ -80,7 +80,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
      * @return new page object
      */
     public ExplorePage cancel() {
-        cancelButton.click();
+        pageUtils.waitForElementAndClick(cancelButton);
         return new ExplorePage(driver);
     }
 }

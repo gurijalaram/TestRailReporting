@@ -16,6 +16,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.ColumnIndexEnum;
@@ -36,12 +37,14 @@ import java.util.List;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
-    String assemblyType = "";
     private AssemblyDetailsReportPage assemblyDetailsReport;
+    private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
     private LibraryPage library;
     private HomePage homePage;
+
+    String assemblyType = "";
 
     public AssemblyDetailsReportTests() {
         super();
@@ -403,18 +406,19 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
-        assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
-            .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .ensureDateIsToday()
-            .setExportDateToTwoMonthsAgoInput()
-            .ensureExportSetHasChanged();
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .setLatestExportDateToTodayInput()
+                .ensureDatesAreCorrect(false, true);
+        //.waitForCorrectExportSetListCount("0");
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
-        assertThat(assemblyDetailsReport.getAmountOfTopLevelExportSets(), is(0));
+        // TODO: Bring last method above back in once bug fixed
+        assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 
     @Test
@@ -422,18 +426,19 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
-        assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
-            .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .ensureDateIsToday()
-            .setExportDateToTwoMonthsAgoPicker()
-            .ensureExportSetHasChanged();
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .setLatestExportDateToTodayPlusTwoPicker()
+                .ensureDatesAreCorrect(false, false);
+        //.waitForCorrectExportSetListCount("0");
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
-        assertThat(assemblyDetailsReport.getAmountOfTopLevelExportSets(), is(0));
+        // TODO: Bring last method above back in once bug fixed
+        assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 
     @Test

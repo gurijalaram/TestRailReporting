@@ -1,5 +1,6 @@
 package com.apriori.utils.constants;
 
+import org.aeonbits.owner.Config;
 import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
@@ -23,6 +24,7 @@ public class Constants {
 
     public static final String scenarioExportChapterUrlPartOne = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
     public static final String scenarioExportChapterUrlPartTwo = "CIA_UG";
+    public static final String scenarioExportChapterPageTitle = "2 Scenario and System Data Exports";
     public static final String reportsUrlSuffix = "jasperserver-pro/";
     public static final String domainDesignerUrlSuffix = String.format("%sdomaindesigner.html", reportsUrlSuffix);
     public static final String reportsLastSuffix = "flow.html?_flowId=homeFlow";
@@ -47,6 +49,15 @@ public class Constants {
     private static String cdsIdentityRole;
     private static String cdsIdentityCustomer;
     private static String cdsIdentityApplication;
+    private static String atsServiceHost;
+    private static String atsTokenUsername;
+    private static String atsTokenEmail;
+    private static String atsTokenIssuer;
+    private static String atsTokenSubject;
+    private static String atsAuthApplication;
+    private static String atsAuthTargetCloudContext;
+    private static String fmsServiceHost;
+    private static String fmsFileIdentity;
     public static final String defaultServiceHostKey = "serverHost";
     public static final String defaultServicePortKey = "serverPort";
     public static final String defaultServiceNameKey = "serverName";
@@ -155,6 +166,78 @@ public class Constants {
         }
 
         return cdsIdentityApplication;
+    }
+
+    public static String getAtsServiceHost() {
+        if (atsServiceHost == null) {
+            atsServiceHost = System.getProperty("atsServiceHost", constantsInit.atsServiceHost());
+        }
+
+        return atsServiceHost;
+    }
+
+    public static String getFmsServiceHost() {
+        if (fmsServiceHost == null) {
+            fmsServiceHost = System.getProperty("fmsServiceHost", constantsInit.fmsServiceHost());
+        }
+
+        return fmsServiceHost;
+    }
+
+    public static String getFmsFileIdentity() {
+        if (fmsFileIdentity == null) {
+            fmsFileIdentity = System.getProperty("fmsFileIdentity", constantsInit.fmsFileIdentity());
+        }
+
+        return fmsFileIdentity;
+    }
+
+    public static String getAtsTokenUsername() {
+        if (atsTokenUsername == null) {
+            atsTokenUsername = System.getProperty("atsTokenUsername", constantsInit.atsTokenUsername());
+        }
+
+        return atsTokenUsername;
+    }
+
+    public static String getAtsTokenEmail() {
+        if (atsTokenEmail == null) {
+            atsTokenEmail = System.getProperty("atsTokenEmail", constantsInit.atsTokenEmail());
+        }
+
+        return atsTokenEmail;
+    }
+
+    public static String getAtsTokenIssuer() {
+        if (atsTokenIssuer == null) {
+            atsTokenIssuer = System.getProperty("atsTokenIssuer", constantsInit.atsTokenIssuer());
+        }
+
+        return atsTokenIssuer;
+    }
+
+    public static String getAtsTokenSubject() {
+        if (atsTokenSubject == null) {
+            atsTokenSubject = System.getProperty("atsTokenSubject", constantsInit.atsTokenSubject());
+        }
+
+        return atsTokenSubject;
+    }
+
+    public static String getAtsAuthApplication() {
+        if (atsAuthApplication == null) {
+            atsAuthApplication = System.getProperty("atsAuthApplication", constantsInit.atsAuthApplication());
+        }
+
+        return atsAuthApplication;
+    }
+
+    public static String getAtsAuthTargetCloudContext() {
+        if (atsAuthTargetCloudContext == null) {
+            atsAuthTargetCloudContext = System.getProperty("atsAuthTargetCloudContext", constantsInit.atsAuthTargetCloudContext());
+        }
+
+        return atsAuthTargetCloudContext;
     }
 
 }

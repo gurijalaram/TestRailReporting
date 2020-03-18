@@ -1,16 +1,14 @@
 package com.apriori.apibase.http.builder.dao;
 
-import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
-import com.apriori.apibase.http.builder.service.RequestAreaCds;
-import com.apriori.apibase.http.builder.service.RequestAreaUiAuth;
+import com.apriori.apibase.utils.FormParams;
+import com.apriori.apibase.utils.MultiPartFiles;
 import com.apriori.utils.constants.Constants;
-import com.apriori.utils.users.UserUtil;
-
 import org.apache.http.HttpStatus;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 public class ServiceConnector {
 
@@ -22,25 +20,18 @@ public class ServiceConnector {
      * @return
      */
     public static Object getServiceNoEncoding(String url, Class klass) {
-//        System.out.println("**************************\n" + GenericRequestUtil.get(RequestEntity.init(url, UserUtil.getUser(), klass)
-//                        .setFollowRedirection(true)
-////                        .setAutoLogin(true)
-//                        .setUrlEncodingEnabled(false),
-//                        new RequestAreaCds()
-//                        ).getBody());
-//
-//        return null;
+
         return new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setEndpoint("https://cds.qa.awsproxy.apriori.com/applications/%23CDS%40010100%23?key=AMKC0LA2DF3M")
-            .setReturnType(klass)
-            .setStatusCode(HttpStatus.SC_OK, HttpStatus.SC_MOVED_PERMANENTLY)
-            .setFollowRedirection(true)
-            .commitChanges()
-            .connect()
-            .disableEncoding()
-            .get();
+                .unauthorized()
+                .customizeRequest()
+                .setEndpoint(url)
+                .setReturnType(klass)
+                .setStatusCode(HttpStatus.SC_OK, HttpStatus.SC_MOVED_PERMANENTLY)
+                .setFollowRedirection(true)
+                .commitChanges()
+                .connect()
+                .disableEncoding()
+                .get();
     }
 
     /**
@@ -51,22 +42,133 @@ public class ServiceConnector {
      * @return
      */
     public static Object getService(String url, Class klass) {
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, UserUtil.getUser(), klass).setFollowRedirection(true),
-                new RequestAreaUiAuth()
-        );
-//        return new HTTPRequest()
-//            .unauthorized()
-//            .customizeRequest()
-//            .setEndpoint(url)
-//            .setReturnType(klass)
-//            .setStatusCode(HttpStatus.SC_OK, HttpStatus.SC_MOVED_PERMANENTLY)
-//            .setFollowRedirection(true)
-//            .commitChanges()
-//            .connect()
-//            .enableEncoding()
-//            .get();
+        return new HTTPRequest()
+                .unauthorized()
+                .customizeRequest()
+                .setEndpoint(url)
+                .setReturnType(klass)
+                .setStatusCode(HttpStatus.SC_OK, HttpStatus.SC_MOVED_PERMANENTLY)
+                .setFollowRedirection(true)
+                .commitChanges()
+                .connect()
+                .enableEncoding()
+                .get();
     }
+
+    /** Send a url encoded request
+     *
+     * @param url
+     * @param klass
+     * @param statusCode
+     * @return
+     */
+    public static Object getService(String url, Class klass, int statusCode) {
+        return new HTTPRequest()
+                .unauthorized()
+                .customizeRequest()
+                .setEndpoint(url)
+                .setReturnType(klass)
+                .setStatusCode(statusCode)
+                .setFollowRedirection(true)
+                .commitChanges()
+                .connect()
+                .enableEncoding()
+                .get();
+    }
+
+    /** Send a url encoded request
+     *
+     * @param url
+     * @param klass
+     * @param statusCode
+     * @param headers
+     * @return
+     */
+    public static Object getService(String url, Class klass, int statusCode, Map<String, String> headers) {
+        return new HTTPRequest()
+                .unauthorized()
+                .customizeRequest()
+                .setEndpoint(url)
+                .setReturnType(klass)
+                .setStatusCode(statusCode)
+                .setHeaders(headers)
+                .setFollowRedirection(true)
+                .commitChanges()
+                .connect()
+                .enableEncoding()
+                .get();
+    }
+
+    /**
+     * Send a post request to a service
+     *
+     * @param url
+     * @param klass
+     * @param body
+     * @return
+     */
+    public static Object postToService(String url, Class klass, Object body) {
+        return new HTTPRequest()
+                .unauthorized()
+                .customizeRequest()
+                .setEndpoint(url)
+                .setBody(body)
+                .setReturnType(klass)
+                .setStatusCode(HttpStatus.SC_OK, HttpStatus.SC_MOVED_PERMANENTLY)
+                .setFollowRedirection(true)
+                .commitChanges()
+                .connect()
+                .post();
+    }
+
+    /**
+     * Send a post request to a service
+     *
+     * @param url
+     * @param klass
+     * @param body
+     * @return
+     */
+    public static Object postToService(String url, Class klass, Object body, int statusCode) {
+        return new HTTPRequest()
+                .unauthorized()
+                .customizeRequest()
+                .setEndpoint(url)
+                .setBody(body)
+                .setReturnType(klass)
+                .setStatusCode(statusCode)
+                .setFollowRedirection(true)
+                .commitChanges()
+                .connect()
+                .post();
+    }
+
+    /**
+     * Send a post request to a service
+     *
+     * @param url
+     * @param klass
+     * @param statusCode
+     * @param headers
+     * @param multiPartFiles
+     * @return
+     */
+    public static Object postToService(String url, Class klass, int statusCode, Map<String,String> headers, MultiPartFiles multiPartFiles, FormParams formParams) {
+        return new HTTPRequest()
+                .unauthorized()
+                .customizeRequest()
+                .setEndpoint(url)
+                .setHeaders(headers)
+                .setMultiPartFiles(multiPartFiles)
+                .setFormParams(formParams)
+                .setReturnType(klass)
+                .setStatusCode(statusCode)
+                .setFollowRedirection(true)
+                .commitChanges()
+                .connect()
+                .postMultiPart();
+    }
+
 
     /**
      * Generate a url for a micro-service using default parameters
@@ -77,11 +179,24 @@ public class ServiceConnector {
         return getServiceUrl(null, null, null);
     }
 
+    /**
+     * Generate a url for a micro-service using default parameters
+     *
+     * @param host
+     *
+     * @return
+     */
+    public static String getServiceUrl(String host) {
+        return getServiceUrl(host, null, null);
+    }
 
     /**
      * Generate a url for a micro-service
      *
-     * @param service
+     * @param host
+     * @param port
+     * @param secretKey
+     *
      * @return
      */
     public static String getServiceUrl(String host, String port, String secretKey) {
@@ -98,7 +213,7 @@ public class ServiceConnector {
         }
 
         StringBuilder url = new StringBuilder();
-        url.append(String.format("http://%s", host));
+        url.append(String.format("https://%s", host));
 
         if (port != null) {
             url.append(String.format(":%s", port));
@@ -112,7 +227,6 @@ public class ServiceConnector {
      * Encode a url string using the Java encoder instead of the Rest-Assured encoder
      *
      * @param url
-     * @param klass
      * @return
      */
     public static String urlEncode(String url) {

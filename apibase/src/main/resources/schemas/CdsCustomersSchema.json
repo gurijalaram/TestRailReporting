@@ -1,7 +1,6 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -9,7 +8,6 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
       "required": [
@@ -26,7 +24,6 @@
       ],
       "properties": {
         "isFirstPage": {
-          "$id": "#/properties/response/properties/isFirstPage",
           "type": "boolean",
           "title": "The Isfirstpage Schema",
           "default": false,
@@ -35,7 +32,6 @@
           ]
         },
         "isLastPage": {
-          "$id": "#/properties/response/properties/isLastPage",
           "type": "boolean",
           "title": "The Islastpage Schema",
           "default": false,
@@ -44,7 +40,6 @@
           ]
         },
         "pageNumber": {
-          "$id": "#/properties/response/properties/pageNumber",
           "type": "integer",
           "title": "The Pagenumber Schema",
           "default": 0,
@@ -53,7 +48,6 @@
           ]
         },
         "pageSize": {
-          "$id": "#/properties/response/properties/pageSize",
           "type": "integer",
           "title": "The Pagesize Schema",
           "default": 0,
@@ -62,7 +56,6 @@
           ]
         },
         "pageItemCount": {
-          "$id": "#/properties/response/properties/pageItemCount",
           "type": "integer",
           "title": "The Pageitemcount Schema",
           "default": 0,
@@ -71,7 +64,6 @@
           ]
         },
         "totalItemCount": {
-          "$id": "#/properties/response/properties/totalItemCount",
           "type": "integer",
           "title": "The Totalitemcount Schema",
           "default": 0,
@@ -80,7 +72,6 @@
           ]
         },
         "totalPageCount": {
-          "$id": "#/properties/response/properties/totalPageCount",
           "type": "integer",
           "title": "The Totalpagecount Schema",
           "default": 0,
@@ -89,7 +80,6 @@
           ]
         },
         "hasNextPage": {
-          "$id": "#/properties/response/properties/hasNextPage",
           "type": "boolean",
           "title": "The Hasnextpage Schema",
           "default": false,
@@ -98,7 +88,6 @@
           ]
         },
         "hasPreviousPage": {
-          "$id": "#/properties/response/properties/hasPreviousPage",
           "type": "boolean",
           "title": "The Haspreviouspage Schema",
           "default": false,
@@ -107,11 +96,9 @@
           ]
         },
         "items": {
-          "$id": "#/properties/response/properties/items",
           "type": "array",
           "title": "The Items Schema",
           "items": {
-            "$id": "#/properties/response/properties/items/items",
             "type": "object",
             "title": "The Items Schema",
             "required": [
@@ -126,7 +113,6 @@
             ],
             "properties": {
               "identity": {
-                "$id": "#/properties/response/properties/items/items/properties/identity",
                 "type": "string",
                 "title": "The Identity Schema",
                 "default": "",
@@ -136,12 +122,10 @@
                 "pattern": "^(.*)$"
               },
               "createdBy": {
-                "$id": "#/properties/response/properties/createdBy",
                 "type": "string",
                 "pattern": "^(.*)$"
               },
               "createdBy": {
-                "$id": "#/properties/response/properties/items/items/properties/createdBy",
                 "type": "string",
                 "title": "The Createdby Schema",
                 "default": "",
@@ -151,7 +135,6 @@
                 "pattern": "^(.*)$"
               },
               "createdAt": {
-                "$id": "#/properties/response/properties/items/items/properties/createdAt",
                 "type": "string",
                 "title": "The Createdat Schema",
                 "default": "",
@@ -161,7 +144,6 @@
                 "pattern": "^(.*)$"
               },
               "name": {
-                "$id": "#/properties/response/properties/items/items/properties/name",
                 "type": "string",
                 "title": "The Name Schema",
                 "default": "",
@@ -171,7 +153,6 @@
                 "pattern": "^(.*)$"
               },
               "description": {
-                "$id": "#/properties/response/properties/items/items/properties/description",
                 "type": "string",
                 "title": "The Description Schema",
                 "default": "",
@@ -181,7 +162,6 @@
                 "pattern": "^(.*)$"
               },
               "salesforceId": {
-                "$id": "#/properties/response/properties/items/items/properties/salesforceId",
                 "type": "string",
                 "title": "The Salesforceid Schema",
                 "default": "",
@@ -191,11 +171,9 @@
                 "pattern": "^(.*)$"
               },
               "emailRegexPatterns": {
-                "$id": "#/properties/response/properties/items/items/properties/emailRegexPatterns",
                 "type": "array",
                 "title": "The Emailregexpatterns Schema",
                 "items": {
-                  "$id": "#/properties/response/properties/items/items/properties/emailRegexPatterns/items",
                   "type": "string",
                   "title": "The Items Schema",
                   "default": "",
@@ -206,7 +184,6 @@
                 }
               },
               "active": {
-                "$id": "#/properties/response/properties/items/items/properties/active",
                 "type": "boolean",
                 "title": "The Active Schema",
                 "default": false,
@@ -215,7 +192,6 @@
                 ]
               },
               "customerType": {
-                "$id": "#/properties/response/properties/items/items/properties/customerType",
                 "type": "string",
                 "title": "The Customertype Schema",
                 "default": "",
