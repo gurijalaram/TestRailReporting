@@ -21,6 +21,8 @@ public class ListOfVPETests extends TestBase {
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
 
+    private File resourceFile;
+
     public ListOfVPETests() {
         super();
     }
@@ -28,7 +30,7 @@ public class ListOfVPETests extends TestBase {
     @Test
     @Description("Get List of VPEs")
     public void getVPEsList() {
-        File resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
