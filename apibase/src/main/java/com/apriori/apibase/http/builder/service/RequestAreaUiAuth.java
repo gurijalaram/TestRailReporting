@@ -56,7 +56,7 @@ public class RequestAreaUiAuth implements RequestArea {
 
 
     private RequestEntity authValidation(RequestEntity requestEntity) {
-        if(requestEntity.getHeaders() == null || requestEntity.getHeaders().size() == 0) {
+        if (requestEntity.getHeaders() == null || requestEntity.getHeaders().size() == 0) {
             requestEntity.setHeaders(doUiAuth(requestEntity));
         }
 
@@ -66,7 +66,7 @@ public class RequestAreaUiAuth implements RequestArea {
     private Map<String, String> doUiAuth(RequestEntity requestEntity) {
         final String userEmail = requestEntity.getUserAuthenticationEntity().getEmailAddress();
 
-        if( authTokens.get(userEmail) == null ) {
+        if (authTokens.get(userEmail) == null) {
             String token = new WebDriverUtils()
                     .getToken(requestEntity.getUserAuthenticationEntity().getEmailAddress(),
                             requestEntity.getUserAuthenticationEntity().getPassword()
@@ -76,7 +76,7 @@ public class RequestAreaUiAuth implements RequestArea {
         }
 
         return new HashMap<String, String>() {{
-            put("Authorization", "Bearer " + authTokens.get(userEmail));
-        }};
+                put("Authorization", "Bearer " + authTokens.get(userEmail));
+            }};
     }
 }

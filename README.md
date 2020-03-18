@@ -71,6 +71,50 @@ Get user functionality has reference to `{environment}.properties` file.
     - {password}: required
     - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
 
+
+## API Request functionality
+
+**`RequestEntity`** - it is a transfer object, which contain all needed information about the request
+
+- To init default RequestEntity use _init_ method:
+    - `init(String endpoint, final UserCredentials userCredentials, Class<?> returnType)` e.g.: `RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userData.getUserCredentials(), BillOfMaterialsWrapper.class);`
+- You may add special parameters e.g.: 
+    - `RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userData.getUserCredentials(), BillOfMaterialsWrapper.class).setUrlEncoding(true).setInlineVariables("test")`
+- If you don't want to validate and map response body, _returnType_ should be null e.g.:
+    - `RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userData.getUserCredentials(), null);`
+
+**`ResponseWrapper`** - transfer object, which contain information about the response.
+_ResponseWrapper_ fields: <br>
+    - statusCode : Integer - Response status code. <br>
+    - body : String - Response body as String. <br>
+    - responseEntity - mapped response entity. The type of mapping should be inserted in _RequestEntity_ as returnType
+
+**`RequestArea`** - requests specification. Contain templates and specific functions for HTTP request area.
+ - `RequestAreaUiAuth` - provide capabilities to do HTTP requests which require UI authorization
+    - if `RequestEntity` - doesn't contain headers and token for username is not cached (first HTTP request from user), will do UI authorization and cache the token for this user. 
+ - `RequestAreaCds` -  provide capabilities to do HTTP requests for CDS
+
+**`ConnectionManager`** - class which send API requests and validate/extract results. The response is mapping into ResponseWrapper (see ResponseWrapper)
+
+_Validation:_
+ * if RequestEntity contain _ReturnType_, the response will be validated by Schema and mapped to returnType
+ * if RequestEntity contain _statusCode_, the response will be validated on presents of inserted status code.
+ * if RequestEntity has _isUrlEncodingEnabled_ "true" - request URL will be encoded
+ 
+**`GenericRequestUtil`** - Wrapper for HTTP requests, provide easy way, to do requests
+
+- To init request `GenericRequestUtil` use 
+`<request type get, post...>(RequestEntity requestEntity, RequestArea requestArea)`
+- Examples of usage:  
+`GenericRequestUtil.get(RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userData.getUserCredentials(), BillOfMaterialsWrapper.class), new RequestAreaUiAuth());`
+- To provide more simple view you may split RequestEntity initialization and GenericRequestUtil :
+`RequestEntity requestEntity = RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS,
+    userData.getUserCredentials(),
+    BillOfMaterialsWrapper.class)`
+`GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth());`
+   
+  
+
 ## Run Checkstyle analysis from command line
 1. go to `build` directory, run `gradle check -x test`
 

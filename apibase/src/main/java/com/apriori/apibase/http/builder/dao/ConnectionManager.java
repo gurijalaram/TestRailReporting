@@ -6,16 +6,15 @@ import static org.hamcrest.Matchers.isOneOf;
 import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
-import com.apriori.apibase.http.builder.common.response.common.ErrorRequestResponse;
 import com.apriori.apibase.http.builder.common.response.common.LoginJSON;
 import com.apriori.apibase.http.builder.common.response.common.PayloadJSON;
-import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.apibase.http.builder.service.RequestInitService;
 import com.apriori.apibase.http.enums.Schema;
 import com.apriori.apibase.http.enums.common.api.AuthEndpointEnum;
 import com.apriori.apibase.http.enums.common.api.CommonEndpointEnum;
 import com.apriori.apibase.utils.MultiPartFiles;
+import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.apibase.utils.URLParams;
 import com.apriori.utils.constants.Constants;
 
@@ -24,7 +23,6 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
-import io.restassured.http.Headers;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
@@ -104,6 +102,8 @@ public class ConnectionManager<T> {
             }
         }
 
+        RestAssured.urlEncodingEnabled = requestEntity.isUrlEncodingEnabled();
+
         if (multiPartFiles != null) {
             builder.setContentType("multipart/form-data");
         } else {
@@ -157,7 +157,7 @@ public class ConnectionManager<T> {
                 .setBaseUri(requestEntity.buildEndpoint());
 
 
-        if(requestEntity.getStatusCode() != null) {
+        if (requestEntity.getStatusCode() != null) {
             return RestAssured.given()
                     .spec(builder.build())
                     .expect().statusCode(isOneOf(requestEntity.getStatusCode())).request()
@@ -368,108 +368,5 @@ public class ConnectionManager<T> {
         RestAssured.urlEncodingEnabled = true;
         return new ConnectionManager<>(this.requestEntity, this.requestEntity.getReturnType());
     }
-
-
-    //    /**
-//     * Sends request to desired endpoint with the desired specifications using HTTP POST method
-//     *
-//     * @return Headers object instance from response
-//     */
-//    public Headers postHeader() {
-//        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-//                .expect()
-//                .statusCode(isOneOf(requestEntity.getStatusCode()))
-//                .when()
-//                .post(requestEntity.buildEndpoint()).headers();
-//    }
-
-//    /**
-//     * gets header from PATCH request
-//     *
-//     * @return header
-//     */
-//    public Headers patchHeader() {
-//        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-//                .expect()
-//                .statusCode(isOneOf(requestEntity.getStatusCode()))
-//                .when()
-//                .patch(requestEntity.buildEndpoint())
-//                .headers();
-//    }
-    //    /**
-//     * Sends request to desired endpoint with the desired specifications using HTTP PUT method
-//     *
-//     * @return Headers object instance from response
-//     */
-//    public Headers putHeader() {
-//        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-//                .expect()
-//                .statusCode(isOneOf(requestEntity.getStatusCode()))
-//                .when()
-//                .put(requestEntity.buildEndpoint()).headers();
-//    }
-    //    /**
-//     * Sends request to desired endpoint with the desired specifications using HTTP GET method
-//     *
-//     * @return Headers object instance from response
-//     */
-//    public Headers getHeader() {
-//        return createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
-//                .expect()
-//                .statusCode(isOneOf(requestEntity.getStatusCode()))
-//                .when()
-//                .get(requestEntity.buildEndpoint()).headers();
-//    }
-    //    /**
-//     * Sends request to desired endpoint with the desired specifications using HTTP GET method
-//     *
-//     * @return JSON POJO object instance of @returnType
-//     */
-//    public T get() {
-//        return resultOf(
-//                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
-//                        .expect()
-//                        .statusCode(isOneOf(requestEntity.getStatusCode()))
-//                        .when()
-//                        .get(requestEntity.buildEndpoint())
-//                        .then()
-//                        .log().all()
-//        );
-//    }
-    //    private T resultOf(ValidatableResponse response) {
-//
-//        final int responseCode = response.extract().statusCode();
-//        final String responseBody = response.extract().body().asString();
-//
-//        if (returnType != null) {
-//            String schemaLocation;
-//
-//            try {
-//                schemaLocation = returnType.getAnnotation(Schema.class).location();
-//            } catch (NullPointerException ex) {
-//                throw new RuntimeException(String.format("Your returnType %s is not annotated with @Schema annotation", returnType.getName()));
-//            }
-//
-//            final URL resource = Thread.currentThread().getContextClassLoader().getResource(Constants.schemaBasePath + schemaLocation);
-//            if (resource == null) {
-//                throw new RuntimeException(
-//                        String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
-//                                returnType.getName()));
-//            }
-//
-//            Class<T> responseEntity = response.assertThat()
-//                    .body(matchesJsonSchema(resource))
-//                    .extract()
-//                    .response()
-//                    .as((Type) returnType);
-//
-////            return ResponseWrapper.build(responseCode, responseBody, responseEntity);
-//        }
-////        else {
-////            return ResponseWrapper.build(responseCode, responseBody, null);
-////        }
-//            return null;
-//    }
-
 }
 

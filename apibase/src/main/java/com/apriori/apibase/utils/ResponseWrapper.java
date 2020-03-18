@@ -6,7 +6,7 @@ public class ResponseWrapper<T> {
     private String body;
     private T responseEntity;
 
-    public static <T>  ResponseWrapper<T> build(int statusCode, String body,  T responseEntity){
+    public static <T>  ResponseWrapper<T> build(int statusCode, String body,  T responseEntity) {
         return new ResponseWrapper<T>(statusCode, body, responseEntity);
     }
 

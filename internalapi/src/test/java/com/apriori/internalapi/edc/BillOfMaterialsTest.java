@@ -68,10 +68,10 @@ public class BillOfMaterialsTest extends TestUtil {
         final int deleteIndex = new Random().nextInt(userData.getBillOfMaterials().size());
 
         RequestEntity requestEntity = RequestEntity.init(
-                BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userData.getUserCredentials(), BillOfSingleMaterialWrapper.class)
+                BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userData.getUserCredentials(), null)
                 .setInlineVariables(userData.getBillOfMaterials().get(deleteIndex).getIdentity());
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT,
                 GenericRequestUtil.delete(requestEntity, new RequestAreaUiAuth()).getStatusCode());
 
         userData.getBillOfMaterials().remove(deleteIndex);

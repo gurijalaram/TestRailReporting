@@ -7,9 +7,8 @@ import com.apriori.apibase.http.enums.common.ExternalEndpointEnum;
 import com.apriori.apibase.http.enums.common.InternalEndpointEnum;
 import com.apriori.apibase.utils.MultiPartFiles;
 import com.apriori.utils.Util;
-
 import com.apriori.utils.users.UserCredentials;
-import org.apache.http.HttpStatus;
+
 import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ public class RequestEntity {
     private WebDriver driver;
     private UserAuthenticationEntity userAuthenticationEntity;
     private RequestInitService requestInitService;
-
 
     private String customBody;
     private EndpointEnum endpoint;
@@ -373,7 +371,8 @@ public class RequestEntity {
         return urlEncodingEnabled;
     }
 
-    public void setUrlEncodingEnabled(boolean urlEncodingEnabled) {
+    public RequestEntity setUrlEncodingEnabled(boolean urlEncodingEnabled) {
         this.urlEncodingEnabled = urlEncodingEnabled;
+        return this;
     }
 }

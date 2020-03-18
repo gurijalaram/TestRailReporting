@@ -11,6 +11,7 @@ import com.apriori.apibase.http.builder.common.response.common.WorkSpaceSearchWr
 import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.pageobjects.utils.WorkOrderRequestEntity;
+
 import org.apache.http.HttpStatus;
 
 import java.util.Arrays;
@@ -53,8 +54,6 @@ public class ScenarioAction {
     private WorkOrdersWrapper findWorkOrders(WorkOrderRequestEntity workOrderRequestEntity) {
         return workOrderRequestEntity.getWorkSpaceSearchWrapper() != null ? this.getOrderByFilter(authorizationHeader, workOrderRequestEntity.getWorkSpaceSearchWrapper())
                 : this.getOrderByFilter(authorizationHeader, this.initDefaultSearchCriteria(workOrderRequestEntity));
-
-//        return submitWorkOredrResponseWrapper.getResponseEntity();
     }
 
     private boolean listFilteredOrdersIsEmpty(WorkOrdersWrapper workOrdersWrapper) {
