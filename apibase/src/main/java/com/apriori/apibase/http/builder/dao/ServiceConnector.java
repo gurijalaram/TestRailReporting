@@ -1,12 +1,15 @@
 package com.apriori.apibase.http.builder.dao;
 
 import com.apriori.apibase.http.builder.service.HTTPRequest;
+import com.apriori.apibase.utils.FormParams;
+import com.apriori.apibase.utils.MultiPartFiles;
 import com.apriori.utils.constants.Constants;
 
 import org.apache.http.HttpStatus;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 public class ServiceConnector {
 
@@ -58,7 +61,7 @@ public class ServiceConnector {
      * @param klass
      * @param statusCode
      * @return
-             */
+     */
     public static Object getService(String url, Class klass, int statusCode) {
         return new HTTPRequest()
                 .unauthorized()
@@ -66,6 +69,29 @@ public class ServiceConnector {
                 .setEndpoint(url)
                 .setReturnType(klass)
                 .setStatusCode(statusCode)
+                .setFollowRedirection(true)
+                .commitChanges()
+                .connect()
+                .enableEncoding()
+                .get();
+    }
+
+    /** Send a url encoded request
+     *
+     * @param url
+     * @param klass
+     * @param statusCode
+     * @param headers
+     * @return
+     */
+    public static Object getService(String url, Class klass, int statusCode, Map<String, String> headers) {
+        return new HTTPRequest()
+                .unauthorized()
+                .customizeRequest()
+                .setEndpoint(url)
+                .setReturnType(klass)
+                .setStatusCode(statusCode)
+                .setHeaders(headers)
                 .setFollowRedirection(true)
                 .commitChanges()
                 .connect()
@@ -116,6 +142,33 @@ public class ServiceConnector {
                 .connect()
                 .post();
     }
+
+    /**
+     * Send a post request to a service
+     *
+     * @param url
+     * @param klass
+     * @param statusCode
+     * @param headers
+     * @param multiPartFiles
+     * @return
+     */
+    public static Object postToService(String url, Class klass, int statusCode, Map<String,String> headers, MultiPartFiles multiPartFiles, FormParams formParams) {
+        return new HTTPRequest()
+                .unauthorized()
+                .customizeRequest()
+                .setEndpoint(url)
+                .setHeaders(headers)
+                .setMultiPartFiles(multiPartFiles)
+                .setFormParams(formParams)
+                .setReturnType(klass)
+                .setStatusCode(statusCode)
+                .setFollowRedirection(true)
+                .commitChanges()
+                .connect()
+                .postMultiPart();
+    }
+
 
     /**
      * Generate a url for a micro-service using default parameters
@@ -174,7 +227,6 @@ public class ServiceConnector {
      * Encode a url string using the Java encoder instead of the Rest-Assured encoder
      *
      * @param url
-     * @param klass
      * @return
      */
     public static String urlEncode(String url) {

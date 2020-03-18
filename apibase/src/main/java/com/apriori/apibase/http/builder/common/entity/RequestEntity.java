@@ -5,6 +5,7 @@ import com.apriori.apibase.http.enums.EndpointEnum;
 import com.apriori.apibase.http.enums.EndpointType;
 import com.apriori.apibase.http.enums.common.ExternalEndpointEnum;
 import com.apriori.apibase.http.enums.common.InternalEndpointEnum;
+import com.apriori.apibase.utils.FormParams;
 import com.apriori.apibase.utils.MultiPartFiles;
 import com.apriori.utils.Util;
 
@@ -45,6 +46,7 @@ public class RequestEntity {
     private List<Map<String, ?>> xwwwwFormUrlEncoded = new ArrayList<>();
     private Object[] inlineVariables;
     private MultiPartFiles multiPartFiles;
+    private FormParams formParams;
     private Object body;
     private Class<?> returnType;
     private int connectionTimeout = 60000;
@@ -281,6 +283,15 @@ public class RequestEntity {
 
     public RequestEntity setMultiPartFiles(MultiPartFiles multiPartFiles) {
         this.multiPartFiles = multiPartFiles;
+        return this;
+    }
+
+    public FormParams getFormParams() {
+        return formParams;
+    }
+
+    public RequestEntity setFormParams(FormParams formParams) {
+        this.formParams = formParams;
         return this;
     }
 
