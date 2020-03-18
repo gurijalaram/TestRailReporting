@@ -17,12 +17,15 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
+import java.io.File;
+
 public class DeletePublicScenarioTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private String testScenarioName;
 
+    private File resourceFile;
     private final String noComponentMessage = "You have no components that match the selected filter";
 
     public DeletePublicScenarioTests() {
@@ -34,13 +37,14 @@ public class DeletePublicScenarioTests extends TestBase {
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
         testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -58,5 +62,4 @@ public class DeletePublicScenarioTests extends TestBase {
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
-
 }
