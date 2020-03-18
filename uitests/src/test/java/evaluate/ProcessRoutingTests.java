@@ -602,7 +602,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile )
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
