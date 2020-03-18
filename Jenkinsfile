@@ -32,7 +32,7 @@ pipeline {
             steps {
                 echo 'Running test....'
                 dir("${env.WORKSPACE}/build") {
-                    bat label: '', script: 'gradle clean :uitests:test --tests CIDTestSuite -DthreadCount=3 -Dbrowser=chrome -Denv=cid-te --scan --info'
+                    bat label: '', script: 'gradle clean :uitests:test --tests CIDTestSuite -DthreadCount=1 -Dbrowser=chrome -Denv=cid-te --scan --info'
                 }
             }
 
