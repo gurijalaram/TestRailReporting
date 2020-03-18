@@ -16,8 +16,10 @@ public class FileResourceUtil {
     public File getResourceFile(String fileName) {
         String file;
 
-        if (!new File(ClassLoader.getSystemResource(fileName).getFile()).isFile()) {
-            throw new RuntimeException(String.format("File with name '%s' does not exist: ", fileName));
+        try {
+            new File(ClassLoader.getSystemResource(fileName).getFile());
+        } catch (RuntimeException e) {
+            throw new CustomFileException(String.format("File with name '%s' does not exist: ", fileName, e));
         }
 
         file = ClassLoader.getSystemResource(fileName).getFile();
