@@ -59,6 +59,7 @@ public class SheetMetalDTCTests extends TestBase {
     public void sheetMetalDTCHoles() {
 
         resourceFile = new FileResourceUtil().getResourceFile("SheMetDTC.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -97,6 +98,7 @@ public class SheetMetalDTCTests extends TestBase {
     public void sheetMetalProximity() {
 
         resourceFile = new FileResourceUtil().getResourceFile("SheetMetalTray.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -125,6 +127,7 @@ public class SheetMetalDTCTests extends TestBase {
     public void sheetMetalBends() {
 
         resourceFile = new FileResourceUtil().getResourceFile("extremebends.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -158,6 +161,7 @@ public class SheetMetalDTCTests extends TestBase {
     public void tileDTC() {
 
         resourceFile = new FileResourceUtil().getResourceFile("extremebends.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -184,6 +188,7 @@ public class SheetMetalDTCTests extends TestBase {
     public void sheetMetalDTCInvestigation() {
 
         resourceFile = new FileResourceUtil().getResourceFile("SheMetDTC.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -227,6 +232,7 @@ public class SheetMetalDTCTests extends TestBase {
     public void toleranceAdditionalOp() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 

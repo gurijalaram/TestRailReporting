@@ -45,8 +45,8 @@ public class DTCPlasticMouldingTests extends TestBase {
     public void testDTCMouldingDraft() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
-        loginPage = new CIDLoginPage(driver);
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -84,8 +84,8 @@ public class DTCPlasticMouldingTests extends TestBase {
     public void structuralFoamMouldDraft() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
-        loginPage = new CIDLoginPage(driver);
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -109,8 +109,8 @@ public class DTCPlasticMouldingTests extends TestBase {
     public void testMouldingEdgeInternal() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart");
-        loginPage = new CIDLoginPage(driver);
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -127,8 +127,8 @@ public class DTCPlasticMouldingTests extends TestBase {
     public void testMouldingEdgeExternal() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart");
-        loginPage = new CIDLoginPage(driver);
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -147,8 +147,8 @@ public class DTCPlasticMouldingTests extends TestBase {
     public void minWallThicknessSFM() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT");
-        loginPage = new CIDLoginPage(driver);
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -182,8 +182,8 @@ public class DTCPlasticMouldingTests extends TestBase {
     public void plasticMaxWallThickness() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -235,8 +235,8 @@ public class DTCPlasticMouldingTests extends TestBase {
     public void plasticMinWallThickness() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.CATPart");
-        loginPage = new CIDLoginPage(driver);
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -270,8 +270,8 @@ public class DTCPlasticMouldingTests extends TestBase {
     public void plasticSlideLift() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
 
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())

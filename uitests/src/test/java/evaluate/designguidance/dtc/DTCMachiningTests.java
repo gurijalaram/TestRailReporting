@@ -56,9 +56,9 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCKeyseat() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -75,9 +75,9 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Sharp Corner on a Curved Surface")
     public void testDTCCurvedSurface() {
         resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -95,9 +95,9 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCSharpCorner() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -115,9 +115,9 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCSideMilling() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -135,9 +135,9 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCMissingSetup() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -155,9 +155,9 @@ public class DTCMachiningTests extends TestBase {
     public void obstructedSurfacePlanarFace() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -177,9 +177,9 @@ public class DTCMachiningTests extends TestBase {
     public void stockMachiningDTC() {
 
         resourceFile = new FileResourceUtil().getResourceFile("nist_ftc_06_asme1_sw1500_rd.SLDPRT");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -212,9 +212,9 @@ public class DTCMachiningTests extends TestBase {
     public void sharpCornerCurvedWall() {
 
         resourceFile = new FileResourceUtil().getResourceFile("1379344_BEFORE_DTC.stp");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -233,9 +233,9 @@ public class DTCMachiningTests extends TestBase {
     public void stockMachineDTC() {
 
         resourceFile = new FileResourceUtil().getResourceFile("nist_ftc_06_asme1_sw1500_rd.SLDPRT");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
