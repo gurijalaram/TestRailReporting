@@ -21,12 +21,16 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class GeometryTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private GeometryPage geometryPage;
     private PropertiesDialogPage propertiesDialogPage;
+
+    private File resourceFile;
 
     public GeometryTests() {
         super();
@@ -37,9 +41,11 @@ public class GeometryTests extends TestBase {
     @TestRail(testCaseId = {"1620", "1621", "1255", "1259", "1256"})
     @Description("Validate the user can open the Analysis Properties dialogue box for a specific GCD selected from the geometry tab")
     public void propertiesRouting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp");
         loginPage = new CIDLoginPage(driver);
         geometryPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
