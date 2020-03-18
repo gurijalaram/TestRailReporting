@@ -23,12 +23,16 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class DTCPlasticMouldingTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private GuidancePage guidancePage;
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
+
+    private File resourceFile;
 
     public DTCPlasticMouldingTests() {
         super();
@@ -39,9 +43,12 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1066", "1593"})
     @Description("Min. draft for Injection Moulding & Reaction Injection Moulding (>0.25 Degrees)")
     public void testDTCMouldingDraft() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
         loginPage = new CIDLoginPage(driver);
+
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(5)
             .openDesignGuidance()
@@ -75,9 +82,12 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1067", "1593", "1068"})
     @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
     public void structuralFoamMouldDraft() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
         loginPage = new CIDLoginPage(driver);
+
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -97,9 +107,12 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Test
     @Description("Testing DTC Plastic Moulding Edge Radius Internal")
     public void testMouldingEdgeInternal() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart");
         loginPage = new CIDLoginPage(driver);
+
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -112,9 +125,12 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Test
     @Description("Testing DTC Plastic Moulding Edge Radius External")
     public void testMouldingEdgeExternal() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart");
         loginPage = new CIDLoginPage(driver);
+
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -129,9 +145,12 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1076", "1070", "1081", "1082"})
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT");
         loginPage = new CIDLoginPage(driver);
+
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -161,9 +180,12 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1078", "1079", "1080"})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticMaxWallThickness() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
+
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -211,9 +233,12 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1075", "1077"})
     @Description("Testing DTC Moulding Thickness Min")
     public void plasticMinWallThickness() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.CATPart");
         loginPage = new CIDLoginPage(driver);
+
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -243,9 +268,12 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1071", "1072", "1083"})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticSlideLift() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
+
         investigationPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
