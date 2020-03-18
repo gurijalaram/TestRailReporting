@@ -31,6 +31,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class ActionsTests extends TestBase {
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
@@ -40,17 +42,20 @@ public class ActionsTests extends TestBase {
     private AssignPage assignPage;
     private WarningPage warningPage;
 
+    private File resourceFile;
+
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"545", "731", "738", "1610", "742"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -77,11 +82,12 @@ public class ActionsTests extends TestBase {
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("M3CapScrew.CATPart"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -115,11 +121,12 @@ public class ActionsTests extends TestBase {
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -149,11 +156,12 @@ public class ActionsTests extends TestBase {
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .selectScenarioInfoNotes()
@@ -177,11 +185,12 @@ public class ActionsTests extends TestBase {
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .selectInfoNotes()
@@ -205,11 +214,12 @@ public class ActionsTests extends TestBase {
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -236,11 +246,12 @@ public class ActionsTests extends TestBase {
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -268,11 +279,12 @@ public class ActionsTests extends TestBase {
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario("New", "Low", "Ciene Frith")
@@ -290,11 +302,12 @@ public class ActionsTests extends TestBase {
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -327,11 +340,12 @@ public class ActionsTests extends TestBase {
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -362,11 +376,12 @@ public class ActionsTests extends TestBase {
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -399,12 +414,13 @@ public class ActionsTests extends TestBase {
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
         String testScenarioName = new Util().getScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
 
         new CIDLoginPage(driver).login(testUser1)
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -437,11 +453,12 @@ public class ActionsTests extends TestBase {
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .costScenario()
             .publishScenario("Complete", "Medium", "Moya Parker")
@@ -466,11 +483,12 @@ public class ActionsTests extends TestBase {
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -502,11 +520,12 @@ public class ActionsTests extends TestBase {
     @Description("Ensure scripts cannot be entered into text input fields")
     public void cannotUseScript() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
