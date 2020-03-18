@@ -53,9 +53,9 @@ public class FailuresWarningsTests extends TestBase {
     public void failedCostingMessaging() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -84,9 +84,9 @@ public class FailuresWarningsTests extends TestBase {
     public void failedCostingCount() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()

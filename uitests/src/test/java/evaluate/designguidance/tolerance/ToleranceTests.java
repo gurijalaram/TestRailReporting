@@ -74,9 +74,9 @@ public class ToleranceTests extends TestBase {
     public void testEditTolerances() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -116,9 +116,9 @@ public class ToleranceTests extends TestBase {
     public void testRemoveTolerance() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -148,9 +148,9 @@ public class ToleranceTests extends TestBase {
     public void testNoJunkTolerances() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -179,9 +179,9 @@ public class ToleranceTests extends TestBase {
     public void testNoJunkTolerance0() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -209,9 +209,9 @@ public class ToleranceTests extends TestBase {
     public void testMaintainingToleranceChangeMaterial() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -254,9 +254,9 @@ public class ToleranceTests extends TestBase {
     public void toleranceCounts() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -290,9 +290,9 @@ public class ToleranceTests extends TestBase {
     public void testMaintainingToleranceChangePG() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -331,10 +331,11 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"730", "709", "713", "714", "722"})
     @Description("Validate tolerance edits are maintained when user adds a secondary process group")
     public void testMaintainingSecondaryPG() {
+
         resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -390,9 +391,9 @@ public class ToleranceTests extends TestBase {
     public void specificDefaultTolerances() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -453,9 +454,9 @@ public class ToleranceTests extends TestBase {
     public void assumeTolerances() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -479,9 +480,9 @@ public class ToleranceTests extends TestBase {
     public void specificTolerances() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -536,9 +537,10 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1287", "750"})
     @Description("tolerance Policy Panel functionality in CI Design-JUNK values are prevented")
     public void tolerancePolicyJunk() {
-        loginPage = new CIDLoginPage(driver);
+
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -557,9 +559,9 @@ public class ToleranceTests extends TestBase {
     public void specificTolerancesNoPMI() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -586,9 +588,10 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"1289"})
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
-        loginPage = new CIDLoginPage(driver);
+
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -622,9 +625,9 @@ public class ToleranceTests extends TestBase {
     public void replaceValuesButton() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()

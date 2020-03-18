@@ -43,6 +43,7 @@ public class GeometryTests extends TestBase {
     public void propertiesRouting() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp");
+
         loginPage = new CIDLoginPage(driver);
         geometryPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)

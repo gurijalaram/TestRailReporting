@@ -58,9 +58,9 @@ public class ThreadTests extends TestBase {
     public void threadButtonDisabled() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -79,9 +79,9 @@ public class ThreadTests extends TestBase {
     public void editThread() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -103,9 +103,9 @@ public class ThreadTests extends TestBase {
     public void selectScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -137,9 +137,9 @@ public class ThreadTests extends TestBase {
     public void setDropdownValueNo() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -160,9 +160,9 @@ public class ThreadTests extends TestBase {
     public void setDropdownValueYes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
@@ -185,9 +185,9 @@ public class ThreadTests extends TestBase {
     public void costedThreadLengthRemoved() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -213,9 +213,9 @@ public class ThreadTests extends TestBase {
     public void changeThreadValueCancel() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -241,9 +241,9 @@ public class ThreadTests extends TestBase {
     public void junkValuesCharTest() {
 
         resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
@@ -264,9 +264,9 @@ public class ThreadTests extends TestBase {
     public void junkValueTest() {
 
         resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -288,9 +288,9 @@ public class ThreadTests extends TestBase {
     public void zeroValueTest() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -313,11 +313,10 @@ public class ThreadTests extends TestBase {
     public void cannotEditPublicThread() {
 
         String testScenarioName = new Util().getScenarioName();
-
         resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
@@ -338,9 +337,9 @@ public class ThreadTests extends TestBase {
     public void maintainingThreadChangeAttributes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -377,9 +376,9 @@ public class ThreadTests extends TestBase {
     public void validateThreadUnitsInches() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -401,9 +400,9 @@ public class ThreadTests extends TestBase {
     public void validateThreadUnitsMM() {
 
         resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -429,9 +428,9 @@ public class ThreadTests extends TestBase {
     public void maintainingThreadSecondaryProcessGroup() {
 
         resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -466,9 +465,9 @@ public class ThreadTests extends TestBase {
     public void threadsCompatibleCadDTC() {
 
         resourceFile = new FileResourceUtil().getResourceFile("CatiaPMIThreads.CATPart");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -488,9 +487,9 @@ public class ThreadTests extends TestBase {
     public void threadsCompatibleCadNX() {
 
         resourceFile = new FileResourceUtil().getResourceFile("100plusThreads.prt");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
@@ -510,9 +509,9 @@ public class ThreadTests extends TestBase {
     public void threadsCompatibleCadCreo() {
 
         resourceFile = new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1");
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
