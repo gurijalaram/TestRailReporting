@@ -6,9 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -26,13 +24,15 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class NewScenarioNameTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private JobQueuePage jobQueuePage;
-    private WarningPage warningPage;
+
+    private File resourceFile;
 
     public NewScenarioNameTests() {
         super();
@@ -44,11 +44,12 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("partbody_2.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .createNewScenario()
             .enterScenarioName(testScenarioName)
             .save();
@@ -62,6 +63,7 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
         String testScenarioName = new Util().getScenarioName();
         String testNewScenarioName = new Util().getScenarioName();
 
@@ -69,7 +71,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"));
+        evaluatePage = explorePage.uploadFile(testScenarioName, resourceFile);
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), CoreMatchers.is(true));
 
@@ -93,6 +95,7 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
     public void multipleUpload() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
         String scenarioA = new Util().getScenarioName();
         String scenarioB = new Util().getScenarioName();
         String scenarioC = new Util().getScenarioName();
@@ -100,7 +103,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
         explorePage = new ExplorePage(driver);
-        explorePage = explorePage.uploadFile(scenarioA, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+        explorePage = explorePage.uploadFile(scenarioA, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

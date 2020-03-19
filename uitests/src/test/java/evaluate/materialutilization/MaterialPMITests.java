@@ -21,11 +21,15 @@ import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
 
+import java.io.File;
+
 public class MaterialPMITests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
+
+    private File resourceFile;
 
     public MaterialPMITests() {
         super();
@@ -42,6 +46,9 @@ public class MaterialPMITests extends TestBase {
     @TestRail(testCaseId = {"901"})
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -54,7 +61,7 @@ public class MaterialPMITests extends TestBase {
             .selectMaterial("Aluminum, Stock, ANSI 6061");
         new SettingsPage(driver).save(ExplorePage.class);
 
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
             .costScenario(3);
 
         evaluatePage = new EvaluatePage(driver);

@@ -21,11 +21,15 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class ChangeMaterialSelectionTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private MaterialPage materialPage;
+
+    private File resourceFile;
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -37,9 +41,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Additive Manufacturing, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestAdditive() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Additive.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_Additive.prt.1"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario();
 
@@ -58,9 +64,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Bar & Tube Fab, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestBarandTubeFab() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_BarAndTube.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_BarAndTube.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario();
 
@@ -79,9 +87,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestCasting() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario();
 
@@ -100,9 +110,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Sand Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSandCasting() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(5);
 
@@ -121,9 +133,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Die Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestDieCasting() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -142,9 +156,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Forging, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestForging() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
@@ -163,9 +179,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Plastic Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPlasticMolding() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -184,9 +202,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Powder Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPowderMetal() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Powder Metal.stp");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Powder Metal.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario();
 
@@ -205,9 +225,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Rapid Prototyping, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestRapidPrototyping() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .costScenario();
 
@@ -226,9 +248,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Roto & Blow Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestRotoBlowMolding() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -247,9 +271,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetal() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
@@ -268,9 +294,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Sheet Metal - Hydroforming, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetalHydroforming() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Hydroform Sample Banana.stp");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroform Sample Banana.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup())
             .costScenario();
 
@@ -289,9 +317,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Sheet Metal Transfer Die, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetalTransferDie() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
@@ -311,9 +341,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Sheet Plastic, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetPlastic() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("2038646_Sheet_plastic.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("2038646_Sheet_plastic.prt.1"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .costScenario();
 
@@ -334,10 +366,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     public void changeMaterialSelectionTestStockMachining() {
 
         String scenarioName = new Util().getScenarioName();
+        new FileResourceUtil().getResourceFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
@@ -361,9 +394,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openMaterialCompositionTable()
@@ -384,9 +419,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test de-selecting the material, previous material applied and the scenario can be cost")
     public void changeMaterialSelectionTestDeSelect() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openMaterialCompositionTable()
@@ -406,9 +443,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         materialPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialCompositionTable()
@@ -427,10 +466,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     public void changeMaterialSelectionTestPMI() {
 
         String scenarioName = new Util().getScenarioName();
+        resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialCompositionTable()
             .method("MCAD <material not found - VPE default used>")
@@ -447,9 +487,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS IronCast.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS IronCast.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialCompositionTable()
             .method("MCAD <material not found - VPE default used>")
@@ -464,9 +506,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test opening material selection and selecting apply without making a selection")
     public void changeMaterialSelectionTestNoChange() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .openMaterialCompositionTable()
             .apply()
@@ -480,9 +524,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test opening material selection and selecting cancel after making a selection")
     public void changeMaterialSelectionTestCancel() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, AISI 316")

@@ -26,6 +26,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 
 public class SaveAsComparisonTests extends TestBase {
 
@@ -35,6 +37,8 @@ public class SaveAsComparisonTests extends TestBase {
     private GenericHeader genericHeader;
     private JobQueuePage jobQueuePage;
     private PageHeader pageHeader;
+
+    private File resourceFile;
 
     public SaveAsComparisonTests() {
         super();
@@ -46,6 +50,7 @@ public class SaveAsComparisonTests extends TestBase {
     @Description("Test a private comparison can be have Save As performed on it")
     public void testSaveAsPrivateComparison() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
         String scenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
         String testSaveAsComparisonName = new Util().getComparisonName();
@@ -53,7 +58,7 @@ public class SaveAsComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
             .createNewComparison()
@@ -118,12 +123,13 @@ public class SaveAsComparisonTests extends TestBase {
     @Description("Attempt to create a new comparison with a name that already exists")
     public void comparisonNameExists() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
         String scenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
             .createNewComparison()

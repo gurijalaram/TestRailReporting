@@ -16,10 +16,14 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
+import java.io.File;
+
 public class SanityTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
+
+    private File resourceFile;
 
     public SanityTests() {
         super();
@@ -28,9 +32,12 @@ public class SanityTests extends TestBase {
     @Test
     @Description("sanity test a part can uploaded and costed")
     public void sanityTest() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("powderMetal.stp");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("powderMetal.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();

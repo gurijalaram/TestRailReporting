@@ -5,12 +5,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.GenericHeader;
-import com.apriori.pageobjects.header.PageHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -24,6 +22,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 
 public class DeleteComparisonTests extends TestBase {
 
@@ -31,9 +31,8 @@ public class DeleteComparisonTests extends TestBase {
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
-    private JobQueuePage jobQueuePage;
-    private PageHeader pageHeader;
 
+    private File resourceFile;
     private final String noComponentMessage = "You have no components that match the selected filter";
 
     public DeleteComparisonTests() {
@@ -45,12 +44,13 @@ public class DeleteComparisonTests extends TestBase {
     @Description("Test a private comparison can be deleted from the explore page")
     public void testDeletePrivateComparisonExplore() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+            .uploadFile(testScenarioName, resourceFile)
             .costScenario()
             .selectExploreButton()
             .createNewComparison()
@@ -111,13 +111,14 @@ public class DeleteComparisonTests extends TestBase {
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDeleteExplore() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new CIDLoginPage(driver);
 
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+            .uploadFile(testScenarioName, resourceFile)
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -154,13 +155,14 @@ public class DeleteComparisonTests extends TestBase {
     @Description("Delete a public comparison from comparison page")
     public void deletePublicComparisonPage() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("testpart-4.prt");
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new CIDLoginPage(driver);
 
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -200,12 +202,13 @@ public class DeleteComparisonTests extends TestBase {
     @Description("In comparison view, the user can delete the currently open comparison and any matching public or private comparisons")
     public void deletePublicPrivateComparison() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("testpart-4.prt");
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("testpart-4.prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()

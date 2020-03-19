@@ -28,6 +28,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class SheetMetalDTCTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -37,6 +39,8 @@ public class SheetMetalDTCTests extends TestBase {
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
     private UserCredentials currentUser;
+
+    private File resourceFile;
 
     public SheetMetalDTCTests() {
         super();
@@ -53,6 +57,9 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1839", "1842", "1843"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("SheMetDTC.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -63,7 +70,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheMetDTC.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -89,11 +96,14 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1840", "1841", "3837"})
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("SheetMetalTray.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheetMetalTray.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
@@ -115,6 +125,9 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1838", "1844"})
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("extremebends.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -125,7 +138,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("extremebends.prt.1"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -146,6 +159,9 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1829"})
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("extremebends.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -156,7 +172,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("extremebends.prt.1"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
@@ -170,6 +186,9 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1834", "1835", "1836", "1837"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("SheMetDTC.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -180,7 +199,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         investigationPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SheMetDTC.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -211,6 +230,9 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1845", "719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -221,7 +243,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
