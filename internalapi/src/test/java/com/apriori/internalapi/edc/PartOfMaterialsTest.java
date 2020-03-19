@@ -10,9 +10,11 @@ import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.internalapi.edc.util.UserDataEDC;
 import com.apriori.internalapi.edc.util.UserTestDataUtil;
 import com.apriori.internalapi.util.TestUtil;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -72,8 +74,8 @@ public class PartOfMaterialsTest extends TestUtil {
     @Severity(SeverityLevel.NORMAL)
     public void costPart() {
         final List<String> costingIdentity = userData.getLineItem().getMaterialParts().stream()
-            .map(MaterialPart::getIdentity)
-            .collect(Collectors.toList());
+                .map(MaterialPart::getIdentity)
+                .collect(Collectors.toList());
 
         RequestEntity requestEntity = RequestEntity.init(
                 PartsAPIEnum.POST_COST_PARTS_BY_BILL_AND_LINE_IDENTITY, userData.getUserCredentials(), null)

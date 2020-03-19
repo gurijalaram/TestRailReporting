@@ -13,6 +13,7 @@ import com.apriori.apibase.utils.MultiPartFiles;
 import com.apriori.utils.Util;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
+
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ public class UserTestDataUtil {
     public UserDataEDC initEmptyUser() {
         UserCredentials userNamePass = UserUtil.getUser();
 
-      return new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
+        return new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
     }
 
     public UserDataEDC initBillOfMaterials() {

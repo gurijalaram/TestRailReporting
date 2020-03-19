@@ -4,16 +4,16 @@ import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.response.common.BillOfMaterialsWrapper;
 import com.apriori.apibase.http.builder.common.response.common.BillOfSingleMaterialWrapper;
 import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
-import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.apibase.http.builder.service.RequestAreaUiAuth;
 import com.apriori.apibase.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.internalapi.edc.util.UserDataEDC;
 import com.apriori.internalapi.edc.util.UserTestDataUtil;
-
 import com.apriori.internalapi.util.TestUtil;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

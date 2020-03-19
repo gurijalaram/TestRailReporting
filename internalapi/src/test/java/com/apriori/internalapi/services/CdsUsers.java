@@ -7,7 +7,9 @@ import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.internalapi.util.CdsTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
+
 import io.qameta.allure.Description;
+
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -40,7 +42,7 @@ public class CdsUsers extends CdsTestUtil {
     @Description("API returns a user's information based on the supplied identity")
     public void getUserById() {
         url = String.format(url,
-            String.format("users/%s", Constants.getCdsIdentityUser()));
+                String.format("users/%s", Constants.getCdsIdentityUser()));
         ResponseWrapper<User> response = getCommonRequest(url, true, User.class);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
@@ -54,7 +56,7 @@ public class CdsUsers extends CdsTestUtil {
     private void validateUsers(Users usersResponse) {
         Object[] users = usersResponse.getResponse().getItems().toArray();
         Arrays.stream(users)
-            .forEach(u -> validate(u));
+                .forEach(u -> validate(u));
     }
 
     private void validateUser(User userResponse) {

@@ -1,5 +1,7 @@
 package com.apriori.internalapi.edc;
 
+import static org.junit.Assert.assertEquals;
+
 import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.response.common.AccountStatus;
 import com.apriori.apibase.http.builder.common.response.common.Accounts;
@@ -12,19 +14,18 @@ import com.apriori.internalapi.edc.util.UserDataEDC;
 import com.apriori.internalapi.edc.util.UserTestDataUtil;
 import com.apriori.internalapi.util.TestUtil;
 import com.apriori.utils.users.UserCredentials;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.junit.Assert.assertEquals;
-
 
 public class AccountsTest extends TestUtil {
 
