@@ -33,6 +33,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class DTCCastingTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -44,6 +46,8 @@ public class DTCCastingTests extends TestBase {
     private PropertiesDialogPage propertiesDialogPage;
     private TolerancePage tolerancePage;
     private UserCredentials currentUser;
+
+    private File resourceFile;
 
     public DTCCastingTests() {
         super();
@@ -62,6 +66,8 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -72,7 +78,7 @@ public class DTCCastingTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(8)
             .openDesignGuidance()
@@ -102,6 +108,8 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1596", "1261"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void geometryTest() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -112,7 +120,7 @@ public class DTCCastingTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         geometryPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(3)
             .openDesignGuidance()
@@ -131,6 +139,8 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1042", "1046", "1051", "1053", "1055", "1057"})
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -141,7 +151,7 @@ public class DTCCastingTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -169,6 +179,8 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1046", "1051", "1055"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -179,7 +191,7 @@ public class DTCCastingTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -207,6 +219,8 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"1044"})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -217,7 +231,7 @@ public class DTCCastingTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()

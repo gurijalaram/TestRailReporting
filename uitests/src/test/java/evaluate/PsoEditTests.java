@@ -17,6 +17,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
+import java.io.File;
+
 public class PsoEditTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -24,13 +26,18 @@ public class PsoEditTests extends TestBase {
     private ProcessSetupOptionsPage processSetupOptionsPage;
     private ProcessRoutingPage processRoutingPage;
 
+    private File resourceFile;
+
     @Test
     @TestRail(testCaseId = {"761", "762", "763", "764"})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(3)
             .openProcessDetails()
@@ -62,9 +69,12 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"771", "772", "773"})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Casting-Die.stp");
+
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Casting-Die.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -92,9 +102,12 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"769", "770"})
     @Description("Sand Casting edit PSO")
     public void sandCastPSO() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("SandCast.x_t");
+
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SandCast.x_t"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(3)
             .openProcessDetails()
@@ -120,9 +133,12 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"768"})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -147,9 +163,12 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"774"})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -174,9 +193,12 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"775"})
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
     public void sheetPlasticPSO() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("sheet_plastic.STEP");
+
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("sheet_plastic.STEP"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -200,9 +222,12 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"1652"})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -263,9 +288,12 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"749"})
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
