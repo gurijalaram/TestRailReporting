@@ -84,19 +84,6 @@ public class PartOfMaterialsTest extends TestUtil {
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
                 GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth()).getStatusCode());
-
-
-//        new HTTPRequest().unauthorized()
-//            .customizeRequest()
-//            .setEndpoint(PartsAPIEnum.POST_COST_PARTS_BY_BILL_AND_LINE_IDENTITY)
-//            .setHeaders(userData.getAuthorizationHeaders())
-//            .setInlineVariables(
-//                userData.getBillOfMaterial().getIdentity(),
-//                userData.getLineItem().getIdentity())
-//            .setBody(costingIdentity)
-//            .commitChanges()
-//            .connect()
-//            .post();
     }
 
     @Test

@@ -1,9 +1,16 @@
 package com.apriori.apibase.http.builder.dao;
 
+import com.apriori.apibase.http.builder.common.entity.RequestEntity;
+import com.apriori.apibase.http.builder.common.response.common.BillOfMaterialsWrapper;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
+import com.apriori.apibase.http.builder.service.RequestAreaCds;
+import com.apriori.apibase.http.builder.service.RequestAreaUiAuth;
+import com.apriori.apibase.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.apibase.utils.FormParams;
 import com.apriori.apibase.utils.MultiPartFiles;
+import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.utils.constants.Constants;
+
 import org.apache.http.HttpStatus;
 
 import java.io.UnsupportedEncodingException;
@@ -19,19 +26,12 @@ public class ServiceConnector {
      * @param klass
      * @return
      */
-    public static Object getServiceNoEncoding(String url, Class klass) {
-
-        return new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setEndpoint(url)
-                .setReturnType(klass)
-                .setStatusCode(HttpStatus.SC_OK, HttpStatus.SC_MOVED_PERMANENTLY)
+    public static <T> ResponseWrapper<T> getServiceNoEncoding(String url, Class klass) {
+        RequestEntity requestEntity = RequestEntity.init(url,klass)
                 .setFollowRedirection(true)
-                .commitChanges()
-                .connect()
-                .disableEncoding()
-                .get();
+                .setUrlEncodingEnabled(false);
+
+        return GenericRequestUtil.get(requestEntity, new RequestAreaCds());
     }
 
     /**
@@ -41,18 +41,13 @@ public class ServiceConnector {
      * @param klass
      * @return
      */
-    public static Object getService(String url, Class klass) {
-        return new HTTPRequest()
-                .unauthorized()
-                .customizeRequest()
-                .setEndpoint(url)
-                .setReturnType(klass)
-                .setStatusCode(HttpStatus.SC_OK, HttpStatus.SC_MOVED_PERMANENTLY)
+    public static <T> ResponseWrapper<T> getService(String url, Class klass) {
+
+        RequestEntity requestEntity = RequestEntity.init(url,klass)
                 .setFollowRedirection(true)
-                .commitChanges()
-                .connect()
-                .enableEncoding()
-                .get();
+                .setUrlEncodingEnabled(true);
+
+        return GenericRequestUtil.get(requestEntity, new RequestAreaCds());
     }
 
     /** Send a url encoded request

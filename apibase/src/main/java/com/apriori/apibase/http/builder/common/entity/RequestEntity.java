@@ -52,6 +52,12 @@ public class RequestEntity {
     private int socketTimeout = 60000;
     private boolean urlEncodingEnabled = true;
 
+    public static RequestEntity init(String url, Class<?> returnType) {
+        return new RequestEntity(null, null)
+                .setEndpoint(url)
+                .setReturnType(returnType);
+    }
+
     public static RequestEntity init(String endpoint, final UserCredentials userCredentials, Class<?> returnType) {
         return new RequestEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()), null)
                 .setReturnType(returnType)

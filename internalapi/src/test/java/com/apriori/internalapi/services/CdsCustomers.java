@@ -6,6 +6,7 @@ import com.apriori.apibase.http.builder.dao.ServiceConnector;
 import com.apriori.apibase.services.objects.Customer;
 import com.apriori.apibase.services.objects.Customers;
 import com.apriori.apibase.services.objects.Users;
+import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 
@@ -31,8 +32,8 @@ public class CdsCustomers {
     @Description("API returns a list of all the available customers in the CDS DB")
     public void getCustomers() {
         url = String.format(url, "customers");
-        Customers response = (Customers) ServiceConnector.getService(url, Customers.class);
-        validateCustomers(response);
+        ResponseWrapper<Customers> response = ServiceConnector.getService(url, Customers.class);
+        validateCustomers(response.getResponseEntity());
     }
 
     @Test
@@ -41,8 +42,8 @@ public class CdsCustomers {
     public void getCustomerById() {
         url = String.format(url,
             String.format("customers/%s", Constants.getCdsIdentityCustomer()));
-        Customer response = (Customer) ServiceConnector.getService(url, Customer.class);
-        validateCustomer(response);
+        ResponseWrapper<Customer> response =  ServiceConnector.getService(url, Customer.class);
+        validateCustomer(response.getResponseEntity());
     }
 
     @Test

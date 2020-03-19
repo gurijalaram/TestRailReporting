@@ -3,17 +3,20 @@ package com.apriori.internalapi.services;
 import com.apriori.apibase.http.builder.dao.ServiceConnector;
 import com.apriori.apibase.services.objects.Application;
 import com.apriori.apibase.services.objects.Applications;
+import com.apriori.apibase.utils.ResponseWrapper;
+import com.apriori.internalapi.util.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-public class CdsApplications {
+public class CdsApplications extends TestUtil {
     private String url;
 
     @Before
@@ -27,8 +30,9 @@ public class CdsApplications {
     @Description("API returns a list of all the available applications in the CDS DB")
     public void getAllApplications() {
         url = String.format(url, "applications");
-        Applications response = (Applications) ServiceConnector.getService(url, Applications.class);
-        validateApplications(response);
+        ResponseWrapper<Applications> response = ServiceConnector.getService(url, Applications.class);
+
+        validateApplications(response.getResponseEntity());
     }
 
 
@@ -38,24 +42,28 @@ public class CdsApplications {
     public void getApplicationById() {
         url = String.format(url, 
             String.format("applications/%s", ServiceConnector.urlEncode(Constants.getCdsIdentityApplication())));
-        Application response = (Application) ServiceConnector.getServiceNoEncoding(url, Application.class);
-        validateApplication(response);
+        ResponseWrapper<Application> response = ServiceConnector.getServiceNoEncoding(url, Application.class);
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
     /*
      * Application Validation
      */
+    @Deprecated
     private void validateApplications(Applications applicationsResponse) {
         Object[] applications = applicationsResponse.getResponse().getItems().toArray();
         Arrays.stream(applications)
             .forEach(a -> validate(a));
     }
 
+    @Deprecated
     private void validateApplication(Application applicationResponse) {
         Application application = applicationResponse.getResponse();
         validate(application);
     }
 
+    @Deprecated
     private void validate(Object applicationObj) {
         Application application = (Application) applicationObj;
         Assert.assertTrue(application.getIdentity().matches("^#[a-zA-Z0-9]+@[a-zA-Z0-9]+#$"));

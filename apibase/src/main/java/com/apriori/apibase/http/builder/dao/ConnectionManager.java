@@ -64,6 +64,8 @@ public class ConnectionManager<T> {
         this.requestEntity = requestEntity;
         this.returnType = returnType;
         RestAssured.defaultParser = Parser.JSON;
+        RestAssured.urlEncodingEnabled = requestEntity.isUrlEncodingEnabled();
+
     }
 
     private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody) {
@@ -102,8 +104,6 @@ public class ConnectionManager<T> {
                     //TODO handle default;
             }
         }
-
-        RestAssured.urlEncodingEnabled = requestEntity.isUrlEncodingEnabled();
 
         if (multiPartFiles != null) {
             builder.setContentType("multipart/form-data");
@@ -309,7 +309,6 @@ public class ConnectionManager<T> {
 
             createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getMultiPartFiles(), requestEntity.getFormParams())
                 .expect()
-                .statusCode(isOneOf(requestEntity.getStatusCode()))
                 .when()
                 .post(requestEntity.buildEndpoint())
                 .then()

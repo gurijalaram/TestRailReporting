@@ -1,8 +1,10 @@
 package com.apriori.internalapi.services;
 
 import com.apriori.apibase.http.builder.dao.ServiceConnector;
+import com.apriori.apibase.services.objects.Response;
 import com.apriori.apibase.services.objects.Role;
 import com.apriori.apibase.services.objects.Roles;
+import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 
@@ -26,8 +28,8 @@ public class CdsRoles {
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getRoles() {
         url = String.format(url, "roles");
-        Roles response = (Roles) ServiceConnector.getService(url, Roles.class);
-        validateRoles(response);
+        ResponseWrapper<Roles> response =  ServiceConnector.getService(url, Roles.class);
+        validateRoles(response.getResponseEntity());
     }
 
     @Test
@@ -36,8 +38,8 @@ public class CdsRoles {
     public void getRoleById() {
         url = String.format(url,
             String.format("roles/%s", Constants.getCdsIdentityRole()));
-        Role response = (Role) ServiceConnector.getService(url, Role.class);
-        validateRole(response);
+        ResponseWrapper<Role> response = ServiceConnector.getService(url, Role.class);
+        validateRole(response.getResponseEntity());
     }
 
 
