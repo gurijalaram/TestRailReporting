@@ -33,8 +33,8 @@ public class FileManagementService {
     public static <T> ResponseWrapper<T> getFileInfo(Class klass, String url, String token,  String fileIdentity) {
         String requestUrl = String.format(finalUrl, url);
 
-        if(fileIdentity != null) {
-           requestUrl = requestUrl.concat(fileIdentity);
+        if (fileIdentity != null) {
+            requestUrl = requestUrl.concat(fileIdentity);
         }
 
         RequestEntity requestEntity = RequestEntity.init(requestUrl, klass)
@@ -61,12 +61,12 @@ public class FileManagementService {
 
     private static Map<String, String> initHeaders(String token, boolean addMultiPartFile) {
         Map<String, String> headers = new HashMap<String, String>() {{
-            put("Authorization", "Bearer " + token);
-            put("ap-cloud-context", Constants.getAtsAuthTargetCloudContext());
-        }};
+                put("Authorization", "Bearer " + token);
+                put("ap-cloud-context", Constants.getAtsAuthTargetCloudContext());
+            }};
 
-        if (addMultiPartFile){
-           headers.put("Content-Type", "multipart/form-data");
+        if (addMultiPartFile) {
+            headers.put("Content-Type", "multipart/form-data");
         }
         return headers;
     }

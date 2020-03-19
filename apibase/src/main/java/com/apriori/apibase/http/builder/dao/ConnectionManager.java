@@ -68,28 +68,12 @@ public class ConnectionManager<T> {
 
     }
 
-//    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody) {
-//        return createRequestSpecification(urlParams, body, customBody, null, null);
-//    }
-
-//    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body) {
-//
-//        return createRequestSpecification(urlParams, body, null);
-//    }
-
-//    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, MultiPartFiles multiPartFiles, FormParams formParams) {
-//
-//        return createRequestSpecification(urlParams, null, null, multiPartFiles, formParams);
-//    }
-
     private RequestSpecification createRequestSpecification() {
         RequestSpecBuilder builder = new RequestSpecBuilder();
 
         List<Map<String, ?>> urlParams = requestEntity.getUrlParams();
         MultiPartFiles multiPartFiles = requestEntity.getMultiPartFiles();
         FormParams formParams = requestEntity.getFormParams();
-//        Object body = requestEntity.getBody();
-//        String customBody = requestEntity.getCustomBody();
 
         if (requestEntity.isAutoLogin()) {
             switch (requestEntity.getEndpointType()) {
