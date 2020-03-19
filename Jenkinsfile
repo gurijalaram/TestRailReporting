@@ -14,25 +14,11 @@ pipeline {
 
     stages {
 
-        stage('Setup Workspace') {
-            steps {
-                echo 'Setting up workspace....'
-                bat label: '', script: '''rmdir /s /q "%WORKSPACE%\\temp"
-                if exist "%WORKSPACE%\\temp" (
-                if not exist "%WORKSPACE%\\empty" mkdir %WORKSPACE%\\empty"
-                robocopy /e /mir /log:"%WORKSPACE%\\robocopy.log" "%WORKSPACE%\\empty" "%WORKSPACE%\\temp"
-                rmdir /s /q "%WORKSPACE%\\empty"
-                rmdir /s /q "%WORKSPACE%\\temp"
-                )
-                mkdir "%WORKSPACE%\\temp"'''
-            }
-        }
-
         stage('End-2-End Testing') {
             steps {
                 echo 'Running test....'
                 dir("${env.WORKSPACE}/build") {
-                    bat label: '', script: 'gradle clean :uitests:test --tests CIDTestSuite -DthreadCount=1 -Dbrowser=chrome -Denv=cid-te --scan --info'
+                    bat label: '', script: 'gradle clean :uitests:test --tests "login.LoginTests" -DthreadCount=1 -Dbrowser=chrome -Denv=cid-te --scan --info'
                 }
             }
 
@@ -48,13 +34,6 @@ pipeline {
                         ])
                     }
                 }
-            }
-        }
-
-        stage('Temp Dir') {
-            steps {
-                echo 'Creating temp dir....'
-                bat label: '', script: 'dir %TEMP% | findstr bytes'
             }
         }
     }
