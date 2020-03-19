@@ -93,6 +93,7 @@ _ResponseWrapper_ fields: <br>
  - `RequestAreaUiAuth` - provide capabilities to do HTTP requests which require UI authorization
     - if `RequestEntity` - doesn't contain headers and token for username is not cached (first HTTP request from user), will do UI authorization and cache the token for this user. 
  - `RequestAreaCds` -  provide capabilities to do HTTP requests for CDS
+ - `RequestAreaFms` -  provide capabilities to do HTTP requests for FMS
 
 **`ConnectionManager`** - class which send API requests and validate/extract results. The response is mapping into ResponseWrapper (see ResponseWrapper)
 
