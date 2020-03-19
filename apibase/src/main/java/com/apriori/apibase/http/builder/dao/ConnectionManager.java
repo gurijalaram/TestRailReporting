@@ -68,22 +68,28 @@ public class ConnectionManager<T> {
 
     }
 
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody) {
-        return createRequestSpecification(urlParams, body, customBody, null, null);
-    }
+//    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody) {
+//        return createRequestSpecification(urlParams, body, customBody, null, null);
+//    }
 
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body) {
+//    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body) {
+//
+//        return createRequestSpecification(urlParams, body, null);
+//    }
 
-        return createRequestSpecification(urlParams, body, null);
-    }
+//    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, MultiPartFiles multiPartFiles, FormParams formParams) {
+//
+//        return createRequestSpecification(urlParams, null, null, multiPartFiles, formParams);
+//    }
 
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, MultiPartFiles multiPartFiles, FormParams formParams) {
-
-        return createRequestSpecification(urlParams, null, null, multiPartFiles, formParams);
-    }
-
-    private RequestSpecification createRequestSpecification(List<Map<String, ?>> urlParams, Object body, String customBody, MultiPartFiles multiPartFiles, FormParams formParams) {
+    private RequestSpecification createRequestSpecification() {
         RequestSpecBuilder builder = new RequestSpecBuilder();
+
+        List<Map<String, ?>> urlParams = requestEntity.getUrlParams();
+        MultiPartFiles multiPartFiles = requestEntity.getMultiPartFiles();
+        FormParams formParams = requestEntity.getFormParams();
+//        Object body = requestEntity.getBody();
+//        String customBody = requestEntity.getCustomBody();
 
         if (requestEntity.isAutoLogin()) {
             switch (requestEntity.getEndpointType()) {
@@ -129,12 +135,12 @@ public class ConnectionManager<T> {
             requestEntity.getXwwwwFormUrlEncoded().forEach(builder::addFormParams);
         }
 
-        if (customBody != null) {
-            builder.setBody(customBody);
+        if (requestEntity.getCustomBody() != null) {
+            builder.setBody(requestEntity.getCustomBody());
         }
 
-        if (body != null) {
-            builder.setBody(body, ObjectMapperType.JACKSON_2);
+        if (requestEntity.getBody() != null) {
+            builder.setBody(requestEntity.getBody(), ObjectMapperType.JACKSON_2);
         }
 
         /*
@@ -275,7 +281,7 @@ public class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> get() {
         return resultOf(
-                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
+                createRequestSpecification()
                         .when()
                         .get(requestEntity.buildEndpoint())
                         .then()
@@ -290,7 +296,7 @@ public class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> post() {
         return resultOf(
-                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody(), requestEntity.getCustomBody())
+                createRequestSpecification()
                         .when()
                         .post(requestEntity.buildEndpoint())
                         .then()
@@ -307,7 +313,7 @@ public class ConnectionManager<T> {
     public <T> ResponseWrapper<T> postMultiPart() {
         return resultOf(
 
-            createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getMultiPartFiles(), requestEntity.getFormParams())
+            createRequestSpecification()
                 .expect()
                 .when()
                 .post(requestEntity.buildEndpoint())
@@ -323,7 +329,7 @@ public class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> put() {
         return resultOf(
-                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+                createRequestSpecification()
                         .when()
                         .put(requestEntity.buildEndpoint())
                         .then()
@@ -333,7 +339,7 @@ public class ConnectionManager<T> {
 
     public <T> ResponseWrapper<T> patch() {
         return resultOf(
-                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+                createRequestSpecification()
                         .when()
                         .patch(requestEntity.buildEndpoint())
                         .then()
@@ -349,27 +355,12 @@ public class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> delete() {
         return resultOf(
-                createRequestSpecification(requestEntity.getUrlParams(), requestEntity.getBody())
+                createRequestSpecification()
                         .when()
                         .delete(requestEntity.buildEndpoint())
                         .then()
                         .log().all()
         );
-    }
-
-    /**
-     * Url Strings with '#' need to be encoded before the request is sent. Rest-assured doesn't
-     * handle this well and throws an URISyntaxException. To get around this we need to disable
-     * the rest-assured encoder
-     */
-    public ConnectionManager<?> disableEncoding() {
-        RestAssured.urlEncodingEnabled = false;
-        return new ConnectionManager<>(this.requestEntity, this.requestEntity.getReturnType());
-    }
-
-    public ConnectionManager<?> enableEncoding() {
-        RestAssured.urlEncodingEnabled = true;
-        return new ConnectionManager<>(this.requestEntity, this.requestEntity.getReturnType());
     }
 }
 

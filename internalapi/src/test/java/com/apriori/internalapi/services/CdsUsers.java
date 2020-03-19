@@ -4,17 +4,19 @@ import com.apriori.apibase.http.builder.dao.ServiceConnector;
 import com.apriori.apibase.services.objects.User;
 import com.apriori.apibase.services.objects.Users;
 import com.apriori.apibase.utils.ResponseWrapper;
+import com.apriori.internalapi.util.CdsTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import io.qameta.allure.Description;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-public class CdsUsers {
+public class CdsUsers extends CdsTestUtil {
     private String url;
 
     @Before
@@ -27,7 +29,9 @@ public class CdsUsers {
     @Description("API returns a list of all the available users in the CDS DB")
     public void getUsers() {
         url = String.format(url, "users");
-        ResponseWrapper<Users> response = ServiceConnector.getService(url, Users.class);
+        ResponseWrapper<Users> response = getCommonRequest(url, true, Users.class);
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
         validateUsers(response.getResponseEntity());
     }
 
@@ -37,7 +41,9 @@ public class CdsUsers {
     public void getUserById() {
         url = String.format(url,
             String.format("users/%s", Constants.getCdsIdentityUser()));
-        ResponseWrapper<User> response = ServiceConnector.getService(url, User.class);
+        ResponseWrapper<User> response = getCommonRequest(url, true, User.class);
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
         validateUser(response.getResponseEntity());
     }
 

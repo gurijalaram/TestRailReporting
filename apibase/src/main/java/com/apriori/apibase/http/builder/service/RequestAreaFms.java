@@ -4,7 +4,7 @@ import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.interfaces.RequestArea;
 import com.apriori.apibase.utils.ResponseWrapper;
 
-public class RequestAreaCds implements RequestArea {
+public class RequestAreaFms implements RequestArea {
 
     @Override
     public <T> ResponseWrapper<T> get(RequestEntity requestEntity) {

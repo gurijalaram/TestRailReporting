@@ -1,21 +1,26 @@
 package com.apriori.internalapi.services;
 
+import com.apriori.apibase.http.builder.common.entity.RequestEntity;
+import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
 import com.apriori.apibase.http.builder.dao.ServiceConnector;
+import com.apriori.apibase.http.builder.service.RequestAreaCds;
 import com.apriori.apibase.services.objects.Response;
 import com.apriori.apibase.services.objects.Role;
 import com.apriori.apibase.services.objects.Roles;
 import com.apriori.apibase.utils.ResponseWrapper;
+import com.apriori.internalapi.util.CdsTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-public class CdsRoles {
+public class CdsRoles extends CdsTestUtil {
     private String url;
 
     @Before
@@ -28,7 +33,10 @@ public class CdsRoles {
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getRoles() {
         url = String.format(url, "roles");
-        ResponseWrapper<Roles> response =  ServiceConnector.getService(url, Roles.class);
+
+        ResponseWrapper<Roles> response =  getCommonRequest(url, true, Roles.class);
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
         validateRoles(response.getResponseEntity());
     }
 
@@ -38,7 +46,9 @@ public class CdsRoles {
     public void getRoleById() {
         url = String.format(url,
             String.format("roles/%s", Constants.getCdsIdentityRole()));
-        ResponseWrapper<Role> response = ServiceConnector.getService(url, Role.class);
+        ResponseWrapper<Role> response = getCommonRequest(url, true, Role.class);
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
         validateRole(response.getResponseEntity());
     }
 

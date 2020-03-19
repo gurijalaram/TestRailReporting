@@ -1,6 +1,9 @@
 package com.apriori.apibase.services.utils;
 
+import com.apriori.apibase.http.builder.common.entity.RequestEntity;
+import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
 import com.apriori.apibase.http.builder.dao.ServiceConnector;
+import com.apriori.apibase.http.builder.service.RequestAreaCds;
 import com.apriori.apibase.services.objects.AuthorizationResponse;
 import com.apriori.apibase.services.objects.AuthorizeRequest;
 import com.apriori.apibase.services.objects.Token;
@@ -19,7 +22,14 @@ public class SecurityManager {
                 .setSubject(subject)
                 .setNameAndEmail(username, email);
         body.setToken(information);
-        Token token = (Token) ServiceConnector.postToService(url, Token.class, body, statusCode);
+
+        Token token = (Token) GenericRequestUtil.postMultipart(
+                RequestEntity.init(url, Token.class)
+                        .setBody(body)
+                        .setStatusCode(statusCode),
+                new RequestAreaCds()
+        ).getResponseEntity();
+
         return token.getToken();
     }
 
@@ -28,7 +38,14 @@ public class SecurityManager {
         url = "https://" + url;
         url = url.concat(String.format("/authorize?key=%s", Constants.getSecretKey()));
         AuthorizeRequest request = new AuthorizeRequest();
+
         AuthorizeRequest body = request.setApplication(application).setTargetCloudContext(targetCloudContext).setToken(token);
-        return (AuthorizationResponse)ServiceConnector.postToService(url, AuthorizationResponse.class, body, statusCode);
+
+        return (AuthorizationResponse) GenericRequestUtil.postMultipart(
+                RequestEntity.init(url, AuthorizationResponse.class)
+                        .setBody(body)
+                        .setStatusCode(statusCode),
+                new RequestAreaCds()
+        ).getResponseEntity();
     }
 }
