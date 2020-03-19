@@ -27,6 +27,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class FailuresWarningsTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -34,6 +36,8 @@ public class FailuresWarningsTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private FailuresPage failuresPage;
     private UserCredentials currentUser;
+
+    private File resourceFile;
 
     @After
     public void resetSettings() {
@@ -47,9 +51,11 @@ public class FailuresWarningsTests extends TestBase {
     @TestRail(testCaseId = {"1592", "1059", "1831", "1791"})
     @Description("Ensure that 'Failures/ Warnings tab includes: Messaging")
     public void failedCostingMessaging() {
-        loginPage = new CIDLoginPage(driver);
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -57,7 +63,7 @@ public class FailuresWarningsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         failuresPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(5)
             .openDesignGuidance()
@@ -76,9 +82,11 @@ public class FailuresWarningsTests extends TestBase {
     @TestRail(testCaseId = {"1592"})
     @Description("Ensure that 'Failures/ Warnings tab includes: - Issue type & count")
     public void failedCostingCount() {
-        loginPage = new CIDLoginPage(driver);
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
+        loginPage = new CIDLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
             .openSettings()
             .openTolerancesTab()
@@ -86,7 +94,7 @@ public class FailuresWarningsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         failuresPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()

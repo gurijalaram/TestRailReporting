@@ -24,6 +24,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class PublishExistingCostedTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -31,6 +33,8 @@ public class PublishExistingCostedTests extends TestBase {
     private EvaluatePage evaluatePage;
     private GenericHeader genericHeader;
     private JobQueuePage jobQueuePage;
+
+    private File resourceFile;
 
     public PublishExistingCostedTests() {
         super();
@@ -44,10 +48,11 @@ public class PublishExistingCostedTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
         String partName = "testpart-4";
+        resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -76,10 +81,11 @@ public class PublishExistingCostedTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String scenarioNameB = new Util().getScenarioName();
         String partName = "PowderMetalShaft";
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -118,10 +124,11 @@ public class PublishExistingCostedTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
         String partName = "PowderMetalShaft";
+        resourceFile = new FileResourceUtil().getResourceFile(partName + ".stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -149,10 +156,11 @@ public class PublishExistingCostedTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String testScenarioName2 = new Util().getScenarioName();
         String partName = "PowderMetalShaft";
+        resourceFile = new FileResourceUtil().getResourceFile(partName + ".stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

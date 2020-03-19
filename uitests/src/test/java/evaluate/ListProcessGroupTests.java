@@ -15,10 +15,14 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
+import java.io.File;
+
 public class ListProcessGroupTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
+
+    private File resourceFile;
 
     public ListProcessGroupTests() {
         super();
@@ -27,9 +31,12 @@ public class ListProcessGroupTests extends TestBase {
     @Test
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
+            .uploadFile(new Util().getScenarioName(), resourceFile);
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
     }
@@ -37,9 +44,12 @@ public class ListProcessGroupTests extends TestBase {
     @Test
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Piston_assembly.stp"));
+            .uploadFile(new Util().getScenarioName(), resourceFile);
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(AssemblyProcessGroupEnum.getNames()));
     }

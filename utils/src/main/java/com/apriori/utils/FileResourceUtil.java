@@ -4,24 +4,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 
 public class FileResourceUtil {
 
-    private final Logger logger = LoggerFactory.getLogger(FileResourceUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileResourceUtil.class);
 
     /**
-     * @param fileName the name of the file
+     * @param fileName - the file name
      * @return file object
      */
     public File getResourceFile(String fileName) {
-        String decodedFile = null;
+        String file;
+
         try {
-            decodedFile = URLDecoder.decode(ClassLoader.getSystemResource(fileName).getFile(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new AssertionError("Unknown encoding" + e);
+            new File(ClassLoader.getSystemResource(fileName).getFile());
+        } catch (RuntimeException e) {
+            throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
         }
-        return new File(decodedFile);
+
+        file = ClassLoader.getSystemResource(fileName).getFile();
+        return new File(file);
     }
 }
