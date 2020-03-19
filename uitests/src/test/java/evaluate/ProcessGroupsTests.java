@@ -22,11 +22,15 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class ProcessGroupsTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
+
+    private File resourceFile;
 
     public ProcessGroupsTests() {
         super();
@@ -38,9 +42,11 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_001_006-8613190_2.prt.2");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_001_006-8613190_2.prt.2"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
@@ -53,9 +59,11 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Stock Machining")
     public void testProcessGroupStockMachining() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("42x1021_ref.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("42x1021_ref.prt.1"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -68,13 +76,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupBarTube() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("350611.prt.1");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("350611.prt.1"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -94,13 +103,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupCasting() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_012_009-0020647_hinge_2.prt.1");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_012_009-0020647_hinge_2.prt.1"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -120,13 +130,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupExtrusion() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("700-33770-01_A0.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("700-33770-01_A0.stp"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -146,13 +157,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupFilleting() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_005_flat end mill contouring.SLDPRT");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_005_flat end mill contouring.SLDPRT"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -172,13 +184,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupGearMaking() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -198,13 +211,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachiningContouring() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -224,13 +238,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachiningGageParts() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("GagePart_Case_011_gundrillgagepart-01.prt.1");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("GagePart_Case_011_gundrillgagepart-01.prt.1"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -250,13 +265,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachining4AxisMill() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("prt0001.prt.1");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("prt0001.prt.1"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -276,13 +292,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachining5AxisMill() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("7021021-2_rib.prt.1");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("7021021-2_rib.prt.1"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -302,13 +319,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachiningMillTurn() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("ms16555-627_1.prt.1");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("ms16555-627_1.prt.1"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -328,13 +346,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPartiallyAutomatedMachining() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("14100640.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("14100640.stp"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -354,13 +373,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPerimeterMilling() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("14100640.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("14100640.stp"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -380,13 +400,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPocketRecognitionSharedWalls() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -406,13 +427,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupRoughMilling() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("16-340053-00-04.prt.1");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("16-340053-00-04.prt.1"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -432,13 +454,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupSlotExamples() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -458,13 +481,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupTurning() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -484,13 +508,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupBlowMolding() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -510,13 +535,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPowderMetal() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_31_test_part_6_small.prt.2");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_31_test_part_6_small.prt.2"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -536,13 +562,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupRollBending() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("AGCO _ 71421375.prt.1");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("AGCO _ 71421375.prt.1"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -562,13 +589,14 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupTransferDie() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("case_011_CENA-009-A1-LH-Rear-Body-Mount.prt");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("case_011_CENA-009-A1-LH-Rear-Body-Mount.prt"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())

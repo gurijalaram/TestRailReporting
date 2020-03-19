@@ -24,6 +24,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class EditPublicComparisonTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -31,6 +33,8 @@ public class EditPublicComparisonTests extends TestBase {
     private ComparePage comparePage;
     private GenericHeader genericHeader;
     private EvaluatePage evaluatePage;
+
+    private File resourceFile;
 
     public EditPublicComparisonTests() {
         super();
@@ -90,12 +94,13 @@ public class EditPublicComparisonTests extends TestBase {
     @Description("Delete private scenarios included in comparison from private workspace")
     public void testRemoveFromComparison() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -118,6 +123,7 @@ public class EditPublicComparisonTests extends TestBase {
     @Description("Test you can change the basis of your comparison")
     public void testChangeComparisonBasis() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("SandCast.x_t");
         String testScenarioName = new Util().getScenarioName();
         String testScenarioName2 = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
@@ -125,7 +131,7 @@ public class EditPublicComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("SandCast.x_t"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
             .createNewScenario()

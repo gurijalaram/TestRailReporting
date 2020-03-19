@@ -21,10 +21,14 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class DeleteScenarioIterationsTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
+
+    private File resourceFile;
 
     public DeleteScenarioIterationsTests() {
         super();
@@ -35,13 +39,15 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @TestRail(testCaseId = {"588", "394", "581", "395"})
     @Description("Test a public scenario can be deleted from the evaluate page")
     public void testDeletePublicScenarioIteration() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectLock()
             .selectPublishButton()
@@ -68,13 +74,15 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @TestRail(testCaseId = {"588", "572", "1089"})
     @Description("Test a private scenario can be deleted from the evaluate page")
     public void testDeletePrivateScenarioIteration() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())

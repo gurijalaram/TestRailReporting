@@ -36,6 +36,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class SettingsTests extends TestBase {
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
@@ -46,6 +48,8 @@ public class SettingsTests extends TestBase {
     private SelectionSettingsPage selectionSettingsPage;
     private WarningPage warningPage;
     private UserCredentials currentUser;
+
+    File resourceFile;
 
     @After
     public void resetAllSettings() {
@@ -94,6 +98,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Process group")
     public void defaultPG() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -106,7 +111,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -122,6 +127,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default VPE")
     public void defaultVPE() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -134,7 +140,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -147,6 +153,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -160,7 +167,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("partbody_2.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -174,6 +181,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -187,7 +195,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         moreInputsPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openMoreInputs();

@@ -14,10 +14,14 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
+import java.io.File;
+
 public class ListOfVPETests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
+
+    private File resourceFile;
 
     public ListOfVPETests() {
         super();
@@ -26,9 +30,11 @@ public class ListOfVPETests extends TestBase {
     @Test
     @Description("Get List of VPEs")
     public void getVPEsList() {
+        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"));
+            .uploadFile(new Util().getScenarioName(), resourceFile);
 
         assertThat(evaluatePage.getListOfVPEs(), hasItems(VPEEnum.getNames()));
     }

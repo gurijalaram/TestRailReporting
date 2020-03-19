@@ -25,12 +25,16 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class PublishComparisonTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private ComparePage comparePage;
     private ExplorePage explorePage;
     private GenericHeader genericHeader;
+
+    private File resourceFile;
 
     public PublishComparisonTests() {
         super();
@@ -43,12 +47,13 @@ public class PublishComparisonTests extends TestBase {
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -96,12 +101,13 @@ public class PublishComparisonTests extends TestBase {
     @Description("Test a private comparison can be published from explore page")
     public void testPublishComparisonExplorePage() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

@@ -17,11 +17,14 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class DeletePrivateScenarioTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
 
+    private File resourceFile;
     private final String noComponentMessage = "You have no components that match the selected filter";
 
     public DeletePrivateScenarioTests() {
@@ -34,13 +37,14 @@ public class DeletePrivateScenarioTests extends TestBase {
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("casting.prt"))
+        explorePage.uploadFile(testScenarioName, resourceFile)
             .selectExploreButton()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)

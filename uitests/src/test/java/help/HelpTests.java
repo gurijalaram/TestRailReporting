@@ -22,6 +22,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class HelpTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -31,6 +33,8 @@ public class HelpTests extends TestBase {
     private DesignGuidancePage designGuidancePage;
     private ProcessRoutingPage processRoutingPage;
     private CostDetailsPage costDetailsPage;
+
+    private File resourceFile;
 
     @Test
     @Category(SmokeTests.class)
@@ -49,9 +53,12 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void moreInputsHelp() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+
         loginPage = new CIDLoginPage(driver);
         moreInputsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openMoreInputs()
@@ -64,9 +71,12 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void materialUtilHelp() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+
         loginPage = new CIDLoginPage(driver);
         materialPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openMaterialComposition()
@@ -79,9 +89,12 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void designGuidanceHelp() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+
         loginPage = new CIDLoginPage(driver);
         designGuidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -94,9 +107,12 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void processDetailsHelp() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+
         loginPage = new CIDLoginPage(driver);
         processRoutingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -109,9 +125,12 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void costResultsHelp() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+
         loginPage = new CIDLoginPage(driver);
         costDetailsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openCostDetails()
