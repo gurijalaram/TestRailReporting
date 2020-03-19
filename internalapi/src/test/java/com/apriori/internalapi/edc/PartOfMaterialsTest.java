@@ -126,18 +126,5 @@ public class PartOfMaterialsTest extends TestUtil {
         ResponseWrapper<MaterialPartWrapper> materialPartWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, materialPartWrapper.getStatusCode());
-
-//        new HTTPRequest().unauthorized()
-//            .customizeRequest()
-//            .setEndpoint(PartsAPIEnum.POST_SELECT_PART_BY_BILL_LINE_AND_PART_IDENTITY)
-//            .setStatusCode(204)
-//            .setHeaders(userData.getAuthorizationHeaders())
-//            .setInlineVariables(
-//                userData.getBillOfMaterial().getIdentity(),
-//                materialPart.getLineItemIdentity(),
-//                materialPart.getIdentity())
-//            .commitChanges()
-//            .connect()
-//            .post();
     }
 }

@@ -45,8 +45,7 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser() {
-        //        TODO z: change when auth users will be added to EDC env
-        UserCredentials user = new UserCredentials("cfrith@apriori.com", "TestEvent2018"); // UserCommonService.getUser();
+        UserCredentials user = UserCommonService.getUser();
         logInfo(user);
         return user;
     }
