@@ -40,16 +40,10 @@ public class APILoginTest {
     @Test
     @Description("Test auto login functionality")
     public void testTokenAutoLoginFiledIfIncorrectLoginProcess() {
-
         ResponseWrapper<ErrorRequestResponse> accountStatusResponseWrapper =
                 GenericRequestUtil.get(RequestEntity.init(AuthEndpointEnum.POST_AUTH, UserUtil.getUser(), ErrorRequestResponse.class),
                 new RequestAreaUiAuth()
         );
-
-        System.out.println("--------------------------------");
-        System.out.println(accountStatusResponseWrapper.getStatusCode());
-        System.out.println(accountStatusResponseWrapper.getBody());
-        System.out.println(accountStatusResponseWrapper.getResponseEntity().getErrorMessage());
     }
 
     @Test
