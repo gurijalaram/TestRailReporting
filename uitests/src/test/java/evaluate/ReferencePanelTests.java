@@ -20,19 +20,25 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
+import java.io.File;
+
 public class ReferencePanelTests extends TestBase {
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ReferenceComparePage referenceComparePage;
+
+    private File resourceFile;
 
     @Test
     @TestRail(testCaseId = {"355"})
     @Description("Validate the compare panel updates the comparison details to the previous iteration of the scenario")
     public void referenceUpdates() {
 
+        resourceFile =  new FileResourceUtil().getResourceFile("powderMetal.stp");
+
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("powderMetal.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -54,11 +60,12 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate  the compare panel can show the comparison between the most recent public iteration")
     public void referencePublicIteration() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -88,11 +95,12 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -113,10 +121,11 @@ public class ReferencePanelTests extends TestBase {
         String scenarioName2 = new Util().getScenarioName();
         String scenarioName3 = new Util().getScenarioName();
         String componentName = "Rapid Prototyping";
+        resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()

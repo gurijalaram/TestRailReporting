@@ -24,6 +24,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class AddScenarioTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -33,17 +35,20 @@ public class AddScenarioTests extends TestBase {
     private GenericHeader genericHeader;
     private ComparisonPage comparisonPage;
 
+    private File resourceFile;
+
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"412", "1171"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         comparisonTablePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
             .createNewComparison()
@@ -61,12 +66,13 @@ public class AddScenarioTests extends TestBase {
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
     public void filterAddPublicScenario() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
 
         comparisonTablePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -86,6 +92,7 @@ public class AddScenarioTests extends TestBase {
     @TestRail(testCaseId = {"462"})
     @Description("Test warning message appears when the user does not enter a scenario name for a comparison")
     public void comparisonNoScenarioName() {
+
         loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
