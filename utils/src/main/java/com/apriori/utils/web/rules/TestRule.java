@@ -37,7 +37,7 @@ public class TestRule implements MethodRule {
 
     private static final Logger logger = LoggerFactory.getLogger(TestRule.class);
 
-    private int times = 1;
+    private int times = 0;
 
     private Throwable originalException = null;
     private String originalScreenshot = null;
