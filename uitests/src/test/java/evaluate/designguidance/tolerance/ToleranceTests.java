@@ -684,4 +684,22 @@ public class ToleranceTests extends TestBase {
 
         assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {""})
+    @Description("Validate conditions used for original costing are maintained between different users")
+    public void toleranceThresholdMaintains() {
+
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        new SettingsPage(driver).save(ExplorePage.class);
+
+        assertThat(new ExplorePage(driver).getToleranceThreshold(currentUser.getUsername(), "useCadToleranceThreshhold"), is(equalTo("true")));
+    }
 }
