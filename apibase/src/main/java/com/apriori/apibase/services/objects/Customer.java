@@ -54,6 +54,18 @@ public class Customer {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
 
+    @JsonProperty
+    private String updatedBy;
+
+    public String getUpdateBy() {
+        return this.updatedBy;
+    }
+
+    public Customer setUpdateBy(String updateBy) {
+        this.updatedBy = updateBy;
+        return this;
+    }
+
     public LocalDateTime getUpdatedAt() {
         return this.updatedAt;
     }
