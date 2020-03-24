@@ -686,7 +686,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {""})
+    @TestRail(testCaseId = {"1299"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void toleranceThresholdMaintains() {
 
@@ -700,6 +700,6 @@ public class ToleranceTests extends TestBase {
 
         new SettingsPage(driver).save(ExplorePage.class);
 
-        assertThat(new ExplorePage(driver).getAPIValue(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+        assertThat(new ExplorePage(driver).getToleranceAPIValue(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
     }
 }

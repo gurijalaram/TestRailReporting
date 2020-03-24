@@ -372,7 +372,7 @@ public class ExplorePage extends ExploreHeader {
      * @param apiPath    - the field
      * @return string
      */
-    public String getAPIValue(String username, String apiPath) {
+    public String getToleranceAPIValue(String username, String apiPath) {
 
         String jsonResponse = new HTTPRequest()
                 .unauthorized()
