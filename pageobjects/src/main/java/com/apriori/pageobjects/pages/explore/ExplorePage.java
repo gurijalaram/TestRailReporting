@@ -9,6 +9,8 @@ import com.apriori.pageobjects.utils.APIAuthentication;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,9 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -366,13 +366,14 @@ public class ExplorePage extends ExploreHeader {
 
     /**
      * Gets the api value of the cad threshold
+     *
      * @param username - logged in user username
-     * @param field - the field
+     * @param field    - the field
      * @return string
      */
     public String getToleranceThreshold(String username, String field) {
 
-        List<String[]> apiProperties = Arrays.stream(new HTTPRequest()
+        String json = new HTTPRequest()
             .unauthorized()
             .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
@@ -381,21 +382,40 @@ public class ExplorePage extends ExploreHeader {
             .commitChanges()
             .connect()
             .get()
-            .getBody()
-            .split("\n")).map(option -> option.split(":")).collect(Collectors.toList());
+            .getBody();
 
-        Map<String, String> apiMap = new HashMap<>();
-
-        for (int i = 0; i < apiProperties.size(); i++) {
-            String[] apiValues = apiProperties.get(i);
-            for (String apiValue : apiValues) {
-                if (apiValue.replace("\"", "").trim().equals(field)) {
-                    apiMap.put(apiValues[0].replace("\"", "").trim(), apiValues[1].replaceAll("[ ,\"]", ""));
-
-                    return apiMap.get(field);
-                }
-            }
+        String toleranceValueEntry = null;
+        try {
+            toleranceValueEntry = new ObjectMapper().readValue(json, ToleranceValuesEntity.class).getToleranceMode();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-        return null;
+        return toleranceValueEntry;
+
+//        List<String[]> apiProperties = Arrays.stream(new HTTPRequest()
+//            .unauthorized()
+//            .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
+//            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+//            .setAutoLogin(false)
+//            .setReturnType(ToleranceValuesEntity.class)
+//            .commitChanges()
+//            .connect()
+//            .get()
+//            .getBody()
+//            .split("\n")).map(option -> option.split(":")).collect(Collectors.toList());
+//
+//        Map<String, String> apiMap = new HashMap<>();
+//
+//        for (int i = 0; i < apiProperties.size(); i++) {
+//            String[] apiValues = apiProperties.get(i);
+//            for (String apiValue : apiValues) {
+//                if (apiValue.replace("\"", "").trim().equals(field)) {
+//                    apiMap.put(apiValues[0].replace("\"", "").trim(), apiValues[1].replaceAll("[ ,\"]", ""));
+//
+//                    return apiMap.get(field);
+//                }
+//            }
+//        }
+//        return null;
     }
 }
