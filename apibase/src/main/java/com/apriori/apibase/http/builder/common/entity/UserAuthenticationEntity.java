@@ -12,12 +12,21 @@ public class UserAuthenticationEntity {
     private String grantType;
     private String clientId;
     private String clientSecret;
+    private String token;
+    private String cloudContext;
     private String scope;
     private boolean alreadyLoggedIn;
 
     public UserAuthenticationEntity() {
 
     }
+
+    public static UserAuthenticationEntity initCloudInfo(final String token, final String cloudContext) {
+        return new UserAuthenticationEntity()
+                .setToken(token)
+                .setCloudContext(cloudContext);
+    }
+
 
     public UserAuthenticationEntity(String emailAddress, String password) {
         this.emailAddress = emailAddress;
@@ -134,6 +143,24 @@ public class UserAuthenticationEntity {
             return false;
         }
         return password.equals(that.password);
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public UserAuthenticationEntity setToken(String token) {
+        this.token = token;
+        return this;
+    }
+
+    public String getCloudContext() {
+        return cloudContext;
+    }
+
+    public UserAuthenticationEntity setCloudContext(String cloudContext) {
+        this.cloudContext = cloudContext;
+        return this;
     }
 
     @Override

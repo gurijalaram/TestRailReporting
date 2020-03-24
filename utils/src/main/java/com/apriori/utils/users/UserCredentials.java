@@ -6,6 +6,14 @@ public class UserCredentials {
 
     private String password;
 
+    public static UserCredentials init(String username, String password) {
+        return new UserCredentials(username, password);
+    }
+
+    public static UserCredentials initWithAccessLevel(String username, String password, String accessLevel) {
+        return new UserCredentials(username, password, accessLevel);
+    }
+
     //TODO z: change it on Security ENUM when will be information about security levels
     private String accessLevel;
 
