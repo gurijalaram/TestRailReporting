@@ -8,6 +8,9 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.qameta.allure.Issue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -174,5 +177,35 @@ public class AfterTestUtil {
             .commitChanges()
             .connect()
             .post();
+    }
+
+    /**
+     * Gets the api value of the cad threshold
+     *
+     * @param username - logged in user username
+     * @param apiPath    - the field
+     * @return string
+     */
+    public String getToleranceAPIValue(String username, String apiPath) {
+
+        String jsonResponse = new HTTPRequest()
+            .unauthorized()
+            .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+            .setAutoLogin(false)
+            .setReturnType(ToleranceValuesEntity.class)
+            .commitChanges()
+            .connect()
+            .get()
+            .getBody();
+
+        JsonNode node = null;
+        try {
+            node = new ObjectMapper().readTree(jsonResponse);
+        } catch (JsonProcessingException e) {
+            logger.debug(e.getMessage());
+        }
+
+        return node.findPath(apiPath).asText();
     }
 }
