@@ -380,7 +380,8 @@ public class ExplorePage extends ExploreHeader {
             .setReturnType(ToleranceValuesEntity.class)
             .commitChanges()
             .connect()
-            .getJSON()
+            .get()
+            .getBody()
             .split("\n")).map(option -> option.split(":")).collect(Collectors.toList());
 
         Map<String, String> apiMap = new HashMap<>();
