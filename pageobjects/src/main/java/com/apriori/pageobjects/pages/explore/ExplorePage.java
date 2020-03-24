@@ -10,6 +10,7 @@ import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -368,54 +369,29 @@ public class ExplorePage extends ExploreHeader {
      * Gets the api value of the cad threshold
      *
      * @param username - logged in user username
-     * @param field    - the field
+     * @param apiPath    - the field
      * @return string
      */
-    public String getToleranceThreshold(String username, String field) {
+    public String getAPIValue(String username, String apiPath) {
 
-        String json = new HTTPRequest()
-            .unauthorized()
-            .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
-            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
-            .setAutoLogin(false)
-            .setReturnType(ToleranceValuesEntity.class)
-            .commitChanges()
-            .connect()
-            .get()
-            .getBody();
+        String jsonResponse = new HTTPRequest()
+                .unauthorized()
+                .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
+                .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+                .setAutoLogin(false)
+                .setReturnType(ToleranceValuesEntity.class)
+                .commitChanges()
+                .connect()
+                .get()
+                .getBody();
 
-        String toleranceValueEntry = null;
+        JsonNode node = null;
         try {
-            toleranceValueEntry = new ObjectMapper().readValue(json, ToleranceValuesEntity.class).getToleranceMode();
+            node = new ObjectMapper().readTree(jsonResponse);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return toleranceValueEntry;
 
-//        List<String[]> apiProperties = Arrays.stream(new HTTPRequest()
-//            .unauthorized()
-//            .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
-//            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
-//            .setAutoLogin(false)
-//            .setReturnType(ToleranceValuesEntity.class)
-//            .commitChanges()
-//            .connect()
-//            .get()
-//            .getBody()
-//            .split("\n")).map(option -> option.split(":")).collect(Collectors.toList());
-//
-//        Map<String, String> apiMap = new HashMap<>();
-//
-//        for (int i = 0; i < apiProperties.size(); i++) {
-//            String[] apiValues = apiProperties.get(i);
-//            for (String apiValue : apiValues) {
-//                if (apiValue.replace("\"", "").trim().equals(field)) {
-//                    apiMap.put(apiValues[0].replace("\"", "").trim(), apiValues[1].replaceAll("[ ,\"]", ""));
-//
-//                    return apiMap.get(field);
-//                }
-//            }
-//        }
-//        return null;
+        return node.findPath(apiPath).asText();
     }
 }

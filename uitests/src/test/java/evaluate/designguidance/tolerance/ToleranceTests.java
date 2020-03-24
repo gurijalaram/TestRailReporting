@@ -700,6 +700,6 @@ public class ToleranceTests extends TestBase {
 
         new SettingsPage(driver).save(ExplorePage.class);
 
-        assertThat(new ExplorePage(driver).getToleranceThreshold(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+        assertThat(new ExplorePage(driver).getAPIValue(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
     }
 }
