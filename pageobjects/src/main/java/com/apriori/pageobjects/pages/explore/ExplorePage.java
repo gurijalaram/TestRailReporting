@@ -390,7 +390,7 @@ public class ExplorePage extends ExploreHeader {
             String[] apiValues = apiProperties.get(i);
             for (String apiValue : apiValues) {
                 if (apiValue.replace("\"", "").trim().equals(field)) {
-                    apiMap.put(apiValues[0].replace("\"", "").trim(), apiValues[1].replace(",", "").replace(" ", ""));
+                    apiMap.put(apiValues[0].replace("\"", "").trim(), apiValues[1].replaceAll("[ ,\"]", ""));
 
                     return apiMap.get(field);
                 }
