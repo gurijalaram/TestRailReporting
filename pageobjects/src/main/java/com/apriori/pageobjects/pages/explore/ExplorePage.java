@@ -1,17 +1,11 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.apibase.http.builder.common.response.common.ToleranceValuesEntity;
-import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.pageobjects.header.ExploreHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.utils.APIAuthentication;
 import com.apriori.pageobjects.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -363,35 +357,5 @@ public class ExplorePage extends ExploreHeader {
             pageUtils.waitForElementAndClick(column);
         }
         return this;
-    }
-
-    /**
-     * Gets the api value of the cad threshold
-     *
-     * @param username - logged in user username
-     * @param apiPath    - the field
-     * @return string
-     */
-    public String getToleranceAPIValue(String username, String apiPath) {
-
-        String jsonResponse = new HTTPRequest()
-                .unauthorized()
-                .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
-                .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
-                .setAutoLogin(false)
-                .setReturnType(ToleranceValuesEntity.class)
-                .commitChanges()
-                .connect()
-                .get()
-                .getBody();
-
-        JsonNode node = null;
-        try {
-            node = new ObjectMapper().readTree(jsonResponse);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return node.findPath(apiPath).asText();
     }
 }
