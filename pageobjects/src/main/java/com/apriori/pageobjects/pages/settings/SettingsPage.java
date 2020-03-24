@@ -30,6 +30,9 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     @FindBy(css = "select[data-ap-field='currency']")
     private WebElement currencyDropdown;
 
+    @FindBy(css = "select[data-ap-field='decimalPlaces']")
+    private WebElement decimalPlacesDropdown;
+
     @FindBy(css = "a[href='#selectionTab']")
     private WebElement selectionButton;
 
@@ -117,6 +120,17 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     }
 
     /**
+     * Changes displayed no. of decimal places
+     *
+     * @param decimal - the no. of displayed decimal places
+     * @return current page object
+     */
+    public SettingsPage changeDecimalPlaces(String decimal) {
+        pageUtils.selectDropdownOption(decimalPlacesDropdown, decimal);
+        return this;
+    }
+
+    /**
      * Selects the save button
      *
      * @param className - the class the method should return
@@ -143,7 +157,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     /**
      * Gets the selected Units
      *
-     * @return
+     * @return currently selected units
      */
     public boolean getSelectedUnits(String unit) {
         return pageUtils.checkElementFirstOption(unitsDropdown, unit);

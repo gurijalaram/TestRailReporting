@@ -167,6 +167,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "td[data-ap-field='finishMass']")
     private WebElement finishMass;
 
+    @FindBy(css = "td[data-ap-field='utilization']")
+    private WebElement utilization;
+
     @FindBy(css = "td[data-ap-field='targetFinishMass']")
     private WebElement targetMass;
 
@@ -483,7 +486,6 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the fully burdened cost
      *
-     * @param text
      * @return string
      */
     public boolean getBurdenedCost(String text) {
@@ -630,6 +632,16 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public boolean isFinishMass(String value) {
         return pageUtils.checkElementAttribute(finishMass, "innerText", value);
+    }
+
+    /**
+     * Checks the value of Utilization
+     *
+     * @param value - the value
+     * @return true/false
+     */
+    public boolean isUtilization(String value) {
+        return pageUtils.checkElementAttribute(utilization, "innerText", value);
     }
 
     /**

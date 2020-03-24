@@ -7,6 +7,7 @@ import com.apriori.apibase.http.builder.service.HTTPRequest;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.DecimalPlaceEnum;
 
 import io.qameta.allure.Issue;
 import org.slf4j.Logger;
@@ -171,6 +172,24 @@ public class AfterTestUtil {
                 .setTotalRunoutOverride(null)
                 .setStraightnessOverride(null)
                 .setSymmetryOverride(null))
+            .commitChanges()
+            .connect()
+            .post();
+    }
+
+    /**
+     * Resets the displayed decimal place settings back to default
+     *
+     * @param username - username of logged user
+     */
+    private void resetDecimalPlaces(String username) {
+        new HTTPRequest()
+            .unauthorized()
+            .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/tolerance-policy-defaults")
+            .setAutoLogin(false)
+            .setBody(new DisplayPreferencesEntity()
+                .setDecimalPlaces(DecimalPlaceEnum.TWO.getDecimalPlaces()))
             .commitChanges()
             .connect()
             .post();
