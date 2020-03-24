@@ -3,10 +3,6 @@ package com.apriori.apibase.http.builder.service;
 import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.dao.ConnectionManager;
 
-
-//INFO z: we may add new functionality in a feature.
-// for now it's working like:
-//    requestService.customizeRequest().set().set().commitChanges().useNewFunctionalityInThisService().connect()
 public class RequestInitService {
 
     private RequestEntity requestEntity;

@@ -2,14 +2,12 @@
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "title": "The Root Schema",
   "required": [
     "response"
   ],
   "properties": {
     "response": {
       "type": "object",
-      "title": "The Response Schema",
       "required": [
         "isFirstPage",
         "isLastPage",
@@ -24,83 +22,36 @@
       ],
       "properties": {
         "isFirstPage": {
-          "type": "boolean",
-          "title": "The Isfirstpage Schema",
-          "default": false,
-          "examples": [
-            true
-          ]
+          "type": "boolean"
         },
         "isLastPage": {
-          "type": "boolean",
-          "title": "The Islastpage Schema",
-          "default": false,
-          "examples": [
-            false
-          ]
+          "type": "boolean"
         },
         "pageNumber": {
-          "type": "integer",
-          "title": "The Pagenumber Schema",
-          "default": 0,
-          "examples": [
-            1
-          ]
+          "type": "integer"
         },
         "pageSize": {
-          "type": "integer",
-          "title": "The Pagesize Schema",
-          "default": 0,
-          "examples": [
-            10
-          ]
+          "type": "integer"
         },
         "pageItemCount": {
-          "type": "integer",
-          "title": "The Pageitemcount Schema",
-          "default": 0,
-          "examples": [
-            10
-          ]
+          "type": "integer"
         },
         "totalItemCount": {
-          "type": "integer",
-          "title": "The Totalitemcount Schema",
-          "default": 0,
-          "examples": [
-            201
-          ]
+          "type": "integer"
         },
         "totalPageCount": {
-          "type": "integer",
-          "title": "The Totalpagecount Schema",
-          "default": 0,
-          "examples": [
-            21
-          ]
+          "type": "integer"
         },
         "hasNextPage": {
-          "type": "boolean",
-          "title": "The Hasnextpage Schema",
-          "default": false,
-          "examples": [
-            true
-          ]
+          "type": "boolean"
         },
         "hasPreviousPage": {
-          "type": "boolean",
-          "title": "The Haspreviouspage Schema",
-          "default": false,
-          "examples": [
-            false
-          ]
+          "type": "boolean"
         },
         "items": {
           "type": "array",
-          "title": "The Items Schema",
           "items": {
             "type": "object",
-            "title": "The Items Schema",
             "required": [
               "identity",
               "createdBy",
@@ -114,11 +65,6 @@
             "properties": {
               "identity": {
                 "type": "string",
-                "title": "The Identity Schema",
-                "default": "",
-                "examples": [
-                  "72KL796DEEN7"
-                ],
                 "pattern": "^(.*)$"
               },
               "createdBy": {
@@ -127,78 +73,56 @@
               },
               "createdBy": {
                 "type": "string",
-                "title": "The Createdby Schema",
-                "default": "",
-                "examples": [
-                  "2DG62EIC1887"
-                ],
+                "pattern": "^(.*)$"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "updatedBy": {
+                "type": "string",
                 "pattern": "^(.*)$"
               },
               "createdAt": {
                 "type": "string",
-                "title": "The Createdat Schema",
-                "default": "",
-                "examples": [
-                  "2020-02-24T14:21Z"
-                ],
                 "pattern": "^(.*)$"
               },
               "name": {
                 "type": "string",
-                "title": "The Name Schema",
-                "default": "",
-                "examples": [
-                  "asas"
-                ],
                 "pattern": "^(.*)$"
               },
               "description": {
                 "type": "string",
-                "title": "The Description Schema",
-                "default": "",
-                "examples": [
-                  "asas"
-                ],
                 "pattern": "^(.*)$"
               },
               "salesforceId": {
                 "type": "string",
-                "title": "The Salesforceid Schema",
-                "default": "",
-                "examples": [
-                  "sasasdsadsadsadsa"
-                ],
                 "pattern": "^(.*)$"
               },
               "emailRegexPatterns": {
                 "type": "array",
-                "title": "The Emailregexpatterns Schema",
                 "items": {
                   "type": "string",
-                  "title": "The Items Schema",
-                  "default": "",
-                  "examples": [
-                    "sassa"
-                  ],
                   "pattern": "^(.*)$"
                 }
               },
               "active": {
-                "type": "boolean",
-                "title": "The Active Schema",
-                "default": false,
-                "examples": [
-                  true
-                ]
+                "type": "boolean"
               },
               "customerType": {
                 "type": "string",
-                "title": "The Customertype Schema",
-                "default": "",
-                "examples": [
-                  "ON_PREMISE_ONLY"
-                ],
                 "pattern": "^(.*)$"
+              },
+              "if": {
+                "properties": {
+                  "updatedAt": {
+                    "not": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              "then": {
+                "required": ["updatedBy"]
               }
             }
           }

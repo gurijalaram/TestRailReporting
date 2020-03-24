@@ -3,6 +3,7 @@ package com.apriori.internalapi.edc.util;
 import com.apriori.apibase.http.builder.common.response.common.BillOfMaterial;
 import com.apriori.apibase.http.builder.common.response.common.MaterialLineItem;
 import com.apriori.apibase.http.builder.common.response.common.MaterialPart;
+import com.apriori.utils.users.UserCredentials;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,11 @@ public class UserDataEDC {
 
     public List<BillOfMaterial> getBillOfMaterials() {
         return billOfMaterials;
+    }
+
+
+    public UserCredentials getUserCredentials() {
+        return UserCredentials.init(this.getUsername(), this.getPassword());
     }
 
     public UserDataEDC setBillOfMaterials(List<BillOfMaterial> billOfMaterials) {
@@ -67,7 +73,6 @@ public class UserDataEDC {
 
         this.authorizationHeaders = new HashMap<String, String>() {{
                 put("Authorization", "Bearer " + token);
-                put("ap-cloud-context", "EDC");
             }};
 
         return this;
