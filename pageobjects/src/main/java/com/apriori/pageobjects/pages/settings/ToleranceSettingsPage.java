@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.settings;
 
+import com.apriori.apibase.http.builder.common.response.common.ToleranceValuesEntity;
+import com.apriori.pageobjects.utils.APIValue;
 import com.apriori.pageobjects.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -127,5 +129,15 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
             replaceValuesCheckbox.click();
         }
         return this;
+    }
+
+    /**
+     * Gets value from api
+     * @param username - the username
+     * @param path - the path
+     * @return string representation of the api value
+     */
+    public String getToleranceValueFromAPI(String username, String path) {
+        return new APIValue().getValueFromAPI(username, "ws/workspace/users/me/tolerance-policy-defaults", ToleranceValuesEntity.class, path);
     }
 }
