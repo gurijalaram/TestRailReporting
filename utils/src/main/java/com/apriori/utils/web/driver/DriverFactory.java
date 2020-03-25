@@ -46,7 +46,7 @@ public class DriverFactory {
             switch (testMode) {
                 case QA:
                     logger_DriverFactory.debug("Getting host and port from properties file");
-                    BaseReader propertiesReader = new BaseReader("main/resources/seleniumconfig.properties");
+                    BaseReader propertiesReader = new BaseReader("seleniumconfig.properties");
                     String seleniumProtocol = propertiesReader.getProperties().getProperty("protocol");
                     String seleniumPort = propertiesReader.getProperties().getProperty("port");
                     String seleniumHost = propertiesReader.getProperties().getProperty("host");

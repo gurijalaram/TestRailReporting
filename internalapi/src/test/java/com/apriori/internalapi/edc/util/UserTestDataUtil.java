@@ -1,24 +1,25 @@
 package com.apriori.internalapi.edc.util;
 
+import com.apriori.apibase.http.builder.common.entity.RequestEntity;
 import com.apriori.apibase.http.builder.common.response.common.BillOfMaterial;
 import com.apriori.apibase.http.builder.common.response.common.BillOfMaterialsWrapper;
 import com.apriori.apibase.http.builder.common.response.common.MaterialLineItem;
 import com.apriori.apibase.http.builder.common.response.common.MaterialsLineItemsWrapper;
-import com.apriori.apibase.http.builder.service.HTTPRequest;
+import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
+import com.apriori.apibase.http.builder.service.RequestAreaUiAuth;
 import com.apriori.apibase.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.apibase.http.enums.common.api.PartsAPIEnum;
 import com.apriori.apibase.utils.MultiPartFiles;
-import com.apriori.apibase.utils.WebDriverUtils;
 import com.apriori.utils.Util;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class UserTestDataUtil {
@@ -28,16 +29,7 @@ public class UserTestDataUtil {
     public UserDataEDC initEmptyUser() {
         UserCredentials userNamePass = UserUtil.getUser();
 
-        UserDataEDC userDataEDC = new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
-
-        userDataEDC.setTokenAndInitAuthorizationHeaders(
-            new WebDriverUtils()
-                .getToken(userNamePass.getUsername(),
-                    userNamePass.getPassword()
-                )
-        );
-
-        return userDataEDC;
+        return new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
     }
 
     public UserDataEDC initBillOfMaterials() {
@@ -47,7 +39,7 @@ public class UserTestDataUtil {
 
         userDataEDC.setBillOfMaterials(
             getBillOfMaterials(
-                userDataEDC.getAuthorizationHeaders()
+                userDataEDC
             ).getBillOfMaterialsList()
         );
 
@@ -70,16 +62,13 @@ public class UserTestDataUtil {
     }
 
     private MaterialsLineItemsWrapper getMaterialsLineItemWrapper(UserDataEDC userDataEDC) {
-        return (MaterialsLineItemsWrapper) new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setInlineVariables(userDataEDC.getBillOfMaterial().getIdentity())
-            .setHeaders(userDataEDC.getAuthorizationHeaders())
-            .setEndpoint(PartsAPIEnum.GET_LINE_ITEMS)
-            .setReturnType(MaterialsLineItemsWrapper.class)
-            .commitChanges()
-            .connect()
-            .get();
+
+        RequestEntity requestEntity = RequestEntity.init(
+                PartsAPIEnum.GET_LINE_ITEMS, userDataEDC.getUserCredentials(), MaterialsLineItemsWrapper.class)
+                .setInlineVariables(userDataEDC.getBillOfMaterial().getIdentity());
+
+        return (MaterialsLineItemsWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth())
+                .getResponseEntity();
     }
 
     private BillOfMaterial getBillOfMaterial(List<BillOfMaterial> billOfMaterials) {
@@ -90,47 +79,34 @@ public class UserTestDataUtil {
         );
     }
 
-    private BillOfMaterialsWrapper getBillOfMaterials(Map<String, String> authorizationHeaders) {
-        return (BillOfMaterialsWrapper) new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS)
-            .setReturnType(BillOfMaterialsWrapper.class)
-            .setHeaders(authorizationHeaders)
-            .commitChanges()
-            .connect()
-            .get();
+    private BillOfMaterialsWrapper getBillOfMaterials(UserDataEDC userDataEDC) {
+
+        RequestEntity requestEntity = RequestEntity.init(
+                BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userDataEDC.getUserCredentials(), BillOfMaterialsWrapper.class);
+
+        return (BillOfMaterialsWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth())
+                .getResponseEntity();
     }
 
     public void clearTestData(final UserDataEDC userDataEDC) {
-        userDataEDC.getBillOfMaterials().forEach(billOfMaterial -> new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(userDataEDC.getAuthorizationHeaders())
-            .setEndpoint(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY)
-            .setInlineVariables(billOfMaterial.getIdentity())
-            .setStatusCode(204)
-            .commitChanges()
-            .connect()
-            .delete());
+        userDataEDC.getBillOfMaterials().forEach(billOfMaterial ->
+                GenericRequestUtil.delete(
+                        RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userDataEDC.getUserCredentials(), null)
+                        .setInlineVariables(billOfMaterial.getIdentity())
+                        .setStatusCode(HttpStatus.SC_NO_CONTENT),
+                        new RequestAreaUiAuth()
+                )
+        );
     }
 
     public void uploadTestData(final UserDataEDC userDataEDC) {
-
         final File testData = Util.getLocalResourceFile("test-data/apriori-4-items.csv");
 
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest()
-            .setHeaders(userDataEDC.getAuthorizationHeaders())
-            .setMultiPartFiles(
-                new MultiPartFiles().use("multiPartFile", testData)
-            )
-            .setStatusCode(201)
-            .setEndpoint(BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS)
-            .commitChanges()
-            .connect()
-            .postMultiPart();
+        RequestEntity requestEntity = RequestEntity.init(
+                BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS, userDataEDC.getUserCredentials(), null)
+                .setMultiPartFiles(new MultiPartFiles().use("multiPartFile", testData));
+
+        GenericRequestUtil.postMultipart(requestEntity, new RequestAreaUiAuth());
     }
 
     private MaterialLineItem getRandomLineItemWithParts(MaterialsLineItemsWrapper materialsLineItemsWrapper) {

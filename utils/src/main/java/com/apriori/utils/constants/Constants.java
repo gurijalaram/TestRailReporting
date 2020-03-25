@@ -1,6 +1,5 @@
 package com.apriori.utils.constants;
 
-import org.aeonbits.owner.Config;
 import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
