@@ -14,15 +14,13 @@ public class FileResourceUtil {
      * @return file object
      */
     public File getResourceFile(String fileName) {
-        String file;
+        File file;
 
         try {
-            new File(ClassLoader.getSystemResource(fileName).getFile());
+            file = new File(ClassLoader.getSystemResource(fileName).getFile());
         } catch (RuntimeException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
         }
-
-        file = ClassLoader.getSystemResource(fileName).getFile();
-        return new File(file);
+        return file;
     }
 }

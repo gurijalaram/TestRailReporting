@@ -2,6 +2,7 @@ package com.apriori.pageobjects.utils;
 
 import com.apriori.apibase.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.apibase.http.builder.service.HTTPRequest;
+import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.utils.constants.Constants;
 
 import org.apache.commons.collections4.map.PassiveExpiringMap;
@@ -32,17 +33,17 @@ public class APIAuthentication {
         String password = username.split("@")[0];
 
         if (accessToken == null && timeToLive < 1) {
-            AuthenticateJSON tokenDetails = ((AuthenticateJSON) new HTTPRequest().defaultFormAuthorization(username, password)
+            ResponseWrapper<AuthenticateJSON> tokenDetails =  new HTTPRequest().defaultFormAuthorization(username, password)
                 .customizeRequest()
                 .setReturnType(AuthenticateJSON.class)
                 .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
                 .setAutoLogin(false)
                 .commitChanges()
                 .connect()
-                .post());
+                .post();
 
-            timeToLive = tokenDetails.getExpiresIn();
-            accessToken = tokenDetails.getAccessToken();
+            timeToLive = tokenDetails.getResponseEntity().getExpiresIn();
+            accessToken = tokenDetails.getResponseEntity().getAccessToken();
         }
 
         PassiveExpiringMap<String, String> tokenCache = new PassiveExpiringMap<>(TimeUnit.SECONDS.toMillis(timeToLive));
