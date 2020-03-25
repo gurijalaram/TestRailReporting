@@ -16,6 +16,7 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceValueSettingsPage;
+import com.apriori.pageobjects.utils.APIValue;
 import com.apriori.pageobjects.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -700,6 +701,6 @@ public class ToleranceTests extends TestBase {
 
         new SettingsPage(driver).save(ExplorePage.class);
 
-        assertThat(new ToleranceSettingsPage(driver).getToleranceValueFromAPI(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
     }
 }
