@@ -67,7 +67,7 @@ public class ToleranceTests extends TestBase {
         }
     }
 
-    @Category( {CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Issue("AP-59432")
     @TestRail(testCaseId = {"707", "1607", "1285"})
@@ -111,7 +111,7 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16"), is(true));
     }
 
-    @Category( {CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"708", "1607"})
     @Description("Validate a user can remove an applied tolerance")
@@ -143,7 +143,7 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), ""), is(true));
     }
 
-    @Category( {CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Issue("AP-59432")
     @TestRail(testCaseId = {"716", "1608"})
@@ -176,7 +176,7 @@ public class ToleranceTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
-    @Category( {CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Issue("AP-59432")
     @TestRail(testCaseId = {"717", "1608"})
@@ -254,7 +254,7 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.44"), is(true));
     }
 
-    @Category( {CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Issue("AP-59432")
     @TestRail(testCaseId = {"1595"})
