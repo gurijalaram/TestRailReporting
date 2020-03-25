@@ -33,7 +33,13 @@
         },
         "updatedAt": {
           "type": "string"
+
         },
+        "updatedBy": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+
         "name": {
           "type": "string",
           "pattern": "^(.*)$"
@@ -61,6 +67,18 @@
           "type": "string",
           "pattern": "^(.*)$"
         }
+      },
+      "if": {
+        "properties": {
+          "updatedAt": {
+            "not": {
+              "type": "null"
+            }
+          }
+        }
+      },
+      "then": {
+        "required": ["updatedBy"]
       }
     }
   }
