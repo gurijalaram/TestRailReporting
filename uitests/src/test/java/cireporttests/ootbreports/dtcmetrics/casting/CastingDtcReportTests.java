@@ -165,28 +165,30 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "T102990")
+    @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
         genericReportPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToLibraryPage()
-                .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-                .clickApplyAndOk();
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+            .clickApplyAndOk();
+
+        // Assert against report being on screen or something else? Think!
     }
 
     @Test
-    @TestRail(testCaseId = "T102990")
+    @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
 
     }
 
     @Test
-    @TestRail(testCaseId = "T102990")
+    @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyDetailsReportAvailableAndCorrectData() {
 
