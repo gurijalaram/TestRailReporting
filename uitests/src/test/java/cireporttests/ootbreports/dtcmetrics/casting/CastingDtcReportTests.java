@@ -163,4 +163,32 @@ public class CastingDtcReportTests extends TestBase {
 
         assertThat(genericReportPage.isOptionInDropDown("Saved Config", 1), is(false));
     }
+
+    @Test
+    @TestRail(testCaseId = "T102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickApplyAndOk();
+    }
+
+    @Test
+    @TestRail(testCaseId = "T102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyComparisonReportAvailableAndCorrectData() {
+
+    }
+
+    @Test
+    @TestRail(testCaseId = "T102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyDetailsReportAvailableAndCorrectData() {
+
+    }
 }
