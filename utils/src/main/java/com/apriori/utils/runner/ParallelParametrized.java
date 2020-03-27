@@ -11,8 +11,8 @@ public class ParallelParametrized extends Parameterized {
     public ParallelParametrized(Class<?> klass) throws Throwable {
         super(klass);
         String threads = "1";
-        if (StringUtils.isNotEmpty(System.getProperty("threadCounts"))) {
-            threads = System.getProperty("threadCounts");
+        if (StringUtils.isNotEmpty(System.getProperty("threadCount"))) {
+            threads = System.getProperty("threadCount");
         }
         setScheduler(new ParallelScheduler(threads));
 

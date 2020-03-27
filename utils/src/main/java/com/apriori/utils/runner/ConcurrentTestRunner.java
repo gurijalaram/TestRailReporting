@@ -17,8 +17,8 @@ public class ConcurrentTestRunner extends BlockJUnit4ClassRunner {
         super(klass);
         logger_ConcurrentTestRunner.debug("ConcurrentTestRunner constructor");
         String threads = "1";
-        if (StringUtils.isNotEmpty(System.getProperty("threadCounts"))) {
-            threads = System.getProperty("threadCounts");
+        if (StringUtils.isNotEmpty(System.getProperty("threadCount"))) {
+            threads = System.getProperty("threadCount");
         }
         setScheduler(new ParallelScheduler(threads));
 
