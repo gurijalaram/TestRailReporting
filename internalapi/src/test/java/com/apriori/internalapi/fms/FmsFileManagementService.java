@@ -21,8 +21,8 @@ public class FmsFileManagementService extends TestUtil {
         token = SecurityManager.retriveJwtToken(
                 Constants.getAtsServiceHost(),
                 HttpStatus.SC_CREATED,
-                Constants.getAtsTokenUsername(),
-                Constants.getAtsTokenEmail(),
+                "splunkett",
+                "splunkett@apriori.com",
                 Constants.getAtsTokenIssuer(),
                 Constants.getAtsTokenSubject());
     }

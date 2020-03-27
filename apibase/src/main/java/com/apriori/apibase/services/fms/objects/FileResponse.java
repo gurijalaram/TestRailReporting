@@ -3,7 +3,6 @@ package com.apriori.apibase.services.fms.objects;
 import com.apriori.apibase.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -12,45 +11,32 @@ import java.time.LocalDateTime;
 
 @Schema(location = "fms/FmsFileSchema.json")
 public class FileResponse {
-    @JsonProperty
     private String identity;
 
-    @JsonProperty
     private String createdBy;
 
-    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
 
-    @JsonProperty
     private String customerIdentity;
 
-    @JsonProperty
     private String deploymentIdentity;
 
-    @JsonProperty
     private String installationIdentity;
 
-    @JsonProperty
     private String applicationIdentity;
 
-    @JsonProperty
     private String userIdentity;
 
-    @JsonProperty
     private String filename;
 
-    @JsonProperty
     private String folder;
 
-    @JsonProperty
     private Long filesize;
 
-    @JsonProperty
     private String md5hash;
 
-    @JsonProperty
     private FileResponse response;
 
     public FileResponse getResponse() {
