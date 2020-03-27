@@ -29,6 +29,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
@@ -148,6 +149,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-57941")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"278", "279", "561"})
     @Description("User can change the default Production Life")
