@@ -113,7 +113,7 @@ public class NavigationTests extends TestBase {
 
         String headerToCheck = logout.getHeaderToCheck();
 
-        assertThat(logout.getHeaderText(), equalTo(headerToCheck));
+        assertThat(logout.getHeaderText(), containsString(headerToCheck));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
