@@ -90,7 +90,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return current page object
      */
     private FileUploadPage enterFilePath(File filePath) {
-        fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));;
+        fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
         fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
         return this;
     }
