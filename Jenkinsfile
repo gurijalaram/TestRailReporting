@@ -10,7 +10,7 @@ pipeline {
     }
 
     agent {
-        label "${params.JENKINS_NODE}"
+        "label ${params.JENKINS_NODE}"
     }
 
 
