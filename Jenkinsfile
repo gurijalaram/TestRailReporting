@@ -6,7 +6,7 @@ pipeline {
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         string(name: 'BROWSER', defaultValue: 'chrome', description: 'What is the browser?')
         string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
-        string(name: 'JENKINS_NODE', defaultValue: ' ', description: 'What is Jenkins node?')
+        string(name: 'JENKINS_NODE', defaultValue: 'CONQBW8VM11', description: 'What is Jenkins node?')
     }
 
     agent {
