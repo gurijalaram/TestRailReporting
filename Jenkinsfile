@@ -1,4 +1,7 @@
 pipeline {
+    parameters {
+        string(name: 'NODE', defaultValue: 'CONQBW8VM11', description: 'What is the node?')
+    }
     agent {
         label "${params.NODE}"
     }
