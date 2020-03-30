@@ -54,6 +54,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_Casting']")
     protected WebElement dtcCastingExportSet;
 
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='ROLL_UP A']")
+    protected WebElement rollupAExportSet;
+
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_MachiningDataset']/div/a")
     protected WebElement machiningDtcDataSetExportSet;
 
@@ -449,6 +452,7 @@ public class GenericReportPage extends ReportsPageHeader {
         exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
         exportSetMap.put("DTC_Casting", dtcCastingExportSet);
         exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
+        exportSetMap.put("ROLL_UP A", rollupAExportSet);
     }
 
     /**
