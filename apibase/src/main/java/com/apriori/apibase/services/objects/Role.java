@@ -3,7 +3,6 @@ package com.apriori.apibase.services.objects;
 import com.apriori.apibase.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -12,26 +11,15 @@ import java.time.LocalDateTime;
 
 @Schema(location = "CdsRoleSchema.json")
 public class Role {
-
-    @JsonProperty
     private String identity;
-
-    @JsonProperty
     private String createdBy;
-
-    @JsonProperty
+    private String name;
+    private String description;
+    private Role response;
+    
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-
-    @JsonProperty
-    private String name;
-
-    @JsonProperty
-    private String description;
-
-    @JsonProperty
-    private Role response;
 
     public Role getResponse() {
         return this.response;

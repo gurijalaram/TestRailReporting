@@ -3,7 +3,6 @@ package com.apriori.apibase.services.objects;
 import com.apriori.apibase.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -13,40 +12,21 @@ import java.util.List;
 
 @Schema(location = "CdsUserSchema.json")
 public class User {
-    @JsonProperty
     private String identity;
-
-    @JsonProperty
     private String createdBy;
+    private String userType;
+    private UserProfile userProfile;
+    private String email;
+    private String username;
+    private Boolean active;
+    private List<Site> sites;
+    private String customerIdentity;
+    private User response;
 
-    @JsonProperty
+    
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-
-    @JsonProperty
-    private String userType;
-
-    @JsonProperty
-    private UserProfile userProfile;
-
-    @JsonProperty
-    private String email;
-
-    @JsonProperty
-    private String username;
-
-    @JsonProperty
-    private Boolean active;
-
-    @JsonProperty
-    private List<Site> sites;
-
-    @JsonProperty
-    private String customerIdentity;
-
-    @JsonProperty
-    private User response;
 
     public User getResponse() {
         return this.response;

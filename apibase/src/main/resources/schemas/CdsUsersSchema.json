@@ -110,6 +110,26 @@
                   "familyName": {
                     "type": "string",
                     "pattern": "^(.*)$"
+                  },
+                  "jobTitle": {
+                    "type": "string",
+                    "pattern": "^(.*)$"
+                  },
+                  "department": {
+                    "type": "string",
+                    "pattern": "^(.*)$"
+                  },
+                  "supervisor": {
+                    "type": "string",
+                    "pattern": "^(.*)$"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "pattern": "^(.*)$"
+                  },
+                  "townCity": {
+                    "type": "string",
+                    "pattern": "^(.*)$"
                   }
                 }
               },

@@ -3,7 +3,6 @@ package com.apriori.apibase.services.objects;
 import com.apriori.apibase.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -14,48 +13,42 @@ import java.util.List;
 
 @Schema(location = "CdsCustomerSchema.json")
 public class Customer {
-    @JsonProperty
     private String identity;
-
-    @JsonProperty
     private String createdBy;
+    private String name;
+    private String cloudReference;
+    private String description;
+    private List<String> emailRegexPatterns;
+    private Boolean active;
+    private String customerType;
+    private Customer response;
+    private String salesforceId;
+    private String updatedBy;
 
-    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-
-    @JsonProperty
-    private String name;
-
-    @JsonProperty
-    private String cloudReference;
-
-    @JsonProperty
-    private String description;
-
-    @JsonProperty
-    private List<String> emailRegexPatterns;
-
-    @JsonProperty
-    private Boolean active;
-
-    @JsonProperty
-    private String customerType;
-
-    @JsonProperty
-    private Customer response;
-
-    @JsonProperty
-    private String salesforceId;
-
-    @JsonProperty
+    
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
 
-    @JsonProperty
-    private String updatedBy;
+    public String getCloudReference() {
+        return this.cloudReference;
+    }
+
+    public void setCloudReference(String cloudReference) {
+        this.cloudReference = cloudReference;
+    }
+
+    public String getUpdatedBy() {
+        return this.updatedBy;
+    }
+
+    public Customer setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+        return this;
+    }
 
     public String getUpdateBy() {
         return this.updatedBy;

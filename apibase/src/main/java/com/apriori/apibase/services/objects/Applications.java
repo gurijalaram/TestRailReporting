@@ -2,43 +2,20 @@ package com.apriori.apibase.services.objects;
 
 import com.apriori.apibase.http.enums.Schema;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 @Schema(location = "CdsApplicationsSchema.json")
 public class Applications {
-    @JsonProperty
     private Boolean isFirstPage;
-
-    @JsonProperty
     private Boolean isLastPage;
-
-    @JsonProperty
     private Integer pageNumber;
-
-    @JsonProperty
     private Integer pageSize;
-
-    @JsonProperty
     private Integer pageItemCount;
-
-    @JsonProperty
     private Integer totalItemCount;
-
-    @JsonProperty
     private Integer totalPageCount;
-
-    @JsonProperty
     private Boolean hasNextPage;
-
-    @JsonProperty
     private Boolean hasPreviousPage;
-
-    @JsonProperty
     private List<Application> items;
-
-    @JsonProperty
     private Applications response;
 
     public Applications getResponse() {
