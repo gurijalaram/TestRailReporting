@@ -20,6 +20,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 public class CastingDtcReportTests extends TestBase {
 
     private ViewRepositoryPage repository;
@@ -176,6 +178,18 @@ public class CastingDtcReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickApplyAndOk();
+
+        // 1. Click bubble -> DTC Part Summary report (or use tooltips as before)
+        // 2. Grab part name to use in CID from DTC Part Summary Report
+        //      - Save in variable for later (String - partName - local scope) Final - won't change
+        BigDecimal value = genericReportPage.getValueFromCentralCircleInChart();
+
+        // 3. Go to CID in new tab
+        // 4. Filter (using CID code (auto)):
+        //      - Public workspace only
+        //      - Part only
+        //      - PartName contains partName variable from above
+        //      - ScenarioName contains Initial (to filter duplicates out)
 
         // Assert against report being on screen or something else? Think!
     }

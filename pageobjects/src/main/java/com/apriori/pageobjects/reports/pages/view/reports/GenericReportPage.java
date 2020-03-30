@@ -10,12 +10,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +31,12 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
+
+    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][4]")
+    private WebElement currentBlob;
+
+    @FindBy(css = "tspan:nth-child(5)")
+    private WebElement tooltipValueElement;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -731,5 +739,21 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage waitForExpectedExportCount(String expected) {
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
         return this;
+    }
+
+    /**
+     * Gets value from tooltip on chart
+     * @return BigDecimal of retrieved value
+     */
+    public BigDecimal getValueFromCentralCircleInChart() {
+        //pageUtils.waitForElementToAppear(currentBlob);
+        // click on random part of page, then continue. Above line fails, cause Selenium (json exception...)
+        Actions builder = new Actions(driver).moveToElement(currentBlob);
+        builder.perform();
+        pageUtils.waitForElementToAppear(tooltipValueElement);
+        String value = tooltipValueElement.getAttribute("textContent")
+                .replace(",", "")
+                .replace(" ", "");
+        return new BigDecimal(value);
     }
 }

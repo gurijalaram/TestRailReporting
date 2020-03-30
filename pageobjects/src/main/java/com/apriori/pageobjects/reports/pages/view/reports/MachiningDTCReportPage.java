@@ -35,8 +35,7 @@ public class MachiningDTCReportPage extends GenericReportPage {
 
     /**
      * Gets value from tooltip on chart
-     *
-     * @return
+     * @return BigDecimal of retrieved value
      */
     public BigDecimal getValueFromCentralCircleInChart() {
         pageUtils.waitForElementToAppear(currentBlob);
