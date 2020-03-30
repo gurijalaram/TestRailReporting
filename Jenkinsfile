@@ -1,7 +1,4 @@
 pipeline {
-    parameters {
-        string(name: 'NODE', defaultValue: 'CONQBW8VM11', description: 'What is the node?')
-    }
     agent {
         label "${params.NODE}"
     }
@@ -12,6 +9,7 @@ pipeline {
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         string(name: 'BROWSER', defaultValue: 'chrome', description: 'What is the browser?')
         string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
+        string(name: 'NODE', defaultValue: 'CONQBW8VM11', description: 'What is the node?')
     }
 
     environment {
