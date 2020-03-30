@@ -1,0 +1,38 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "currencyCode",
+    "currencyExchangeRate",
+    "isSystemUnits"
+  ],
+  "properties": {
+    "currencyCode": {
+      "type": "string",
+      "title": "The Currencycode Schema",
+      "default": "",
+      "examples": [
+        "USD"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "currencyExchangeRate": {
+      "type": "number",
+      "title": "The Currencyexchangerate Schema",
+      "default": 0,
+      "examples": [
+        1
+      ]
+    },
+    "isSystemUnits": {
+      "type": "boolean",
+      "title": "The Issystemunits Schema",
+      "default": false,
+      "examples": [
+        false
+      ]
+    }
+  }
+}
