@@ -31,6 +31,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -215,7 +216,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, SanityTests.class})
     @TestRail(testCaseId = {"1044"})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
