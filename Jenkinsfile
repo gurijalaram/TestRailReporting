@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "CONQBW8VM11"
+        label "${params.NODE}"
     }
 
     parameters {
