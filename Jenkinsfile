@@ -4,7 +4,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'TARGET_ENV', defaultValue: 'cid-aut', description: 'What is the target environment for testing?')
+        string(name: 'TARGET_ENV', defaultValue: '"cid-aut"', description: 'What is the target environment for testing?')
     }
 
     environment {
