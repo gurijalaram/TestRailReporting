@@ -1,14 +1,14 @@
 pipeline {
+    agent {
+        label "${params.NODE}"
+    }
+
     parameters {
         string(name: 'TARGET_ENV', defaultValue: 'cid-aut', description: 'What is the target environment for testing?')
         string(name: 'TEST_SUITE', defaultValue: 'CIDTestSuite', description: 'What is the test suite?')
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         string(name: 'BROWSER', defaultValue: 'chrome', description: 'What is the browser?')
         string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
-    }
-
-    agent {
-        label 'any'
     }
 
     environment {
