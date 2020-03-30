@@ -7,6 +7,9 @@ pipeline {
         string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
     }
 
+    agent {
+        label 'any'
+    }
 
     environment {
         JAVA_HOME = "${tool 'OpenJDK 1.8.0_192 WIN64'}"
