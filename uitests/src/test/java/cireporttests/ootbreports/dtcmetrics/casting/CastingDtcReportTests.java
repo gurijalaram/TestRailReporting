@@ -192,7 +192,6 @@ public class CastingDtcReportTests extends TestBase {
         //      - ScenarioName contains Initial (to filter duplicates out)
 
         // Assert against report being on screen or something else? Think!
-        String val = "hello, snooker is fab!";
     }
 
     @Test
