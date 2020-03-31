@@ -35,6 +35,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -59,7 +60,7 @@ public class SettingsTests extends TestBase {
         }
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class, SanityTests.class})
     @Test
     @TestRail(testCaseId = {"1609", "276"})
     @Description("User can change the default Production Defaults")

@@ -23,6 +23,7 @@ import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -95,7 +96,7 @@ public class PublishComparisonTests extends TestBase {
 
 
     @Test
-
+    @Category({SanityTests.class})
     @Issue("AP-58576")
     @TestRail(testCaseId = {"421"})
     @Description("Test a private comparison can be published from explore page")
