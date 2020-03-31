@@ -1,8 +1,7 @@
 import org.junit.Test;
-import utils.DBDataImporter;
 import utils.DBBackupHandler;
+import utils.DBDataImporter;
 import utils.PropertiesHandler;
-
 
 import java.util.ArrayList;
 
