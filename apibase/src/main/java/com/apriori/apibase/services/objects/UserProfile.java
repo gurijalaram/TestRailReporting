@@ -6,6 +6,56 @@ public class UserProfile {
     private String createdAt;
     private String givenName;
     private String familyName;
+    private String jobTitle;
+    private String department;
+    private String supervisor;
+    private String timezone;
+    private String townCity;
+
+    public String getTowncity() {
+        return townCity;
+    }
+
+    public UserProfile setTownCity(String townCity) {
+        this.townCity = townCity;
+        return this;
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public UserProfile setTimezone(String timezone) {
+        this.timezone = timezone;
+        return this;
+    }
+
+    public String getSupervisor() {
+        return this.supervisor;
+    }
+
+    public UserProfile setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+        return this;
+    }
+
+    public String getDepartment() {
+        return this.department;
+    }
+
+    public UserProfile setDepartment(String department) {
+        this.department = department;
+        return this;
+    }
+
+    public String getJobTitle() {
+        return this.jobTitle;
+    }
+
+    public UserProfile setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+        return this;
+    }
 
 
     public UserProfile setIdentity(String identity) {

@@ -3,7 +3,6 @@ package com.apriori.apibase.services.objects;
 import com.apriori.apibase.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -12,47 +11,22 @@ import java.time.LocalDateTime;
 
 @Schema(location = "CdsApplicationSchema.json")
 public class Application {
-
-    @JsonProperty
     private Boolean isCloudHomeApp;
-
-    @JsonProperty
     private Boolean isSingleTenant;
-
-    @JsonProperty
     private Boolean isPublic;
-
-    @JsonProperty
     private String identity;
-
-    @JsonProperty
     private String createdBy;
+    private String name;
+    private String cloudReference;
+    private String serviceName;
+    private String version;
+    private String description;
+    private String iconUrl;
+    private Application response;
 
-    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-
-    @JsonProperty
-    private String name;
-
-    @JsonProperty
-    private String cloudReference;
-
-    @JsonProperty
-    private String serviceName;
-
-    @JsonProperty
-    private String version;
-
-    @JsonProperty
-    private String description;
-
-    @JsonProperty
-    private String iconUrl;
-
-    @JsonProperty
-    private Application response;
 
     public Application getResponse() {
         return this.response;
