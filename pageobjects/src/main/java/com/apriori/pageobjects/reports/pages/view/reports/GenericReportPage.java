@@ -203,8 +203,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(okButton);
-
+        pageUtils.waitForElementToAppear(currentBlob);
     }
 
     /**
@@ -764,6 +763,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public BigDecimal getValueFromDtcPartSummaryReport() {
         // 1. navigate to part summary report
         //if (currentBlob.isDisplayed() && currentBlob.isEnabled()) {
+        //pageUtils.waitForElementAndClick(currentBlob);
         pageUtils.waitForElementAndClick(currentBlob);
         currentBlob.click();
         //currentBlob.click();
