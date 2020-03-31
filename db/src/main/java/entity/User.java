@@ -1,18 +1,27 @@
 package entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
- @Entity @Table(name = "fbc_user")
+@Entity
+@Table(name = "fbc_user")
 public class User implements Serializable {
 
     private static final Long serialVersionUID = -231312312L;
-    public User(){}
+
+    public User() {
+    }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_ID")
     private Long user_ID;
     @Column(name = "rawLoginID")
@@ -39,7 +48,8 @@ public class User implements Serializable {
     private String location;
     @Column(name = "department")
     private String department;
-    @Column(name = "\"function\"")  // because "function" is reserved word in SQL, we have to put backslash before column name
+    @Column(name = "\"function\"")
+    // because "function" is reserved word in SQL, we have to put backslash before column name
     private String function;
     @Column(name = "manager")
     private String manager;
@@ -93,8 +103,8 @@ public class User implements Serializable {
     private String extra9;
     @Column(name = "extra10")
     private String extra10;
-    
-    @OneToMany(cascade = CascadeType.ALL,  orphanRemoval = true)
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserGroups> userGroups;
 
     public static Long getSerialVersionUID() {
@@ -352,7 +362,6 @@ public class User implements Serializable {
         this.currencyCode = currencyCode;
         return this;
     }
-
 
 
     public String getUserDataXML() {

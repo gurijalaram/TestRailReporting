@@ -1,8 +1,9 @@
 package dao;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.Query;
+
 import java.util.List;
 
 public abstract class GlobalDao<T> {
@@ -12,7 +13,9 @@ public abstract class GlobalDao<T> {
     public GlobalDao(Session session) {
         this.session = session;
     }
-    public GlobalDao (){}
+
+    public GlobalDao() {
+    }
 
     public List<T> getAllObjects(Class<?> dbObject) {
         Query query = session.createQuery("FROM " + dbObject.getName());
@@ -33,11 +36,11 @@ public abstract class GlobalDao<T> {
         }
     }
 
-    public void delete(List <T> dbObject) {
+    public void delete(List<T> dbObject) {
         Transaction transaction;
         try {
             transaction = session.beginTransaction();
-            for(int i = 0; i < dbObject.size(); i++) {
+            for (int i = 0; i < dbObject.size(); i++) {
                 session.delete(dbObject.get(i));
             }
             transaction.commit();
@@ -50,7 +53,7 @@ public abstract class GlobalDao<T> {
         Transaction transaction;
         try {
             transaction = session.beginTransaction();
-            for(int i = 0; i < dbObject.size(); i++) {
+            for (int i = 0; i < dbObject.size(); i++) {
                 session.save(dbObject.get(i));
             }
             transaction.commit();

@@ -1,19 +1,16 @@
-package daoImpl;
+package dao;
 
-import dao.GlobalDao;
 import entity.User;
 import entity.UserGroups;
-import utils.SessionFactoryClass;
-
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao
-    extends GlobalDao<User> {
+        extends GlobalDao<User> {
     public UserDao(Session session) {
         super(session);
     }

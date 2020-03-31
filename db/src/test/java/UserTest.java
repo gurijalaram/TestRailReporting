@@ -1,7 +1,5 @@
-import daoImpl.UserDao;
-import daoImpl.UserGroupsDao;
+import dao.UserDao;
 import entity.User;
-import entity.UserGroups;
 
 import org.junit.Test;
 import utils.PropertiesHandler;

@@ -1,18 +1,15 @@
-package daoImpl;
+package dao;
 
-import java.util.List;
-
+import entity.User;
+import entity.UserGroups;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import dao.GlobalDao;
-import entity.User;
-import entity.UserGroups;
-import utils.SessionFactoryClass;
+import java.util.List;
 
 public class UserGroupsDao
-    extends GlobalDao<UserGroups> {
+        extends GlobalDao<UserGroups> {
 
     public UserGroupsDao(Session session) {
         super(session);
@@ -24,8 +21,8 @@ public class UserGroupsDao
     public List<UserGroups> getByFullName(User user) {
         UserDao userDao = new UserDao(session);
         Query query =
-            session.createQuery("FROM UserGroups ug " + "where ug.user_ID=:user_ID")
-            .setParameter("user_ID", userDao.getByFullName(user).getUser_ID());
+                session.createQuery("FROM UserGroups ug " + "where ug.user_ID=:user_ID")
+                        .setParameter("user_ID", userDao.getByFullName(user).getUser_ID());
         List<UserGroups> dbListObjects = query.list();
         return dbListObjects;
     }
@@ -47,10 +44,10 @@ public class UserGroupsDao
                 UserGroups schemaGroup1 = new UserGroups(users.get(i).getUser_ID(), "schemaGroup", "c3d6cac1-71a9-4248-a599-f728da5d018f");
                 session.save(schemaGroup1);
                 UserGroups namedGroupAllUsers =
-                    new UserGroups(users.get(i).getUser_ID(), "namedGroup", "5154a89b-157b-4180-8833-7c40e712f9ed");
+                        new UserGroups(users.get(i).getUser_ID(), "namedGroup", "5154a89b-157b-4180-8833-7c40e712f9ed");
                 session.save(namedGroupAllUsers);
                 UserGroups namedGroupSuperUser =
-                    new UserGroups(users.get(i).getUser_ID(), "namedGroup", "e2e4cbe5-5ded-4120-a5ac-75568b0a989d");
+                        new UserGroups(users.get(i).getUser_ID(), "namedGroup", "e2e4cbe5-5ded-4120-a5ac-75568b0a989d");
                 session.save(namedGroupSuperUser);
             }
             transaction.commit();
