@@ -19,6 +19,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class CastingDtcReportTests extends TestBase {
 
@@ -74,6 +76,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CustomerSmokeTests.class)
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
     public void testRollupDropDown() {
