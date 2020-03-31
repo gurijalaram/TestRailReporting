@@ -2,47 +2,40 @@ package com.apriori.apibase.services.objects;
 
 import com.apriori.apibase.http.enums.Schema;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 @Schema(location = "CdsCustomersSchema.json")
 public class Customers extends Customer {
-    @JsonProperty
     private Boolean isFirstPage;
-
-    @JsonProperty
     private Boolean isLastPage;
-
-    @JsonProperty
     private Integer pageNumber;
-
-    @JsonProperty
     private Integer pageSize;
-
-    @JsonProperty
     private Integer pageItemCount;
-
-    @JsonProperty
     private Integer totalItemCount;
-
-    @JsonProperty
     private Integer totalPageCount;
-
-    @JsonProperty
     private Boolean hasNextPage;
-
-    @JsonProperty
     private Boolean hasPreviousPage;
-
-    @JsonProperty
     private List<Customer> items;
-
-    @JsonProperty
     private Customers response;
-
-    @JsonProperty
     private String salesforceId;
+
+    public Boolean getFirstPage() {
+        return this.isFirstPage;
+    }
+
+    public Customers setFirstPage(Boolean firstPage) {
+        this.isFirstPage = firstPage;
+        return this;
+    }
+
+    public Boolean getLastPage() {
+        return this.isLastPage;
+    }
+
+    public Customers setLastPage(Boolean lastPage) {
+        this.isLastPage = lastPage;
+        return this;
+    }
 
     public String getSalesforceId() {
         return this.salesforceId;
