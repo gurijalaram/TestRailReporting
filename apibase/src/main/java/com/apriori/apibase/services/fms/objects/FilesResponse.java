@@ -1,6 +1,6 @@
 package com.apriori.apibase.services.fms.objects;
 
-import com.apriori.apibase.http.enums.Schema;
+import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 

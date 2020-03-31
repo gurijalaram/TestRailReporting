@@ -1,15 +1,15 @@
 package com.apriori.apibase.services.fms.apicalls;
 
-import com.apriori.apibase.http.builder.common.entity.RequestEntity;
-import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
-import com.apriori.apibase.http.builder.service.RequestAreaCds;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.fms.objects.FilesResponse;
-import com.apriori.apibase.utils.FormParams;
-import com.apriori.apibase.utils.MultiPartFiles;
-import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.utils.Util;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.dao.GenericRequestUtil;
+import com.apriori.utils.http.builder.service.RequestAreaCds;
+import com.apriori.utils.http.utils.FormParams;
+import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.ResponseWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
