@@ -750,10 +750,28 @@ public class GenericReportPage extends ReportsPageHeader {
         // click on random part of page, then continue. Above line fails, cause Selenium (json exception...)
         Actions builder = new Actions(driver).moveToElement(currentBlob);
         builder.perform();
-        pageUtils.waitForElementToAppear(tooltipValueElement);
+        //pageUtils.waitForElementToAppear(tooltipValueElement);
         String value = tooltipValueElement.getAttribute("textContent")
                 .replace(",", "")
                 .replace(" ", "");
         return new BigDecimal(value);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getValueFromDtcPartSummaryReport() {
+        // 1. navigate to part summary report
+        //if (currentBlob.isDisplayed() && currentBlob.isEnabled()) {
+        pageUtils.waitForElementAndClick(currentBlob);
+        currentBlob.click();
+        //currentBlob.click();
+        //}
+
+        // 2. ensure it is right one
+        // 3. get value
+        // 4. return value
+        return new BigDecimal("0.00");
     }
 }

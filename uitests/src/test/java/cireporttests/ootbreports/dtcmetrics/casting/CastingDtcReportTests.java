@@ -182,7 +182,7 @@ public class CastingDtcReportTests extends TestBase {
         // 1. Click bubble -> DTC Part Summary report (or use tooltips as before)
         // 2. Grab part name to use in CID from DTC Part Summary Report
         //      - Save in variable for later (String - partName - local scope) Final - won't change
-        BigDecimal value = genericReportPage.getValueFromCentralCircleInChart();
+        BigDecimal value = genericReportPage.getValueFromDtcPartSummaryReport();
 
         // 3. Go to CID in new tab
         // 4. Filter (using CID code (auto)):
@@ -192,6 +192,7 @@ public class CastingDtcReportTests extends TestBase {
         //      - ScenarioName contains Initial (to filter duplicates out)
 
         // Assert against report being on screen or something else? Think!
+        String val = "hello, snooker is fab!";
     }
 
     @Test
