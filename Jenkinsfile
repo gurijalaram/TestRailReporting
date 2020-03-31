@@ -6,7 +6,7 @@ pipeline {
         string(name: 'THREAD_COUNT', defaultValue: '3', description: 'What is the amount of browser instances?')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'What is the browser?')
         string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
-        choice(name: 'VM', choices: ['CONQBW8VM11','CONBSW8VM65','CONBSW8VM46'], description: 'What is the VM?')
+        choice(name: 'VM', choices: ['frodo','gimli','legolas'], description: 'What is the VM?')
     }
 
     agent {
