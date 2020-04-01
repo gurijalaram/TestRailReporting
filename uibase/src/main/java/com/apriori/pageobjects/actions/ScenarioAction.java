@@ -14,7 +14,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import org.apache.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -70,7 +69,7 @@ public class ScenarioAction {
             .setReturnType(SubmitWorkOredr.class)
             .setEndpoint(baseURL + "ws/workorder/orderstatus")
             .setBody(new SubmitWorkOredr()
-                .setOrderIds(Arrays.asList(submitWorkOredr.getId()))
+                .setOrderIds(Collections.singletonList(submitWorkOredr.getId()))
                 .setAction("SUBMIT")
             )
             .setStatusCode(200)

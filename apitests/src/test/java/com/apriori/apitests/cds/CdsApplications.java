@@ -66,7 +66,7 @@ public class CdsApplications extends TestUtil {
     private void validateApplications(Applications applicationsResponse) {
         Object[] applications = applicationsResponse.getResponse().getItems().toArray();
         Arrays.stream(applications)
-                .forEach(a -> validate(a));
+                .forEach(this::validate);
     }
 
     private void validateApplication(Application applicationResponse) {

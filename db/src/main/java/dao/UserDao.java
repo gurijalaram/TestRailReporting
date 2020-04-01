@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao
@@ -20,9 +19,7 @@ public class UserDao
         Transaction transaction;
         try {
             transaction = session.beginTransaction();
-            for (int i = 0; i < usersList.size(); i++) {
-                session.saveOrUpdate(usersList.get(i));
-            }
+            usersList.forEach(user -> session.saveOrUpdate(user));
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,15 +31,15 @@ public class UserDao
     @Override
     public void delete(List<User> dbObject) {
         Transaction transaction;
-        List<UserGroups> userGroups = new ArrayList<UserGroups>();
+        List<UserGroups> userGroups;
         try {
             transaction = session.beginTransaction();
-            for (int i = 0; i < dbObject.size(); i++) {
-                userGroups = new UserGroupsDao(session).getByFullName(dbObject.get(i));
+            for (User user : dbObject) {
+                userGroups = new UserGroupsDao(session).getByFullName(user);
                 for (int z = 0; z < userGroups.size(); z++) {
                     session.delete(userGroups.get(z));
                 }
-                session.delete(dbObject.get(i));
+                session.delete(user);
                 // session.delete(dbObject.get(i));
             }
             transaction.commit();

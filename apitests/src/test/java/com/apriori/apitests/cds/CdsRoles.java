@@ -55,7 +55,7 @@ public class CdsRoles extends CdsTestUtil {
     private void validateRoles(Roles rolesResponse) {
         Object[] roles = rolesResponse.getResponse().getItems().toArray();
         Arrays.stream(roles)
-            .forEach(r -> validate(r));
+            .forEach(this::validate);
     }
 
     private void validateRole(Role roleResponse) {

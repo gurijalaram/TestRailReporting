@@ -163,7 +163,7 @@ public class TestRule implements MethodRule {
      * @return something
      */
     public String captureScreenshot(String className, String testName, TestBase testBase, int errorNumber) {
-        String filename = null;
+        String filename;
         String filePath = null;
         try {
             File screenshot;
