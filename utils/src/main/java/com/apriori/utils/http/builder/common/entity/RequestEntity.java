@@ -5,7 +5,6 @@ import com.apriori.utils.http.builder.service.RequestInitService;
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http.enums.EndpointType;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
-import com.apriori.utils.http.enums.common.InternalEndpointEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.users.UserCredentials;
@@ -165,9 +164,7 @@ public class RequestEntity {
 
     public RequestEntity setEndpoint(EndpointEnum endpoint) {
         this.endpoint = endpoint;
-        if (this.endpoint instanceof InternalEndpointEnum) {
-            this.endpointType = EndpointType.INTERNAL;
-        } else if (this.endpoint instanceof ExternalEndpointEnum) {
+        if (this.endpoint instanceof ExternalEndpointEnum) {
             this.endpointType = EndpointType.EXTERNAL;
         }
         return this;

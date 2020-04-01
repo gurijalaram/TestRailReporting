@@ -36,9 +36,7 @@ public class UserDao
             transaction = session.beginTransaction();
             for (User user : dbObject) {
                 userGroups = new UserGroupsDao(session).getByFullName(user);
-                for (int z = 0; z < userGroups.size(); z++) {
-                    session.delete(userGroups.get(z));
-                }
+                userGroups.forEach(userGroup -> session.delete(userGroup));
                 session.delete(user);
                 // session.delete(dbObject.get(i));
             }

@@ -71,10 +71,6 @@
                 "type": "string",
                 "pattern": "^(.*)$"
               },
-              "createdBy": {
-                "type": "string",
-                "pattern": "^(.*)$"
-              },
               "updatedAt": {
                 "type": "string"
               },
