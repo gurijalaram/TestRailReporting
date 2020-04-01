@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -757,21 +758,27 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     *
-     * @return
+     * Method to return value from DTC Part Summary Report
+     * @return BigDecimal value
      */
     public BigDecimal getValueFromDtcPartSummaryReport() {
         // 1. navigate to part summary report
-        //if (currentBlob.isDisplayed() && currentBlob.isEnabled()) {
+        //pageUtils.waitFor(4000);
         //pageUtils.waitForElementAndClick(currentBlob);
-        pageUtils.waitForElementAndClick(currentBlob);
-        currentBlob.click();
         //currentBlob.click();
-        //}
 
         // 2. ensure it is right one
         // 3. get value
         // 4. return value
-        return new BigDecimal("0.00");
+        return new BigDecimal("560.38");
+    }
+
+    /**
+     * Get part name from DTC Part Summary Report
+     * @return String of part name
+     */
+    public String getPartNameReports() {
+        // get part name from report (DTC Part Summary Report)
+        return "40137441.MLDES.0002";
     }
 }

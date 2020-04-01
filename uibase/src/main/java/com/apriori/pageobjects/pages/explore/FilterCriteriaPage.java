@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Filter;
 
 /**
  * @author cfrith
@@ -109,7 +110,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Filter criteria for public selection
-     *
      * @param type      - type of selection whether private or public
      * @param attribute - the attribute
      * @param condition - specified condition
@@ -127,6 +127,21 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
+     * Multi filter criteria for public selection
+     * @return current page object
+     */
+    public FilterCriteriaPage multiFilterPublicCriteria(String[] type, String[] attribute, String[] condition, String[] value) {
+        setPublicWorkspace();
+        for (int i = 0; i < value.length; i++) {
+            setScenarioType(type[i]);
+            selectAttribute(attribute[i]);
+            selectCondition(condition[i]);
+            setTypeOfValue(value[i]);
+        }
+        return this;
+    }
+
+    /**
      * Clears all listed checkboxes
      *
      * @return current page object
@@ -138,7 +153,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets the scenario type
-     *
      * @param type - scenario type
      * @return current page object
      */
