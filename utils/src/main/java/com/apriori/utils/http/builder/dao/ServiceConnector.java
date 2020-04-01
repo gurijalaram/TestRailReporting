@@ -56,7 +56,7 @@ public class ServiceConnector {
             url.append(String.format(":%s", port));
         }
 
-        url.append("/%s?key=" + secretKey);
+        url.append("/%s?key=").append(secretKey);
         return url.toString();
     }
 

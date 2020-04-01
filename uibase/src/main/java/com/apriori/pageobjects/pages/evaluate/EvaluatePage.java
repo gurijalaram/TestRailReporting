@@ -680,11 +680,11 @@ public class EvaluatePage extends EvaluateHeader {
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getTableValsByRow(String row) {
-        ArrayList<BigDecimal> valsToReturn = new ArrayList<BigDecimal>();
+        ArrayList<BigDecimal> valsToReturn = new ArrayList<>();
         Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
 
         String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td";
-        ArrayList<Element> elements = new ArrayList<>();
+        ArrayList<Element> elements;
 
         baseCssSelector = String.format(baseCssSelector, row);
         elements = evaluateComponentView.select(baseCssSelector);
