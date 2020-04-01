@@ -19,7 +19,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;

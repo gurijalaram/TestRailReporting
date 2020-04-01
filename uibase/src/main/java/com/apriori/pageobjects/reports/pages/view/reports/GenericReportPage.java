@@ -1,0 +1,777 @@
+package com.apriori.pageobjects.reports.pages.view.reports;
+
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
+import com.apriori.pageobjects.reports.pages.library.LibraryPage;
+import com.apriori.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.AssemblyTypeEnum;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class GenericReportPage extends ReportsPageHeader {
+
+    private static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private Map<String, WebElement> exportSetMap = new HashMap<>();
+    private Map<String, WebElement> assemblyMap = new HashMap<>();
+    private Map<String, WebElement> currencyMap = new HashMap<>();
+
+    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][4]")
+    private WebElement currentBlob;
+
+    @FindBy(css = "tspan:nth-child(5)")
+    private WebElement tooltipValueElement;
+
+    @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
+    private WebElement currentCurrency;
+
+    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    private WebElement currentAssembly;
+
+    @FindBy(css = "a[id='logo']")
+    private WebElement cidLogo;
+
+    @FindBy(xpath = "//label[contains(@title, 'Earliest Export Date')]/input")
+    protected WebElement earliestExportDateInput;
+
+    @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
+    protected WebElement latestExportDateInput;
+
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
+    protected WebElement topLevelExportSet;
+
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='Piston Assembly']/div/a")
+    protected WebElement pistonAssemblyExportSet;
+
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_Casting']")
+    protected WebElement dtcCastingExportSet;
+
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='ROLL_UP A']")
+    protected WebElement rollupAExportSet;
+
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_MachiningDataset']/div/a")
+    protected WebElement machiningDtcDataSetExportSet;
+
+    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
+    private WebElement currentAssemblyElement;
+
+    @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
+    private WebElement currentAssElement;
+
+    @FindBy(xpath = "//a[contains(text(), 'SUB-ASSEMBLY')]")
+    private WebElement subAssOption;
+
+    @FindBy(xpath = "//div[@id='assemblySelect']//input")
+    private WebElement assemblyInput;
+
+    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
+    private WebElement subAssemblyOption;
+
+    @FindBy(xpath = "//label[@title='Assembly Select']//input")
+    private WebElement inputBox;
+
+    @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
+    private WebElement subSubAsmOption;
+
+    @FindBy(css = "li[title='TOP-LEVEL (Initial)'] > div > a")
+    private WebElement topLevelOption;
+
+    @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
+    private WebElement currentCurrencyElement;
+
+    @FindBy(css = "li[title='USD'] > div > a")
+    private WebElement usdCurrencyOption;
+
+    @FindBy(css = "li[title='GBP'] > div > a")
+    private WebElement gbpCurrencyOption;
+
+    @FindBy(id = "apply")
+    private WebElement applyButton;
+
+    @FindBy(id = "ok")
+    private WebElement okButton;
+
+    @FindBy(id = "reset")
+    private WebElement resetButton;
+
+    @FindBy(id = "cancel")
+    private WebElement cancelButton;
+
+    @FindBy(id = "save")
+    private WebElement saveButton;
+
+    @FindBy(id = "loading")
+    private WebElement loadingPopup;
+
+    @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Select All']/a")
+    private WebElement exportSetSelectAll;
+
+    @FindBy(css = "div[id='exportSetName'] > div > div > div > div > div:nth-of-type(1) > span")
+    private WebElement availableExportSets;
+
+    @FindBy(css = "div[id='exportSetName'] > div > div > div > div > div:nth-of-type(2) > span")
+    private WebElement selectedExportSets;
+
+    @FindBy(xpath = "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr']")
+    private WebElement exportSetList;
+
+    @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Invert']/a")
+    private WebElement exportSetInvert;
+
+    @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Deselect All']/a")
+    private WebElement exportSetDeselect;
+
+    @FindBy(xpath = "//label[contains(@title, 'Earliest Export Date')]//button")
+    private WebElement earliestExportSetDatePickerTriggerBtn;
+
+    @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]//button")
+    private WebElement latestExportSetDatePickerTriggerBtn;
+
+    @FindBy(xpath = "//button[contains(text(), 'Now')]")
+    private WebElement nowPickerButton;
+
+    @FindBy(xpath = "//button[contains(text(), 'Close')]")
+    private WebElement closeButton;
+
+    @FindBy(css = "select[class='ui-datepicker-month']")
+    private WebElement datePickerMonthSelect;
+
+    @FindBy(css = "select[class='ui-datepicker-year']")
+    private WebElement datePickerYearSelect;
+
+    @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-input-expander jr']")
+    private WebElement rollupDropDown;
+
+    @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
+    private WebElement rollupSearch;
+
+    @FindBy(css = "input[id='savedValuesName']")
+    private WebElement saveInput;
+
+    @FindBy(xpath = "//div[@id='saveValues']//button[@id='saveAsBtnSave']")
+    private WebElement saveAsButton;
+
+    @FindBy(xpath = "//select[@id='reportOptionsSelect']")
+    private WebElement savedOptionsDropDown;
+
+    @FindBy(xpath = "//button[@id='remove' and @class='button action up']")
+    private WebElement removeButton;
+
+    @FindBy(xpath = "//div[@class='jr-mDialog jr confirmationDialog open']//div[@class='jr-mDialog-footer jr']/button[1]")
+    private WebElement confirmRemove;
+
+    @FindBy(xpath = "//select[@id='reportOptionsSelect']//option[@value='']")
+    private WebElement noneOption;
+
+    @FindBy(xpath = "//div[@id='inputControls']//div[@class='sub header hidden']")
+    private WebElement hiddenSavedOptions;
+
+    private WebDriver driver;
+    private PageUtils pageUtils;
+
+    public GenericReportPage(WebDriver driver) {
+        super(driver);
+        this.driver = driver;
+        this.pageUtils = new PageUtils(driver);
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        PageFactory.initElements(driver, this);
+        initialiseExportSetHashMap();
+        initialiseAssemblyHashMap();
+        initialiseCurrencyMap();
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(currentBlob);
+    }
+
+    /**
+     * Selects specified export set
+     * @return current page object
+     */
+    public GenericReportPage selectExportSet(String exportSet) {
+        pageUtils.waitForElementAndClick(exportSetMap.get(exportSet));
+        return this;
+    }
+
+    /**
+     * Generic scroll method
+     * @return current page object
+     */
+    public GenericReportPage scrollDownInputControls() {
+        pageUtils.waitForElementToAppear(currentCurrencyElement);
+        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
+        return this;
+    }
+
+    /**
+     * Sets specified assembly
+     * @return current page object
+     */
+    public GenericReportPage setAssembly(String assemblyName) {
+        currentAssemblyElement.click();
+        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
+        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
+            if (assemblyName.equals("TOP-LEVEL (Initial)")) {
+                selectAssemblyOption(3);
+            } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
+                selectAssemblyOption(2);
+            }
+            inputBox.sendKeys(Keys.ENTER);
+        }
+        return this;
+    }
+
+    /**
+     * Checks current currency selection, fixes if necessary
+     * @param currency
+     * @return current page object
+     */
+    public GenericReportPage checkCurrencySelected(String currency) {
+        currentCurrencyElement.click();
+        if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
+            currencyMap.get(currency).click();
+        }
+        return this;
+    }
+
+    /**
+     * Opens new tab and switches to it
+     * @return
+     */
+    public GenericReportPage openNewTabAndFocus() {
+        pageUtils.jsNewTab();
+        pageUtils.windowHandler();
+        driver.get(Constants.cidURL);
+        pageUtils.waitForElementToAppear(cidLogo);
+        return new GenericReportPage(driver);
+    }
+
+    /**
+     * Clicks apply and ok
+     * @return Generic Report page object
+     */
+    public GenericReportPage clickApplyAndOk() {
+        pageUtils.waitForElementAndClick(okButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        okButton.click();
+        return this;
+    }
+
+    /**
+     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     * @param assemblyToCheck
+     * @return Generic - instance of specified class
+     */
+    public <T> T waitForCorrectAssembly(String assemblyToCheck, Class<T> className) {
+        pageUtils.waitForElementToAppear(currentAssembly);
+        // if not top level, add -
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
+            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+        }
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Wait for export set list count to be zero
+     * @return current page object
+     */
+    public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
+        pageUtils.checkElementAttribute(exportSetList, "childElementCount", expectedCount);
+        pageUtils.checkElementAttribute(selectedExportSets, "title", getCountOfExportSets());
+        return this;
+    }
+
+    /**
+     * Ensures latest date is set to today
+     * @return current page object
+     */
+    public GenericReportPage setEarliestExportDateToTodayInput() {
+        String dtToday = getDate(true);
+        pageUtils.waitForElementToAppear(earliestExportDateInput);
+
+        if (!earliestExportDateInput.getAttribute("value").isEmpty()) {
+            earliestExportDateInput.click();
+            earliestExportDateInput.clear();
+            earliestExportDateInput.sendKeys(dtToday);
+        }
+        return this;
+    }
+
+    /**
+     * Sets earliest export set date to today using picker
+     * @return current page object
+     */
+    public GenericReportPage setEarliestExportDateToTodayPicker() {
+        LocalDateTime dtToday = getCurrentDateLDT();
+        pageUtils.waitForElementAndClick(earliestExportSetDatePickerTriggerBtn);
+
+        setMonthValuePicker(dtToday.getMonthValue() - 1);
+        setYearValuePicker(String.format("%d", dtToday.getYear()));
+        earliestExportSetDatePickerTriggerBtn.click();
+
+        String currentVal = earliestExportDateInput.getAttribute("value");
+        earliestExportDateInput.click();
+        earliestExportDateInput.clear();
+        earliestExportDateInput.sendKeys(currentVal.replace("23", String.format("%d", dtToday.getDayOfMonth())));
+        return this;
+    }
+
+    /**
+     * Sets export set time and date to current time minus two months using input field
+     */
+    public GenericReportPage setLatestExportDateToTwoDaysFutureInput() {
+        String dtTwoMonthsAgo = getDate(false);
+
+        pageUtils.waitForElementToAppear(latestExportDateInput);
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.click();
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtTwoMonthsAgo);
+        }
+        return this;
+    }
+
+    /**
+     * Sets export set time and date to current time minus two months using input field
+     */
+    public GenericReportPage setLatestExportDateToTodayInput() {
+        String dtToday = getDate(true);
+        pageUtils.waitForElementToAppear(latestExportDateInput);
+
+        if (!latestExportDateInput.getAttribute("value").isEmpty()) {
+            latestExportDateInput.click();
+            latestExportDateInput.clear();
+            latestExportDateInput.sendKeys(dtToday);
+        }
+        return this;
+    }
+
+    /**
+     * Sets latest export date to two days from current (dynamic)
+     * @return current page object
+     */
+    public GenericReportPage setLatestExportDateToTodayPlusTwoPicker() {
+        LocalDateTime newDt = getCurrentDateLDT().plusDays(2);
+
+        int monthValue = newDt.getMonthValue();
+        int dayValue = newDt.getDayOfMonth();
+        int yearValue = newDt.getYear();
+
+        pageUtils.waitForElementAndClick(latestExportSetDatePickerTriggerBtn);
+        setMonthValuePicker(monthValue - 1);
+        setYearValuePicker(String.format("%d", yearValue));
+
+        String twoDaysAheadBtnLocator = String.format("//a[contains(text(), '%d')]", dayValue);
+        pageUtils.waitForElementAndClick(By.xpath(twoDaysAheadBtnLocator));
+        pageUtils.waitForElementAndClick(closeButton);
+
+        return this;
+    }
+
+    /**
+     * Ensures latest date is set to today
+     * @return current page object
+     */
+    public GenericReportPage ensureDatesAreCorrect(boolean areBothInputsPresent, boolean getCurrentDateInitially) {
+        WebElement dateElementToUse;
+        String date = removeTimeFromDate(getDate(getCurrentDateInitially));
+
+        if (areBothInputsPresent) {
+            for (int i = 0; i < 2; i++) {
+                String dateForBoth = getCurrentDateInitially ? date : removeTimeFromDate(getDate(getCurrentDateInitially));
+                dateElementToUse = getCurrentDateInitially ? earliestExportDateInput : latestExportDateInput;
+                pageUtils.checkElementAttribute(dateElementToUse, "value", dateForBoth);
+                getCurrentDateInitially = false;
+            }
+        } else {
+            dateElementToUse = latestExportDateInput;
+            pageUtils.checkElementAttribute(dateElementToUse, "value", date);
+        }
+        return this;
+    }
+
+    /**
+     * Ensures filtering worked correctly
+     * @return int size of element list
+     */
+    public int getAmountOfTopLevelExportSets() {
+        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
+        return list.size();
+    }
+
+    /**
+     * Generic method to wait for correct currency and return specified page object
+     * @param currencyToCheck
+     * @param className
+     * @param <T> return type - any page object that is specified
+     * @return new instance of page object
+     */
+    public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
+        pageUtils.waitForElementToAppear(currentCurrency);
+        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Gets current currency setting
+     * @return String
+     */
+    public String getCurrentCurrency() {
+        return pageUtils.getElementText(currentCurrency);
+    }
+
+    /**
+     * Initialises export set hash map
+     */
+    private void initialiseCurrencyMap() {
+        currencyMap.put("GBP", gbpCurrencyOption);
+        currencyMap.put("USD", usdCurrencyOption);
+    }
+
+    /**
+     * Initialises export set hash map
+     */
+    private void initialiseExportSetHashMap() {
+        exportSetMap.put("top-level", topLevelExportSet);
+        exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
+        exportSetMap.put("DTC_Casting", dtcCastingExportSet);
+        exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
+        exportSetMap.put("ROLL_UP A", rollupAExportSet);
+    }
+
+    /**
+     * Initialises assembly hash map
+     */
+    private void initialiseAssemblyHashMap() {
+        assemblyMap.put("SUB-ASSEMBLY (Initial)", subAssemblyOption);
+        assemblyMap.put("SUB-SUB-ASM (Initial)", subSubAsmOption);
+        assemblyMap.put("TOP-LEVEL (Initial)", topLevelOption);
+    }
+
+    /**
+     * Click export set select all button
+     * @return current page object
+     */
+    public GenericReportPage exportSetSelectAll() {
+        pageUtils.waitForElementAndClick(exportSetSelectAll);
+        String exportSetCount = getCountOfExportSets();
+        pageUtils.checkElementAttribute(selectedExportSets, "title", exportSetCount);
+        return this;
+    }
+
+    /**
+     * Gets number of currently available export sets
+     * @return String - count of export sets
+     */
+    public String getCountOfExportSets() {
+        return exportSetList.getAttribute("childElementCount");
+    }
+
+    /**
+     * Get number of available export sets
+     * @return int
+     */
+    public int getAvailableExportSetCount() {
+        String count = pageUtils.waitForElementToAppear(availableExportSets).getAttribute("title");
+        count = count.substring((count.lastIndexOf(" ") + 1));
+        return Integer.parseInt(count);
+    }
+
+    /**
+     * Get number of selected export sets
+     * @return int
+     */
+    public int getSelectedExportSetCount() {
+        String count = pageUtils.waitForElementToAppear(selectedExportSets).getAttribute("title");
+        count = count.substring((count.lastIndexOf(" ") + 1));
+        return Integer.parseInt(count);
+    }
+
+    /**
+     * Deselect export set
+     * @return current page object
+     */
+    public GenericReportPage deselectExportSet(String exportSet) {
+        int expected = getSelectedExportSetCount() - 1;
+        pageUtils.waitForElementAndClick(exportSetMap.get(exportSet));
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        return this;
+    }
+
+    /**
+     * Invert export set selection
+     * @return current page object
+     */
+    public GenericReportPage invertExportSetSelection() {
+        int expected = getAvailableExportSetCount() - getSelectedExportSetCount();
+        pageUtils.waitForElementAndClick(exportSetInvert);
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        return this;
+    }
+
+    /**
+     * Deselect all export sets
+     *
+     * @return current page object
+     */
+    public GenericReportPage exportSetDeselectAll() {
+        pageUtils.waitForElementAndClick(exportSetDeselect);
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + "0");
+        return this;
+    }
+
+    /**
+     * Expand rollup drop-down
+     * @return current page object
+     */
+    public GenericReportPage expandRollupDropDown() {
+        pageUtils.waitForElementAndClick(rollupDropDown);
+        return this;
+    }
+
+    /**
+     * Search for rollup in rollup drop-down search bar
+     * @return current page object
+     */
+    public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
+        pageUtils.waitForElementAndClick(rollupSearch);
+        rollupSearch.sendKeys(rollupName);
+        return this;
+    }
+
+    /**
+     * Substrings date to remove time
+     * @return String
+     */
+    private String removeTimeFromDate(String dateToSubstring) {
+        return dateToSubstring.substring(0, 10);
+    }
+
+    /**
+     * Gets current date in correct format
+     * @return String
+     */
+    private String getDate(boolean getCurrent) {
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return getCurrent ? formatter
+                .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
+                            : formatter
+                .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
+    }
+
+    /**
+     * Get current date as Local Date Time, rather than String
+     * @return LocalDateTime
+     */
+    private LocalDateTime getCurrentDateLDT() {
+        return LocalDateTime.now(ZoneOffset.UTC).withNano(0);
+    }
+
+
+    /**
+     * Select Assembly option dropdown using send keys
+     * @param topIndex
+     */
+    private void selectAssemblyOption(int topIndex) {
+        for (int i = 0; i < topIndex; i++) {
+            inputBox.sendKeys(Keys.ARROW_DOWN);
+        }
+    }
+
+    /**
+     * Sets month dropdown value in date picker
+     * @param indexToSelect
+     */
+    private void setMonthValuePicker(int indexToSelect) {
+        Select monthSelect = new Select(datePickerMonthSelect);
+        monthSelect.selectByIndex(indexToSelect);
+    }
+
+    /**
+     * Sets year dropdown value in date picker
+     * @param valueToSelect
+     */
+    private void setYearValuePicker(String valueToSelect) {
+        Select yearSelect = new Select(datePickerYearSelect);
+        yearSelect.selectByValue(valueToSelect);
+    }
+
+    /**
+     * Click apply
+     * @return current page object
+     */
+    public GenericReportPage clickApply() {
+        pageUtils.waitForElementAndClick(applyButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        applyButton.click();
+        return this;
+    }
+
+    /**
+     * Click cancel
+     * @return new library page object
+     */
+    public LibraryPage clickCancel() {
+        pageUtils.waitForElementAndClick(cancelButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return new LibraryPage(driver);
+    }
+
+    /**
+     * Click reset
+     * @return current page object
+     */
+    public GenericReportPage clickReset() {
+        pageUtils.waitForElementAndClick(resetButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
+    }
+
+    /**
+     * Click save
+     * @return current page object
+     */
+    public GenericReportPage clickSave() {
+        pageUtils.waitForElementAndClick(saveButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
+    }
+
+    /**
+     * Enter saved input control configuration name
+     * @return current page object
+     */
+    public GenericReportPage enterSaveName(String saveName) {
+        pageUtils.waitForElementAndClick(saveInput);
+        saveInput.sendKeys(Keys.CONTROL + "a");
+        saveInput.sendKeys(Keys.DELETE);
+        saveInput.sendKeys(saveName);
+        return this;
+    }
+
+    /**
+     * Click save as button to save input control configuration
+     * @return current page object
+     */
+    public GenericReportPage clickSaveAsButton() {
+        pageUtils.waitForElementAndClick(saveAsButton);
+        return this;
+    }
+
+    /**
+     * Select saved input control config by name
+     * @return current page object
+     */
+    public GenericReportPage selectSavedOptionByName(String optionsName) {
+        pageUtils.waitForElementToAppear(savedOptionsDropDown);
+        Select dropDown = new Select(savedOptionsDropDown);
+        dropDown.selectByVisibleText(optionsName);
+        return this;
+    }
+
+    /**
+     * Get export set selection status
+     * @return boolean
+     */
+    public boolean isExportSetSelected(String exportSetName) {
+        pageUtils.waitForElementToAppear(exportSetList);
+        List<WebElement> childElements = exportSetList.findElements(By.tagName("li"));
+
+        return childElements.stream().anyMatch(we -> (we.getAttribute("title").contains(exportSetName)
+            && we.getAttribute("class").contains("isHovered")));
+    }
+
+    /**
+     * Click remove button
+     * @return current page object
+     */
+    public GenericReportPage clickRemove() {
+        pageUtils.waitForElementAndClick(removeButton);
+        pageUtils.waitForElementAndClick(confirmRemove);
+        return this;
+    }
+
+    /**
+     * Option in dropdown
+     * @return boolean
+     */
+    public boolean isOptionInDropDown(String optionName, int expected) {
+        pageUtils.checkElementAttribute(savedOptionsDropDown, "childElementCount", Integer.toString(expected));
+        if (driver.findElements(By.xpath("//div[@id='inputControls']//div[@class='sub header hidden']")).size() > 0) {
+            return false;
+        } else {
+            pageUtils.waitForElementToAppear(savedOptionsDropDown);
+            Select dropDown = new Select(savedOptionsDropDown);
+            List<WebElement> options = dropDown.getOptions();
+
+            return options.stream().anyMatch(we -> we.getText().equals(optionName));
+        }
+    }
+
+    /**
+     * Wait for expected export count
+     */
+    public GenericReportPage waitForExpectedExportCount(String expected) {
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        return this;
+    }
+
+    /**
+     * Gets value from tooltip on chart
+     * @return BigDecimal of retrieved value
+     */
+    public BigDecimal getValueFromCentralCircleInChart() {
+        //pageUtils.waitForElementToAppear(currentBlob);
+        // click on random part of page, then continue. Above line fails, cause Selenium (json exception...)
+        Actions builder = new Actions(driver).moveToElement(currentBlob);
+        builder.perform();
+        //pageUtils.waitForElementToAppear(tooltipValueElement);
+        String value = tooltipValueElement.getAttribute("textContent")
+                .replace(",", "")
+                .replace(" ", "");
+        return new BigDecimal(value);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BigDecimal getValueFromDtcPartSummaryReport() {
+        // 1. navigate to part summary report
+        //if (currentBlob.isDisplayed() && currentBlob.isEnabled()) {
+        //pageUtils.waitForElementAndClick(currentBlob);
+        pageUtils.waitForElementAndClick(currentBlob);
+        currentBlob.click();
+        //currentBlob.click();
+        //}
+
+        // 2. ensure it is right one
+        // 3. get value
+        // 4. return value
+        return new BigDecimal("0.00");
+    }
+}

@@ -112,6 +112,10 @@
                 "type": "string",
                 "pattern": "^(.*)$"
               },
+              "cloudReference": {
+                "type": "string",
+                "pattern": "^(.*)$"
+              },
               "if": {
                 "properties": {
                   "updatedAt": {
