@@ -84,7 +84,7 @@ subprojects {
 
     //clean allure results directory
     clean.doFirst {
-        delete "${project.rootDir}${File.separator}target${File.separator}allure-results"
+        delete "${projectDir}${File.separator}target${File.separator}allure-results"
     }
 
     //set allure and working directory
@@ -92,7 +92,7 @@ subprojects {
         version = '2.8.1'
         aspectjweaver = true
         autoconfigure = true
-        resultsDir = file("${project.rootDir}${File.separator}target${File.separator}allure-results")
+        resultsDir = file("${projectDir}${File.separator}target${File.separator}allure-results")
         downloadLink = 'http://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.8.1/allure-commandline-2.8.1.zip'
     }
 
