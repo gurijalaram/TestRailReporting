@@ -1,44 +1,31 @@
 package com.apriori.apibase.services.fms.objects;
 
-import com.apriori.apibase.http.enums.Schema;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
 @Schema(location = "fms/FmsFilesSchema.json")
 public class FilesResponse {
-    @JsonProperty
     private Boolean isFirstPage;
 
-    @JsonProperty
     private Boolean isLastPage;
 
-    @JsonProperty
     private Integer pageNumber;
 
-    @JsonProperty
     private Integer pageSize;
 
-    @JsonProperty
     private Integer pageItemCount;
 
-    @JsonProperty
     private Integer totalItemCount;
 
-    @JsonProperty
     private Integer totalPageCount;
 
-    @JsonProperty
     private Boolean hasNextPage;
 
-    @JsonProperty
     private Boolean hasPreviousPage;
 
-    @JsonProperty
     private List<FileResponse> items;
 
-    @JsonProperty
     private FilesResponse response;
 
     public FilesResponse getResponse() {

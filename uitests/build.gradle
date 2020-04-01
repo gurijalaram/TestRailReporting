@@ -3,6 +3,6 @@
  */
 
 dependencies {
-    implementation project(':pageobjects')
+    implementation project(':uibase')
     implementation project(':utils')
 }

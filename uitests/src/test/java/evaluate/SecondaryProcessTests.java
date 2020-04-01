@@ -13,7 +13,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -25,6 +25,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Test;
@@ -92,6 +93,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59839")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"658", "659", "661"})
     @Description("Test secondary process xray")
@@ -322,6 +324,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Issue("AP-59839")
     @TestRail(testCaseId = {"1616"})
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
@@ -451,6 +454,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Issue("AP-59839")
     @TestRail(testCaseId = {"1614", "654"})
     @Description("Multiple Secondary Processes before Costing")
     public void multiSecondaryProcessBeforeCost() {

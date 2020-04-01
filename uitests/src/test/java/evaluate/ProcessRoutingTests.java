@@ -19,7 +19,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -281,7 +281,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getBurdenedCost("1.55"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.56"), is(true));
 
         new EvaluatePage(driver).openProcessDetails()
             .selectRoutingsButton()
@@ -290,7 +290,7 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("1.95"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.96"), is(true));
     }
 
     @Test
