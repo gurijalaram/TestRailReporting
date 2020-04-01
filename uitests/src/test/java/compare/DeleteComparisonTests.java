@@ -62,7 +62,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ComparisonTablePage.class);
 
-            new ComparisonTablePage(driver).selectScenario(testScenarioName, "Machined Box AMERICAS")
+        new ComparisonTablePage(driver).selectScenario(testScenarioName, "Machined Box AMERICAS")
             .apply();
 
         genericHeader = new GenericHeader(driver);

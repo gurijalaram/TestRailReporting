@@ -136,7 +136,7 @@ public class SaveAsComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
 
-            new ComparePage(driver).addScenario()
+        new ComparePage(driver).addScenario()
             .selectScenario(scenarioName, "Push Pin")
             .apply();
 
