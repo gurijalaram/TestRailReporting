@@ -2,9 +2,6 @@ package com.apriori.utils.http.builder.dao;
 
 import com.apriori.utils.constants.Constants;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 public class ServiceConnector {
 
     /**
