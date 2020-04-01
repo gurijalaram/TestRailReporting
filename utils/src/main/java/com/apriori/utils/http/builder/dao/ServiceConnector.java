@@ -20,7 +20,6 @@ public class ServiceConnector {
      * Generate a url for a micro-service using default parameters
      *
      * @param host
-     *
      * @return
      */
     public static String getServiceUrl(String host) {
@@ -33,7 +32,6 @@ public class ServiceConnector {
      * @param host
      * @param port
      * @param secretKey
-     *
      * @return
      */
     public static String getServiceUrl(String host, String port, String secretKey) {
@@ -59,12 +57,4 @@ public class ServiceConnector {
         url.append("/%s?key=").append(secretKey);
         return url.toString();
     }
-
-    /**
-     * Only spaces are encoded in url parameters
-     */
-    public static String encodeSpaces(String url) {
-        return url.replace(" ", "%20");
-    }
-
 }
