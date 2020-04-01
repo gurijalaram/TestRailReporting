@@ -61,21 +61,6 @@ public class ServiceConnector {
     }
 
     /**
-     * Encode a url string using the Java encoder instead of the Rest-Assured encoder
-     *
-     * @param url
-     * @return
-     */
-    public static String urlEncode(String url) {
-        try {
-            return URLEncoder.encode(url, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new AssertionError("Unknown encoding" + e);
-        }
-
-    }
-
-    /**
      * Only spaces are encoded in url parameters
      */
     public static String encodeSpaces(String url) {
