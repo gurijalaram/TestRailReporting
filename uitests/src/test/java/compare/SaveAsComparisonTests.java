@@ -142,7 +142,7 @@ public class SaveAsComparisonTests extends TestBase {
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", " Set Children to Comparison", "okay")
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
             .closeJobQueue(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
