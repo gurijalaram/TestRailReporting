@@ -20,6 +20,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -116,10 +117,11 @@ public class EditPublicComparisonTests extends TestBase {
             .apply()
             .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
 
-        assertThat(comparePage.getScenarioInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
+        assertThat(new ComparePage(driver).getScenarioInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
     }
 
     @Test
+    @Issue("BA-999")
     @Description("Test you can change the basis of your comparison")
     public void testChangeComparisonBasis() {
 
@@ -150,15 +152,17 @@ public class EditPublicComparisonTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, testPartName)
-            .apply()
-            .addScenario()
+            .apply();
+
+            new ComparePage(driver).addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName2, testPartName)
-            .apply()
-            .setBasis(testScenarioName2);
+            .apply();
 
-        assertThat(comparePage.isComparisonBasis(testScenarioName2), is(false));
+            new ComparePage(driver).setBasis(testScenarioName2);
+
+        assertThat(new ComparePage(driver).isComparisonBasis(testScenarioName2), is(false));
     }
 }

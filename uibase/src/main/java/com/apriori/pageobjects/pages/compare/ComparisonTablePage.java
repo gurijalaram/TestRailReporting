@@ -55,6 +55,7 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(workspaceRow);
+        pageUtils.waitForSteadinessOfElement(By.cssSelector("button[data-ap-nav-dialog='showScenarioSearchCriteria']"));
     }
 
     /**
