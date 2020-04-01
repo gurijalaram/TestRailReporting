@@ -19,9 +19,9 @@ public class SessionFactoryClass {
             URL entityesUrl = loader.getResource("entity");
             File folder = new File(entityesUrl.getPath());
             File[] classes = folder.listFiles();
-            for (int i = 0; i < classes.length; i++) {
-                int index = classes[i].getName().indexOf(".");
-                String className = classes[i].getName().substring(0, index);
+            for (File aClass : classes) {
+                int index = aClass.getName().indexOf(".");
+                String className = aClass.getName().substring(0, index);
                 String classNamePath = "entity" + "." + className;
                 Class<?> repoClass = Class.forName(classNamePath);
                 config.addAnnotatedClass(repoClass);

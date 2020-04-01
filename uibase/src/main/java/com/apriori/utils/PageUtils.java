@@ -855,7 +855,7 @@ public class PageUtils {
      * @return String
      */
     public String getHeaderToCheck() {
-        String headerToCheck = "";
+        String headerToCheck;
         if (isEnvTE()) {
             headerToCheck = Constants.cidTeHeaderText;
         } else {

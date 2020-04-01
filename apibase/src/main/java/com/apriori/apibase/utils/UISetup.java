@@ -36,7 +36,7 @@ public class UISetup {
     }
 
     private List<ColumnEntity> generateDefaultColumnsList() {
-        List<ColumnEntity> columns = new ArrayList<ColumnEntity>();
+        List<ColumnEntity> columns = new ArrayList<>();
         ColumnEntity column;
 
         column = new ColumnEntity();

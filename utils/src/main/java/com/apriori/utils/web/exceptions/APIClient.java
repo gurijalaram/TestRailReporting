@@ -12,6 +12,7 @@
 
 package com.apriori.utils.web.exceptions;
 
+import org.apache.http.HttpStatus;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -28,6 +29,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class APIClient {
@@ -177,7 +179,7 @@ public class APIClient {
                 } else { // Not an attachment
                     conn.addRequestProperty("Content-Type", "application/json");
                     byte[] block = JSONValue.toJSONString(data).getBytes(
-                        "UTF-8");
+                        StandardCharsets.UTF_8);
 
                     conn.setDoOutput(true);
                     OutputStream ostream = conn.getOutputStream();
@@ -195,7 +197,7 @@ public class APIClient {
         int status = conn.getResponseCode();
 
         InputStream istream;
-        if (status != 200) {
+        if (status != HttpStatus.SC_OK) {
             istream = conn.getErrorStream();
             if (istream == null) {
                 throw new APIException("TestRail API return HTTP " + status
@@ -209,7 +211,7 @@ public class APIClient {
         if ((istream != null) && (uri.startsWith("get_attachment/"))) {
             FileOutputStream outputStream = new FileOutputStream((String) data);
 
-            int bytesRead = 0;
+            int bytesRead;
             byte[] buffer = new byte[1024];
             while ((bytesRead = istream.read(buffer)) > 0) {
                 outputStream.write(buffer, 0, bytesRead);
@@ -217,28 +219,28 @@ public class APIClient {
 
             outputStream.close();
             istream.close();
-            return (String) data;
+            return data;
         }
 
         // Not an attachment received
         // Read the response body, if any, and deserialize it from JSON.
-        String text = "";
+        StringBuilder text = new StringBuilder();
         if (istream != null) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                istream, "UTF-8"));
+                istream, StandardCharsets.UTF_8));
 
             String line;
             while ((line = reader.readLine()) != null) {
-                text += line;
-                text += System.getProperty("line.separator");
+                text.append(line);
+                text.append(System.getProperty("line.separator"));
             }
 
             reader.close();
         }
 
         Object result;
-        if (!text.equals("")) {
-            result = JSONValue.parse(text);
+        if (!text.toString().equals("")) {
+            result = JSONValue.parse(text.toString());
         } else {
             result = new JSONObject();
         }
@@ -246,9 +248,9 @@ public class APIClient {
         // Check for any occurred errors and add additional details to
         // the exception message, if any (e.g. the error message returned
         // by TestRail).
-        if (status != 200) {
+        if (status != HttpStatus.SC_OK) {
             String error = "No additional error message received";
-            if (result != null && result instanceof JSONObject) {
+            if (result instanceof JSONObject) {
                 JSONObject obj = (JSONObject) result;
                 if (obj.containsKey("error")) {
                     error = '"' + (String) obj.get("error") + '"';
