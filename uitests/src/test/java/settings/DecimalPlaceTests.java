@@ -61,13 +61,15 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("0.701755"), is(true));
-        assertThat(evaluatePage.isUtilization("95.000000"), is(true));
-        assertThat(evaluatePage.getCycleTimeCount(), is("92.698712"));
-        assertThat(evaluatePage.getMaterialCost(), is("2.227365"));
-        assertThat(evaluatePage.getPartCost(), is("6.513465"));
-        assertThat(evaluatePage.getBurdenedCost("8.377654"), is(true));
-        assertThat(evaluatePage.getCapitalInvestment(), is("51,265.177987"));
+/*
+        assertThat(evaluatePage.isFinishMass("5.309458"), is(true));
+        assertThat(evaluatePage.isUtilization("81.163688"), is(true));
+*/
+        assertThat(evaluatePage.getCycleTimeCount(), is("110.120000"));
+        assertThat(evaluatePage.getMaterialCost(), is("16.151375"));
+        assertThat(evaluatePage.getPartCost(), is("19.723087"));
+        assertThat(evaluatePage.getBurdenedCost("19.723087"), is(true));
+        assertThat(evaluatePage.getCapitalInvestment(), is("0.000000"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
