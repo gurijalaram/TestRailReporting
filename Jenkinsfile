@@ -13,8 +13,6 @@ pipeline {
         label "${params.VM}"
     }
 
-
-
     environment {
         JAVA_HOME = "${tool 'OpenJDK 1.8.0_192 WIN64'}"
         PATH = "${JAVA_HOME}/bin:${PATH}"
