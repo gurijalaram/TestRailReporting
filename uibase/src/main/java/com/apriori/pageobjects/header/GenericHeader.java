@@ -128,6 +128,15 @@ public class GenericHeader extends PageHeader {
     }
 
     /**
+     * Uploads a cad file
+     * @param filename the filename
+     * @return new page object
+     */
+    public EvaluatePage uploadCadFile(File filename) {
+        return new FileUploadPage(driver).enterFileName(filename);
+    }
+
+    /**
      * Selects new scenario button
      *
      * @return new page object

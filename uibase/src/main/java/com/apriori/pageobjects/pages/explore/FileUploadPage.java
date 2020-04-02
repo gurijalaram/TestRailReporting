@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -93,6 +94,18 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
         fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
         return this;
+    }
+
+    /**
+     * Gets details of file for upload
+     *
+     * @param filename - the file name
+     * @return new page object
+     */
+    public EvaluatePage enterFileName(File filename) {
+        fileInput.sendKeys(filename.getAbsolutePath().replace("%20", " "));
+        fileInput.sendKeys(filename.getAbsolutePath().replace("%20", " "));
+        return new EvaluatePage(driver);
     }
 
     /**
