@@ -74,7 +74,7 @@ public class FailuresWarningsTests extends TestBase {
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in)"));
 
-        guidancePage.selectIssueTypeAndGCD("Not Supported GCDs" , "Detached Solid", "Not Supported:1");
+        guidancePage.selectIssueTypeAndGCD("Not Supported GCDs", "Detached Solid", "Not Supported:1");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Multiple bodies exist in the model. Only the largest body is used and the remainder are ignored"));
     }
 
