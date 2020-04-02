@@ -45,7 +45,7 @@ public class CdsApplications extends TestUtil {
     @Description("API returns an application's information based on the supplied identity")
     public void getApplicationById() {
         url = String.format(url,
-                String.format("applications/%s", ServiceConnector.urlEncode(Constants.getCdsIdentityApplication())));
+                String.format("applications/%s", Constants.getCdsIdentityApplication()));
 
         ResponseWrapper<Application> response =  getRequest(Application.class, false);
 
@@ -76,6 +76,6 @@ public class CdsApplications extends TestUtil {
 
     private void validate(Object applicationObj) {
         Application application = (Application) applicationObj;
-        Assert.assertTrue(application.getIdentity().matches("^#[a-zA-Z0-9]+@[a-zA-Z0-9]+#$"));
+        Assert.assertTrue(application.getIdentity().matches("^[a-zA-Z0-9]+$"));
     }
 }

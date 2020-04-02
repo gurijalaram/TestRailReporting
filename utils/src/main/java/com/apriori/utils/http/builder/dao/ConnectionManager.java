@@ -7,17 +7,14 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
-import com.apriori.utils.http.builder.common.response.common.LoginJSON;
 import com.apriori.utils.http.builder.common.response.common.PayloadJSON;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 import com.apriori.utils.http.builder.service.RequestInitService;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.http.enums.common.api.AuthEndpointEnum;
-import com.apriori.utils.http.enums.common.api.CommonEndpointEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http.utils.URLParams;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -28,8 +25,6 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import org.apache.http.HttpStatus;
-import org.openqa.selenium.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +33,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -76,23 +70,12 @@ public class ConnectionManager<T> {
         FormParams formParams = requestEntity.getFormParams();
 
         if (requestEntity.isAutoLogin()) {
-            switch (requestEntity.getEndpointType()) {
-                case INTERNAL:
-                    if (requestEntity.isUseCookie()) {
-                        builder.setSessionId(getSessionId());
-                    }
-                    break;
-                case EXTERNAL:
-                    String authToken = setAuthToken();
-                    // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
-                    //TODO handle null
-                    Map<String, String> auth = new HashMap<>();
-                    auth.put("auth", authToken);
-                    urlParams.add(auth);
-                    break;
-                default:
-                    //TODO handle default;
-            }
+            String authToken = setAuthToken();
+            // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
+            //TODO handle null
+            Map<String, String> auth = new HashMap<>();
+            auth.put("auth", authToken);
+            urlParams.add(auth);
         }
 
         if (multiPartFiles != null) {
@@ -162,40 +145,6 @@ public class ConnectionManager<T> {
                     .redirects().follow(requestEntity.isFollowRedirection())
                     .log()
                     .all();
-    }
-
-    private String getSessionId() {
-        if (requestEntity.getDriver() != null) {
-            StringBuilder cookie = new StringBuilder();
-            Set<Cookie> allCookies = requestEntity.getDriver().manage().getCookies();
-            for (Cookie c : allCookies) {
-                cookie.append(c.getName()).append("=").append(c.getValue()).append(";");
-            }
-            return cookie.toString();
-        } else {
-            if (sessionIds.get(requestEntity.getUserAuthenticationEntity().getEmailAddress()) == null) {
-                logger.info("Missing session id for: " + requestEntity.getUserAuthenticationEntity().getEmailAddress());
-
-                UserAuthenticationEntity userAuthenticationEntity = requestEntity.getUserAuthenticationEntity();
-
-                String sessionId = LoginJSON.class.cast(
-                        new HTTPRequest().userAuthorizationData(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
-                                .customizeRequest()
-                                .setEndpoint(CommonEndpointEnum.POST_SESSIONID)
-                                .setAutoLogin(false)
-                                .setStatusCode(HttpStatus.SC_OK)
-                                .setUrlParams(URLParams.params()
-                                        .use("username", requestEntity.getUserAuthenticationEntity().getEmailAddress())
-                                        .use("password", requestEntity.getUserAuthenticationEntity().getPassword()))
-                                .setReturnType(LoginJSON.class)
-                                .commitChanges()
-                                .connect()
-                                .post()
-                ).getSessionId();
-                sessionIds.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), sessionId);
-            }
-            return sessionIds.get(requestEntity.getUserAuthenticationEntity().getEmailAddress());
-        }
     }
 
     // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
