@@ -83,7 +83,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
      */
     public boolean isCadFileName(String text) {
         pageUtils.waitForElementToAppear(cadFileInput);
-        return pageUtils.checkElementAttribute(cadFileInput, "title", text);
+        return pageUtils.checkElementAttribute(cadFileInput, "title", text.toLowerCase());
     }
 
     /**
