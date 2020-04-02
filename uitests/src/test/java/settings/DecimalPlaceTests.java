@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -49,18 +48,16 @@ public class DecimalPlaceTests extends TestBase {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.SIX.getDecimalPlaces());
-        new SettingsPage(driver).save(ExplorePage.class)
+            .changeDecimalPlaces(DecimalPlaceEnum.SIX.getDecimalPlaces())
+            .save(ExplorePage.class)
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
-
 /*
         assertThat(evaluatePage.isFinishMass("5.309458"), is(true));
         assertThat(evaluatePage.isUtilization("81.163688"), is(true));
@@ -80,14 +77,13 @@ public class DecimalPlaceTests extends TestBase {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces());
-        new SettingsPage(driver).save(ExplorePage.class)
+            .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
+            .save(ExplorePage.class)
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
@@ -109,14 +105,13 @@ public class DecimalPlaceTests extends TestBase {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces());
-        new SettingsPage(driver).save(ExplorePage.class)
+            .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
+            .save(ExplorePage.class)
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
@@ -130,8 +125,8 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCapitalInvestment(), is("51,265.177987"));
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces());
-        new SettingsPage(driver).save(ExplorePage.class);
+            .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
+            .save(ExplorePage.class);
 
         assertThat(evaluatePage.isFinishMass("0.701755"), is(true));
         assertThat(evaluatePage.isUtilization("95.000000"), is(true));
@@ -150,14 +145,13 @@ public class DecimalPlaceTests extends TestBase {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces());
-        new SettingsPage(driver).save(ExplorePage.class)
+            .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
+            .save(ExplorePage.class)
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
@@ -181,5 +175,4 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost("8.377654"), is(true));
         assertThat(evaluatePage.getCapitalInvestment(), is("51,265.177987"));
     }
-    
 }
