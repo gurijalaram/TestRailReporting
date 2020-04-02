@@ -95,16 +95,14 @@ public class FailuresWarningsTests extends TestBase {
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        failuresPage = settingsPage.save(ExplorePage.class)
+        guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .openFailuresTab();
+            .openGuidanceTab();
 
-        assertThat(failuresPage.getFailuresCell("Failed GCDs", "Count"), is(equalTo("3")));
-        assertThat(failuresPage.getFailuresCell("Failed GCDs", "Reason"), is(equalTo("Failed to cost")));
-        assertThat(failuresPage.getFailuresCell("Not Supported GCDs", "Count"), is(equalTo("1")));
-        assertThat(failuresPage.getFailuresCell("Not Supported GCDs", "Reason"), is(equalTo("Detached Solid")));
+        assertThat(guidancePage.getGuidanceCell("Failed GCDs", "Count"), is(equalTo("3")));
+        assertThat(guidancePage.getGuidanceCell("Not Supported GCDs", "Count"), is(equalTo("1")));
     }
 }
