@@ -692,6 +692,7 @@ public class PageUtils {
 
         return new WebDriverWait(driver, timeoutInMinutes)
             .withMessage("\nNot expecting: " + locator)
+            .ignoreAll(ignoredWebDriverExceptions)
             .until(ExpectedConditions.invisibilityOfAllElements(locator));
     }
 
