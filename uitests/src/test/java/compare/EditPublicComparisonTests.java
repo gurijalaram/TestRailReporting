@@ -119,7 +119,7 @@ public class EditPublicComparisonTests extends TestBase {
             .apply()
             .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
 
-        assertThat(new ComparePage(driver).getScenarioInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
+        assertThat(new ComparePage(driver).isScenarioInComparisonView(testScenarioName, "PowderMetalShaft"), is(true));
     }
 
     @Test
