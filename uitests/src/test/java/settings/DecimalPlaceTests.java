@@ -58,10 +58,9 @@ public class DecimalPlaceTests extends TestBase {
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
-/*
+
         assertThat(evaluatePage.isFinishMass("5.309458"), is(true));
         assertThat(evaluatePage.isUtilization("81.163688"), is(true));
-*/
         assertThat(evaluatePage.getCycleTimeCount(), is("110.120000"));
         assertThat(evaluatePage.getMaterialCost(), is("16.151375"));
         assertThat(evaluatePage.getPartCost(), is("19.723087"));
