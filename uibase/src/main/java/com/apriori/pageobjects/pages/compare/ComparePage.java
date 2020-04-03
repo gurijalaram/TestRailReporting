@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.compare;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -123,7 +124,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     public ComparePage removeScenarioFromCompareView(String partName, String scenarioName) {
         By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
             partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
-        pageUtils.scrollHorizontally(removeComparisonButton, horizontalScroller);
+        pageUtils.scrollToElement(removeComparisonButton, horizontalScroller, Constants.HORIZONTAL_SCROLL);
         pageUtils.waitForElementAndClick(removeComparisonButton);
         return this;
     }
@@ -134,7 +135,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return current page object
      */
     public ComparePage setBasis(String scenarioName) {
-        pageUtils.scrollHorizontally(findBasisButton(scenarioName), horizontalScroller);
+        pageUtils.scrollToElement(findBasisButton(scenarioName), horizontalScroller, Constants.HORIZONTAL_SCROLL);
         pageUtils.waitForElementAndClick(findBasisButton(scenarioName));
         return this;
     }
@@ -154,7 +155,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param partName the part name
      * @return size of element as int
      */
-    public int getScenarioInComparisonView(String scenarioName, String partName) {
+    public int getScenarioInComparisonView(String partName, String scenarioName) {
         By scenario = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
         return driver.findElements(scenario).size();
     }
