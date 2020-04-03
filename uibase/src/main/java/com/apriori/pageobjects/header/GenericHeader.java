@@ -133,7 +133,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public EvaluatePage uploadCadFile(File filename) {
-        return new FileUploadPage(driver).enterFileName(filename);
+        return new FileUploadPage(driver).uploadCadFile(filename);
     }
 
     /**

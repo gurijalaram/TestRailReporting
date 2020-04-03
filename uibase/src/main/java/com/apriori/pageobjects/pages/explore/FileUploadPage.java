@@ -102,7 +102,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param filename - the file name
      * @return new page object
      */
-    public EvaluatePage enterFileName(File filename) {
+    public EvaluatePage uploadCadFile(File filename) {
         fileInput.sendKeys(filename.getAbsolutePath().replace("%20", " "));
         fileInput.sendKeys(filename.getAbsolutePath().replace("%20", " "));
         return new EvaluatePage(driver);

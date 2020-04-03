@@ -67,4 +67,24 @@ public class MaterialPMITests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         assertThat(evaluatePage.isMaterialInfo("Aluminum, Stock, ANSI 6061"), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {"901"})
+    @Description("Test setting a default material and ensure parts are costed in that material by default")
+    public void testCadFile() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        File resourceFile2 = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadCadFile(resourceFile2)
+            .costScenario(3);
+
+        evaluatePage = new EvaluatePage(driver);
+        assertThat(evaluatePage.isMaterialInfo("Aluminum, Stock, ANSI 6061"), is(true));
+    }
 }
