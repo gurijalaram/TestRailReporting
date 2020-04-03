@@ -34,7 +34,7 @@ public class FileResourceUtil {
     public File getPathResourceFile(String fileName) {
 
         try {
-            file = new File("src/main/resources/" + fileName);
+            file = new File("uitests/src/main/resources/" + fileName);
         } catch (RuntimeException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
         }

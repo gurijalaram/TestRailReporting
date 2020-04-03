@@ -83,6 +83,9 @@ public class MaterialPMITests extends TestBase {
 
         loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
             .uploadCadFile(cadResourceFile);
 
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
