@@ -138,6 +138,8 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     public FilterCriteriaPage multiFilterPublicCriteria(String[] type, String[] attribute, String[] condition, String[] value) {
         //setPublicWorkspace();
+        assemblyCheckBox.click();
+        partCheckBox.click();
 
         //setScenarioType(type[0]);
         multiSelectAttribute(attribute[0]);
@@ -255,20 +257,60 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
-     * Multi selects value of matcher
-     * @param value - value to select in dropdown
+     * Set row one value, and two if needed
+     * @param value - value to set
+     * @param isMultiSelect - boolean if more than one row
      * @return current page object
      */
-    private FilterCriteriaPage multiSelectValue(String value) {
-        valueInputTwo.click();
-        valueInputTwo.sendKeys(value);
-        valueInputTwo.sendKeys(Keys.ESCAPE);
+    private FilterCriteriaPage setValues(String value, boolean isMultiSelect) {
+        if (!isMultiSelect) {
+            valueInputOne.click();
+            valueInputOne.sendKeys(value);
+            valueInputTwo.sendKeys(Keys.ESCAPE);
+        } else {
+            multiSelectionOfValue(value);
+        }
         return this;
     }
 
     /**
+     * Sets value for multi filter
+     * @param value - value to set
+     * @return current page object
+     */
+    private FilterCriteriaPage setValue(String value, boolean isMultiSelect) {
+        if (!isMultiSelect) {
+            new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
+        } else {
+            multiSelectAttribute(attribute, 2);
+        }
+        return this;
+    }
+
+    /**
+     * Multi select for value
+     * @param value -  value to set
+     */
+    private void multiSelectValue(String value) {
+        setValues(value, true);
+    }
+
+    /**
+     * Multi selection of values
+     * @param value - value to input
+     */
+    private void multiSelectionOfValue(String value) {
+        switch (this.numRows) {
+            case 2:
+                valueSelectionAction(valueInputOne, value);
+                valueSelectionAction(valueInputTwo, value);
+            default:
+                break;
+        }
+    }
+
+    /**
      * Selects the apply button
-     *
      * @param className - the class the method should return
      * @param <T>       - the generic declaration type
      * @return generic page object
@@ -364,6 +406,17 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     private void attributeSelectionAction(WebElement dropdownToUse, String attribute) {
         new Select(dropdownToUse).selectByVisibleText(attribute);
+    }
+
+    /**
+     * Inputs value into input field
+     * @param inputToUse - WebElement to enter text into
+     * @param valueToEnter - the text to enter in the input
+     */
+    private void valueSelectionAction(WebElement inputToUse, String valueToEnter) {
+        inputToUse.click();
+        inputToUse.sendKeys(valueToEnter);
+        inputToUse.sendKeys(Keys.ESCAPE);
     }
 
     /**
