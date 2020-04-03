@@ -11,6 +11,7 @@ import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
@@ -18,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
@@ -30,6 +30,7 @@ public class MaterialPMITests extends TestBase {
     private UserCredentials currentUser;
 
     private File resourceFile;
+    private File cadResourceFile;
 
     public MaterialPMITests() {
         super();
@@ -70,21 +71,20 @@ public class MaterialPMITests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"901"})
-    @Description("Test setting a default material and ensure parts are costed in that material by default")
+    @Description("Test to check file upload")
     public void testCadFile() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
-        File resourceFile2 = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        cadResourceFile = new FileResourceUtil().getPathResourceFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
-            .uploadCadFile(resourceFile2)
-            .costScenario(3);
+            .uploadCadFile(cadResourceFile);
 
-        evaluatePage = new EvaluatePage(driver);
-        assertThat(evaluatePage.isMaterialInfo("Aluminum, Stock, ANSI 6061"), is(true));
+        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), is(true));
     }
 }
