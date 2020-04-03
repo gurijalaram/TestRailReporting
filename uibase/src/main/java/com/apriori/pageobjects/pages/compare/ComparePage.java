@@ -154,7 +154,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param partName the part name
      * @return size of element as int
      */
-    public boolean isScenarioInComparisonView(String scenarioName, String partName) {
+    public boolean scenarioIsNotInComparisonView(String scenarioName, String partName) {
         By scenario = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
         return pageUtils.invisibilityOfElements(driver.findElements(scenario));
     }
