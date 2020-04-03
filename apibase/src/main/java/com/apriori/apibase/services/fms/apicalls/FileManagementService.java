@@ -6,7 +6,7 @@ import com.apriori.utils.Util;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaCds;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -36,7 +36,7 @@ public class FileManagementService {
         RequestEntity requestEntity = RequestEntity.init(requestUrl, klass)
                 .setHeaders(initHeaders(token, false));
 
-        return  GenericRequestUtil.get(requestEntity, new RequestAreaCds());
+        return  GenericRequestUtil.get(requestEntity, new RequestAreaApi());
     }
 
 
@@ -52,7 +52,7 @@ public class FileManagementService {
                         .use("folder", "QAAutomationFolder")
                 );
 
-        return GenericRequestUtil.postMultipart(requestEntity, new RequestAreaCds());
+        return GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi());
     }
 
     private static Map<String, String> initHeaders(String token, boolean addMultiPartFile) {

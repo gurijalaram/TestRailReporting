@@ -79,11 +79,11 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
     /**
      * Gets name of cad file
      *
-     * @return true/false
+     * @return name of cad file
      */
-    public boolean isCadFileName(String text) {
+    public String getCadFileName() {
         pageUtils.waitForElementToAppear(cadFileInput);
-        return pageUtils.checkElementAttribute(cadFileInput, "title", text);
+        return cadFileInput.getAttribute("value");
     }
 
     /**
@@ -181,12 +181,13 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
     }
 
     /**
-     * Checks the input value is correct
+     * Gets batch size from UI
      *
-     * @return true/false
+     * @return batch size
      */
-    public boolean getBatchSize(String text) {
-        return pageUtils.checkElementAttribute(batchSizeInput, "value", text);
+    public String getBatchSize() {
+        pageUtils.waitForElementAppear(batchSizeInput);
+        return batchSizeInput.getAttribute("value");
     }
 
     /**
