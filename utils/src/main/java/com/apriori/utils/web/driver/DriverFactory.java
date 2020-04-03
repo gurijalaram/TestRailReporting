@@ -234,6 +234,9 @@ public class DriverFactory {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--allow-outdated-plugins");
+        if (!StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"))) {
+            options.addArguments("--ignore-certificate-errors");
+        }
         options.setExperimentalOption("prefs", chromePrefs);
 
         // TODO: 28/02/2020 quick fix for running on linux. this will be reworked with major changes in the near future
