@@ -78,6 +78,9 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = "button[data-ap-comp='costComparisonReportButton']")
     private WebElement comparisonReportButton;
 
+    @FindBy(css = "input[type='file']")
+    private WebElement fileInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -129,11 +132,17 @@ public class GenericHeader extends PageHeader {
 
     /**
      * Uploads a cad file
-     * @param filename the filename
+     *
+     * @param filename - the file name
      * @return new page object
      */
     public EvaluatePage uploadCadFile(File filename) {
-        return new FileUploadPage(driver).uploadCadFile(filename);
+        pageUtils.waitForElementAndClick(actionsDropdown);
+        for (int sendFile = 0; sendFile < 4; sendFile++) {
+            fileInput.sendKeys(filename.getAbsolutePath().replace("%20", " "));
+        }
+        pageUtils.waitForElementAndClick(actionsDropdown);
+        return new EvaluatePage(driver);
     }
 
     /**

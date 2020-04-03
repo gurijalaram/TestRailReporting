@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.explore;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -103,8 +104,8 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return new page object
      */
     public EvaluatePage uploadCadFile(File filename) {
-        fileInput.sendKeys(filename.getAbsolutePath().replace("%20", " "));
-        fileInput.sendKeys(filename.getAbsolutePath().replace("%20", " "));
+        driver.findElement(By.cssSelector("input[type='file']")).sendKeys(filename.getAbsolutePath().replace("%20", " "));
+        driver.findElement(By.cssSelector("input[type='file']")).sendKeys(filename.getAbsolutePath().replace("%20", " "));
         return new EvaluatePage(driver);
     }
 
