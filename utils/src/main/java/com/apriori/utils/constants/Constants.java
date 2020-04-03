@@ -35,6 +35,7 @@ public class Constants {
 
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
+    public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
 
     public static String RUN_ID = defaultProjectIDValue;
 
