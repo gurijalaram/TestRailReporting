@@ -8,7 +8,7 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.dao.ServiceConnector;
-import com.apriori.utils.http.builder.service.RequestAreaCds;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -56,7 +56,7 @@ public class CdsApplications extends TestUtil {
     private <T> ResponseWrapper<T> getRequest(Class klass, boolean urlEncoding) {
         return GenericRequestUtil.get(
                 RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
-                new RequestAreaCds()
+                new RequestAreaApi()
         );
     }
 
