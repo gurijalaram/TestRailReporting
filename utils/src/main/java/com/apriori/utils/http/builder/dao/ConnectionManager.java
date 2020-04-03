@@ -20,11 +20,13 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
+import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,11 +125,15 @@ public class ConnectionManager<T> {
          *                          period inactivity between two consecutive data packets arriving at client side
          *                          after connection is established.
          */
-        builder.setConfig(RestAssuredConfig.config().httpClient(
-                HttpClientConfig.httpClientConfig()
-                        .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
-                        .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
-        ))
+        builder
+                .setConfig(RestAssuredConfig.config()
+                        .httpClient(
+                                HttpClientConfig.httpClientConfig()
+                                        .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
+                                        .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
+                        )
+                        .sslConfig(ignoreSslCheck() ? new SSLConfig().allowAllHostnames() : new SSLConfig())
+                )
                 .setBaseUri(requestEntity.buildEndpoint());
 
 
@@ -145,6 +151,10 @@ public class ConnectionManager<T> {
                     .redirects().follow(requestEntity.isFollowRedirection())
                     .log()
                     .all();
+    }
+
+    private boolean ignoreSslCheck() {
+        return !StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"));
     }
 
     // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
