@@ -1,19 +1,35 @@
 package com.apriori.utils.http.utils;
 
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
+
+import java.util.List;
+
 public class ResponseWrapper<T> {
 
     private int statusCode;
+    private Headers headers;
     private String body;
     private T responseEntity;
 
-    public static <T>  ResponseWrapper<T> build(int statusCode, String body,  T responseEntity) {
-        return new ResponseWrapper<T>(statusCode, body, responseEntity);
+    public static <T>  ResponseWrapper<T> build(final int statusCode, final Headers headers, final String body, T responseEntity) {
+        return new ResponseWrapper<T>(statusCode, headers, body, responseEntity);
     }
 
-    public ResponseWrapper(int statusCode, String body,  T responseEntity) {
+    public ResponseWrapper(final int statusCode, final Headers headers, final String body,  T responseEntity) {
         this.responseEntity = responseEntity;
         this.statusCode = statusCode;
         this.body = body;
+        this.headers = headers;
+    }
+
+    public Headers getHeaders() {
+        return headers;
+    }
+
+    public ResponseWrapper<T> setHeaders(Headers headers) {
+        this.headers = headers;
+        return this;
     }
 
     public String getBody() {

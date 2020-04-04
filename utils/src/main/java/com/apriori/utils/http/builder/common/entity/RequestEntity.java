@@ -52,6 +52,12 @@ public class RequestEntity {
     private int socketTimeout = 60000;
     private boolean urlEncodingEnabled = true;
 
+    public static RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
+        return new RequestEntity(null, null)
+                .setEndpoint(endpoint)
+                .setReturnType(returnType);
+    }
+
     public static RequestEntity init(String url, Class<?> returnType) {
         return new RequestEntity(null, null)
                 .setEndpoint(url)
@@ -262,6 +268,13 @@ public class RequestEntity {
     public RequestEntity setHeaders(Map<String, String> headers) {
         if (headers != null) {
             this.headers = headers;
+        }
+        return this;
+    }
+
+    public RequestEntity addHeaders(final String key, final String value) {
+        if (headers != null) {
+            this.headers.put(key, value);
         }
         return this;
     }
