@@ -136,15 +136,15 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Multi filter criteria for public selection
      * @return current page object
      */
-    public FilterCriteriaPage multiFilterPublicCriteria(String[] type, String[] attribute, String[] condition, String[] value) {
+    public FilterCriteriaPage multiFilterPublicCriteria(String[] type, String[] attributes, String[] condition, String[] values) {
         //setPublicWorkspace();
         assemblyCheckBox.click();
         partCheckBox.click();
 
         //setScenarioType(type[0]);
-        multiSelectAttribute(attribute[0]);
-        selectCondition(condition[0]);
-        multiSelectValue(value[0]);
+        multiSelectAttributes(attributes);
+        // condition defaults to contains (only option) so doesn't need selected
+        multiSelectValue(values);
         //setTypeOfValue(value[0]);
 
         return this;
@@ -212,11 +212,17 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     private FilterCriteriaPage selectAttribute(String attribute) {
-        return setAttribute(attribute, false);
+        return setAttribute(attribute, false, false);
     }
 
-    private FilterCriteriaPage multiSelectAttribute(String attribute) {
-        return setAttribute(attribute, true);
+    /**
+     * Insert multiple attributes
+     * @param attributes - attribute array
+     * @return current page object
+     */
+    private void multiSelectAttributes(String[] attributes) {
+        setAttribute(attributes[0], false, true);
+        selectAttribute(attributes[1]);
     }
 
     /**
@@ -262,13 +268,13 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param isMultiSelect - boolean if more than one row
      * @return current page object
      */
-    private FilterCriteriaPage setValues(String value, boolean isMultiSelect) {
+    private FilterCriteriaPage setValues(String[] value, boolean isMultiSelect) {
         if (!isMultiSelect) {
             valueInputOne.click();
             valueInputOne.sendKeys(value);
             valueInputTwo.sendKeys(Keys.ESCAPE);
         } else {
-            multiSelectionOfValue(value);
+            multiSelectionOfValue(value[0]);
         }
         return this;
     }
@@ -282,17 +288,17 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         if (!isMultiSelect) {
             new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
         } else {
-            multiSelectAttribute(attribute, 2);
+            multiSelectAttributes(attribute, 2);
         }
         return this;
     }
 
     /**
      * Multi select for value
-     * @param value -  value to set
+     * @param values -  values to set
      */
-    private void multiSelectValue(String value) {
-        setValues(value, true);
+    private void multiSelectValue(String[] values) {
+        setValues(values, true);
     }
 
     /**
@@ -373,11 +379,15 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param attribute - attribute to set
      * @return current page object
      */
-    private FilterCriteriaPage setAttribute(String attribute, boolean isMultiSelect) {
+    private FilterCriteriaPage setAttribute(String attribute, boolean isMultiSelect, boolean isFirstRow) {
         if (!isMultiSelect) {
-            new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
+            if (isFirstRow) {
+                new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
+            } else {
+                new Select(rowTwoAttributeDropdown).selectByVisibleText(attribute);
+            }
         } else {
-            multiSelectAttribute(attribute, 2);
+            multiSelectAttributes(attribute, 2);
         }
         return this;
     }
@@ -387,7 +397,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param attribute - attribute to select
      * @param numRows - number of rows to use
      */
-    private void multiSelectAttribute(String attribute, int numRows) {
+    private void multiSelectAttributes(String attribute, int numRows) {
         this.numRows = numRows;
         switch (numRows) {
             case 2:
