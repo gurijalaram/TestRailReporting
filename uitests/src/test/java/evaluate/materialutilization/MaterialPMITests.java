@@ -76,7 +76,7 @@ public class MaterialPMITests extends TestBase {
     public void testCadFile() {
 
         resourceFile = new FileResourceUtil().getResourceFile("1379344.stp");
-        cadResourceFile = new FileResourceUtil().getPathResourceFile("1379344.stp");
+        cadResourceFile = new FileResourceUtil().getResourceCadFile("1379344.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();

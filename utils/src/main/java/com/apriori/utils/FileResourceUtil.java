@@ -31,10 +31,10 @@ public class FileResourceUtil {
      * @param fileName - the file name
      * @return file object
      */
-    public File getPathResourceFile(String fileName) {
+    public File getResourceCadFile(String fileName) {
 
         try {
-            file = new File("/src/main/resources/" + fileName);
+            file = new File("cad-files/" + fileName);
         } catch (RuntimeException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
         }
