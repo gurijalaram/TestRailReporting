@@ -75,8 +75,9 @@ public class MaterialPMITests extends TestBase {
     @Description("Test to check file upload")
     public void testCadFile() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("1379344.stp");
-        cadResourceFile = new FileResourceUtil().getResourceCadFile("1379344.stp");
+        String file = "1379344.stp";
+        resourceFile = new FileResourceUtil().getResourceFile(file);
+        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
