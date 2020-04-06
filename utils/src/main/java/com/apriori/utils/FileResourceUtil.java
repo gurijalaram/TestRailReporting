@@ -18,7 +18,7 @@ public class FileResourceUtil {
      * @return file object
      */
     public File getResourceFile(String fileName) {
-        return getResource(fileName);
+        return resourceFile(fileName);
     }
 
     /**
@@ -28,10 +28,10 @@ public class FileResourceUtil {
      * @return file object
      */
     public File getResourceCadFile(String fileName) {
-        return getResource("cad-files" + fileName);
+        return resourceFile("cad-files" + fileName);
     }
 
-    private File getResource(String fileName) {
+    private File resourceFile(String fileName) {
         try {
             file = new File(ClassLoader.getSystemResource(fileName).getFile());
         } catch (RuntimeException e) {
