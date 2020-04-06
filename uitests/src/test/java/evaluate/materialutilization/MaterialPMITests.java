@@ -75,15 +75,15 @@ public class MaterialPMITests extends TestBase {
     @Description("Test to check file upload")
     public void testCadFile() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
-        cadResourceFile = new FileResourceUtil().getPathResourceFile("bracket_basic.prt");
+        resourceFile = new FileResourceUtil().getResourceFile("1379344.stp");
+        cadResourceFile = new FileResourceUtil().getPathResourceFile("1379344.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .uploadCadFile(cadResourceFile);
