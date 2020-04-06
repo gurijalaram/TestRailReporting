@@ -131,7 +131,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class})
     @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {

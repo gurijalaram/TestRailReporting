@@ -457,13 +457,27 @@ public class PageUtils {
     public WebElement scrollToElement(By scenario, WebElement scroller, String keyboardButton) {
         long startTime = System.currentTimeMillis() / 1000;
         int count = 0;
-        Keys keyboardAction = keyboardButton.equals("page_down") ? Keys.PAGE_DOWN : Keys.DOWN;
+        Keys keyAction = null;
+        switch (keyboardButton) {
+            case "page_down":
+                keyAction = Keys.PAGE_DOWN;
+                break;
+            case "arrow_down":
+                keyAction = Keys.DOWN;
+                break;
+            case "horizontal_scroll":
+                keyAction = Keys.RIGHT;
+                break;
+            default:
+                logger.error("unknown/no scroll action found");
+                break;
+        }
 
         while (count < 12) {
             try {
                 if (scroller.isDisplayed() && !isElementDisplayed(scenario)) {
                     do {
-                        scroller.sendKeys(keyboardAction);
+                        scroller.sendKeys(keyAction);
                     } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
 
                     Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
@@ -519,46 +533,6 @@ public class PageUtils {
             }
         }
         return driver.findElements(scenario);
-    }
-
-    /**
-     * Finds element in a table by scrolling.
-     *
-     * @param scenario - the locator for the scenario
-     * @param scroller - the scroller to scroll the element into view
-     * @return - the element as a webelement
-     */
-    public WebElement scrollHorizontally(By scenario, WebElement scroller) {
-        long startTime = System.currentTimeMillis() / 1000;
-        int count = 0;
-        Keys keyboardAction = Keys.RIGHT;
-
-        while (count < 12) {
-            try {
-                if (scroller.isDisplayed() && !isElementDisplayed(scenario)) {
-                    do {
-                        scroller.sendKeys(keyboardAction);
-                    } while (driver.findElements(scenario).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS * 2);
-
-                    Coordinates processCoordinates = ((Locatable) driver.findElement(scenario)).getCoordinates();
-                    processCoordinates.inViewPort();
-
-                    return driver.findElement(scenario);
-                } else {
-                    return driver.findElement(scenario);
-                }
-            } catch (ElementNotInteractableException e) {
-                logger.debug("Trying to recover from an element not interactable exception");
-                count = count + 1;
-            } catch (NoSuchElementException e) {
-                logger.debug("Trying to recover from no such element exception");
-                count = count + 1;
-            } catch (StaleElementReferenceException e) {
-                logger.debug("Trying to recover from a stale element reference exception");
-                count = count + 1;
-            }
-        }
-        return waitForElementToAppear(scenario);
     }
 
     /**
@@ -855,7 +829,7 @@ public class PageUtils {
      * @return String
      */
     public String getHeaderToCheck() {
-        String headerToCheck = "";
+        String headerToCheck;
         if (isEnvTE()) {
             headerToCheck = Constants.cidTeHeaderText;
         } else {

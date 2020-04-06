@@ -24,36 +24,42 @@ public class DBBackupHandler {
 
     private StringBuffer connectionStringMaker() {
         StringBuffer connectionString = null;
-        if (dbType.equals("mysql")) {
-            System.out.println("mysql connection string");
-            connectionString = new StringBuffer().append("mysqldump -u"
-                    + dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.username")
-                    + " -p" + dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.password")
-                    + " " + dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.dbname"));
-            for (int i = 0; i < excludedTables.size(); i++) {
-                connectionString.append(" --ignore-table=" + dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.dbname") + "." + excludedTables.get(i).concat(" -r "));
-            }
-            connectionString.append(backupPathHandlere());
-            System.out.println(connectionString);
-        } else if (dbType.equals("sqlserver")) {
-            System.out.println("sqlserver connection string");
-            connectionString = new StringBuffer().append("sqlcmd -q ").append("\"").append("BACKUP DATABASE apriori TO DISK = ").append(backupPathHandlere()).append("\"");
-            System.out.println(connectionString);
-        } else if (dbType.equals("oracle")) {
-            System.out.println("oracle connection string");
+        switch (dbType) {
+            case "mysql":
+                System.out.println("mysql connection string");
+                connectionString = new StringBuffer().append("mysqldump -u").append(dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.username")).append(" -p").append(dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.password")).append(" ").append(dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.dbname"));
+                for (String excludedTable : excludedTables) {
+                    connectionString.append(" --ignore-table=").append(dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.dbname")).append(".").append(excludedTable.concat(" -r "));
+                }
+                connectionString.append(backupPathHandlere());
+                System.out.println(connectionString);
+                break;
+            case "sqlserver":
+                System.out.println("sqlserver connection string");
+                connectionString = new StringBuffer().append("sqlcmd -q ").append("\"").append("BACKUP DATABASE apriori TO DISK = ").append(backupPathHandlere()).append("\"");
+                System.out.println(connectionString);
+                break;
+            case "oracle":
+                System.out.println("oracle connection string");
+                break;
         }
         return connectionString;
     }
 
     private String backupPathHandlere() {
-        if (dbType.equals("sqlserver")) {
-            userProjectHomePath = "'".concat(System.getProperty("user.dir").concat("\\apriori.bak")).concat("'");
-        } else if (dbType.equals("mysql")) {
-            userProjectHomePath = dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.dbname") + "_dump.sql";
-        } else if (dbType.equals("oracle")) {
-            System.out.println("oracle");
-        } else {
-            System.out.println("Couldn't resolve DB type");
+        switch (dbType) {
+            case "sqlserver":
+                userProjectHomePath = "'".concat(System.getProperty("user.dir").concat("\\apriori.bak")).concat("'");
+                break;
+            case "mysql":
+                userProjectHomePath = dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.dbname") + "_dump.sql";
+                break;
+            case "oracle":
+                System.out.println("oracle");
+                break;
+            default:
+                System.out.println("Couldn't resolve DB type");
+                break;
         }
         return userProjectHomePath;
     }

@@ -50,7 +50,7 @@ public class CastingDtcReportHeader extends GenericReportPage {
      * @return String of header text
      */
     private String waitForCorrectHeader(String reportName) {
-        String textToReturn = "";
+        String textToReturn;
         if (reportName.equals("Casting DTC Details") || reportName.equals("Casting DTC")) {
             pageUtils.waitForElementToAppear(headerDisplayedCastingDtcDetails);
             textToReturn = headerDisplayedCastingDtcDetails.getText();

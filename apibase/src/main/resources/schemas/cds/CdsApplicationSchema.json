@@ -1,6 +1,4 @@
 {
-  "definitions": {},
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "required": [
     "response"
@@ -9,16 +7,28 @@
     "response": {
       "type": "object",
       "required": [
+        "isCloudHomeApp",
+        "isSingleTenant",
+        "isPublic",
         "identity",
         "createdBy",
         "createdAt",
         "name",
-        "description",
-        "emailRegexPatterns",
-        "active",
-        "customerType"
+        "cloudReference",
+        "serviceName",
+        "version",
+        "description"
       ],
       "properties": {
+        "isCloudHomeApp": {
+          "type": "boolean"
+        },
+        "isSingleTenant": {
+          "type": "boolean"
+        },
+        "isPublic": {
+          "type": "boolean"
+        },
         "identity": {
           "type": "string",
           "pattern": "^(.*)$"
@@ -31,54 +41,30 @@
           "type": "string",
           "pattern": "^(.*)$"
         },
-        "updatedAt": {
-          "type": "string"
-
-        },
-        "updatedBy": {
-          "type": "string",
-          "pattern": "^(.*)$"
-        },
-
         "name": {
           "type": "string",
           "pattern": "^(.*)$"
         },
         "cloudReference": {
           "type": "string",
-          "pattern": "^(.*)$",
-          "optional": true
+          "pattern": "^(.*)$"
+        },
+        "serviceName": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(.*)$"
         },
         "description": {
           "type": "string",
           "pattern": "^(.*)$"
         },
-        "emailRegexPatterns": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^(.*)$"
-          }
-        },
-        "active": {
-          "type": "boolean"
-        },
-        "customerType": {
+        "iconUrl": {
           "type": "string",
           "pattern": "^(.*)$"
         }
-      },
-      "if": {
-        "properties": {
-          "updatedAt": {
-            "not": {
-              "type": "null"
-            }
-          }
-        }
-      },
-      "then": {
-        "required": ["updatedBy"]
       }
     }
   }

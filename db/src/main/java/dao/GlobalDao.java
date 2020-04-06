@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public abstract class GlobalDao<T> {
 
@@ -19,17 +20,14 @@ public abstract class GlobalDao<T> {
 
     public List<T> getAllObjects(Class<?> dbObject) {
         Query query = session.createQuery("FROM " + dbObject.getName());
-        List<T> dbListObjects = query.list();
-        return dbListObjects;
+        return query.list();
     }
 
     public void update(List<T> dbObject) {
         Transaction transaction;
         try {
             transaction = session.beginTransaction();
-            for (int i = 0; i < dbObject.size(); i++) {
-                session.saveOrUpdate(dbObject.get(i));
-            }
+            IntStream.range(0, dbObject.size()).forEach(i -> session.saveOrUpdate(dbObject.get(i)));
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,9 +38,7 @@ public abstract class GlobalDao<T> {
         Transaction transaction;
         try {
             transaction = session.beginTransaction();
-            for (int i = 0; i < dbObject.size(); i++) {
-                session.delete(dbObject.get(i));
-            }
+            IntStream.range(0, dbObject.size()).forEach(i -> session.delete(dbObject.get(i)));
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,9 +49,7 @@ public abstract class GlobalDao<T> {
         Transaction transaction;
         try {
             transaction = session.beginTransaction();
-            for (int i = 0; i < dbObject.size(); i++) {
-                session.save(dbObject.get(i));
-            }
+            IntStream.range(0, dbObject.size()).forEach(i -> session.save(dbObject.get(i)));
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

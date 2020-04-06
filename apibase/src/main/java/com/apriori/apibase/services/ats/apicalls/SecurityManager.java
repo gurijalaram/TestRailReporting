@@ -8,7 +8,7 @@ import com.apriori.apibase.services.ats.objects.TokenRequest;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaCds;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 
 public class SecurityManager {
     public static String retriveJwtToken(String url, int statusCode, String username, String email, String issuer, String subject) {
@@ -26,7 +26,7 @@ public class SecurityManager {
                 RequestEntity.init(url, Token.class)
                         .setBody(body)
                         .setStatusCode(statusCode),
-                new RequestAreaCds()
+                new RequestAreaApi()
         ).getResponseEntity();
 
         return token.getToken();
@@ -44,7 +44,7 @@ public class SecurityManager {
                 RequestEntity.init(url, AuthorizationResponse.class)
                         .setBody(body)
                         .setStatusCode(statusCode),
-                new RequestAreaCds()
+                new RequestAreaApi()
         ).getResponseEntity();
     }
 }

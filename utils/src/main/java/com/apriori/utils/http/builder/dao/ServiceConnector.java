@@ -2,9 +2,6 @@ package com.apriori.utils.http.builder.dao;
 
 import com.apriori.utils.constants.Constants;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 public class ServiceConnector {
 
     /**
@@ -20,7 +17,6 @@ public class ServiceConnector {
      * Generate a url for a micro-service using default parameters
      *
      * @param host
-     *
      * @return
      */
     public static String getServiceUrl(String host) {
@@ -33,7 +29,6 @@ public class ServiceConnector {
      * @param host
      * @param port
      * @param secretKey
-     *
      * @return
      */
     public static String getServiceUrl(String host, String port, String secretKey) {
@@ -56,30 +51,7 @@ public class ServiceConnector {
             url.append(String.format(":%s", port));
         }
 
-        url.append("/%s?key=" + secretKey);
+        url.append("/%s?key=").append(secretKey);
         return url.toString();
     }
-
-    /**
-     * Encode a url string using the Java encoder instead of the Rest-Assured encoder
-     *
-     * @param url
-     * @return
-     */
-    public static String urlEncode(String url) {
-        try {
-            return URLEncoder.encode(url, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new AssertionError("Unknown encoding" + e);
-        }
-
-    }
-
-    /**
-     * Only spaces are encoded in url parameters
-     */
-    public static String encodeSpaces(String url) {
-        return url.replace(" ", "%20");
-    }
-
 }

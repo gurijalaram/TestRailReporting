@@ -3,7 +3,7 @@ pipeline {
     parameters {
         string(name: 'TARGET_ENV', defaultValue: 'cid-aut', description: 'What is the target environment for testing?')
         choice(name: 'TEST_SUITE', choices: ['CIDTestSuite','SmokeTestSuite','AdhocTestSuite','CustomerSmokeTestSuite'], description: 'What is the test suite?')
-        string(name: 'THREAD_COUNT', defaultValue: '3', description: 'What is the amount of browser instances?')
+        string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'What is the browser?')
         string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
         choice(name: 'VM', choices: ['frodo','gimli','legolas'], description: 'What is the VM?')
@@ -12,8 +12,6 @@ pipeline {
     agent {
         label "${params.VM}"
     }
-
-
 
     environment {
         JAVA_HOME = "${tool 'OpenJDK 1.8.0_192 WIN64'}"

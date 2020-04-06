@@ -56,7 +56,7 @@ public class CdsUsers extends CdsTestUtil {
     private void validateUsers(Users usersResponse) {
         Object[] users = usersResponse.getResponse().getItems().toArray();
         Arrays.stream(users)
-                .forEach(u -> validate(u));
+                .forEach(this::validate);
     }
 
     private void validateUser(User userResponse) {

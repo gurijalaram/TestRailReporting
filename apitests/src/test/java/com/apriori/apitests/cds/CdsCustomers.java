@@ -73,7 +73,7 @@ public class CdsCustomers extends CdsTestUtil {
     private void validateCustomers(Customers customersResponse) {
         Object[] customers = customersResponse.getResponse().getItems().toArray();
         Arrays.stream(customers)
-            .forEach(c -> validate(c));
+            .forEach(this::validate);
     }
 
     private void validateCustomer(Customer customerResponse) {

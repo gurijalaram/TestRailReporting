@@ -8,7 +8,7 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.dao.ServiceConnector;
-import com.apriori.utils.http.builder.service.RequestAreaCds;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -45,7 +45,7 @@ public class CdsApplications extends TestUtil {
     @Description("API returns an application's information based on the supplied identity")
     public void getApplicationById() {
         url = String.format(url,
-                String.format("applications/%s", ServiceConnector.urlEncode(Constants.getCdsIdentityApplication())));
+                String.format("applications/%s", Constants.getCdsIdentityApplication()));
 
         ResponseWrapper<Application> response =  getRequest(Application.class, false);
 
@@ -56,7 +56,7 @@ public class CdsApplications extends TestUtil {
     private <T> ResponseWrapper<T> getRequest(Class klass, boolean urlEncoding) {
         return GenericRequestUtil.get(
                 RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
-                new RequestAreaCds()
+                new RequestAreaApi()
         );
     }
 
@@ -66,7 +66,7 @@ public class CdsApplications extends TestUtil {
     private void validateApplications(Applications applicationsResponse) {
         Object[] applications = applicationsResponse.getResponse().getItems().toArray();
         Arrays.stream(applications)
-                .forEach(a -> validate(a));
+                .forEach(this::validate);
     }
 
     private void validateApplication(Application applicationResponse) {
@@ -76,6 +76,6 @@ public class CdsApplications extends TestUtil {
 
     private void validate(Object applicationObj) {
         Application application = (Application) applicationObj;
-        Assert.assertTrue(application.getIdentity().matches("^#[a-zA-Z0-9]+@[a-zA-Z0-9]+#$"));
+        Assert.assertTrue(application.getIdentity().matches("^[a-zA-Z0-9]+$"));
     }
 }

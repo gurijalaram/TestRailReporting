@@ -122,7 +122,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         List<Element> valueElements = reportsPartPage.select(baseCssSelector);
 
         for (Element valueCell : valueElements) {
-            if (!valueCell.text().isEmpty() && valueCell.text().matches("[0-9]*[\\.][0-9]{2}")) {
+            if (!valueCell.text().isEmpty() && valueCell.text().matches("[0-9]*[.][0-9]{2}")) {
                 valsToReturn.add(new BigDecimal(valueCell.text()));
             }
         }
