@@ -97,13 +97,13 @@ public class Util {
 
     public static Map<String, String> getDefaultAuthorizationForm(final String username, final String password) {
         return new HashMap<String, String>() {{
-            put("grant_type", "password");
-            put("client_id", "apriori-web-cost");
-            put("client_secret", "donotusethiskey");
-            put("scope", "tenantGroup%3Ddefault%20tenant%3Ddefault");
-            put("username", username);
-            put("password", password);
-        }};
+                put("grant_type", "password");
+                put("client_id", "apriori-web-cost");
+                put("client_secret", "donotusethiskey");
+                put("scope", "tenantGroup%3Ddefault%20tenant%3Ddefault");
+                put("username", username);
+                put("password", password);
+            }};
     }
 
     /**

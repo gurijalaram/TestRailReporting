@@ -1,10 +1,12 @@
 package com.apriori.utils.http.utils;
 
-import io.restassured.http.Header;
 import io.restassured.http.Headers;
 
-import java.util.List;
-
+/**
+ * Response wrapper.
+ * Should wrap all HTTP responses, to provide the same communication interface with them.
+ * @param <T> - type of response entity.
+ */
 public class ResponseWrapper<T> {
 
     private int statusCode;
