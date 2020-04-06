@@ -13,28 +13,27 @@ public class FileResourceUtil {
 
     /**
      * Gets resource file
+     *
      * @param fileName - the file name
      * @return file object
      */
     public File getResourceFile(String fileName) {
-
-        try {
-            file = new File(ClassLoader.getSystemResource(fileName).getFile());
-        } catch (RuntimeException e) {
-            throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
-        }
-        return file;
+        return getResource(fileName);
     }
 
     /**
      * Gets resource file from specified path
+     *
      * @param fileName - the file name
      * @return file object
      */
     public File getResourceCadFile(String fileName) {
+        return getResource("cad-files" + fileName);
+    }
 
+    private File getResource(String fileName) {
         try {
-            file = new File(ClassLoader.getSystemResource("cad-files/" + fileName).getFile());
+            file = new File(ClassLoader.getSystemResource(fileName).getFile());
         } catch (RuntimeException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
         }
