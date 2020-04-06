@@ -34,7 +34,7 @@ public class FileResourceUtil {
     public File getResourceCadFile(String fileName) {
 
         try {
-            file = new File("cad-files/" + fileName);
+            file = new File(ClassLoader.getSystemResource("cad-files/" + fileName).getFile());
         } catch (RuntimeException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
         }
