@@ -1,6 +1,8 @@
-import org.junit.Test;
 import actions.local.DBBackupHandler;
 import actions.local.DBDataImporter;
+
+import org.junit.Test;
+
 import utils.PropertiesHandler;
 
 import java.util.ArrayList;
@@ -15,15 +17,15 @@ public class DBworkTests {
     public void createDBdump() {
         ArrayList<String> excludedTables = new ArrayList<>();
         excludedTables.add("fbc_persistentdocument");
-        DBBackupHandler db_beckup_maker = new DBBackupHandler(excludedTables);
-        db_beckup_maker.createDataBaseBackup();
+        DBBackupHandler dbBackupMaker = new DBBackupHandler(excludedTables);
+        dbBackupMaker.createDataBaseBackup();
     }
 
     @Test
     public void importIntoDB() {
         DBDataImporter dbDataImporter = new DBDataImporter();
         /* Path to folder with test materials */
-        String [] partPath = new String [] {"C:\\Users\\ssakho.FBC\\Desktop\\test\\ap"};
+        String[] partPath = new String[]{"C:\\Users\\ssakho.FBC\\Desktop\\test\\ap"};
         dbDataImporter.imporFilesIntoDB(partPath);
         System.out.println("Data was successfully imported");
     }

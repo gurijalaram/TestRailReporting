@@ -1,8 +1,11 @@
-import actions.cloud.DbMigration;
 import com.apriori.apibase.services.cid.objects.response.ExportSchedulesResponse;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
+import actions.cloud.DbMigration;
+
 import io.restassured.http.Header;
+
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,13 +17,13 @@ public class DataBaseActions extends TestUtil {
 
     @Before
     public void createNewDbMigrationInstance() {
-       dbMigration = new DbMigration();
+        dbMigration = new DbMigration();
     }
 
     /**
      * To migrate data from aPriori Professional database to jasper (reporting) database <br>
-     *     run this command in cmd from build folder: <br>
-     *         gradle clean -Denv=<env name> :database:test --tests "DataBaseActions.migrateDataFromProfessionalToReportingFailedIfDataIsNotMigrated"
+     * run this command in cmd from build folder: <br>
+     * gradle clean -Denv=<env name> :database:test --tests "DataBaseActions.migrateDataFromProfessionalToReportingFailedIfDataIsNotMigrated"
      */
     @Test
     public void migrateDataFromProfessionalToReportingFailedIfDataIsNotMigrated() {
@@ -48,6 +51,6 @@ public class DataBaseActions extends TestUtil {
     }
 
     private void removeExportSchedule(final DbMigration dbMigration, final String scheduleId) {
-            dbMigration.doDeleteExportSchedulesBySchedulesId(scheduleId);
+        dbMigration.doDeleteExportSchedulesBySchedulesId(scheduleId);
     }
 }
