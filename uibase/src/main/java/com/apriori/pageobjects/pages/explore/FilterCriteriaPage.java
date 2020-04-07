@@ -137,15 +137,17 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage multiFilterPublicCriteria(String[] type, String[] attributes, String[] condition, String[] values) {
-        //setPublicWorkspace();
-        assemblyCheckBox.click();
+        // workspace type and scenario type checkboxes default to what current user user last time
+        // thus I have unchecked what was likely used before and re-ticked them, but this will need more work
+        // in due course to make it properly dynamic.
+        privateCheckBox.click();
+        privateCheckBox.click();
+        partCheckBox.click();
         partCheckBox.click();
 
-        //setScenarioType(type[0]);
         multiSelectAttributes(attributes);
-        // condition defaults to contains (only option) so doesn't need selected
+        // condition defaults to contains (only option) so doesn't need selected (always, currently)
         multiSelectValue(values);
-        //setTypeOfValue(value[0]);
 
         return this;
     }
@@ -270,9 +272,12 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     private FilterCriteriaPage setValues(String[] value, boolean isMultiSelect) {
         if (!isMultiSelect) {
-            valueInputOne.click();
-            valueInputOne.sendKeys(value);
-            valueInputTwo.sendKeys(Keys.ESCAPE);
+            for (int i = 0; i < value.length; i++) {
+                WebElement elementToUse = i == 0 ? valueInputOne : valueInputTwo;
+                elementToUse.clear();
+                elementToUse.click();
+                elementToUse.sendKeys(value[i]);
+            }
         } else {
             multiSelectionOfValue(value[0]);
         }
@@ -298,7 +303,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param values -  values to set
      */
     private void multiSelectValue(String[] values) {
-        setValues(values, true);
+        setValues(values, false);
     }
 
     /**
