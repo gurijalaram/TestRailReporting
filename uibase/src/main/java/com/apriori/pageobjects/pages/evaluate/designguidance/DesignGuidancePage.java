@@ -68,7 +68,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToBeClickable(failuresTab);
+        pageUtils.waitForElementToBeClickable(investigationTab);
         pageUtils.waitForElementToAppear(panelDetails);
     }
 

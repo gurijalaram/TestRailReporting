@@ -14,6 +14,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author cfrith
  */
@@ -61,8 +65,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     }
 
     public ThreadingPage editThread(String gcdType, String gcd) {
-        findGCDType(gcdType).click();
-        findGCD(gcd).click();
+        selectGcdTypeAndGcd(gcdType, gcd);
         selectEditButton();
         return new ThreadingPage(driver);
     }
@@ -77,28 +80,6 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
         By investigationTopic = By.xpath("//div[@data-ap-comp='dtcTopicTable']//div[.='" + topic + "']");
         pageUtils.waitForElementToAppear(investigationTopic).click();
         return this;
-    }
-
-    /**
-     * Selects the gcd type
-     *
-     * @param gcdType - the gcd type
-     * @return the gcd type as a webelement
-     */
-    private WebElement findGCDType(String gcdType) {
-        By type = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcdType + "')]/ancestor::tr//label[@class]");
-        return pageUtils.scrollToElement(type, threadScroller, Constants.ARROW_DOWN);
-    }
-
-    /**
-     * Selects the gcd
-     *
-     * @param gcd - the gcd
-     * @return the gcd as webelement
-     */
-    private WebElement findGCD(String gcd) {
-        By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]/ancestor::td[@class]");
-        return pageUtils.scrollToElement(gcdElement, threadScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -150,5 +131,43 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     public String getInvestigationCell(String issueType, String column) {
         String rowLocator = "//div[@data-ap-comp='dtcInvestigationTable']//div[contains(text(),'" + issueType + "')]/ancestor::tr[@class]";
         return columnUtils.columnDetails("dtcInvestigationTable", column, rowLocator);
+    }
+
+    /**
+     * Gets the information in the gcd row
+     * @param gcdType - the gcd type
+     * @return the cell info as list
+     */
+    public List<String> getGcdRow(String gcdType) {
+        By gcdRow = By.xpath(String.format("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'%s')]/ancestor::tr[@class]", gcdType));
+        return Arrays.stream(driver.findElement(gcdRow).getText().split("[\n ]")).collect(Collectors.toList());
+    }
+
+    public InvestigationPage selectGcdTypeAndGcd(String gcdType, String gcd) {
+        findGCDType(gcdType).click();
+        findGCD(gcd).click();
+        return this;
+    }
+
+    /**
+     * Selects the gcd type
+     *
+     * @param gcdType - the gcd type
+     * @return the gcd type as a webelement
+     */
+    private WebElement findGCDType(String gcdType) {
+        By type = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcdType + "')]/ancestor::tr//label[@class]");
+        return pageUtils.scrollToElement(type, threadScroller, Constants.ARROW_DOWN);
+    }
+
+    /**
+     * Selects the gcd
+     *
+     * @param gcd - the gcd
+     * @return the gcd as webelement
+     */
+    private WebElement findGCD(String gcd) {
+        By gcdElement = By.xpath("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'" + gcd + "')]/ancestor::td[@class]");
+        return pageUtils.scrollToElement(gcdElement, threadScroller, Constants.ARROW_DOWN);
     }
 }
