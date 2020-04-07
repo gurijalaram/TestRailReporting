@@ -204,22 +204,19 @@ public class SheetMetalDTCTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
-            .selectInvestigationTopic("Holes and Fillets")
-            .findIssueType("Hole - Standard");
+            .selectInvestigationTopic("Holes and Fillets");
 
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("2")));
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("4")));
 
-        investigationPage.selectInvestigationTopic("Distinct Sizes Count")
-            .findIssueType("Bend Radius");
+        investigationPage.selectInvestigationTopic("Distinct Sizes Count");
 
         assertThat(investigationPage.getInvestigationCell("Bend Radius", "Tool Count"), is(equalTo("1")));
         assertThat(investigationPage.getInvestigationCell("Bend Radius", "GCD Count"), is(equalTo("1")));
         assertThat(investigationPage.getInvestigationCell("Hole Size", "Tool Count"), is(equalTo("2")));
         assertThat(investigationPage.getInvestigationCell("Hole Size", "GCD Count"), is(equalTo("4")));
 
-        investigationPage.selectInvestigationTopic("Machining Setups")
-            .findIssueType("SetupAxis:1");
+        investigationPage.selectInvestigationTopic("Machining Setups");
 
         assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("14")));
     }
