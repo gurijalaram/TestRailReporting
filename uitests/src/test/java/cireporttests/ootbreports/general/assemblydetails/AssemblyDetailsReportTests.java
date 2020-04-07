@@ -32,7 +32,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 import testsuites.suiteinterface.MySQLTest;
-import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;

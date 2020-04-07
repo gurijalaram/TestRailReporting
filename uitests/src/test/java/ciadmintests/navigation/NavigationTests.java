@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.admin.pages.homepage.HomePage;
 import com.apriori.pageobjects.admin.pages.login.LoginPage;
 import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
@@ -22,7 +21,6 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
-import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 public class NavigationTests extends TestBase {
