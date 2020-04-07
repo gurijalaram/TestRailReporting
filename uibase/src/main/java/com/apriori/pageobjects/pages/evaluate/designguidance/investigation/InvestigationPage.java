@@ -29,7 +29,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     @FindBy(css = "div[data-ap-comp='dtcTopicTable']")
     private WebElement topicTable;
 
-    @FindBy(css = ".gwt-ListBox")
+    @FindBy(css = "select[class='dtc-table-control']")
     private WebElement threadableDropdown;
 
     @FindBy(css = "div[data-ap-comp='dtcInvestigationTableExt'] .edit-tolerances-btn")
@@ -88,7 +88,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @param option - the dropdown in the option
      * @return current page object
      */
-    public InvestigationPage selectThreadableGCD(String option) {
+    public InvestigationPage selectFilterDropdown(String option) {
         pageUtils.selectDropdownOption(threadableDropdown, option);
         return this;
     }

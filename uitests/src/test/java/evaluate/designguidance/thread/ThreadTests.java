@@ -19,7 +19,6 @@ import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.enums.VPEEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -74,7 +73,7 @@ public class ThreadTests extends TestBase {
         assertThat(investigationPage.getEditButton().isEnabled(), is(false));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category( {CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"28", "1631"})
     @Description("C28 Test to check thread length persist")
@@ -133,7 +132,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Category({SmokeTests.class})
+    @Category( {SmokeTests.class})
     @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
@@ -460,7 +459,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category( {CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for DTC files")
@@ -482,7 +481,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("10.00"), is(true));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category( {CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for NX files")
@@ -504,7 +503,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("15.00"), is(true));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category( {CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for Creo files")
@@ -527,21 +526,40 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"44", "1632"})
-    @Description("Testing compatible thread length for Creo files")
-    public void threadsTable() {
+    @TestRail(testCaseId = {"64"})
+    @Description("Validate thread filter behaves correctly in Investigation tab.")
+    public void threadFilter() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .openScenario("Initial", "DTCCASTINGISSUES")
+            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
-            .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:4");
+            .selectFilterDropdown("Threaded in CAD")
+            .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
 
-        assertThat(investigationPage.getGcdRow("SimpleHole:4"), hasItems("CAD", "20.00"));
+        assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("CAD", "4.06"));
+
+        new InvestigationPage(driver).selectEditButton()
+            .enterThreadLength("7")
+            .apply(InvestigationPage.class);
+
+        new DesignGuidancePage(driver).closeDesignGuidance();
+
+        evaluatePage = new EvaluatePage(driver);
+        investigationPage = evaluatePage.costScenario()
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .selectFilterDropdown("Overridden GCDs")
+            .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
+
+        assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("Manual", "7.00"));
     }
 }
