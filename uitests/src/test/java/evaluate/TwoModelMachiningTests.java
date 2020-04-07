@@ -71,8 +71,8 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isSourceMaterial("Aluminum, Cast, ANSI AL380.0"), is(true));
-        assertThat(evaluatePage.isSourcePartName("DIE CASTING LOWER CONTROL ARM (AS CAST)"), is(true));
-        assertThat(evaluatePage.isSourceScenarioName("2 model 1"), is(true));
+        assertThat(evaluatePage.isSourcePartName("CASTING_BEFORE_MACHINING"), is(true));
+        assertThat(evaluatePage.isSourceScenarioName(testScenarioName, is(true));
     }
 
     @Test
