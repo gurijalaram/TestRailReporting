@@ -72,7 +72,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         assertThat(evaluatePage.isSourceMaterial("Aluminum, Cast, ANSI AL380.0"), is(true));
         assertThat(evaluatePage.isSourcePartName("CASTING_BEFORE_MACHINING"), is(true));
-        assertThat(evaluatePage.isSourceScenarioName(testScenarioName, is(true));
+        assertThat(evaluatePage.isSourceScenarioName(testScenarioName), is(true));
     }
 
     @Test
