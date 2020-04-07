@@ -20,6 +20,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class NavigationTests extends TestBase {
 
@@ -35,6 +37,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(CustomerSmokeTests.class)
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -119,6 +122,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(CustomerSmokeTests.class)
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {

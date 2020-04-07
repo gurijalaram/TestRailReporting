@@ -20,8 +20,8 @@ public class ConcurrentSuiteRunner extends Suite {
         String threads = "1";
         if (StringUtils.isNotEmpty(System.getProperty("threadCountClasses"))) {
             threads = System.getProperty("threadCountClasses");
-        } else if (StringUtils.isEmpty(System.getProperty("threadCountClasses")) && StringUtils.isNotEmpty(System.getProperty("threadCount"))) {
-            threads = System.getProperty("threadCount");
+        } else if (StringUtils.isEmpty(System.getProperty("threadCountClasses")) && StringUtils.isNotEmpty(System.getProperty("threadCounts"))) {
+            threads = System.getProperty("threadCounts");
         }
         setScheduler(new ParallelScheduler(threads));
 

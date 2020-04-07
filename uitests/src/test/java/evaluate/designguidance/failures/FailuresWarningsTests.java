@@ -6,11 +6,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -36,6 +37,7 @@ public class FailuresWarningsTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private FailuresPage failuresPage;
     private UserCredentials currentUser;
+    private GuidancePage guidancePage;
 
     private File resourceFile;
 
@@ -62,18 +64,18 @@ public class FailuresWarningsTests extends TestBase {
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        failuresPage = settingsPage.save(ExplorePage.class)
+        guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(5)
             .openDesignGuidance()
-            .openFailuresTab()
-            .selectIssueTypeAndGCD("Failed GCDs", "CurvedWall:100");
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Failed GCDs", "Curved Walls", "CurvedWall:100");
 
-        assertThat(failuresPage.getUncostedMessage(), containsString("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in)"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in)"));
 
-        failuresPage.selectIssueTypeAndGCD("Not Supported GCDs", "Not Supported:1");
-        assertThat(failuresPage.getUncostedMessage(), containsString("Multiple bodies exist in the model. Only the largest body is used and the remainder are ignored"));
+        guidancePage.selectIssueTypeAndGCD("Not Supported GCDs", "Detached Solid", "Not Supported:1");
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Multiple bodies exist in the model. Only the largest body is used and the remainder are ignored"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -93,16 +95,14 @@ public class FailuresWarningsTests extends TestBase {
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        failuresPage = settingsPage.save(ExplorePage.class)
+        guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .openFailuresTab();
+            .openGuidanceTab();
 
-        assertThat(failuresPage.getFailuresCell("Failed GCDs", "Count"), is(equalTo("3")));
-        assertThat(failuresPage.getFailuresCell("Failed GCDs", "Reason"), is(equalTo("Failed to cost")));
-        assertThat(failuresPage.getFailuresCell("Not Supported GCDs", "Count"), is(equalTo("1")));
-        assertThat(failuresPage.getFailuresCell("Not Supported GCDs", "Reason"), is(equalTo("Detached Solid")));
+        assertThat(guidancePage.getGuidanceCell("Failed GCDs", "Count"), is(equalTo("3")));
+        assertThat(guidancePage.getGuidanceCell("Not Supported GCDs", "Count"), is(equalTo("1")));
     }
 }

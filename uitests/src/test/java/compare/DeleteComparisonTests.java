@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -48,9 +49,9 @@ public class DeleteComparisonTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
 
-        loginPage = new CIDLoginPage(driver);
-        comparePage = loginPage.login(UserUtil.getUser())
+        new CIDLoginPage(driver).login(UserUtil.getUser())
             .uploadFile(testScenarioName, resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .selectExploreButton()
             .createNewComparison()
@@ -59,8 +60,9 @@ public class DeleteComparisonTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
-            .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "Machined Box AMERICAS")
+            .apply(ComparisonTablePage.class);
+
+        new ComparisonTablePage(driver).selectScenario(testScenarioName, "Machined Box AMERICAS")
             .apply();
 
         genericHeader = new GenericHeader(driver);
@@ -78,7 +80,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPrivateCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
-        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
+        assertThat(new ExplorePage(driver).getNoComponentText(), is(containsString(noComponentMessage)));
     }
 
     @Test

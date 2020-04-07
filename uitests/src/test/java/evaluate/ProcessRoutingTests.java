@@ -19,7 +19,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -110,7 +110,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.05, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,801.52"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.05, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.05, Total Capital Investments (USD): 11,753.83"));
     }
 
     @Test

@@ -17,6 +17,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -33,7 +34,7 @@ public class PublishNewCostedTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, SanityTests.class})
     @Description("Publish a new scenario from the Private Workspace to the Public Workspace")
     @TestRail(testCaseId = {"386", "388"})
     public void testPublishNewCostedScenario() {
