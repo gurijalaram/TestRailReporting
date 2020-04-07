@@ -17,29 +17,35 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
+
+import java.io.File;
 
 public class PublishNewCostedTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
 
+    private File resourceFile;
+
     public PublishNewCostedTests() {
         super();
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, SanityTests.class})
     @Description("Publish a new scenario from the Private Workspace to the Public Workspace")
     @TestRail(testCaseId = {"386", "388"})
     public void testPublishNewCostedScenario() {
 
         String testScenarioName = new Util().getScenarioName();
         String partName = "Testpart-4";
+        resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -56,10 +62,11 @@ public class PublishNewCostedTests extends TestBase {
 
         String testScenarioName = new Util().getScenarioName();
         String partName = "Testpart-4";
+        resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario("Analysis", "Low", "Abe Chaves")

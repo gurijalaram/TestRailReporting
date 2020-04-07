@@ -16,10 +16,13 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
+
+import java.io.File;
 
 public class ChangeStockSelectionTests extends TestBase {
 
@@ -28,18 +31,24 @@ public class ChangeStockSelectionTests extends TestBase {
     private StockPage stockPage;
     private MaterialPage materialPage;
 
+    private File resourceFile;
+
     public ChangeStockSelectionTests() {
         super();
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Issue("AP-59839")
     @TestRail(testCaseId = {"960", "1617", "1618", "1619", "873"})
     @Description("Test making changes to the Material Stock in Sheet Metal, the change is respected and the scenario can be re-cost")
     public void changeStockSelectionTestSheetMetal() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialComposition()
@@ -61,9 +70,12 @@ public class ChangeStockSelectionTests extends TestBase {
     @TestRail(testCaseId = {"983"})
     @Description("Test inappropriate stock cannot be selected")
     public void inappropriateStockSelectionTest() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         selectStockPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialComposition()

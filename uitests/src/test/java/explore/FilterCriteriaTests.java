@@ -20,12 +20,15 @@ import io.qameta.allure.Description;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
+
 public class FilterCriteriaTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
-    private PublishPage publishPage;
     private GenericHeader genericHeader;
+
+    private File resourceFile;
 
     public FilterCriteriaTests() {
         super();
@@ -36,11 +39,12 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("SheetMetal.prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
@@ -55,11 +59,12 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria attribute")
     public void testPrivateCriteriaAttribute() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Casting.prt"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .selectExploreButton();
@@ -76,11 +81,12 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria part contains")
     public void testPrivateCriteriaContains() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("CurvedWall.CATPart"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
@@ -95,11 +101,12 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
@@ -113,11 +120,13 @@ public class FilterCriteriaTests extends TestBase {
     @Test
     @Description("Test private criteria assembly status")
     public void testPublicCriteriaAssemblyStatus() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Analysis", "High", "Test Description", "Test Notes")
             .save(EvaluatePage.class)
@@ -140,11 +149,12 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton();
 
@@ -160,11 +170,12 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test public criteria assembly description")
     public void testPublicCriteriaAssemblyDesc() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .uploadFile(testScenarioName, resourceFile)
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Complete", "High", "Test Description", "Test Notes")
             .save(EvaluatePage.class)

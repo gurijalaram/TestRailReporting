@@ -1,28 +1,37 @@
 version: '3.7'
-
 services:
-    build: .
-    hub:
-      image: selenium/hub:3.141.59-titanium
-      ports:
-        - "4444:4444"
+  selenium-hub:
+    image: selenium/hub:latest
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
 
-    chrome:
-      image: selenium/node-chrome:3.141.59-titanium
-      volumes:
-        - /dev/shm:/dev/shm
-      environment:
-        HUB_HOST: hub
-        HUB_PORT: 4444
-        NODE_MAX_INSTANCES: 5
-        NODE_MAX_SESSION: 5
+  chrome:
+    image: selenium/node-chrome:latest
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - NODE_MAX_INSTANCES=5
+      - NODE_MAX_SESSION=5
+    restart: always
+    ports:
+      - "5900:5900"
 
-    firefox:
-      image: selenium/node-firefox:3.141.59-titanium
-      volumes:
-        - /dev/shm:/dev/shm
-      environment:
-        HUB_HOST: hub
-        HUB_PORT: 4444
-        NODE_MAX_INSTANCES: 5
-        NODE_MAX_SESSION: 5
+  firefox:
+    image: selenium/node-firefox:latest
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - NODE_MAX_INSTANCES=5
+      - NODE_MAX_SESSION=5
+    restart: always
+    ports:
+      - "5901:5900"

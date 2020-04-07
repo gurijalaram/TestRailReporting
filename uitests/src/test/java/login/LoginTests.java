@@ -19,12 +19,12 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
+
+import java.io.File;
 
 public class LoginTests extends TestBase {
 
@@ -33,23 +33,18 @@ public class LoginTests extends TestBase {
     private ForgottenPasswordPage forgottenPasswordPage;
     private PrivacyPolicyPage privacyPolicyPage;
     private EvaluatePage evaluatePage;
+
+    File resourceFile;
     private static String loginPageErrorMessage = "Wrong email or password.";
 
     public LoginTests() {
         super();
     }
 
-    @Before
-    public void before() {
-    }
-
-    @After
-    public void after() {
-    }
-
     @Test
     @Description("Test successful login")
     public void testLogin() {
+
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
@@ -59,6 +54,7 @@ public class LoginTests extends TestBase {
     @Test
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
+
         loginPage = new CIDLoginPage(driver);
         loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 
@@ -68,6 +64,7 @@ public class LoginTests extends TestBase {
     @Test
     @Description("Test unsuccessful login with incorrect email, correct password")
     public void testIncorrectEmail() {
+
         loginPage = new CIDLoginPage(driver);
         loginPage = loginPage.failedLoginAs("jacky348@apriori.com", UserUtil.getUser().getPassword());
 
@@ -77,6 +74,7 @@ public class LoginTests extends TestBase {
     @Test
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
+
         loginPage = new CIDLoginPage(driver);
         loginPage = loginPage.failedLoginAs("fakeuser@apriori.com", "fakePassword");
 
@@ -88,6 +86,7 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"1574"})
     @Description("Validate Login Dialog")
     public void loginDialog() {
+
         loginPage = new CIDLoginPage(driver);
 
         assertThat(loginPage.getMarketingText(), containsString("For the past 7 years, aPriori has hosted the International Cost Insight Conference"));
@@ -99,6 +98,7 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"1574"})
     @Description("Validate forgotten password link")
     public void forgotPassword() {
+
         loginPage = new CIDLoginPage(driver);
         forgottenPasswordPage = loginPage.forgottenPassword();
 
@@ -110,6 +110,7 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"1575"})
     @Description("Validate Welcome Message")
     public void welcomeMessage() {
+
         loginPage = new CIDLoginPage(driver);
         assertThat(loginPage.getWelcomeText(), containsString("Welcome! This login page provides access to aPriori's web applications, support portal and customer community. Access to these web services is available only to aPriori licensed customers, partners and employees"));
 
@@ -125,11 +126,12 @@ public class LoginTests extends TestBase {
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
     public void cadConnectionRemains() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

@@ -7,10 +7,11 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
@@ -21,11 +22,16 @@ import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
 
+import java.io.File;
+
 public class MaterialPMITests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
+
+    private File resourceFile;
+    private File cadResourceFile;
 
     public MaterialPMITests() {
         super();
@@ -42,6 +48,9 @@ public class MaterialPMITests extends TestBase {
     @TestRail(testCaseId = {"901"})
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -54,10 +63,33 @@ public class MaterialPMITests extends TestBase {
             .selectMaterial("Aluminum, Stock, ANSI 6061");
         new SettingsPage(driver).save(ExplorePage.class);
 
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
             .costScenario(3);
 
         evaluatePage = new EvaluatePage(driver);
         assertThat(evaluatePage.isMaterialInfo("Aluminum, Stock, ANSI 6061"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"901"})
+    @Description("Test to check file upload")
+    public void testCadFile() {
+
+        String file = "1379344.stp";
+        resourceFile = new FileResourceUtil().getResourceFile(file);
+        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .costScenario()
+            .uploadCadFile(cadResourceFile);
+
+        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), is(true));
     }
 }

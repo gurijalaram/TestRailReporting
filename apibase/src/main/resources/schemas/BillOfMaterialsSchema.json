@@ -1,7 +1,6 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -9,12 +8,10 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "title": "The Response Schema",
       "properties": {
         "isFirstPage": {
-          "$id": "#/properties/response/properties/isFirstPage",
           "type": "boolean",
           "title": "The Isfirstpage Schema",
           "default": false,
@@ -23,7 +20,6 @@
           ]
         },
         "isLastPage": {
-          "$id": "#/properties/response/properties/isLastPage",
           "type": "boolean",
           "title": "The Islastpage Schema",
           "default": false,
@@ -32,7 +28,6 @@
           ]
         },
         "pageNumber": {
-          "$id": "#/properties/response/properties/pageNumber",
           "type": "integer",
           "title": "The Pagenumber Schema",
           "default": 0,
@@ -41,7 +36,6 @@
           ]
         },
         "pageSize": {
-          "$id": "#/properties/response/properties/pageSize",
           "type": "integer",
           "title": "The Pagesize Schema",
           "default": 0,
@@ -50,7 +44,6 @@
           ]
         },
         "pageItemCount": {
-          "$id": "#/properties/response/properties/pageItemCount",
           "type": "integer",
           "title": "The Pageitemcount Schema",
           "default": 0,
@@ -59,7 +52,6 @@
           ]
         },
         "totalItemCount": {
-          "$id": "#/properties/response/properties/totalItemCount",
           "type": "integer",
           "title": "The Totalitemcount Schema",
           "default": 0,
@@ -68,7 +60,6 @@
           ]
         },
         "totalPageCount": {
-          "$id": "#/properties/response/properties/totalPageCount",
           "type": "integer",
           "title": "The Totalpagecount Schema",
           "default": 0,
@@ -77,7 +68,6 @@
           ]
         },
         "hasNextPage": {
-          "$id": "#/properties/response/properties/hasNextPage",
           "type": "boolean",
           "title": "The Hasnextpage Schema",
           "default": false,
@@ -86,7 +76,6 @@
           ]
         },
         "hasPreviousPage": {
-          "$id": "#/properties/response/properties/hasPreviousPage",
           "type": "boolean",
           "title": "The Haspreviouspage Schema",
           "default": false,
@@ -95,16 +84,13 @@
           ]
         },
         "items": {
-          "$id": "#/properties/response/properties/items",
           "type": "array",
           "title": "The Items Schema",
           "items": {
-            "$id": "#/properties/response/properties/items/items",
             "type": "object",
             "title": "The Items Schema",
             "properties": {
               "identity": {
-                "$id": "#/properties/response/properties/items/items/properties/identity",
                 "type": "string",
                 "title": "The Identity Schema",
                 "default": "",
@@ -114,7 +100,6 @@
                 "pattern": "^(.*)$"
               },
               "createdBy": {
-                "$id": "#/properties/response/properties/items/items/properties/createdBy",
                 "type": "string",
                 "title": "The Createdby Schema",
                 "default": "",
@@ -124,7 +109,6 @@
                 "pattern": "^(.*)$"
               },
               "createdAt": {
-                "$id": "#/properties/response/properties/items/items/properties/createdAt",
                 "type": "string",
                 "title": "The Createdat Schema",
                 "default": "",
@@ -134,7 +118,6 @@
                 "pattern": "^(.*)$"
               },
               "name": {
-                "$id": "#/properties/response/properties/items/items/properties/name",
                 "type": "string",
                 "title": "The Name Schema",
                 "default": "",
@@ -144,7 +127,6 @@
                 "pattern": "^(.*)$"
               },
               "filename": {
-                "$id": "#/properties/response/properties/items/items/properties/filename",
                 "type": "string",
                 "title": "The Filename Schema",
                 "default": "",
@@ -154,7 +136,6 @@
                 "pattern": "^(.*)$"
               },
               "type": {
-                "$id": "#/properties/response/properties/items/items/properties/type",
                 "type": "string",
                 "title": "The Type Schema",
                 "default": "",
@@ -164,7 +145,6 @@
                 "pattern": "^(.*)$"
               },
               "numberOfLineItemsNoPartsMatched": {
-                "$id": "#/properties/response/properties/items/items/properties/numberOfLineItemsNoPartsMatched",
                 "type": "integer",
                 "title": "The Numberoflineitemsnopartsmatched Schema",
                 "default": 0,
@@ -173,7 +153,6 @@
                 ]
               },
               "numberOfLineItemsIncomplete": {
-                "$id": "#/properties/response/properties/items/items/properties/numberOfLineItemsIncomplete",
                 "type": "integer",
                 "title": "The Numberoflineitemsincomplete Schema",
                 "default": 0,
@@ -182,7 +161,6 @@
                 ]
               },
               "numberOfLineItemsReadyForExport": {
-                "$id": "#/properties/response/properties/items/items/properties/numberOfLineItemsReadyForExport",
                 "type": "integer",
                 "title": "The Numberoflineitemsreadyforexport Schema",
                 "default": 0,
@@ -191,7 +169,6 @@
                 ]
               },
               "totalNumberOfLineItems": {
-                "$id": "#/properties/response/properties/items/items/properties/totalNumberOfLineItems",
                 "type": "integer",
                 "title": "The Totalnumberoflineitems Schema",
                 "default": 0,

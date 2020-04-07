@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.DeletePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -19,18 +18,22 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
+
+import java.io.File;
 
 public class AssemblyUploadTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private DeletePage deletePage;
 
+    private File resourceFile;
     private String scenarioName;
     private final String noComponentMessage = "You have no components that match the selected filter";
 
@@ -39,13 +42,17 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2628", "2647", "2653"})
     @Description("Assembly File Upload - STEP")
     public void testAssemblyFormatSTEP() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
 
@@ -57,16 +64,18 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2655", "2647", "2643"})
     @Description("Uploaded STEP assembly and components can be recosted")
     public void costAssembly() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
         String scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Assembly2.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
             .selectExploreButton()
@@ -118,16 +127,18 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2651"})
     @Description("User can delete STEP Assembly Pre-Costing")
     public void testSTEPAssemblyDeletePreCost() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
         scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .delete()
             .deleteScenario()
             .filterCriteria()
@@ -138,16 +149,18 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2652"})
     @Description("User can delete STEP Assembly Post-Costing")
     public void testSTEPAssemblyDeletePostCost() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
         scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
             .delete()
@@ -160,15 +173,18 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
+    @Category({SanityTests.class})
     @TestRail(testCaseId = {"2648"})
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
     public void testSTEPAssemblyPowderCoatCart() {
 
+        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
         scenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, new FileResourceUtil().getResourceFile("Piston_assembly.stp"))
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")

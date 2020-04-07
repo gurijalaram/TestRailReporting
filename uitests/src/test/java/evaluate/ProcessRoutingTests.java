@@ -19,7 +19,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -40,6 +40,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class ProcessRoutingTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -53,6 +55,8 @@ public class ProcessRoutingTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
     private UserCredentials currentUser;
+
+    private File resourceFile;
 
     public ProcessRoutingTests() {
         super();
@@ -68,11 +72,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate the user can Change the process routing in CI Design")
     public void testAlternateRoutingSelection() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -90,28 +97,34 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"645", "269", "647", "649"})
     @Description("View detailed information about costed process")
     public void testViewProcessDetails() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.05, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,801.52"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.05, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.05, Total Capital Investments (USD): 11,753.83"));
     }
 
     @Test
     @TestRail(testCaseId = {"646"})
     @Description("View individual process steps")
     public void testViewProcessSteps() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -125,11 +138,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1649", "1656"})
     @Description("Validate the user can Change the process routing")
     public void changeRouting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -152,11 +168,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1667", "1668"})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testRoutingCheckBox() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -181,11 +200,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1665", "1666"})
     @Description("Validate the information updates in the routing modal box")
     public void testlastRouting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("CastedPart.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CastedPart.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -211,11 +233,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1670", "568", "570", "571"})
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("CastedPart.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("CastedPart.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -245,15 +270,18 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1659"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("HoleProximityTest.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("HoleProximityTest.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getBurdenedCost("1.55"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.56"), is(true));
 
         new EvaluatePage(driver).openProcessDetails()
             .selectRoutingsButton()
@@ -262,18 +290,21 @@ public class ProcessRoutingTests extends TestBase {
             .closeProcessPanel()
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("1.95"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.96"), is(true));
     }
 
     @Test
     @TestRail(testCaseId = {"1661"})
     @Description("Validate materials selected are appropriate for selected routing.")
     public void routingMaterials() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         materialCompositionPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -292,11 +323,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1664"})
     @Description("Validate behaviour when selecting a PG that auto triggers a secondary process")
     public void routingSecondaryPG() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("AdditiveManuf.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("AdditiveManuf.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -330,11 +364,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1663"})
     @Description("Validate a variety of secondary processes can be added for newly selected routings")
     public void secondaryProcessesRoutings() {
+
+        resourceFile =  new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -363,11 +400,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1674", "1675"})
     @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
     public void routingPGs() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -382,11 +422,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1673"})
     @Description("Validate behaviour when Adding/Editing threads that may require additional machining.")
     public void threadsRouting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("plasticLid.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -418,11 +461,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1658", "1254"})
     @Description("Validate the properties dialogue box updates with a newly selected and costed routing.")
     public void propertiesRouting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         geometryPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -460,11 +506,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"648"})
     @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
     public void cycleTime() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Push Pin.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -484,11 +533,14 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1657"})
     @Description("Validate routing out of date message appears")
     public void routingOutOfDate() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -503,11 +555,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate routings Additive")
     public void routingsAdditive() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -520,11 +575,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate routings Bar and Tube")
     public void routingsBarTube() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -537,11 +595,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate routings Die Cast")
     public void routingsDieCasting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("SandCast.x_t");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SandCast.x_t"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -555,11 +616,14 @@ public class ProcessRoutingTests extends TestBase {
     @Issue("BA-867")
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("SandCast.x_t");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("SandCast.x_t"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -573,11 +637,14 @@ public class ProcessRoutingTests extends TestBase {
     @Issue("BA-867")
     @Description("Validate routings Forging")
     public void routingsForging() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -590,11 +657,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate routings Plastic Moulding")
     public void routingsPlasticMoulding() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -608,11 +678,14 @@ public class ProcessRoutingTests extends TestBase {
     @Issue("BA-867")
     @Description("Validate routings Powder Metal")
     public void routingsPowderMetal() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("PowderMetalShaft.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -625,11 +698,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate routings Rapid Prototyping")
     public void routingsRapidPrototyping() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -642,11 +718,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate routings Roto & Blow Moulding")
     public void routingsRotoBlowMould() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Rapid Prototyping.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -660,11 +739,14 @@ public class ProcessRoutingTests extends TestBase {
     @Issue("BA-867")
     @Description("Validate routings Sheet Metal")
     public void routingsSheetMetal() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("700-33770-01_A0.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("700-33770-01_A0.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -679,11 +761,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Hydroforming.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroforming.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -697,11 +782,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate routings Sheet Metal - Stretchforming")
     public void routingsStretchforming() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Hydroforming.stp");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Hydroforming.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -714,11 +802,14 @@ public class ProcessRoutingTests extends TestBase {
     @Test
     @Description("Validate routings Sheet Plastic")
     public void routingsSheetPlastic() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("sheet_plastic.STEP");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("sheet_plastic.STEP"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -732,11 +823,14 @@ public class ProcessRoutingTests extends TestBase {
     @Issue("BA-867")
     @Description("Validate routings Stock Machining")
     public void routingsStockMachining() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -752,6 +846,9 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1672"})
     @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
     public void routingTolerances() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -763,7 +860,7 @@ public class ProcessRoutingTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();

@@ -25,6 +25,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
+
 public class CostAllCadTests extends TestBase {
 
     private CIDLoginPage loginPage;
@@ -33,6 +35,8 @@ public class CostAllCadTests extends TestBase {
     private EvaluateHeader evaluateHeader;
     private WarningPage warningPage;
     private ReferenceComparePage referenceComparePage;
+
+    private File resourceFile;
 
     public CostAllCadTests() {
         super();
@@ -43,9 +47,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574", "565", "567"})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
+
         loginPage = new CIDLoginPage(driver);
         costDetailsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -53,18 +60,21 @@ public class CostAllCadTests extends TestBase {
             .expandDropdown("Piece Part Cost")
             .expandDropdown("Total Variable Costs");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("16.22"));
+        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("16.07"));
         assertThat(costDetailsPage.getCostContribution("Labor "), containsString("4.94"));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.35"));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.32"));
     }
 
     @Test
     @TestRail(testCaseId = {"566"})
     @Description("Be able to determine whether a decision has caused a cost increase or decrease")
     public void costIncreaseDecrease() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("powderMetal.stp");
+
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("powderMetal.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -85,9 +95,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - par")
     public void testCADFormatPar() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("26136.par");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("26136.par"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -99,9 +112,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - CATPart")
     public void testCADFormatCATPart() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -113,9 +129,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("turning.prt.4");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("turning.prt.4"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -127,9 +146,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Creo")
     public void testCADFormatCreo() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("turning.prt.4");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("turning.prt.4"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -141,9 +163,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Locker_bottom_panel.prt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Locker_bottom_panel.prt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -155,9 +180,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("VERTICAL PLATE.ipt");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("VERTICAL PLATE.ipt"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -169,9 +197,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("partbody_2.stp"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -183,9 +214,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParasolid() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic_steel_PMI.x_t");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("bracket_basic_steel_PMI.x_t"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -197,9 +231,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SAT");
+
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SAT"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -210,9 +247,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"1605"})
     @Description("Upload large GCD part. Part should be displayed in the viewer within 60 seconds")
     public void translationTest() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("LargePart.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         evaluateHeader = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), new FileResourceUtil().getResourceFile("LargePart.prt.1"))
+            .uploadFile(new Util().getScenarioName(), resourceFile)
             .checkForImage(0.1);
 
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), (is(true)));
@@ -222,9 +262,12 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"2317"})
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("LargePart.prt.1");
+
         loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
-            .failedUploadFile("<script>alert(document.cookie)</script>", new FileResourceUtil().getResourceFile("LargePart.prt.1"));
+            .failedUploadFile("<script>alert(document.cookie)</script>", resourceFile);
 
         assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
     }

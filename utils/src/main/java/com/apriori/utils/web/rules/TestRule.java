@@ -37,7 +37,7 @@ public class TestRule implements MethodRule {
 
     private static final Logger logger = LoggerFactory.getLogger(TestRule.class);
 
-    private int times = 1;
+    private int times = 0;
 
     private Throwable originalException = null;
     private String originalScreenshot = null;
@@ -163,7 +163,7 @@ public class TestRule implements MethodRule {
      * @return something
      */
     public String captureScreenshot(String className, String testName, TestBase testBase, int errorNumber) {
-        String filename = null;
+        String filename;
         String filePath = null;
         try {
             File screenshot;
