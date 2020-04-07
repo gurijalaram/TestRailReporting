@@ -135,11 +135,11 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     /**
      * Gets the information in the gcd row
-     * @param gcdType - the gcd type
+     * @param gcd - the gcd type
      * @return the cell info as list
      */
-    public List<String> getGcdRow(String gcdType) {
-        By gcdRow = By.xpath(String.format("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'%s')]/ancestor::tr[@class]", gcdType));
+    public List<String> getGcdRow(String gcd) {
+        By gcdRow = By.xpath(String.format("//div[@data-ap-comp='dtcTableExtArea']//div[contains(text(),'%s')]/ancestor::tr[@class]", gcd));
         return Arrays.stream(driver.findElement(gcdRow).getText().split("[\n ]")).collect(Collectors.toList());
     }
 
