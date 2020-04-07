@@ -73,7 +73,7 @@ public class ThreadTests extends TestBase {
         assertThat(investigationPage.getEditButton().isEnabled(), is(false));
     }
 
-    @Category( {CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"28", "1631"})
     @Description("C28 Test to check thread length persist")
@@ -132,7 +132,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
@@ -459,7 +459,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }
 
-    @Category( {CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for DTC files")
@@ -481,7 +481,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("10.00"), is(true));
     }
 
-    @Category( {CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for NX files")
@@ -503,7 +503,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("15.00"), is(true));
     }
 
-    @Category( {CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for Creo files")
