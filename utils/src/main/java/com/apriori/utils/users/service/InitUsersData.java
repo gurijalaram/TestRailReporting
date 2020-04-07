@@ -115,11 +115,10 @@ class InitUsersData {
 
     private static String initPathToFileWithUsers() {
 
-        return new StringBuffer(Constants.environment)
-            .append("/")
-            .append(Constants.usersFile)
-            .append(".csv")
-            .toString();
+        return Constants.environment +
+            "/" +
+            Constants.usersFile +
+            ".csv";
     }
 
 }
