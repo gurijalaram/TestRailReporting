@@ -143,6 +143,12 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
         return Arrays.stream(driver.findElement(gcdRow).getText().split("[\n ]")).collect(Collectors.toList());
     }
 
+    /**
+     * Selects the gcd type and gcd
+     * @param gcdType - the gcd type
+     * @param gcd - the gcd
+     * @return current page object
+     */
     public InvestigationPage selectGcdTypeAndGcd(String gcdType, String gcd) {
         findGCDType(gcdType).click();
         findGCD(gcd).click();

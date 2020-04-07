@@ -3,6 +3,7 @@ package evaluate.designguidance.thread;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
@@ -18,6 +19,7 @@ import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -522,5 +524,24 @@ public class ThreadTests extends TestBase {
             .editThread("Simple Holes", "SimpleHole:13");
 
         assertThat(threadingPage.isThreadLength("4.06"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"44", "1632"})
+    @Description("Testing compatible thread length for Creo files")
+    public void threadsTable() {
+
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CIDLoginPage(driver);
+        investigationPage = loginPage.login(currentUser)
+            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+            .openScenario("Initial", "DTCCASTINGISSUES")
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:4");
+
+        assertThat(investigationPage.getGcdRow("SimpleHole:4"), hasItems("CAD", "20.00"));
     }
 }
