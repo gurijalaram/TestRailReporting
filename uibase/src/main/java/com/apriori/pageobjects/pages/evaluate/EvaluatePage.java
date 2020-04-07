@@ -187,7 +187,7 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-field='sourceModelPartName']")
     private WebElement sourceModelPartName;
 
-    @FindBy(css = "[data-ap-comp='selectSource']")
+    @FindBy(css = "[data-ap-comp='selectSourceLink']")
     private WebElement selectSourceButton;
 
     @FindBy(css = "[data-ap-field='sourceModelScenario']")
@@ -795,6 +795,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public ComparisonTablePage selectSourcePart() {
+        pageUtils.waitForElementToAppear(selectSourceButton);
         pageUtils.waitForElementAndClick(selectSourceButton);
         return new ComparisonTablePage(driver);
     }

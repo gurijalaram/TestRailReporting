@@ -116,7 +116,7 @@ public class EditPublicComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class);
 
         new ComparisonTablePage(driver).selectScenario(testScenarioName, "PowderMetalShaft")
-            .apply()
+            .apply(ComparePage.class)
             .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
 
         assertThat(new ComparePage(driver).getScenarioInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
@@ -154,14 +154,14 @@ public class EditPublicComparisonTests extends TestBase {
             .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, testPartName)
-            .apply();
+            .apply(ComparePage.class);
 
         new ComparePage(driver).addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName2, testPartName)
-            .apply();
+            .apply(ComparePage.class);
 
         new ComparePage(driver).setBasis(testScenarioName2);
 

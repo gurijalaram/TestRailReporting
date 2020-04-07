@@ -63,7 +63,7 @@ public class DeleteComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class);
 
         new ComparisonTablePage(driver).selectScenario(testScenarioName, "Machined Box AMERICAS")
-            .apply();
+            .apply(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.openJobQueue()
@@ -134,10 +134,6 @@ public class DeleteComparisonTests extends TestBase {
             .selectScenario(testScenarioName, "MACHINED BOX AMERICAS")
             .apply(ComparePage.class);
 
-        pageHeader = new PageHeader(driver);
-        jobQueuePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
-
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -181,10 +177,6 @@ public class DeleteComparisonTests extends TestBase {
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
             .apply(ComparePage.class);
-
-        pageHeader = new PageHeader(driver);
-        jobQueuePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)
@@ -230,11 +222,7 @@ public class DeleteComparisonTests extends TestBase {
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
             .apply(ComparisonTablePage.class)
             .selectScenario(testScenarioName, "testpart-4")
-            .apply(ComparePage.class));
-
-        pageHeader = new PageHeader(driver);
-        jobQueuePage = pageHeader.openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay");
+            .apply(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)
