@@ -21,6 +21,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
+import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 public class NavigationTests extends TestBase {
@@ -37,7 +39,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -127,7 +129,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {

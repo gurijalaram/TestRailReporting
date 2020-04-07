@@ -1,20 +1,16 @@
 package com.apriori.apibase.services.fms.apicalls;
 
-import com.apriori.apibase.http.builder.common.entity.RequestEntity;
-import com.apriori.apibase.http.builder.dao.GenericRequestUtil;
-import com.apriori.apibase.http.builder.dao.ServiceConnector;
-import com.apriori.apibase.http.builder.service.RequestAreaCds;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.fms.objects.FilesResponse;
-import com.apriori.apibase.services.fms.objects.UploadResponse;
-import com.apriori.apibase.services.objects.Token;
-import com.apriori.apibase.utils.FormParams;
-import com.apriori.apibase.utils.MultiPartFiles;
-import com.apriori.apibase.utils.ResponseWrapper;
 import com.apriori.utils.Util;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.dao.GenericRequestUtil;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.utils.http.utils.FormParams;
+import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.ResponseWrapper;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,13 +36,13 @@ public class FileManagementService {
         RequestEntity requestEntity = RequestEntity.init(requestUrl, klass)
                 .setHeaders(initHeaders(token, false));
 
-        return  GenericRequestUtil.get(requestEntity, new RequestAreaCds());
+        return  GenericRequestUtil.get(requestEntity, new RequestAreaApi());
     }
 
 
-    public static ResponseWrapper<UploadResponse> uploadFile(String token, String fileName) {
+    public static ResponseWrapper<FileResponse> uploadFile(String token, String fileName) {
 
-        RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, Constants.getFmsServiceHost()), UploadResponse.class)
+        RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, Constants.getFmsServiceHost()), FileResponse.class)
                 .setHeaders(initHeaders(token, true))
                 .setMultiPartFiles(new MultiPartFiles()
                         .use("data", Util.getLocalResourceFile(fileName))
@@ -56,7 +52,7 @@ public class FileManagementService {
                         .use("folder", "QAAutomationFolder")
                 );
 
-        return GenericRequestUtil.postMultipart(requestEntity, new RequestAreaCds());
+        return GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi());
     }
 
     private static Map<String, String> initHeaders(String token, boolean addMultiPartFile) {

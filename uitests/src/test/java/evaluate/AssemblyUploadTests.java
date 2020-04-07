@@ -22,6 +22,7 @@ import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -173,6 +174,7 @@ public class AssemblyUploadTests extends TestBase {
 
     @Test
     @Issue("AP-59726")
+    @Category({SanityTests.class})
     @TestRail(testCaseId = {"2648"})
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
     public void testSTEPAssemblyPowderCoatCart() {

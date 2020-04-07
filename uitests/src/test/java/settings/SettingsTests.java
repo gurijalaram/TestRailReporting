@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
@@ -15,7 +16,7 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultPage;
 import com.apriori.pageobjects.pages.settings.SelectionSettingsPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -35,6 +36,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -59,7 +61,7 @@ public class SettingsTests extends TestBase {
         }
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class, SanityTests.class})
     @Test
     @TestRail(testCaseId = {"1609", "276"})
     @Description("User can change the default Production Defaults")
@@ -183,7 +185,9 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        String partName = "Push Pin.stp";
+        String batchSize = "46";
+        resourceFile = new FileResourceUtil().getResourceFile(partName);
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -193,7 +197,7 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .openProdDefaultTab()
             .selectBatchManual()
-            .enterBatchInput("46");
+            .enterBatchInput(batchSize);
 
         settingsPage = new SettingsPage(driver);
         moreInputsPage = settingsPage.save(ExplorePage.class)
@@ -202,8 +206,8 @@ public class SettingsTests extends TestBase {
             .costScenario()
             .openMoreInputs();
 
-        assertThat(moreInputsPage.getBatchSize("46"), Matchers.is(true));
-        assertThat(moreInputsPage.isCadFileName("push pin.stp"), is(true));
+        assertThat(moreInputsPage.getBatchSize(), equalTo(batchSize));
+        assertThat(moreInputsPage.getCadFileName(), equalToIgnoringCase(partName));
     }
 
     @Test

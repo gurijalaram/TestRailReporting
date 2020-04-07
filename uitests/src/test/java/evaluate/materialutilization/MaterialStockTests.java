@@ -84,7 +84,7 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("19.14")));
+        assertThat(evaluatePage.getPartCost(), is(equalTo("18.56")));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialComposition()
@@ -102,7 +102,7 @@ public class MaterialStockTests extends TestBase {
         materialPage = new MaterialPage(driver);
         evaluatePage = materialPage.closeMaterialAndUtilizationPanel()
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("19.64")));
+        assertThat(evaluatePage.getPartCost(), is(equalTo("19.06")));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialComposition()

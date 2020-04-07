@@ -32,6 +32,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 import testsuites.suiteinterface.MySQLTest;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -104,7 +106,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "1922")
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {

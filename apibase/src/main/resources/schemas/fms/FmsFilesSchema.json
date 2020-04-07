@@ -7,101 +7,14 @@
     "response": {
       "type": "object",
       "required": [
-        "isLastPage",
-        "isFirstPage",
-        "pageNumber",
-        "pageSize",
-        "pageItemCount",
-        "totalItemCount",
-        "totalPageCount",
-        "hasNextPage",
-        "hasPreviousPage",
         "items"
       ],
+      "$ref": "../PaginationSchema.json",
       "properties": {
-        "isLastPage": {
-          "type": "boolean"
-        },
-        "isFirstPage": {
-          "type": "boolean"
-        },
-        "pageNumber": {
-          "type": "integer"
-        },
-        "pageSize": {
-          "type": "integer"
-        },
-        "pageItemCount": {
-          "type": "integer"
-        },
-        "totalItemCount": {
-          "type": "integer"
-        },
-        "totalPageCount": {
-          "type": "integer"
-        },
-        "hasNextPage": {
-          "type": "boolean"
-        },
-        "hasPreviousPage": {
-          "type": "boolean"
-        },
         "items": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "identity",
-              "createdBy",
-              "createdAt",
-              "customerIdentity",
-              "deploymentIdentity",
-              "installationIdentity",
-              "applicationIdentity",
-              "userIdentity",
-              "filename",
-              "folder",
-              "filesize",
-              "md5hash"
-            ],
-            "properties": {
-              "identity": {
-                "type": "string"
-              },
-              "createdBy": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "customerIdentity": {
-                "type": "string"
-              },
-              "deploymentIdentity": {
-                "type": "string"
-              },
-              "installationIdentity": {
-                "type": "string"
-              },
-              "applicationIdentity": {
-                "type": "string"
-              },
-              "userIdentity": {
-                "type": "string"
-              },
-              "filename": {
-                "type": "string"
-              },
-              "folder": {
-                "type": "string"
-              },
-              "filesize": {
-                "type": "integer"
-              },
-              "md5hash": {
-                "type": "string"
-              }
-            }
+            "$ref": "FmsFileSchema.json"
           }
         }
       }

@@ -11,7 +11,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.Inves
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -131,7 +131,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class})
     @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
