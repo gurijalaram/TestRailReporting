@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "CdsRoleSchema.json")
+@Schema(location = "cds/CdsRoleSchema.json")
 public class Role {
     private String identity;
     private String createdBy;

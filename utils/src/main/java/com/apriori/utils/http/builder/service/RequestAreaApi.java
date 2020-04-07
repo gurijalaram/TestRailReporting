@@ -1,10 +1,9 @@
 package com.apriori.utils.http.builder.service;
 
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.interfaces.RequestArea;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
-public class RequestAreaFms implements RequestArea {
+public class RequestAreaApi implements com.apriori.utils.http.builder.interfaces.RequestArea {
 
     @Override
     public <T> ResponseWrapper<T> get(RequestEntity requestEntity) {

@@ -141,17 +141,6 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     }
 
     /**
-     * Finds the issue type
-     *
-     * @param issueType - the issue type
-     * @return
-     */
-    public InvestigationPage findIssueType(String issueType) {
-        By issue = By.xpath("//div[@data-ap-comp='dtcInvestigationTable']//div[contains(text(),'" + issueType.trim() + "')]");
-        return this;
-    }
-
-    /**
      * Gets the cell details
      *
      * @param issueType - tolerance type
