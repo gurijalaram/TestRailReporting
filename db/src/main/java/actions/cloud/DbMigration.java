@@ -69,7 +69,7 @@ public class DbMigration {
         RequestEntity requestEntity =
                 this.initDefaultRequest(CidAdminHttpEnum.POST_EXPORT_NOW_BY_SCHEDULE_ID)
                         .setInlineVariables(schedulesId)
-                        .setStatusCode(HttpStatus.SC_CREATED);
+                        .setStatusCode(HttpStatus.SC_NO_CONTENT);
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaClearRequest());
     }
@@ -92,7 +92,7 @@ public class DbMigration {
         RequestEntity requestEntity =
                 this.initDefaultRequest(CidAdminHttpEnum.DELETE_EXPORT_BY_SCHEDULE_ID)
                         .setInlineVariables(schedulesId)
-                        .setStatusCode(HttpStatus.SC_OK);
+                        .setStatusCode(HttpStatus.SC_NO_CONTENT);
 
         return GenericRequestUtil.delete(requestEntity, new RequestAreaClearRequest());
     }
