@@ -191,16 +191,14 @@ public class CastingDtcReportTests extends TestBase {
         String scenarioName = "Initial";
         genericReportPage.openNewTabAndFocus();
 
-        String[] typesArray = { "Part", "Part" };
         String[] attributesArray = { "Part Name", "Scenario Name" };
-        String[] conditionsArray = { "Contains", "Contains" };
         String[] valuesArray = { partName, scenarioName };
         ExplorePage explorePage = new ExplorePage(driver)
                 .filterCriteria()
-                .multiFilterPublicCriteria(typesArray, attributesArray, conditionsArray, valuesArray)
+                .multiFilterPublicCriteria(attributesArray, valuesArray)
                 .apply(ExplorePage.class);
 
-        // Click into part at top of list (list of one
+        // Click into part at top of list (list of one)
 
         // Assert against report being on screen or something else? Think!
     }

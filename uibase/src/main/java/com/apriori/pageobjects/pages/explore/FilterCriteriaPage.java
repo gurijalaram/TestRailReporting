@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Filter;
 
 /**
  * @author cfrith
@@ -136,19 +137,12 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Multi filter criteria for public selection
      * @return current page object
      */
-    public FilterCriteriaPage multiFilterPublicCriteria(String[] type, String[] attributes, String[] condition, String[] values) {
-        // workspace type and scenario type checkboxes default to what current user user last time
-        // thus I have unchecked what was likely used before and re-ticked them, but this will need more work
-        // in due course to make it properly dynamic.
-        privateCheckBox.click();
-        privateCheckBox.click();
-        partCheckBox.click();
-        partCheckBox.click();
-
-        multiSelectAttributes(attributes);
-        // condition defaults to contains (only option) so doesn't need selected (always, currently)
-        multiSelectValue(values);
-
+    public FilterCriteriaPage multiFilterPublicCriteria(String[] attributes, String[] values) {
+        clear(FilterCriteriaPage.class)
+            .setPrivateWorkSpace()
+            .setScenarioType("Part")
+            .multiSelectAttributes(attributes)
+            .multiSelectValue(values);
         return this;
     }
 
@@ -169,22 +163,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     protected FilterCriteriaPage setScenarioType(String type) {
         selectScenarioType(type);
-        return this;
-    }
-
-    /**
-     * Sets the scenario type
-     * @param type - scenario type
-     * @return current page object
-     */
-    protected FilterCriteriaPage multiSelectScenarioType(String type, int row) {
-        if (row == 1) {
-            selectScenarioType(type);
-        } else if (row == 2) {
-            selectScenarioType(type);
-        } else {
-            return this;
-        }
         return this;
     }
 
@@ -214,7 +192,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     private FilterCriteriaPage selectAttribute(String attribute) {
-        return setAttribute(attribute, false, false);
+        new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
+        this.attribute = attribute;
+        return this;
     }
 
     /**
@@ -222,9 +202,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param attributes - attribute array
      * @return current page object
      */
-    private void multiSelectAttributes(String[] attributes) {
-        setAttribute(attributes[0], false, true);
-        selectAttribute(attributes[1]);
+    private FilterCriteriaPage multiSelectAttributes(String[] attributes) {
+        setAttributes(attributes);
+        return this;
     }
 
     /**
@@ -265,35 +245,14 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
-     * Set row one value, and two if needed
-     * @param value - value to set
-     * @param isMultiSelect - boolean if more than one row
+     * Set value in more than one row
+     * @param values - values to set
      * @return current page object
      */
-    private FilterCriteriaPage setValues(String[] value, boolean isMultiSelect) {
-        if (!isMultiSelect) {
-            for (int i = 0; i < value.length; i++) {
-                WebElement elementToUse = i == 0 ? valueInputOne : valueInputTwo;
-                elementToUse.clear();
-                elementToUse.click();
-                elementToUse.sendKeys(value[i]);
-            }
-        } else {
-            multiSelectionOfValue(value[0]);
-        }
-        return this;
-    }
-
-    /**
-     * Sets value for multi filter
-     * @param value - value to set
-     * @return current page object
-     */
-    private FilterCriteriaPage setValue(String value, boolean isMultiSelect) {
-        if (!isMultiSelect) {
-            new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
-        } else {
-            multiSelectAttributes(attribute, 2);
+    private FilterCriteriaPage setValues(String[] values) {
+        for (int i = 0; i < values.length; i++) {
+            WebElement elementToUse = i == 0 ? valueInputOne : valueInputTwo;
+            valueSelectionAction(elementToUse, values[i]);
         }
         return this;
     }
@@ -303,21 +262,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param values -  values to set
      */
     private void multiSelectValue(String[] values) {
-        setValues(values, false);
-    }
-
-    /**
-     * Multi selection of values
-     * @param value - value to input
-     */
-    private void multiSelectionOfValue(String value) {
-        switch (this.numRows) {
-            case 2:
-                valueSelectionAction(valueInputOne, value);
-                valueSelectionAction(valueInputTwo, value);
-            default:
-                break;
-        }
+        setValues(values);
     }
 
     /**
@@ -381,37 +326,17 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets attribute for multi filter
-     * @param attribute - attribute to set
+     * @param attributes - array of attributes to set
      * @return current page object
      */
-    private FilterCriteriaPage setAttribute(String attribute, boolean isMultiSelect, boolean isFirstRow) {
-        if (!isMultiSelect) {
-            if (isFirstRow) {
-                new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
-            } else {
-                new Select(rowTwoAttributeDropdown).selectByVisibleText(attribute);
-            }
-        } else {
-            multiSelectAttributes(attribute, 2);
+    private FilterCriteriaPage setAttributes(String[] attributes) {
+        for (int i = 0; i < attributes.length; i++) {
+            WebElement elementToUse = i == 0 ? rowOneAttributeDropdown : rowTwoAttributeDropdown;
+            //Select selectToUse = new Select(elementToUse);
+            attributeSelectionAction(elementToUse, attributes[i]);
+            //selectToUse.selectByVisibleText(attributes[i]);
         }
         return this;
-    }
-
-    /**
-     * Multi select for attribute
-     * @param attribute - attribute to select
-     * @param numRows - number of rows to use
-     */
-    private void multiSelectAttributes(String attribute, int numRows) {
-        this.numRows = numRows;
-        switch (numRows) {
-            case 2:
-                attributeSelectionAction(rowOneAttributeDropdown, attribute);
-                attributeSelectionAction(rowTwoAttributeDropdown, attribute);
-                break;
-            default:
-                break;
-        }
     }
 
     /**
@@ -429,9 +354,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param valueToEnter - the text to enter in the input
      */
     private void valueSelectionAction(WebElement inputToUse, String valueToEnter) {
-        inputToUse.click();
+        inputToUse.clear();
+        pageUtils.waitForElementAndClick(inputToUse);
         inputToUse.sendKeys(valueToEnter);
-        inputToUse.sendKeys(Keys.ESCAPE);
     }
 
     /**
@@ -465,23 +390,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
             selectValue(value);
         } else {
             inputValue(value);
-        }
-        return this;
-    }
-
-    /**
-     * Multi set type of value
-     * @param value - value to set
-     * @return current page object
-     */
-    private FilterCriteriaPage multiSetTypeOfValue(String value) {
-        switch (numRows) {
-            case 2:
-                attributeSelectionAction(rowOneAttributeDropdown, attribute);
-                attributeSelectionAction(rowTwoAttributeDropdown, attribute);
-                break;
-            default:
-                break;
         }
         return this;
     }
