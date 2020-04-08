@@ -8,7 +8,8 @@ public enum CostingLabelEnum {
     READY_TO_COST("Ready to\n" + "Cost"),
     UNCOSTED_CHANGES("Uncosted\n" + "Changes"),
     COSTING_IN_PROGRESS("Costing in\n" + "Progress"),
-    SAVING_NEW_SCENARIO("Saving New\n" + "Scenario");
+    SAVING_NEW_SCENARIO("Saving New\n" + "Scenario"),
+    TRANSLATING("Translating");
 
     private final String costingText;
 

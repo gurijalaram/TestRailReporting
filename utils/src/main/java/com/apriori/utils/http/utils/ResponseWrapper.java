@@ -15,7 +15,7 @@ public class ResponseWrapper<T> {
     private T responseEntity;
 
     public static <T>  ResponseWrapper<T> build(final int statusCode, final Headers headers, final String body, T responseEntity) {
-        return new ResponseWrapper<T>(statusCode, headers, body, responseEntity);
+        return new ResponseWrapper<>(statusCode, headers, body, responseEntity);
     }
 
     public ResponseWrapper(final int statusCode, final Headers headers, final String body,  T responseEntity) {

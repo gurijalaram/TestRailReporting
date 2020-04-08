@@ -29,8 +29,9 @@ public class UserTest {
     @Test
     public void testCreateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
-        List<User> usersForCreate = new ArrayList<User>();
 
+        List<User> usersForCreate = new ArrayList<>();
+        
         /*Create new user with FullName: aPriori Default User and RawLoginID: adu*/
         User user = new User()
                 .setFullName("aPriori Default User")
@@ -43,8 +44,9 @@ public class UserTest {
     @Test
     public void testUpdateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
-        List<User> usersForUpdate = new ArrayList<User>();
 
+        List<User> usersForUpdate = new ArrayList<>();
+        
         /*Change FullName of use "aPriori Default User" to "aPriori Test User" */
         User user = new User().setFullName("aPriori Default User");
         usersForUpdate.add(userDao.getByFullName(user).setFullName("aPriori Test User"));
@@ -54,7 +56,7 @@ public class UserTest {
     @Test
     public void testDeleteUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
-        List<User> userForDelete = new ArrayList<User>();
+        List<User> userForDelete = new ArrayList<>();
 
         /*Remove user with name "aPriori Default User" and RawLoginID "adu" from DB*/
         User user = new User().setFullName("aPriori Test User").setRawLoginID("adu");
