@@ -48,11 +48,12 @@ public class APIValue {
             .get()
             .getBody();
 
-        JsonNode node = null;
+        JsonNode node;
         try {
             node = new ObjectMapper().readTree(jsonResponse);
         } catch (JsonProcessingException e) {
             logger.debug(e.getMessage());
+            throw new NullPointerException("can't read json node");
         }
 
         return node.findPath(apiPath).asText();
