@@ -76,7 +76,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private String attribute;
-    private int numRows;
 
     public FilterCriteriaPage(WebDriver driver) {
         this.driver = driver;
@@ -98,7 +97,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Filter criteria for private selection
-     *
      * @param type      - type of selection whether private or public
      * @param attribute - the attribute
      * @param condition - specified condition
@@ -148,7 +146,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Clears all listed checkboxes
-     *
      * @return current page object
      */
     private FilterCriteriaPage clearAllCheckBoxes() {
@@ -168,7 +165,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the checkbox
-     *
      * @return current page object
      */
     private FilterCriteriaPage setPrivateWorkSpace() {
@@ -178,7 +174,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the checkbox
-     *
      * @return current page object
      */
     private FilterCriteriaPage setPublicWorkspace() {
@@ -209,7 +204,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the condition
-     *
      * @param condition - the condition
      * @return current page object
      */
@@ -220,7 +214,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets the value as input
-     *
      * @param input - the input value
      * @return current page object
      */
@@ -290,7 +283,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the clear button
-     *
      * @param className - the class the method should return
      * @param <T>       - the generic declaration type
      * @return generic page object
@@ -332,9 +324,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     private FilterCriteriaPage setAttributes(String[] attributes) {
         for (int i = 0; i < attributes.length; i++) {
             WebElement elementToUse = i == 0 ? rowOneAttributeDropdown : rowTwoAttributeDropdown;
-            //Select selectToUse = new Select(elementToUse);
             attributeSelectionAction(elementToUse, attributes[i]);
-            //selectToUse.selectByVisibleText(attributes[i]);
         }
         return this;
     }
@@ -381,7 +371,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Choose how data is entered either via input or dropdown based on enum
-     *
      * @param value - enum value
      * @return current page object
      */
