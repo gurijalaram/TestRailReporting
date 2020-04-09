@@ -275,10 +275,15 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         explorePage = new ExplorePage(driver);
-        tolerancePage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
+        evaluatePage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
+        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        tolerancePage = evaluatePage.openDesignGuidance()
             .expandGuidancePanel()
             .openTolerancesTab();
 
