@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.header.ExploreHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -61,11 +62,13 @@ public class ExplorePage extends ExploreHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ScenarioTablePage scenarioTablePage;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.scenarioTablePage = new ScenarioTablePage(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -87,7 +90,7 @@ public class ExplorePage extends ExploreHeader {
      * @return current page object
      */
     public ExplorePage selectWorkSpace(String workspace) {
-        pageUtils.selectDropdownOption(workspaceDropdown, workspace);
+        scenarioTablePage.selectWorkSpace(workspace);
         return this;
     }
 
