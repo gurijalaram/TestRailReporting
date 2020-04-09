@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
@@ -29,7 +28,6 @@ public class DTCPlasticMouldingTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private GuidancePage guidancePage;
-    private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
     private DesignGuidancePage designGuidancePage;
 
