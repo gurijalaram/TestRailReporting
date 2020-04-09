@@ -39,6 +39,7 @@ public class ThreadTests extends TestBase {
     private InvestigationPage investigationPage;
     private ThreadingPage threadingPage;
     private WarningPage warningPage;
+    private DesignGuidancePage designGuidancePage;
     private UserCredentials currentUser;
 
     private File resourceFile;
@@ -119,10 +120,9 @@ public class ThreadTests extends TestBase {
             .enterThreadLength("0.28")
             .apply(InvestigationPage.class);
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        threadingPage = evaluatePage.costScenario()
+        designGuidancePage = new DesignGuidancePage(driver);
+        threadingPage = designGuidancePage.closeDesignGuidance()
+            .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
@@ -353,10 +353,9 @@ public class ThreadTests extends TestBase {
             .enterThreadLength("4.85")
             .apply(InvestigationPage.class);
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        threadingPage = evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+        designGuidancePage = new DesignGuidancePage(driver);
+        threadingPage = designGuidancePage.closeDesignGuidance()
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
@@ -417,9 +416,9 @@ public class ThreadTests extends TestBase {
 
         assertThat(investigationPage.getThreadHeader("(mm)"), is(true));
 
-        investigationPage = new InvestigationPage(driver);
-        threadingPage = investigationPage.editThread("Simple Holes", "SimpleHole:1");
-        assertThat(threadingPage.isThreadLength("20"), is(true));
+        investigationPage.editThread("Simple Holes", "SimpleHole:1");
+
+        assertThat(new ThreadingPage(driver).isThreadLength("20"), is(true));
     }
 
     @Test
@@ -444,10 +443,9 @@ public class ThreadTests extends TestBase {
             .enterThreadLength("4.85")
             .apply(InvestigationPage.class);
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        threadingPage = evaluatePage.openSecondaryProcess()
+        designGuidancePage = new DesignGuidancePage(driver);
+        threadingPage = designGuidancePage.closeDesignGuidance()
+            .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
             .costScenario()
@@ -546,14 +544,13 @@ public class ThreadTests extends TestBase {
 
         assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("CAD", "4.06"));
 
-        new InvestigationPage(driver).selectEditButton()
+        investigationPage.selectEditButton()
             .enterThreadLength("7")
             .apply(InvestigationPage.class);
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        investigationPage = evaluatePage.costScenario()
+        designGuidancePage = new DesignGuidancePage(driver);
+        investigationPage = designGuidancePage.closeDesignGuidance()
+            .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")

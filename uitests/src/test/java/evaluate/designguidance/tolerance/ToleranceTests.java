@@ -53,6 +53,7 @@ public class ToleranceTests extends TestBase {
     private ToleranceValueSettingsPage toleranceValueSettingsPage;
     private UserCredentials currentUser;
     private ExplorePage explorePage;
+    private CIDLoginPage cidLoginPage;
 
     private File resourceFile;
 
@@ -367,10 +368,9 @@ public class ToleranceTests extends TestBase {
             .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
             .apply(TolerancePage.class);
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceEditPage = evaluatePage.openDesignGuidance()
+        designGuidancePage = new DesignGuidancePage(driver);
+        toleranceEditPage = designGuidancePage.closeDesignGuidance()
+            .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
@@ -378,13 +378,12 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
 
-        new ToleranceEditPage(driver).setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
+        toleranceEditPage.setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
             .cancel();
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceEditPage = evaluatePage.openSecondaryProcess()
+        designGuidancePage = new DesignGuidancePage(driver);
+        toleranceEditPage = designGuidancePage.closeDesignGuidance()
+            .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
             .costScenario()
@@ -429,10 +428,9 @@ public class ToleranceTests extends TestBase {
             .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
             .apply(TolerancePage.class);
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceEditPage = evaluatePage.openDesignGuidance()
+        designGuidancePage = new DesignGuidancePage(driver);
+        toleranceEditPage = designGuidancePage.closeDesignGuidance()
+            .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
@@ -440,13 +438,12 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
 
-        new ToleranceEditPage(driver).setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
+        toleranceEditPage.setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
             .cancel();
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceEditPage = evaluatePage.openSecondaryProcess()
+        designGuidancePage = new DesignGuidancePage(driver);
+        toleranceEditPage = designGuidancePage.closeDesignGuidance()
+            .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
             .costScenario()
@@ -693,10 +690,9 @@ public class ToleranceTests extends TestBase {
             .openAdminDropdown()
             .selectLogOut();
 
-        new CIDLoginPage(driver).login(testUser2);
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+        cidLoginPage = new CIDLoginPage(driver);
+        evaluatePage = cidLoginPage.login(testUser2)
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
 
         assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
