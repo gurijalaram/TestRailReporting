@@ -767,8 +767,20 @@ public class GenericReportPage extends ReportsPageHeader {
         //pageUtils.waitForElementAndClick(currentBlob);
         //currentBlob.click();
 
+        //pageUtils.waitFor(2000);
+        //currentBlob.click();
+        pageUtils.waitForElementToAppear(currentBlob);
+
+        Actions builder = new Actions(driver).moveToElement(currentBlob);
+        builder.perform();
+        pageUtils.waitForElementToAppear(tooltipValueElement);
+        String value = tooltipValueElement.getAttribute("textContent")
+                .replace(",", "")
+                .replace(" ", "");
+
         // 2. ensure it is right one
         // 3. get value
+
         // 4. return value
         return new BigDecimal("560.38");
     }
