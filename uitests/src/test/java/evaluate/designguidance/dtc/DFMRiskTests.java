@@ -87,4 +87,41 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {"3834"})
+    @Description("Validate DFM Risk - Critical for Sheet Metal")
+    public void sheetMetalCriticalDFM() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("1271576_CRITICAL.prt.1");
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
+        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"3835"})
+    @Description("Validate DFM Risk - High for Sheet Metal")
+    public void sheetMetalHighDFM() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("3571050_cad.prt.1");
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+    }
+
 }
