@@ -195,7 +195,7 @@ public class DTCPlasticMouldingTests extends TestBase{
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 3.556 mm")));
 
-        designGuidancePage =  new DesignGuidancePage(driver);
+        designGuidancePage = new DesignGuidancePage(driver);
         guidancePage = designGuidancePage.closeDesignGuidance()
             .openProcessDetails()
             .selectRoutingsButton()
@@ -211,7 +211,7 @@ public class DTCPlasticMouldingTests extends TestBase{
         assertThat(guidancePage.getGuidanceMessage(), containsString("Structural Foam Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 15 mm")));
 
-        designGuidancePage =  new DesignGuidancePage(driver);
+        designGuidancePage = new DesignGuidancePage(driver);
         guidancePage = designGuidancePage.closeDesignGuidance()
             .openProcessDetails()
             .selectRoutingsButton()
