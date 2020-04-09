@@ -25,7 +25,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class DTCPlasticMouldingTests extends TestBase{
+public class DTCPlasticMouldingTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private GuidancePage guidancePage;
