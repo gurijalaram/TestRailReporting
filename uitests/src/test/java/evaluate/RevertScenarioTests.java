@@ -53,7 +53,7 @@ public class RevertScenarioTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
 
-        new EvaluatePage(driver).revert()
+        evaluatePage = evaluatePage.revert()
             .revertScenario();
 
         assertThat(evaluatePage.isProcessGroupSelected(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));

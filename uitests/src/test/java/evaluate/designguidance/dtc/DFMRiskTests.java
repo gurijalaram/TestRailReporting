@@ -5,13 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
-import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -30,13 +24,7 @@ import java.io.File;
 public class DFMRiskTests extends TestBase {
 
     private CIDLoginPage loginPage;
-    private GuidancePage guidancePage;
-    private ToleranceSettingsPage toleranceSettingsPage;
-    private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
-    private GeometryPage geometryPage;
-    private PropertiesDialogPage propertiesDialogPage;
-    private TolerancePage tolerancePage;
     private UserCredentials currentUser;
 
     private File resourceFile;
