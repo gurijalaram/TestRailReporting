@@ -696,7 +696,6 @@ public class EvaluatePage extends EvaluateHeader {
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getTableValsByRow(String row) {
-        ArrayList<BigDecimal> valsToReturn = new ArrayList<>();
         Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
 
         String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td";
@@ -705,13 +704,7 @@ public class EvaluatePage extends EvaluateHeader {
         baseCssSelector = String.format(baseCssSelector, row);
         elements = evaluateComponentView.select(baseCssSelector);
 
-        for (Element element : elements) {
-            if (!element.text().isEmpty() && element.text().contains(".")) {
-                valsToReturn.add(new BigDecimal(element.text()));
-            }
-        }
-
-        return valsToReturn;
+        return elements.stream().filter(element -> !element.text().isEmpty() && element.text().contains(".")).map(element -> new BigDecimal(element.text())).collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -731,12 +724,11 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Checks the dfm risk score
      *
-     * @param value - the value
-     * @return true/false
+     * @return dfm risk score
      */
-    public boolean isDfmRisk(String value) {
+    public String getDfmRisk() {
         pageUtils.waitForElementAppear(dfmRisk);
-        return dfmRisk.getText().contains(value);
+        return dfmRisk.getText();
     }
 
     /**
@@ -762,31 +754,31 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Checks source part name
      *
-     * @param text - the value
-     * @return true/false
+     * @return part name
      */
-    public boolean isSourcePartName(String text) {
-        return pageUtils.checkElementAttribute(sourceModelPartName, "title", text);
+    public String getSourcePartName() {
+        pageUtils.waitForElementAppear(sourceModelPartName);
+        return sourceModelPartName.getText();
     }
 
     /**
      * Checks source Scenario name
      *
-     * @param text - the value
-     * @return true/false
+     * @return source model scenario name
      */
-    public boolean isSourceScenarioName(String text) {
-        return pageUtils.checkElementAttribute(sourceModelScenarioName, "title", text);
+    public String getSourceScenarioName() {
+        pageUtils.waitForElementAppear(sourceModelScenarioName);
+        return sourceModelScenarioName.getAttribute("title");
     }
 
     /**
      * Checks source Scenario Material
      *
-     * @param text - the value
-     * @return true/false
+     * @return source material
      */
-    public boolean isSourceMaterial(String text) {
-        return pageUtils.checkElementAttribute(sourceMaterial, "innerText", text);
+    public String getSourceMaterial() {
+        pageUtils.waitForElementAppear(sourceMaterial);
+        return sourceMaterial.getText();
     }
 
     /**

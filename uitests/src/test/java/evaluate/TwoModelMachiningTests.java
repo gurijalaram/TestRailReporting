@@ -5,19 +5,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
-import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
-import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.pages.settings.SettingsPage;
-import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
-import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -30,12 +24,6 @@ public class TwoModelMachiningTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private ToleranceSettingsPage toleranceSettingsPage;
-    private SettingsPage settingsPage;
-    private SecondaryProcessPage secondaryProcessPage;
-    private ProcessRoutingPage processRoutingPage;
-    private ProcessSetupOptionsPage processSetupOptionsPage;
-    private UserCredentials currentUser;
     private ExplorePage explorePage;
 
     private File resourceFile;
@@ -70,9 +58,9 @@ public class TwoModelMachiningTests extends TestBase {
             .apply(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isSourceMaterial("Aluminum, Cast, ANSI AL380.0"), is(true));
-        assertThat(evaluatePage.isSourcePartName("CASTING_BEFORE_MACHINING"), is(true));
-        assertThat(evaluatePage.isSourceScenarioName(testScenarioName), is(true));
+        assertThat(evaluatePage.getSourceMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
+        assertThat(evaluatePage.getSourcePartName(), is("CASTING_BEFORE_MACHINING"));
+        assertThat(evaluatePage.getSourceScenarioName(), is(testScenarioName));
     }
 
     @Test
@@ -122,6 +110,6 @@ public class TwoModelMachiningTests extends TestBase {
             .highlightScenario(newSourceScenarioName, sourcePartName)
             .apply(EvaluatePage.class);
 
-        assertThat(evaluatePage.isSourceScenarioName(newSourceScenarioName), is(true));
+        assertThat(evaluatePage.getSourceScenarioName(), is(testScenarioName));
     }
 }
