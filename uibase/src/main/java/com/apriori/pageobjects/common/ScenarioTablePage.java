@@ -50,6 +50,15 @@ public class ScenarioTablePage extends LoadableComponent<ScenarioTablePage> {
     @FindBy(css = "div[data-ap-comp='noComponentsMessage']")
     private WebElement noComponentText;
 
+    @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
+    private WebElement comparisonScroller;
+
+    @FindBy(css = "button.btn.btn-primary")
+    private WebElement applyButton;
+
+    @FindBy(css = "button.btn.btn-default")
+    private WebElement cancelButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -69,6 +78,7 @@ public class ScenarioTablePage extends LoadableComponent<ScenarioTablePage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementsToAppear(workspaceDropdownList);
+        pageUtils.waitForSteadinessOfElement(By.cssSelector("button[data-ap-nav-dialog='showScenarioSearchCriteria']"));
     }
 
     /**
@@ -296,6 +306,52 @@ public class ScenarioTablePage extends LoadableComponent<ScenarioTablePage> {
     public String getColumnOrder(String columnName) {
         By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
         return driver.findElement(column).getAttribute("outerHTML");
+    }
+
+    /**
+     * Selects the comparison in the table
+     *
+     * @param partName     - the name of the part
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
+    public ScenarioTablePage selectComparisonScenario(String scenarioName, String partName) {
+        findComparisonScenario(scenarioName, partName);
+        WebElement scenario = driver.findElement(By.xpath("//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]"));
+        pageUtils.javaScriptClick(scenario);
+        return this;
+    }
+
+    /**
+     * Find and select the comparison in the table
+     *
+     * @param partName     - name of the part
+     * @param scenarioName - scenario name
+     * @return comparison as webelement
+     */
+    public WebElement findComparisonScenario(String scenarioName, String partName) {
+        By comparison = By.xpath("//a[contains(@href,'" + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//input[@class]");
+        return pageUtils.scrollToElement(comparison, comparisonScroller, Constants.PAGE_DOWN);
+    }
+
+    /**
+     * Selects the apply button
+     *
+     * @return new page object
+     */
+    public <T> T apply(Class<T> className) {
+        pageUtils.waitForElementAndClick(applyButton);
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Selects the cancel button
+     *
+     * @return new page object
+     */
+    public <T> T cancel(Class<T> className) {
+        pageUtils.waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
