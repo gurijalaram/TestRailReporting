@@ -117,7 +117,8 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Removes the scenario from the comparison view
-     * @param partName - the part name
+     *
+     * @param partName     - the part name
      * @param scenarioName - the scenario name
      * @return current page object
      */
@@ -131,6 +132,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Selects the basis button
+     *
      * @param scenarioName - the scenario name
      * @return current page object
      */
@@ -142,6 +144,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Checks if the basis button exist
+     *
      * @param scenarioName - the scenario name
      * @return true/false
      */
@@ -151,8 +154,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Gets list of scenarios in comparison view
+     *
      * @param scenarioName - the scenario name
-     * @param partName the part name
+     * @param partName     the part name
      * @return size of element as int
      */
     public int getScenarioInComparisonView(String partName, String scenarioName) {
