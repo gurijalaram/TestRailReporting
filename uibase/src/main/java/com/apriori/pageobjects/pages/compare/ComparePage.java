@@ -165,6 +165,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     private By findBasisButton(String partName, String scenarioName) {
-        return By.xpath(String.format("//div[@title='%s']/ancestor::table//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName, scenarioName));
+        return By.xpath(String.format("//div[@title='%s']/ancestor::table//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName.toUpperCase(), scenarioName));
     }
 }
