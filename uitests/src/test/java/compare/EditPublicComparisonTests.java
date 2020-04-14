@@ -130,7 +130,8 @@ public class EditPublicComparisonTests extends TestBase {
         resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
         String scenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
-        String testPartName = "Assembly2";
+        String testAssemblyName = "Assembly2";
+        String partName = "PART0001";
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -139,7 +140,7 @@ public class EditPublicComparisonTests extends TestBase {
             .costScenario()
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .openScenario(scenarioName, "PART0001")
+            .openScenario(scenarioName, partName)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .createNewComparison()
@@ -147,20 +148,20 @@ public class EditPublicComparisonTests extends TestBase {
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
-            .filterPrivateCriteria("Assembly", "Part Name", "Contains", testPartName)
+            .filterPrivateCriteria("Assembly", "Part Name", "Contains", testAssemblyName)
             .apply(ComparisonTablePage.class)
-            .selectScenario(scenarioName, testPartName)
+            .selectScenario(scenarioName, testAssemblyName)
             .apply();
 
         new ComparePage(driver).addScenario()
             .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "PART0001")
+            .filterPrivateCriteria("Part", "Part Name", "Contains", partName)
             .apply(ComparisonTablePage.class)
-            .selectScenario(scenarioName, "PART0001")
+            .selectScenario(scenarioName, partName)
             .apply();
 
-        new ComparePage(driver).setBasis("PART0001",scenarioName);
+        new ComparePage(driver).setBasis(partName,scenarioName);
 
-        assertThat(new ComparePage(driver).isComparisonBasis(testPartName, scenarioName), is(false));
+        assertThat(new ComparePage(driver).isComparisonBasis(testAssemblyName, scenarioName), is(false));
     }
 }
