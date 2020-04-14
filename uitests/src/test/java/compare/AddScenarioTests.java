@@ -63,6 +63,7 @@ public class AddScenarioTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"448"})
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
     public void filterAddPublicScenario() {
 

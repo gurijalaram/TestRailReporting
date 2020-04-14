@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.toolbars.DesignGuidanceToolbar;
@@ -41,8 +42,14 @@ public class DesignGuidancePage extends DesignGuidanceToolbar {
     @FindBy(css = "a[href='#geometryTab")
     private WebElement geometryTab;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    @FindBy(css = ".panel .glyphicon-remove")
+    private WebElement closePanelButton;
+
+    @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
+    private WebElement helpButton;
+
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public DesignGuidancePage(WebDriver driver) {
         super(driver);
@@ -60,7 +67,7 @@ public class DesignGuidancePage extends DesignGuidanceToolbar {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToBeClickable(guidanceTab);
+        pageUtils.waitForElementToBeClickable(investigationTab);
         pageUtils.waitForElementToAppear(panelDetails);
     }
 

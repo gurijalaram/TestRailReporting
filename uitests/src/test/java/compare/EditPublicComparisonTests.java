@@ -13,7 +13,7 @@ import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
-import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
@@ -108,18 +108,17 @@ public class EditPublicComparisonTests extends TestBase {
             .selectPublishButton()
             .createNewComparison()
             .enterComparisonName(testComparisonName)
-            .save(ComparePage.class);
-
-        new ComparePage(driver).addScenario()
+            .save(ComparePage.class)
+            .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "PowderMetalShaft")
-            .apply(ComparisonTablePage.class);
+            .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName, "PowderMetalShaft")
+            .apply();
 
-        new ComparisonTablePage(driver).selectScenario(testScenarioName, "PowderMetalShaft")
-            .apply()
-            .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
+        new ComparePage(driver).removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
 
-        assertThat(new ComparePage(driver).getScenarioInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
+        assertThat(new ComparePage(driver).scenarioIsNotInComparisonView(testScenarioName, "PowderMetalShaft"), is(true));
     }
 
     @Test
@@ -127,44 +126,42 @@ public class EditPublicComparisonTests extends TestBase {
     @Description("Test you can change the basis of your comparison")
     public void testChangeComparisonBasis() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SandCast.x_t");
-        String testScenarioName = new Util().getScenarioName();
-        String testScenarioName2 = new Util().getScenarioName();
+        resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
+        String scenarioName = new Util().getScenarioName();
         String testComparisonName = new Util().getComparisonName();
-        String testPartName = "SANDCAST";
+        String testAssemblyName = "Assembly2";
+        String partName = "PART0001";
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+        comparePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, resourceFile)
+            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
-            .createNewScenario()
-            .enterScenarioName(testScenarioName2)
-            .save();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.SAVING_NEW_SCENARIO.getCostingText()), is(true));
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-
-        evaluatePage = new EvaluatePage(driver);
-        comparePage = evaluatePage.createNewComparison()
+            .selectExploreButton()
+            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+            .openScenario(scenarioName, partName)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .costScenario()
+            .createNewComparison()
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
+            .filterPrivateCriteria("Assembly", "Part Name", "Contains", testAssemblyName)
             .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, testPartName)
+            .selectScenario(scenarioName, testAssemblyName)
             .apply();
 
         new ComparePage(driver).addScenario()
             .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", testPartName)
+            .filterPrivateCriteria("Part", "Part Name", "Contains", partName)
             .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName2, testPartName)
+            .selectScenario(scenarioName, partName)
             .apply();
 
-        new ComparePage(driver).setBasis(testScenarioName2);
+        new ComparePage(driver).setBasis(partName,scenarioName);
 
-        assertThat(new ComparePage(driver).isComparisonBasis(testScenarioName2), is(false));
+        assertThat(new ComparePage(driver).isBasis(partName, scenarioName), is(true));
+        assertThat(new ComparePage(driver).isBasisButtonPresent(testAssemblyName, scenarioName), is(true));
     }
 }
