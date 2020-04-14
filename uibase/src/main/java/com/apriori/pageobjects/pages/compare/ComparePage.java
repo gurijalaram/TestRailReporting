@@ -134,9 +134,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    public ComparePage setBasis(String scenarioName) {
-        pageUtils.scrollToElement(findBasisButton(scenarioName), horizontalScroller, Constants.HORIZONTAL_SCROLL);
-        pageUtils.waitForElementAndClick(findBasisButton(scenarioName));
+    public ComparePage setBasis(String partName, String scenarioName) {
+        pageUtils.scrollToElement(findBasisButton(partName, scenarioName), horizontalScroller, Constants.HORIZONTAL_SCROLL);
+        pageUtils.waitForElementAndClick(findBasisButton(partName, scenarioName));
         return this;
     }
 
@@ -145,22 +145,21 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param scenarioName - the scenario name
      * @return true/false
      */
-    public boolean isComparisonBasis(String scenarioName) {
-        return pageUtils.isElementDisplayed(findBasisButton(scenarioName));
+    public boolean isComparisonBasis(String partName, String scenarioName) {
+        return pageUtils.isElementDisplayed(findBasisButton(partName, scenarioName));
     }
 
     /**
      * Gets list of scenarios in comparison view
      * @param scenarioName - the scenario name
-     * @param partName the part name
+     * @param partName     the part name
      * @return size of element as int
      */
     public int getScenarioInComparisonView(String partName, String scenarioName) {
         By scenario = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
         return driver.findElements(scenario).size();
     }
-
-    private By findBasisButton(String scenarioName) {
-        return By.xpath("//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']" + scenarioName);
+    private By findBasisButton(String partName, String scenarioName) {
+        return By.xpath(String.format("//div[@title='%s']/ancestor::table//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName, scenarioName));
     }
 }
