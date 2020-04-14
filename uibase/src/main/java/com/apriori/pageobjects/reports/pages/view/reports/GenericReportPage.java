@@ -391,7 +391,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         if (areBothInputsPresent) {
             for (int i = 0; i < 2; i++) {
-                String dateForBoth = getCurrentDateInitially ? date : removeTimeFromDate(getDate(getCurrentDateInitially));
+                String dateForBoth = getCurrentDateInitially ? date : removeTimeFromDate(getDate(false));
                 dateElementToUse = getCurrentDateInitially ? earliestExportDateInput : latestExportDateInput;
                 pageUtils.checkElementAttribute(dateElementToUse, "value", dateForBoth);
                 getCurrentDateInitially = false;
