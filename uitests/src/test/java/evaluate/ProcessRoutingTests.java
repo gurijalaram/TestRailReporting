@@ -259,7 +259,7 @@ public class ProcessRoutingTests extends TestBase {
 
         evaluatePage = new EvaluatePage(driver);
         failuresPage = evaluatePage.openDesignGuidance()
-            .openFailuresTab()
+            .openFailuresWarningsTab()
             .selectIssueTypeAndGCD("Costing Failed", "Component:1");
 
         assertThat(failuresPage.getUncostedMessage(), containsString("This DMLS material is not compatible with Stereolithography."));
