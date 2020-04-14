@@ -35,8 +35,8 @@ public class DeletePage extends LoadableComponent<DeletePage> {
     @FindBy(css = ".popover-content .gwt-HTML")
     private List<WebElement> notificationPopover;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public DeletePage(WebDriver driver) {
         this.driver = driver;

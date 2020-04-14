@@ -5,7 +5,7 @@ public enum AssemblySetEnum {
     SUB_SUB_ASM("SUB-SUB-ASM (Initial)"),
     TOP_LEVEL("TOP-LEVEL (Initial)");
 
-    private String assemblySetName;
+    private final String assemblySetName;
 
     AssemblySetEnum(String assemblySetName) {
         this.assemblySetName = assemblySetName;

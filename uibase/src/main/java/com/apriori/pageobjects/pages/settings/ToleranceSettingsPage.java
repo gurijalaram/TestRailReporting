@@ -40,8 +40,8 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
     private WebElement cadReplacementInput;
 
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ToleranceSettingsPage(WebDriver driver) {
         this.driver = driver;

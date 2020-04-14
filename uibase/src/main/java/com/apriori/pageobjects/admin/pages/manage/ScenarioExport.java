@@ -16,8 +16,8 @@ public class ScenarioExport extends AdminHeader {
     @FindBy(css = "h1")
     private WebElement manageScenarioExportTitle;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ScenarioExport(WebDriver driver) {
         super(driver);

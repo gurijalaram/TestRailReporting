@@ -24,8 +24,8 @@ public class StockPage extends LoadableComponent<StockPage> {
     @FindBy(css = ".table.material-stock-table")
     private WebElement stockTable;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public StockPage(WebDriver driver) {
         this.driver = driver;

@@ -33,8 +33,8 @@ public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
     @FindBy(css = "[data-ap-comp='thumbnail']")
     private WebElement thumbnailImage;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public PreviewPanelPage(WebDriver driver) {
         this.driver = driver;

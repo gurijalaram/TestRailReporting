@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 
 public class AdminHeader extends PageHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
-    private PageUtils pageUtils;
+    private final PageUtils pageUtils;
 
     public AdminHeader(WebDriver driver) {
         super(driver);

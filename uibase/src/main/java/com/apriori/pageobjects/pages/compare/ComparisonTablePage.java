@@ -36,8 +36,8 @@ public class ComparisonTablePage extends LoadableComponent<ComparisonTablePage> 
     @FindBy(css = "button[data-ap-nav-dialog='showScenarioSearchCriteria']")
     private WebElement filterButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ComparisonTablePage(WebDriver driver) {
         this.driver = driver;

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class CirUserGuidePage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(CirUserGuidePage.class);
+    private final Logger logger = LoggerFactory.getLogger(CirUserGuidePage.class);
 
     @FindBy(xpath = "//*[contains(text(), 'Cost Insight Report:User Guide')]")
     private WebElement pageTitle;
@@ -23,8 +23,8 @@ public class CirUserGuidePage extends ReportsPageHeader {
     @FindBy(css = ".Documentation_Cover_Page_Title")
     private WebElement reportsUserGuideTitle;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public CirUserGuidePage(WebDriver driver) {
         super(driver);

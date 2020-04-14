@@ -37,8 +37,8 @@ public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement closeButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public VPESelectionPage(WebDriver driver) {
         this.driver = driver;

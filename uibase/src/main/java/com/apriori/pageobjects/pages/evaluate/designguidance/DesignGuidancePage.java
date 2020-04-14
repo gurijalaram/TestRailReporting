@@ -50,8 +50,8 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public DesignGuidancePage(WebDriver driver) {
         this.driver = driver;

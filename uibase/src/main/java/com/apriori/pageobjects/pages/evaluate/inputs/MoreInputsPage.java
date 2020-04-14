@@ -55,8 +55,8 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public MoreInputsPage(WebDriver driver) {
         this.driver = driver;

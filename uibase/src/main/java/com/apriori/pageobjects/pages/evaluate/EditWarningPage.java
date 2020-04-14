@@ -36,8 +36,8 @@ public class EditWarningPage extends LoadableComponent<EditWarningPage> {
     @FindBy(css = "div[data-ap-comp='editScenarioConflict'] button.btn.btn-default")
     private WebElement cancelButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public EditWarningPage(WebDriver driver) {
         this.driver = driver;

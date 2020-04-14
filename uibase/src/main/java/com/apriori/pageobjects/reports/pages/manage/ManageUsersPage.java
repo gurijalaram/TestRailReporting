@@ -14,8 +14,8 @@ public class ManageUsersPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ManageUsersPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     @FindBy(xpath = "//div[@id='users']/div/div[1]/div[contains(@class, 'title')]")
     private WebElement usersPageTitle;

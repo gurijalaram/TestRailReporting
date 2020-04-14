@@ -27,8 +27,8 @@ public class CostingJobPage extends LoadableComponent<CostingJobPage> {
     @FindBy(css = "div[data-ap-comp='additionalOrderInputs'] button.btn.btn-default")
     private WebElement cancelButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public CostingJobPage(WebDriver driver) {
         this.driver = driver;

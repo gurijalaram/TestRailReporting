@@ -28,7 +28,7 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
 
     private final Logger logger = LoggerFactory.getLogger(ComponentTableColumnsPage.class);
 
-    private Map<String, String> columnSelectorMap = new HashMap<>();
+    private final Map<String, String> columnSelectorMap = new HashMap<>();
 
     @FindBy(css = "[data-ap-scope='assemblyComponentsTableViewSelection'] .modal-content")
     private WebElement tableDialog;
@@ -57,8 +57,8 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
     @FindBy(css = "button[data-ap-comp='downButton']")
     private WebElement downButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ComponentTableColumnsPage(WebDriver driver) {
         this.driver = driver;

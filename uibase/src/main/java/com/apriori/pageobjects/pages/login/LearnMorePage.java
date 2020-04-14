@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class LearnMorePage extends LoadableComponent<LearnMorePage> {
 
-    private Logger logger = LoggerFactory.getLogger(LearnMorePage.class);
+    private final Logger logger = LoggerFactory.getLogger(LearnMorePage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -24,8 +24,8 @@ public class LearnMorePage extends LoadableComponent<LearnMorePage> {
     @FindBy(css = ".page_title")
     private WebElement heading;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public LearnMorePage(WebDriver driver) {
         this.driver = driver;

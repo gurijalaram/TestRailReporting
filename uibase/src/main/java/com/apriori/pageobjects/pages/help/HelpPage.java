@@ -29,8 +29,8 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @FindBy(css = "a.navbar-help")
     private WebElement helpButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public HelpPage(WebDriver driver) {
         this.driver = driver;

@@ -33,9 +33,9 @@ public class GuidancePage extends LoadableComponent<GuidancePage> {
     @FindBy(css = "div[data-ap-comp='guidanceIssuesMessage']")
     private WebElement gcdMessage;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-    private ColumnUtils columnUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
+    private final ColumnUtils columnUtils;
 
     public GuidancePage(WebDriver driver) {
         this.driver = driver;

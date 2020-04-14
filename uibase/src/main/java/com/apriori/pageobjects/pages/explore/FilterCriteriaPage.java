@@ -66,8 +66,8 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(xpath = "//div[@data-ap-comp='scenarioSearchCriteria'] //button[contains(text(),'Clear')]")
     private WebElement clearButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
     private String attribute;
 
     public FilterCriteriaPage(WebDriver driver) {
@@ -276,7 +276,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         COSTMATURITY("Cost Maturity"),
         ASSIGNEE("Assignee");
 
-        private String attributeValue;
+        private final String attributeValue;
 
         Attribute(String attributeValue) {
 

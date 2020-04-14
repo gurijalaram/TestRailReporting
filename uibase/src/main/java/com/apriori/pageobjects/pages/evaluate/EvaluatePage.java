@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.header.EvaluateHeader;
 import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
@@ -9,6 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
+import com.apriori.pageobjects.toolbars.EvaluateHeader;
 import com.apriori.utils.PageUtils;
 
 import org.jsoup.Jsoup;
@@ -36,7 +36,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
-    private Map<String, String> columnSelectorMap = new HashMap<>();
+    private final Map<String, String> columnSelectorMap = new HashMap<>();
 
     @FindBy(css = "thead[data-ap-comp='scenarioKey'] label[data-ap-field='masterName']")
     private WebElement partName;
@@ -180,8 +180,8 @@ public class EvaluatePage extends EvaluateHeader {
     private WebElement dfmRiskIcon;
 
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public EvaluatePage(WebDriver driver) {
         super(driver);

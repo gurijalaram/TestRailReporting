@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.header.ExploreHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.toolbars.ExploreHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
@@ -59,8 +59,8 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "div[data-ap-comp='noComponentsMessage']")
     private WebElement noComponentText;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ExplorePage(WebDriver driver) {
         super(driver);

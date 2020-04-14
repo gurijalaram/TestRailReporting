@@ -43,8 +43,8 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
     @FindBy(css = ".material-selection-dialog button.btn.btn-default")
     private WebElement cancelButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public MaterialCompositionPage(WebDriver driver) {
         this.driver = driver;

@@ -37,9 +37,9 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     @FindBy(css = "div[data-ap-comp='dtcInvestigationTableExt'] .v-grid-header")
     private WebElement threadHeader;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-    private ColumnUtils columnUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
+    private final ColumnUtils columnUtils;
 
     public InvestigationPage(WebDriver driver) {
         this.driver = driver;

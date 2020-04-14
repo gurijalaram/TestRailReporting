@@ -32,8 +32,8 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     @FindBy(css = "[data-ap-comp='saveAsNew']")
     private WebElement newScenarioButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public PublishWarningPage(WebDriver driver) {
         this.driver = driver;

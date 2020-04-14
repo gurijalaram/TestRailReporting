@@ -46,8 +46,8 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
     @FindBy(css = "button[data-ap-comp='expandPanelButton']")
     private WebElement chevronButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public PartNestingPage(WebDriver driver) {
         this.driver = driver;

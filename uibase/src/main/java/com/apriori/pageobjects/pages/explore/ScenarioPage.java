@@ -31,8 +31,8 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
     @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ScenarioPage(WebDriver driver) {
         this.driver = driver;

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class HelpPage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(HelpPage.class);
+    private final Logger logger = LoggerFactory.getLogger(HelpPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -27,8 +27,8 @@ public class HelpPage extends ReportsPageHeader {
     @FindBy(css = "iframe[id='topic']")
     private WebElement mainContentIframe;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public HelpPage(WebDriver driver) {
         super(driver);

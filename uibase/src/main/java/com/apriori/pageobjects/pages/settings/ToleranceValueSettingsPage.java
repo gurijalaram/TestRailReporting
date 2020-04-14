@@ -82,8 +82,8 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
     @FindBy(css = ".modal-footer button.btn.btn-default")
     private WebElement cancelButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
     private Map<String, WebElement> map = new HashMap<>();
 
     public ToleranceValueSettingsPage(WebDriver driver) {

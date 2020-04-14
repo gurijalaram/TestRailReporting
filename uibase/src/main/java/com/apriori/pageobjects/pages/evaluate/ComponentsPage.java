@@ -38,8 +38,8 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     @FindBy(css = "button[data-ap-scope='assemblyComponentsTableViewSelection']")
     private WebElement columnSelectorButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ComponentsPage(WebDriver driver) {
         this.driver = driver;

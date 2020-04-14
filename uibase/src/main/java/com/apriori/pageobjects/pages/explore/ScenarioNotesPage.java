@@ -43,8 +43,8 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     @FindBy(css = "[data-ap-field='assignee']")
     private WebElement assigneeField;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ScenarioNotesPage(WebDriver driver) {
         this.driver = driver;

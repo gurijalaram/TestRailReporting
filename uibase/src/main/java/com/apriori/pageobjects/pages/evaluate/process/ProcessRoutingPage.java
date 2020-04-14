@@ -72,8 +72,8 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ProcessRoutingPage(WebDriver driver) {
         this.driver = driver;

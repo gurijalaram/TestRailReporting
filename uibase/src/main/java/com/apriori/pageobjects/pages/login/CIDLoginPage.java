@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
     private final Logger logger = LoggerFactory.getLogger(CIDLoginPage.class);
-    private static String loginPageUrl = Constants.cidURL;
+    private static final String loginPageUrl = Constants.cidURL;
 
     @FindBy(css = "input[name='email']")
     private WebElement email;

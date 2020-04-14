@@ -43,8 +43,8 @@ public class HomePage extends PageHeader {
     @FindBy(id = "main_logOut_link")
     private WebElement reportsLogoutOption;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public HomePage(WebDriver driver) {
         super(driver);

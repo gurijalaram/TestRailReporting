@@ -38,8 +38,8 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     @FindBy(css = "div[data-ap-comp='threadEditor'] button.btn.btn-default")
     private WebElement cancelButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ThreadingPage(WebDriver driver) {
         this.driver = driver;

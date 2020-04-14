@@ -25,8 +25,8 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
     @FindBy(css = "div[data-ap-comp='gcdProperties'] .v-grid-scroller")
     private WebElement verticalScroller;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public PropertiesDialogPage(WebDriver driver) {
         this.driver = driver;

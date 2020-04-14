@@ -33,9 +33,9 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
     @FindBy(css = "div[data-ap-comp='tolerancesDetailsTable'] .v-grid-scroller-vertical")
     private WebElement detailsScroller;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-    private ColumnUtils columnUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
+    private final ColumnUtils columnUtils;
 
     public TolerancePage(WebDriver driver) {
         this.driver = driver;

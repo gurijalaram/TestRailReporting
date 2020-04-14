@@ -14,8 +14,8 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(CreateAdHocViewPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     @FindBy(xpath = "//div[@id='display']/div[2]/div/div[1]/div")
     private WebElement adHocViewPageTitle;

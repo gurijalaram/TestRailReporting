@@ -48,8 +48,8 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public MaterialPage(WebDriver driver) {
         this.driver = driver;

@@ -173,8 +173,8 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
     @FindBy(css = "div.form-section")
     private WebElement psoFormSection;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ProcessSetupOptionsPage(WebDriver driver) {
         this.driver = driver;

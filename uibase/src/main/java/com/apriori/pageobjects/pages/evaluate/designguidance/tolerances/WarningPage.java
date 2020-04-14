@@ -27,8 +27,8 @@ public class WarningPage extends LoadableComponent<WarningPage> {
     @FindBy(css = "div[data-ap-scope='genericDialog'] button.btn.btn-primary")
     private WebElement okButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public WarningPage(WebDriver driver) {
         this.driver = driver;

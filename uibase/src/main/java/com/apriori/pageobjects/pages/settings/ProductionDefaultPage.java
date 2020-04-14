@@ -47,8 +47,8 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
     @FindBy(css = ".col-xs-2 .bold-font")
     private WebElement batchInput;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ProductionDefaultPage(WebDriver driver) {
         this.driver = driver;

@@ -14,8 +14,8 @@ public class CreateReportPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(CreateReportPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     @FindBy(id = "reportGeneratorProperties")
     private WebElement createReportDialog;

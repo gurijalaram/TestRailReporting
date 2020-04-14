@@ -30,9 +30,9 @@ public class GeometryPage extends LoadableComponent<GeometryPage> {
     @FindBy(css = "div[data-ap-comp='artifactProperties'] div.v-grid-scroller-vertical")
     private WebElement propertiesScroller;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-    private ColumnUtils columnUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
+    private final ColumnUtils columnUtils;
 
     public GeometryPage(WebDriver driver) {
         this.driver = driver;

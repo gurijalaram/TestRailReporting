@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.header.CompareHeader;
+import com.apriori.pageobjects.toolbars.CompareHeader;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -33,8 +33,8 @@ public class ComparisonPage extends CompareHeader {
     @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ComparisonPage(WebDriver driver) {
         super(driver);

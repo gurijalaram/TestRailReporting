@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.header;
+package com.apriori.pageobjects.toolbars;
 
 import com.apriori.pageobjects.pages.evaluate.CostingJobPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class EvaluateHeader extends GenericHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
 
     @FindBy(css = "button[data-ap-comp='costButton']")
     private WebElement costButton;
@@ -40,8 +40,8 @@ public class EvaluateHeader extends GenericHeader {
     @FindBy(css = ".panel.panel-default.spacer .panel-body")
     private WebElement loadingImage;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public EvaluateHeader(WebDriver driver) {
         super(driver);

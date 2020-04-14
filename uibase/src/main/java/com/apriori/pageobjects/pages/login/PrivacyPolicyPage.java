@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
-    private Logger logger = LoggerFactory.getLogger(PrivacyPolicyPage.class);
+    private final Logger logger = LoggerFactory.getLogger(PrivacyPolicyPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -24,8 +24,8 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     @FindBy(css = "section[id='services_title_section'] > div > h1")
     private WebElement heading;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public PrivacyPolicyPage(WebDriver driver) {
         this.driver = driver;

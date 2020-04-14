@@ -17,8 +17,8 @@ public class LogoutPage extends ReportsPageHeader {
     @FindBy(css = "div[class='auth0-lock-header-welcome'] > div")
     private WebElement loginPageTitle;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public LogoutPage(WebDriver driver) {
         super(driver);

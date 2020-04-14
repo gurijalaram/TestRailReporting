@@ -13,8 +13,8 @@ public class CastingDtcReportHeader extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(CastingDtcReportHeader.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     @FindBy(xpath = "//div[@id='reportContainer']//td[@colspan='4']/span")
     private WebElement headerDisplayedRollup;

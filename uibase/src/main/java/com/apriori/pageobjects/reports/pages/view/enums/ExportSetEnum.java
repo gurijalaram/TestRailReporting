@@ -6,7 +6,7 @@ public enum ExportSetEnum {
     MACHINING_DTC_DATASET("DTC_MachiningDataset"),
     CASTING_DTC("DTC_Casting");
 
-    private String exportSetName;
+    private final String exportSetName;
 
     ExportSetEnum(String exportSetName) {
         this.exportSetName = exportSetName;

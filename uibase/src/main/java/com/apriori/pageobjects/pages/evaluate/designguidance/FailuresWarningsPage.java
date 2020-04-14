@@ -22,9 +22,9 @@ public class FailuresWarningsPage extends LoadableComponent<FailuresWarningsPage
     @FindBy(css = "div[data-ap-comp='uncostedMessage']")
     private WebElement uncostedMessage;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-    private ColumnUtils columnUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
+    private final ColumnUtils columnUtils;
 
     public FailuresWarningsPage(WebDriver driver) {
         this.driver = driver;

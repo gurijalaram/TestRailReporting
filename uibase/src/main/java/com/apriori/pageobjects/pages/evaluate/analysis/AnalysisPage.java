@@ -18,8 +18,8 @@ public class AnalysisPage extends LoadableComponent<AnalysisPage> {
     @FindBy(xpath = "//li[.='Properties']")
     private WebElement propertiesButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public AnalysisPage(WebDriver driver) {
         this.driver = driver;

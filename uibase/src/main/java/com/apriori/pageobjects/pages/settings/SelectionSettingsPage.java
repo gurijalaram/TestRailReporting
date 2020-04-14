@@ -88,8 +88,8 @@ public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPa
     @FindBy(css = colourLocator + " span[title='#000000']")
     private WebElement black;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
     private Map<String, WebElement> map = new HashMap<>();
 
     public SelectionSettingsPage(WebDriver driver) {

@@ -14,8 +14,8 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ViewSearchResultsPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     @FindBy(css = "body")
     private WebElement searchResultsPageTitle;

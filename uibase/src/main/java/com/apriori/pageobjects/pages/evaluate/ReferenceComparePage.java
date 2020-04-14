@@ -101,8 +101,8 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     @FindBy(css = "[data-ap-field='materialCost.indicator']")
     private WebElement materialCostIndicator;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ReferenceComparePage(WebDriver driver) {
         this.driver = driver;

@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.header;
+package com.apriori.pageobjects.toolbars;
 
 import com.apriori.pageobjects.pages.compare.SaveAsPage;
 import com.apriori.utils.PageUtils;
@@ -16,13 +16,13 @@ import org.slf4j.LoggerFactory;
 
 public class CompareHeader extends GenericHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(CompareHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(CompareHeader.class);
 
     @FindBy(css = "button[data-ap-comp='saveComparisonAsButton']")
     private WebElement saveAs;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public CompareHeader(WebDriver driver) {
         super(driver);

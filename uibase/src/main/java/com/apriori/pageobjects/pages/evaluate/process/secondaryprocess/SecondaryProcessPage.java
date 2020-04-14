@@ -36,8 +36,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     @FindBy(css = ".modal-footer button.btn.btn-default")
     private WebElement cancelButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
     private By secondaryProcess;
 
     public SecondaryProcessPage(WebDriver driver) {

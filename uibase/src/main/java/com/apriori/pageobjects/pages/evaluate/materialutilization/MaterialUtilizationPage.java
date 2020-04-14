@@ -39,8 +39,8 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     @FindBy(xpath = "//span[contains(text(), 'Material Properties')]/..")
     private WebElement materialPropertiesTabToggle;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public MaterialUtilizationPage(WebDriver driver) {
         this.driver = driver;

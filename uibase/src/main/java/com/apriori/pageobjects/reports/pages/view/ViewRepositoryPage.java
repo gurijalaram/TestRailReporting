@@ -17,11 +17,11 @@ import java.util.Map;
 public class ViewRepositoryPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
-    private Map<String, WebElement> folderElementMap = new HashMap<>();
-    private Map<String, WebElement> reportElementMap = new HashMap<>();
+    private final Map<String, WebElement> folderElementMap = new HashMap<>();
+    private final Map<String, WebElement> reportElementMap = new HashMap<>();
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
     private WebElement repositoryPageTitle;

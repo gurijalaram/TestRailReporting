@@ -31,8 +31,8 @@ public class LogoutPage extends LoadableComponent<LogoutPage> {
     @FindBy(css = "a[href='session/logout']")
     private WebElement logOut;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public LogoutPage(WebDriver driver) {
         this.driver = driver;

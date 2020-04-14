@@ -16,8 +16,8 @@ public class MachiningDTCReportPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(MachiningDTCReportPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
     private WebElement currentBlob;

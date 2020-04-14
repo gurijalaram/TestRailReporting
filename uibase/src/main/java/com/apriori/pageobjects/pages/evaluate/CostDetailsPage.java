@@ -25,8 +25,8 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public CostDetailsPage(WebDriver driver) {
         this.driver = driver;

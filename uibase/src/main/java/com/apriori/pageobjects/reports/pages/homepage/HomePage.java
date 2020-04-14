@@ -15,9 +15,9 @@ public class HomePage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
-    private PageUtils pageUtils;
+    private final PageUtils pageUtils;
     private HelpPage helpPage;
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public HomePage(WebDriver driver) {
         super(driver);
