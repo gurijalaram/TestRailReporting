@@ -148,7 +148,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param scenarioName - the scenario name
      * @return true/false
      */
-    public boolean basisButtonNotPresent(String partName, String scenarioName) {
+    public boolean isBasis(String partName, String scenarioName) {
         return pageUtils.invisibilityOfElements(driver.findElements(findBasisButton(partName, scenarioName)));
     }
 
@@ -158,7 +158,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param scenarioName - the scenario name
      * @return true/false
      */
-    public boolean isBasis(String partName, String scenarioName) {
+    public boolean isBasisButtonPresent(String partName, String scenarioName) {
         return  pageUtils.isElementDisplayed(driver.findElement(findBasisButton(partName, scenarioName)));
     }
 
