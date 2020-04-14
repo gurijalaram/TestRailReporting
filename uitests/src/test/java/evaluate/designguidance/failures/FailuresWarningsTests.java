@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresWarningsPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -35,7 +35,7 @@ public class FailuresWarningsTests extends TestBase {
     private CIDLoginPage loginPage;
     private SettingsPage settingsPage;
     private ToleranceSettingsPage toleranceSettingsPage;
-    private FailuresPage failuresPage;
+    private FailuresWarningsPage failuresWarningsPage;
     private UserCredentials currentUser;
     private GuidancePage guidancePage;
 

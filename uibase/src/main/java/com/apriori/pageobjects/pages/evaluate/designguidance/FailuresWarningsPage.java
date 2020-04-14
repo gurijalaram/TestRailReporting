@@ -12,9 +12,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FailuresPage extends LoadableComponent<FailuresPage> {
+public class FailuresWarningsPage extends LoadableComponent<FailuresWarningsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(FailuresPage.class);
+    private final Logger logger = LoggerFactory.getLogger(FailuresWarningsPage.class);
 
     @FindBy(css = "div[data-ap-comp='uncostedFeaturesInfo']")
     private WebElement failuresInfo;
@@ -26,7 +26,7 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
     private PageUtils pageUtils;
     private ColumnUtils columnUtils;
 
-    public FailuresPage(WebDriver driver) {
+    public FailuresWarningsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.columnUtils = new ColumnUtils(driver);
@@ -52,7 +52,7 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
      * @param gcd - the gcd
      * @return current page object
      */
-    public FailuresPage selectIssueTypeAndGCD(String issueType, String gcd) {
+    public FailuresWarningsPage selectIssueTypeAndGCD(String issueType, String gcd) {
         findIssueType(issueType).click();
         findGCD(gcd).click();
         return this;

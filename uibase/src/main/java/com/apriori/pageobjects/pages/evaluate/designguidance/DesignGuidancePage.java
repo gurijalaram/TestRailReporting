@@ -87,9 +87,9 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      *
      * @return new page object
      */
-    public FailuresPage openFailuresWarningsTab() {
+    public FailuresWarningsPage openFailuresWarningsTab() {
         pageUtils.waitForElementAndClick(failuresWarningsTab);
-        return new FailuresPage(driver);
+        return new FailuresWarningsPage(driver);
     }
 
     /**
