@@ -148,7 +148,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param scenarioName - the scenario name
      * @return true/false
      */
-    public boolean isComparisonBasis(String partName, String scenarioName) {
+    public boolean isBasisButtonPresent(String partName, String scenarioName) {
         return pageUtils.isElementDisplayed(findBasisButton(partName, scenarioName));
     }
 

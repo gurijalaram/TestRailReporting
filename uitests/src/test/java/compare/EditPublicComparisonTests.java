@@ -161,6 +161,7 @@ public class EditPublicComparisonTests extends TestBase {
 
         new ComparePage(driver).setBasis(partName,scenarioName);
 
-        assertThat(new ComparePage(driver).isComparisonBasis(testAssemblyName, scenarioName), is(false));
+        assertThat(new ComparePage(driver).isBasisButtonPresent(partName, scenarioName), is(false));
+        assertThat(new ComparePage(driver).isBasisButtonPresent(testAssemblyName, scenarioName), is(true));
     }
 }
