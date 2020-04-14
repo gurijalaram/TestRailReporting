@@ -148,8 +148,18 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @param scenarioName - the scenario name
      * @return true/false
      */
-    public boolean isBasisButtonPresent(String partName, String scenarioName) {
-        return pageUtils.isElementDisplayed(findBasisButton(partName, scenarioName));
+    public boolean basisButtonNotPresent(String partName, String scenarioName) {
+        return pageUtils.invisibilityOfElements(driver.findElements(findBasisButton(partName, scenarioName)));
+    }
+
+    /**
+     * Checks if the scenario is a basis
+     * @param partName - the part name
+     * @param scenarioName - the scenario name
+     * @return true/false
+     */
+    public boolean isBasis(String partName, String scenarioName) {
+        return  pageUtils.isElementDisplayed(driver.findElement(findBasisButton(partName, scenarioName)));
     }
 
     /**
@@ -165,6 +175,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     private By findBasisButton(String partName, String scenarioName) {
-        return By.xpath(String.format("//div[@title='%s']/ancestor::table//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName.toUpperCase(), scenarioName));
+        return By.xpath(String.format("//div[@title='%s']/ancestor::th//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName.toUpperCase(), scenarioName));
     }
 }
