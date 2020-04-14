@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.DesignGuidanceToolbar;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -33,6 +34,7 @@ public class HelpTests extends TestBase {
     private DesignGuidancePage designGuidancePage;
     private ProcessRoutingPage processRoutingPage;
     private CostDetailsPage costDetailsPage;
+    private DesignGuidanceToolbar designGuidanceToolbar;
 
     private File resourceFile;
 
@@ -93,14 +95,14 @@ public class HelpTests extends TestBase {
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
-        designGuidancePage = loginPage.login(UserUtil.getUser())
+        designGuidanceToolbar = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .clickHelp();
 
-        assertThat(designGuidancePage.getChildPageTitle(), containsString("Design Guidance Details"));
+        assertThat(designGuidanceToolbar.getChildPageTitle(), containsString("Design Guidance Details"));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.toolbars.DesignGuidanceToolbar;
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
 
@@ -8,11 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FailuresWarningsPage extends LoadableComponent<FailuresWarningsPage> {
+public class FailuresWarningsPage extends DesignGuidanceToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(FailuresWarningsPage.class);
 
@@ -27,6 +27,7 @@ public class FailuresWarningsPage extends LoadableComponent<FailuresWarningsPage
     private final ColumnUtils columnUtils;
 
     public FailuresWarningsPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.columnUtils = new ColumnUtils(driver);
