@@ -108,18 +108,17 @@ public class EditPublicComparisonTests extends TestBase {
             .selectPublishButton()
             .createNewComparison()
             .enterComparisonName(testComparisonName)
-            .save(ComparePage.class);
-
-        new ComparePage(driver).addScenario()
+            .save(ComparePage.class)
+            .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "PowderMetalShaft")
-            .apply(ComparisonTablePage.class);
+            .apply(ComparisonTablePage.class)
+            .selectScenario(testScenarioName, "PowderMetalShaft")
+            .apply();
 
-        new ComparisonTablePage(driver).selectScenario(testScenarioName, "PowderMetalShaft")
-            .apply()
-            .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
+        new ComparePage(driver).removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
 
-        assertThat(new ComparePage(driver).getScenarioInComparisonView(testScenarioName, "PowderMetalShaft"), is(0));
+        assertThat(new ComparePage(driver).scenarioIsNotInComparisonView(testScenarioName, "PowderMetalShaft"), is(true));
     }
 
     @Test
