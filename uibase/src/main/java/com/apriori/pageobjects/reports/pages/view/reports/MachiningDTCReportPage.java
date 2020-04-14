@@ -22,6 +22,9 @@ public class MachiningDTCReportPage extends GenericReportPage {
     @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
     private WebElement currentBlob;
 
+    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][4]")
+    private WebElement currentBlobTwo;
+
     @FindBy(css = "tspan:nth-child(5)")
     private WebElement tooltipValueElement;
 
@@ -38,7 +41,7 @@ public class MachiningDTCReportPage extends GenericReportPage {
      * @return BigDecimal of retrieved value
      */
     public BigDecimal getValueFromCentralCircleInChart() {
-        pageUtils.waitForElementToAppear(currentBlob);
+        //pageUtils.waitForElementToAppear(currentBlobTwo);
         Actions builder = new Actions(driver).moveToElement(currentBlob);
         builder.perform();
         pageUtils.waitForElementToAppear(tooltipValueElement);

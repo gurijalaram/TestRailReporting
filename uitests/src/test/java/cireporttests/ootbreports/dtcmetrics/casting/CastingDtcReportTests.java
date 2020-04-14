@@ -13,6 +13,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportHeader;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.reports.pages.view.reports.MachiningDTCReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
@@ -181,12 +182,16 @@ public class CastingDtcReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickApplyAndOk();
+            .clickApplyAndOk()
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
 
         // 1. Click bubble -> DTC Part Summary report (or use tooltips as before)
         // 2. Grab part name to use in CID from DTC Part Summary Report
         //      - Save in variable for later (String - partName - local scope) Final - won't change
-        BigDecimal value = genericReportPage.getValueFromDtcPartSummaryReport();
+        // try machining dtc here instead to see if it works
+        MachiningDTCReportPage machiningDTCReportPage = new MachiningDTCReportPage(driver);
+        machiningDTCReportPage.getValueFromCentralCircleInChart();
+        //BigDecimal value = genericReportPage.getValueFromDtcPartSummaryReport();
         String partName = genericReportPage.getPartNameReports();
         String scenarioName = "Initial";
         genericReportPage.openNewTabAndFocus();

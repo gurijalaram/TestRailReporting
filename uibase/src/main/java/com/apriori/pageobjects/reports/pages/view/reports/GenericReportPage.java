@@ -763,13 +763,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public BigDecimal getValueFromDtcPartSummaryReport() {
         // 1. navigate to part summary report
-        //pageUtils.waitFor(4000);
-        //pageUtils.waitForElementAndClick(currentBlob);
-        //currentBlob.click();
-
-        //pageUtils.waitFor(2000);
-        //currentBlob.click();
-        pageUtils.waitForElementToAppear(currentBlob);
+        // update jira
 
         Actions builder = new Actions(driver).moveToElement(currentBlob);
         builder.perform();
