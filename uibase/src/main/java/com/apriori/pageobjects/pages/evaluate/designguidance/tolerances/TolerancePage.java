@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
@@ -9,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class TolerancePage extends LoadableComponent<TolerancePage> {
+public class TolerancePage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(TolerancePage.class);
 
@@ -38,6 +38,7 @@ public class TolerancePage extends LoadableComponent<TolerancePage> {
     private final ColumnUtils columnUtils;
 
     public TolerancePage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.columnUtils = new ColumnUtils(driver);
