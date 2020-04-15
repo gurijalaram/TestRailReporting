@@ -132,13 +132,13 @@ public class HelpTests extends TestBase {
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
-        costDetailsPage = loginPage.login(UserUtil.getUser())
+        helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openCostDetails()
             .clickHelp();
 
-        assertThat(costDetailsPage.getChildPageTitle(), containsString("Cost Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Details"));
     }
 }
