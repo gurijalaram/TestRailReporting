@@ -179,7 +179,6 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-comp='dfmRiskIcon']")
     private WebElement dfmRiskIcon;
 
-
     private final WebDriver driver;
     private final PageUtils pageUtils;
 

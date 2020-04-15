@@ -44,8 +44,8 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "div[data-ap-comp='scenarioTiles'] div.v-grid-scroller-horizontal")
     private WebElement horizontalScroller;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ComparePage(WebDriver driver) {
         this.driver = driver;

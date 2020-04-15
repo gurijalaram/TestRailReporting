@@ -25,8 +25,8 @@ public class EvaluatePanelToolbar extends LoadableComponent<EvaluatePanelToolbar
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public EvaluatePanelToolbar(WebDriver driver) {
         this.driver = driver;
@@ -42,8 +42,6 @@ public class EvaluatePanelToolbar extends LoadableComponent<EvaluatePanelToolbar
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(closePanelButton);
-        pageUtils.waitForElementAppear(chevronButton);
     }
 
     /**
