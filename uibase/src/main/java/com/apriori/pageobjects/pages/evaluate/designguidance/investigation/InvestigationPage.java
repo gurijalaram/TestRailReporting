@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
-    private Logger logger = LoggerFactory.getLogger(InvestigationPage.class);
+    private final Logger logger = LoggerFactory.getLogger(InvestigationPage.class);
 
     @FindBy(css = "div[data-ap-comp='dtcTopicTable']")
     private WebElement topicTable;

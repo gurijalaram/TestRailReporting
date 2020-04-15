@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
 
-    private Logger logger = LoggerFactory.getLogger(PublishWarningPage.class);
+    private final Logger logger = LoggerFactory.getLogger(PublishWarningPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;

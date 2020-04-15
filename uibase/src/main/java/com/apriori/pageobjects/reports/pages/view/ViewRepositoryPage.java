@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class ViewRepositoryPage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
     private Map<String, WebElement> folderElementMap = new HashMap<>();
     private Map<String, WebElement> reportElementMap = new HashMap<>();
 

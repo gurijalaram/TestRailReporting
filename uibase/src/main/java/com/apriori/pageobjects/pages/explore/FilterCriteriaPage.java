@@ -22,7 +22,7 @@ import java.util.List;
 
 public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
-    private Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
+    private final Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage> {
 
-    private Logger logger = LoggerFactory.getLogger(SecondaryProcessPage.class);
+    private final Logger logger = LoggerFactory.getLogger(SecondaryProcessPage.class);
 
     @FindBy(css = ".secondary-treatments-panel-header-btn")
     private WebElement clearAllButton;

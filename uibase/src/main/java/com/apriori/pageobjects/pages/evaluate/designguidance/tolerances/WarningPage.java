@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class WarningPage extends LoadableComponent<WarningPage> {
 
-    private Logger logger = LoggerFactory.getLogger(WarningPage.class);
+    private final Logger logger = LoggerFactory.getLogger(WarningPage.class);
 
     @FindBy(css = "div[data-ap-comp='genericDialog'] .modal-content")
     private WebElement dialog;

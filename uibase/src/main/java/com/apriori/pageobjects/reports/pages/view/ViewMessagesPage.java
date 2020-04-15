@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ViewMessagesPage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(ViewMessagesPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewMessagesPage.class);
 
     @FindBy(xpath = "//div[contains(@class, 'showingToolBar')]/div/div[1]/div[contains(@class, 'title')]")
     private WebElement messagesPageTitle;

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class DeletePage extends LoadableComponent<DeletePage> {
 
-    private Logger logger = LoggerFactory.getLogger(DeletePage.class);
+    private final Logger logger = LoggerFactory.getLogger(DeletePage.class);
 
     @FindBy(css = "[data-ap-comp='deleteInputs'] .modal-content")
     private WebElement modalDialog;

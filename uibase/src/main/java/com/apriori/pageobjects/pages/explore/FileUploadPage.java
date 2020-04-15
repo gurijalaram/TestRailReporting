@@ -20,7 +20,7 @@ import java.io.File;
 
 public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
-    private Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
+    private final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;

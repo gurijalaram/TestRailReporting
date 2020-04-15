@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
 
-    private Logger logger = LoggerFactory.getLogger(VPESelectionPage.class);
+    private final Logger logger = LoggerFactory.getLogger(VPESelectionPage.class);
 
     @FindBy(css = "div[data-ap-comp='vpeSelection'] .modal-content")
     private WebElement modalTitle;

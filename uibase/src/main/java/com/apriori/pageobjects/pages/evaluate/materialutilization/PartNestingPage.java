@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class PartNestingPage extends EvaluatePanelToolbar {
 
-    private Logger logger = LoggerFactory.getLogger(PartNestingPage.class);
+    private final Logger logger = LoggerFactory.getLogger(PartNestingPage.class);
 
     @FindBy(css = "label[data-ap-field='selectedSheet']")
     private WebElement selectedSheet;

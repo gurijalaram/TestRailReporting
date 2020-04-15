@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class SelectStockPage extends LoadableComponent<SelectStockPage> {
 
-    private Logger logger = LoggerFactory.getLogger(SelectStockPage.class);
+    private final Logger logger = LoggerFactory.getLogger(SelectStockPage.class);
 
     @FindBy(css = "div[data-ap-comp='stockSelectionTable']")
     private WebElement stockTable;

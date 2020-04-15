@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPage> {
 
-    private Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
 
     @FindBy(css = "input[data-ap-comp='SYSTEMDEFAULT']")
     private WebElement assumeDefaultCheckbox;

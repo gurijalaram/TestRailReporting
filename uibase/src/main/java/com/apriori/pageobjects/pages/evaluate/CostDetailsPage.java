@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class CostDetailsPage extends EvaluatePanelToolbar {
 
-    private Logger logger = LoggerFactory.getLogger(CostDetailsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(CostDetailsPage.class);
 
     @FindBy(css = "[data-ap-comp='costResultChartArea']")
     private WebElement costResultChart;

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class AssignPage extends LoadableComponent<AssignPage> {
 
-    private Logger logger = LoggerFactory.getLogger(AssignPage.class);
+    private final Logger logger = LoggerFactory.getLogger(AssignPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;

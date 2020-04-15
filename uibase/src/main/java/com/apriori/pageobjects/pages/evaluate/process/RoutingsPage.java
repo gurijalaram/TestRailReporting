@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
-    private Logger logger = LoggerFactory.getLogger(RoutingsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(RoutingsPage.class);
 
     @FindBy(css = "div[data-ap-comp='routingSelectionTable'] td")
     private WebElement routingTableCell;

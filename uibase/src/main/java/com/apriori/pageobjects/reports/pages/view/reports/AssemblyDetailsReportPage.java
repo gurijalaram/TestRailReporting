@@ -28,15 +28,7 @@ import java.util.stream.IntStream;
 
 public class AssemblyDetailsReportPage extends GenericReportPage {
 
-    private Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
-    List<BigDecimal> refinedQuantities = new ArrayList<>();
-    private Map<String, String> genericColumnMap = new HashMap<>();
-    private Map<String, String> topLevelRowMap = new HashMap<>();
-    private Map<String, String> subSubAsmRowMap = new HashMap<>();
-    private Map<String, String> subAssemblyRowMap = new HashMap<>();
-
-    private String genericTrSelector = "tr:nth-child(%s)";
-    private String cssSelector;
+    private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
 
     @FindBy(css = "a[id='logo']")
     private WebElement cidLogo;
@@ -55,6 +47,15 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
+
+    List<BigDecimal> refinedQuantities = new ArrayList<>();
+    private Map<String, String> genericColumnMap = new HashMap<>();
+    private Map<String, String> topLevelRowMap = new HashMap<>();
+    private Map<String, String> subSubAsmRowMap = new HashMap<>();
+    private Map<String, String> subAssemblyRowMap = new HashMap<>();
+
+    private String genericTrSelector = "tr:nth-child(%s)";
+    private String cssSelector;
 
     private PageUtils pageUtils;
     private WebDriver driver;

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
-    private Logger logger = LoggerFactory.getLogger(HelpDocPage.class);
+    private final Logger logger = LoggerFactory.getLogger(HelpDocPage.class);
 
     @FindBy(css = ".navbar-brand")
     private WebElement brandImage;

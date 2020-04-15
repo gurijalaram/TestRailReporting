@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class CastingDtcReportHeader extends GenericReportPage {
 
-    private Logger logger = LoggerFactory.getLogger(CastingDtcReportHeader.class);
+    private final Logger logger = LoggerFactory.getLogger(CastingDtcReportHeader.class);
 
     @FindBy(xpath = "//div[@id='reportContainer']//td[@colspan='4']/span")
     private WebElement headerDisplayedRollup;

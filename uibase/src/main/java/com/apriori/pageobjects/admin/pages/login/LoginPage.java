@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class LoginPage extends AdminHeader {
 
-    private Logger logger = LoggerFactory.getLogger(LoginPage.class);
+    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     private static String loginPageURL = Constants.ciaURL;
 
     @FindBy(css = "input[name='email']")

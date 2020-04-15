@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizationPage> {
 
-    private Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
+    private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
     @FindBy(css = "input[data-ap-field='materialUnitCostFlag']")
     private WebElement basicInfoCheckbox;

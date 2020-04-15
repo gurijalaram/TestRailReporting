@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class LogoutPage extends LoadableComponent<LogoutPage> {
 
-    private Logger logger = LoggerFactory.getLogger(LogoutPage.class);
+    private final Logger logger = LoggerFactory.getLogger(LogoutPage.class);
 
     @FindBy(css = "li.user-menu-schema-info")
     private WebElement logOutInfo;

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
 
-    private Logger logger = LoggerFactory.getLogger(PreviewPanelPage.class);
+    private final Logger logger = LoggerFactory.getLogger(PreviewPanelPage.class);
 
     @FindBy(css = "[data-ap-field='totalCost']")
     private WebElement totalCost;

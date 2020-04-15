@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class CreateDashboardPage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(CreateDashboardPage.class);
+    private final Logger logger = LoggerFactory.getLogger(CreateDashboardPage.class);
 
     @FindBy(css = "div[id='display'] .title")
     private WebElement dashboardPageTitle;

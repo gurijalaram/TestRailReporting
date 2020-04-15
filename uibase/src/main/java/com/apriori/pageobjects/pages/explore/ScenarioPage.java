@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class ScenarioPage extends LoadableComponent<ScenarioPage> {
 
-    private Logger logger = LoggerFactory.getLogger(ScenarioPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ScenarioPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;

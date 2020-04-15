@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class CiaUserGuide extends PageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(CiaUserGuide.class);
+    private final Logger logger = LoggerFactory.getLogger(CiaUserGuide.class);
 
     @FindBy(xpath = "//*[contains(text(), 'Cost Insight Report:User Guide')]")
     private WebElement pageTitle;

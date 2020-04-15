@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class MaterialPage extends EvaluatePanelToolbar {
 
-    private Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
+    private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;

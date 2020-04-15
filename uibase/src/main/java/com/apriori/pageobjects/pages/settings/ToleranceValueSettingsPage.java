@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValueSettingsPage> {
 
-    private Logger logger = LoggerFactory.getLogger(ToleranceValueSettingsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ToleranceValueSettingsPage.class);
 
     @FindBy(css = "[data-ap-comp='partOverrideTolerances'] .modal-title")
     private WebElement dialogTitle;

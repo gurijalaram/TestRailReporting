@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
+    private final static Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(css = "a[data-ap-comp='exploreButton'")
     private WebElement exploreTab;

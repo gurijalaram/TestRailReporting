@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class SystemDataExport extends AdminHeader {
 
-    private Logger logger = LoggerFactory.getLogger(SystemDataExport.class);
+    private final Logger logger = LoggerFactory.getLogger(SystemDataExport.class);
 
     private WebDriver driver;
     private PageUtils pageUtils;

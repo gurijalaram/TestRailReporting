@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class CompareHeader extends GenericHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(CompareHeader.class);
+    private final static Logger logger = LoggerFactory.getLogger(CompareHeader.class);
 
     @FindBy(css = "button[data-ap-comp='saveComparisonAsButton']")
     private WebElement saveAs;

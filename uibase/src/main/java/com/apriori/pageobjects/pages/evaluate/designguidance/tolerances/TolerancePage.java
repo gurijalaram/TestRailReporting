@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class TolerancePage extends EvaluatePanelToolbar {
 
-    private Logger logger = LoggerFactory.getLogger(TolerancePage.class);
+    private final Logger logger = LoggerFactory.getLogger(TolerancePage.class);
 
     @FindBy(css = "div[data-ap-comp='tolerancesTable']")
     private WebElement toleranceTable;

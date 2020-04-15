@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPage> {
 
-    private Logger logger = LoggerFactory.getLogger(SelectionSettingsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(SelectionSettingsPage.class);
     private final String colourLocator = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled']";
 
     @FindBy(css = "div[data-ap-field='selectionColor'] input")

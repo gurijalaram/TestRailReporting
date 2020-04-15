@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class FailuresWarningsPage extends EvaluatePanelToolbar {
 
-    private Logger logger = LoggerFactory.getLogger(FailuresWarningsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(FailuresWarningsPage.class);
 
     @FindBy(css = "div[data-ap-comp='uncostedFeaturesInfo']")
     private WebElement failuresInfo;

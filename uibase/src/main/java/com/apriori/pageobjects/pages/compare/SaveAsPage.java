@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class SaveAsPage extends LoadableComponent<SaveAsPage> {
 
-    private Logger logger = LoggerFactory.getLogger(SaveAsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(SaveAsPage.class);
 
     @FindBy(css = "input[data-ap-field='name']")
     private WebElement nameInput;

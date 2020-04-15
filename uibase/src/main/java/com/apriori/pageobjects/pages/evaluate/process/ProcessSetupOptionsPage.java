@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
 
-    private Logger logger = LoggerFactory.getLogger(ProcessSetupOptionsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ProcessSetupOptionsPage.class);
 
     @FindBy(css = "input[data-ap-comp='numberOfCavities.radioButtons.default']")
     private WebElement defaultValueRadioButton;

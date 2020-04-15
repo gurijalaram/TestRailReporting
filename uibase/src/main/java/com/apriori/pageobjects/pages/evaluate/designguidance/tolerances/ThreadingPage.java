@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class ThreadingPage extends LoadableComponent<ThreadingPage> {
 
-    private Logger logger = LoggerFactory.getLogger(ThreadingPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ThreadingPage.class);
 
     @FindBy(css = "div[data-ap-comp='threadEditor'] .modal-content")
     private WebElement threadDialog;

@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
-    private Logger logger = LoggerFactory.getLogger(ComponentsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ComponentsPage.class);
 
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;

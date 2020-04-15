@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ScenarioExport extends AdminHeader {
 
-    private Logger logger = LoggerFactory.getLogger(ScenarioExport.class);
+    private final Logger logger = LoggerFactory.getLogger(ScenarioExport.class);
 
     @FindBy(css = "h1")
     private WebElement manageScenarioExportTitle;

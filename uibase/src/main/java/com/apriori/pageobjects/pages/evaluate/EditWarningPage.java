@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class EditWarningPage extends LoadableComponent<EditWarningPage> {
 
-    private Logger logger = LoggerFactory.getLogger(EditWarningPage.class);
+    private final Logger logger = LoggerFactory.getLogger(EditWarningPage.class);
 
     @FindBy(css = "div[data-ap-comp='editScenarioConflict'] .modal-content")
     private WebElement dialog;

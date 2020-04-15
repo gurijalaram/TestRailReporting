@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class GuidancePage extends EvaluatePanelToolbar {
 
-    private Logger logger = LoggerFactory.getLogger(GuidancePage.class);
+    private final Logger logger = LoggerFactory.getLogger(GuidancePage.class);
 
     @FindBy(css = "div[data-ap-comp='guidanceIssuesTable']")
     private WebElement guidanceTable;

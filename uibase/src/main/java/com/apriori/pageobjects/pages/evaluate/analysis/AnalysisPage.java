@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class AnalysisPage extends LoadableComponent<AnalysisPage> {
 
-    private Logger logger = LoggerFactory.getLogger(AnalysisPage.class);
+    private final Logger logger = LoggerFactory.getLogger(AnalysisPage.class);
 
     @FindBy(xpath = "//li[.='Properties']")
     private WebElement propertiesButton;

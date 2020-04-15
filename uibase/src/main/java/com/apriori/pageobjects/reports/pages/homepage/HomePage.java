@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class HomePage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(HomePage.class);
+    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
     private PageUtils pageUtils;
     private HelpPage helpPage;

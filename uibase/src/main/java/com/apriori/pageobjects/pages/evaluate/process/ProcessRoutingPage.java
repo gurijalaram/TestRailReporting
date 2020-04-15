@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 
 public class ProcessRoutingPage extends EvaluatePanelToolbar {
 
-    private Logger logger = LoggerFactory.getLogger(ProcessRoutingPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ProcessRoutingPage.class);
 
     @FindBy(css = "div[data-ap-comp='processCycleTime']")
     private WebElement routingTable;

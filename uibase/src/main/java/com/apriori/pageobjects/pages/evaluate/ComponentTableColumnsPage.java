@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableColumnsPage> {
 
-    private Logger logger = LoggerFactory.getLogger(ComponentTableColumnsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ComponentTableColumnsPage.class);
 
     private Map<String, String> columnSelectorMap = new HashMap<>();
 

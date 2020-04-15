@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class CostingJobPage extends LoadableComponent<CostingJobPage> {
 
-    private Logger logger = LoggerFactory.getLogger(CostingJobPage.class);
+    private final Logger logger = LoggerFactory.getLogger(CostingJobPage.class);
 
     @FindBy(css = "div[data-ap-comp='additionalOrderInputs'] .modal-content")
     private WebElement dialog;

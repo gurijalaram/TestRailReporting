@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class GenericReportPage extends ReportsPageHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private final static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();

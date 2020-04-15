@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class ComparePage extends LoadableComponent<ComparePage> {
 
-    private Logger logger = LoggerFactory.getLogger(ComparePage.class);
+    private final Logger logger = LoggerFactory.getLogger(ComparePage.class);
 
     @FindBy(css = "table.comparison-table-header-widget-table")
     private WebElement scenarioTable;

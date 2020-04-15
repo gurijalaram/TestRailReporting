@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class MoreInputsPage extends EvaluatePanelToolbar {
 
-    private Logger logger = LoggerFactory.getLogger(MoreInputsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(MoreInputsPage.class);
 
     @FindBy(css = ".details-viewport-part .panel-details")
     private WebElement inputTable;

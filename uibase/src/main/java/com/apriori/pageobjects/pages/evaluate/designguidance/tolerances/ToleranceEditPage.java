@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
-    private Logger logger = LoggerFactory.getLogger(ToleranceEditPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ToleranceEditPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;

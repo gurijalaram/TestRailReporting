@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class LibraryPage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(LibraryPage.class);
+    private final Logger logger = LoggerFactory.getLogger(LibraryPage.class);
 
     @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
     private WebElement libraryPageTitle;

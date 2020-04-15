@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
 public class EvaluatePage extends EvaluateHeader {
 
-    private Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
+    private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
     private Map<String, String> columnSelectorMap = new HashMap<>();
 

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class CIDLoginPage extends LoadableComponent<CIDLoginPage> {
 
-    private Logger logger = LoggerFactory.getLogger(CIDLoginPage.class);
+    private final Logger logger = LoggerFactory.getLogger(CIDLoginPage.class);
     private static String loginPageUrl = Constants.cidURL;
 
     @FindBy(css = "input[name='email']")

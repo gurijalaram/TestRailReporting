@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage> {
 
-    private Logger logger = LoggerFactory.getLogger(ReferenceComparePage.class);
+    private final Logger logger = LoggerFactory.getLogger(ReferenceComparePage.class);
 
     @FindBy(css = "[data-ap-comp='baselineScenarioSelection']")
     private WebElement filterDropdown;

@@ -15,7 +15,7 @@ import java.util.HashSet;
 
 public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPage> {
 
-    private Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
 
     @FindBy(css = "input[data-ap-field='scenarioName']")
     private WebElement scenarioNameInput;

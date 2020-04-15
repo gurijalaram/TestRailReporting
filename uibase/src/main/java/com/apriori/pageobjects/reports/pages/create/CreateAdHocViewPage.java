@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class CreateAdHocViewPage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(CreateAdHocViewPage.class);
+    private final Logger logger = LoggerFactory.getLogger(CreateAdHocViewPage.class);
 
     @FindBy(xpath = "//div[@id='display']/div[2]/div/div[1]/div")
     private WebElement adHocViewPageTitle;

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage> {
 
-    private Logger logger = LoggerFactory.getLogger(PropertiesDialogPage.class);
+    private final Logger logger = LoggerFactory.getLogger(PropertiesDialogPage.class);
 
     @FindBy(id = "propertiesPanel")
     private WebElement propertyPanel;

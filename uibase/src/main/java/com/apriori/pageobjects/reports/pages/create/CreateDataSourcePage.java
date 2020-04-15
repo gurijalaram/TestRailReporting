@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class CreateDataSourcePage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(CreateDataSourcePage.class);
+    private final Logger logger = LoggerFactory.getLogger(CreateDataSourcePage.class);
 
     @FindBy(xpath = "//div[@id='display']/div/div/div/div[contains(@class, 'header')]/div")
     private WebElement dataSourcePageTitle;

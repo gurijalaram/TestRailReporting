@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
-    private Logger logger = LoggerFactory.getLogger(TableColumnsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(TableColumnsPage.class);
 
     @FindBy(css = "[data-ap-scope='tableViewSelection'] .modal-content")
     private WebElement tableDialog;
