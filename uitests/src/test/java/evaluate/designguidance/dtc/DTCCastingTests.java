@@ -63,8 +63,9 @@ public class DTCCastingTests extends TestBase {
 
     @Test
     @Issue("AP-57941")
+    @Issue("BA-774")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049", "286"})
+    @TestRail(testCaseId = {"3846", "1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
 
@@ -78,11 +79,16 @@ public class DTCCastingTests extends TestBase {
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        guidancePage = settingsPage.save(ExplorePage.class)
+        evaluatePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(8)
-            .openDesignGuidance()
+            .costScenario(8);
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
+        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
+
+        evaluatePage = new EvaluatePage(driver);
+        guidancePage = evaluatePage.openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:18");
 
