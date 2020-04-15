@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 public class CreateDomainPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(CreateDomainPage.class);
-
-    private final PageUtils pageUtils;
-    private final WebDriver driver;
+    private Logger logger = LoggerFactory.getLogger(CreateDomainPage.class);
 
     @FindBy(css = "div[data-name='repositoryResourceChooserDialog']")
     private WebElement domainDialog;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public CreateDomainPage(WebDriver driver) {
         super(driver);

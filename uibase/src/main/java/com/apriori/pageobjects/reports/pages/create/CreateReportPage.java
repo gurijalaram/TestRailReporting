@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 public class CreateReportPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(CreateReportPage.class);
-
-    private final PageUtils pageUtils;
-    private final WebDriver driver;
+    private Logger logger = LoggerFactory.getLogger(CreateReportPage.class);
 
     @FindBy(id = "reportGeneratorProperties")
     private WebElement createReportDialog;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public CreateReportPage(WebDriver driver) {
         super(driver);

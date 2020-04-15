@@ -12,16 +12,16 @@ import org.slf4j.LoggerFactory;
 
 public class CreateAdHocViewPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(CreateAdHocViewPage.class);
-
-    private final PageUtils pageUtils;
-    private final WebDriver driver;
+    private Logger logger = LoggerFactory.getLogger(CreateAdHocViewPage.class);
 
     @FindBy(xpath = "//div[@id='display']/div[2]/div/div[1]/div")
     private WebElement adHocViewPageTitle;
 
     @FindBy(xpath = "//div[contains(@class, 'sourceDialogNew ')]")
     private WebElement adHocViewDiaolog;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public CreateAdHocViewPage(WebDriver driver) {
         super(driver);
