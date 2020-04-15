@@ -28,7 +28,7 @@ import java.io.File;
 
 public class GenericHeader extends PageHeader {
 
-    private static final Logger logger = LoggerFactory.getLogger(GenericHeader.class);
+    private static Logger logger = LoggerFactory.getLogger(GenericHeader.class);
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
@@ -81,8 +81,8 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = "input[type='file']")
     private WebElement fileInput;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public GenericHeader(WebDriver driver) {
         super(driver);

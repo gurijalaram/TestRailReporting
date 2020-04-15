@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValueSettingsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ToleranceValueSettingsPage.class);
+    private Logger logger = LoggerFactory.getLogger(ToleranceValueSettingsPage.class);
 
     @FindBy(css = "[data-ap-comp='partOverrideTolerances'] .modal-title")
     private WebElement dialogTitle;
@@ -82,8 +82,8 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
     @FindBy(css = ".modal-footer button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
     private Map<String, WebElement> map = new HashMap<>();
 
     public ToleranceValueSettingsPage(WebDriver driver) {

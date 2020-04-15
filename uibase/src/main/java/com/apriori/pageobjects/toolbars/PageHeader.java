@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private static final Logger logger = LoggerFactory.getLogger(PageHeader.class);
+    private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(css = "a[data-ap-comp='exploreButton'")
     private WebElement exploreTab;
@@ -49,8 +49,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(xpath = "//a[contains(text(),'Log Out')]")
     private WebElement logOutButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public PageHeader(WebDriver driver) {
         this.driver = driver;

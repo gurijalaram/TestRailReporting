@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
+    private Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
 
     @FindBy(css = "input[data-ap-comp='SYSTEMDEFAULT']")
     private WebElement assumeDefaultCheckbox;
@@ -39,9 +39,8 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
     @FindBy(css = "input[data-ap-field='cadToleranceReplacement']")
     private WebElement cadReplacementInput;
 
-
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ToleranceSettingsPage(WebDriver driver) {
         this.driver = driver;

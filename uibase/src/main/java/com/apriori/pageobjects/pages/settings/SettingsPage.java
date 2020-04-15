@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class SettingsPage extends LoadableComponent<SettingsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(SettingsPage.class);
+    private Logger logger = LoggerFactory.getLogger(SettingsPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
@@ -42,8 +42,8 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     @FindBy(css = ".btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public SettingsPage(WebDriver driver) {
         this.driver = driver;

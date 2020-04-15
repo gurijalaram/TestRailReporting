@@ -15,7 +15,7 @@ import java.util.HashSet;
 
 public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
+    private Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
 
     @FindBy(css = "input[data-ap-field='scenarioName']")
     private WebElement scenarioNameInput;
@@ -47,8 +47,8 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
     @FindBy(css = ".col-xs-2 .bold-font")
     private WebElement batchInput;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ProductionDefaultPage(WebDriver driver) {
         this.driver = driver;

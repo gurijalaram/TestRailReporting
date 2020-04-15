@@ -16,13 +16,13 @@ import org.slf4j.LoggerFactory;
 
 public class CompareHeader extends GenericHeader {
 
-    private static final Logger logger = LoggerFactory.getLogger(CompareHeader.class);
+    private static Logger logger = LoggerFactory.getLogger(CompareHeader.class);
 
     @FindBy(css = "button[data-ap-comp='saveComparisonAsButton']")
     private WebElement saveAs;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public CompareHeader(WebDriver driver) {
         super(driver);

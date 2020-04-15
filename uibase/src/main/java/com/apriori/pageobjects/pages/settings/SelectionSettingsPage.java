@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(SelectionSettingsPage.class);
+    private Logger logger = LoggerFactory.getLogger(SelectionSettingsPage.class);
     private final String colourLocator = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled']";
 
     @FindBy(css = "div[data-ap-field='selectionColor'] input")
@@ -88,8 +88,8 @@ public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPa
     @FindBy(css = colourLocator + " span[title='#000000']")
     private WebElement black;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
     private Map<String, WebElement> map = new HashMap<>();
 
     public SelectionSettingsPage(WebDriver driver) {

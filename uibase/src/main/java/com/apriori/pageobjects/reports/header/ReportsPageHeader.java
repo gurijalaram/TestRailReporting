@@ -11,7 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ReportsPageHeader extends PageHeader {
-    private static final Logger logger = LoggerFactory.getLogger(ReportsPageHeader.class);
+
+    private static Logger logger = LoggerFactory.getLogger(ReportsPageHeader.class);
 
     @FindBy(xpath = "//div[@id='reportViewFrame']/div/div/div[@class='title']")
     private WebElement reportTitle;
@@ -61,8 +62,8 @@ public class ReportsPageHeader extends PageHeader {
     @FindBy(id = "apply")
     private WebElement applyButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ReportsPageHeader(WebDriver driver) {
         super(driver);
