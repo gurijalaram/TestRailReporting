@@ -15,6 +15,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -59,14 +60,14 @@ public class HelpTests extends TestBase {
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
-        moreInputsPage = loginPage.login(UserUtil.getUser())
+        helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openMoreInputs()
             .clickHelp();
 
-        assertThat(moreInputsPage.getChildPageTitle(), containsString("More Inputs"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("More Inputs"));
     }
 
     @Test
