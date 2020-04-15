@@ -198,7 +198,7 @@ public class DTCCastingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Gravity Die Cast")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()

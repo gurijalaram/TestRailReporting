@@ -183,13 +183,13 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
             .checkRoutingBox()
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Injection Molding"), is(true));
@@ -218,7 +218,7 @@ public class ProcessRoutingTests extends TestBase {
 
         routingsPage.selectRouting("Sand Casting")
             .apply()
-            .closeProcessPanel();
+            .closePanel();
 
         evaluatePage = new EvaluatePage(driver);
         routingsPage = evaluatePage.costScenario()
@@ -248,7 +248,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Vat Photopolymerization")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum AlSi10Mg")
             .apply()
@@ -287,7 +287,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("[CTL]/Waterjet/[Bend]")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario();
 
         assertThat(evaluatePage.getBurdenedCost("1.96"), is(true));
@@ -312,7 +312,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openMaterialCompositionTable();
 
@@ -338,7 +338,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Material Jetting")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Visijet M3 Black")
             .apply()
@@ -351,7 +351,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Powder Bed Fusion / Direct Metal Laser Sintering")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum AlSi10Mg")
             .apply()
@@ -379,7 +379,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
@@ -389,7 +389,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Injection Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openProcessDetails();
 
@@ -450,7 +450,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Gravity Die Cast")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Gravity Die Casting"), is(true));
@@ -489,7 +489,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("[CTL]/Waterjet/[Bend]")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openDesignGuidance()
             .openGeometryTab()
@@ -871,7 +871,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Gravity Die Cast")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openProcessDetails();
 

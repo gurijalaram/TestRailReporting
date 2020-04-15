@@ -1,16 +1,16 @@
 package com.apriori.pageobjects.pages.evaluate.process;
 
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptionsPage> {
+public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(ProcessSetupOptionsPage.class);
 
@@ -177,6 +177,7 @@ public class ProcessSetupOptionsPage extends LoadableComponent<ProcessSetupOptio
     private final PageUtils pageUtils;
 
     public ProcessSetupOptionsPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
