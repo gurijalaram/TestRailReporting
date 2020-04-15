@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class EditWarningPage extends LoadableComponent<EditWarningPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(EditWarningPage.class);
+    private Logger logger = LoggerFactory.getLogger(EditWarningPage.class);
 
     @FindBy(css = "div[data-ap-comp='editScenarioConflict'] .modal-content")
     private WebElement dialog;
@@ -36,8 +36,8 @@ public class EditWarningPage extends LoadableComponent<EditWarningPage> {
     @FindBy(css = "div[data-ap-comp='editScenarioConflict'] button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public EditWarningPage(WebDriver driver) {
         this.driver = driver;

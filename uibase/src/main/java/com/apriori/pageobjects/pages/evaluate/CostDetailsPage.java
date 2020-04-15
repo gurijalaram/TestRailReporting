@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class CostDetailsPage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(CostDetailsPage.class);
-
+    private Logger logger = LoggerFactory.getLogger(CostDetailsPage.class);
 
     @FindBy(css = "[data-ap-comp='costResultChartArea']")
     private WebElement costResultChart;
@@ -25,8 +24,8 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public CostDetailsPage(WebDriver driver) {
         super(driver);

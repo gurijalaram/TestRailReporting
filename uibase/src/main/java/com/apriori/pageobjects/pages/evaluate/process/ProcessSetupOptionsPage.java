@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(ProcessSetupOptionsPage.class);
+    private Logger logger = LoggerFactory.getLogger(ProcessSetupOptionsPage.class);
 
     @FindBy(css = "input[data-ap-comp='numberOfCavities.radioButtons.default']")
     private WebElement defaultValueRadioButton;
@@ -173,8 +173,8 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     @FindBy(css = "div.form-section")
     private WebElement psoFormSection;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ProcessSetupOptionsPage(WebDriver driver) {
         super(driver);

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(SecondaryProcessPage.class);
+    private Logger logger = LoggerFactory.getLogger(SecondaryProcessPage.class);
 
     @FindBy(css = ".secondary-treatments-panel-header-btn")
     private WebElement clearAllButton;
@@ -36,8 +36,8 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
     @FindBy(css = ".modal-footer button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
     private By secondaryProcess;
 
     public SecondaryProcessPage(WebDriver driver) {

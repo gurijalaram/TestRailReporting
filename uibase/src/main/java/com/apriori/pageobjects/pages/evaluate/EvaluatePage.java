@@ -34,9 +34,9 @@ import java.util.stream.Collectors;
 
 public class EvaluatePage extends EvaluateHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
+    private Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
-    private final Map<String, String> columnSelectorMap = new HashMap<>();
+    private Map<String, String> columnSelectorMap = new HashMap<>();
 
     @FindBy(css = "thead[data-ap-comp='scenarioKey'] label[data-ap-field='masterName']")
     private WebElement partName;
@@ -179,8 +179,8 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-comp='dfmRiskIcon']")
     private WebElement dfmRiskIcon;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public EvaluatePage(WebDriver driver) {
         super(driver);

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(RoutingsPage.class);
+    private Logger logger = LoggerFactory.getLogger(RoutingsPage.class);
 
     @FindBy(css = "div[data-ap-comp='routingSelectionTable'] td")
     private WebElement routingTableCell;
@@ -51,8 +51,8 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
     @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public RoutingsPage(WebDriver driver) {
         this.driver = driver;

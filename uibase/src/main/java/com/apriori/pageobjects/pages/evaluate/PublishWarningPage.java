@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PublishWarningPage.class);
+    private Logger logger = LoggerFactory.getLogger(PublishWarningPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
@@ -32,8 +32,8 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     @FindBy(css = "[data-ap-comp='saveAsNew']")
     private WebElement newScenarioButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public PublishWarningPage(WebDriver driver) {
         this.driver = driver;

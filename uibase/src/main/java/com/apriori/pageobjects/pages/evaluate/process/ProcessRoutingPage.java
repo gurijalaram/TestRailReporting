@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 
 public class ProcessRoutingPage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(ProcessRoutingPage.class);
+    private Logger logger = LoggerFactory.getLogger(ProcessRoutingPage.class);
 
     @FindBy(css = "div[data-ap-comp='processCycleTime']")
     private WebElement routingTable;
@@ -71,8 +71,8 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ProcessRoutingPage(WebDriver driver) {
         super(driver);

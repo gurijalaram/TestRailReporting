@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class CostingJobPage extends LoadableComponent<CostingJobPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(CostingJobPage.class);
+    private Logger logger = LoggerFactory.getLogger(CostingJobPage.class);
 
     @FindBy(css = "div[data-ap-comp='additionalOrderInputs'] .modal-content")
     private WebElement dialog;
@@ -27,8 +27,8 @@ public class CostingJobPage extends LoadableComponent<CostingJobPage> {
     @FindBy(css = "div[data-ap-comp='additionalOrderInputs'] button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public CostingJobPage(WebDriver driver) {
         this.driver = driver;
