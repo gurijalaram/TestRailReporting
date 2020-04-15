@@ -137,7 +137,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     public FilterCriteriaPage multiFilterPublicCriteria(String[] attributes, String[] values) {
         clear(FilterCriteriaPage.class)
-            .setPrivateWorkSpace()
+            .setPublicWorkspace()
             .setScenarioType("Part")
             .multiSelectAttributes(attributes)
             .multiSelectValue(values);

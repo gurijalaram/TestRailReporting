@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -33,11 +32,14 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
 
-    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][4]")
-    private WebElement currentBlob;
+    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][3]")
+    private WebElement castingDtcBubble;
+
+    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
+    private WebElement machiningDtcBubble;
 
     @FindBy(css = "tspan:nth-child(5)")
-    private WebElement tooltipValueElement;
+    private WebElement tooltipPartNameElement;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -204,7 +206,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(currentBlob);
+        pageUtils.waitForElementToAppear(castingDtcBubble);
     }
 
     /**
@@ -273,7 +275,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Clicks apply and ok
      * @return Generic Report page object
      */
-    public GenericReportPage clickApplyAndOk() {
+    public GenericReportPage clickOk() {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
@@ -742,41 +744,22 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets value from tooltip on chart
-     * @return BigDecimal of retrieved value
-     */
-    public BigDecimal getValueFromCentralCircleInChart() {
-        //pageUtils.waitForElementToAppear(currentBlob);
-        // click on random part of page, then continue. Above line fails, cause Selenium (json exception...)
-        Actions builder = new Actions(driver).moveToElement(currentBlob);
-        builder.perform();
-        //pageUtils.waitForElementToAppear(tooltipValueElement);
-        String value = tooltipValueElement.getAttribute("textContent")
-                .replace(",", "")
-                .replace(" ", "");
-        return new BigDecimal(value);
-    }
-
-    /**
-     * Method to return value from DTC Part Summary Report
+     * Method to return value from Bubble in DTC Casting or Machining DTC Report
      * @return BigDecimal value
      */
-    public BigDecimal getValueFromDtcPartSummaryReport() {
-        // 1. navigate to part summary report
-        // update jira
-
-        Actions builder = new Actions(driver).moveToElement(currentBlob);
+    public BigDecimal getValueFromBubbleTooltip(boolean isCastingDtcReport) {
+        WebElement elementToUse = isCastingDtcReport ? castingDtcBubble : machiningDtcBubble;
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
-        pageUtils.waitForElementToAppear(tooltipValueElement);
-        String value = tooltipValueElement.getAttribute("textContent")
-                .replace(",", "")
-                .replace(" ", "");
 
-        // 2. ensure it is right one
-        // 3. get value
+        pageUtils.waitForElementToAppear(tooltipPartNameElement);
 
-        // 4. return value
-        return new BigDecimal("560.38");
+        return new BigDecimal(
+                tooltipPartNameElement.getAttribute("textContent")
+                        .replace(",", "")
+                        .replace(" ", "")
+        );
     }
 
     /**

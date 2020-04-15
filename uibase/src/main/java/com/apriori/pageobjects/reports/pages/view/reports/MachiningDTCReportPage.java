@@ -19,35 +19,11 @@ public class MachiningDTCReportPage extends GenericReportPage {
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
-    private WebElement currentBlob;
-
-    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][4]")
-    private WebElement currentBlobTwo;
-
-    @FindBy(css = "tspan:nth-child(5)")
-    private WebElement tooltipValueElement;
-
     public MachiningDTCReportPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-    }
-
-    /**
-     * Gets value from tooltip on chart
-     * @return BigDecimal of retrieved value
-     */
-    public BigDecimal getValueFromCentralCircleInChart() {
-        //pageUtils.waitForElementToAppear(currentBlobTwo);
-        Actions builder = new Actions(driver).moveToElement(currentBlob);
-        builder.perform();
-        pageUtils.waitForElementToAppear(tooltipValueElement);
-        String value = tooltipValueElement.getAttribute("textContent")
-            .replace(",", "")
-            .replace(" ", "");
-        return new BigDecimal(value);
     }
 }
