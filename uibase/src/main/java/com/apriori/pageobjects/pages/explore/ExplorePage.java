@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.header.ExploreHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,9 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -32,15 +30,6 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "select.form-control.input-md.auto-width")
     private WebElement workspaceDropdown;
 
-    @FindBy(css = "button[data-ap-nav-dialog='showScenarioSearchCriteria']")
-    private WebElement filterButton;
-
-    @FindBy(css = "span[data-ap-comp='resultCount']")
-    private WebElement objectsFound;
-
-    @FindBy(css = "button[data-ap-nav-dialog='showTableViewEditor']")
-    private WebElement columnsButton;
-
     @FindBy(css = "button[data-ap-comp='togglePreviewButton']")
     private WebElement previewButton;
 
@@ -50,22 +39,15 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "[data-ap-comp='previewPanel']")
     private WebElement previewPanelData;
 
-    @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
-    private WebElement componentScroller;
-
-    @FindBy(css = ".v-grid-header")
-    private WebElement columnHeaders;
-
-    @FindBy(css = "div[data-ap-comp='noComponentsMessage']")
-    private WebElement noComponentText;
-
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ScenarioTablePage scenarioTablePage;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.scenarioTablePage = new ScenarioTablePage(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -87,7 +69,7 @@ public class ExplorePage extends ExploreHeader {
      * @return current page object
      */
     public ExplorePage selectWorkSpace(String workspace) {
-        pageUtils.selectDropdownOption(workspaceDropdown, workspace);
+        scenarioTablePage.selectWorkSpace(workspace);
         return this;
     }
 
@@ -99,9 +81,7 @@ public class ExplorePage extends ExploreHeader {
      * @return a new page object
      */
     public EvaluatePage openScenario(String scenarioName, String partName) {
-        pageUtils.waitForElementToAppear(findScenario(scenarioName, partName));
-        findScenario(scenarioName, partName).click();
-        return new EvaluatePage(driver);
+        return scenarioTablePage.openScenario(scenarioName, partName);
     }
 
     /**
@@ -111,9 +91,7 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public ComparePage openComparison(String comparisonName) {
-        pageUtils.waitForElementToAppear(findComparison(comparisonName));
-        findComparison(comparisonName).click();
-        return new ComparePage(driver);
+        return scenarioTablePage.openComparison(comparisonName);
     }
 
     /**
@@ -124,8 +102,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the part as webelement
      */
     public WebElement findScenario(String scenarioName, String partName) {
-        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]");
-        return pageUtils.scrollToElement(scenario, componentScroller, Constants.PAGE_DOWN);
+        return scenarioTablePage.findScenario(partName, scenarioName);
     }
 
     /**
@@ -135,10 +112,7 @@ public class ExplorePage extends ExploreHeader {
      * @param partName     - name of the part
      */
     public void highlightScenario(String scenarioName, String partName) {
-        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
-        pageUtils.scrollToElement(scenario, componentScroller, Constants.PAGE_DOWN);
-        pageUtils.waitForElementToAppear(scenario);
-        pageUtils.javaScriptClick(driver.findElement(scenario));
+        scenarioTablePage.highlightScenario(scenarioName, partName);
     }
 
     /**
@@ -149,9 +123,7 @@ public class ExplorePage extends ExploreHeader {
      * @return a new page object
      */
     public EvaluatePage openAssembly(String scenarioName, String partName) {
-        pageUtils.waitForElementToAppear(findAssembly(scenarioName, partName));
-        findAssembly(scenarioName, partName).click();
-        return new EvaluatePage(driver);
+        return scenarioTablePage.openAssembly(scenarioName, partName);
     }
 
     /**
@@ -162,8 +134,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the part as webelement
      */
     public WebElement findAssembly(String scenarioName, String partName) {
-        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElement(scenario, componentScroller, Constants.PAGE_DOWN);
+        return scenarioTablePage.findAssembly(scenarioName, partName);
     }
 
     /**
@@ -173,9 +144,7 @@ public class ExplorePage extends ExploreHeader {
      * @param partName     - name of the assembly
      */
     public void highlightAssembly(String scenarioName, String partName) {
-        By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
-        pageUtils.scrollToElement(scenario, componentScroller, Constants.PAGE_DOWN);
-        pageUtils.javaScriptClick(driver.findElement(scenario));
+        scenarioTablePage.highlightAssembly(scenarioName, partName);
     }
 
     /**
@@ -186,8 +155,7 @@ public class ExplorePage extends ExploreHeader {
      * @return size of the element as int
      */
     public int getListOfScenarios(String scenarioName, String partName) {
-        By scenario = By.cssSelector("a[href*='#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElements(scenario, componentScroller, Constants.PAGE_DOWN).size();
+        return scenarioTablePage.getListOfScenarios(scenarioName, partName);
     }
 
     /**
@@ -198,8 +166,7 @@ public class ExplorePage extends ExploreHeader {
      * @return size of the element as int
      */
     public int getListOfAssemblies(String scenarioName, String partName) {
-        By assembly = By.cssSelector("a[href*='#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElements(assembly, componentScroller, Constants.PAGE_DOWN).size();
+        return scenarioTablePage.getListOfAssemblies(scenarioName, partName);
     }
 
     /**
@@ -209,8 +176,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenario as webelement
      */
     public WebElement findComparison(String comparisonName) {
-        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]");
-        return pageUtils.scrollToElement(comparison, componentScroller, Constants.PAGE_DOWN);
+        return scenarioTablePage.findComparison(comparisonName);
     }
 
     /**
@@ -220,10 +186,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the scenario as webelement
      */
     public ExplorePage highlightComparison(String comparisonName) {
-        By comparison = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::td");
-        pageUtils.scrollToElement(comparison, componentScroller, Constants.PAGE_DOWN);
-        pageUtils.javaScriptClick(driver.findElement(comparison));
-        return this;
+        return scenarioTablePage.highlightComparison(comparisonName);
     }
 
     /**
@@ -233,8 +196,7 @@ public class ExplorePage extends ExploreHeader {
      * @return size of the element as int
      */
     public int getListOfComparisons(String comparisonName) {
-        By comparison = By.xpath("//div[@title='" + comparisonName.toUpperCase() + "']");
-        return pageUtils.scrollToElements(comparison, componentScroller, Constants.PAGE_DOWN).size();
+        return scenarioTablePage.getListOfComparisons(comparisonName);
     }
 
     /**
@@ -243,8 +205,7 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public FilterCriteriaPage filterCriteria() {
-        pageUtils.waitForElementAndClick(filterButton);
-        return new FilterCriteriaPage(driver);
+        return scenarioTablePage.filterCriteria();
     }
 
     /**
@@ -253,8 +214,7 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public TableColumnsPage openColumnsTable() {
-        pageUtils.waitForElementToAppear(columnsButton).click();
-        return new TableColumnsPage(driver);
+        return scenarioTablePage.openColumnsTable();
     }
 
     /**
@@ -285,7 +245,7 @@ public class ExplorePage extends ExploreHeader {
      * @return column headers as string
      */
     public List<String> getColumnHeaderNames() {
-        return Arrays.stream(columnHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+        return scenarioTablePage.getColumnHeaderNames();
     }
 
     /**
@@ -294,7 +254,7 @@ public class ExplorePage extends ExploreHeader {
      * @return string
      */
     public String getNoComponentText() {
-        return pageUtils.waitForElementToAppear(noComponentText).getText();
+        return scenarioTablePage.getNoComponentText();
     }
 
     /**
@@ -315,8 +275,8 @@ public class ExplorePage extends ExploreHeader {
      * @param columnName - column name
      * @return current page object
      */
-    public ExplorePage sortColumnAscending(String columnName) {
-        return setColumn(columnName, "sort-asc");
+    public ScenarioTablePage sortColumnAscending(String columnName) {
+        return scenarioTablePage.sortColumnAscending(columnName);
     }
 
     /**
@@ -326,8 +286,8 @@ public class ExplorePage extends ExploreHeader {
      * @return current page object
      */
     public ExplorePage sortColumnDescending(String columnName) {
-        sortColumnAscending(columnName);
-        return setColumn(columnName, "sort-desc");
+        scenarioTablePage.sortColumnDescending(columnName);
+        return this;
     }
 
     /**
@@ -339,23 +299,5 @@ public class ExplorePage extends ExploreHeader {
     public String getColumnOrder(String columnName) {
         By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
         return driver.findElement(column).getAttribute("outerHTML");
-    }
-
-    /**
-     * Sets the column order
-     *
-     * @param columnName - column name
-     * @param order      - column order
-     * @return current page object
-     */
-    private ExplorePage setColumn(String columnName, String order) {
-        By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
-
-        if (pageUtils.waitForElementToAppear(column).getAttribute("outerHTML").contains(order)) {
-            return this;
-        } else {
-            pageUtils.waitForElementAndClick(column);
-        }
-        return this;
     }
 }
