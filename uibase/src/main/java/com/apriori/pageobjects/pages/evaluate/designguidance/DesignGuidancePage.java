@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.toolbars.DesignGuidanceToolbar;

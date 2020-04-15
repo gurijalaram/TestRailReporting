@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
+import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.DesignGuidanceToolbar;
@@ -31,10 +31,10 @@ public class HelpTests extends TestBase {
     private HelpPage helpPage;
     private MoreInputsPage moreInputsPage;
     private MaterialPage materialPage;
-    private DesignGuidancePage designGuidancePage;
     private ProcessRoutingPage processRoutingPage;
     private CostDetailsPage costDetailsPage;
     private DesignGuidanceToolbar designGuidanceToolbar;
+    private HelpDocPage helpDocPage;
 
     private File resourceFile;
 
@@ -95,14 +95,14 @@ public class HelpTests extends TestBase {
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
-        designGuidanceToolbar = loginPage.login(UserUtil.getUser())
+        helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .clickHelp();
 
-        assertThat(designGuidanceToolbar.getChildPageTitle(), containsString("Design Guidance Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Design Guidance Details"));
     }
 
     @Test
