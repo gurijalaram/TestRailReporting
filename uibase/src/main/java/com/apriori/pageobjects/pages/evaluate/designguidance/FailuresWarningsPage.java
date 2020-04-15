@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
-import com.apriori.pageobjects.toolbars.DesignGuidanceToolbar;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
 
@@ -12,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FailuresWarningsPage extends DesignGuidanceToolbar {
+public class FailuresWarningsPage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(FailuresWarningsPage.class);
 

@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
-import com.apriori.pageobjects.toolbars.DesignGuidanceToolbar;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class GuidancePage extends DesignGuidanceToolbar {
+public class GuidancePage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(GuidancePage.class);
 

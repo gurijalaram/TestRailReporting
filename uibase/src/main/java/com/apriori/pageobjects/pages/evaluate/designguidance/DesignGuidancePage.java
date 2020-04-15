@@ -2,7 +2,7 @@ package com.apriori.pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
-import com.apriori.pageobjects.toolbars.DesignGuidanceToolbar;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class DesignGuidancePage extends DesignGuidanceToolbar {
+public class DesignGuidancePage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(DesignGuidancePage.class);
 

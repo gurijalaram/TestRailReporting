@@ -12,9 +12,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DesignGuidanceToolbar extends LoadableComponent<DesignGuidanceToolbar> {
+public class EvaluatePanelToolbar extends LoadableComponent<EvaluatePanelToolbar> {
 
-    private final Logger logger = LoggerFactory.getLogger(DesignGuidanceToolbar.class);
+    private final Logger logger = LoggerFactory.getLogger(EvaluatePanelToolbar.class);
 
     @FindBy(css = "button[data-ap-comp='expandPanelButton']")
     private WebElement chevronButton;
@@ -28,7 +28,7 @@ public class DesignGuidanceToolbar extends LoadableComponent<DesignGuidanceToolb
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public DesignGuidanceToolbar(WebDriver driver) {
+    public EvaluatePanelToolbar(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -61,7 +61,7 @@ public class DesignGuidanceToolbar extends LoadableComponent<DesignGuidanceToolb
      *
      * @return current page object
      */
-    public DesignGuidanceToolbar expandPanel() {
+    public EvaluatePanelToolbar expandPanel() {
         pageUtils.waitForElementAndClick(chevronButton);
         return this;
     }

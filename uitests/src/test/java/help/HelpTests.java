@@ -10,7 +10,7 @@ import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.toolbars.DesignGuidanceToolbar;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -33,7 +33,7 @@ public class HelpTests extends TestBase {
     private MaterialPage materialPage;
     private ProcessRoutingPage processRoutingPage;
     private CostDetailsPage costDetailsPage;
-    private DesignGuidanceToolbar designGuidanceToolbar;
+    private EvaluatePanelToolbar designGuidanceToolbar;
     private HelpDocPage helpDocPage;
 
     private File resourceFile;
