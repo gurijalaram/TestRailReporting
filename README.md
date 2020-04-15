@@ -16,11 +16,11 @@
 
 ## How to run single
 1. Open Terminal to root `build` directory
-2. Run `gradle clean :uitests:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite" --tests "testsuites.SmokeTestSuite"`
+2. Run `gradle clean :uitests:test --tests "{fully qualified packagename.nameOfClass.nameOfTest}"` eg `gradle clean :uitests:test --tests "evaluate.designguidance.failures.failedCostingCount"`
 
 ## How to run multiple suites
 1. Open Terminal to root `build` directory
-2. Run `gradle clean :uitests:test --tests 
+Run `gradle clean :uitests:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite" --tests "testsuites.SmokeTestSuite"`
 
 ## Build Gradle jar files
 1. Download and install Gradle 6.1.1 (this is the version that was first used on the project)
