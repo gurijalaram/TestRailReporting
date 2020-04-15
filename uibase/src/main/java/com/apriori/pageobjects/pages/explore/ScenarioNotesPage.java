@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ScenarioNotesPage.class);
+    private Logger logger = LoggerFactory.getLogger(ScenarioNotesPage.class);
 
     @FindBy(css = "[data-ap-scope='scenarioSelection'] .modal-content")
     private WebElement modalDialog;
@@ -43,8 +43,8 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     @FindBy(css = "[data-ap-field='assignee']")
     private WebElement assigneeField;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ScenarioNotesPage(WebDriver driver) {
         this.driver = driver;

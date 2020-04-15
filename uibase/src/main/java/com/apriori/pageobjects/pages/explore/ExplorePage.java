@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ExplorePage extends ExploreHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
+    private Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(css = "select[data-ap-field='filter'] option")
     private List<WebElement> workspaceDropdownList;

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class ComparisonPage extends CompareHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(ComparisonPage.class);
+    private Logger logger = LoggerFactory.getLogger(ComparisonPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -33,8 +33,8 @@ public class ComparisonPage extends CompareHeader {
     @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ComparisonPage(WebDriver driver) {
         super(driver);

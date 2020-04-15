@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class AssignPage extends LoadableComponent<AssignPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(AssignPage.class);
+    private Logger logger = LoggerFactory.getLogger(AssignPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -31,8 +31,8 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public AssignPage(WebDriver driver) {
         this.driver = driver;

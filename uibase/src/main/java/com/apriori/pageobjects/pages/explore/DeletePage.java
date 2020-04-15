@@ -18,7 +18,7 @@ import java.util.List;
 
 public class DeletePage extends LoadableComponent<DeletePage> {
 
-    private final Logger logger = LoggerFactory.getLogger(DeletePage.class);
+    private Logger logger = LoggerFactory.getLogger(DeletePage.class);
 
     @FindBy(css = "[data-ap-comp='deleteInputs'] .modal-content")
     private WebElement modalDialog;
@@ -35,8 +35,8 @@ public class DeletePage extends LoadableComponent<DeletePage> {
     @FindBy(css = ".popover-content .gwt-HTML")
     private List<WebElement> notificationPopover;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public DeletePage(WebDriver driver) {
         this.driver = driver;

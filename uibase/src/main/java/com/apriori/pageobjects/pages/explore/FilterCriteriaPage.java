@@ -22,7 +22,7 @@ import java.util.List;
 
 public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
+    private Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -66,8 +66,8 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(xpath = "//div[@data-ap-comp='scenarioSearchCriteria'] //button[contains(text(),'Clear')]")
     private WebElement clearButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
     private String attribute;
 
     public FilterCriteriaPage(WebDriver driver) {

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class ScenarioPage extends LoadableComponent<ScenarioPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ScenarioPage.class);
+    private Logger logger = LoggerFactory.getLogger(ScenarioPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -31,8 +31,8 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
     @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ScenarioPage(WebDriver driver) {
         this.driver = driver;

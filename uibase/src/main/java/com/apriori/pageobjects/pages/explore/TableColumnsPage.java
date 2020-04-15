@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(TableColumnsPage.class);
+    private Logger logger = LoggerFactory.getLogger(TableColumnsPage.class);
 
     @FindBy(css = "[data-ap-scope='tableViewSelection'] .modal-content")
     private WebElement tableDialog;
@@ -46,8 +46,8 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
     @FindBy(css = "button[data-ap-comp='downButton']")
     private WebElement downButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public TableColumnsPage(WebDriver driver) {
         this.driver = driver;

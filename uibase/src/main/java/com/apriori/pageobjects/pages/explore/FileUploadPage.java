@@ -20,7 +20,7 @@ import java.io.File;
 
 public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
+    private Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -37,8 +37,8 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public FileUploadPage(WebDriver driver) {
         this.driver = driver;
