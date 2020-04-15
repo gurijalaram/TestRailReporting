@@ -10,12 +10,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +31,15 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
+
+    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][3]")
+    private WebElement castingDtcBubble;
+
+    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
+    private WebElement machiningDtcBubble;
+
+    @FindBy(css = "tspan:nth-child(5)")
+    private WebElement tooltipPartNameElement;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -53,6 +64,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_Casting']")
     protected WebElement dtcCastingExportSet;
+
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='ROLL_UP A']")
+    protected WebElement rollupAExportSet;
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_MachiningDataset']/div/a")
     protected WebElement machiningDtcDataSetExportSet;
@@ -192,8 +206,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(okButton);
-
+        pageUtils.waitForElementToAppear(castingDtcBubble);
     }
 
     /**
@@ -262,7 +275,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Clicks apply and ok
      * @return Generic Report page object
      */
-    public GenericReportPage clickApplyAndOk() {
+    public GenericReportPage clickOk() {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         okButton.click();
@@ -449,6 +462,7 @@ public class GenericReportPage extends ReportsPageHeader {
         exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
         exportSetMap.put("DTC_Casting", dtcCastingExportSet);
         exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
+        exportSetMap.put("ROLL_UP A", rollupAExportSet);
     }
 
     /**
@@ -727,5 +741,33 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage waitForExpectedExportCount(String expected) {
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
         return this;
+    }
+
+    /**
+     * Method to return value from Bubble in DTC Casting or Machining DTC Report
+     * @return BigDecimal value
+     */
+    public BigDecimal getValueFromBubbleTooltip(boolean isCastingDtcReport) {
+        WebElement elementToUse = isCastingDtcReport ? castingDtcBubble : machiningDtcBubble;
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
+        builder.perform();
+
+        pageUtils.waitForElementToAppear(tooltipPartNameElement);
+
+        return new BigDecimal(
+                tooltipPartNameElement.getAttribute("textContent")
+                        .replace(",", "")
+                        .replace(" ", "")
+        );
+    }
+
+    /**
+     * Get part name from DTC Part Summary Report
+     * @return String of part name
+     */
+    public String getPartNameReports() {
+        // get part name from report (DTC Part Summary Report)
+        return "40137441.MLDES.0002";
     }
 }

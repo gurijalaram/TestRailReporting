@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Filter;
 
 /**
  * @author cfrith
@@ -43,13 +44,19 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     private WebElement comparisonCheckBox;
 
     @FindBy(css = "select[data-ap-field='criteria0.criteriaName']")
-    private WebElement attributeDropdown;
+    private WebElement rowOneAttributeDropdown;
+
+    @FindBy(css = "select[data-ap-field='criteria1.criteriaName']")
+    private WebElement rowTwoAttributeDropdown;
 
     @FindBy(css = "select[data-ap-field='criteria0.operation']")
     private WebElement conditionDropdown;
 
     @FindBy(css = "input[data-ap-field='criteria0.value']")
-    private WebElement valueInput;
+    private WebElement valueInputOne;
+
+    @FindBy(css = "input[data-ap-field='criteria1.value']")
+    private WebElement valueInputTwo;
 
     @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
     private WebElement valueInputDropdown;
@@ -85,12 +92,11 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(modalDialog);
-        pageUtils.waitForElementToAppear(attributeDropdown);
+        pageUtils.waitForElementToAppear(rowOneAttributeDropdown);
     }
 
     /**
      * Filter criteria for private selection
-     *
      * @param type      - type of selection whether private or public
      * @param attribute - the attribute
      * @param condition - specified condition
@@ -109,7 +115,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Filter criteria for public selection
-     *
      * @param type      - type of selection whether private or public
      * @param attribute - the attribute
      * @param condition - specified condition
@@ -127,8 +132,20 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
+     * Multi filter criteria for public selection
+     * @return current page object
+     */
+    public FilterCriteriaPage multiFilterPublicCriteria(String[] attributes, String[] values) {
+        clear(FilterCriteriaPage.class)
+            .setPublicWorkspace()
+            .setScenarioType("Part")
+            .multiSelectAttributes(attributes)
+            .multiSelectValue(values);
+        return this;
+    }
+
+    /**
      * Clears all listed checkboxes
-     *
      * @return current page object
      */
     private FilterCriteriaPage clearAllCheckBoxes() {
@@ -138,30 +155,16 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets the scenario type
-     *
      * @param type - scenario type
      * @return current page object
      */
     protected FilterCriteriaPage setScenarioType(String type) {
-        switch (type) {
-            case "Part":
-                pageUtils.waitForElementAndClick(partCheckBox);
-                break;
-            case "Assembly":
-                pageUtils.waitForElementAndClick(assemblyCheckBox);
-                break;
-            case "Comparison":
-                pageUtils.waitForElementAndClick(comparisonCheckBox);
-                break;
-            default:
-                throw new IllegalArgumentException("The type: " + type + " is not found");
-        }
+        selectScenarioType(type);
         return this;
     }
 
     /**
      * Selects the checkbox
-     *
      * @return current page object
      */
     private FilterCriteriaPage setPrivateWorkSpace() {
@@ -171,7 +174,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the checkbox
-     *
      * @return current page object
      */
     private FilterCriteriaPage setPublicWorkspace() {
@@ -181,19 +183,27 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the attribute
-     *
      * @param attribute - the attribute
      * @return current page object
      */
     private FilterCriteriaPage selectAttribute(String attribute) {
-        new Select(attributeDropdown).selectByVisibleText(attribute);
+        new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
         this.attribute = attribute;
         return this;
     }
 
     /**
+     * Insert multiple attributes
+     * @param attributes - attribute array
+     * @return current page object
+     */
+    private FilterCriteriaPage multiSelectAttributes(String[] attributes) {
+        setAttributes(attributes);
+        return this;
+    }
+
+    /**
      * Selects the condition
-     *
      * @param condition - the condition
      * @return current page object
      */
@@ -204,20 +214,18 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets the value as input
-     *
      * @param input - the input value
      * @return current page object
      */
     private FilterCriteriaPage inputValue(String input) {
-        valueInput.click();
-        pageUtils.clearInput(valueInput);
-        valueInput.sendKeys(input);
+        valueInputOne.click();
+        pageUtils.clearInput(valueInputOne);
+        valueInputOne.sendKeys(input);
         return this;
     }
 
     /**
      * Selects the value as a dropdown
-     *
      * @param input - the input value
      * @return current page object
      */
@@ -230,8 +238,28 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
+     * Set value in more than one row
+     * @param values - values to set
+     * @return current page object
+     */
+    private FilterCriteriaPage setValues(String[] values) {
+        for (int i = 0; i < values.length; i++) {
+            WebElement elementToUse = i == 0 ? valueInputOne : valueInputTwo;
+            valueSelectionAction(elementToUse, values[i]);
+        }
+        return this;
+    }
+
+    /**
+     * Multi select for value
+     * @param values -  values to set
+     */
+    private void multiSelectValue(String[] values) {
+        setValues(values);
+    }
+
+    /**
      * Selects the apply button
-     *
      * @param className - the class the method should return
      * @param <T>       - the generic declaration type
      * @return generic page object
@@ -255,7 +283,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the clear button
-     *
      * @param className - the class the method should return
      * @param <T>       - the generic declaration type
      * @return generic page object
@@ -290,8 +317,60 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
+     * Sets attribute for multi filter
+     * @param attributes - array of attributes to set
+     * @return current page object
+     */
+    private FilterCriteriaPage setAttributes(String[] attributes) {
+        for (int i = 0; i < attributes.length; i++) {
+            WebElement elementToUse = i == 0 ? rowOneAttributeDropdown : rowTwoAttributeDropdown;
+            attributeSelectionAction(elementToUse, attributes[i]);
+        }
+        return this;
+    }
+
+    /**
+     * Actually selects the attribute
+     * @param dropdownToUse - WebElement to use
+     * @param attribute - attribute to select
+     */
+    private void attributeSelectionAction(WebElement dropdownToUse, String attribute) {
+        new Select(dropdownToUse).selectByVisibleText(attribute);
+    }
+
+    /**
+     * Inputs value into input field
+     * @param inputToUse - WebElement to enter text into
+     * @param valueToEnter - the text to enter in the input
+     */
+    private void valueSelectionAction(WebElement inputToUse, String valueToEnter) {
+        inputToUse.clear();
+        pageUtils.waitForElementAndClick(inputToUse);
+        inputToUse.sendKeys(valueToEnter);
+    }
+
+    /**
+     * Selects scenario type for filter popup
+     * @param type - scenario name
+     */
+    private void selectScenarioType(String type) {
+        switch (type) {
+            case "Part":
+                pageUtils.waitForElementAndClick(partCheckBox);
+                break;
+            case "Assembly":
+                pageUtils.waitForElementAndClick(assemblyCheckBox);
+                break;
+            case "Comparison":
+                pageUtils.waitForElementAndClick(comparisonCheckBox);
+                break;
+            default:
+                throw new IllegalArgumentException("The type: " + type + " is not found");
+        }
+    }
+
+    /**
      * Choose how data is entered either via input or dropdown based on enum
-     *
      * @param value - enum value
      * @return current page object
      */

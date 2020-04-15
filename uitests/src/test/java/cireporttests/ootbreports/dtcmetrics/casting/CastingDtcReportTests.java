@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
@@ -22,6 +23,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
+
+import java.math.BigDecimal;
 
 public class CastingDtcReportTests extends TestBase {
 
@@ -88,7 +91,7 @@ public class CastingDtcReportTests extends TestBase {
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
-            .clickApplyAndOk()
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
         assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC.getReportName()),
@@ -167,5 +170,52 @@ public class CastingDtcReportTests extends TestBase {
         genericReportPage.clickRemove();
 
         assertThat(genericReportPage.isOptionInDropDown("Saved Config", 1), is(false));
+    }
+
+    @Test
+    @TestRail(testCaseId = "102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
+        genericReportPage = new LoginPage(driver)
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+            .clickOk();
+
+        // 1. Click bubble -> tooltip appears
+        // 2. Grab part name to use in CID from DTC Part Summary Report
+        //      - Save in variable for later (String - partName - local scope) Final - won't change
+        BigDecimal value = genericReportPage.getValueFromBubbleTooltip(true);
+        String partName = genericReportPage.getPartNameReports();
+        String scenarioName = "Initial";
+        genericReportPage.openNewTabAndFocus();
+
+        String[] attributesArray = { "Part Name", "Scenario Name" };
+        String[] valuesArray = { partName, scenarioName };
+        ExplorePage explorePage = new ExplorePage(driver)
+                .filterCriteria()
+                .multiFilterPublicCriteria(attributesArray, valuesArray)
+                .apply(ExplorePage.class);
+
+        // Click into part at top of list (list of one)
+
+        // Assert report values against CID values
+    }
+
+    @Test
+    @TestRail(testCaseId = "102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyComparisonReportAvailableAndCorrectData() {
+
+    }
+
+    @Test
+    @TestRail(testCaseId = "102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyDetailsReportAvailableAndCorrectData() {
+
     }
 }
