@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class LogoutPage extends LoadableComponent<LogoutPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(LogoutPage.class);
+    private Logger logger = LoggerFactory.getLogger(LogoutPage.class);
 
     @FindBy(css = "li.user-menu-schema-info")
     private WebElement logOutInfo;
@@ -31,8 +31,8 @@ public class LogoutPage extends LoadableComponent<LogoutPage> {
     @FindBy(css = "a[href='session/logout']")
     private WebElement logOut;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public LogoutPage(WebDriver driver) {
         this.driver = driver;

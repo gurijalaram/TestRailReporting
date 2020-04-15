@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class HelpPage extends LoadableComponent<HelpPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(HelpPage.class);
+    private Logger logger = LoggerFactory.getLogger(HelpPage.class);
 
     @FindBy(css = "[data-ap-help='CIDesign:NGHELP:CID_QS_title_page']")
     private WebElement onlineHelpButton;
@@ -29,8 +29,8 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @FindBy(css = "a.navbar-help")
     private WebElement helpButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public HelpPage(WebDriver driver) {
         this.driver = driver;

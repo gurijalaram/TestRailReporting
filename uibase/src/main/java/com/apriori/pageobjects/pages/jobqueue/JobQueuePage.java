@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class JobQueuePage extends LoadableComponent<JobQueuePage> {
 
-    private final Logger logger = LoggerFactory.getLogger(JobQueuePage.class);
+    private Logger logger = LoggerFactory.getLogger(JobQueuePage.class);
 
     @FindBy(css = ".table.table-striped")
     private WebElement jobQueueTable;
@@ -30,8 +30,8 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     @FindBy(xpath = "//div[@class='popover-content']//div[@class='gwt-Label']/ancestor::tr")
     private WebElement jobQueueFirstRow;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public JobQueuePage(WebDriver driver) {
         this.driver = driver;

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(HelpDocPage.class);
+    private Logger logger = LoggerFactory.getLogger(HelpDocPage.class);
 
     @FindBy(css = ".navbar-brand")
     private WebElement brandImage;
@@ -20,8 +20,8 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
     @FindBy(xpath = "//div[@id='gdpr']//button[.='Yes I Agree']")
     private WebElement agreeButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public HelpDocPage(WebDriver driver) {
         this.driver = driver;

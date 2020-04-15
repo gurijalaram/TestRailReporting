@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ForgottenPasswordPage.class);
+    private Logger logger = LoggerFactory.getLogger(ForgottenPasswordPage.class);
 
     @FindBy(css = ".auth0-lock-name")
     private WebElement resetPasswordText;
@@ -30,8 +30,8 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
     @FindBy(css = ".auth0-lock-back-button")
     private WebElement backButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ForgottenPasswordPage(WebDriver driver) {
         this.driver = driver;
