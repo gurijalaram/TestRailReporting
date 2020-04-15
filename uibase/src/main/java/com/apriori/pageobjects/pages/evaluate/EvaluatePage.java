@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.common.ScenarioTablePage;
-import com.apriori.pageobjects.header.EvaluateHeader;
 import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
