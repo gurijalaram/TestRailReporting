@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.pageobjects.common.ScenarioTablePage;
-import com.apriori.pageobjects.header.ExploreHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.toolbars.ExploreHeader;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;

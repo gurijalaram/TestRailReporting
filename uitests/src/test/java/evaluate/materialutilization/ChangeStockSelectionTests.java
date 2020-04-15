@@ -8,6 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.SelectStockPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -29,7 +30,7 @@ public class ChangeStockSelectionTests extends TestBase {
     private CIDLoginPage loginPage;
     private SelectStockPage selectStockPage;
     private StockPage stockPage;
-    private MaterialPage materialPage;
+    private EvaluatePanelToolbar evaluatePanelToolbar;
 
     private File resourceFile;
 
@@ -58,8 +59,8 @@ public class ChangeStockSelectionTests extends TestBase {
             .apply();
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
 
-        materialPage = new MaterialPage(driver);
-        stockPage = materialPage.closeMaterialAndUtilizationPanel()
+        evaluatePanelToolbar = new MaterialPage(driver);
+        stockPage = evaluatePanelToolbar.closePanel()
             .costScenario()
             .openMaterialComposition()
             .goToStockTab();

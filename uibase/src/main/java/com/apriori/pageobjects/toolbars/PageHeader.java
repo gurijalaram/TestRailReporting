@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.header;
+package com.apriori.pageobjects.toolbars;
 
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
+    private final static Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(css = "a[data-ap-comp='exploreButton'")
     private WebElement exploreTab;

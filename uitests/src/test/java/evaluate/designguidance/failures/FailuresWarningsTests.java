@@ -38,6 +38,7 @@ public class FailuresWarningsTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private UserCredentials currentUser;
     private GuidancePage guidancePage;
+    private EvaluatePage evaluatePage;
 
     private File resourceFile;
 
@@ -105,9 +106,10 @@ public class FailuresWarningsTests extends TestBase {
         assertThat(guidancePage.getGuidanceCell("Failed GCDs", "Count"), is(equalTo("3")));
         assertThat(guidancePage.getGuidanceCell("Not Supported GCDs", "Count"), is(equalTo("1")));
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
+        guidancePage.closePanel();
 
-        assertThat(new EvaluatePage(driver).getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(new EvaluatePage(driver).getDfmRisk(), is(true));
+        evaluatePage = new EvaluatePage(driver);
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
+        assertThat(evaluatePage.getDFMRiskIcon(), is(true));
     }
 }

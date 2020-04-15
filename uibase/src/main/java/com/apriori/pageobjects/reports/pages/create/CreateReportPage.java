@@ -14,11 +14,11 @@ public class CreateReportPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(CreateReportPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     @FindBy(id = "reportGeneratorProperties")
     private WebElement createReportDialog;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public CreateReportPage(WebDriver driver) {
         super(driver);

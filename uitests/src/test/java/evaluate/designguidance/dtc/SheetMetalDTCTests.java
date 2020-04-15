@@ -249,7 +249,6 @@ public class SheetMetalDTCTests extends TestBase {
 
         evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openDesignGuidance()
-            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 

@@ -162,7 +162,6 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:6");
 
@@ -205,10 +204,9 @@ public class DTCCastingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Gravity Die Cast")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:7");
 
@@ -242,7 +240,6 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openTolerancesTab();
 
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.DIAMTOLERANCE.getToleranceName()), "9"), Matchers.is(true));

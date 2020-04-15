@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.common.ScenarioTablePage;
-import com.apriori.pageobjects.header.EvaluateHeader;
 import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
@@ -10,6 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
+import com.apriori.pageobjects.toolbars.EvaluateHeader;
 import com.apriori.utils.PageUtils;
 
 import org.jsoup.Jsoup;
@@ -179,7 +179,6 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "[data-ap-comp='dfmRiskIcon']")
     private WebElement dfmRiskIcon;
-
 
     @FindBy(css = "[data-ap-region='sourceAndUtilizationTile']")
     private WebElement sourceAndUtilTile;

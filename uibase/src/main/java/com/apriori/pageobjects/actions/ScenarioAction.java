@@ -52,7 +52,7 @@ public class ScenarioAction {
 
     private WorkOrdersWrapper findWorkOrders(WorkOrderRequestEntity workOrderRequestEntity) {
         return workOrderRequestEntity.getWorkSpaceSearchWrapper() != null ? this.getOrderByFilter(authorizationHeader, workOrderRequestEntity.getWorkSpaceSearchWrapper())
-                : this.getOrderByFilter(authorizationHeader, this.initDefaultSearchCriteria(workOrderRequestEntity));
+            : this.getOrderByFilter(authorizationHeader, this.initDefaultSearchCriteria(workOrderRequestEntity));
     }
 
     private boolean listFilteredOrdersIsEmpty(WorkOrdersWrapper workOrdersWrapper) {
@@ -88,20 +88,20 @@ public class ScenarioAction {
             );
 
         ResponseWrapper<SubmitWorkOredr> submitWorkOredrResponseWrapper = new HTTPRequest().unauthorized()
-                .customizeRequest()
-                .setHeaders(authorizationHeader)
-                .setReturnType(SubmitWorkOredr.class)
-                .setEndpoint(baseURL + "ws/workorder/orders")
-                .setBody(workOrderCommand)
-                .setStatusCode(201)
-                .commitChanges()
-                .connect()
-                .post();
+            .customizeRequest()
+            .setHeaders(authorizationHeader)
+            .setReturnType(SubmitWorkOredr.class)
+            .setEndpoint(baseURL + "ws/workorder/orders")
+            .setBody(workOrderCommand)
+            .setStatusCode(201)
+            .commitChanges()
+            .connect()
+            .post();
 
-        return  submitWorkOredrResponseWrapper.getResponseEntity();
+        return submitWorkOredrResponseWrapper.getResponseEntity();
     }
 
-    private WorkOrdersWrapper  getOrderByFilter(final HashMap<String, String> authorizationHeader, WorkSpaceSearchWrapper workSpaceSearch) {
+    private WorkOrdersWrapper getOrderByFilter(final HashMap<String, String> authorizationHeader, WorkSpaceSearchWrapper workSpaceSearch) {
         new HTTPRequest().unauthorized()
             .customizeRequest()
             .setEndpoint(baseURL + "ws/workspace/users/me/saved-searches?name=default")
@@ -147,7 +147,7 @@ public class ScenarioAction {
     }
 
     private String authenticateUser(String username, String password) {
-        ResponseWrapper<AuthenticateJSON> authenticateJSONResponseWrapper =  new HTTPRequest().defaultFormAuthorization(username, password)
+        ResponseWrapper<AuthenticateJSON> authenticateJSONResponseWrapper = new HTTPRequest().defaultFormAuthorization(username, password)
             .customizeRequest()
             .setReturnType(AuthenticateJSON.class)
             .setEndpoint(baseURL + "ws/auth/token")
