@@ -59,6 +59,9 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "div[data-ap-comp='noComponentsMessage']")
     private WebElement noComponentText;
 
+    @FindBy(xpath = "//tbody/tr[1]/td[2]/div/div[2]/a")
+    private WebElement firstScenarioLink;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -101,6 +104,15 @@ public class ExplorePage extends ExploreHeader {
     public EvaluatePage openScenario(String scenarioName, String partName) {
         pageUtils.waitForElementToAppear(findScenario(scenarioName, partName));
         findScenario(scenarioName, partName).click();
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Opens first scenario in list
+     * @return new page object
+     */
+    public EvaluatePage openFirstScenario() {
+        pageUtils.waitForElementAndClick(firstScenarioLink);
         return new EvaluatePage(driver);
     }
 

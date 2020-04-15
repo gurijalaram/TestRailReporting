@@ -4,7 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.ScenarioPage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
@@ -193,14 +195,16 @@ public class CastingDtcReportTests extends TestBase {
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
         String[] valuesArray = { partName, scenarioName };
-        ExplorePage explorePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filterCriteria()
                 .multiFilterPublicCriteria(attributesArray, valuesArray)
-                .apply(ExplorePage.class);
-
-        // Click into part at top of list (list of one)
+                .apply(ExplorePage.class)
+                .openFirstScenario();
 
         // Assert report values against CID values
+        // 1. Find what values are needed
+        // 2. Get values from CID
+        // 3. Assert between Report and CID values (use above variable entitled 'value')
     }
 
     @Test
