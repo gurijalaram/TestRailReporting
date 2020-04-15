@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
 
 public class AnalysisPage extends LoadableComponent<AnalysisPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(AnalysisPage.class);
+    private Logger logger = LoggerFactory.getLogger(AnalysisPage.class);
 
     @FindBy(xpath = "//li[.='Properties']")
     private WebElement propertiesButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public AnalysisPage(WebDriver driver) {
         this.driver = driver;

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class FailuresWarningsPage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(FailuresWarningsPage.class);
+    private Logger logger = LoggerFactory.getLogger(FailuresWarningsPage.class);
 
     @FindBy(css = "div[data-ap-comp='uncostedFeaturesInfo']")
     private WebElement failuresInfo;
@@ -22,9 +22,9 @@ public class FailuresWarningsPage extends EvaluatePanelToolbar {
     @FindBy(css = "div[data-ap-comp='uncostedMessage']")
     private WebElement uncostedMessage;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
-    private final ColumnUtils columnUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public FailuresWarningsPage(WebDriver driver) {
         super(driver);

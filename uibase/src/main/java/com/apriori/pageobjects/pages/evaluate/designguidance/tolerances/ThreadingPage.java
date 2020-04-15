@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class ThreadingPage extends LoadableComponent<ThreadingPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ThreadingPage.class);
+    private Logger logger = LoggerFactory.getLogger(ThreadingPage.class);
 
     @FindBy(css = "div[data-ap-comp='threadEditor'] .modal-content")
     private WebElement threadDialog;
@@ -38,8 +38,8 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     @FindBy(css = "div[data-ap-comp='threadEditor'] button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ThreadingPage(WebDriver driver) {
         this.driver = driver;

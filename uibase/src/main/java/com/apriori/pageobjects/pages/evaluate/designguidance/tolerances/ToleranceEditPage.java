@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ToleranceEditPage.class);
+    private Logger logger = LoggerFactory.getLogger(ToleranceEditPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
@@ -82,8 +82,8 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     @FindBy(css = "button[data-ap-dialog-cancel]")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
     private Map<String, WebElement> map = new HashMap<>();
 
     public ToleranceEditPage(WebDriver driver) {

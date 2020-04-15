@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 public class ScenarioTablePage extends LoadableComponent<ScenarioTablePage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ScenarioTablePage.class);
+    private Logger logger = LoggerFactory.getLogger(ScenarioTablePage.class);
 
     @FindBy(css = "select[data-ap-field='filter'] option")
     private List<WebElement> workspaceDropdownList;

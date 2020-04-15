@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class WarningPage extends LoadableComponent<WarningPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(WarningPage.class);
+    private Logger logger = LoggerFactory.getLogger(WarningPage.class);
 
     @FindBy(css = "div[data-ap-comp='genericDialog'] .modal-content")
     private WebElement dialog;
@@ -27,8 +27,8 @@ public class WarningPage extends LoadableComponent<WarningPage> {
     @FindBy(css = "div[data-ap-scope='genericDialog'] button.btn.btn-primary")
     private WebElement okButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public WarningPage(WebDriver driver) {
         this.driver = driver;

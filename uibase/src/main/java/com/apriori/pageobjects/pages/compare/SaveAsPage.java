@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class SaveAsPage extends LoadableComponent<SaveAsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(SaveAsPage.class);
+    private Logger logger = LoggerFactory.getLogger(SaveAsPage.class);
 
     @FindBy(css = "input[data-ap-field='name']")
     private WebElement nameInput;
@@ -30,8 +30,8 @@ public class SaveAsPage extends LoadableComponent<SaveAsPage> {
     @FindBy(css = "button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public SaveAsPage(WebDriver driver) {
         this.driver = driver;

@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(InvestigationPage.class);
+    private Logger logger = LoggerFactory.getLogger(InvestigationPage.class);
 
     @FindBy(css = "div[data-ap-comp='dtcTopicTable']")
     private WebElement topicTable;
@@ -41,9 +41,9 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     @FindBy(css = "div[data-ap-comp='dtcInvestigationTableExt'] .v-grid-header")
     private WebElement threadHeader;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
-    private final ColumnUtils columnUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public InvestigationPage(WebDriver driver) {
         this.driver = driver;

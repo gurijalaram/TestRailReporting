@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ComponentsPage.class);
+    private Logger logger = LoggerFactory.getLogger(ComponentsPage.class);
 
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;
@@ -38,8 +38,8 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     @FindBy(css = "button[data-ap-scope='assemblyComponentsTableViewSelection']")
     private WebElement columnSelectorButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ComponentsPage(WebDriver driver) {
         this.driver = driver;

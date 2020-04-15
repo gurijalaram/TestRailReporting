@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class GeometryPage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(GeometryPage.class);
+    private Logger logger = LoggerFactory.getLogger(GeometryPage.class);
 
     @FindBy(css = "div[data-ap-comp='gcdTreeTable']")
     private WebElement gcdTable;
@@ -30,9 +30,9 @@ public class GeometryPage extends EvaluatePanelToolbar {
     @FindBy(css = "div[data-ap-comp='artifactProperties'] div.v-grid-scroller-vertical")
     private WebElement propertiesScroller;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
-    private final ColumnUtils columnUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public GeometryPage(WebDriver driver) {
         super(driver);

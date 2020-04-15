@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class GuidancePage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(GuidancePage.class);
+    private Logger logger = LoggerFactory.getLogger(GuidancePage.class);
 
     @FindBy(css = "div[data-ap-comp='guidanceIssuesTable']")
     private WebElement guidanceTable;
@@ -33,9 +33,9 @@ public class GuidancePage extends EvaluatePanelToolbar {
     @FindBy(css = "div[data-ap-comp='guidanceIssuesMessage']")
     private WebElement gcdMessage;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
-    private final ColumnUtils columnUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
+    private ColumnUtils columnUtils;
 
     public GuidancePage(WebDriver driver) {
         super(driver);

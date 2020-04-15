@@ -11,13 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Logout extends AdminHeader {
-    private final Logger logger = LoggerFactory.getLogger(Logout.class);
+
+    private Logger logger = LoggerFactory.getLogger(Logout.class);
 
     @FindBy(css = "div[class='auth0-lock-header-welcome'] > div")
     private WebElement loginPageTitle;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public Logout(WebDriver driver) {
         super(driver);

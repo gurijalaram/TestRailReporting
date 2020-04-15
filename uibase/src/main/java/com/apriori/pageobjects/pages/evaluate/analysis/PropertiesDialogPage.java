@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PropertiesDialogPage.class);
+    private Logger logger = LoggerFactory.getLogger(PropertiesDialogPage.class);
 
     @FindBy(id = "propertiesPanel")
     private WebElement propertyPanel;
@@ -25,8 +25,8 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
     @FindBy(css = "div[data-ap-comp='gcdProperties'] .v-grid-scroller")
     private WebElement verticalScroller;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public PropertiesDialogPage(WebDriver driver) {
         this.driver = driver;
