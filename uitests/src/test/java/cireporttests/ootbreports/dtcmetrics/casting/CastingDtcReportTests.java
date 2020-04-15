@@ -149,7 +149,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -173,6 +172,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyCastingDtcReportIsAvailableWithRollUp() {

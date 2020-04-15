@@ -20,6 +20,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
 
@@ -79,6 +81,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3026")
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
