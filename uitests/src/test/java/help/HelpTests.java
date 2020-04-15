@@ -33,7 +33,7 @@ public class HelpTests extends TestBase {
     private MaterialPage materialPage;
     private ProcessRoutingPage processRoutingPage;
     private CostDetailsPage costDetailsPage;
-    private EvaluatePanelToolbar designGuidanceToolbar;
+    private EvaluatePanelToolbar evaluatePanelToolbar;
     private HelpDocPage helpDocPage;
 
     private File resourceFile;
