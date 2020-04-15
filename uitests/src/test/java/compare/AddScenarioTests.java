@@ -4,13 +4,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.pageobjects.header.GenericHeader;
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
-import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -30,11 +28,9 @@ import java.io.File;
 public class AddScenarioTests extends TestBase {
 
     private CIDLoginPage loginPage;
-    private ComparisonTablePage comparisonTablePage;
     private WarningPage warningPage;
     private ComparePage comparePage;
-    private GenericHeader genericHeader;
-    private ComparisonPage comparisonPage;
+    private ScenarioTablePage scenarioTablePage;
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
@@ -49,7 +45,7 @@ public class AddScenarioTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage  = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario();
@@ -57,14 +53,14 @@ public class AddScenarioTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
-        comparisonTablePage = evaluatePage.createNewComparison().enterComparisonName(new Util().getComparisonName())
+        scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new Util().getComparisonName())
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface")
-            .apply(ComparisonTablePage.class);
+            .apply(ScenarioTablePage.class);
 
-        assertThat(comparisonTablePage.findScenario(testScenarioName, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface").isDisplayed(), Matchers.is(true));
+        assertThat(scenarioTablePage.findScenario(testScenarioName, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface").isDisplayed(), Matchers.is(true));
     }
 
     @Test
@@ -77,7 +73,7 @@ public class AddScenarioTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
 
-        comparisonTablePage = loginPage.login(UserUtil.getUser())
+        scenarioTablePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
@@ -89,9 +85,9 @@ public class AddScenarioTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
-            .apply(ComparisonTablePage.class);
+            .apply(ScenarioTablePage.class);
 
-        assertThat(comparisonTablePage.findScenario(testScenarioName, "Casting").isDisplayed(), Matchers.is(true));
+        assertThat(scenarioTablePage.findScenario(testScenarioName, "Casting").isDisplayed(), Matchers.is(true));
     }
 
     @Test
