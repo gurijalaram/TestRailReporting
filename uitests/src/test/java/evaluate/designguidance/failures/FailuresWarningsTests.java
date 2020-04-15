@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresWarningsPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -35,9 +36,9 @@ public class FailuresWarningsTests extends TestBase {
     private CIDLoginPage loginPage;
     private SettingsPage settingsPage;
     private ToleranceSettingsPage toleranceSettingsPage;
-    private FailuresWarningsPage failuresWarningsPage;
     private UserCredentials currentUser;
     private GuidancePage guidancePage;
+    private EvaluatePage evaluatePage;
 
     private File resourceFile;
 
@@ -81,7 +82,7 @@ public class FailuresWarningsTests extends TestBase {
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Issue("AP-57941")
-    @TestRail(testCaseId = {"1592"})
+    @TestRail(testCaseId = {"1592", "3830"})
     @Description("Ensure that 'Failures/ Warnings tab includes: - Issue type & count")
     public void failedCostingCount() {
 
@@ -97,12 +98,18 @@ public class FailuresWarningsTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab();
 
         assertThat(guidancePage.getGuidanceCell("Failed GCDs", "Count"), is(equalTo("3")));
         assertThat(guidancePage.getGuidanceCell("Not Supported GCDs", "Count"), is(equalTo("1")));
+
+        guidancePage.closePanel();
+
+        evaluatePage = new EvaluatePage(driver);
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
+        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
     }
 }

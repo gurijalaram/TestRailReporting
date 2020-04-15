@@ -224,7 +224,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Test
     @Issue("AP-57941")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1845", "719"})
+    @TestRail(testCaseId = {"1845", "719", "3836"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
 
