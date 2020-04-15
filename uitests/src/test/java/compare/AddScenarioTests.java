@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.ComparisonPage;
@@ -34,12 +35,13 @@ public class AddScenarioTests extends TestBase {
     private ComparePage comparePage;
     private GenericHeader genericHeader;
     private ComparisonPage comparisonPage;
+    private EvaluatePage evaluatePage;
 
     private File resourceFile;
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"412", "1171"})
+    @TestRail(testCaseId = {"3847", "412", "1171"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
 
@@ -47,12 +49,15 @@ public class AddScenarioTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        comparisonTablePage = loginPage.login(UserUtil.getUser())
+        evaluatePage  = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario()
-            .createNewComparison()
-            .enterComparisonName(new Util().getComparisonName())
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+
+        comparisonTablePage = evaluatePage.createNewComparison().enterComparisonName(new Util().getComparisonName())
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -63,6 +68,7 @@ public class AddScenarioTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"448"})
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
     public void filterAddPublicScenario() {
 

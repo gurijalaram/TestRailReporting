@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.utils.PageUtils;
@@ -68,7 +69,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToBeClickable(guidanceTab);
+        pageUtils.waitForElementToBeClickable(investigationTab);
         pageUtils.waitForElementToAppear(panelDetails);
     }
 
@@ -124,11 +125,11 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     /**
      * Closes the design guidance
      *
-     * @return current page object
+     * @return new page object
      */
-    public DesignGuidancePage closeDesignGuidance() {
+    public EvaluatePage closeDesignGuidance() {
         pageUtils.waitForElementAndClick(closePanelButton);
-        return this;
+        return new EvaluatePage(driver);
     }
 
     /**
