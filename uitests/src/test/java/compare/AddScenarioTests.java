@@ -4,13 +4,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
-import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -33,8 +31,6 @@ public class AddScenarioTests extends TestBase {
     private ComparisonTablePage comparisonTablePage;
     private WarningPage warningPage;
     private ComparePage comparePage;
-    private GenericHeader genericHeader;
-    private ComparisonPage comparisonPage;
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
@@ -55,7 +51,7 @@ public class AddScenarioTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is(true));
 
         comparisonTablePage = evaluatePage.createNewComparison().enterComparisonName(new Util().getComparisonName())
             .save(ComparePage.class)
