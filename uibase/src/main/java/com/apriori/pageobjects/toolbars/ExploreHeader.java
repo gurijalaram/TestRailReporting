@@ -15,7 +15,7 @@ public class ExploreHeader extends GenericHeader {
 
     private static Logger logger = LoggerFactory.getLogger(ExploreHeader.class);
 
-    private final PageUtils pageUtils;
+    private PageUtils pageUtils;
 
     public ExploreHeader(WebDriver driver) {
         super(driver);
