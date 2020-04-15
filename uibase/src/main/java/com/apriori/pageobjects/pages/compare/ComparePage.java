@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.compare;
 
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
@@ -71,9 +72,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      *
      * @return new page object
      */
-    public ComparisonTablePage addScenario() {
+    public ScenarioTablePage addScenario() {
         pageUtils.waitForElementAndClick(addScenariosButton);
-        return new ComparisonTablePage(driver);
+        return new ScenarioTablePage(driver);
     }
 
     /**

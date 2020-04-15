@@ -3,8 +3,9 @@ package compare;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.common.ScenarioTablePage;
+import com.apriori.pageobjects.header.GenericHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -112,13 +113,12 @@ public class EditPublicComparisonTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "PowderMetalShaft")
-            .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "PowderMetalShaft")
-            .apply();
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(testScenarioName, "PowderMetalShaft")
+            .apply(ComparePage.class)
+            .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
 
-        new ComparePage(driver).removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
-
-        assertThat(new ComparePage(driver).scenarioIsNotInComparisonView(testScenarioName, "PowderMetalShaft"), is(true));
+        assertThat(comparePage.scenarioIsNotInComparisonView(testScenarioName, "PowderMetalShaft"), is(true));
     }
 
     @Test
@@ -148,16 +148,16 @@ public class EditPublicComparisonTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Assembly", "Part Name", "Contains", testAssemblyName)
-            .apply(ComparisonTablePage.class)
-            .selectScenario(scenarioName, testAssemblyName)
-            .apply();
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(scenarioName, testAssemblyName)
+            .apply(ComparePage.class);
 
         new ComparePage(driver).addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", partName)
-            .apply(ComparisonTablePage.class)
-            .selectScenario(scenarioName, partName)
-            .apply();
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(scenarioName, partName)
+            .apply(ComparePage.class);
 
         new ComparePage(driver).setBasis(partName,scenarioName);
 
