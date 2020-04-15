@@ -11,7 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HomePage extends PageHeader {
-    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
+
+    private Logger logger = LoggerFactory.getLogger(HomePage.class);
 
     @FindBy(id = "manage.scenario-export-manager")
     private WebElement manageScenarioExportMenuOption;
@@ -43,8 +44,8 @@ public class HomePage extends PageHeader {
     @FindBy(id = "main_logOut_link")
     private WebElement reportsLogoutOption;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public HomePage(WebDriver driver) {
         super(driver);

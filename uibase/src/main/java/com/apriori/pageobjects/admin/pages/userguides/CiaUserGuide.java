@@ -11,7 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CiaUserGuide extends PageHeader {
-    private final Logger logger = LoggerFactory.getLogger(CiaUserGuide.class);
+
+    private Logger logger = LoggerFactory.getLogger(CiaUserGuide.class);
 
     @FindBy(xpath = "//*[contains(text(), 'Cost Insight Report:User Guide')]")
     private WebElement pageTitle;
@@ -22,8 +23,8 @@ public class CiaUserGuide extends PageHeader {
     @FindBy(css = ".aPriori_Cover_Page_Title")
     private WebElement adminUserGuideTitle;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public CiaUserGuide(WebDriver driver) {
         super(driver);

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class ComparePage extends LoadableComponent<ComparePage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ComparePage.class);
+    private Logger logger = LoggerFactory.getLogger(ComparePage.class);
 
     @FindBy(css = "table.comparison-table-header-widget-table")
     private WebElement scenarioTable;
@@ -45,8 +45,8 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "div[data-ap-comp='scenarioTiles'] div.v-grid-scroller-horizontal")
     private WebElement horizontalScroller;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ComparePage(WebDriver driver) {
         this.driver = driver;

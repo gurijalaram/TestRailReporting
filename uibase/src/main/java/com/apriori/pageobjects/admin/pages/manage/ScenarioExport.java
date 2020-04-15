@@ -11,13 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ScenarioExport extends AdminHeader {
-    private final Logger logger = LoggerFactory.getLogger(ScenarioExport.class);
+
+    private Logger logger = LoggerFactory.getLogger(ScenarioExport.class);
 
     @FindBy(css = "h1")
     private WebElement manageScenarioExportTitle;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public ScenarioExport(WebDriver driver) {
         super(driver);

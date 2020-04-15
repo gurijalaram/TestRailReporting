@@ -18,17 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private static final Logger logger = LoggerFactory.getLogger(PageHeader.class);
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-
-    }
+    private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;
@@ -66,14 +56,24 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(xpath = "//h2[contains(text(), 'Admin')]")
     private WebElement adminTitle;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public PageHeader(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+
     }
 
     /**

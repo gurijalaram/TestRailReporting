@@ -11,9 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SystemDataExport extends AdminHeader {
-    private final Logger logger = LoggerFactory.getLogger(SystemDataExport.class);
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+
+    private Logger logger = LoggerFactory.getLogger(SystemDataExport.class);
+
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     @FindBy(css = "h1")
     private WebElement manageSystemDataExportTitle;
