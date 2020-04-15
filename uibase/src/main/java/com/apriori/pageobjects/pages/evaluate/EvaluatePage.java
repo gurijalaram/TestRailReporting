@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.header.EvaluateHeader;
-import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
@@ -786,9 +786,9 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return new page object
      */
-    public ComparisonTablePage selectSourcePart() {
+    public ScenarioTablePage selectSourcePart() {
         pageUtils.waitForElementToAppear(selectSourceButton);
         pageUtils.waitForElementAndClick(selectSourceButton);
-        return new ComparisonTablePage(driver);
+        return new ScenarioTablePage(driver);
     }
 }

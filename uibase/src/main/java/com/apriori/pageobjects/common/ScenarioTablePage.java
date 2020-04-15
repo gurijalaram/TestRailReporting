@@ -146,11 +146,12 @@ public class ScenarioTablePage extends LoadableComponent<ScenarioTablePage> {
      * @param scenarioName - scenario name
      * @param partName     - name of the part
      */
-    public void highlightScenario(String scenarioName, String partName) {
+    public ScenarioTablePage highlightScenario(String scenarioName, String partName) {
         By scenario = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
         pageUtils.scrollToElement(scenario, componentScroller, Constants.PAGE_DOWN);
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.javaScriptClick(driver.findElement(scenario));
+        return this;
     }
 
     /**

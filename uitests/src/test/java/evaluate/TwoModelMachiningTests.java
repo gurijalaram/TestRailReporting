@@ -3,7 +3,6 @@ package evaluate;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -52,9 +51,8 @@ public class TwoModelMachiningTests extends TestBase {
             .refreshCurrentPage()
             .uploadFile(new Util().getScenarioName(), twoModelFile)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
-            .selectSourcePart();
-
-        new ComparisonTablePage(driver).selectScenario(testScenarioName, "casting_BEFORE_machining")
+            .selectSourcePart()
+            .selectComparisonScenario(testScenarioName, "casting_BEFORE_machining")
             .apply(EvaluatePage.class)
             .costScenario();
 
