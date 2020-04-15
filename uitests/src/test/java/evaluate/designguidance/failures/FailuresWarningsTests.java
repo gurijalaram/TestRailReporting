@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -37,7 +36,6 @@ public class FailuresWarningsTests extends TestBase {
     private CIDLoginPage loginPage;
     private SettingsPage settingsPage;
     private ToleranceSettingsPage toleranceSettingsPage;
-    private FailuresPage failuresPage;
     private UserCredentials currentUser;
     private GuidancePage guidancePage;
 
@@ -110,6 +108,6 @@ public class FailuresWarningsTests extends TestBase {
         new DesignGuidancePage(driver).closeDesignGuidance();
 
         assertThat(new EvaluatePage(driver).getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(new EvaluatePage(driver).isDfmRisk("Critical"), is(true));
+        assertThat(new EvaluatePage(driver).getDfmRisk(), is(true));
     }
 }
