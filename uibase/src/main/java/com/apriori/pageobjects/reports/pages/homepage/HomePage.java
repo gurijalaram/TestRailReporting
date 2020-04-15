@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 
 public class HomePage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
+    private Logger logger = LoggerFactory.getLogger(HomePage.class);
 
-    private final PageUtils pageUtils;
+    private PageUtils pageUtils;
     private HelpPage helpPage;
-    private final WebDriver driver;
+    private WebDriver driver;
 
     public HomePage(WebDriver driver) {
         super(driver);

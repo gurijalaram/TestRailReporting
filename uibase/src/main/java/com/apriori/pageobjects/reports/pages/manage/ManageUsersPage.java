@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 public class ManageUsersPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(ManageUsersPage.class);
-
-    private final PageUtils pageUtils;
-    private final WebDriver driver;
+    private Logger logger = LoggerFactory.getLogger(ManageUsersPage.class);
 
     @FindBy(xpath = "//div[@id='users']/div/div[1]/div[contains(@class, 'title')]")
     private WebElement usersPageTitle;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public ManageUsersPage(WebDriver driver) {
         super(driver);
