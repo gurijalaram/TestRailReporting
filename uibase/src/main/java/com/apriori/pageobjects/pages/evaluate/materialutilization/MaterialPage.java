@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.materialutilization;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class MaterialPage extends LoadableComponent<MaterialPage> {
+public class MaterialPage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
@@ -52,6 +51,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     private final PageUtils pageUtils;
 
     public MaterialPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -76,6 +76,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
      * @return new page object
      */
     public MaterialUtilizationPage goToMaterialUtilizationTab() {
+        expandPanel();
         materialUtilizationTab.click();
         return new MaterialUtilizationPage(driver);
     }
@@ -86,6 +87,7 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
      * @return new page object
      */
     public StockPage goToStockTab() {
+        expandPanel();
         pageUtils.waitForElementAndClick(stockTab);
         return new StockPage(driver);
     }
@@ -96,18 +98,9 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
      * @return new page object
      */
     public PartNestingPage goToPartNestingTab() {
+        expandPanel();
         pageUtils.waitForElementAndClick(partNestingTab);
         return new PartNestingPage(driver);
-    }
-
-    /**
-     * Closes the material & utilization
-     *
-     * @return new page object
-     */
-    public EvaluatePage closeMaterialAndUtilizationPanel() {
-        pageUtils.waitForElementAndClick(closePanelButton);
-        return new EvaluatePage(driver);
     }
 
     /**
@@ -124,38 +117,11 @@ public class MaterialPage extends LoadableComponent<MaterialPage> {
     }
 
     /**
-     * Expands the panel
-     *
-     * @return current page object
-     */
-    public MaterialPage expandPanel() {
-        pageUtils.waitForElementAndClick(chevronButton);
-        return this;
-    }
-
-    /**
      * Gets the button as a webelement
      *
      * @return the button as webelement
      */
     public WebElement getPartNestingButton() {
-        pageUtils.waitForElementToAppear(panelDetails);
-        pageUtils.waitForElementToAppear(partNestingTab);
         return partNestingTab;
-    }
-
-    /**
-     * Clicks the help button
-     *
-     * @return the current page object
-     */
-    public MaterialPage clickHelp() {
-        pageUtils.waitForElementAndClick(helpButton);
-        return this;
-    }
-
-    public String getChildPageTitle() {
-        return pageUtils.windowHandler().getTitle();
-        // TODO remove code duplication
     }
 }

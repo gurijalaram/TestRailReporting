@@ -49,7 +49,7 @@ public class EvaluatePanelToolbar extends LoadableComponent<EvaluatePanelToolbar
      *
      * @return current page object
      */
-    public EvaluatePage closeDesignGuidance() {
+    public EvaluatePage closePanel() {
         pageUtils.waitForElementAndClick(closePanelButton);
         return new EvaluatePage(driver);
     }

@@ -1,13 +1,13 @@
 package com.apriori.pageobjects.pages.evaluate.materialutilization;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author smccaffrey
  */
 
-public class PartNestingPage extends LoadableComponent<PartNestingPage> {
+public class PartNestingPage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(PartNestingPage.class);
 
@@ -50,6 +50,7 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
     private final PageUtils pageUtils;
 
     public PartNestingPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

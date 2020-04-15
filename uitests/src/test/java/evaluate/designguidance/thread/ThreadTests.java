@@ -121,7 +121,7 @@ public class ThreadTests extends TestBase {
             .apply(InvestigationPage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
-        threadingPage = designGuidancePage.closeDesignGuidance()
+        threadingPage = designGuidancePage.closePanel()
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
@@ -354,7 +354,7 @@ public class ThreadTests extends TestBase {
             .apply(InvestigationPage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
-        threadingPage = designGuidancePage.closeDesignGuidance()
+        threadingPage = designGuidancePage.closePanel()
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .openMaterialCompositionTable()
@@ -444,7 +444,7 @@ public class ThreadTests extends TestBase {
             .apply(InvestigationPage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
-        threadingPage = designGuidancePage.closeDesignGuidance()
+        threadingPage = designGuidancePage.closePanel()
             .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
@@ -549,7 +549,7 @@ public class ThreadTests extends TestBase {
             .apply(InvestigationPage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
-        investigationPage = designGuidancePage.closeDesignGuidance()
+        investigationPage = designGuidancePage.closePanel()
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()

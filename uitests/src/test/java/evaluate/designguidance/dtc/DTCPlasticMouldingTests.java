@@ -57,7 +57,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
         designGuidancePage = new DesignGuidancePage(driver);
-        guidancePage = designGuidancePage.closeDesignGuidance()
+        guidancePage = designGuidancePage.closePanel()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Reaction Injection Mold")
@@ -194,7 +194,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 3.556 mm")));
 
         designGuidancePage = new DesignGuidancePage(driver);
-        guidancePage = designGuidancePage.closeDesignGuidance()
+        guidancePage = designGuidancePage.closePanel()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
@@ -209,7 +209,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 15 mm")));
 
         designGuidancePage = new DesignGuidancePage(driver);
-        guidancePage = designGuidancePage.closeDesignGuidance()
+        guidancePage = designGuidancePage.closePanel()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Reaction Injection Mold")
@@ -247,7 +247,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
 
         designGuidancePage = new DesignGuidancePage(driver);
-        guidancePage = designGuidancePage.closeDesignGuidance()
+        guidancePage = designGuidancePage.closePanel()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Reaction Injection Mold")
