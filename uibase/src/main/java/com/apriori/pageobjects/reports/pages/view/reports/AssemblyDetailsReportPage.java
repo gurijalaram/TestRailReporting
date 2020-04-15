@@ -56,8 +56,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
-    private final PageUtils pageUtils;
-    private final WebDriver driver;
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public AssemblyDetailsReportPage(WebDriver driver) {
         super(driver);
