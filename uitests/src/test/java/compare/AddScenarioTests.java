@@ -52,7 +52,7 @@ public class AddScenarioTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is(true));
 
         scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new Util().getComparisonName())
             .save(ComparePage.class)

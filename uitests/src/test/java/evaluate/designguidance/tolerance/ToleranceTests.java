@@ -93,7 +93,7 @@ public class ToleranceTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is(true));
 
         new EvaluatePage(driver).openDesignGuidance()
             .openTolerancesTab()
@@ -278,7 +278,7 @@ public class ToleranceTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is(true));
 
         evaluatePage = new EvaluatePage(driver);
         tolerancePage = evaluatePage.openDesignGuidance()
@@ -673,7 +673,7 @@ public class ToleranceTests extends TestBase {
 
         assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is(true));
 
         new EvaluatePage(driver).publishScenario(PublishPage.class)
             .selectPublishButton()
