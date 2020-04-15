@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class SelectStockPage extends LoadableComponent<SelectStockPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(SelectStockPage.class);
+    private Logger logger = LoggerFactory.getLogger(SelectStockPage.class);
 
     @FindBy(css = "div[data-ap-comp='stockSelectionTable']")
     private WebElement stockTable;
@@ -39,8 +39,8 @@ public class SelectStockPage extends LoadableComponent<SelectStockPage> {
     @FindBy(css = ".material-selection-dialog button.btn.btn-default")
     private WebElement cancelButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public SelectStockPage(WebDriver driver) {
         this.driver = driver;

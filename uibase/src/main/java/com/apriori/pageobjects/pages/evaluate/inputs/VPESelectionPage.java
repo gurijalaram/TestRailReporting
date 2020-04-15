@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(VPESelectionPage.class);
+    private Logger logger = LoggerFactory.getLogger(VPESelectionPage.class);
 
     @FindBy(css = "div[data-ap-comp='vpeSelection'] .modal-content")
     private WebElement modalTitle;
@@ -37,8 +37,8 @@ public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement closeButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public VPESelectionPage(WebDriver driver) {
         this.driver = driver;

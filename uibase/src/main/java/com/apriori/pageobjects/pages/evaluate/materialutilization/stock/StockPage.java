@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class StockPage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(StockPage.class);
+    private Logger logger = LoggerFactory.getLogger(StockPage.class);
 
     @FindBy(css = ".secondary-treatments-panel-header-btn")
     private WebElement editButton;
@@ -24,8 +24,8 @@ public class StockPage extends EvaluatePanelToolbar {
     @FindBy(css = ".table.material-stock-table")
     private WebElement stockTable;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public StockPage(WebDriver driver) {
         super(driver);

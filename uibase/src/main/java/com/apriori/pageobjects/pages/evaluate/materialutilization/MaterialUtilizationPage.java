@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizationPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
+    private Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
     @FindBy(css = "input[data-ap-field='materialUnitCostFlag']")
     private WebElement basicInfoCheckbox;
@@ -39,8 +39,8 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     @FindBy(xpath = "//span[contains(text(), 'Material Properties')]/..")
     private WebElement materialPropertiesTabToggle;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public MaterialUtilizationPage(WebDriver driver) {
         this.driver = driver;

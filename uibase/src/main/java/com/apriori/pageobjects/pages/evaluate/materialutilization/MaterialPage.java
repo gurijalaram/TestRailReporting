@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class MaterialPage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
+    private Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;
@@ -47,8 +47,8 @@ public class MaterialPage extends EvaluatePanelToolbar {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public MaterialPage(WebDriver driver) {
         super(driver);
