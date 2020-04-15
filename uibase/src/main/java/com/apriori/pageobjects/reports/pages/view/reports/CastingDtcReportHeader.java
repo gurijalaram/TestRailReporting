@@ -11,10 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class CastingDtcReportHeader extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(CastingDtcReportHeader.class);
-
-    private final PageUtils pageUtils;
-    private final WebDriver driver;
+    private Logger logger = LoggerFactory.getLogger(CastingDtcReportHeader.class);
 
     @FindBy(xpath = "//div[@id='reportContainer']//td[@colspan='4']/span")
     private WebElement headerDisplayedRollup;
@@ -24,6 +21,9 @@ public class CastingDtcReportHeader extends GenericReportPage {
 
     @FindBy(id = "loading")
     private WebElement loadingPopup;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public CastingDtcReportHeader(WebDriver driver) {
         super(driver);

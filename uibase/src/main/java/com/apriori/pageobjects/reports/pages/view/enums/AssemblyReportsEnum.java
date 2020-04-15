@@ -7,7 +7,7 @@ public enum AssemblyReportsEnum {
     COMPONENT_COST("Component Cost"),
     SCENARIO_COMPARISON("Scenario Comparison");
 
-    private final String reportName;
+    private String reportName;
 
     AssemblyReportsEnum(String name) {
         this.reportName = name;

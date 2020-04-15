@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 public class ViewSchedulesPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(ViewSchedulesPage.class);
-
-    private final PageUtils pageUtils;
-    private final WebDriver driver;
+    private Logger logger = LoggerFactory.getLogger(ViewSchedulesPage.class);
 
     @FindBy(xpath = "//div[contains(@class, 'listOfJobs')]/div/div[1]/div")
     private WebElement schedulesPageTitle;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public ViewSchedulesPage(WebDriver driver) {
         super(driver);

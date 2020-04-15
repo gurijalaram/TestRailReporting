@@ -12,16 +12,16 @@ import org.slf4j.LoggerFactory;
 
 public class ViewSearchResultsPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(ViewSearchResultsPage.class);
-
-    private final PageUtils pageUtils;
-    private final WebDriver driver;
+    private Logger logger = LoggerFactory.getLogger(ViewSearchResultsPage.class);
 
     @FindBy(css = "body")
     private WebElement searchResultsPageTitle;
 
     @FindBy(id = "accessTypeFilter_item1")
     private WebElement allAvailableFilterButton;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public ViewSearchResultsPage(WebDriver driver) {
         super(driver);

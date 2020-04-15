@@ -25,10 +25,10 @@ import java.util.Map;
 
 public class GenericReportPage extends ReportsPageHeader {
 
-    private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
-    private final Map<String, WebElement> exportSetMap = new HashMap<>();
-    private final Map<String, WebElement> assemblyMap = new HashMap<>();
-    private final Map<String, WebElement> currencyMap = new HashMap<>();
+    private static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private Map<String, WebElement> exportSetMap = new HashMap<>();
+    private Map<String, WebElement> assemblyMap = new HashMap<>();
+    private Map<String, WebElement> currencyMap = new HashMap<>();
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -171,8 +171,8 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='inputControls']//div[@class='sub header hidden']")
     private WebElement hiddenSavedOptions;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    private WebDriver driver;
+    private PageUtils pageUtils;
 
     public GenericReportPage(WebDriver driver) {
         super(driver);

@@ -5,7 +5,7 @@ public enum CastingReportsEnum {
     CASTING_DTC_COMPARISON("Casting DTC Comparison"),
     CASTING_DTC_DETAILS("Casting DTC Details");
 
-    private final String reportName;
+    private String reportName;
 
     CastingReportsEnum(String name) {
         this.reportName = name;

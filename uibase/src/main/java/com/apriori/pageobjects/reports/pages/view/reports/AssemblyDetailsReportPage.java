@@ -28,14 +28,14 @@ import java.util.stream.IntStream;
 
 public class AssemblyDetailsReportPage extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
+    private Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
     List<BigDecimal> refinedQuantities = new ArrayList<>();
-    private final Map<String, String> genericColumnMap = new HashMap<>();
-    private final Map<String, String> topLevelRowMap = new HashMap<>();
-    private final Map<String, String> subSubAsmRowMap = new HashMap<>();
-    private final Map<String, String> subAssemblyRowMap = new HashMap<>();
+    private Map<String, String> genericColumnMap = new HashMap<>();
+    private Map<String, String> topLevelRowMap = new HashMap<>();
+    private Map<String, String> subSubAsmRowMap = new HashMap<>();
+    private Map<String, String> subAssemblyRowMap = new HashMap<>();
 
-    private final String genericTrSelector = "tr:nth-child(%s)";
+    private String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
 
     @FindBy(css = "a[id='logo']")
