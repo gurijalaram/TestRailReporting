@@ -4,7 +4,7 @@ import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
@@ -340,9 +340,9 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return new page object
      */
-    public MaterialPage openMaterialComposition() {
+    public MaterialUtilizationPage openMaterialUtilization() {
         pageUtils.waitForElementAndClick(materialsDetails);
-        return new MaterialPage(driver);
+        return new MaterialUtilizationPage(driver);
     }
 
     /**

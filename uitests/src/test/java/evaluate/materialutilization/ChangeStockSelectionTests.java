@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.SelectStockPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -52,19 +51,20 @@ public class ChangeStockSelectionTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToStockTab()
             .editStock()
             .selectStock("4.00  mm x 1500 mm x 3000 mm")
             .apply();
+
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
 
-        evaluatePanelToolbar = new MaterialPage(driver);
-        stockPage = evaluatePanelToolbar.closePanel()
+        stockPage.closePanel()
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToStockTab();
-        assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
+
+        assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class ChangeStockSelectionTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToStockTab()
             .editStock();
 
