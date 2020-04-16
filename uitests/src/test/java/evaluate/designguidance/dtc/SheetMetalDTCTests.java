@@ -107,8 +107,8 @@ public class SheetMetalDTCTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(),containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+        assertThat(evaluatePage.getDFMRiskIcon(),containsString("dtc-medium-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openDesignGuidance()
