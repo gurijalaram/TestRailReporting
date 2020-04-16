@@ -85,7 +85,7 @@ public class DTCCastingTests extends TestBase {
             .costScenario(8);
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
 
         evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openDesignGuidance()
