@@ -10,7 +10,6 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -52,7 +51,7 @@ public class AddScenarioTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
 
         scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new Util().getComparisonName())
             .save(ComparePage.class)

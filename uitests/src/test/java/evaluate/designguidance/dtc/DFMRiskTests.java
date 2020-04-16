@@ -55,7 +55,7 @@ public class DFMRiskTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class DFMRiskTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class DFMRiskTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class DFMRiskTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
     }
 
 }
