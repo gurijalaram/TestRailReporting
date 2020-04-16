@@ -39,6 +39,18 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "[data-ap-comp='previewPanel']")
     private WebElement previewPanelData;
 
+    @FindBy(css = "div[data-ap-comp='componentTable'] div.v-grid-scroller-vertical")
+    private WebElement componentScroller;
+
+    @FindBy(css = ".v-grid-header")
+    private WebElement columnHeaders;
+
+    @FindBy(css = "div[data-ap-comp='noComponentsMessage']")
+    private WebElement noComponentText;
+
+    @FindBy(xpath = "//tbody/tr[1]/td[2]/div/div[2]/a")
+    private WebElement firstScenarioLink;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ScenarioTablePage scenarioTablePage;
@@ -82,6 +94,15 @@ public class ExplorePage extends ExploreHeader {
      */
     public EvaluatePage openScenario(String scenarioName, String partName) {
         return scenarioTablePage.openScenario(scenarioName, partName);
+    }
+
+    /**
+     * Opens first scenario in list
+     * @return new page object
+     */
+    public EvaluatePage openFirstScenario() {
+        pageUtils.waitForElementAndClick(firstScenarioLink);
+        return new EvaluatePage(driver);
     }
 
     /**
