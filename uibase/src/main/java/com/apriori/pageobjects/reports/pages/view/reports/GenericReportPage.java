@@ -35,14 +35,11 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][3]")
     private WebElement castingDtcBubble;
 
-    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][4]")
-    private WebElement castingDtcBubbleTwo;
-
     @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
     private WebElement machiningDtcBubble;
 
     @FindBy(css = "tspan:nth-child(5)")
-    private WebElement tooltipPartNameElement;
+    private WebElement tooltipFbcElement;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -209,7 +206,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(castingDtcBubble);
+        pageUtils.waitForElementToAppear(okButton);
     }
 
     /**
@@ -790,16 +787,15 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return BigDecimal value
      */
     public BigDecimal getFBCValueFromBubbleTooltip(boolean isCastingDtcReport) {
-        //WebElement elementToUse = isCastingDtcReport ? castingDtcBubble : machiningDtcBubble;
-        WebElement element = castingDtcBubble;
-        pageUtils.waitForElementToAppear(element);
-        Actions builder = new Actions(driver).moveToElement(element);
+        WebElement elementToUse = isCastingDtcReport ? castingDtcBubble : machiningDtcBubble;
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
 
-        pageUtils.waitForElementToAppear(tooltipPartNameElement);
+        pageUtils.waitForElementToAppear(tooltipFbcElement);
 
         return new BigDecimal(
-                tooltipPartNameElement.getAttribute("textContent")
+                tooltipFbcElement.getAttribute("textContent")
                         .replace(",", "")
                         .replace(" ", "")
         );
@@ -810,7 +806,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String of part name
      */
     public String getPartNameReports() {
-        // get part name from report (DTC Part Summary Report)
-        return "40137441.MLDES.0002";
+        /*
+        This assumes that the locator used with findElements will return three elements,
+        and, by extension, that the third element (index 2, 0 based List) is the one we are after.
+        Goal is to return the part name, and it works for now.
+         */
+        String locator = "tspan:nth-child(1)";
+        WebElement elementToUse = driver.findElements(By.cssSelector(locator)).get(2);
+        return elementToUse.getText();
     }
 }
