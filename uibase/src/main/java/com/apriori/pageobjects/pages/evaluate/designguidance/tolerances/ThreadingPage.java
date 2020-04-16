@@ -32,6 +32,9 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     @FindBy(css = "input[data-ap-field='threadLength']")
     private WebElement lengthInput;
 
+    @FindBy(css = ".bold-font.tolerance-field.error")
+    private WebElement lengthInputError;
+
     @FindBy(css = "div[data-ap-comp='threadEditor'] button.btn.btn-primary")
     private WebElement applyButton;
 
@@ -92,6 +95,8 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     public ThreadingPage removeThreadLength() {
         pageUtils.waitForElementToAppear(lengthInput).click();
         lengthInput.clear();
+        lengthInput.sendKeys(Keys.TAB);
+        pageUtils.waitForElementAppear(lengthInputError);
         return this;
     }
 
