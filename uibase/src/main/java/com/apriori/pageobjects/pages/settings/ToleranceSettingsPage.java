@@ -39,7 +39,6 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
     @FindBy(css = "input[data-ap-field='cadToleranceReplacement']")
     private WebElement cadReplacementInput;
 
-
     private WebDriver driver;
     private PageUtils pageUtils;
 

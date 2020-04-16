@@ -4,13 +4,13 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.header.GenericHeader;
-import com.apriori.pageobjects.header.PageHeader;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.GenericHeader;
+import com.apriori.pageobjects.toolbars.PageHeader;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -65,10 +65,9 @@ public class SaveAsComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .selectScenario(scenarioName, "Push Pin")
-            .apply();
-
-        new GenericHeader(driver).saveAs()
+            .selectComparisonScenario(scenarioName, "Push Pin")
+            .apply(GenericHeader.class)
+            .saveAs()
             .inputName(testSaveAsComparisonName)
             .inputDescription(testSaveAsComparisonDescription)
             .selectCreateButton();
@@ -137,11 +136,9 @@ public class SaveAsComparisonTests extends TestBase {
             .save(ComparePage.class);
 
         new ComparePage(driver).addScenario()
-            .selectScenario(scenarioName, "Push Pin")
-            .apply();
-
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.openJobQueue()
+            .selectComparisonScenario(scenarioName, "Push Pin")
+            .apply(GenericHeader.class)
+            .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
             .closeJobQueue(ComparePage.class);
 

@@ -14,11 +14,11 @@ public class CreateDashboardPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(CreateDashboardPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     @FindBy(css = "div[id='display'] .title")
     private WebElement dashboardPageTitle;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public CreateDashboardPage(WebDriver driver) {
         super(driver);

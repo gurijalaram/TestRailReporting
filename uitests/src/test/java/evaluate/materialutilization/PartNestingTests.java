@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.PartNestingPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -26,6 +27,7 @@ public class PartNestingTests extends TestBase {
     private CIDLoginPage loginPage;
     private MaterialPage materialPage;
     private PartNestingPage partNestingPage;
+    private EvaluatePanelToolbar evaluatePanelToolbar;
 
     private File resourceFile;
 
@@ -136,8 +138,7 @@ public class PartNestingTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
-            .expandPanel();
+            .openMaterialComposition();
 
         assertThat(materialPage.getPartNestingButton().getAttribute("class"), is("disabled"));
     }

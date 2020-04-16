@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.process;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,7 @@ import java.util.stream.IntStream;
  * @author cfrith
  */
 
-public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
+public class ProcessRoutingPage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(ProcessRoutingPage.class);
 
@@ -76,6 +75,7 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     private PageUtils pageUtils;
 
     public ProcessRoutingPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -172,16 +172,6 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
     }
 
     /**
-     * Closes the processes panel
-     *
-     * @return current page object
-     */
-    public EvaluatePage closeProcessPanel() {
-        pageUtils.waitForElementAndClick(closePanelButton);
-        return new EvaluatePage(driver);
-    }
-
-    /**
      * Selects the option tab
      *
      * @return new page object
@@ -208,20 +198,5 @@ public class ProcessRoutingPage extends LoadableComponent<ProcessRoutingPage> {
      */
     public boolean isRoutingOutOfDateDisplayed() {
         return pageUtils.checkElementVisibleByBoolean(outOfDateMsg);
-    }
-
-    /**
-     * Clicks the help button
-     *
-     * @return the current page object
-     */
-    public ProcessRoutingPage clickHelp() {
-        pageUtils.waitForElementAndClick(helpButton);
-        return this;
-    }
-
-    public String getChildPageTitle() {
-        return pageUtils.windowHandler().getTitle();
-        // TODO remove code duplication
     }
 }

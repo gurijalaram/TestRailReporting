@@ -18,17 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-
-    }
+    private final static Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;
@@ -76,8 +66,19 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         PageFactory.initElements(driver, this);
     }
 
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+
+    }
+
     /**
      * Navigates to Manage Scenario Export
+     *
      * @return Manage Scenario Export Page Object Model
      */
     public ScenarioExport navigateToManageScenarioExport() {
@@ -86,6 +87,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Manage System Data Export
+     *
      * @return System Data Export Page Object Model
      */
     public SystemDataExport navigateToManageSystemDataExport() {
@@ -94,6 +96,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Reports System
+     *
      * @return Reports Page Object Model
      */
     public HomePage navigateToReports() {
@@ -102,6 +105,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Reports System User Guide
+     *
      * @return Home Page Page Object Model (since help is external to system)
      */
     public CirUserGuidePage navigateToHelpReportsGuide() {
@@ -110,6 +114,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Admin System User Guide
+     *
      * @return Home Page Page Object Model (since help is external to system)
      */
     public CiaUserGuide navigateToHelpAdminGuide() {
@@ -118,6 +123,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Scenario Export Chapter Page
+     *
      * @return Scenario Export Chapter Page Object Model
      */
     public CiaUserGuide navigateToScenarioExportChapterPage() {
@@ -126,6 +132,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Logout/Login page
+     *
      * @return Logout Page Object Model
      */
     public Logout navigateToAdminLogout() {
@@ -135,6 +142,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Returns header to check
+     *
      * @return
      */
     public String getHeaderToCheck() {
@@ -143,6 +151,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Get page title text
+     *
      * @return String - page title text
      */
     public String getHomeTitleText() {
@@ -152,6 +161,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * General navigation method
+     *
      * @param parentPage
      * @param className
      * @param <T>
@@ -164,6 +174,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Another general navigation method
+     *
      * @param parentPage
      * @param childPage
      */

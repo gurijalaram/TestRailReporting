@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -7,14 +8,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
+public class CostDetailsPage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(CostDetailsPage.class);
-
 
     @FindBy(css = "[data-ap-comp='costResultChartArea']")
     private WebElement costResultChart;
@@ -29,6 +28,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     private PageUtils pageUtils;
 
     public CostDetailsPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -77,20 +77,5 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
         By costInfo = By.xpath("//td[.='" + contributor + "']/following-sibling::td");
         //TODO add in ability to scroll when BA-890 is fixed pageUtils.scrollToElement(costInfo, verticalScroller);
         return driver.findElement(costInfo).getText();
-    }
-
-    /**
-     * Clicks the help button
-     *
-     * @return the current page object
-     */
-    public CostDetailsPage clickHelp() {
-        pageUtils.waitForElementAndClick(helpButton);
-        return this;
-    }
-
-    public String getChildPageTitle() {
-        return pageUtils.windowHandler().getTitle();
-        // TODO remove code duplication
     }
 }

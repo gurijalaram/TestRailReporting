@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.header.CompareHeader;
+import com.apriori.pageobjects.toolbars.CompareHeader;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
