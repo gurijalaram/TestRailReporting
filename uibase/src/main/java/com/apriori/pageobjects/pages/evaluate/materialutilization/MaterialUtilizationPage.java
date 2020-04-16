@@ -135,7 +135,7 @@ public class MaterialUtilizationPage extends EvaluatePanelToolbar {
      * @return the button as webelement
      */
     public String getPartNestingButton() {
-        pageUtils.waitForElementAppear(partNestingTab);
+        pageUtils.waitForElementToAppear(By.xpath("//td[.='Name']"));
         return partNestingTab.getAttribute("class");
     }
 
