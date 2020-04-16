@@ -94,7 +94,7 @@ public class DTCCastingTests extends TestBase {
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
-        guidancePage.selectIssueTypeAndGCD("Hole Issue, Maximum Hole Depth", "Simple Holes", "SimpleHole:2");
+        guidancePage.selectIssueTypeAndGCD("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
 
         guidancePage.selectIssueTypeAndGCD("Hole Issue", "Minimum Hole Diameter", "SimpleHole:10");

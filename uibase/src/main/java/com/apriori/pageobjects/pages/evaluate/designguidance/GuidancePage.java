@@ -81,7 +81,7 @@ public class GuidancePage extends EvaluatePanelToolbar {
      */
     private GuidancePage collapseIssueDropdown() {
         By dropdown = By.cssSelector(".fa.fa-caret-down");
-        if (pageUtils.isElementDisplayed(dropdown)) {
+        while (pageUtils.isElementDisplayed(dropdown)) {
             pageUtils.scrollToElement(dropdown, guidanceTableScroller, Constants.ARROW_DOWN);
             pageUtils.waitForElementToAppear(dropdown).click();
         }
