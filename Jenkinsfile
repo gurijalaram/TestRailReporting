@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'Running test...'
                 dir("${env.WORKSPACE}/build") {
-                    bat label: "", script: "gradle clean :uitests:test --tests ${params.TEST_SUITE} -DthreadCounts=${params.THREAD_COUNT} -Dbrowser=${params.BROWSER} -Denv=${params.TARGET_ENV} -Dmode=${params.TEST_MODE} --scan --info"
+                    bat label: "", script: "gradle clean :uitests:test --tests ${params.TEST_SUITE} -DthreadCounts=${params.THREAD_COUNT} -Dbrowser=${params.BROWSER} -Durl=${params.TARGET_URL} -Dmode=${params.TEST_MODE} --scan --info"
                 }
             }
 
