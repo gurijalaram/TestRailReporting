@@ -166,7 +166,7 @@ public class MaterialStockTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        new EvaluatePage(driver).openMaterialComposition();
+        evaluatePage.openMaterialComposition();
 
         materialUtilizationPage = new MaterialUtilizationPage(driver)
             .toggleMaterialPropertiesPanel()

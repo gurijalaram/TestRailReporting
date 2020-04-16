@@ -157,7 +157,6 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
-        evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")

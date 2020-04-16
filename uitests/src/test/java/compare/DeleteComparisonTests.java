@@ -130,7 +130,6 @@ public class DeleteComparisonTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Critical"));
 
-        evaluatePage = new EvaluatePage(driver);
         explorePage = evaluatePage.publishScenario(PublishPage.class)
             .selectPublishButton()
             .createNewComparison()
