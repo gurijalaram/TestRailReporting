@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
@@ -30,6 +31,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     private GuidancePage guidancePage;
     private InvestigationPage investigationPage;
     private DesignGuidancePage designGuidancePage;
+    private EvaluatePage evaluatePage;
 
     private File resourceFile;
 
@@ -140,18 +142,23 @@ public class DTCPlasticMouldingTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1076", "1070", "1081", "1082"})
+    @TestRail(testCaseId = {"3841", "1076", "1070", "1081", "1082"})
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
-        guidancePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .openProcessDetails()
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+
+        evaluatePage = new EvaluatePage(driver);
+        guidancePage = evaluatePage.openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()

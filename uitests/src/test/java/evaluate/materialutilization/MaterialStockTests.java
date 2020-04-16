@@ -1,5 +1,6 @@
 package evaluate.materialutilization;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -149,19 +150,23 @@ public class MaterialStockTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"869"})
+    @TestRail(testCaseId = {"3839","869"})
     @Description("validate the user can collapse and expand material properties")
     public void materialProperties() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
 
         loginPage = new CIDLoginPage(driver);
-        materialPage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openMaterialComposition();
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
+
+        new EvaluatePage(driver).openMaterialComposition();
 
         materialUtilizationPage = new MaterialUtilizationPage(driver)
             .toggleMaterialPropertiesPanel()
