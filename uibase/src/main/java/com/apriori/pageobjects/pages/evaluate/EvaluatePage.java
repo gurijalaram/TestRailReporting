@@ -511,7 +511,9 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public BigDecimal getBurdenedCostValue() {
         return new BigDecimal(
-                burdenedCost.getText().replace(",", ""))
+                burdenedCost.getText()
+                        .replace(",", "")
+                        .replace(" ", ""))
                 .setScale(2, BigDecimal.ROUND_FLOOR);
     }
 
