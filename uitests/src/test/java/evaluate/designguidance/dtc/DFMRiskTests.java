@@ -112,4 +112,21 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRisk(), is("High"));
     }
 
+    @Test
+    @TestRail(testCaseId = {"3840"})
+    @Description("Validate DFM Risk - High for Sheet Metal")
+    public void plasticMouldedMediumDFM() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PlasticMoulded-Special Tooling Sliders Lifters.CATPart");
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+    }
 }
