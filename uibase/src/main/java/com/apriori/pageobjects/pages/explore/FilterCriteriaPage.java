@@ -303,7 +303,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         COSTMATURITY("Cost Maturity"),
         ASSIGNEE("Assignee");
 
-        private String attributeValue;
+        private final String attributeValue;
 
         Attribute(String attributeValue) {
 
