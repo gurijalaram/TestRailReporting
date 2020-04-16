@@ -35,6 +35,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][3]")
     private WebElement castingDtcBubble;
 
+    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][4]")
+    private WebElement castingDtcBubbleTwo;
+
     @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
     private WebElement machiningDtcBubble;
 
@@ -747,10 +750,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * Method to return value from Bubble in DTC Casting or Machining DTC Report
      * @return BigDecimal value
      */
-    public BigDecimal getValueFromBubbleTooltip(boolean isCastingDtcReport) {
-        WebElement elementToUse = isCastingDtcReport ? castingDtcBubble : machiningDtcBubble;
-        pageUtils.waitForElementToAppear(elementToUse);
-        Actions builder = new Actions(driver).moveToElement(elementToUse);
+    public BigDecimal getFBCValueFromBubbleTooltip(boolean isCastingDtcReport) {
+        //WebElement elementToUse = isCastingDtcReport ? castingDtcBubble : machiningDtcBubble;
+        WebElement element = castingDtcBubble;
+        pageUtils.waitForElementToAppear(element);
+        Actions builder = new Actions(driver).moveToElement(element);
         builder.perform();
 
         pageUtils.waitForElementToAppear(tooltipPartNameElement);

@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.explore.ScenarioPage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
@@ -26,6 +25,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class CastingDtcReportTests extends TestBase {
 
@@ -182,13 +182,10 @@ public class CastingDtcReportTests extends TestBase {
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk();
 
-        // 1. Click bubble -> tooltip appears
-        // 2. Grab part name to use in CID from DTC Part Summary Report
-        //      - Save in variable for later (String - partName - local scope) Final - won't change
-        BigDecimal value = genericReportPage.getValueFromBubbleTooltip(true);
+        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
         String partName = genericReportPage.getPartNameReports();
         String scenarioName = "Initial";
         genericReportPage.openNewTabAndFocus();
@@ -201,10 +198,8 @@ public class CastingDtcReportTests extends TestBase {
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 
-        // Assert report values against CID values
-        // 1. Find what values are needed
-        // 2. Get values from CID
-        // 3. Assert between Report and CID values (use above variable entitled 'value')
+        BigDecimal cidFbcValue = evaluatePage.getBurdenedCostValue();
+        assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
 
     @Test
