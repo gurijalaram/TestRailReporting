@@ -144,7 +144,7 @@ public class MaterialStockTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"869"})
+    @TestRail(testCaseId = {"3839","869"})
     @Description("validate the user can collapse and expand material properties")
     public void materialProperties() {
 
