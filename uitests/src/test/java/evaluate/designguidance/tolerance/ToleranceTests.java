@@ -230,7 +230,7 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
+        toleranceEditPage = new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
