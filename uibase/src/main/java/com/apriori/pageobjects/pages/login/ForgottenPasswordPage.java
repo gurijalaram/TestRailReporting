@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPage> {
 
-    private Logger logger = LoggerFactory.getLogger(ForgottenPasswordPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ForgottenPasswordPage.class);
 
     @FindBy(css = ".auth0-lock-name")
     private WebElement resetPasswordText;

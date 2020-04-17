@@ -93,7 +93,7 @@ public class ToleranceTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
 
         new EvaluatePage(driver).openDesignGuidance()
             .openTolerancesTab()
@@ -101,13 +101,9 @@ public class ToleranceTests extends TestBase {
             .selectEditButton()
             .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23")
             .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16")
-            .apply(TolerancePage.class);
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceEditPage = evaluatePage.costScenario()
+            .apply(TolerancePage.class)
+            .closePanel()
+            .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
@@ -243,13 +239,9 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "PlanarFace:78")
             .selectEditButton()
             .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.44")
-            .apply(TolerancePage.class);
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceEditPage = evaluatePage.openMaterialCompositionTable()
+            .apply(TolerancePage.class)
+            .closePanel()
+            .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
             .apply()
             .costScenario()
@@ -286,11 +278,10 @@ public class ToleranceTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         evaluatePage = new EvaluatePage(driver);
         tolerancePage = evaluatePage.openDesignGuidance()
-            .expandGuidancePanel()
             .openTolerancesTab();
 
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.CIRCULARITY.getToleranceName()), "1"), is(true));
@@ -323,7 +314,8 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
+        explorePage = new ExplorePage(driver);
+        toleranceEditPage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -332,13 +324,9 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5")
             .selectEditButton()
             .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "2.16")
-            .apply(TolerancePage.class);
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        designGuidancePage.closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        toleranceEditPage = evaluatePage.selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .apply(TolerancePage.class)
+            .closePanel()
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .costScenario()
             .openDesignGuidance()
@@ -367,7 +355,8 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
+        explorePage = new ExplorePage(driver);
+        toleranceEditPage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -376,10 +365,8 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton()
             .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
-            .apply(TolerancePage.class);
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        toleranceEditPage = designGuidancePage.closeDesignGuidance()
+            .apply(TolerancePage.class)
+            .closePanel()
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
@@ -389,10 +376,8 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
 
         toleranceEditPage.setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
-            .cancel();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        toleranceEditPage = designGuidancePage.closeDesignGuidance()
+            .cancel()
+            .closePanel()
             .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
@@ -426,7 +411,7 @@ public class ToleranceTests extends TestBase {
             .save(ToleranceSettingsPage.class);
 
         settingsPage = new SettingsPage(driver);
-        tolerancePage = settingsPage.save(ExplorePage.class)
+        toleranceEditPage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -436,10 +421,8 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton()
             .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
-            .apply(TolerancePage.class);
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        toleranceEditPage = designGuidancePage.closeDesignGuidance()
+            .apply(TolerancePage.class)
+            .closePanel()
             .openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
@@ -449,10 +432,8 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
 
         toleranceEditPage.setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
-            .cancel();
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        toleranceEditPage = designGuidancePage.closeDesignGuidance()
+            .cancel()
+            .closePanel()
             .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
@@ -532,7 +513,6 @@ public class ToleranceTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:1");
 
@@ -596,7 +576,6 @@ public class ToleranceTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "CurvedWall:2");
 
@@ -662,7 +641,6 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5");
 
@@ -695,7 +673,7 @@ public class ToleranceTests extends TestBase {
 
         assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
 
         new EvaluatePage(driver).publishScenario(PublishPage.class)
             .selectPublishButton()

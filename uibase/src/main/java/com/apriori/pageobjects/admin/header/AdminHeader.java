@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class AdminHeader extends PageHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
+    private final static Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     private PageUtils pageUtils;
 

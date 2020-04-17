@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -37,9 +36,9 @@ public class FailuresWarningsTests extends TestBase {
     private CIDLoginPage loginPage;
     private SettingsPage settingsPage;
     private ToleranceSettingsPage toleranceSettingsPage;
-    private FailuresPage failuresPage;
     private UserCredentials currentUser;
     private GuidancePage guidancePage;
+    private EvaluatePage evaluatePage;
 
     private File resourceFile;
 
@@ -107,9 +106,10 @@ public class FailuresWarningsTests extends TestBase {
         assertThat(guidancePage.getGuidanceCell("Failed GCDs", "Count"), is(equalTo("3")));
         assertThat(guidancePage.getGuidanceCell("Not Supported GCDs", "Count"), is(equalTo("1")));
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
+        guidancePage.closePanel();
 
-        assertThat(new EvaluatePage(driver).getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(new EvaluatePage(driver).isDfmRisk("Critical"), is(true));
+        evaluatePage = new EvaluatePage(driver);
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
+        assertThat(evaluatePage.getDFMRiskIcon(), is(true));
     }
 }

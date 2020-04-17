@@ -108,7 +108,7 @@ public class SheetMetalDTCTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(),containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openDesignGuidance()
@@ -245,11 +245,10 @@ public class SheetMetalDTCTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openDesignGuidance()
-            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 

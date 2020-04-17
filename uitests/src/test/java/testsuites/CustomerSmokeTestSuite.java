@@ -5,6 +5,7 @@ import com.apriori.utils.runner.CategorySuiteRunner;
 import evaluate.NewScenarioNameTests;
 import evaluate.ProcessGroupsTests;
 import evaluate.PublishNewCostedTests;
+import evaluate.TwoModelMachiningTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCPlasticMouldingTests;
 import evaluate.designguidance.failures.FailuresWarningsTests;
@@ -37,7 +38,8 @@ import testsuites.suiteinterface.CustomerSmokeTests;
     PublishNewCostedTests.class,
     FailuresWarningsTests.class,
     DTCPlasticMouldingTests.class,
-    DTCCastingTests.class
+    DTCCastingTests.class,
+    TwoModelMachiningTests.class,
 })
 public class CustomerSmokeTestSuite {
 }

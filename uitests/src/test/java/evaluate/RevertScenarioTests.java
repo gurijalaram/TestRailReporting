@@ -51,7 +51,7 @@ public class RevertScenarioTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         evaluatePage = evaluatePage.revert()
             .revertScenario();

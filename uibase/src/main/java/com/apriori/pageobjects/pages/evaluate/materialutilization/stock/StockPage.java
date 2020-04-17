@@ -1,12 +1,12 @@
 package com.apriori.pageobjects.pages.evaluate.materialutilization.stock;
 
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class StockPage extends LoadableComponent<StockPage> {
+public class StockPage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(StockPage.class);
 
@@ -28,6 +28,7 @@ public class StockPage extends LoadableComponent<StockPage> {
     private PageUtils pageUtils;
 
     public StockPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

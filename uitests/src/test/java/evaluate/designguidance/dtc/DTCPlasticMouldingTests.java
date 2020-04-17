@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
@@ -30,6 +31,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     private GuidancePage guidancePage;
     private InvestigationPage investigationPage;
     private DesignGuidancePage designGuidancePage;
+    private EvaluatePage evaluatePage;
 
     private File resourceFile;
 
@@ -57,12 +59,12 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
         designGuidancePage = new DesignGuidancePage(driver);
-        guidancePage = designGuidancePage.closeDesignGuidance()
+        guidancePage = designGuidancePage.closePanel()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Reaction Injection Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Nylon, Type 6")
             .apply()
@@ -92,7 +94,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
@@ -140,22 +142,26 @@ public class DTCPlasticMouldingTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1076", "1070", "1081", "1082"})
+    @TestRail(testCaseId = {"3841", "1076", "1070", "1081", "1082"})
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
-        guidancePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .openProcessDetails()
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+
+        guidancePage = evaluatePage.openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario(1)
             .openDesignGuidance()
             .openGuidanceTab()
@@ -194,15 +200,14 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 3.556 mm")));
 
         designGuidancePage = new DesignGuidancePage(driver);
-        guidancePage = designGuidancePage.closeDesignGuidance()
+        guidancePage = designGuidancePage.closePanel()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
 
@@ -210,12 +215,12 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 15 mm")));
 
         designGuidancePage = new DesignGuidancePage(driver);
-        guidancePage = designGuidancePage.closeDesignGuidance()
+        guidancePage = designGuidancePage.closePanel()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Reaction Injection Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Polyurethane, Polymeric MDI")
             .apply()
@@ -248,12 +253,12 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
 
         designGuidancePage = new DesignGuidancePage(driver);
-        guidancePage = designGuidancePage.closeDesignGuidance()
+        guidancePage = designGuidancePage.closePanel()
             .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Reaction Injection Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Polyurethane, Polymeric MDI")
             .apply()

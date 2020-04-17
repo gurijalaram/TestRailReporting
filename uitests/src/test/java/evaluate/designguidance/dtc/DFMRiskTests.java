@@ -55,7 +55,7 @@ public class DFMRiskTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class DFMRiskTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class DFMRiskTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
     }
 
     @Test
@@ -109,7 +109,24 @@ public class DFMRiskTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
     }
 
+    @Test
+    @TestRail(testCaseId = {"3840"})
+    @Description("Validate DFM Risk - High for Sheet Metal")
+    public void plasticMouldedMediumDFM() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PlasticMoulded-Special Tooling Sliders Lifters.CATPart");
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+    }
 }
