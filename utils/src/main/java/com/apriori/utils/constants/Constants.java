@@ -37,6 +37,8 @@ public class Constants {
     public static final String PAGE_DOWN = "page_down";
     public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
 
+    public static final String defaultScenarioName = "Initial";
+
     public static String RUN_ID = defaultProjectIDValue;
 
     public static String environment = System.getProperty(defaultEnvironmentKey, defaultEnvironmentValue);

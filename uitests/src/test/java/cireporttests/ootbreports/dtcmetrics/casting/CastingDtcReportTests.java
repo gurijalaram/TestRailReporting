@@ -15,6 +15,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportHeader;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -187,11 +188,10 @@ public class CastingDtcReportTests extends TestBase {
 
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
         String partName = genericReportPage.getPartNameReports();
-        String scenarioName = "Initial";
         genericReportPage.openNewTabAndFocus();
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
-        String[] valuesArray = { partName, scenarioName };
+        String[] valuesArray = { partName, Constants.defaultScenarioName };
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filterCriteria()
                 .multiFilterPublicCriteria(attributesArray, valuesArray)
@@ -199,6 +199,12 @@ public class CastingDtcReportTests extends TestBase {
                 .openFirstScenario();
 
         BigDecimal cidFbcValue = evaluatePage.getBurdenedCostValue();
+
+        /*
+            This is great now, but rounding in CID is not done at all really (long story)
+            Thus this may start failing in due course, and can be fixed then
+            Currency in Reports and CID needs to match for this test also (both default to USD)
+         */
         assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
 

@@ -807,12 +807,10 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getPartNameReports() {
         /*
-        This assumes that the locator used with findElements will return three elements,
-        and, by extension, that the third element (index 2, 0 based List) is the one we are after.
-        Goal is to return the part name, and it works for now.
+            This assumes that the locator used with findElements will return three elements,
+            and, by extension, that the third element (index 2, 0 based List) is the one we are after.
+            Goal is to return the part name, and it works for now.
          */
-        String locator = "tspan:nth-child(1)";
-        WebElement elementToUse = driver.findElements(By.cssSelector(locator)).get(2);
-        return elementToUse.getText();
+        return driver.findElements(By.cssSelector("tspan:nth-child(1)")).get(2).getText();
     }
 }
