@@ -81,7 +81,7 @@ public class ExplorePage extends ExploreHeader {
      * @return a new page object
      */
     public EvaluatePage openScenario(String scenarioName, String partName) {
-        return scenarioTablePage.openScenario(scenarioName, partName);
+        return scenarioTablePage.openScenario(scenarioName, partName.toUpperCase());
     }
 
     /**
@@ -123,7 +123,7 @@ public class ExplorePage extends ExploreHeader {
      * @return a new page object
      */
     public EvaluatePage openAssembly(String scenarioName, String partName) {
-        return scenarioTablePage.openAssembly(scenarioName, partName);
+        return scenarioTablePage.openAssembly(scenarioName, partName.toUpperCase());
     }
 
     /**
