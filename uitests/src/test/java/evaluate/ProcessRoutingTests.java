@@ -9,8 +9,8 @@ import static org.hamcrest.Matchers.hasItem;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresWarningsPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
@@ -51,7 +51,7 @@ public class ProcessRoutingTests extends TestBase {
     private MaterialCompositionPage materialCompositionPage;
     private GeometryPage geometryPage;
     private PropertiesDialogPage propertiesDialogPage;
-    private FailuresWarningsPage failuresWarningsPage;
+    private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
     private UserCredentials currentUser;
@@ -258,11 +258,11 @@ public class ProcessRoutingTests extends TestBase {
         assertThat(evaluatePage.isFailedIconPresent(), is(true));
 
         evaluatePage = new EvaluatePage(driver);
-        failuresWarningsPage = evaluatePage.openDesignGuidance()
-            .openFailuresWarningsTab()
-            .selectIssueTypeAndGCD("Costing Failed", "Component:1");
+        guidancePage = evaluatePage.openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Costing Failed", "Additive Manufacturing/Surface Treatment is infeasible", "Component:1");
 
-        assertThat(failuresWarningsPage.getUncostedMessage(), containsString("This DMLS material is not compatible with Stereolithography."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("This DMLS material is not compatible with Stereolithography."));
     }
 
     @Test
