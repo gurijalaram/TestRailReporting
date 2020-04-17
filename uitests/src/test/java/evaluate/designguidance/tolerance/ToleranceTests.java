@@ -95,7 +95,7 @@ public class ToleranceTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Critical"));
 
-        new EvaluatePage(driver).openDesignGuidance()
+        toleranceEditPage = new EvaluatePage(driver).openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
             .selectEditButton()
