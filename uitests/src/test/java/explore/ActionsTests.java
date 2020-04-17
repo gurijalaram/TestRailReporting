@@ -139,6 +139,7 @@ public class ActionsTests extends TestBase {
         genericHeader.selectActions();
 
         assertThat(genericHeader.isActionLockedStatus("Unlock"), is(true));
+        genericHeader.selectActions();
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.openScenario(testScenarioName, "bracket_basic");
