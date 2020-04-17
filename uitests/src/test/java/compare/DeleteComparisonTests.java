@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -34,6 +35,7 @@ public class DeleteComparisonTests extends TestBase {
     private ComparePage comparePage;
     private GenericHeader genericHeader;
     private ScenarioTablePage scenarioTablePage;
+    private EvaluatePage evaluatePage;
 
     private File resourceFile;
 
@@ -110,7 +112,7 @@ public class DeleteComparisonTests extends TestBase {
 
     @Test
     @Category({SmokeTests.class})
-    @TestRail(testCaseId = {"430", "432", "442", "448"})
+    @TestRail(testCaseId = {"3838", "430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDeleteExplore() {
 
@@ -120,10 +122,15 @@ public class DeleteComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
 
-        explorePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, resourceFile)
-            .costScenario()
-            .publishScenario(PublishPage.class)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
+
+        explorePage = evaluatePage.publishScenario(PublishPage.class)
             .selectPublishButton()
             .createNewComparison()
             .enterComparisonName(testComparisonName)
