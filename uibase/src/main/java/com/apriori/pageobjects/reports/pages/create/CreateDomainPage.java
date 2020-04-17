@@ -14,11 +14,11 @@ public class CreateDomainPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(CreateDomainPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     @FindBy(css = "div[data-name='repositoryResourceChooserDialog']")
     private WebElement domainDialog;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public CreateDomainPage(WebDriver driver) {
         super(driver);

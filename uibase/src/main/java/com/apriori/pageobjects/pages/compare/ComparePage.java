@@ -1,6 +1,8 @@
 package com.apriori.pageobjects.pages.compare;
 
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -70,9 +72,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      *
      * @return new page object
      */
-    public ComparisonTablePage addScenario() {
+    public ScenarioTablePage addScenario() {
         pageUtils.waitForElementAndClick(addScenariosButton);
-        return new ComparisonTablePage(driver);
+        return new ScenarioTablePage(driver);
     }
 
     /**
@@ -116,50 +118,64 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Removes the scenario from the comparison view
-     * @param partName - the part name
+     *
+     * @param partName     - the part name
      * @param scenarioName - the scenario name
      * @return current page object
      */
     public ComparePage removeScenarioFromCompareView(String partName, String scenarioName) {
         By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
             partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
-        pageUtils.scrollHorizontally(removeComparisonButton, horizontalScroller);
+        pageUtils.scrollToElement(removeComparisonButton, horizontalScroller, Constants.HORIZONTAL_SCROLL);
         pageUtils.waitForElementAndClick(removeComparisonButton);
         return this;
     }
 
     /**
      * Selects the basis button
+     *
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    public ComparePage setBasis(String scenarioName) {
-        pageUtils.scrollHorizontally(findBasisButton(scenarioName), horizontalScroller);
-        pageUtils.waitForElementAndClick(findBasisButton(scenarioName));
+    public ComparePage setBasis(String partName, String scenarioName) {
+        pageUtils.scrollToElement(findBasisButton(partName, scenarioName), horizontalScroller, Constants.HORIZONTAL_SCROLL);
+        pageUtils.waitForElementAndClick(findBasisButton(partName, scenarioName));
         return this;
     }
 
     /**
      * Checks if the basis button exist
+     *
      * @param scenarioName - the scenario name
      * @return true/false
      */
-    public boolean isComparisonBasis(String scenarioName) {
-        return pageUtils.isElementDisplayed(findBasisButton(scenarioName));
+    public boolean isBasis(String partName, String scenarioName) {
+        return pageUtils.invisibilityOfElements(driver.findElements(findBasisButton(partName, scenarioName)));
+    }
+
+    /**
+     * Checks if the scenario is a basis
+     * @param partName - the part name
+     * @param scenarioName - the scenario name
+     * @return true/false
+     */
+    public boolean isBasisButtonPresent(String partName, String scenarioName) {
+        return  pageUtils.isElementDisplayed(driver.findElement(findBasisButton(partName, scenarioName)));
     }
 
     /**
      * Gets list of scenarios in comparison view
+     *
      * @param scenarioName - the scenario name
-     * @param partName the part name
+     * @param partName     the part name
      * @return size of element as int
      */
-    public int getScenarioInComparisonView(String scenarioName, String partName) {
+    public boolean scenarioIsNotInComparisonView(String scenarioName, String partName) {
         By scenario = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
-        return driver.findElements(scenario).size();
+        return pageUtils.invisibilityOfElements(driver.findElements(scenario));
     }
 
-    private By findBasisButton(String scenarioName) {
-        return By.xpath("//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']" + scenarioName);
+    private By findBasisButton(String partName, String scenarioName) {
+        return By.xpath(String.format("//div[@title='%s']/ancestor::th//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName.toUpperCase(), scenarioName));
     }
 }

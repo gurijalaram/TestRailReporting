@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.header.EvaluateHeader;
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
@@ -9,6 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
+import com.apriori.pageobjects.toolbars.EvaluateHeader;
 import com.apriori.utils.PageUtils;
 
 import org.jsoup.Jsoup;
@@ -182,6 +183,20 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-comp='dfmRiskIcon']")
     private WebElement dfmRiskIcon;
 
+    @FindBy(css = "[data-ap-region='sourceAndUtilizationTile']")
+    private WebElement sourceAndUtilTile;
+
+    @FindBy(css = "[data-ap-field='sourceModelPartName']")
+    private WebElement sourceModelPartName;
+
+    @FindBy(css = "[data-ap-comp='selectSourceLink']")
+    private WebElement selectSourceButton;
+
+    @FindBy(css = "[data-ap-field='sourceModelScenario']")
+    private WebElement sourceModelScenarioName;
+
+    @FindBy(css = "[data-ap-field='materialName']")
+    private WebElement sourceMaterial;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -692,7 +707,6 @@ public class EvaluatePage extends EvaluateHeader {
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getTableValsByRow(String row) {
-        ArrayList<BigDecimal> valsToReturn = new ArrayList<>();
         Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
 
         String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td";
@@ -701,13 +715,7 @@ public class EvaluatePage extends EvaluateHeader {
         baseCssSelector = String.format(baseCssSelector, row);
         elements = evaluateComponentView.select(baseCssSelector);
 
-        for (Element element : elements) {
-            if (!element.text().isEmpty() && element.text().contains(".")) {
-                valsToReturn.add(new BigDecimal(element.text()));
-            }
-        }
-
-        return valsToReturn;
+        return elements.stream().filter(element -> !element.text().isEmpty() && element.text().contains(".")).map(element -> new BigDecimal(element.text())).collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -727,12 +735,11 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Checks the dfm risk score
      *
-     * @param value - the value
-     * @return true/false
+     * @return dfm risk score
      */
-    public boolean isDfmRisk(String value) {
+    public String getDfmRisk() {
         pageUtils.waitForElementAppear(dfmRisk);
-        return dfmRisk.getText().contains(value);
+        return dfmRisk.getText();
     }
 
     /**
@@ -743,5 +750,56 @@ public class EvaluatePage extends EvaluateHeader {
     public String getDFMRiskIcon() {
         pageUtils.waitForElementToAppear(dfmRiskIcon);
         return dfmRiskIcon.getAttribute("outerHTML");
+    }
+
+    /**
+     * Opens the Source Scenario
+     *
+     * @return new page object
+     */
+    public EvaluatePage openSourceScenario() {
+        pageUtils.waitForElementAndClick(sourceModelScenarioName);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Checks source part name
+     *
+     * @return part name
+     */
+    public String getSourcePartName() {
+        pageUtils.waitForElementAppear(sourceModelPartName);
+        return sourceModelPartName.getText();
+    }
+
+    /**
+     * Checks source Scenario name
+     *
+     * @return source model scenario name
+     */
+    public String getSourceScenarioName() {
+        pageUtils.waitForElementAppear(sourceModelScenarioName);
+        return sourceModelScenarioName.getAttribute("title");
+    }
+
+    /**
+     * Checks source Scenario Material
+     *
+     * @return source material
+     */
+    public String getSourceMaterial() {
+        pageUtils.waitForElementAppear(sourceMaterial);
+        return sourceMaterial.getText();
+    }
+
+    /**
+     * Opens the Scenario Selection Page
+     *
+     * @return new page object
+     */
+    public ScenarioTablePage selectSourcePart() {
+        pageUtils.waitForElementToAppear(selectSourceButton);
+        pageUtils.waitForElementAndClick(selectSourceButton);
+        return new ScenarioTablePage(driver);
     }
 }

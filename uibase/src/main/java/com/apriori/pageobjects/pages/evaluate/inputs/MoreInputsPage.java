@@ -1,12 +1,12 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
+public class MoreInputsPage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(MoreInputsPage.class);
 
@@ -59,6 +59,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
     private PageUtils pageUtils;
 
     public MoreInputsPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -79,11 +80,11 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
     /**
      * Gets name of cad file
      *
-     * @return true/false
+     * @return name of cad file
      */
-    public boolean isCadFileName(String text) {
+    public String getCadFileName() {
         pageUtils.waitForElementToAppear(cadFileInput);
-        return pageUtils.checkElementAttribute(cadFileInput, "title", text);
+        return cadFileInput.getAttribute("value");
     }
 
     /**
@@ -181,26 +182,12 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
     }
 
     /**
-     * Checks the input value is correct
+     * Gets batch size from UI
      *
-     * @return true/false
+     * @return batch size
      */
-    public boolean getBatchSize(String text) {
-        return pageUtils.checkElementAttribute(batchSizeInput, "value", text);
-    }
-
-    /**
-     * Clicks the help button
-     *
-     * @return the current page object
-     */
-    public MoreInputsPage clickHelp() {
-        pageUtils.waitForElementAndClick(helpButton);
-        return this;
-    }
-
-    public String getChildPageTitle() {
-        return pageUtils.windowHandler().getTitle();
-        // TODO remove code duplication
+    public String getBatchSize() {
+        pageUtils.waitForElementAppear(batchSizeInput);
+        return batchSizeInput.getAttribute("value");
     }
 }

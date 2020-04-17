@@ -366,7 +366,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     public void changeMaterialSelectionTestStockMachining() {
 
         String scenarioName = new Util().getScenarioName();
-        new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())

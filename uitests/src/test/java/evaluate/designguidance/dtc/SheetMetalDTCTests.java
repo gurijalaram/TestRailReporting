@@ -108,7 +108,7 @@ public class SheetMetalDTCTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(),containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openDesignGuidance()
@@ -204,22 +204,19 @@ public class SheetMetalDTCTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
-            .selectInvestigationTopic("Holes and Fillets")
-            .findIssueType("Hole - Standard");
+            .selectInvestigationTopic("Holes and Fillets");
 
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("2")));
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("4")));
 
-        investigationPage.selectInvestigationTopic("Distinct Sizes Count")
-            .findIssueType("Bend Radius");
+        investigationPage.selectInvestigationTopic("Distinct Sizes Count");
 
         assertThat(investigationPage.getInvestigationCell("Bend Radius", "Tool Count"), is(equalTo("1")));
         assertThat(investigationPage.getInvestigationCell("Bend Radius", "GCD Count"), is(equalTo("1")));
         assertThat(investigationPage.getInvestigationCell("Hole Size", "Tool Count"), is(equalTo("2")));
         assertThat(investigationPage.getInvestigationCell("Hole Size", "GCD Count"), is(equalTo("4")));
 
-        investigationPage.selectInvestigationTopic("Machining Setups")
-            .findIssueType("SetupAxis:1");
+        investigationPage.selectInvestigationTopic("Machining Setups");
 
         assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("14")));
     }
@@ -227,7 +224,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Test
     @Issue("AP-57941")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1845", "719"})
+    @TestRail(testCaseId = {"1845", "719", "3836"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
 
@@ -248,11 +245,10 @@ public class SheetMetalDTCTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openDesignGuidance()
-            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 

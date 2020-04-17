@@ -4,7 +4,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "CdsResponseSchema.json")
+@Schema(location = "cds/CdsResponseSchema.json")
 public class Response {
     private Boolean isFirstPage;
     private Boolean isLastPage;

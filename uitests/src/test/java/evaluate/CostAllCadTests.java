@@ -4,12 +4,12 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.header.EvaluateHeader;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.ReferenceComparePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.EvaluateHeader;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -60,9 +60,9 @@ public class CostAllCadTests extends TestBase {
             .expandDropdown("Piece Part Cost")
             .expandDropdown("Total Variable Costs");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("16.22"));
+        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("16.07"));
         assertThat(costDetailsPage.getCostContribution("Labor "), containsString("4.94"));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.35"));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.32"));
     }
 
     @Test

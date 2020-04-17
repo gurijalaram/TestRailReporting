@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class SettingsPage extends LoadableComponent<SettingsPage> {
 
-    private Logger logger = LoggerFactory.getLogger(SettingsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(SettingsPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;

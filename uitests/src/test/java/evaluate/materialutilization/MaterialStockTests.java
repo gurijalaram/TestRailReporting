@@ -1,5 +1,6 @@
 package evaluate.materialutilization;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,6 +10,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -32,6 +34,7 @@ public class MaterialStockTests extends TestBase {
     private MaterialPage materialPage;
     private MaterialUtilizationPage materialUtilizationPage;
     private EvaluatePage evaluatePage;
+    private EvaluatePanelToolbar evaluatePanelToolbar;
 
     private File resourceFile;
 
@@ -48,17 +51,20 @@ public class MaterialStockTests extends TestBase {
         resourceFile = new FileResourceUtil().getResourceFile("Powder Metal.stp");
 
         loginPage = new CIDLoginPage(driver);
-        materialPage = loginPage.login(UserUtil.getUser())
+        evaluatePanelToolbar = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialComposition()
             .expandPanel();
+
+        materialPage = new MaterialPage(driver);
         assertThat(materialPage.getMaterialInfo("Name"), is(equalTo("F-0005")));
         assertThat(materialPage.getMaterialInfo("Cut Code"), is(equalTo("1.1")));
 
-        new MaterialPage(driver).closeMaterialAndUtilizationPanel()
+        evaluatePanelToolbar = new EvaluatePanelToolbar(driver);
+        materialPage = evaluatePanelToolbar.closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("FN-0205")
             .apply()
@@ -84,11 +90,10 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("19.14")));
+        assertThat(evaluatePage.getPartCost(), is(equalTo("18.56")));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialComposition()
-            .expandPanel()
             .goToStockTab();
         assertThat(stockPage.checkTableDetails("Auto"), is(true));
         assertThat(stockPage.checkTableDetails("6.91"), is(true));
@@ -99,14 +104,15 @@ public class MaterialStockTests extends TestBase {
             .apply();
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
 
-        materialPage = new MaterialPage(driver);
-        evaluatePage = materialPage.closeMaterialAndUtilizationPanel()
+        evaluatePanelToolbar = new EvaluatePanelToolbar(driver);
+        evaluatePage = evaluatePanelToolbar.closePanel()
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("19.64")));
+        assertThat(evaluatePage.getPartCost(), is(equalTo("19.06")));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialComposition()
             .goToStockTab();
+
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
         assertThat(stockPage.checkTableDetails("Manual"), is(true));
         assertThat(stockPage.checkTableDetails("6.91"), is(true));
@@ -127,35 +133,40 @@ public class MaterialStockTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialComposition()
-            .expandPanel()
             .goToStockTab();
-        assertThat(new StockPage(driver).checkTableDetails("ROUND_BAR"), is(true));
-        assertThat(new StockPage(driver).checkTableDetails("Virtual Stock Yes"), is(true));
 
-        new MaterialPage(driver).closeMaterialAndUtilizationPanel();
-        new EvaluatePage(driver).selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+        assertThat(stockPage.checkTableDetails("ROUND_BAR"), is(true));
+        assertThat(stockPage.checkTableDetails("Virtual Stock Yes"), is(true));
+
+        stockPage.closePanel()
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .openMaterialComposition()
             .goToStockTab();
-        assertThat(new StockPage(driver).checkTableDetails("SQUARE_BAR"), is(true));
-        assertThat(new StockPage(driver).checkTableDetails("Virtual Stock No"), is(true));
+
+        assertThat(stockPage.checkTableDetails("SQUARE_BAR"), is(true));
+        assertThat(stockPage.checkTableDetails("Virtual Stock No"), is(true));
     }
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"869"})
+    @TestRail(testCaseId = {"3839","869"})
     @Description("validate the user can collapse and expand material properties")
     public void materialProperties() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
 
         loginPage = new CIDLoginPage(driver);
-        materialPage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openMaterialComposition();
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
+
+        evaluatePage.openMaterialComposition();
 
         materialUtilizationPage = new MaterialUtilizationPage(driver)
             .toggleMaterialPropertiesPanel()

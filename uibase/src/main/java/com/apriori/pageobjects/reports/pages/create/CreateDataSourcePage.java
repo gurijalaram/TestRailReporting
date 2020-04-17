@@ -14,11 +14,11 @@ public class CreateDataSourcePage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(CreateDataSourcePage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     @FindBy(xpath = "//div[@id='display']/div/div/div/div[contains(@class, 'header')]/div")
     private WebElement dataSourcePageTitle;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public CreateDataSourcePage(WebDriver driver) {
         super(driver);

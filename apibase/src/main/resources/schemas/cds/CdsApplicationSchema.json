@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "isCloudHomeApp",
+        "isSingleTenant",
+        "isPublic",
+        "identity",
+        "createdBy",
+        "createdAt",
+        "name",
+        "cloudReference",
+        "serviceName",
+        "version",
+        "description"
+      ],
+      "properties": {
+        "isCloudHomeApp": {
+          "type": "boolean"
+        },
+        "isSingleTenant": {
+          "type": "boolean"
+        },
+        "isPublic": {
+          "type": "boolean"
+        },
+        "identity": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "createdBy": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "createdAt": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "cloudReference": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "serviceName": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "description": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "iconUrl": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}

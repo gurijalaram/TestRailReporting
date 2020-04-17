@@ -11,8 +11,16 @@
 
 ## Run Gradle tests with JVM args
 1. Open Terminal to root `build` directory
-2. Run `gradle clean :uitests:test --tests "{parentFolder.nameOfTest}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite"`
+2. Run `gradle clean :uitests:test --tests "{parentFolder.suiteName}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite"`
 3. To pass in JVM args `gradle clean :uitests:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :uitests:test --tests "testsuites.CIDTestSuite" -DthreadCounts=3 -Denv=cid-te`
+
+## How to run single
+1. Open Terminal to root `build` directory
+2. Run `gradle clean :uitests:test --tests "{fully qualified packagename.nameOfClass.nameOfTest}"` eg `gradle clean :uitests:test --tests "evaluate.designguidance.failures.failedCostingCount"`
+
+## How to run multiple suites
+1. Open Terminal to root `build` directory
+Run `gradle clean :uitests:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite" --tests "testsuites.SmokeTestSuite"`
 
 ## Build Gradle jar files
 1. Download and install Gradle 6.1.1 (this is the version that was first used on the project)
@@ -127,3 +135,9 @@ Annotate suite class that needs RunWith using following format (_class_ should b
 ## Add TestRail testCaseIDs to test methods
 Annotate method that needs testRailID using following format. Tags is optional so if you don't add, its ok
 `@TestRail(testCaseId = {"717"})`
+
+## How to run tests against local dev env
+When we want to run tests against local env we need to override **env** value `-Denv=localhost` 
+
+If we want to run against Eclipse dev env we also need to change **url** and **ignore ssl check** 
+`-Durl=https://localhost:8543/ -DignoreSslCheck=true`
