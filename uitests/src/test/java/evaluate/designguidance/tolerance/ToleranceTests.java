@@ -95,7 +95,7 @@ public class ToleranceTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Critical"));
 
-        new EvaluatePage(driver).openDesignGuidance()
+        toleranceEditPage = new EvaluatePage(driver).openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
             .selectEditButton()
@@ -230,7 +230,7 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
+        toleranceEditPage = new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
