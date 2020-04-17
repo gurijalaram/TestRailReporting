@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HomePage extends PageHeader {
+
     private final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
     @FindBy(id = "manage.scenario-export-manager")

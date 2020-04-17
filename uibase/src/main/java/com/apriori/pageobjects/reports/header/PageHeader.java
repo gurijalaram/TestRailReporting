@@ -29,17 +29,7 @@ import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private static Logger logger = LoggerFactory.getLogger(PageHeader.class);
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(homePageTitle);
-    }
+    private final static Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(xpath = "//div[contains(text(), 'Repository')]")
     private WebElement repositoryLink;
@@ -138,8 +128,19 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         PageFactory.initElements(driver, this);
     }
 
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+		pageUtils.waitForElementToAppear(homePageTitle);
+    }
+
     /**
      * Home page navigation method
+     *
      * @return Home Page page object
      */
     public HomePage navigateToHomePage() {
@@ -148,6 +149,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Library page navigation method
+     *
      * @return Library Page page object
      */
     public LibraryPage navigateToLibraryPage() {
@@ -156,6 +158,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * View Search Results page navigation method
+     *
      * @return Search Results Page page object
      */
     public ViewSearchResultsPage navigateToViewSearchResultsPage() {
@@ -164,6 +167,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * View Repository page navigation method
+     *
      * @return Repository Page page object
      */
     public ViewRepositoryPage navigateToViewRepositoryPage() {
@@ -172,6 +176,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * View Schedules page navigation method
+     *
      * @return Schedules Page page object
      */
     public ViewSchedulesPage navigateToViewSchedulesPage() {
@@ -180,6 +185,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * View Messages page navigation method
+     *
      * @return Messages Page page object
      */
     public ViewMessagesPage navigateToViewMessagesPage() {
@@ -188,6 +194,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Manage Users page navigation method
+     *
      * @return Users Page page object
      */
     public ManageUsersPage navigateToManageUsersPage() {
@@ -196,6 +203,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Manage Roles page navigation method
+     *
      * @return Roles Page page object
      */
     public ManageRolesPage navigateToManageRolesPage() {
@@ -204,6 +212,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Create Ad Hoc View page navigation method
+     *
      * @return Ad Hoc View Page page object
      */
     public CreateAdHocViewPage navigateToCreateAdHocViewPage() {
@@ -212,6 +221,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Create Report page navigation method
+     *
      * @return Report Page page object
      */
     public CreateReportPage navigateToCreateReportPage() {
@@ -220,6 +230,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Create Dashboard page navigation method
+     *
      * @return Dashboard Page page object
      */
     public CreateDashboardPage navigateToCreateDashboardPage() {
@@ -228,6 +239,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Create Domain page navigation method
+     *
      * @return Domain Page page object
      */
     public CreateDomainPage navigateToCreateDomainPage() {
@@ -236,6 +248,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Create Data Source page navigation method
+     *
      * @return Data Source Page page object
      */
     public CreateDataSourcePage navigateToCreateDataSourcePage() {
@@ -244,6 +257,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigate to Reports from Admin
+     *
      * @return Reports Page page object model
      */
     public CreateReportPage navigateToReports() {
@@ -252,6 +266,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to Reports User Guide
+     *
      * @return Home Page page object model
      */
     public CirUserGuidePage navigateToReportUserGuide() {
@@ -260,6 +275,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to help page
+     *
      * @return Help Page page object
      */
     public HelpPage navigateToHelpPage() {
@@ -272,6 +288,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Switches to iframe within a page by its "id" value
+     *
      * @param iframeId - iframe id attribute
      * @return new HelpPage object
      */
@@ -282,6 +299,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Switches to iframe within a page by its "id" value
+     *
      * @param iframeId - iframe id attribute
      * @return new CirUserGuide page object
      */
@@ -299,6 +317,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Switches tab using window handler
+     *
      * @return new CirUserGuide page object
      */
     public CirUserGuidePage switchTab() {
@@ -308,6 +327,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to log out screen
+     *
      * @return Logout page object model
      */
     public LogoutPage navigateToReportLogout() {
@@ -317,6 +337,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Get page title text
+     *
      * @return String - page title text
      */
     public String getHomeTitleText() {
@@ -326,6 +347,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to a particular page and returns an instance of the specified page object
+     *
      * @param <T>
      * @return Instance of relevant page object class
      */
@@ -336,6 +358,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Another general navigation method
+     *
      * @param parentPage
      * @param childPage
      */
@@ -347,6 +370,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Search for Report
+     *
      * @param textToType
      * @return current page object
      */

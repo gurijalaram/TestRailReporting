@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class GenericReportPage extends ReportsPageHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private final static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
@@ -198,6 +198,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Selects specified export set
+     *
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
@@ -207,6 +208,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Generic scroll method
+     *
      * @return current page object
      */
     public GenericReportPage scrollDownInputControls() {
@@ -217,6 +219,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Sets specified assembly
+     *
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
@@ -235,6 +238,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Checks current currency selection, fixes if necessary
+     *
      * @param currency
      * @return current page object
      */
@@ -248,6 +252,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Opens new tab and switches to it
+     *
      * @return
      */
     public GenericReportPage openNewTabAndFocus() {
@@ -260,6 +265,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Clicks apply and ok
+     *
      * @return Generic Report page object
      */
     public GenericReportPage clickApplyAndOk() {
@@ -270,6 +276,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     *
      * @param assemblyToCheck
      * @return Generic - instance of specified class
      */
@@ -285,6 +292,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Wait for export set list count to be zero
+     *
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
@@ -295,6 +303,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Ensures latest date is set to today
+     *
      * @return current page object
      */
     public GenericReportPage setEarliestExportDateToTodayInput() {
@@ -311,6 +320,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Sets earliest export set date to today using picker
+     *
      * @return current page object
      */
     public GenericReportPage setEarliestExportDateToTodayPicker() {
@@ -360,6 +370,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Sets latest export date to two days from current (dynamic)
+     *
      * @return current page object
      */
     public GenericReportPage setLatestExportDateToTodayPlusTwoPicker() {
@@ -382,6 +393,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Ensures latest date is set to today
+     *
      * @return current page object
      */
     public GenericReportPage ensureDatesAreCorrect(boolean areBothInputsPresent, boolean getCurrentDateInitially) {
@@ -404,6 +416,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Ensures filtering worked correctly
+     *
      * @return int size of element list
      */
     public int getAmountOfTopLevelExportSets() {
@@ -413,9 +426,10 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Generic method to wait for correct currency and return specified page object
+     *
      * @param currencyToCheck
      * @param className
-     * @param <T> return type - any page object that is specified
+     * @param <T>             return type - any page object that is specified
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
@@ -426,6 +440,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets current currency setting
+     *
      * @return String
      */
     public String getCurrentCurrency() {
@@ -461,6 +476,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click export set select all button
+     *
      * @return current page object
      */
     public GenericReportPage exportSetSelectAll() {
@@ -472,6 +488,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets number of currently available export sets
+     *
      * @return String - count of export sets
      */
     public String getCountOfExportSets() {
@@ -480,6 +497,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get number of available export sets
+     *
      * @return int
      */
     public int getAvailableExportSetCount() {
@@ -490,6 +508,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get number of selected export sets
+     *
      * @return int
      */
     public int getSelectedExportSetCount() {
@@ -500,6 +519,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Deselect export set
+     *
      * @return current page object
      */
     public GenericReportPage deselectExportSet(String exportSet) {
@@ -511,6 +531,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Invert export set selection
+     *
      * @return current page object
      */
     public GenericReportPage invertExportSetSelection() {
@@ -533,6 +554,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Expand rollup drop-down
+     *
      * @return current page object
      */
     public GenericReportPage expandRollupDropDown() {
@@ -542,6 +564,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Search for rollup in rollup drop-down search bar
+     *
      * @return current page object
      */
     public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
@@ -552,6 +575,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Substrings date to remove time
+     *
      * @return String
      */
     private String removeTimeFromDate(String dateToSubstring) {
@@ -560,19 +584,21 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets current date in correct format
+     *
      * @return String
      */
     private String getDate(boolean getCurrent) {
         DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return getCurrent ? formatter
-                .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
-                            : formatter
-                .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
+            .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
+            : formatter
+            .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
     }
 
     /**
      * Get current date as Local Date Time, rather than String
+     *
      * @return LocalDateTime
      */
     private LocalDateTime getCurrentDateLDT() {
@@ -582,6 +608,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Select Assembly option dropdown using send keys
+     *
      * @param topIndex
      */
     private void selectAssemblyOption(int topIndex) {
@@ -592,6 +619,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Sets month dropdown value in date picker
+     *
      * @param indexToSelect
      */
     private void setMonthValuePicker(int indexToSelect) {
@@ -601,6 +629,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Sets year dropdown value in date picker
+     *
      * @param valueToSelect
      */
     private void setYearValuePicker(String valueToSelect) {
@@ -610,6 +639,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click apply
+     *
      * @return current page object
      */
     public GenericReportPage clickApply() {
@@ -621,6 +651,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click cancel
+     *
      * @return new library page object
      */
     public LibraryPage clickCancel() {
@@ -631,6 +662,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click reset
+     *
      * @return current page object
      */
     public GenericReportPage clickReset() {
@@ -641,6 +673,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click save
+     *
      * @return current page object
      */
     public GenericReportPage clickSave() {
@@ -651,6 +684,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Enter saved input control configuration name
+     *
      * @return current page object
      */
     public GenericReportPage enterSaveName(String saveName) {
@@ -663,6 +697,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click save as button to save input control configuration
+     *
      * @return current page object
      */
     public GenericReportPage clickSaveAsButton() {
@@ -672,6 +707,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Select saved input control config by name
+     *
      * @return current page object
      */
     public GenericReportPage selectSavedOptionByName(String optionsName) {
@@ -683,6 +719,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get export set selection status
+     *
      * @return boolean
      */
     public boolean isExportSetSelected(String exportSetName) {
@@ -695,6 +732,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Click remove button
+     *
      * @return current page object
      */
     public GenericReportPage clickRemove() {
@@ -705,6 +743,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Option in dropdown
+     *
      * @return boolean
      */
     public boolean isOptionInDropDown(String optionName, int expected) {

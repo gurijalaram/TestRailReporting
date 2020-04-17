@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class HelpPage extends ReportsPageHeader {
 
-    private Logger logger = LoggerFactory.getLogger(HelpPage.class);
+    private final Logger logger = LoggerFactory.getLogger(HelpPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;

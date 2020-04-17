@@ -14,14 +14,14 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ViewSearchResultsPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     @FindBy(css = "body")
     private WebElement searchResultsPageTitle;
 
     @FindBy(id = "accessTypeFilter_item1")
     private WebElement allAvailableFilterButton;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public ViewSearchResultsPage(WebDriver driver) {
         super(driver);

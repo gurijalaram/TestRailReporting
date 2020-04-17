@@ -24,6 +24,7 @@ import evaluate.ReCostScenarioTests;
 import evaluate.ReferencePanelTests;
 import evaluate.RevertScenarioTests;
 import evaluate.SecondaryProcessTests;
+import evaluate.TwoModelMachiningTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCMachiningTests;
 import evaluate.designguidance.dtc.DTCPlasticMouldingTests;
@@ -94,6 +95,7 @@ import testsuites.suiteinterface.AdhocTests;
     ReferencePanelTests.class,
     MaterialPMITests.class,
     RevertScenarioTests.class,
+    TwoModelMachiningTests.class,
 })
 public class AdhocTestSuite {
 }
