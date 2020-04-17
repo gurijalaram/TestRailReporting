@@ -507,7 +507,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Returns fully burdened cost value
-     * @return BigDecimal
+     * @return BigDecimal - Fully Burdened Cost (rounded down - thus ROUND_FLOOR)
      */
     public BigDecimal getBurdenedCostValue() {
         return new BigDecimal(

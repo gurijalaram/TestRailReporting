@@ -39,12 +39,9 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "[data-ap-comp='previewPanel']")
     private WebElement previewPanelData;
 
-    @FindBy(xpath = "//tbody/tr[1]/td[2]/div/div[2]/a")
-    private WebElement firstScenarioLink;
-
-    private WebDriver driver;
-    private PageUtils pageUtils;
     private ScenarioTablePage scenarioTablePage;
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
@@ -92,7 +89,9 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public EvaluatePage openFirstScenario() {
-        pageUtils.waitForElementAndClick(firstScenarioLink);
+        // There may be more than one result from filter, thus findElements is used
+        // But this method should always pick the first one
+        pageUtils.waitForElementAndClick(driver.findElements(By.cssSelector("a[class='gwt-Anchor']")).get(0));
         return new EvaluatePage(driver);
     }
 
