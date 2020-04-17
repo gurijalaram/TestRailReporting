@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -45,6 +46,7 @@ public class SecondaryProcessTests extends TestBase {
     private ProcessRoutingPage processRoutingPage;
     private ProcessSetupOptionsPage processSetupOptionsPage;
     private UserCredentials currentUser;
+    private EvaluatePanelToolbar evaluatePanelToolbar;
 
     private File resourceFile;
 
@@ -144,14 +146,12 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario();
         assertThat(evaluatePage.isProcessRoutingDetails("Carburize"), is(true));
 
-        new EvaluatePage(driver).openProcessDetails()
+        evaluatePage.openProcessDetails()
             .selectProcessChart("Carburize")
             .selectOptions()
             .setCaseOverrideInput("0.46")
-            .setMaskedFeaturesInput("1");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processSetupOptionsPage = processRoutingPage.closeProcessPanel()
+            .setMaskedFeaturesInput("1")
+            .closePanel()
             .costScenario()
             .openProcessDetails()
             .selectProcessChart("Carburize")

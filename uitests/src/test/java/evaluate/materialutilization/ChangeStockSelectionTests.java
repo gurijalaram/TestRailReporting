@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.SelectStockPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -29,7 +29,7 @@ public class ChangeStockSelectionTests extends TestBase {
     private CIDLoginPage loginPage;
     private SelectStockPage selectStockPage;
     private StockPage stockPage;
-    private MaterialPage materialPage;
+    private EvaluatePanelToolbar evaluatePanelToolbar;
 
     private File resourceFile;
 
@@ -51,19 +51,20 @@ public class ChangeStockSelectionTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToStockTab()
             .editStock()
             .selectStock("4.00  mm x 1500 mm x 3000 mm")
             .apply();
+
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
 
-        materialPage = new MaterialPage(driver);
-        stockPage = materialPage.closeMaterialAndUtilizationPanel()
+        stockPage.closePanel()
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToStockTab();
-        assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
+
+        assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
     }
 
     @Test
@@ -78,7 +79,7 @@ public class ChangeStockSelectionTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToStockTab()
             .editStock();
 

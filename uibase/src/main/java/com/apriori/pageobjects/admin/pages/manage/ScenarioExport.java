@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ScenarioExport extends AdminHeader {
+
     private final Logger logger = LoggerFactory.getLogger(ScenarioExport.class);
 
     @FindBy(css = "h1")

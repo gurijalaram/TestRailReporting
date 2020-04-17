@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class LearnMorePage extends LoadableComponent<LearnMorePage> {
 
-    private Logger logger = LoggerFactory.getLogger(LearnMorePage.class);
+    private final Logger logger = LoggerFactory.getLogger(LearnMorePage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;

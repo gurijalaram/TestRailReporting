@@ -14,11 +14,11 @@ public class ViewSchedulesPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ViewSchedulesPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     @FindBy(xpath = "//div[contains(@class, 'listOfJobs')]/div/div[1]/div")
     private WebElement schedulesPageTitle;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public ViewSchedulesPage(WebDriver driver) {
         super(driver);
