@@ -218,8 +218,8 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     private FilterCriteriaPage inputValue(String input) {
-        valueInputOne.click();
-        pageUtils.clearInput(valueInputOne);
+        pageUtils.waitForElementAndClick(valueInputOne);
+        valueInputOne.clear();
         valueInputOne.sendKeys(input);
         return this;
     }
@@ -344,8 +344,8 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param valueToEnter - the text to enter in the input
      */
     private void valueSelectionAction(WebElement inputToUse, String valueToEnter) {
-        inputToUse.clear();
         pageUtils.waitForElementAndClick(inputToUse);
+        inputToUse.clear();
         inputToUse.sendKeys(valueToEnter);
     }
 
