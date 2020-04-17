@@ -1,6 +1,5 @@
-package com.apriori.pageobjects.pages.evaluate.materialutilization;
+package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 

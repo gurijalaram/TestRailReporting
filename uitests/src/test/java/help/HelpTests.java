@@ -3,19 +3,13 @@ package help;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
-import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -30,11 +24,6 @@ public class HelpTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private HelpPage helpPage;
-    private MoreInputsPage moreInputsPage;
-    private MaterialPage materialPage;
-    private ProcessRoutingPage processRoutingPage;
-    private CostDetailsPage costDetailsPage;
-    private EvaluatePanelToolbar evaluatePanelToolbar;
     private HelpDocPage helpDocPage;
 
     private File resourceFile;
@@ -82,7 +71,7 @@ public class HelpTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .clickHelp();
 
         assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Utilization Details"));

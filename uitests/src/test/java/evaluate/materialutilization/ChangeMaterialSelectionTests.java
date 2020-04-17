@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -27,7 +27,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private MaterialPage materialPage;
+    private MaterialUtilizationPage materialUtilizationPage;
 
     private File resourceFile;
 
@@ -446,7 +446,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
-        materialPage = loginPage.login(UserUtil.getUser())
+        materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
@@ -454,9 +454,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectMaterialComposition("Inconel 625")
             .apply()
             .costScenario()
-            .openMaterialComposition();
+            .openMaterialUtilization();
 
-        assertThat(materialPage.getMaterialInfo("Name"), is("Inconel 625"));
+        assertThat(materialUtilizationPage.getMaterialInfo("Name"), is("Inconel 625"));
     }
 
     @Test
