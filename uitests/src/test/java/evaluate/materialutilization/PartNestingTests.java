@@ -1,13 +1,13 @@
 package evaluate.materialutilization;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.PartNestingPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -25,9 +25,8 @@ import java.io.File;
 public class PartNestingTests extends TestBase {
 
     private CIDLoginPage loginPage;
-    private MaterialPage materialPage;
+    private MaterialUtilizationPage materialUtilizationPage;
     private PartNestingPage partNestingPage;
-    private EvaluatePanelToolbar evaluatePanelToolbar;
 
     private File resourceFile;
 
@@ -48,7 +47,7 @@ public class PartNestingTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToPartNestingTab();
         assertThat(partNestingPage.getSelectedSheet(), is(equalTo("4.00 mm x 1250 mm x 2500 mm")));
         assertThat(partNestingPage.getBlankSize(), is(equalTo("470.7811 x 400.0018")));
@@ -67,12 +66,12 @@ public class PartNestingTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToPartNestingTab()
             .selectRectangularNesting()
             .closePartNestingPanel()
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToPartNestingTab();
 
         assertThat(partNestingPage.isRectangularNesting("checked"), is("true"));
@@ -90,13 +89,13 @@ public class PartNestingTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToPartNestingTab()
             .selectRectangularNesting()
             .selectTrue_PartShapeNesting()
             .closePartNestingPanel()
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToPartNestingTab();
 
         assertThat(partNestingPage.isTruePartNesting("checked"), is("true"));
@@ -114,12 +113,12 @@ public class PartNestingTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToPartNestingTab()
             .selectMachineDefaultNesting()
             .closePartNestingPanel()
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToPartNestingTab();
 
         assertThat(partNestingPage.isMachineDefaultNesting("checked"), is("true"));
@@ -134,12 +133,12 @@ public class PartNestingTests extends TestBase {
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
-        materialPage = loginPage.login(UserUtil.getUser())
+        materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .openMaterialComposition();
+            .openMaterialUtilization();
 
-        assertThat(materialPage.getPartNestingButton().getAttribute("class"), is("disabled"));
+        assertThat(materialUtilizationPage.getPartNestingButton(), containsString("disabled"));
     }
 }
