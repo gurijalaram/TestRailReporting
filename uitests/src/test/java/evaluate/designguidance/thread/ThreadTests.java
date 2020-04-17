@@ -189,7 +189,7 @@ public class ThreadTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
-        warningPage = loginPage.login(currentUser)
+        threadingPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -200,8 +200,10 @@ public class ThreadTests extends TestBase {
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.25")
             .apply(InvestigationPage.class)
-            .selectEditButton()
-            .removeThreadLength()
+            .selectEditButton();
+
+        assertThat(threadingPage.isThreadLength("0.25"), is(true));
+        warningPage = threadingPage.removeThreadLength()
             .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
