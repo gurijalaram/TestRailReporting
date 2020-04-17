@@ -116,7 +116,7 @@ public class AssemblyUploadTests extends TestBase {
             .openAssembly(scenarioName, "ASSEMBLY01")
             .costScenario()
             .selectExploreButton()
-            .openAssembly(scenarioName, "Assembly2")
+            .openAssembly(scenarioName, "ASSEMBLY2")
             .costScenario();
 
         assertThat(evaluatePage.isTotalComponents("22"), is(true));
