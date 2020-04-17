@@ -20,9 +20,6 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     private Map<String, WebElement> folderElementMap = new HashMap<>();
     private Map<String, WebElement> reportElementMap = new HashMap<>();
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
     private WebElement repositoryPageTitle;
 
@@ -73,6 +70,9 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[2]/ul/li[2]/p/b")
     private WebElement machiningDTCFolder;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public ViewRepositoryPage(WebDriver driver) {
         super(driver);

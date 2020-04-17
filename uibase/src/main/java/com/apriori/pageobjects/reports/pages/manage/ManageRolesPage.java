@@ -14,11 +14,11 @@ public class ManageRolesPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ManageRolesPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     @FindBy(xpath = "//div[@id='roles']/div/div[1]/div[contains(@class, 'title')]")
     private WebElement rolesPageTitle;
+
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public ManageRolesPage(WebDriver driver) {
         super(driver);

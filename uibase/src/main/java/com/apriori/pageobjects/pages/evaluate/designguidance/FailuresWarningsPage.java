@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
 
@@ -8,13 +9,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FailuresPage extends LoadableComponent<FailuresPage> {
+public class FailuresWarningsPage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(FailuresPage.class);
+    private final Logger logger = LoggerFactory.getLogger(FailuresWarningsPage.class);
 
     @FindBy(css = "div[data-ap-comp='uncostedFeaturesInfo']")
     private WebElement failuresInfo;
@@ -26,7 +26,8 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
     private PageUtils pageUtils;
     private ColumnUtils columnUtils;
 
-    public FailuresPage(WebDriver driver) {
+    public FailuresWarningsPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.columnUtils = new ColumnUtils(driver);
@@ -52,7 +53,7 @@ public class FailuresPage extends LoadableComponent<FailuresPage> {
      * @param gcd - the gcd
      * @return current page object
      */
-    public FailuresPage selectIssueTypeAndGCD(String issueType, String gcd) {
+    public FailuresWarningsPage selectIssueTypeAndGCD(String issueType, String gcd) {
         findIssueType(issueType).click();
         findGCD(gcd).click();
         return this;

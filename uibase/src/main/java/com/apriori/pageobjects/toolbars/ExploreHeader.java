@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.header;
+package com.apriori.pageobjects.toolbars;
 
 import com.apriori.utils.PageUtils;
 
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class ExploreHeader extends GenericHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(ExploreHeader.class);
+    private final static Logger logger = LoggerFactory.getLogger(ExploreHeader.class);
 
     private PageUtils pageUtils;
 

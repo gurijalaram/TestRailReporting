@@ -2,13 +2,13 @@ package com.apriori.pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
+public class DesignGuidancePage extends EvaluatePanelToolbar {
 
     private final Logger logger = LoggerFactory.getLogger(DesignGuidancePage.class);
 
@@ -24,10 +24,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     private WebElement panelDetails;
 
     @FindBy(css = "a[href='#failuresAndWarningsTab']")
-    private WebElement failuresTab;
-
-    @FindBy(css = "button[data-ap-comp='expandPanelButton']")
-    private WebElement chevronButton;
+    private WebElement failuresWarningsTab;
 
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement questionButton;
@@ -54,6 +51,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     private PageUtils pageUtils;
 
     public DesignGuidancePage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -68,7 +66,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToBeClickable(guidanceTab);
+        pageUtils.waitForElementToBeClickable(investigationTab);
         pageUtils.waitForElementToAppear(panelDetails);
     }
 
@@ -78,6 +76,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public GuidancePage openGuidanceTab() {
+        expandPanel();
         pageUtils.waitForElementToBeClickable(guidanceTab).click();
         return new GuidancePage(driver);
     }
@@ -87,8 +86,10 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      *
      * @return new page object
      */
-    public FailuresPage openFailuresTab() {
-        return new FailuresPage(driver);
+    public FailuresWarningsPage openFailuresWarningsTab() {
+        expandPanel();
+        pageUtils.waitForElementAndClick(failuresWarningsTab);
+        return new FailuresWarningsPage(driver);
     }
 
     /**
@@ -97,6 +98,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public InvestigationPage openInvestigationTab() {
+        expandPanel();
         pageUtils.waitForElementAndClick(investigationTab);
         return new InvestigationPage(driver);
     }
@@ -107,6 +109,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public TolerancePage openTolerancesTab() {
+        expandPanel();
         pageUtils.waitForElementAndClick(tolerancesTab);
         return new TolerancePage(driver);
     }
@@ -117,42 +120,8 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
      * @return new page object
      */
     public GeometryPage openGeometryTab() {
+        expandPanel();
         pageUtils.waitForElementAndClick(geometryTab);
         return new GeometryPage(driver);
-    }
-
-    /**
-     * Closes the design guidance
-     *
-     * @return current page object
-     */
-    public DesignGuidancePage closeDesignGuidance() {
-        pageUtils.waitForElementAndClick(closePanelButton);
-        return this;
-    }
-
-    /**
-     * Expands the guidance panel
-     *
-     * @return current page object
-     */
-    public DesignGuidancePage expandGuidancePanel() {
-        pageUtils.waitForElementAndClick(chevronButton);
-        return this;
-    }
-
-    /**
-     * Clicks the help button
-     *
-     * @return the current page object
-     */
-    public DesignGuidancePage clickHelp() {
-        pageUtils.waitForElementAndClick(helpButton);
-        return this;
-    }
-
-    public String getChildPageTitle() {
-        return pageUtils.windowHandler().getTitle();
-        // TODO remove code duplication
     }
 }

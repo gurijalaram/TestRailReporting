@@ -4,12 +4,13 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.header.GenericHeader;
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -28,13 +29,15 @@ import java.io.File;
 
 public class DeleteComparisonTests extends TestBase {
 
+    private final String noComponentMessage = "You have no components that match the selected filter";
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private ComparePage comparePage;
     private GenericHeader genericHeader;
+    private ScenarioTablePage scenarioTablePage;
+    private EvaluatePage evaluatePage;
 
     private File resourceFile;
-    private final String noComponentMessage = "You have no components that match the selected filter";
 
     public DeleteComparisonTests() {
         super();
@@ -60,13 +63,13 @@ public class DeleteComparisonTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
-            .apply(ComparisonTablePage.class);
+            .apply(ScenarioTablePage.class);
 
-        new ComparisonTablePage(driver).selectScenario(testScenarioName, "Machined Box AMERICAS")
-            .apply();
+        scenarioTablePage = new ScenarioTablePage(driver);
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.openJobQueue()
+        new ScenarioTablePage(driver).selectComparisonScenario(testScenarioName, "Machined Box AMERICAS")
+            .apply(GenericHeader.class)
+            .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
             .closeJobQueue(ComparePage.class);
 
@@ -109,7 +112,7 @@ public class DeleteComparisonTests extends TestBase {
 
     @Test
     @Category({SmokeTests.class})
-    @TestRail(testCaseId = {"430", "432", "442", "448"})
+    @TestRail(testCaseId = {"3838", "430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDeleteExplore() {
 
@@ -119,10 +122,15 @@ public class DeleteComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
 
-        comparePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, resourceFile)
-            .costScenario()
-            .publishScenario(PublishPage.class)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
+
+        explorePage = evaluatePage.publishScenario(PublishPage.class)
             .selectPublishButton()
             .createNewComparison()
             .enterComparisonName(testComparisonName)
@@ -130,12 +138,10 @@ public class DeleteComparisonTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
-            .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "MACHINED BOX AMERICAS")
-            .apply();
-
-        genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.publishScenario(PublishPage.class)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(testScenarioName, "MACHINED BOX AMERICAS")
+            .apply(GenericHeader.class)
+            .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName)
@@ -174,12 +180,10 @@ public class DeleteComparisonTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
-            .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "testpart-4")
-            .apply();
-
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.publishScenario(PublishPage.class)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(testScenarioName, "testpart-4")
+            .apply(GenericHeader.class)
+            .publishScenario(PublishPage.class)
             .selectPublishButton()
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
@@ -220,12 +224,10 @@ public class DeleteComparisonTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
-            .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "testpart-4")
-            .apply();
-
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.publishScenario(PublishPage.class)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(testScenarioName, "testpart-4")
+            .apply(GenericHeader.class)
+            .publishScenario(PublishPage.class)
             .selectPublishButton()
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class JobQueuePage extends LoadableComponent<JobQueuePage> {
 
-    private Logger logger = LoggerFactory.getLogger(JobQueuePage.class);
+    private final Logger logger = LoggerFactory.getLogger(JobQueuePage.class);
 
     @FindBy(css = ".table.table-striped")
     private WebElement jobQueueTable;

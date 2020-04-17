@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.header;
+package com.apriori.pageobjects.toolbars;
 
 import com.apriori.pageobjects.pages.compare.SaveAsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -28,7 +28,7 @@ import java.io.File;
 
 public class GenericHeader extends PageHeader {
 
-    private static Logger logger = LoggerFactory.getLogger(GenericHeader.class);
+    private final static Logger logger = LoggerFactory.getLogger(GenericHeader.class);
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;

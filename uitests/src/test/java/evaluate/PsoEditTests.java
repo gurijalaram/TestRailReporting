@@ -48,13 +48,9 @@ public class PsoEditTests extends TestBase {
             .setOverride("0.4")
             .selectAddColorantButton()
             .selectMaterialDefinedButton()
-            .setMaterialRegrindInput("0.3");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.costScenario()
+            .setMaterialRegrindInput("0.3")
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectProcessChart("Injection Molding")
             .selectOptions();
@@ -82,13 +78,9 @@ public class PsoEditTests extends TestBase {
             .selectOptions()
             .selectOptimizeForMinimumCostButton()
             .selectMoldMaterialDropdown("AISI P20")
-            .selectPartToleranceDropdown("Low Tolerance +/-0.254 (+/-0.010\")");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.costScenario()
+            .selectPartToleranceDropdown("Low Tolerance +/-0.254 (+/-0.010\")")
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectProcessChart("High Pressure Die Casting")
             .selectOptions();
@@ -114,13 +106,9 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Vertical Automatic")
             .selectOptions()
             .selectOptimizeForMinimumCostButton()
-            .selectMoldMaterialDropdown("Plastic");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.costScenario()
+            .selectMoldMaterialDropdown("Plastic")
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectProcessChart("Vertical Automatic")
             .selectOptions();
@@ -145,13 +133,9 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Band Saw")
             .selectOptions()
             .selectOverrideBundleCount()
-            .setBundleCountOverride("3");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.costScenario()
+            .setBundleCountOverride("3")
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectProcessChart("Band Saw")
             .selectOptions();
@@ -175,13 +159,9 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Compaction Pressing")
             .selectOptions()
             .selectMaterialAllowanceOverrideValue()
-            .setMaterialAllowanceOverride("0.611");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.costScenario()
+            .setMaterialAllowanceOverride("0.611")
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectProcessChart("Compaction Pressing")
             .selectOptions();
@@ -204,13 +184,9 @@ public class PsoEditTests extends TestBase {
             .openProcessDetails()
             .selectProcessChart("4 Cavities Drape Forming")
             .selectOptions()
-            .setCoolingtimeInput("150.29");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.costScenario()
+            .setCoolingtimeInput("150.29")
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectProcessChart("4 Cavities Drape Forming")
             .selectOptions();
@@ -237,13 +213,9 @@ public class PsoEditTests extends TestBase {
             .selectOverrideNominalButton()
             .setOverride("0.13")
             .selectUserDefinedColorChargeButton()
-            .setDefinedColorChargeInput("0.68");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.costScenario()
+            .setDefinedColorChargeInput("0.68")
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectProcessChart("Injection Molding")
             .selectOptions();
@@ -252,15 +224,12 @@ public class PsoEditTests extends TestBase {
         assertThat(processSetupOptionsPage.isNominalWallThicknessOverride("0.13"), is(true));
         assertThat(processSetupOptionsPage.isColorChargeOverride("0.68"), is(true));
 
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.openProcessDetails()
+        processSetupOptionsPage.closePanel()
+            .openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openProcessDetails()
             .selectProcessChart("Structural Foam Molding")
@@ -268,13 +237,9 @@ public class PsoEditTests extends TestBase {
             .selectDefinedValueDropdown("4")
             .selectAddColorantButton()
             .selectMaterialDefinedButton()
-            .setMaterialRegrindInput("1.00");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.costScenario()
+            .setMaterialRegrindInput("1.00")
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectProcessChart("Structural Foam Molding")
             .selectOptions();
@@ -300,13 +265,9 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Band Saw")
             .selectOptions()
             .selectOverrideBundleCount()
-            .setBundleCountOverride("jrigm");
-
-        processRoutingPage = new ProcessRoutingPage(driver);
-        processRoutingPage.closeProcessPanel();
-
-        evaluatePage = new EvaluatePage(driver);
-        processSetupOptionsPage = evaluatePage.costScenario()
+            .setBundleCountOverride("jrigm")
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectProcessChart("Band Saw")
             .selectOptions();
