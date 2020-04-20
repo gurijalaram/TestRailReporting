@@ -1,4 +1,6 @@
-package utils;
+package actions.local;
+
+import utils.PropertiesHandler;
 
 import java.io.File;
 import java.io.IOException;

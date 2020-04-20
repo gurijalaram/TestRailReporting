@@ -2,6 +2,7 @@ import dao.UserDao;
 import entity.User;
 
 import org.junit.Test;
+
 import utils.PropertiesHandler;
 import utils.SessionFactoryClass;
 
@@ -16,7 +17,7 @@ public class UserTest {
     }
 
     @Test
-    public void testGetAllUsersFromDB() {        
+    public void testGetAllUsersFromDB() {
         /*Get all users from DB*/
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
         User user = new User();
@@ -28,20 +29,22 @@ public class UserTest {
     @Test
     public void testCreateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
+
         List<User> usersForCreate = new ArrayList<>();
         
         /*Create new user with FullName: aPriori Default User and RawLoginID: adu*/
         User user = new User()
-                        .setFullName("aPriori Default User")
-                        .setRawLoginID("adu");
+                .setFullName("aPriori Default User")
+                .setRawLoginID("adu");
         usersForCreate.add(user);
         userDao.create(usersForCreate);
-        
+
     }
 
     @Test
     public void testUpdateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
+
         List<User> usersForUpdate = new ArrayList<>();
         
         /*Change FullName of use "aPriori Default User" to "aPriori Test User" */
@@ -66,6 +69,6 @@ public class UserTest {
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
         /*Get single use by its name*/
         User user = new User().setFullName("aPriori Test User");
-        System.out.println(userDao.getByFullName(user).getUser_ID());
-    }    
+        System.out.println(userDao.getByFullName(user).getUserId());
+    }
 }

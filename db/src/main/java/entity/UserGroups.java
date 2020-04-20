@@ -22,9 +22,9 @@ public class UserGroups implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userGroupAssoc_ID")
-    private int userGroupAssoc_ID;
+    private int userGroupAssocId;
     @Column(name = "user_ID")
-    private Long user_ID;
+    private Long userId;
     @Column(name = "groupTypeName")
     private String groupTypeName;
     @Column(name = "groupUuid")
@@ -34,26 +34,26 @@ public class UserGroups implements Serializable {
     @JoinColumn(name = "user_ID", insertable = false, updatable = false)
     private User user;
 
-    public UserGroups(Long user_ID, String groupTypeName, String groupUuid) {
-        this.user_ID = user_ID;
+    public UserGroups(Long userId, String groupTypeName, String groupUuid) {
+        this.userId = userId;
         this.groupTypeName = groupTypeName;
         this.groupUuid = groupUuid;
     }
 
-    public int getUserGroupAssoc_ID() {
-        return userGroupAssoc_ID;
+    public int getUserGroupAssocId() {
+        return userGroupAssocId;
     }
 
-    public void setUserGroupAssoc_ID(int userGroupAssoc_ID) {
-        this.userGroupAssoc_ID = userGroupAssoc_ID;
+    public void setUserGroupAssocId(int userGroupAssocId) {
+        this.userGroupAssocId = userGroupAssocId;
     }
 
-    public Long getUser_ID() {
-        return user_ID;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_ID(Long user_ID) {
-        this.user_ID = user_ID;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getGroupTypeName() {
