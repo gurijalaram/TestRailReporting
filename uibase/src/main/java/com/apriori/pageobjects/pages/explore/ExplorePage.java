@@ -102,7 +102,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the part as webelement
      */
     public WebElement findScenario(String scenarioName, String partName) {
-        return scenarioTablePage.findScenario(partName, scenarioName);
+        return scenarioTablePage.findScenario(scenarioName, partName);
     }
 
     /**
