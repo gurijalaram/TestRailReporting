@@ -24,6 +24,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -157,6 +158,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"3847"})
     @Description("Test to set dropdown value to yes")
     public void setDropdownValueYes() {
 
@@ -164,12 +166,17 @@ public class ThreadTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openDesignGuidance()
+            .costScenario(3);
+
+        assertThat(evaluatePage.getDFMRiskIcon(), CoreMatchers.containsString("dtc-high-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
+
+        evaluatePage = new EvaluatePage(driver);
+        threadingPage = evaluatePage.openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:1")
