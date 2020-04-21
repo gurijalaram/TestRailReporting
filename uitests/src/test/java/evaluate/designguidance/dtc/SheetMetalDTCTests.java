@@ -107,7 +107,7 @@ public class SheetMetalDTCTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(),containsString("dtc-low-risk-icon"));
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         evaluatePage = new EvaluatePage(driver);
@@ -224,7 +224,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Test
     @Issue("AP-57941")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1845", "719", "3836"})
+    @TestRail(testCaseId = {"1845", "719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
 
@@ -239,16 +239,11 @@ public class SheetMetalDTCTests extends TestBase {
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        evaluatePage = settingsPage.save(ExplorePage.class)
+        guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
-
-        evaluatePage = new EvaluatePage(driver);
-        guidancePage = evaluatePage.openDesignGuidance()
+            .costScenario()
+            .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 
