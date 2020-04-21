@@ -107,7 +107,7 @@ public class SheetMetalDTCTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(),containsString("dtc-low-risk-icon"));
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         evaluatePage = new EvaluatePage(driver);
@@ -242,7 +242,8 @@ public class SheetMetalDTCTests extends TestBase {
         guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario().openDesignGuidance()
+            .costScenario()
+            .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 

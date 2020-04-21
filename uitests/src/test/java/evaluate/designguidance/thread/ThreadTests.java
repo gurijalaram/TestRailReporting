@@ -175,7 +175,6 @@ public class ThreadTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), CoreMatchers.containsString("dtc-high-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage = new EvaluatePage(driver);
         threadingPage = evaluatePage.openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
