@@ -109,6 +109,6 @@ public class FailuresWarningsTests extends TestBase {
 
         evaluatePage = new EvaluatePage(driver);
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.getDFMRiskIcon(), is("Critical"));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
     }
 }
