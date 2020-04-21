@@ -8,7 +8,7 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'What is the browser?')
         string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
         choice(name: 'VM', choices: ['frodo','gimli','legolas'], description: 'What is the VM?')
-        string(name: 'HEADLESS', defaultValue: 'false', description: 'Open the browser window?')
+        string(name: 'HEADLESS', defaultValue: 'true', description: 'Open the browser window?')
     }
 
     agent {
