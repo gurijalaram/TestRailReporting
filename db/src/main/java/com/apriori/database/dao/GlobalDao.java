@@ -1,4 +1,4 @@
-package dao;
+package com.apriori.database.dao;
 
 import org.hibernate.Query;
 import org.hibernate.Session;

@@ -1,6 +1,6 @@
-package actions.local;
+package com.apriori.database.actions.local;
 
-import utils.PropertiesHandler;
+import com.apriori.database.utils.PropertiesHandler;
 
 import java.io.File;
 import java.io.IOException;

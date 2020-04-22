@@ -1,10 +1,10 @@
-import dao.UserDao;
-import entity.User;
+import com.apriori.database.dao.UserDao;
+import com.apriori.database.entity.User;
 
 import org.junit.Test;
 
-import utils.PropertiesHandler;
-import utils.SessionFactoryClass;
+import com.apriori.database.utils.PropertiesHandler;
+import com.apriori.database.utils.SessionFactoryClass;
 
 import java.util.ArrayList;
 import java.util.List;
