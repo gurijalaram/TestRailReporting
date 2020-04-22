@@ -93,7 +93,7 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1840", "1841", "3837"})
+    @TestRail(testCaseId = {"1840", "1841"})
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
 
@@ -102,16 +102,11 @@ public class SheetMetalDTCTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        evaluatePage = loginPage.login(currentUser)
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
-
-        evaluatePage = new EvaluatePage(driver);
-        guidancePage = evaluatePage.openDesignGuidance()
+            .costScenario()
+            .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Proximity Warning, Distance", "Complex Holes", "ComplexHole:10");
 
