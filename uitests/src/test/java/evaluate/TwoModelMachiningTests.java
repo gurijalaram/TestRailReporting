@@ -113,7 +113,6 @@ public class TwoModelMachiningTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost("12.88"), is(true));
         assertThat(evaluatePage.isFinishMass("2.33"), is(true));
 
-
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
             .uploadFile(twoModel1ScenarioName, twoModelFile)
@@ -126,7 +125,6 @@ public class TwoModelMachiningTests extends TestBase {
         //assertThat(evaluatePage.getUtilizationPercentage(), is("82.71"));
         assertThat(evaluatePage.getBurdenedCost("16.69"), is(true));
         assertThat(evaluatePage.isFinishMass("1.93"), is(true));
-
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
