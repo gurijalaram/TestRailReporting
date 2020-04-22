@@ -194,6 +194,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-field='materialName']")
     private WebElement sourceMaterial;
 
+    @FindBy(css = "[data-ap-field='utilization']")
+    private WebElement utilizationPercentage;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -788,5 +791,15 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementToAppear(selectSourceButton);
         pageUtils.waitForElementAndClick(selectSourceButton);
         return new ScenarioTablePage(driver);
+    }
+
+    /**
+     * Checks Utilization Percentage
+     *
+     * @return Utilization Percentage
+     */
+    public String getUtilizationPercentage() {
+        pageUtils.waitForElementAppear(utilizationPercentage);
+        return utilizationPercentage.getText();
     }
 }

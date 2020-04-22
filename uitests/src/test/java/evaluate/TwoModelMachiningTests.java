@@ -24,6 +24,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     private File resourceFile;
     private File twoModelFile;
+    private File twoModelFile2;
 
     public TwoModelMachiningTests() {
         super();
@@ -85,5 +86,59 @@ public class TwoModelMachiningTests extends TestBase {
             .openSourceScenario();
 
         assertThat(evaluatePage.getCurrentScenarioName(sourceScenarioName), is(true));
+    }
+
+    @Test
+    @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
+    @TestRail(testCaseId = {"4133"})
+    public void multiLevel2Model() {
+
+        String sourceScenarioName = new Util().getScenarioName();
+        String twoModel1ScenarioName = new Util().getScenarioName();
+        String twoModel2ScenarioName = new Util().getScenarioName();
+        String sourcePartName = "2modeltest-cast";
+        String twoModel1PartName = "2modeltest-machine1";
+
+        resourceFile = new FileResourceUtil().getResourceFile("2modeltest-cast.SLDPRT");
+        twoModelFile = new FileResourceUtil().getResourceFile("2modeltest-machine1.SLDPRT");
+        twoModelFile2 = new FileResourceUtil().getResourceFile("2modeltest-machine2.SLDPRT");
+
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(sourceScenarioName, resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getUtilizationPercentage(), is("96.98"));
+        assertThat(evaluatePage.getBurdenedCost("12.88"), is(true));
+        assertThat(evaluatePage.isFinishMass("2.33"), is(true));
+
+
+        evaluatePage.selectExploreButton()
+            .refreshCurrentPage()
+            .uploadFile(twoModel1ScenarioName, twoModelFile)
+            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectSourcePart()
+            .highlightScenario(sourceScenarioName, sourcePartName)
+            .apply(EvaluatePage.class)
+            .costScenario();
+
+        //assertThat(evaluatePage.getUtilizationPercentage(), is("82.71"));
+        assertThat(evaluatePage.getBurdenedCost("16.69"), is(true));
+        assertThat(evaluatePage.isFinishMass("1.93"), is(true));
+
+
+        evaluatePage.selectExploreButton()
+            .refreshCurrentPage()
+            .uploadFile(twoModel2ScenarioName, twoModelFile2)
+            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectSourcePart()
+            .highlightScenario(twoModel1ScenarioName, twoModel1PartName)
+            .apply(EvaluatePage.class)
+            .costScenario();
+
+        //assertThat(evaluatePage.getUtilizationPercentage(), is("83.78"));
+        assertThat(evaluatePage.getBurdenedCost("19.99"), is(true));
+        assertThat(evaluatePage.isFinishMass("1.62"), is(true));
     }
 }
