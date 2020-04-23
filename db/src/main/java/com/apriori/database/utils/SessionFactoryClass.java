@@ -19,9 +19,9 @@ public class SessionFactoryClass {
             URL entityesUrl = loader.getResource("com/apriori/database/entity");
             File folder = new File(entityesUrl.getPath());
             File[] classes = folder.listFiles();
-            for (File aClass : classes) {
-                int index = aClass.getName().indexOf(".");
-                String className = aClass.getName().substring(0, index);
+            for (File file : classes) {
+                int index = file.getName().indexOf(".");
+                String className = file.getName().substring(0, index);
                 String classNamePath = "com/apriori/database/entity" + "." + className;
                 Class<?> repoClass = Class.forName(classNamePath);
                 config.addAnnotatedClass(repoClass);

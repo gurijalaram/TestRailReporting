@@ -2,6 +2,7 @@ package com.apriori.database.dao;
 
 import com.apriori.database.entity.User;
 import com.apriori.database.entity.UserGroups;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
