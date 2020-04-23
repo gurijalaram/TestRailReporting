@@ -66,6 +66,7 @@ public class EvaluateHeader extends GenericHeader {
      * @return current page object
      */
     public EvaluatePage costScenario(int timeoutInMinutes) {
+        pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCostButton();
         checkForCostLabel(timeoutInMinutes);
@@ -79,6 +80,7 @@ public class EvaluateHeader extends GenericHeader {
      * @return current page object
      */
     public EvaluatePage costScenario(int timeoutInMinutes, int imageTimeoutInMinutes) {
+        pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCostButton();
         checkForCostLabel(timeoutInMinutes);
