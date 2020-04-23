@@ -1,9 +1,8 @@
 import com.apriori.apibase.services.cid.objects.response.ExportSchedulesResponse;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.database.actions.cloud.DbMigration;
 import com.apriori.database.entity.MigrationEntity;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
-import com.apriori.database.actions.cloud.DbMigration;
 
 import com.fbc.datamodel.shared.ScenarioType;
 import io.restassured.http.Header;
