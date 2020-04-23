@@ -1,16 +1,19 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -25,6 +28,7 @@ public class TwoModelMachiningTests extends TestBase {
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ProcessSetupOptionsPage processSetupOptionsPage;
+    private GuidancePage guidancePage;
 
     private File resourceFile;
     private File twoModelFile;
@@ -74,7 +78,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessChart("Source Component")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isCadModelSensitivity("42"),is(true));
+        assertThat(processSetupOptionsPage.isCadModelSensitivity("42"), is(true));
     }
 
     @Test
@@ -189,7 +193,7 @@ public class TwoModelMachiningTests extends TestBase {
             .filterCriteria()
             .filterPublicCriteria("Part", "Scenario Name", "Contains", twoModelScenarioName)
             .apply(ExplorePage.class)
-            .openScenario(twoModelScenarioName,twoModelPartName)
+            .openScenario(twoModelScenarioName, twoModelPartName)
             .openSourceScenario();
 
         assertThat(evaluatePage.getCurrentScenarioName(sourceScenarioName), is(true));
@@ -253,24 +257,29 @@ public class TwoModelMachiningTests extends TestBase {
         String testScenarioName = new Util().getScenarioName();
         String sourcePartName = "casting_before_machining";
 
-        resourceFile = new FileResourceUtil().getResourceFile("casting_BEFORE_machining.stp");
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
         twoModelFile = new FileResourceUtil().getResourceFile("casting_AFTER_machining.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(testScenarioName, resourceFile)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .selectExploreButton()
             .refreshCurrentPage()
             .uploadFile(new Util().getScenarioName(), twoModelFile)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
-            .highlightScenario(testScenarioName, "casting_BEFORE_machining")
+            .highlightScenario(testScenarioName, "PowderMetalShaft")
             .apply(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getSourceMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.getSourcePartName(), is(sourcePartName.toUpperCase()));
-        assertThat(evaluatePage.getSourceScenarioName(), is(testScenarioName));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+
+        guidancePage = evaluatePage.openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
+
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Units of the model of the stock differ from the units of the finished model."));
+    }
 }
