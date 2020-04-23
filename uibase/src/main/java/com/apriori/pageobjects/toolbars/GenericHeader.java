@@ -28,7 +28,7 @@ import java.io.File;
 
 public class GenericHeader extends PageHeader {
 
-    private final static Logger logger = LoggerFactory.getLogger(GenericHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(GenericHeader.class);
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;

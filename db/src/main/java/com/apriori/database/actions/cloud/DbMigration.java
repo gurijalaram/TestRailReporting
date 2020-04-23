@@ -5,6 +5,7 @@ import com.apriori.apibase.services.cid.objects.request.ScenarioKeyRequest;
 import com.apriori.apibase.services.cid.objects.request.SchedulesConfigurationRequest;
 import com.apriori.apibase.services.cid.objects.request.SpecificExportSchedulesRequest;
 import com.apriori.apibase.services.cid.objects.response.ExportSchedulesResponse;
+import com.apriori.database.entity.MigrationEntity;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaClearRequest;
@@ -14,7 +15,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
-import com.fbc.datamodel.shared.ScenarioType;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 
@@ -25,6 +25,8 @@ import java.util.Collections;
  * and aPriori jasper (reporting) database.
  */
 public class DbMigration {
+
+    private static final String exportScheduleIdKey = "x-export-schedule-id";
 
     private static ExportSchedulesResponse latestExportSchedules = null;
     private static UserCredentials migrationUser = UserUtil.getUser();
@@ -50,11 +52,11 @@ public class DbMigration {
      * @return ResponseWrapper, more info: <br>
      * @see com.apriori.utils.http.utils.ResponseWrapper
      */
-    public static ResponseWrapper<ExportSchedulesResponse> migrateSpecificScenario(final ScenarioType scenarioType, final String elementName, final String scenarioName) {
+    public static ResponseWrapper<ExportSchedulesResponse> migrateSpecificScenario(final MigrationEntity migrationEntity) {
         DbMigration dbMigration = new DbMigration();
 
         return dbMigration.doMigrationByScheduleId(
-                dbMigration.initSpecificExportSchedulesAndGetScheduleId(scenarioType, elementName, scenarioName));
+                dbMigration.initSpecificExportSchedulesAndGetScheduleId(migrationEntity));
     }
 
     /**
@@ -71,16 +73,16 @@ public class DbMigration {
         return this.doGetSchedulesByScheduleId(scheduleId);
     }
 
-    public String initSpecificExportSchedulesAndGetScheduleId(final ScenarioType scenarioType, final String elementName, final String scenarioName) {
+    public String initSpecificExportSchedulesAndGetScheduleId(final MigrationEntity migrationEntity) {
         return this.doCreateExportSchedules(
-                this.initSpecificExportRequestBody(scenarioType, elementName, scenarioName)
-        ).getHeaders().get("x-export-schedule-id").getValue();
+                this.initSpecificExportRequestBody(migrationEntity)
+        ).getHeaders().get(exportScheduleIdKey).getValue();
     }
 
     public String initExportSchedulesAndGetScheduleId() {
         return this.doCreateExportSchedules(
                 this.initExportRequestBody()
-        ).getHeaders().get("x-export-schedule-id").getValue();
+        ).getHeaders().get(exportScheduleIdKey).getValue();
     }
 
     public ResponseWrapper<Object> doCreateExportSchedules(Object body) {
@@ -124,12 +126,12 @@ public class DbMigration {
         return GenericRequestUtil.delete(requestEntity, new RequestAreaClearRequest());
     }
 
-    public SpecificExportSchedulesRequest initSpecificExportRequestBody(final ScenarioType scenarioType, final String elementName, final String scenarioName) {
+    public SpecificExportSchedulesRequest initSpecificExportRequestBody(final MigrationEntity migrationEntity) {
         SpecificExportSchedulesRequest specificESR = new SpecificExportSchedulesRequest();
         specificESR.setType("exportSetRequestBean");
         specificESR.setDisabled(false);
-        specificESR.setName("Automation TEST Scenarios " + RandomStringUtils.randomAlphabetic(6));
-        specificESR.setDescription("Test export from auth");
+        specificESR.setName(migrationEntity.getNewScenarioName());
+        specificESR.setDescription("Specific export from auth");
         specificESR.setExportDynamicRollups(false);
         specificESR.setExportScope("All Delta");
         specificESR.setSourceSchema("Default Scenarios");
@@ -140,9 +142,9 @@ public class DbMigration {
                         .setRepeatInterval(0))
         );
         specificESR.setScenarioKeyRequest(
-                new ScenarioKeyRequest().setTypeName(scenarioType.baseName)
-                        .setMasterName(elementName)
-                        .setStateName(scenarioName)
+                new ScenarioKeyRequest().setTypeName(migrationEntity.getScenarioType().baseName)
+                        .setMasterName(migrationEntity.getElementName())
+                        .setStateName(migrationEntity.getScenarioName())
         );
 
         return specificESR;
@@ -167,7 +169,7 @@ public class DbMigration {
 
     private RequestEntity initDefaultRequest(final EndpointEnum endpoint) {
         return RequestEntity.init(endpoint,
-                //TODO z: should be uncommented when aoth0 and jasper server will have the same test users credentials
+                //TODO z: should be uncommented when auth0 and jasper server will have the same test users credentials
                 //migrationUser
                 UserCredentials.init("qa-automation-01@apriori.com", "qa-automation-01"),
                 null

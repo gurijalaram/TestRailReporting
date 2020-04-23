@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class ExploreHeader extends GenericHeader {
 
-    private final static Logger logger = LoggerFactory.getLogger(ExploreHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExploreHeader.class);
 
     private PageUtils pageUtils;
 

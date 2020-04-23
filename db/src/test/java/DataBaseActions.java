@@ -1,5 +1,6 @@
 import com.apriori.apibase.services.cid.objects.response.ExportSchedulesResponse;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.database.entity.MigrationEntity;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import com.apriori.database.actions.cloud.DbMigration;
@@ -22,15 +23,15 @@ public class DataBaseActions extends TestUtil {
     }
 
     /**
-     * To migrate data from aPriori Professional database to jasper (reporting) database <br>
+     * To migrate specific scenario from aPriori Professional database to jasper (reporting) database <br>
      * run this command in cmd from build folder: <br>
      * gradle clean -Denv=<env name> :database:test --tests "DataBaseActions.migrateSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated"
      */
     @Test
     public void migrateSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated() {
-        ResponseWrapper<ExportSchedulesResponse> response = DbMigration.migrateSpecificScenario(ScenarioType.PART,
-                "Element for migration name",
-                "Related scenario name"
+        ResponseWrapper<ExportSchedulesResponse> response = DbMigration.migrateSpecificScenario(MigrationEntity.initWithNewScenarioNameForMigration(ScenarioType.ASSEMBLY,
+                "PISTON_ASSEMBLY",
+                "Initial", "12234")
         );
 
         this.validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
