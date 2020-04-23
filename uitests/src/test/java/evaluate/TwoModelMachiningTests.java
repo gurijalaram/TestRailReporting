@@ -4,6 +4,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -21,6 +24,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private ProcessSetupOptionsPage processSetupOptionsPage;
 
     private File resourceFile;
     private File twoModelFile;
@@ -32,10 +36,11 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate Source and util tile appears when 2 MM is selected")
-    @TestRail(testCaseId = {"3927", "3928", "3929", "3930"})
+    @TestRail(testCaseId = {"3927", "3928", "3929", "3930", "3947"})
     public void testTwoModelMachining() {
 
         String testScenarioName = new Util().getScenarioName();
+        String sourcePartName = "casting_before_machining";
 
         resourceFile = new FileResourceUtil().getResourceFile("casting_BEFORE_machining.stp");
         twoModelFile = new FileResourceUtil().getResourceFile("casting_AFTER_machining.stp");
@@ -55,8 +60,21 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSourceMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.getSourcePartName(), is("CASTING_BEFORE_MACHINING"));
+        assertThat(evaluatePage.getSourcePartName(), is(sourcePartName.toUpperCase()));
         assertThat(evaluatePage.getSourceScenarioName(), is(testScenarioName));
+
+        processSetupOptionsPage = evaluatePage.openProcessDetails()
+            .selectProcessChart("Source Component")
+            .selectOptions()
+            .selectOverrideSensitivityButton()
+            .setCadModelSensitivity("42")
+            .closePanel()
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Source Component")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.isCadModelSensitivity("42"),is(true));
     }
 
     @Test
@@ -90,7 +108,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
-    @TestRail(testCaseId = {"4133"})
+    @TestRail(testCaseId = {"3940", "3946", "4133"})
     public void multiLevel2Model() {
 
         String sourceScenarioName = new Util().getScenarioName();
@@ -139,4 +157,120 @@ public class TwoModelMachiningTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost("19.99"), is(true));
         assertThat(evaluatePage.isFinishMass("1.62"), is(true));
     }
+
+    @Test
+    @Description("Validate the User can open a public source part in the evaluate tab")
+    @TestRail(testCaseId = {"4178", "4138"})
+    public void testOpenPublicSourceModel() {
+
+        String sourceScenarioName = new Util().getScenarioName();
+        String twoModelScenarioName = new Util().getScenarioName();
+        String sourcePartName = "Raw Casting";
+        String twoModelPartName = "Machined Casting";
+
+        resourceFile = new FileResourceUtil().getResourceFile("Raw Casting.prt");
+        twoModelFile = new FileResourceUtil().getResourceFile("Machined Casting.prt");
+
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(sourceScenarioName, resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .refreshCurrentPage()
+            .uploadFile(twoModelScenarioName, twoModelFile)
+            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectSourcePart()
+            .highlightScenario(sourceScenarioName, sourcePartName)
+            .apply(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .filterCriteria()
+            .filterPublicCriteria("Part", "Scenario Name", "Contains", twoModelScenarioName)
+            .apply(ExplorePage.class)
+            .openScenario(twoModelScenarioName,twoModelPartName)
+            .openSourceScenario();
+
+        assertThat(evaluatePage.getCurrentScenarioName(sourceScenarioName), is(true));
+    }
+
+    @Test
+    @Description("Validate the user can switch the source part")
+    @TestRail(testCaseId = {"4134", "4315"})
+    public void switchSourcePart() {
+
+        String sourceScenarioName = new Util().getScenarioName();
+        String source2ScenarioName = new Util().getScenarioName();
+        String twoModelScenarioName = new Util().getScenarioName();
+        String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
+        String source2PartName = "Die Casting Lower Control Arm (Source1)";
+
+        resourceFile = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
+        twoModelFile = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (Source1).SLDPRT");
+        twoModelFile2 = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
+
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(sourceScenarioName, resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .costScenario();
+
+        evaluatePage.selectExploreButton()
+            .refreshCurrentPage()
+            .uploadFile(source2ScenarioName, twoModelFile)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario();
+
+        evaluatePage.selectExploreButton()
+            .refreshCurrentPage()
+            .uploadFile(twoModelScenarioName, twoModelFile2)
+            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectSourcePart()
+            .highlightScenario(sourceScenarioName, sourcePartName)
+            .apply(EvaluatePage.class)
+            .costScenario();
+
+        assertThat(evaluatePage.getSourceScenarioName(), is(sourceScenarioName));
+        assertThat(evaluatePage.getSourcePartName(), is(sourcePartName.toUpperCase()));
+        assertThat(evaluatePage.getBurdenedCost("18.05"), is(true));
+
+        evaluatePage.selectSourcePart()
+            .highlightScenario(source2ScenarioName, source2PartName)
+            .apply(EvaluatePage.class)
+            .costScenario();
+
+        assertThat(evaluatePage.getSourceScenarioName(), is(source2ScenarioName));
+        assertThat(evaluatePage.getSourcePartName(), is(source2PartName.toUpperCase()));
+        assertThat(evaluatePage.getBurdenedCost("8.74"), is(true));
+    }
+
+    @Test
+    @Description("Validate the user cannot use two completely different CAD models")
+    @TestRail(testCaseId = {"3948"})
+    public void testTwoModelCorrectCADModels() {
+
+        String testScenarioName = new Util().getScenarioName();
+        String sourcePartName = "casting_before_machining";
+
+        resourceFile = new FileResourceUtil().getResourceFile("casting_BEFORE_machining.stp");
+        twoModelFile = new FileResourceUtil().getResourceFile("casting_AFTER_machining.stp");
+
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .refreshCurrentPage()
+            .uploadFile(new Util().getScenarioName(), twoModelFile)
+            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectSourcePart()
+            .highlightScenario(testScenarioName, "casting_BEFORE_machining")
+            .apply(EvaluatePage.class)
+            .costScenario();
+
+        assertThat(evaluatePage.getSourceMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
+        assertThat(evaluatePage.getSourcePartName(), is(sourcePartName.toUpperCase()));
+        assertThat(evaluatePage.getSourceScenarioName(), is(testScenarioName));
 }

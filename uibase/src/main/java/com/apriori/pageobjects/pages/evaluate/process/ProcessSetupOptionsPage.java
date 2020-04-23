@@ -173,6 +173,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     @FindBy(css = "div.form-section")
     private WebElement psoFormSection;
 
+    @FindBy(css = "input[data-ap-comp='cadModelMisalignmentSensitivity.radioButtons.user']")
+    private WebElement overrideSensitivityRadioButton;
+
+    @FindBy(css = "input[data-ap-field='cadModelMisalignmentSensitivity.modeValues.user.value']")
+    private WebElement overrideSensitivityInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -895,5 +901,35 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
      */
     public boolean isComponentsPerLoad(String text) {
         return checkAttribute(componentsPerLoadInput, text);
+    }
+
+    /**
+     * Selects override sensitivity
+     *
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectOverrideSensitivityButton() {
+        pageUtils.waitForElementToAppear(overrideSensitivityRadioButton).click();
+        return this;
+    }
+    /**
+     * Set cad model sensitivity
+     *
+     * @param text - the text
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage setCadModelSensitivity(String text) {
+        setInput(overrideSensitivityInput, text);
+        return this;
+    }
+
+    /**
+     * Checks CAD Model Sensitivity Override
+     *
+     * @param text - the text
+     * @return true false
+     */
+    public boolean isCadModelSensitivity(String text) {
+        return checkAttribute(overrideSensitivityInput, text);
     }
 }

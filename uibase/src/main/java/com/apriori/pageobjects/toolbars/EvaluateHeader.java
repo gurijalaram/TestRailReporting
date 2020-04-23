@@ -57,6 +57,7 @@ public class EvaluateHeader extends GenericHeader {
      * @return current page object
      */
     public EvaluatePage costScenario() {
+        pageUtils.waitFor(10000);
         return costScenario(3);
     }
 
