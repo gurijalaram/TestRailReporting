@@ -29,7 +29,6 @@ public class UserTest {
     @Test
     public void testCreateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
-
         List<User> usersForCreate = new ArrayList<>();
         
         /*Create new user with FullName: aPriori Default User and RawLoginID: adu*/
