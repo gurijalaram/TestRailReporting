@@ -1,35 +1,27 @@
 # Prepare runtime.
-FROM openjdk:8-jre-stretch AS runtime
+FROM openjdk:8-jre-alpine AS runtime
 WORKDIR /app
 
-# Install Chrome.
-RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
-RUN apt-get -y update
-RUN apt-get -y install google-chrome-stable
-
-# Install Chrome Driver.
-RUN wget https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip
-RUN unzip chromedriver_linux64.zip
-RUN mv chromedriver /usr/bin/chromedriver
-RUN chown root:root /usr/bin/chromedriver
-RUN chmod +x /usr/bin/chromedriver
-
 # Prepare build workspace.
-FROM gradle:6.1.1-jdk11 AS sdk
-WORKDIR /automation-workspace
+FROM gradle:5.3.0-jdk-alpine AS sdk
+WORKDIR /build-workspace
 
 # Copy.
 COPY . .
 
-# Setup build workspace.
-USER root
-
-#Build.
-WORKDIR /automation-workspace/build
+# Build.
+FROM sdk AS build
+ARG ORG_GRADLE_PROJECT_mavenUser
+ARG ORG_GRADLE_PROJECT_mavenPassword
 RUN gradle clean fatJar
+
+# Test.
+FROM build AS test
+ARG ORG_GRADLE_PROJECT_mavenUser
+ARG ORG_GRADLE_PROJECT_mavenPassword
+RUN gradle clean :apitests:test --tests FmsAPISuite -DthreadCount=1 -Denv=cid-aut -Dmode=QA
 
 # App image.
 FROM runtime AS final
-COPY --from=sdk automation-workspace/uitests/build/libs/automation-qa*.jar ./automation-tests.jar
+COPY --from=build /build-workspace/build/libs/automation-qa*.jar ./automation-tests.jar
 ENTRYPOINT ["java", "-jar", "automation-tests.jar"]

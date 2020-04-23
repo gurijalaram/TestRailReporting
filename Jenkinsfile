@@ -1,51 +1,92 @@
+def buildInfo
+def buildInfoFile = 'build-info.yml'
+def branchName = env.BRANCH_NAME
+def timeStamp = new Date().format('yyyyMMddHHmmss')
+
 pipeline {
-
-    parameters {
-        string(name: 'TARGET_URL', defaultValue: 'https://automation.awsdev.apriori.com/', description: 'What is the target URL for testing?')
-        choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'customer-smoke'], description: 'What is the target environment for testing?')
-        choice(name: 'TEST_SUITE', choices: ['SmokeTestSuite','CIDTestSuite','AdhocTestSuite','CustomerSmokeTestSuite'], description: 'What is the test suite?')
-        string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
-        choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'What is the browser?')
-        string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
-        choice(name: 'VM', choices: ['frodo','gimli','legolas'], description: 'What is the VM?')
-    }
-
-    agent {
-        label "${params.VM}"
-    }
-
-    environment {
-        JAVA_HOME = "${tool 'OpenJDK 1.8.0_192 WIN64'}"
-        PATH = "${JAVA_HOME}/bin:${PATH}"
-    }
-
-    tools {
-        gradle "Gradle"
-    }
+    agent any
 
     stages {
-
-        stage('UI Testing') {
+        stage('Initialize') {
             steps {
-                echo 'Running test...'
-                dir("${env.WORKSPACE}/build") {
-                    bat label: "", script: "gradle clean :uitests:test --tests ${params.TEST_SUITE} -DthreadCounts=${params.THREAD_COUNT} -Dbrowser=${params.BROWSER} -Durl=${params.TARGET_URL} -Denv=${params.TARGET_ENV} -Dmode=${params.TEST_MODE} --scan --info"
-                }
-            }
+                echo 'Initializing..'
+                script {
+                    // Read file.
+                    buildInfo = readYaml file: buildInfoFile
+                    sh "rm ${buildInfoFile}"
 
-            post {
-                always {
-                    script {
-                        allure([
-                                includeProperties: false,
-                                jdk              : '',
-                                properties       : [],
-                                reportBuildPolicy: 'ALWAYS',
-                                results          : [[path: 'uitests/target/allure-results']]
-                        ])
-                    }
+                    // Write file.
+                    buildInfo.buildNumber = env.BUILD_TAG
+                    buildInfo.buildTimestamp = timeStamp
+                    buildInfo.commitHash = env.GIT_COMMIT
+                    writeYaml file: buildInfoFile, data: buildInfo
+
+                    // Log file.
+                    sh "cat ${buildInfoFile}"
                 }
             }
+        }
+        stage('Build') {
+            when { expression { shouldBuild } }
+            steps {
+                echo 'Building..'
+                withCredentials([usernamePassword(
+                    credentialsId: 'NEXUS_APRIORI_COM',
+                    passwordVariable: 'NEXUS_PASS',
+                    usernameVariable: 'NEXUS_USER')]) {
+                    sh """
+                        docker build \
+                            --no-cache \
+                            --target build \
+                            --tag ${buildInfo.name}-build-${timeStamp}:latest \
+                            --label \"build-date=${timeStamp}\" \
+                            --build-arg ORG_GRADLE_PROJECT_mavenUser=${NEXUS_USER} \
+                            --build-arg ORG_GRADLE_PROJECT_mavenPassword=${NEXUS_PASS} \
+                            .
+                    """
+                }
+            }
+        }
+        stage('Test') {
+            when { expression { shouldBuild } }
+            steps {
+                echo 'Testing..'
+                withCredentials([usernamePassword(
+                    credentialsId: 'NEXUS_APRIORI_COM',
+                    passwordVariable: 'NEXUS_PASS',
+                    usernameVariable: 'NEXUS_USER')]) {
+                    sh """
+                        docker build \
+                            --target test \
+                            --tag ${buildInfo.name}-test-${timeStamp}:latest \
+                            --label \"build-date=${timeStamp}\" \
+                            --build-arg ORG_GRADLE_PROJECT_mavenUser=${NEXUS_USER} \
+                            --build-arg ORG_GRADLE_PROJECT_mavenPassword=${NEXUS_PASS} \
+                            .
+                   """
+                }
+
+                // Copy out build/test artifacts.
+                sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
+                sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/build build"
+                sh "docker rm ${buildInfo.name}-test-${timeStamp}"
+                sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
+
+                publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'build/reports/tests/test',
+                    reportFiles: 'index.html',
+                    reportName: "${buildInfo.name} Test Report"
+                ])
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Cleaning up..'
+            sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
         }
     }
 }
