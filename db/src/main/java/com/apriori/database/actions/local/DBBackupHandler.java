@@ -1,4 +1,6 @@
-package utils;
+package com.apriori.database.actions.local;
+
+import com.apriori.database.utils.PropertiesHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +27,15 @@ public class DBBackupHandler {
         switch (dbType) {
             case "mysql":
                 System.out.println("mysql connection string");
-                connectionString = new StringBuffer().append("mysqldump -u").append(dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.username")).append(" -p").append(dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.password")).append(" ").append(dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.dbname"));
+                connectionString = new StringBuffer().append("mysqldump -u")
+                        .append(dataBasePropHandler.getDBProperties()
+                                .getProperty("hibernate.connection.username"))
+                        .append(" -p")
+                        .append(dataBasePropHandler.getDBProperties()
+                                .getProperty("hibernate.connection.password")).append(" ")
+                        .append(dataBasePropHandler.getDBProperties()
+                                .getProperty("hibernate.connection.dbname"));
+
                 for (String excludedTable : excludedTables) {
                     connectionString.append(" --ignore-table=").append(dataBasePropHandler.getDBProperties().getProperty("hibernate.connection.dbname")).append(".").append(excludedTable.concat(" -r "));
                 }
@@ -40,6 +50,9 @@ public class DBBackupHandler {
             case "oracle":
                 System.out.println("oracle connection string");
                 break;
+
+            default:
+                throw new IllegalArgumentException("Wrong database type. Received type is: " + dbType);
         }
         return connectionString;
     }

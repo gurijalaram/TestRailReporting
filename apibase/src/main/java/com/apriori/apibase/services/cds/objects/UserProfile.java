@@ -11,14 +11,25 @@ public class UserProfile {
     private String supervisor;
     private String timezone;
     private String townCity;
+    private String countryCode;
 
-    public String getTowncity() {
-        return townCity;
+    public String getCountryCode() {
+        return this.countryCode;
     }
+
+    public UserProfile setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+        return this;
+    }
+
 
     public UserProfile setTownCity(String townCity) {
         this.townCity = townCity;
         return this;
+    }
+
+    public String getTownCity() {
+        return this.townCity;
     }
 
     public String getTimezone() {

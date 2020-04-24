@@ -1,5 +1,6 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -559,7 +560,7 @@ public class ProcessGroupsTests extends TestBase {
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Roll Bending")
-    @TestRail(testCaseId = {"1591"})
+    @TestRail(testCaseId = {"1591", "3836"})
     public void testProcessGroupRollBending() {
 
         resourceFile = new FileResourceUtil().getResourceFile("AGCO _ 71421375.prt.1");
@@ -569,18 +570,12 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "AGCO _ 71421375");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+        evaluatePage = explorePage.uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
