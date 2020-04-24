@@ -10,6 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+
 public class NewExportSet extends AdminHeader {
 
     private final Logger logger = LoggerFactory.getLogger(NewExportSet.class);
@@ -26,11 +28,24 @@ public class NewExportSet extends AdminHeader {
     @FindBy(css = "button[data-id='DTE_Field_scenarioKey.typeName']")
     private WebElement componentTypeDropdown;
 
+    @FindBy(xpath = "//a[contains(@data-normalized-text, 'Assembly')]")
+    private WebElement assemblyOption;
+
+    @FindBy(xpath = "//a[contains(@data-normalized-text, 'Part')]")
+    private WebElement partOption;
+
+    @FindBy(xpath = "//button[@title='Roll-up']/../div/ul/li[3]/a")
+    private WebElement rollUpOption;
+
+    @FindBy(xpath = "//a[contains(@data-normalized-text, 'Dynamic Roll-up')]")
+    private WebElement dynamicRollUpOption;
+
     @FindBy(css = "select[id='DTE_Field_scenarioKey.typeName']")
     private WebElement componentTypes;
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private HashMap<String, WebElement> componentTypeMap;
 
     public NewExportSet(WebDriver driver) {
         super(driver);
@@ -38,6 +53,7 @@ public class NewExportSet extends AdminHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseComponentTypeHashMap();
         this.get();
     }
 
@@ -85,8 +101,20 @@ public class NewExportSet extends AdminHeader {
      * @return current page object
      */
     public NewExportSet selectComponentType(String componentType) {
-        //pageUtils.waitForElementAndClick(componentTypeDropdown);
-        pageUtils.selectDropdownOption(componentTypes, componentType);
+        WebElement elementToUse = componentTypeMap.get(componentType);
+        pageUtils.waitForElementAndClick(componentTypeDropdown);
+        pageUtils.waitForElementAndClick(elementToUse);
         return this;
+    }
+
+    /**
+     * Initialises Hash Map to simplify Element selection
+     */
+    private void initialiseComponentTypeHashMap() {
+        componentTypeMap = new HashMap<>();
+        componentTypeMap.put("Part", partOption);
+        componentTypeMap.put("Assembly", assemblyOption);
+        componentTypeMap.put("Roll-up", rollUpOption);
+        componentTypeMap.put("Dynamic Roll-up", dynamicRollUpOption);
     }
 }

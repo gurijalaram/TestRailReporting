@@ -48,7 +48,7 @@ public class ExportSetsTests extends TestBase {
             .navigateToManageScenarioExport()
             .clickNew()
             .inputSetName("Set 1")
-            .selectComponentType("assembly");
+            .selectComponentType("Dynamic Roll-up");
 
         assertThat(scenarioExport.isHeaderDisplayed(), is(equalTo(true)));
         assertThat(scenarioExport.isHeaderEnabled(), is(equalTo(true)));
