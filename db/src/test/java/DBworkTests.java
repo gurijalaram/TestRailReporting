@@ -1,9 +1,8 @@
-import actions.local.DBBackupHandler;
-import actions.local.DBDataImporter;
+import com.apriori.database.actions.local.DBBackupHandler;
+import com.apriori.database.actions.local.DBDataImporter;
+import com.apriori.database.utils.PropertiesHandler;
 
 import org.junit.Test;
-
-import utils.PropertiesHandler;
 
 import java.util.ArrayList;
 

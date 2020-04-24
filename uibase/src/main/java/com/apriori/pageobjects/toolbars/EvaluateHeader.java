@@ -20,7 +20,7 @@ import java.util.List;
 
 public class EvaluateHeader extends GenericHeader {
 
-    private final static Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
 
     @FindBy(css = "button[data-ap-comp='costButton']")
     private WebElement costButton;

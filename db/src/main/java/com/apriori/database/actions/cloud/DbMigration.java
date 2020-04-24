@@ -1,8 +1,11 @@
-package actions.cloud;
+package com.apriori.database.actions.cloud;
 
 import com.apriori.apibase.services.cid.objects.request.ExportSchedulesRequest;
+import com.apriori.apibase.services.cid.objects.request.ScenarioKeyRequest;
 import com.apriori.apibase.services.cid.objects.request.SchedulesConfigurationRequest;
+import com.apriori.apibase.services.cid.objects.request.SpecificExportSchedulesRequest;
 import com.apriori.apibase.services.cid.objects.response.ExportSchedulesResponse;
+import com.apriori.database.entity.MigrationEntity;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaClearRequest;
@@ -23,6 +26,8 @@ import java.util.Collections;
  */
 public class DbMigration {
 
+    private static final String exportScheduleIdKey = "x-export-schedule-id";
+
     private static ExportSchedulesResponse latestExportSchedules = null;
     private static UserCredentials migrationUser = UserUtil.getUser();
 
@@ -34,7 +39,24 @@ public class DbMigration {
      * @see com.apriori.utils.http.utils.ResponseWrapper
      */
     public static ResponseWrapper<ExportSchedulesResponse> migrateFromProToReport() {
-        return new DbMigration().doMigration();
+        DbMigration dbMigration = new DbMigration();
+
+        return dbMigration.doMigrationByScheduleId(
+                dbMigration.initExportSchedulesAndGetScheduleId());
+    }
+
+    /**
+     * Migrate specific scenario with (part, assembly rollup) from aPriori Professional database <br>
+     * to aPriori jasper (reporting) database.
+     *
+     * @return ResponseWrapper, more info: <br>
+     * @see com.apriori.utils.http.utils.ResponseWrapper
+     */
+    public static ResponseWrapper<ExportSchedulesResponse> migrateSpecificScenario(final MigrationEntity migrationEntity) {
+        DbMigration dbMigration = new DbMigration();
+
+        return dbMigration.doMigrationByScheduleId(
+                dbMigration.initSpecificExportSchedulesAndGetScheduleId(migrationEntity));
     }
 
     /**
@@ -46,20 +68,27 @@ public class DbMigration {
         return latestExportSchedules;
     }
 
-    private ResponseWrapper<ExportSchedulesResponse> doMigration() {
-        String schedulesId = this.doInitExportSchedulesAndGetScheduleId();
-        this.doStartExportSchedulesByScheduleId(schedulesId);
-        return this.doGetSchedulesByScheduleId(schedulesId);
+    private ResponseWrapper<ExportSchedulesResponse> doMigrationByScheduleId(String scheduleId) {
+        this.doStartExportSchedulesByScheduleId(scheduleId);
+        return this.doGetSchedulesByScheduleId(scheduleId);
     }
 
-    public String doInitExportSchedulesAndGetScheduleId() {
-        return this.doInitExportSchedules().getHeaders().get("x-export-schedule-id").getValue();
+    public String initSpecificExportSchedulesAndGetScheduleId(final MigrationEntity migrationEntity) {
+        return this.doCreateExportSchedules(
+                this.initSpecificExportRequestBody(migrationEntity)
+        ).getHeaders().get(exportScheduleIdKey).getValue();
     }
 
-    public ResponseWrapper<Object> doInitExportSchedules() {
+    public String initExportSchedulesAndGetScheduleId() {
+        return this.doCreateExportSchedules(
+                this.initExportRequestBody()
+        ).getHeaders().get(exportScheduleIdKey).getValue();
+    }
+
+    public ResponseWrapper<Object> doCreateExportSchedules(Object body) {
         RequestEntity requestEntity =
                 this.initDefaultRequest(CidAdminHttpEnum.POST_EXPORT_SCHEDULES)
-                        .setBody(this.initExportRequestBody())
+                        .setBody(body)
                         .setStatusCode(HttpStatus.SC_CREATED);
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaClearRequest());
@@ -97,7 +126,31 @@ public class DbMigration {
         return GenericRequestUtil.delete(requestEntity, new RequestAreaClearRequest());
     }
 
-    private ExportSchedulesRequest initExportRequestBody() {
+    public SpecificExportSchedulesRequest initSpecificExportRequestBody(final MigrationEntity migrationEntity) {
+        SpecificExportSchedulesRequest specificESR = new SpecificExportSchedulesRequest();
+        specificESR.setType("exportSetRequestBean");
+        specificESR.setDisabled(false);
+        specificESR.setName(migrationEntity.getNewScenarioName());
+        specificESR.setDescription("Specific export from auth");
+        specificESR.setExportDynamicRollups(false);
+        specificESR.setExportScope("All Delta");
+        specificESR.setSourceSchema("Default Scenarios");
+        specificESR.setSchedules(
+                Collections.singletonList(new SchedulesConfigurationRequest()
+                        .setType("SIMPLE")
+                        .setRepeatCount(0)
+                        .setRepeatInterval(0))
+        );
+        specificESR.setScenarioKeyRequest(
+                new ScenarioKeyRequest().setTypeName(migrationEntity.getScenarioType().baseName)
+                        .setMasterName(migrationEntity.getElementName())
+                        .setStateName(migrationEntity.getScenarioName())
+        );
+
+        return specificESR;
+    }
+
+    public ExportSchedulesRequest initExportRequestBody() {
         return new ExportSchedulesRequest()
                 .setType("exportSetRequestBean")
                 .setDisabled(false)
@@ -116,7 +169,7 @@ public class DbMigration {
 
     private RequestEntity initDefaultRequest(final EndpointEnum endpoint) {
         return RequestEntity.init(endpoint,
-                //TODO z: should be uncommented when aoth0 and jasper server will have the same test users credentials
+                //TODO z: should be uncommented when auth0 and jasper server will have the same test users credentials
                 //migrationUser
                 UserCredentials.init("qa-automation-01@apriori.com", "qa-automation-01"),
                 null

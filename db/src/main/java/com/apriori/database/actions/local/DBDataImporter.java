@@ -1,4 +1,4 @@
-package actions.local;
+package com.apriori.database.actions.local;
 
 import com.apriori.testutil.testdata.DataLoader;
 
