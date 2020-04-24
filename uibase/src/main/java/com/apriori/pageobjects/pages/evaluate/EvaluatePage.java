@@ -182,13 +182,13 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-region='sourceAndUtilizationTile']")
     private WebElement sourceAndUtilTile;
 
-    @FindBy(css = "[data-ap-field='sourceModelPartName']")
+    @FindBy(css = "[data-ap-field='sourceModelKeyPartName']")
     private WebElement sourceModelPartName;
 
     @FindBy(css = "[data-ap-comp='selectSourceLink']")
     private WebElement selectSourceButton;
 
-    @FindBy(css = "[data-ap-field='sourceModelScenario']")
+    @FindBy(css = "[data-ap-field='sourceModelKeyScenarioName']")
     private WebElement sourceModelScenarioName;
 
     @FindBy(css = "[data-ap-field='materialName']")

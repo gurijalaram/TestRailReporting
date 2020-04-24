@@ -86,6 +86,15 @@ public class Util {
         });
     }
 
+
+    public static Map<String, String> getTokenAuthorizationForm(final String token) {
+        return new HashMap<String, String>() {{
+                put("Authorization", "Bearer " + token);
+                put("apriori.tenantGroup", "default");
+                put("apriori.tenant", "default");
+            }};
+    }
+
     public static Map<String, String> getDefaultAuthorizationForm(final String username, final String password) {
         return new HashMap<String, String>() {{
                 put("grant_type", "password");
@@ -106,10 +115,10 @@ public class Util {
     public static File getLocalResourceFile(String resourceFileName) {
         try {
             return new File(
-                URLDecoder.decode(
-                    ClassLoader.getSystemResource(resourceFileName).getFile(),
-                    "UTF-8"
-                )
+                    URLDecoder.decode(
+                            ClassLoader.getSystemResource(resourceFileName).getFile(),
+                            "UTF-8"
+                    )
             );
         } catch (UnsupportedEncodingException e) {
             logger.error(String.format("Resource file: %s was not fount", resourceFileName));
