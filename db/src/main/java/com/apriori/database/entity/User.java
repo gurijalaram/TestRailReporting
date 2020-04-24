@@ -1,4 +1,4 @@
-package entity;
+package com.apriori.database.entity;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_ID")
-    private Long user_ID;
+    private Long userId;
     @Column(name = "rawLoginID")
     private String rawLoginID;
     @Column(name = "fullName")
@@ -111,12 +111,12 @@ public class User implements Serializable {
         return serialVersionUID;
     }
 
-    public Long getUser_ID() {
-        return user_ID;
+    public Long getUserId() {
+        return userId;
     }
 
-    public User setUser_ID(Long user_ID) {
-        this.user_ID = user_ID;
+    public User setUserId(Long userId) {
+        this.userId = userId;
         return this;
     }
 
