@@ -89,8 +89,6 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public EvaluatePage openFirstScenario() {
-        // There may be more than one result from filter, thus findElements is used
-        // But this method should always pick the first one
         pageUtils.waitForElementAndClick(driver.findElements(By.cssSelector("a[class='gwt-Anchor']")).get(0));
         return new EvaluatePage(driver);
     }

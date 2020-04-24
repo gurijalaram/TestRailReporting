@@ -207,18 +207,4 @@ public class CastingDtcReportTests extends TestBase {
          */
         assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
-
-    @Test
-    @TestRail(testCaseId = "102990")
-    @Description("Verify that aPriori costed scenarios are represented correctly")
-    public void testVerifyComparisonReportAvailableAndCorrectData() {
-
-    }
-
-    @Test
-    @TestRail(testCaseId = "102990")
-    @Description("Verify that aPriori costed scenarios are represented correctly")
-    public void testVerifyDetailsReportAvailableAndCorrectData() {
-
-    }
 }
