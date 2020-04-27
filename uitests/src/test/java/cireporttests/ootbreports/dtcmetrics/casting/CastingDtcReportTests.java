@@ -26,7 +26,6 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class CastingDtcReportTests extends TestBase {
 
@@ -191,7 +190,7 @@ public class CastingDtcReportTests extends TestBase {
         genericReportPage.openNewTabAndFocus();
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
-        String[] valuesArray = { partName, Constants.defaultScenarioName };
+        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filterCriteria()
                 .multiFilterPublicCriteria(attributesArray, valuesArray)

@@ -6,7 +6,7 @@ import com.apriori.utils.constants.Constants;
 public class SuiteRunnerHelper {
 
     static void initProjectRunId(Class<?> klass) {
-        String systemProjectRunId = System.getProperty(Constants.defaultProjectIDKey);
+        String systemProjectRunId = System.getProperty(Constants.DEFAULT_PROJECT_ID_KEY);
         if (systemProjectRunId != null) {
             Constants.RUN_ID = systemProjectRunId;
             return;
