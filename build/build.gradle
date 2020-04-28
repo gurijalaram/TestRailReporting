@@ -35,17 +35,7 @@ subprojects {
                 username "deployment"
                 password "deployment123"
             }
-            url 'https://nexus.apriori.com/content/repositories/apriori-releases'
-
-        }
-
-        maven {
-            credentials {
-                username "deployment"
-                password "deployment123"
-            }
             url 'https://nexus.apriori.com/content/repositories/apriori-snapshots'
-
         }
 
         maven {
@@ -54,7 +44,6 @@ subprojects {
                 password "deployment123"
             }
             url 'https://nexus.apriori.com/content/repositories/thirdparty'
-
         }
     }
 
@@ -162,7 +151,7 @@ subprojects {
         implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8'
         implementation 'commons-validator:commons-validator:1.6'
 
-        implementation group: 'com.fbc', name: 'fbc-datamodel', version: '19.2.1.1'
+        implementation group: 'com.fbc', name: 'fbc-datamodel', version: '+'
 
     }
 }
