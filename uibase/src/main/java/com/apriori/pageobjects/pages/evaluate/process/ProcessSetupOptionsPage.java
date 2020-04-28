@@ -912,16 +912,6 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
         pageUtils.waitForElementToAppear(overrideSensitivityRadioButton).click();
         return this;
     }
-    /**
-     * Set cad model sensitivity
-     *
-     * @param text - the text
-     * @return current page object
-     */
-    public ProcessSetupOptionsPage setCadModelSensitivity(String text) {
-        setInput(overrideSensitivityInput, text);
-        return this;
-    }
 
     /**
      * Gets CAD Model Sensitivity Override
@@ -931,5 +921,16 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     public String getCadModelSensitivity() {
         pageUtils.waitForElementToAppear(overrideSensitivityInput);
         return overrideSensitivityInput.getText();
+    }
+
+    /**
+     * Set cad model sensitivity
+     *
+     * @param text - the text
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage setCadModelSensitivity(String text) {
+        setInput(overrideSensitivityInput, text);
+        return this;
     }
 }
