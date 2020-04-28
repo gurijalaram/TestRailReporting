@@ -1,10 +1,9 @@
-import dao.UserDao;
-import entity.User;
+import com.apriori.database.dao.UserDao;
+import com.apriori.database.entity.User;
+import com.apriori.database.utils.PropertiesHandler;
+import com.apriori.database.utils.SessionFactoryClass;
 
 import org.junit.Test;
-
-import utils.PropertiesHandler;
-import utils.SessionFactoryClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,6 @@ public class UserTest {
     @Test
     public void testCreateUser() {
         UserDao userDao = new UserDao(new SessionFactoryClass().getSession());
-
         List<User> usersForCreate = new ArrayList<>();
         
         /*Create new user with FullName: aPriori Default User and RawLoginID: adu*/

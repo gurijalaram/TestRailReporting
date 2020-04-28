@@ -1,4 +1,4 @@
-package entity;
+package com.apriori.database.entity;
 
 import java.io.Serializable;
 import java.util.Set;
