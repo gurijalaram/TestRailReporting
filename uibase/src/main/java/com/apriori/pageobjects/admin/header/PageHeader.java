@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private final static Logger logger = LoggerFactory.getLogger(PageHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;

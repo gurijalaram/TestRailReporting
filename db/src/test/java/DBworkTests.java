@@ -1,7 +1,8 @@
+import com.apriori.database.actions.local.DBBackupHandler;
+import com.apriori.database.actions.local.DBDataImporter;
+import com.apriori.database.utils.PropertiesHandler;
+
 import org.junit.Test;
-import utils.DBBackupHandler;
-import utils.DBDataImporter;
-import utils.PropertiesHandler;
 
 import java.util.ArrayList;
 
@@ -15,16 +16,16 @@ public class DBworkTests {
     public void createDBdump() {
         ArrayList<String> excludedTables = new ArrayList<>();
         excludedTables.add("fbc_persistentdocument");
-        DBBackupHandler db_beckup_maker = new DBBackupHandler(excludedTables);
-        db_beckup_maker.createDataBaseBackup();
+        DBBackupHandler dbBackupMaker = new DBBackupHandler(excludedTables);
+        dbBackupMaker.createDataBaseBackup();
     }
 
     @Test
     public void importIntoDB() {
         DBDataImporter dbDataImporter = new DBDataImporter();
         /* Path to folder with test materials */
-        String [] partPath = new String [] {"C:\\Users\\ssakho.FBC\\Desktop\\test\\ap"};
-        dbDataImporter.imporFilesIntoDB(partPath);
+        String[] partPath = new String[]{"C:\\Users\\ssakho.FBC\\Desktop\\test\\ap"};
+        dbDataImporter.importFilesIntoDB(partPath);
         System.out.println("Data was successfully imported");
     }
 }
