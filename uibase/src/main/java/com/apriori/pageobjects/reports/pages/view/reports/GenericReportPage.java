@@ -795,9 +795,8 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(tooltipFbcElement);
 
         return new BigDecimal(
-                tooltipFbcElement.getAttribute("textContent")
+                tooltipFbcElement.getText()
                         .replace(",", "")
-                        .replace(" ", "")
         );
     }
 
