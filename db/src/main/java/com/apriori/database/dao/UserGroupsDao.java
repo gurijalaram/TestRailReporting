@@ -1,7 +1,8 @@
-package dao;
+package com.apriori.database.dao;
 
-import entity.User;
-import entity.UserGroups;
+import com.apriori.database.entity.User;
+import com.apriori.database.entity.UserGroups;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,7 +23,7 @@ public class UserGroupsDao
         UserDao userDao = new UserDao(session);
         Query query =
                 session.createQuery("FROM UserGroups ug " + "where ug.user_ID=:user_ID")
-                        .setParameter("user_ID", userDao.getByFullName(user).getUser_ID());
+                        .setParameter("user_ID", userDao.getByFullName(user).getUserId());
         return query.list();
     }
 
@@ -38,15 +39,15 @@ public class UserGroupsDao
         Transaction transaction = session.beginTransaction();
         try {
             for (User user : users) {
-                UserGroups schemaGroup = new UserGroups(user.getUser_ID(), "schemaGroup", "246127cd-e5e1-4deb-b03f-b6eaec406ddc");
+                UserGroups schemaGroup = new UserGroups(user.getUserId(), "schemaGroup", "246127cd-e5e1-4deb-b03f-b6eaec406ddc");
                 session.save(schemaGroup);
-                UserGroups schemaGroup1 = new UserGroups(user.getUser_ID(), "schemaGroup", "c3d6cac1-71a9-4248-a599-f728da5d018f");
+                UserGroups schemaGroup1 = new UserGroups(user.getUserId(), "schemaGroup", "c3d6cac1-71a9-4248-a599-f728da5d018f");
                 session.save(schemaGroup1);
                 UserGroups namedGroupAllUsers =
-                    new UserGroups(user.getUser_ID(), "namedGroup", "5154a89b-157b-4180-8833-7c40e712f9ed");
+                    new UserGroups(user.getUserId(), "namedGroup", "5154a89b-157b-4180-8833-7c40e712f9ed");
                 session.save(namedGroupAllUsers);
                 UserGroups namedGroupSuperUser =
-                    new UserGroups(user.getUser_ID(), "namedGroup", "e2e4cbe5-5ded-4120-a5ac-75568b0a989d");
+                    new UserGroups(user.getUserId(), "namedGroup", "e2e4cbe5-5ded-4120-a5ac-75568b0a989d");
                 session.save(namedGroupSuperUser);
             }
             transaction.commit();

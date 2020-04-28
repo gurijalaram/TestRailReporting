@@ -84,6 +84,10 @@
             "townCity": {
               "type": "string",
               "pattern": "^(.*)$"
+            },
+            "countryCode": {
+              "type": "string",
+              "pattern": "^(.*)$"
             }
           }
         },

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class EvaluateHeader extends GenericHeader {
 
-    private final static Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
 
     @FindBy(css = "button[data-ap-comp='costButton']")
     private WebElement costButton;
@@ -66,6 +66,7 @@ public class EvaluateHeader extends GenericHeader {
      * @return current page object
      */
     public EvaluatePage costScenario(int timeoutInMinutes) {
+        pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCostButton();
         checkForCostLabel(timeoutInMinutes);
@@ -79,6 +80,7 @@ public class EvaluateHeader extends GenericHeader {
      * @return current page object
      */
     public EvaluatePage costScenario(int timeoutInMinutes, int imageTimeoutInMinutes) {
+        pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCostButton();
         checkForCostLabel(timeoutInMinutes);
