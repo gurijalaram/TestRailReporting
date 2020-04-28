@@ -227,9 +227,8 @@ public class TwoModelMachiningTests extends TestBase {
             .refreshCurrentPage()
             .uploadFile(source2ScenarioName, twoModelFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario();
-
-        evaluatePage.selectExploreButton()
+            .costScenario()
+            .selectExploreButton()
             .refreshCurrentPage()
             .uploadFile(twoModelScenarioName, twoModelFile2)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
