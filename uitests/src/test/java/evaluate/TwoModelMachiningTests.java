@@ -78,7 +78,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessChart("Source Component")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isCadModelSensitivity("42"), is(true));
+        assertThat(processSetupOptionsPage.getCadModelSensitivity(), is("42"));
     }
 
     @Test
@@ -201,7 +201,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate the user can switch the source part")
-    @TestRail(testCaseId = {"4134", "4315"})
+    @TestRail(testCaseId = {"3845", "4134", "4315"})
     public void switchSourcePart() {
 
         String sourceScenarioName = new Util().getScenarioName();
@@ -217,8 +217,11 @@ public class TwoModelMachiningTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(sourceScenarioName, resourceFile)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()

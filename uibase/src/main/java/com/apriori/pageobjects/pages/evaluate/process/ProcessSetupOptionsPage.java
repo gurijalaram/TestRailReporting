@@ -924,12 +924,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks CAD Model Sensitivity Override
+     * Gets CAD Model Sensitivity Override
      *
-     * @param text - the text
-     * @return true false
+     * @return String
      */
-    public boolean isCadModelSensitivity(String text) {
-        return checkAttribute(overrideSensitivityInput, text);
+    public String getCadModelSensitivity() {
+        pageUtils.waitForElementToAppear(overrideSensitivityInput);
+        return overrideSensitivityInput.getText();
     }
 }
