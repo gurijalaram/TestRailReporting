@@ -31,7 +31,7 @@ public class Constants {
     public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
 
     public static final String cidTeHeaderText = "CI Design (TE)";
-    public static final String cidAutHeaderText = "CI Design (AUTOMATIONENVIRONMENT)";
+    public static final String cidAutHeaderText = "CI Design AUTOMATION";
 
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
