@@ -17,13 +17,13 @@ dependencies {
     implementation group: 'org.hibernate', name: 'hibernate-commons-annotations', version: '3.2.0.Final'
     implementation group: 'org.hibernate', name: 'hibernate-c3p0', version: '3.6.10.Final'
 
-    implementation group: 'com.fbc', name: 'fbc-util-core', version: '19.2.1.1'
-    implementation group: 'com.fbc', name: 'apriori-math', version: '19.2.1.1'
-    implementation group: 'com.fbc', name: 'fbc-util-cad', version: '19.2.1.1'
-    implementation group: 'com.fbc', name: 'fbc-cost-csl', version: '19.2.1.1'
-    implementation group: 'com.fbc', name: 'fbc-util-hibernate3', version: '19.2.1.1'
-    implementation group: 'com.fbc', name: 'fbc-util-core', version: '19.2.1.1'
-    implementation group: 'com.fbc', name: 'fbc-boot', version: '19.2.1.1'
+    implementation group: 'com.fbc', name: 'fbc-util-core', version: '+'
+    implementation group: 'com.fbc', name: 'apriori-math', version: '+'
+    implementation group: 'com.fbc', name: 'fbc-util-cad', version: '+'
+    implementation group: 'com.fbc', name: 'fbc-cost-csl', version: '+'
+    implementation group: 'com.fbc', name: 'fbc-util-hibernate3', version: '+'
+    implementation group: 'com.fbc', name: 'fbc-util-core', version: '+'
+    implementation group: 'com.fbc', name: 'fbc-boot', version: '+'
 
-    implementation 'com.apriori:apriori-commons-testutil:19.2.1.1'
+    implementation 'com.apriori:apriori-commons-testutil:+'
 }
