@@ -1,5 +1,6 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -60,7 +61,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate the User can open the source part in the evaluate tab")
-    @TestRail(testCaseId = {"3941"})
+    @TestRail(testCaseId = {"3844", "3941"})
     public void testOpenSourceModel() {
 
         String sourceScenarioName = new Util().getScenarioName();
@@ -73,8 +74,12 @@ public class TwoModelMachiningTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(sourceScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .selectExploreButton()
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+
+        evaluatePage.selectExploreButton()
             .refreshCurrentPage()
             .uploadFile(new Util().getScenarioName(), twoModelFile)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
