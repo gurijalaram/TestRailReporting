@@ -45,7 +45,7 @@ public class FileManagementService {
         RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, Constants.getFmsServiceHost()), FileResponse.class)
                 .setHeaders(initHeaders(token, true))
                 .setMultiPartFiles(new MultiPartFiles()
-                        .use("data", Util.getLocalResourceFile(fileName))
+                        .use("data", Util.getResourceAsFile(fileName))
                 )
                 .setFormParams(new FormParams()
                         .use("filename", fileName)
