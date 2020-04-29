@@ -32,10 +32,10 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
 
-    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][3]")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name()='path']")
     private WebElement castingDtcBubble;
 
-    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name()='path'][43]")
     private WebElement machiningDtcBubble;
 
     @FindBy(css = "tspan:nth-child(5)")
@@ -801,7 +801,7 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Get part name from DTC Part Summary Report
+     * Get part name from Casting DTC or Machining DTC Report
      * @return String of part name
      */
     public String getPartNameReports() {

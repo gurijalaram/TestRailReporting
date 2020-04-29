@@ -134,10 +134,10 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Multi filter criteria for public selection
      * @return current page object
      */
-    public FilterCriteriaPage multiFilterPublicCriteria(String[] attributes, String[] values) {
+    public FilterCriteriaPage multiFilterPublicCriteria(String scenarioType, String[] attributes, String[] values) {
         clear(FilterCriteriaPage.class)
             .setPublicWorkspace()
-            .setScenarioType("Part")
+            .setScenarioType(scenarioType)
             .multiSelectAttributes(attributes)
             .multiSelectValue(values);
         return this;

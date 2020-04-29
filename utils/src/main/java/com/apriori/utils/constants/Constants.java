@@ -38,6 +38,9 @@ public class Constants {
     public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
 
     public static final String DEFAULT_SCENARIO_NAME = "Initial";
+    public static final String PART_SCENARIO_TYPE = "Part";
+    public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
+    public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
