@@ -24,9 +24,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * The users list file name, is declared by users.csv.file property.
  * users.csv.file: the name of csv file with users list by path: resources/{@link com.apriori.utils.constants.Constants#environment} folder
  * (if users are absent, return default user with:
- * - username:{@link com.apriori.utils.constants.Constants#defaultUserName}
- * - password:{@link com.apriori.utils.constants.Constants#defaultPassword}
- * - accessLevel:{@link com.apriori.utils.constants.Constants#defaultAccessLevel}
+ * - username:{@link com.apriori.utils.constants.Constants#DEFAULT_USER_NAME}
+ * - password:{@link com.apriori.utils.constants.Constants#DEFAULT_PASSWORD}
+ * - accessLevel:{@link com.apriori.utils.constants.Constants#DEFAULT_ACCESS_LEVEL}
  * )
  *
  * @author vzarovnyi
@@ -93,7 +93,7 @@ class InitUsersData {
         if (userRecordWithAccessLevel(values)) {
             return new UserCredentials(values[0], values[1], values[2]);
         } else {
-            return new UserCredentials(values[0], values[1], Constants.defaultAccessLevel);
+            return new UserCredentials(values[0], values[1], Constants.DEFAULT_ACCESS_LEVEL);
         }
     }
 
@@ -108,9 +108,9 @@ class InitUsersData {
     }
 
     private static UserCredentials createDefaultUser() {
-        logger.info(String.format("Creating default user %s/%s/%s", Constants.defaultUserName, Constants.defaultPassword, Constants.defaultAccessLevel));
+        logger.info(String.format("Creating default user %s/%s/%s", Constants.DEFAULT_USER_NAME, Constants.DEFAULT_PASSWORD, Constants.DEFAULT_ACCESS_LEVEL));
 
-        return new UserCredentials(Constants.defaultUserName, Constants.defaultPassword, Constants.defaultAccessLevel);
+        return new UserCredentials(Constants.DEFAULT_USER_NAME, Constants.DEFAULT_PASSWORD, Constants.DEFAULT_ACCESS_LEVEL);
     }
 
     private static String initPathToFileWithUsers() {
