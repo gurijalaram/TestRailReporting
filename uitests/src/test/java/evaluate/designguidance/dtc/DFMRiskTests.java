@@ -10,6 +10,7 @@ import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
+import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
@@ -193,7 +194,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
         evaluatePage.uploadCadFile(cadResourceFile);
-
+        //assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
     }
