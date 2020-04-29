@@ -40,8 +40,6 @@ pipeline {
                         --target build \
                         --tag automation-qa-build:latest \
                         --label \"build-date=${timeStamp}\" \
-                        --build-arg ORG_GRADLE_PROJECT_mavenUser=${NEXUS_USER} \
-                        --build-arg ORG_GRADLE_PROJECT_mavenPassword=${NEXUS_PASS} \
                         .
                 """
             }
