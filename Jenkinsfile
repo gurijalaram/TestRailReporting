@@ -37,7 +37,6 @@ pipeline {
                 sh """
                     docker build \
                         --no-cache \
-                        --target build \
                         --tag automation-qa-build:latest \
                         --label \"build-date=${timeStamp}\" \
                         .
