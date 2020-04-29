@@ -194,6 +194,12 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-field='materialName']")
     private WebElement sourceMaterial;
 
+    @FindBy(css = "[data-ap-field='utilization']")
+    private WebElement utilizationPercentage;
+
+    @FindBy(css = "[data-ap-comp='twoModelProdInfo'] [data-ap-field='utilization']")
+    private WebElement twoModelUtilPercentage;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -511,8 +517,7 @@ public class EvaluatePage extends EvaluateHeader {
     public BigDecimal getBurdenedCostValue() {
         return new BigDecimal(
                 burdenedCost.getText()
-                        .replace(",", "")
-                        .replace(" ", ""))
+                        .replace(",", ""))
                 .setScale(2, BigDecimal.ROUND_FLOOR);
     }
 
@@ -800,5 +805,29 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementToAppear(selectSourceButton);
         pageUtils.waitForElementAndClick(selectSourceButton);
         return new ScenarioTablePage(driver);
+    }
+
+    /**
+     * Get Two Model Utilization Percentage
+     *
+     * @return Utilization Percentage
+     */
+    public String getTwoModelUtilizationPercentage() {
+        return getUtilPercentage(twoModelUtilPercentage);
+    }
+
+
+    /**
+     * Get Utilization Percentage
+     *
+     * @return Utilization Percentage
+     */
+    public String getUtilizationPercentage() {
+        return getUtilPercentage(utilizationPercentage);
+    }
+
+    private String getUtilPercentage(WebElement utilPercentage) {
+        pageUtils.waitForElementAppear(utilPercentage);
+        return utilPercentage.getText();
     }
 }

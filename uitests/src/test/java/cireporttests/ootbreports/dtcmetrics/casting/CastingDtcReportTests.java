@@ -27,7 +27,6 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class CastingDtcReportTests extends TestBase {
 
@@ -192,10 +191,10 @@ public class CastingDtcReportTests extends TestBase {
         genericReportPage.openNewTabAndFocus();
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
-        String[] valuesArray = { partName, Constants.defaultScenarioName };
+        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filterCriteria()
-                .multiFilterPublicCriteria(attributesArray, valuesArray)
+                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray)
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 
@@ -207,19 +206,5 @@ public class CastingDtcReportTests extends TestBase {
             Currency in Reports and CID needs to match for this test also (both default to USD)
          */
         assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
-    }
-
-    @Test
-    @TestRail(testCaseId = "102990")
-    @Description("Verify that aPriori costed scenarios are represented correctly")
-    public void testVerifyComparisonReportAvailableAndCorrectData() {
-
-    }
-
-    @Test
-    @TestRail(testCaseId = "102990")
-    @Description("Verify that aPriori costed scenarios are represented correctly")
-    public void testVerifyDetailsReportAvailableAndCorrectData() {
-
     }
 }

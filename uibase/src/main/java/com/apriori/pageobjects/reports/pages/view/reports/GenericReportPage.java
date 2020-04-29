@@ -32,14 +32,17 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
 
-    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][3]")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name()='path']")
     private WebElement castingDtcBubble;
 
-    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name()='path'][43]")
     private WebElement machiningDtcBubble;
 
-    @FindBy(css = "tspan:nth-child(5)")
+    @FindBy(xpath = "//*[text()=\"Fully Burdened Cost : \"]/following-sibling::*[1]")
     private WebElement tooltipFbcElement;
+
+    @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
+    private WebElement tooltipPartNameElement;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -792,22 +795,16 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(tooltipFbcElement);
 
         return new BigDecimal(
-                tooltipFbcElement.getAttribute("textContent")
+                tooltipFbcElement.getText()
                         .replace(",", "")
-                        .replace(" ", "")
         );
     }
 
     /**
-     * Get part name from DTC Part Summary Report
+     * Get part name from Casting DTC or Machining DTC Report
      * @return String of part name
      */
     public String getPartNameReports() {
-        /*
-            This assumes that the locator used with findElements will return three elements,
-            and, by extension, that the third element (index 2, 0 based List) is the one we are after.
-            Goal is to return the part name, and it works for now.
-         */
-        return driver.findElements(By.cssSelector("tspan:nth-child(1)")).get(2).getText();
+        return tooltipPartNameElement.getText();
     }
 }

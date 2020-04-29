@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Filter;
 
 /**
  * @author cfrith
@@ -135,10 +134,10 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Multi filter criteria for public selection
      * @return current page object
      */
-    public FilterCriteriaPage multiFilterPublicCriteria(String[] attributes, String[] values) {
+    public FilterCriteriaPage multiFilterPublicCriteria(String scenarioType, String[] attributes, String[] values) {
         clear(FilterCriteriaPage.class)
             .setPublicWorkspace()
-            .setScenarioType("Part")
+            .setScenarioType(scenarioType)
             .multiSelectAttributes(attributes)
             .multiSelectValue(values);
         return this;
@@ -324,18 +323,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     private FilterCriteriaPage setAttributes(String[] attributes) {
         for (int i = 0; i < attributes.length; i++) {
             WebElement elementToUse = i == 0 ? rowOneAttributeDropdown : rowTwoAttributeDropdown;
-            attributeSelectionAction(elementToUse, attributes[i]);
+            pageUtils.selectDropdownOption(elementToUse, attributes[i]);
         }
         return this;
-    }
-
-    /**
-     * Actually selects the attribute
-     * @param dropdownToUse - WebElement to use
-     * @param attribute - attribute to select
-     */
-    private void attributeSelectionAction(WebElement dropdownToUse, String attribute) {
-        new Select(dropdownToUse).selectByVisibleText(attribute);
     }
 
     /**
