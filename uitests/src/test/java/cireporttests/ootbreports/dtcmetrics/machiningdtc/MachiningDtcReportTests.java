@@ -99,17 +99,17 @@ public class MachiningDtcReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
             .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickApplyAndOk()
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDTCReportPage.class);
 
-        usdGrandTotal = machiningDTCReportPage.getValueFromCentralCircleInChart();
+        usdGrandTotal = machiningDTCReportPage.getFBCValueFromBubbleTooltip(false);
 
         machiningDTCReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickApplyAndOk()
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), MachiningDTCReportPage.class);
 
-        gbpGrandTotal = machiningDTCReportPage.getValueFromCentralCircleInChart();
+        gbpGrandTotal = machiningDTCReportPage.getFBCValueFromBubbleTooltip(false);
 
         assertThat(machiningDTCReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));

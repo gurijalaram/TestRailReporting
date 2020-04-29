@@ -105,9 +105,9 @@ public class NavigationTests extends TestBase {
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         assertThat(ciaUserGuide.getTabCount(), is(2));
-        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartOne)));
-        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartTwo)));
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.scenarioExportChapterPageTitle)));
+        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
+        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
     }
 
     @Test

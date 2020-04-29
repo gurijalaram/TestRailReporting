@@ -48,7 +48,7 @@ public class UserSecurityService {
             return globalUser;
         }
 
-        globalUser = getSecurityUser(Constants.defaultAccessLevel);
+        globalUser = getSecurityUser(Constants.DEFAULT_ACCESS_LEVEL);
         return globalUser;
     }
 }

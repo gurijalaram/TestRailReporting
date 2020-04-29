@@ -236,7 +236,7 @@ public class NavigationTests extends TestBase {
 
         String urlToCheck = domain.getUrlToCheck();
 
-        assertThat(domain.getCurrentUrl(), equalTo(String.format("%s%s", urlToCheck, Constants.domainDesignerUrlSuffix)));
+        assertThat(domain.getCurrentUrl(), equalTo(String.format("%s%s", urlToCheck, Constants.DOMAIN_DESIGNER_URL_SUFFIX)));
         assertThat(domain.isDialogDisplayed(), is(equalTo(true)));
         assertThat(domain.isDialogEnabled(), is(equalTo(true)));
     }
@@ -266,7 +266,7 @@ public class NavigationTests extends TestBase {
             .ensurePageIsLoaded();
 
         assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
-        assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.reportingHelpUrl)));
+        assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.REPORTING_HELP_URL)));
         assertThat(helpPage.getTabCount(), is(2));
     }
 }
