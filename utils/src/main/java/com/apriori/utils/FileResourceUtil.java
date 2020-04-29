@@ -28,7 +28,7 @@ public class FileResourceUtil {
      * @return file object
      */
     public File getResourceCadFile(String fileName) {
-        return resourceFile("cad-files" + fileName);
+        return resourceFile("cad-files" + File.separatorChar + fileName);
     }
 
     private File resourceFile(String fileName) {
