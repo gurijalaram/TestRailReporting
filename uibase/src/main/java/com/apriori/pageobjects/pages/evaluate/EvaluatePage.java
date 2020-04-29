@@ -736,12 +736,22 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
+     * Checks if DFM Risk Icon is displayed
+     *
+     * @return Risk Level
+     */
+    public boolean isDFMRiskIconDisplayed() {
+        return pageUtils.isElementDisplayed(dfmRiskIcon);
+
+    }
+
+    /**
      * Gets the dfm risk Icon
      *
      * @return Risk Level
      */
     public String getDFMRiskIcon() {
-        pageUtils.waitForElementToAppear(dfmRiskIcon);
+        pageUtils.isElementDisplayed(dfmRiskIcon);
         return dfmRiskIcon.getAttribute("outerHTML");
     }
 

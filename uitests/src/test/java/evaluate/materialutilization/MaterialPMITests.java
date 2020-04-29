@@ -30,7 +30,7 @@ public class MaterialPMITests extends TestBase {
     private UserCredentials currentUser;
 
     private File resourceFile;
-    private File cadResourceFile;
+
 
     public MaterialPMITests() {
         super();
