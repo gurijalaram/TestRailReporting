@@ -25,5 +25,5 @@ dependencies {
     implementation group: 'com.fbc', name: 'fbc-util-core', version: '+'
     implementation group: 'com.fbc', name: 'fbc-boot', version: '+'
 
-    implementation 'com.apriori:apriori-commons-testutil:+'
+    implementation group: 'com.apriori', name: 'apriori-commons-testutil', version: '+'
 }
