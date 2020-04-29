@@ -280,9 +280,8 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Clicks apply and ok
-     *
-     * @return Generic Report page object
+     * Clicks ok
+     * @return Instance of Generic Report Page object
      */
     public GenericReportPage clickOk() {
         pageUtils.waitForElementAndClick(okButton);
@@ -662,7 +661,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage clickApply() {
         pageUtils.waitForElementAndClick(applyButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        applyButton.click();
         return this;
     }
 
