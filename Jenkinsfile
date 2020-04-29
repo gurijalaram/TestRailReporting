@@ -37,11 +37,26 @@ pipeline {
                 sh """
                     docker build \
                         --no-cache \
-                        --tag automation-qa-build:latest \
+                        --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
                         .
                 """
             }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+                sh """
+                    docker run \
+                        ${buildInfo.name}-build-${timeStamp}:latest
+                """
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Cleaning up..'
+            sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
         }
     }
 }
