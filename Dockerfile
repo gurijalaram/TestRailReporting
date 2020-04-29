@@ -29,12 +29,6 @@ COPY . .
 WORKDIR /automation-workspace/build
 RUN gradle clean fatJar
 
-# Test.
-FROM build AS test
-ARG ORG_GRADLE_PROJECT_mavenUser
-ARG ORG_GRADLE_PROJECT_mavenPassword
-RUN gradle clean :apitests:test --tests FmsAPISuite -DthreadCount=1 -Denv=cid-aut -Dmode=QA
-
 # App image.
 FROM runtime AS final
 COPY --from=sdk automation-workspace/apitests/build/libs/automation-qa*.jar ./automation-tests.jar
