@@ -32,18 +32,26 @@ subprojects {
 
         maven {
             credentials {
-                username "deployment"
-                password "deployment123"
+                username = "deployment"
+                password = "deployment123"
             }
-            url 'https://nexus.apriori.com/content/repositories/apriori-snapshots'
+            url = 'https://nexus.apriori.com/content/repositories/apriori-snapshots'
         }
 
         maven {
             credentials {
-                username "deployment"
-                password "deployment123"
+                username = "deployment"
+                password = "deployment123"
             }
-            url 'https://nexus.apriori.com/content/repositories/thirdparty'
+            url = 'https://nexus.apriori.com/content/repositories/apriori-releases'
+        }
+
+        maven {
+            credentials {
+                username = "deployment"
+                password = "deployment123"
+            }
+            url = 'https://nexus.apriori.com/content/repositories/thirdparty'
         }
     }
 
