@@ -1,10 +1,18 @@
 def buildInfo
 def buildInfoFile = 'build-info.yml'
 def branchName = env.BRANCH_NAME
+def changeBranch = env.CHANGE_BRANCH ?: ''
+def environment = [profile: 'development', region: 'us-east-1']
 def timeStamp = new Date().format('yyyyMMddHHmmss')
 
 pipeline {
-    agent any
+    agent {
+        label 'loki'
+    }
+
+    tools {
+        gradle "Gradle"
+    }
 
     stages {
         stage('Initialize') {
@@ -27,7 +35,6 @@ pipeline {
             }
         }
         stage('Build') {
-            when { expression { shouldBuild } }
             steps {
                 echo 'Building..'
                 withCredentials([usernamePassword(
@@ -38,7 +45,7 @@ pipeline {
                         docker build \
                             --no-cache \
                             --target build \
-                            --tag ${buildInfo.name}-build-${timeStamp}:latest \
+                            --tag automation-qa-build:latest \
                             --label \"build-date=${timeStamp}\" \
                             --build-arg ORG_GRADLE_PROJECT_mavenUser=${NEXUS_USER} \
                             --build-arg ORG_GRADLE_PROJECT_mavenPassword=${NEXUS_PASS} \
@@ -46,47 +53,6 @@ pipeline {
                     """
                 }
             }
-        }
-        stage('Test') {
-            when { expression { shouldBuild } }
-            steps {
-                echo 'Testing..'
-                withCredentials([usernamePassword(
-                    credentialsId: 'NEXUS_APRIORI_COM',
-                    passwordVariable: 'NEXUS_PASS',
-                    usernameVariable: 'NEXUS_USER')]) {
-                    sh """
-                        docker build \
-                            --target test \
-                            --tag ${buildInfo.name}-test-${timeStamp}:latest \
-                            --label \"build-date=${timeStamp}\" \
-                            --build-arg ORG_GRADLE_PROJECT_mavenUser=${NEXUS_USER} \
-                            --build-arg ORG_GRADLE_PROJECT_mavenPassword=${NEXUS_PASS} \
-                            .
-                   """
-                }
-
-                // Copy out build/test artifacts.
-                sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
-                sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/build build"
-                sh "docker rm ${buildInfo.name}-test-${timeStamp}"
-                sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
-
-                publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'build/reports/tests/test',
-                    reportFiles: 'index.html',
-                    reportName: "${buildInfo.name} Test Report"
-                ])
-            }
-        }
-    }
-    post {
-        always {
-            echo 'Cleaning up..'
-            sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
         }
     }
 }
