@@ -1,8 +1,5 @@
 def buildInfo
 def buildInfoFile = 'build-info.yml'
-def branchName = env.BRANCH_NAME
-def changeBranch = env.CHANGE_BRANCH ?: ''
-def environment = [profile: 'development', region: 'us-east-1']
 def timeStamp = new Date().format('yyyyMMddHHmmss')
 
 pipeline {
@@ -37,21 +34,16 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                withCredentials([usernamePassword(
-                    credentialsId: 'NEXUS_APRIORI_COM',
-                    passwordVariable: 'NEXUS_PASS',
-                    usernameVariable: 'NEXUS_USER')]) {
-                    sh """
-                        docker build \
-                            --no-cache \
-                            --target build \
-                            --tag automation-qa-build:latest \
-                            --label \"build-date=${timeStamp}\" \
-                            --build-arg ORG_GRADLE_PROJECT_mavenUser=${NEXUS_USER} \
-                            --build-arg ORG_GRADLE_PROJECT_mavenPassword=${NEXUS_PASS} \
-                            .
-                    """
-                }
+                sh """
+                    docker build \
+                        --no-cache \
+                        --target build \
+                        --tag automation-qa-build:latest \
+                        --label \"build-date=${timeStamp}\" \
+                        --build-arg ORG_GRADLE_PROJECT_mavenUser=${NEXUS_USER} \
+                        --build-arg ORG_GRADLE_PROJECT_mavenPassword=${NEXUS_PASS} \
+                        .
+                """
             }
         }
     }
