@@ -16,12 +16,6 @@ public class MachiningDTCReportPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(MachiningDTCReportPage.class);
 
-    @FindBy(xpath = "//*[local-name()='svg']//*[local-name()='g' and @class='highcharts-series-group']//*[local-name()='g'][2]//*[local-name()='path'][44]")
-    private WebElement currentBlob;
-
-    @FindBy(css = "tspan:nth-child(5)")
-    private WebElement tooltipValueElement;
-
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -31,21 +25,5 @@ public class MachiningDTCReportPage extends GenericReportPage {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-    }
-
-    /**
-     * Gets value from tooltip on chart
-     *
-     * @return
-     */
-    public BigDecimal getValueFromCentralCircleInChart() {
-        pageUtils.waitForElementToAppear(currentBlob);
-        Actions builder = new Actions(driver).moveToElement(currentBlob);
-        builder.perform();
-        pageUtils.waitForElementToAppear(tooltipValueElement);
-        String value = tooltipValueElement.getAttribute("textContent")
-            .replace(",", "")
-            .replace(" ", "");
-        return new BigDecimal(value);
     }
 }
