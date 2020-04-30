@@ -44,6 +44,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
     private WebElement tooltipPartNameElement;
 
+    @FindBy(xpath = "//span[contains(text(), 'Comparison')]")
+    private WebElement comparisonButton;
+
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
@@ -267,15 +270,25 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Opens new tab and switches to it
      *
-     * @return
+     */
+    public void newTabTransfer() {
+        if (pageUtils.getCountOfOpenTabs() == 2) {
+            pageUtils.windowHandler();
+        }
+    }
+
+    /**
+     * Opens new tab with CID open and switches to it
+     * @return current page object
      */
     public GenericReportPage openNewTabAndFocus() {
         pageUtils.jsNewTab();
         pageUtils.windowHandler();
+
         driver.get(Constants.cidURL);
         pageUtils.waitForElementToAppear(cidLogo);
+
         return new GenericReportPage(driver);
     }
 
@@ -286,6 +299,15 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage clickOk() {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
+    }
+
+    /**
+     * Click comparison link
+     * @return instance of current page object
+     */
+    public GenericReportPage clickComparison() {
+        pageUtils.waitForElementAndClick(comparisonButton);
         return this;
     }
 

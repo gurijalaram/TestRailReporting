@@ -206,4 +206,24 @@ public class CastingDtcReportTests extends TestBase {
          */
         assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
+
+    @Test
+    @TestRail(testCaseId = "102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyComparisonReportAvailableAndCorrectData() {
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk();
+
+        //BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
+        //String partName = genericReportPage.getPartNameReports();
+
+        genericReportPage.clickComparison();
+        genericReportPage.newTabTransfer();
+    }
 }
