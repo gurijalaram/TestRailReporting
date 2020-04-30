@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.pages.explore.ScenarioPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,9 +33,6 @@ public class GenericHeader extends PageHeader {
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
-
-    @FindBy(css = "button[data-ap-comp='publishScenarioButton'] .fa")
-    private WebElement publishButton;
 
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
     private WebElement revertButton;
@@ -225,8 +223,8 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public <T> T publishScenario(Class<T> className) {
-        pageUtils.waitForElementToAppear(publishButton);
-        pageUtils.actionClick(publishButton);
+        By publishButton = By.cssSelector("button[data-ap-comp='publishScenarioButton'] .fa");
+        pageUtils.waitForElementAndClick(publishButton);
         return PageFactory.initElements(driver, className);
     }
 
@@ -239,6 +237,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
+        By publishButton = By.cssSelector("button[data-ap-comp='publishScenarioButton'] .fa");
         pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
