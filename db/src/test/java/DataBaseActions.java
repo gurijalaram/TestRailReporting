@@ -24,8 +24,6 @@ public class DataBaseActions extends TestUtil {
 
     /**
      * To migrate specific scenario from aPriori Professional database to jasper (reporting) database <br>
-     * run this command in cmd from build folder: <br>
-     * gradle clean -DscenarioType=<> -DelementName=<> -DscenarioName=<> -DnewScenarioName=<> -Denv=<env name> :database:test --tests "DataBaseActions.jenkinsMigrationOfSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated"
      */
     @Test
     public void jenkinsMigrationOfSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated() {
