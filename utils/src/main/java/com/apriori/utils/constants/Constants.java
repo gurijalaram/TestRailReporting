@@ -86,7 +86,7 @@ public class Constants {
 
     public static final String scenarioName = System.getProperty(defaultScenarioNameKey);
     public static final String newScenarioName = System.getProperty(defaultNewScenarioNameKey);
-    public static final String elementName = System.getProperty(defaultElementNameKey);
+    public static final String elementName = System.getenv(defaultElementNameKey);
     public static final String scenarioType = System.getProperty(defaultScenarioTypeKey);
 
     public static final Level consoleLogLevel = Level.parse(constantsInit.consoleLogLevelData());
