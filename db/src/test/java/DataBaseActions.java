@@ -29,10 +29,10 @@ public class DataBaseActions extends TestUtil {
     public void jenkinsMigrationOfSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated() {
 
         ResponseWrapper<ExportSchedulesResponse> response = DbMigration.migrateSpecificScenario(
-                MigrationEntity.initWithNewScenarioNameForMigration(ScenarioType.valueOf(Constants.scenarioType),
-                        Constants.elementName,
-                        Constants.scenarioName,
-                        Constants.newScenarioName
+                MigrationEntity.initWithNewScenarioNameForMigration(ScenarioType.valueOf(Constants.SCENARIO_TYPE),
+                        Constants.ELEMENT_NAME,
+                        Constants.SCENARIO_NAME,
+                        Constants.NEW_SCENARIO_NAME
                 )
         );
 

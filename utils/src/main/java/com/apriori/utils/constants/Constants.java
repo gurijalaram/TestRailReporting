@@ -1,6 +1,5 @@
 package com.apriori.utils.constants;
 
-import com.fbc.datamodel.shared.ScenarioType;
 import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
@@ -22,19 +21,24 @@ public class Constants {
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-aut";
 
-    public static final String defaultScenarioNameKey = "scenarioName";
-    public static final String defaultNewScenarioNameKey = "newScenarioName";
-    public static final String defaultElementNameKey = "elementName";
-    public static final String defaultScenarioTypeKey = "scenarioType";
+    public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
+    public static final String DEFAULT_NEW_SCENARIO_NAME_KEY = "newScenarioName";
+    public static final String DEFAULT_ELEMENT_NAME_KEY = "elementName";
+    public static final String DEFAULT_SCENARIO_TYPE_KEY = "scenarioType";
 
-    public static final String scenarioExportChapterUrlPartOne = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
-    public static final String scenarioExportChapterUrlPartTwo = "CIA_UG";
-    public static final String scenarioExportChapterPageTitle = "2 Scenario and System Data Exports";
-    public static final String reportsUrlSuffix = "jasperserver-pro/";
-    public static final String domainDesignerUrlSuffix = String.format("%sdomaindesigner.html", reportsUrlSuffix);
-    public static final String reportsLastSuffix = "flow.html?_flowId=homeFlow";
-    public static final String reportingHelpUrl = "http://help.jaspersoft.com/Default";
-    public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
+    public static final String SCENARIO_NAME = System.getenv(DEFAULT_SCENARIO_NAME_KEY);
+    public static final String NEW_SCENARIO_NAME = System.getenv(DEFAULT_NEW_SCENARIO_NAME_KEY);
+    public static final String ELEMENT_NAME = System.getenv(DEFAULT_ELEMENT_NAME_KEY);
+    public static final String SCENARIO_TYPE = System.getenv(DEFAULT_SCENARIO_TYPE_KEY);
+
+    public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_ONE = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
+    public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_TWO = "CIA_UG";
+    public static final String SCENARIO_EXPORT_CHAPTER_PAGE_TITLE = "2 Scenario and System Data Exports";
+    public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
+    public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
+    public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
+    public static final String REPORTING_HELP_URL = "http://help.jaspersoft.com/Default";
+    public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design (AUTOMATIONENVIRONMENT)";
@@ -88,12 +92,6 @@ public class Constants {
     }
 
     private static String baseUrl;
-
-    public static final String scenarioName = System.getenv(defaultScenarioNameKey);
-    public static final String newScenarioName = System.getenv(defaultNewScenarioNameKey);
-    public static final String elementName = System.getenv(defaultElementNameKey);
-    public static final String scenarioType = System.getenv(defaultScenarioTypeKey);
-
     public static final Level consoleLogLevel = Level.parse(constantsInit.consoleLogLevelData());
     public static final String schemaBasePath = constantsInit.schemaBasePath();
     public static final String GRID_SERVER_URL = constantsInit.gridServerUrl();
