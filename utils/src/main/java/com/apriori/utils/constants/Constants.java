@@ -1,5 +1,6 @@
 package com.apriori.utils.constants;
 
+import com.fbc.datamodel.shared.ScenarioType;
 import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
@@ -20,6 +21,11 @@ public class Constants {
 
     public static final String defaultEnvironmentKey = "env";
     public static final String defaultEnvironmentValue = "cid-aut";
+
+    public static final String defaultScenarioNameKey = "scenarioName";
+    public static final String defaultNewScenarioNameKey = "newScenarioName";
+    public static final String defaultElementNameKey = "elementName";
+    public static final String defaultScenarioTypeKey = "scenarioType";
 
     public static final String scenarioExportChapterUrlPartOne = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
     public static final String scenarioExportChapterUrlPartTwo = "CIA_UG";
@@ -77,6 +83,12 @@ public class Constants {
     }
 
     private static String baseUrl;
+
+    public static final String scenarioName = System.getProperty(defaultScenarioNameKey);
+    public static final String newScenarioName = System.getProperty(defaultNewScenarioNameKey);
+    public static final String elementName = System.getProperty(defaultElementNameKey);
+    public static final String scenarioType = System.getProperty(defaultScenarioTypeKey);
+
     public static final Level consoleLogLevel = Level.parse(constantsInit.consoleLogLevelData());
     public static final String schemaBasePath = constantsInit.schemaBasePath();
     public static final String GRID_SERVER_URL = constantsInit.gridServerUrl();

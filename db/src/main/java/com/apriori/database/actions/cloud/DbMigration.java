@@ -88,8 +88,7 @@ public class DbMigration {
     public ResponseWrapper<Object> doCreateExportSchedules(Object body) {
         RequestEntity requestEntity =
                 this.initDefaultRequest(CidAdminHttpEnum.POST_EXPORT_SCHEDULES)
-                        .setBody(body)
-                        .setStatusCode(HttpStatus.SC_CREATED);
+                        .setBody(body);
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaClearRequest());
     }
