@@ -101,9 +101,9 @@ public class NavigationTests extends TestBase {
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         assertThat(ciaUserGuide.getTabCount(), is(2));
-        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartOne)));
-        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartTwo)));
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.scenarioExportChapterPageTitle)));
+        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
+        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class NavigationTests extends TestBase {
 
         String headerToCheck = logout.getHeaderToCheck();
 
-        assertThat(logout.getHeaderText(), equalTo(headerToCheck));
+        assertThat(logout.getHeaderText(), containsString(headerToCheck));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
@@ -133,7 +133,7 @@ public class NavigationTests extends TestBase {
         String urlToCheck = homePage.getUrlToCheck();
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.reportsUrlSuffix + Constants.reportsLastSuffix));
+        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.REPORTS_URL_SUFFIX + Constants.REPORTS_LAST_SUFFIX));
         assertThat(homePage.getTabCount(), is(equalTo(2)));
         assertThat(homePage.isReportsLogoutDisplayed(), is(true));
         assertThat(homePage.isReportsLogoutEnabled(), is(true));

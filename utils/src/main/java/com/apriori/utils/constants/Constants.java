@@ -7,20 +7,20 @@ import java.util.logging.Level;
 
 
 public class Constants {
-    public static final String defaultProjectIDValue = "177";
-    public static final String defaultProjectIDKey = "RUN_ID";
+    public static final String DEFAULT_PROJECT_ID_VALUE = "177";
+    public static final String DEFAULT_PROJECT_ID_KEY = "RUN_ID";
 
-    public static final String defaultBuildModeKey = "mode";
-    public static final String defaultBuildModeValue = "QA";
+    public static final String DEFAULT_BUILD_MODE_KEY = "mode";
+    public static final String DEFAULT_BUILD_MODE_VALUE = "QA";
 
-    public static final String defaultBaseUrlKey = "url";
+    public static final String DEFAULT_BASE_URL_KEY = "url";
 
-    public static final String defaultUserName = "admin@apriori.com";
-    public static final String defaultPassword = "admin";
-    public static final String defaultAccessLevel = "admin";
+    public static final String DEFAULT_USER_NAME = "admin@apriori.com";
+    public static final String DEFAULT_PASSWORD = "admin";
+    public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
-    public static final String defaultEnvironmentKey = "env";
-    public static final String defaultEnvironmentValue = "cid-aut";
+    public static final String DEFAULT_ENVIRONMENT_KEY = "env";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-aut";
 
     public static final String defaultScenarioNameKey = "scenarioName";
     public static final String defaultNewScenarioNameKey = "newScenarioName";
@@ -36,16 +36,21 @@ public class Constants {
     public static final String reportingHelpUrl = "http://help.jaspersoft.com/Default";
     public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
 
-    public static final String cidTeHeaderText = "CI Design (TE)";
-    public static final String cidAutHeaderText = "CI Design (AUTOMATIONENVIRONMENT)";
+    public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
+    public static final String CID_AUT_HEADER_TEXT = "CI Design (AUTOMATIONENVIRONMENT)";
 
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
     public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
 
-    public static String RUN_ID = defaultProjectIDValue;
+    public static final String DEFAULT_SCENARIO_NAME = "Initial";
+    public static final String PART_SCENARIO_TYPE = "Part";
+    public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
+    public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
 
-    public static String environment = System.getProperty(defaultEnvironmentKey, defaultEnvironmentValue);
+    public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
+
+    public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
 
     private static String serviceHost;
     private static String servicePort;
@@ -77,7 +82,7 @@ public class Constants {
     private static final ConstantsInit constantsInit;
 
     static {
-        System.setProperty(defaultEnvironmentKey, environment);
+        System.setProperty(DEFAULT_ENVIRONMENT_KEY, environment);
 
         constantsInit = ConfigFactory.create(ConstantsInit.class);
     }
@@ -103,7 +108,7 @@ public class Constants {
 
     public static String getBuildMode() {
         if (buildMode == null) {
-            buildMode = System.getProperty(defaultBuildModeKey, defaultBuildModeValue);
+            buildMode = System.getProperty(DEFAULT_BUILD_MODE_KEY, DEFAULT_BUILD_MODE_VALUE);
         }
 
         return buildMode;
@@ -111,7 +116,7 @@ public class Constants {
 
     public static String getBaseUrl() {
         if (baseUrl == null) {
-            baseUrl = System.getProperty(defaultBaseUrlKey, constantsInit.url());
+            baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY, constantsInit.url());
         }
 
         return baseUrl;
