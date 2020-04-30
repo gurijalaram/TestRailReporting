@@ -84,10 +84,10 @@ public class Constants {
 
     private static String baseUrl;
 
-    public static final String scenarioName = System.getProperty(defaultScenarioNameKey);
-    public static final String newScenarioName = System.getProperty(defaultNewScenarioNameKey);
+    public static final String scenarioName = System.getenv(defaultScenarioNameKey);
+    public static final String newScenarioName = System.getenv(defaultNewScenarioNameKey);
     public static final String elementName = System.getenv(defaultElementNameKey);
-    public static final String scenarioType = System.getProperty(defaultScenarioTypeKey);
+    public static final String scenarioType = System.getenv(defaultScenarioTypeKey);
 
     public static final Level consoleLogLevel = Level.parse(constantsInit.consoleLogLevelData());
     public static final String schemaBasePath = constantsInit.schemaBasePath();
