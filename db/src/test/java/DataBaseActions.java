@@ -27,18 +27,15 @@ public class DataBaseActions extends TestUtil {
      */
     @Test
     public void jenkinsMigrationOfSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated() {
+        ResponseWrapper<ExportSchedulesResponse> response = DbMigration.migrateSpecificScenario(
+                MigrationEntity.initWithNewScenarioNameForMigration(ScenarioType.valueOf(Constants.SCENARIO_TYPE),
+                        Constants.ELEMENT_NAME,
+                        Constants.SCENARIO_NAME,
+                        Constants.NEW_SCENARIO_NAME
+                )
+        );
 
-        System.out.println("*********************" + System.getProperty("JENKINS_TEST"));
-
-//        ResponseWrapper<ExportSchedulesResponse> response = DbMigration.migrateSpecificScenario(
-//                MigrationEntity.initWithNewScenarioNameForMigration(ScenarioType.valueOf(Constants.SCENARIO_TYPE),
-//                        Constants.ELEMENT_NAME,
-//                        Constants.SCENARIO_NAME,
-//                        Constants.NEW_SCENARIO_NAME
-//                )
-//        );
-//
-//        this.validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        this.validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
     /**

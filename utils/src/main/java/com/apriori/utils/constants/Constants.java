@@ -29,13 +29,13 @@ public class Constants {
     public static final String DEFAULT_USER_NAME_KEY = "username";
     public static final String DEFAULT_PASSWORD_KEY = "password";
 
-    public static final String SCENARIO_NAME = System.getenv(DEFAULT_SCENARIO_NAME_KEY);
-    public static final String NEW_SCENARIO_NAME = System.getenv(DEFAULT_NEW_SCENARIO_NAME_KEY);
-    public static final String ELEMENT_NAME = System.getenv(DEFAULT_ELEMENT_NAME_KEY);
-    public static final String SCENARIO_TYPE = System.getenv(DEFAULT_SCENARIO_TYPE_KEY);
+    public static final String SCENARIO_NAME = System.getProperty(DEFAULT_SCENARIO_NAME_KEY);
+    public static final String NEW_SCENARIO_NAME = System.getProperty(DEFAULT_NEW_SCENARIO_NAME_KEY);
+    public static final String ELEMENT_NAME = System.getProperty(DEFAULT_ELEMENT_NAME_KEY);
+    public static final String SCENARIO_TYPE = System.getProperty(DEFAULT_SCENARIO_TYPE_KEY);
 
-    public static final String ENV_USER_NAME = System.getenv(DEFAULT_USER_NAME_KEY);
-    public static final String ENV_USER_PASSWORD = System.getenv(DEFAULT_PASSWORD_KEY);
+    public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
+    public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
 
     public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_ONE = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
     public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_TWO = "CIA_UG";

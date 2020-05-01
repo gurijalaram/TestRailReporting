@@ -171,8 +171,8 @@ public class DbMigration {
 
         UserCredentials userCredentials;
 
-        if (Constants.ENV_USER_NAME != null && Constants.ENV_USER_PASSWORD != null) {
-            userCredentials = UserCredentials.init(Constants.ENV_USER_NAME, Constants.ENV_USER_PASSWORD);
+        if (Constants.PROP_USER_NAME != null && Constants.PROP_USER_PASSWORD != null) {
+            userCredentials = UserCredentials.init(Constants.PROP_USER_NAME, Constants.PROP_USER_PASSWORD);
         } else {
             //TODO z: should be uncommented when auth0 and jasper server will have the same test users credentials
             //migrationUser
