@@ -5,4 +5,5 @@
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
+    implementation project(':database')
 }
