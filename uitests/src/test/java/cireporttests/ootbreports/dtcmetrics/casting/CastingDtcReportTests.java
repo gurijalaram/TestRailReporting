@@ -223,7 +223,13 @@ public class CastingDtcReportTests extends TestBase {
         //BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
         //String partName = genericReportPage.getPartNameReports();
 
+        String castingDtcReportSelectedRollUpName = genericReportPage.getSelectedRollupName();
+
         genericReportPage.clickComparison();
         genericReportPage.newTabTransfer();
+
+        String castingDtcComparisonReportSelectedRollUpName = genericReportPage.getSelectedRollupName();
+
+        assertThat(castingDtcReportSelectedRollUpName, is(equalTo(castingDtcComparisonReportSelectedRollUpName)));
     }
 }

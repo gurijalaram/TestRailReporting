@@ -56,6 +56,12 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "a[id='logo']")
     private WebElement cidLogo;
 
+    @FindBy(xpath = "//span[contains(text(), 'Casting DTC Comparison')]")
+    private WebElement dtcCastingReportTitle;
+
+    @FindBy(xpath = "//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span")
+    private WebElement dtcCastingSelectedRollup;
+
     @FindBy(xpath = "//label[contains(@title, 'Earliest Export Date')]/input")
     protected WebElement earliestExportDateInput;
 
@@ -270,12 +276,13 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     *
+     * Moves to new tab (Casting DTC to Casting DTC Comparison)
      */
     public void newTabTransfer() {
         if (pageUtils.getCountOfOpenTabs() == 2) {
             pageUtils.windowHandler();
         }
+        pageUtils.waitForElementToAppear(comparisonButton);
     }
 
     /**
@@ -828,5 +835,14 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getPartNameReports() {
         return tooltipPartNameElement.getText();
+    }
+
+    /**
+     * Gets name of selected rollup on Casting DTC Report
+     * @return Rollup name
+     */
+    public String getSelectedRollupName() {
+        pageUtils.waitForElementToAppear(dtcCastingSelectedRollup);
+        return dtcCastingSelectedRollup.getText();
     }
 }
