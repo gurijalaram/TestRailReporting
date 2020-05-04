@@ -68,7 +68,7 @@ public class CiaUserGuide extends PageHeader {
      * @return String - page title
      */
     public String getAdminUserGuidePageHeading() {
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(1);
         pageUtils.waitForElementToAppear(mainContentIframe);
         driver.switchTo().frame(mainContentIframe);
         pageUtils.waitForElementAppear(adminUserGuideTitle);

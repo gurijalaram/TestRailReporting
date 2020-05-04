@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
@@ -220,16 +221,29 @@ public class CastingDtcReportTests extends TestBase {
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickOk();
 
-        //BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
-        //String partName = genericReportPage.getPartNameReports();
-
-        String castingDtcReportSelectedRollUpName = genericReportPage.getSelectedRollupName();
-
         genericReportPage.clickComparison();
         genericReportPage.newTabTransfer();
 
-        String castingDtcComparisonReportSelectedRollUpName = genericReportPage.getSelectedRollupName();
+        String partName = genericReportPage.getPartNameFromComparisionReport();
+        // get values to assert on later
+        // 1. Hole Issues (Casting Issues section)
+        String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
+        // below code opens CID in same tab (open one) as well as opening new tab - make more generic
+        genericReportPage.openNewTabAndFocus();
 
-        assertThat(castingDtcReportSelectedRollUpName, is(equalTo(castingDtcComparisonReportSelectedRollUpName)));
+        String[] attributesArray = { "Part Name", "Scenario Name" };
+        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
+        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
+                .filterCriteria()
+                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray)
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
+
+        // 2. Get figure to assert against
+
+
+        // 3. Assert that values are the same
+        //assertThat(castingDtcReportSelectedRollUpName, is(equalTo(castingDtcComparisonReportSelectedRollUpName)));
     }
 }

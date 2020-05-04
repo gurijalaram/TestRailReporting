@@ -44,6 +44,15 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
     private WebElement tooltipPartNameElement;
 
+    @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name()='text' and position()=2]")
+    private WebElement partNameComparisonReport;
+
+    @FindBy(xpath = "//*[local-name()='rect' and @y='180.5']")
+    private WebElement partOfCastingChartComparisonReport;
+
+    @FindBy(xpath = "//*[contains(text(), 'Hole Issues')]/following-sibling::*[1]")
+    private WebElement holeIssuesChartOneComparisonReport;
+
     @FindBy(xpath = "//span[contains(text(), 'Comparison')]")
     private WebElement comparisonButton;
 
@@ -280,7 +289,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void newTabTransfer() {
         if (pageUtils.getCountOfOpenTabs() == 2) {
-            pageUtils.windowHandler();
+            pageUtils.windowHandler(1);
         }
         pageUtils.waitForElementToAppear(comparisonButton);
     }
@@ -291,7 +300,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage openNewTabAndFocus() {
         pageUtils.jsNewTab();
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(2);
 
         driver.get(Constants.cidURL);
         pageUtils.waitForElementToAppear(cidLogo);
@@ -314,7 +323,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of current page object
      */
     public GenericReportPage clickComparison() {
-        pageUtils.waitForElementAndClick(comparisonButton);
+        //pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitFor(8000);
+        pageUtils.waitForElementToAppear(comparisonButton);
+        //pageUtils.waitForElementToBeClickable(comparisonButton);
+        //pageUtils.waitForElementAndClick(comparisonButton);
+        comparisonButton.click();
+        //pageUtils.waitForElementAndClick(comparisonButton);
         return this;
     }
 
@@ -835,6 +850,29 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getPartNameReports() {
         return tooltipPartNameElement.getText();
+    }
+
+    /**
+     * Gets part name from DTC Casting Comparison Report
+     * @return String - part name
+     */
+    public String getPartNameFromComparisionReport() {
+        pageUtils.waitForElementToAppear(partNameComparisonReport);
+        return partNameComparisonReport.getText();
+    }
+
+    /**
+     * Gets Hole Issue number from DTC Casting Comparison Report
+     * @return String - value
+     */
+    public String getHoleIssuesFromComparisonReport() {
+        pageUtils.waitForElementToAppear(partOfCastingChartComparisonReport);
+        Actions builder = new Actions(driver).moveToElement(partOfCastingChartComparisonReport);
+        builder.perform();
+
+        pageUtils.waitForElementToAppear(holeIssuesChartOneComparisonReport);
+
+        return holeIssuesChartOneComparisonReport.getText();
     }
 
     /**
