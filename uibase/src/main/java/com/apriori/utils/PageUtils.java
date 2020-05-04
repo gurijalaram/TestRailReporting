@@ -847,14 +847,14 @@ public class PageUtils {
         String headerToReturn = "";
         String ciDesignTextPreFormat = "CI Design %s";
         if (isEnvTE()) {
-            headerToInsert = Constants.cidTeHeaderText;
+            headerToInsert = Constants.CID_TE_HEADER_TEXT;
             headerToReturn = String.format(ciDesignTextPreFormat, headerToInsert);
         } else if (isLocalEnv && !isAdmin) {
             headerToReturn = "aPriori Cost Insight Report";
         } else if (isLocalEnv && isAdmin) {
             headerToReturn = "Log in to Cost Insight | Admin";
         } else {
-            headerToInsert = Constants.cidAutHeaderText;
+            headerToInsert = Constants.CID_AUT_HEADER_TEXT;
             headerToReturn = String.format(ciDesignTextPreFormat, headerToInsert);
         }
         return headerToReturn;
