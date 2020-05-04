@@ -22,7 +22,7 @@ public class Constants {
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-aut";
 
     public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
-    public static final String DEFAULT_NEW_SCENARIO_NAME_KEY = "newScenarioName";
+    public static final String DEFAULT_EXPORT_SET_NAME_KEY = "exportSetName";
     public static final String DEFAULT_ELEMENT_NAME_KEY = "elementName";
     public static final String DEFAULT_SCENARIO_TYPE_KEY = "scenarioType";
 
@@ -30,7 +30,7 @@ public class Constants {
     public static final String DEFAULT_PASSWORD_KEY = "password";
 
     public static final String SCENARIO_NAME = System.getProperty(DEFAULT_SCENARIO_NAME_KEY);
-    public static final String NEW_SCENARIO_NAME = System.getProperty(DEFAULT_NEW_SCENARIO_NAME_KEY);
+    public static final String EXPORT_SET_NAME = System.getProperty(DEFAULT_EXPORT_SET_NAME_KEY);
     public static final String ELEMENT_NAME = System.getProperty(DEFAULT_ELEMENT_NAME_KEY);
     public static final String SCENARIO_TYPE = System.getProperty(DEFAULT_SCENARIO_TYPE_KEY);
 

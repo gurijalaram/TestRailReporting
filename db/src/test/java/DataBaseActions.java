@@ -31,7 +31,7 @@ public class DataBaseActions extends TestUtil {
                 MigrationEntity.initWithNewScenarioNameForMigration(ScenarioType.valueOf(Constants.SCENARIO_TYPE),
                         Constants.ELEMENT_NAME,
                         Constants.SCENARIO_NAME,
-                        Constants.NEW_SCENARIO_NAME
+                        Constants.EXPORT_SET_NAME
                 )
         );
 
