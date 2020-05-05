@@ -77,7 +77,7 @@ pipeline {
                 sh """
                     docker cp \
                     ${buildInfo.name}-build-${timeStamp}:app/allure-results \
-                    allure-results
+                    .
                 """
 
                 // Stop and remove container and image
