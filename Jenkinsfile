@@ -52,10 +52,18 @@ pipeline {
                         --name ${buildInfo.name}-build-${timeStamp} \
                         ${buildInfo.name}-build-${timeStamp}:latest
                 """
-                sh "docker exec ${buildInfo.name}-build-${timeStamp} java -jar automation-tests.jar"
+                sh """
+                    docker exec \
+                        ${buildInfo.name}-build-${timeStamp} \
+                        java -jar automation-tests.jar"
+                """
 
                 // Copy out Allure results
-                sh "docker cp ${buildInfo.name}-build-${timeStamp}:app/allure-results allure-results"
+                sh """
+                    docker cp \
+                    ${buildInfo.name}-build-${timeStamp}:app/allure-results \
+                    allure-results
+                """
 
                 // Stop and remove container and image
                 sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
