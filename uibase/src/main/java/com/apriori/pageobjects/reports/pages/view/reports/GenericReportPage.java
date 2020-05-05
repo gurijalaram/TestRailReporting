@@ -45,7 +45,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement tooltipPartNameElement;
 
     @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name()='text' and position()=2]")
-    private WebElement partNameComparisonReport;
+    private WebElement partNameCastingDtcComparisonReport;
 
     @FindBy(xpath = "//*[local-name()='rect' and @y='180.5']")
     private WebElement partOfCastingChartComparisonReport;
@@ -55,6 +55,15 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//span[contains(text(), 'Comparison')]")
     private WebElement comparisonButton;
+
+    @FindBy(xpath = "//span[contains(text(), 'MLDES')]")
+    private WebElement partNameCastingDtcDetailsReport;
+
+    @FindBy(xpath = "//table[@class='jrPage superfocus']//span[text()='23']")
+    private WebElement holeIssuesCastingDtcDetailsValue;
+
+    @FindBy(xpath = "//span[contains(text(), 'Hole Issues')]")
+    private WebElement holeIssuesCastingDtcDetailsTitle;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -298,9 +307,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * Opens new tab with CID open and switches to it
      * @return current page object
      */
-    public GenericReportPage openNewTabAndFocus() {
+    public GenericReportPage openNewTabAndFocus(int index) {
         pageUtils.jsNewTab();
-        pageUtils.windowHandler(2);
+        pageUtils.windowHandler(index);
 
         driver.get(Constants.cidURL);
         pageUtils.waitForElementToAppear(cidLogo);
@@ -857,8 +866,17 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String - part name
      */
     public String getPartNameFromComparisionReport() {
-        pageUtils.waitForElementToAppear(partNameComparisonReport);
-        return partNameComparisonReport.getText();
+        pageUtils.waitForElementToAppear(partNameCastingDtcComparisonReport);
+        return partNameCastingDtcComparisonReport.getText();
+    }
+
+    /**
+     * Gets part name from DTC Casting Details Report
+     * @return String - part name
+     */
+    public String getPartNameFromDetailsReport() {
+        pageUtils.waitForElementToAppear(partNameCastingDtcDetailsReport);
+        return partNameCastingDtcDetailsReport.getText();
     }
 
     /**
@@ -873,6 +891,15 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(holeIssuesChartOneComparisonReport);
 
         return holeIssuesChartOneComparisonReport.getText();
+    }
+
+    /**
+     * Gets Hole Issue number from DTC Casting Details Report
+     * @return String - value
+     */
+    public String getHoleIssuesFromDetailsReport() {
+        pageUtils.waitForElementAndClick(holeIssuesCastingDtcDetailsTitle);
+        return holeIssuesCastingDtcDetailsValue.getText();
     }
 
     /**

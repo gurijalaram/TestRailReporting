@@ -537,19 +537,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Opens new tab and switches to it
-     *
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage openNewTabAndFocus() {
-        pageUtils.jsNewTab();
-        pageUtils.windowHandler(1);
-        driver.get(Constants.cidURL);
-        pageUtils.waitForElementToAppear(cidLogo);
-        return this;
-    }
-
-    /**
      * Gets date from two months ago
      *
      * @return String

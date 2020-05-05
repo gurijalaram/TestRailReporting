@@ -22,6 +22,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -188,7 +189,7 @@ public class CastingDtcReportTests extends TestBase {
 
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
         String partName = genericReportPage.getPartNameReports();
-        genericReportPage.openNewTabAndFocus();
+        genericReportPage.openNewTabAndFocus(2);
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
         String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
@@ -213,20 +214,20 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
         genericReportPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToLibraryPage()
-                .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-                .clickOk();
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+            .clickOk();
 
         genericReportPage.clickComparison();
         genericReportPage.newTabTransfer();
 
         String partName = genericReportPage.getPartNameFromComparisionReport();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
-        genericReportPage.openNewTabAndFocus();
+        genericReportPage.openNewTabAndFocus(2);
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
         String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
@@ -239,6 +240,37 @@ public class CastingDtcReportTests extends TestBase {
 
         String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
 
+        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyDetailsReportAvailableAndCorrectData() {
+        genericReportPage = new LoginPage(driver)
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+            .clickOk();
+
+        String partName = genericReportPage.getPartNameFromDetailsReport();
+        String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
+        genericReportPage.openNewTabAndFocus(1);
+
+        String[] attributesArray = { "Part Name", "Scenario Name" };
+        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
+
+        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
+                .filterCriteria()
+                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray)
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
+
+        String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
         assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
 }
