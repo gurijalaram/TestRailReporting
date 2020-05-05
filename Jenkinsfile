@@ -59,7 +59,7 @@ pipeline {
 
                 // Stop and remove container and image
                 sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
-                sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
+                sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
             }
         }
     }
