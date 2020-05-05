@@ -3,26 +3,17 @@ package login;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
-import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -81,7 +72,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
-    @Category(CustomerSmokeTests.class)
+    /*@Category(CustomerSmokeTests.class)
     @Test
     @TestRail(testCaseId = {"1574"})
     @Description("Validate Login Dialog")
@@ -144,5 +135,5 @@ public class LoginTests extends TestBase {
             .openScenario(scenarioName, "225_gasket-1-solid1");
 
         assertThat(evaluatePage.isCADConnectionStatus("CAD file connected"), is(true));
-    }
+    }*/
 }
