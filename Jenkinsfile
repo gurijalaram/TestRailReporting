@@ -48,14 +48,26 @@ pipeline {
                 echo 'Testing..'
                 sh """
                     docker run \
+                        -itd \
+                        --name ${buildInfo.name}-build-${timeStamp}
                         ${buildInfo.name}-build-${timeStamp}:latest
                 """
+                sh "docker exec ${buildInfo.name}-build-${timeStamp} java -jar automation-tests.jar"
+
+                // Copy out Allure results
+                sh "docker cp ${buildInfo.name}-build-${timeStamp}:app/allure-results allure-results"
+
+                // Stop and remove container and image
+                sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
+                sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
             }
         }
     }
     post {
         always {
-            echo 'Cleaning up..'
+            // just in case error or something was missed in previous step
+            echo 'Publishing Results & Cleaning up..'
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
         }
     }

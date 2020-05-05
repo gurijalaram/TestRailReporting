@@ -32,4 +32,3 @@ RUN gradle clean fatJar
 # App image.
 FROM runtime AS final
 COPY --from=sdk automation-workspace/apitests/build/libs/automation-qa*.jar ./automation-tests.jar
-ENTRYPOINT ["java", "-cp", "automation-tests.jar", "org.junit.runner.JUnitCore", "com.apriori.apitests.fms.suite.FmsAPISuite"]
