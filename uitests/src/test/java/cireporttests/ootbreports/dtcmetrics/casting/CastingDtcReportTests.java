@@ -225,10 +225,7 @@ public class CastingDtcReportTests extends TestBase {
         genericReportPage.newTabTransfer();
 
         String partName = genericReportPage.getPartNameFromComparisionReport();
-        // get values to assert on later
-        // 1. Hole Issues (Casting Issues section)
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
-        // below code opens CID in same tab (open one) as well as opening new tab - make more generic
         genericReportPage.openNewTabAndFocus();
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
@@ -240,10 +237,8 @@ public class CastingDtcReportTests extends TestBase {
                 .openFirstScenario()
                 .openDesignGuidance();
 
-        // 2. Get figure to assert against
+        String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
 
-
-        // 3. Assert that values are the same
-        //assertThat(castingDtcReportSelectedRollUpName, is(equalTo(castingDtcComparisonReportSelectedRollUpName)));
+        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
 }
