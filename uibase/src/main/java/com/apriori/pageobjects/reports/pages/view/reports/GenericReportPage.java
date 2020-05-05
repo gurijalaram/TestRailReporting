@@ -332,13 +332,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of current page object
      */
     public GenericReportPage clickComparison() {
-        //pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.waitFor(8000);
-        pageUtils.waitForElementToAppear(comparisonButton);
-        //pageUtils.waitForElementToBeClickable(comparisonButton);
-        //pageUtils.waitForElementAndClick(comparisonButton);
-        comparisonButton.click();
-        //pageUtils.waitForElementAndClick(comparisonButton);
+        pageUtils.waitForElementToAppear(castingDtcBubble);
+        pageUtils.waitForElementAndClick(comparisonButton);
         return this;
     }
 
