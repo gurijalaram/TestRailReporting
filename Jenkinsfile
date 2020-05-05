@@ -70,7 +70,7 @@ pipeline {
                         -DthreadCounts=${params.THREAD_COUNT} -Dbrowser=${params.BROWSER} -Durl=${params.TARGET_URL} -Denv=${params.TARGET_ENV} -Dmode=${params.TEST_MODE} -Dheadless=${params.HEADLESS} \
                         -jar \
                         automation-tests.jar \
-                        -tests ${params.TEST_SUITE}
+                        -tests testsuites.${params.TEST_SUITE}
                 """
 
                 // Copy out Allure results
