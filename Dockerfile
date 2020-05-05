@@ -1,5 +1,5 @@
 # Prepare runtime.
-FROM openjdk:8-jre-alpine AS runtime
+FROM openjdk:8-jre-stretch AS runtime
 WORKDIR /app
 
 # Install Chrome.
