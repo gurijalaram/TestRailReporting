@@ -49,7 +49,7 @@ pipeline {
                 sh """
                     docker run \
                         -itd \
-                        --name ${buildInfo.name}-build-${timeStamp}
+                        --name ${buildInfo.name}-build-${timeStamp} \
                         ${buildInfo.name}-build-${timeStamp}:latest
                 """
                 sh "docker exec ${buildInfo.name}-build-${timeStamp} java -jar automation-tests.jar"
