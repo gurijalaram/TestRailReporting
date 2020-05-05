@@ -543,7 +543,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     public AssemblyDetailsReportPage openNewTabAndFocus() {
         pageUtils.jsNewTab();
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(1);
         driver.get(Constants.cidURL);
         pageUtils.waitForElementToAppear(cidLogo);
         return this;

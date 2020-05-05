@@ -44,6 +44,18 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
     private WebElement tooltipPartNameElement;
 
+    @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name()='text' and position()=2]")
+    private WebElement partNameComparisonReport;
+
+    @FindBy(xpath = "//*[local-name()='rect' and @y='180.5']")
+    private WebElement partOfCastingChartComparisonReport;
+
+    @FindBy(xpath = "//*[contains(text(), 'Hole Issues')]/following-sibling::*[1]")
+    private WebElement holeIssuesChartOneComparisonReport;
+
+    @FindBy(xpath = "//span[contains(text(), 'Comparison')]")
+    private WebElement comparisonButton;
+
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
@@ -52,6 +64,12 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(css = "a[id='logo']")
     private WebElement cidLogo;
+
+    @FindBy(xpath = "//span[contains(text(), 'Casting DTC Comparison')]")
+    private WebElement dtcCastingReportTitle;
+
+    @FindBy(xpath = "//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span")
+    private WebElement dtcCastingSelectedRollup;
 
     @FindBy(xpath = "//label[contains(@title, 'Earliest Export Date')]/input")
     protected WebElement earliestExportDateInput;
@@ -267,15 +285,26 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Opens new tab and switches to it
-     *
-     * @return
+     * Moves to new tab (Casting DTC to Casting DTC Comparison)
+     */
+    public void newTabTransfer() {
+        if (pageUtils.getCountOfOpenTabs() == 2) {
+            pageUtils.windowHandler(1);
+        }
+        pageUtils.waitForElementToAppear(comparisonButton);
+    }
+
+    /**
+     * Opens new tab with CID open and switches to it
+     * @return current page object
      */
     public GenericReportPage openNewTabAndFocus() {
         pageUtils.jsNewTab();
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(2);
+
         driver.get(Constants.cidURL);
         pageUtils.waitForElementToAppear(cidLogo);
+
         return new GenericReportPage(driver);
     }
 
@@ -286,6 +315,21 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage clickOk() {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
+    }
+
+    /**
+     * Click comparison link
+     * @return instance of current page object
+     */
+    public GenericReportPage clickComparison() {
+        //pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitFor(8000);
+        pageUtils.waitForElementToAppear(comparisonButton);
+        //pageUtils.waitForElementToBeClickable(comparisonButton);
+        //pageUtils.waitForElementAndClick(comparisonButton);
+        comparisonButton.click();
+        //pageUtils.waitForElementAndClick(comparisonButton);
         return this;
     }
 
@@ -806,5 +850,37 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getPartNameReports() {
         return tooltipPartNameElement.getText();
+    }
+
+    /**
+     * Gets part name from DTC Casting Comparison Report
+     * @return String - part name
+     */
+    public String getPartNameFromComparisionReport() {
+        pageUtils.waitForElementToAppear(partNameComparisonReport);
+        return partNameComparisonReport.getText();
+    }
+
+    /**
+     * Gets Hole Issue number from DTC Casting Comparison Report
+     * @return String - value
+     */
+    public String getHoleIssuesFromComparisonReport() {
+        pageUtils.waitForElementToAppear(partOfCastingChartComparisonReport);
+        Actions builder = new Actions(driver).moveToElement(partOfCastingChartComparisonReport);
+        builder.perform();
+
+        pageUtils.waitForElementToAppear(holeIssuesChartOneComparisonReport);
+
+        return holeIssuesChartOneComparisonReport.getText();
+    }
+
+    /**
+     * Gets name of selected rollup on Casting DTC Report
+     * @return Rollup name
+     */
+    public String getSelectedRollupName() {
+        pageUtils.waitForElementToAppear(dtcCastingSelectedRollup);
+        return dtcCastingSelectedRollup.getText();
     }
 }
