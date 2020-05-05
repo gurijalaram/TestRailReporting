@@ -6,11 +6,7 @@ pipeline {
     agent {
         label 'loki'
     }
-
-    tools {
-        gradle "Gradle"
-    }
-
+    
     stages {
         stage('Initialize') {
             steps {
