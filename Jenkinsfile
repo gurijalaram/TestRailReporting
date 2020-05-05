@@ -3,9 +3,7 @@ def buildInfoFile = 'build-info.yml'
 def timeStamp = new Date().format('yyyyMMddHHmmss')
 
 pipeline {
-    agent {
-        label 'loki'
-    }
+    agent any
     
     stages {
         stage('Initialize') {
