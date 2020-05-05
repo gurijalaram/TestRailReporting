@@ -142,7 +142,7 @@ public class TestBase {
     }
 
     private TestType getTestType(String testType) {
-        TestType type = null;
+        TestType type;
         if (StringUtils.isEmpty(testType)) {
             logger.debug("Test Type was not defined, assuming it to be :" + TestType.UI);
             return TestType.UI;

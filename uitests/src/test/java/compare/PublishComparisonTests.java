@@ -4,12 +4,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.pageobjects.header.GenericHeader;
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.compare.ComparisonTablePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -23,6 +23,7 @@ import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -64,11 +65,10 @@ public class PublishComparisonTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
-            .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "Casting")
-            .apply();
-
-        new GenericHeader(driver).publishScenario(PublishPage.class)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(testScenarioName, "Casting")
+            .apply(GenericHeader.class)
+            .publishScenario(PublishPage.class)
             .selectPublishButton()
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
@@ -95,7 +95,7 @@ public class PublishComparisonTests extends TestBase {
 
 
     @Test
-
+    @Category({SanityTests.class})
     @Issue("AP-58576")
     @TestRail(testCaseId = {"421"})
     @Description("Test a private comparison can be published from explore page")
@@ -118,12 +118,10 @@ public class PublishComparisonTests extends TestBase {
             .addScenario()
             .filterCriteria()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
-            .apply(ComparisonTablePage.class)
-            .selectScenario(testScenarioName, "CASTING")
-            .apply();
-
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.openJobQueue()
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(testScenarioName, "CASTING")
+            .apply(GenericHeader.class)
+            .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
             .closeJobQueue(ComparePage.class);
 

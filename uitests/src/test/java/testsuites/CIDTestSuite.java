@@ -1,7 +1,7 @@
 package testsuites;
 
 import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.utils.runner.CategorySuiteRunner;
 
 import compare.AddScenarioTests;
 import compare.DeleteComparisonTests;
@@ -25,6 +25,7 @@ import evaluate.ReCostScenarioTests;
 import evaluate.ReferencePanelTests;
 import evaluate.RevertScenarioTests;
 import evaluate.SecondaryProcessTests;
+import evaluate.TwoModelMachiningTests;
 import evaluate.designguidance.dtc.DTCCastingTests;
 import evaluate.designguidance.dtc.DTCMachiningTests;
 import evaluate.designguidance.dtc.DTCPlasticMouldingTests;
@@ -43,12 +44,15 @@ import explore.FilterCriteriaTests;
 import explore.PreviewPanelTests;
 import explore.TableHeadersTests;
 import login.LoginTests;
+import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import settings.SettingsTests;
+import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("177")
-@RunWith(ConcurrentSuiteRunner.class)
+@RunWith(CategorySuiteRunner.class)
+@Categories.ExcludeCategory(SmokeTests.class)
 @Suite.SuiteClasses({
     AddScenarioTests.class,
     DeleteComparisonTests.class,
@@ -91,6 +95,7 @@ import settings.SettingsTests;
     ReferencePanelTests.class,
     MaterialPMITests.class,
     RevertScenarioTests.class,
+    TwoModelMachiningTests.class,
 })
 public class CIDTestSuite {
 }

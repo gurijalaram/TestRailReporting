@@ -23,7 +23,7 @@ public class ConsoleLogger {
         LogEntries logEntries = logs.get(LogType.BROWSER);
         logEntries = filterLogEntries(logEntries);
 
-        if (logEntries != null && !logEntries.getAll().isEmpty()) {
+        if (!logEntries.getAll().isEmpty()) {
             MDC.put("methodName", frameworkMethod.getMethod().getDeclaringClass().getSimpleName() + "." + frameworkMethod.getName() + "-console");
             ConsoleLogger.webdriver_logger.debug("Console errors from browser:");
             for (LogEntry logEntry : logEntries) {

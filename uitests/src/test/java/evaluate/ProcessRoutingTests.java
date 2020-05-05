@@ -8,18 +8,18 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.analysis.PropertiesDialogPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.FailuresPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -51,7 +51,7 @@ public class ProcessRoutingTests extends TestBase {
     private MaterialCompositionPage materialCompositionPage;
     private GeometryPage geometryPage;
     private PropertiesDialogPage propertiesDialogPage;
-    private FailuresPage failuresPage;
+    private GuidancePage guidancePage;
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
     private UserCredentials currentUser;
@@ -110,7 +110,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.05, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,801.52"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.05, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.05, Total Capital Investments (USD): 11,753.83"));
     }
 
     @Test
@@ -183,13 +183,13 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
             .checkRoutingBox()
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Injection Molding"), is(true));
@@ -218,7 +218,7 @@ public class ProcessRoutingTests extends TestBase {
 
         routingsPage.selectRouting("Sand Casting")
             .apply()
-            .closeProcessPanel();
+            .closePanel();
 
         evaluatePage = new EvaluatePage(driver);
         routingsPage = evaluatePage.costScenario()
@@ -248,7 +248,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Vat Photopolymerization")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum AlSi10Mg")
             .apply()
@@ -258,11 +258,11 @@ public class ProcessRoutingTests extends TestBase {
         assertThat(evaluatePage.isFailedIconPresent(), is(true));
 
         evaluatePage = new EvaluatePage(driver);
-        failuresPage = evaluatePage.openDesignGuidance()
-            .openFailuresTab()
-            .selectIssueTypeAndGCD("Costing Failed", "Component:1");
+        guidancePage = evaluatePage.openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Costing Failed", "Additive Manufacturing/Surface Treatment is infeasible", "Component:1");
 
-        assertThat(failuresPage.getUncostedMessage(), containsString("This DMLS material is not compatible with Stereolithography."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("This DMLS material is not compatible with Stereolithography."));
     }
 
     @Test
@@ -281,16 +281,16 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getBurdenedCost("1.55"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.56"), is(true));
 
         new EvaluatePage(driver).openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("[CTL]/Waterjet/[Bend]")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("1.95"), is(true));
+        assertThat(evaluatePage.getBurdenedCost("1.96"), is(true));
     }
 
     @Test
@@ -312,7 +312,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openMaterialCompositionTable();
 
@@ -338,7 +338,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Material Jetting")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Visijet M3 Black")
             .apply()
@@ -351,7 +351,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Powder Bed Fusion / Direct Metal Laser Sintering")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum AlSi10Mg")
             .apply()
@@ -379,7 +379,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Structural Foam Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
@@ -389,7 +389,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Injection Mold")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openProcessDetails();
 
@@ -450,7 +450,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Gravity Die Cast")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Gravity Die Casting"), is(true));
@@ -489,7 +489,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("[CTL]/Waterjet/[Bend]")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openDesignGuidance()
             .openGeometryTab()
@@ -871,7 +871,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Gravity Die Cast")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openProcessDetails();
 

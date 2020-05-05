@@ -1,6 +1,7 @@
 package evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -14,6 +15,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -34,7 +36,7 @@ public class RevertScenarioTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @Description("Test revert saved scenario")
-    @TestRail(testCaseId = {"585"})
+    @TestRail(testCaseId = {"3848","585"})
     public void testRevertSavedScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("testpart-4.prt");
@@ -45,15 +47,20 @@ public class RevertScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario(3)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .revert()
+            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+
+        evaluatePage = evaluatePage.revert()
             .revertScenario();
 
         assertThat(evaluatePage.isProcessGroupSelected(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));
     }
 
     @Test
+    @Issue("AP-59845")
     @Category(SmokeTests.class)
     @Description("Test revert unsaved scenario")
     @TestRail(testCaseId = {"586"})

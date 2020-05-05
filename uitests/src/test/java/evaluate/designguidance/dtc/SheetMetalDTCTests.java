@@ -12,7 +12,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -93,7 +93,7 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1840", "1841", "3837"})
+    @TestRail(testCaseId = {"1840", "1841"})
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
 
@@ -102,16 +102,11 @@ public class SheetMetalDTCTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        evaluatePage = loginPage.login(currentUser)
+        guidancePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getDFMRiskIcon(),containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
-
-        evaluatePage = new EvaluatePage(driver);
-        guidancePage = evaluatePage.openDesignGuidance()
+            .costScenario()
+            .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Proximity Warning, Distance", "Complex Holes", "ComplexHole:10");
 
@@ -204,22 +199,19 @@ public class SheetMetalDTCTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
-            .selectInvestigationTopic("Holes and Fillets")
-            .findIssueType("Hole - Standard");
+            .selectInvestigationTopic("Holes and Fillets");
 
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("2")));
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("4")));
 
-        investigationPage.selectInvestigationTopic("Distinct Sizes Count")
-            .findIssueType("Bend Radius");
+        investigationPage.selectInvestigationTopic("Distinct Sizes Count");
 
         assertThat(investigationPage.getInvestigationCell("Bend Radius", "Tool Count"), is(equalTo("1")));
         assertThat(investigationPage.getInvestigationCell("Bend Radius", "GCD Count"), is(equalTo("1")));
         assertThat(investigationPage.getInvestigationCell("Hole Size", "Tool Count"), is(equalTo("2")));
         assertThat(investigationPage.getInvestigationCell("Hole Size", "GCD Count"), is(equalTo("4")));
 
-        investigationPage.selectInvestigationTopic("Machining Setups")
-            .findIssueType("SetupAxis:1");
+        investigationPage.selectInvestigationTopic("Machining Setups");
 
         assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("14")));
     }
@@ -242,17 +234,11 @@ public class SheetMetalDTCTests extends TestBase {
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        evaluatePage = settingsPage.save(ExplorePage.class)
+        guidancePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
-
-        evaluatePage = new EvaluatePage(driver);
-        guidancePage = evaluatePage.openDesignGuidance()
-            .expandGuidancePanel()
+            .costScenario()
+            .openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 

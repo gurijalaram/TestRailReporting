@@ -3,6 +3,7 @@ package evaluate.designguidance.thread;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
@@ -11,7 +12,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.Inves
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -23,6 +24,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -38,6 +40,7 @@ public class ThreadTests extends TestBase {
     private InvestigationPage investigationPage;
     private ThreadingPage threadingPage;
     private WarningPage warningPage;
+    private DesignGuidancePage designGuidancePage;
     private UserCredentials currentUser;
 
     private File resourceFile;
@@ -118,10 +121,9 @@ public class ThreadTests extends TestBase {
             .enterThreadLength("0.28")
             .apply(InvestigationPage.class);
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        threadingPage = evaluatePage.costScenario()
+        designGuidancePage = new DesignGuidancePage(driver);
+        threadingPage = designGuidancePage.closePanel()
+            .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
@@ -131,7 +133,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class})
     @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
@@ -156,6 +158,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"3847"})
     @Description("Test to set dropdown value to yes")
     public void setDropdownValueYes() {
 
@@ -163,12 +166,16 @@ public class ThreadTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openDesignGuidance()
+            .costScenario(3);
+
+        assertThat(evaluatePage.getDFMRiskIcon(), CoreMatchers.containsString("dtc-high-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
+
+        threadingPage = evaluatePage.openDesignGuidance()
             .openInvestigationTab()
             .selectInvestigationTopic("Threading")
             .editThread("Curved Walls", "CurvedWall:1")
@@ -188,7 +195,7 @@ public class ThreadTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
-        warningPage = loginPage.login(currentUser)
+        threadingPage = loginPage.login(currentUser)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -199,8 +206,10 @@ public class ThreadTests extends TestBase {
             .selectThreadDropdown("Yes")
             .enterThreadLength("0.25")
             .apply(InvestigationPage.class)
-            .selectEditButton()
-            .removeThreadLength()
+            .selectEditButton();
+
+        assertThat(threadingPage.isThreadLength("0.25"), is(true));
+        warningPage = threadingPage.removeThreadLength()
             .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
@@ -352,10 +361,9 @@ public class ThreadTests extends TestBase {
             .enterThreadLength("4.85")
             .apply(InvestigationPage.class);
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        threadingPage = evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+        designGuidancePage = new DesignGuidancePage(driver);
+        threadingPage = designGuidancePage.closePanel()
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
@@ -416,9 +424,9 @@ public class ThreadTests extends TestBase {
 
         assertThat(investigationPage.getThreadHeader("(mm)"), is(true));
 
-        investigationPage = new InvestigationPage(driver);
-        threadingPage = investigationPage.editThread("Simple Holes", "SimpleHole:1");
-        assertThat(threadingPage.isThreadLength("20"), is(true));
+        investigationPage.editThread("Simple Holes", "SimpleHole:1");
+
+        assertThat(new ThreadingPage(driver).isThreadLength("20"), is(true));
     }
 
     @Test
@@ -443,10 +451,9 @@ public class ThreadTests extends TestBase {
             .enterThreadLength("4.85")
             .apply(InvestigationPage.class);
 
-        new DesignGuidancePage(driver).closeDesignGuidance();
-
-        evaluatePage = new EvaluatePage(driver);
-        threadingPage = evaluatePage.openSecondaryProcess()
+        designGuidancePage = new DesignGuidancePage(driver);
+        threadingPage = designGuidancePage.closePanel()
+            .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .apply()
             .costScenario()
@@ -522,5 +529,42 @@ public class ThreadTests extends TestBase {
             .editThread("Simple Holes", "SimpleHole:13");
 
         assertThat(threadingPage.isThreadLength("4.06"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"64"})
+    @Description("Validate thread filter behaves correctly in Investigation tab.")
+    public void threadFilter() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CIDLoginPage(driver);
+        investigationPage = loginPage.login(currentUser)
+            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .selectFilterDropdown("Threaded in CAD")
+            .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
+
+        assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("CAD", "4.06"));
+
+        investigationPage.selectEditButton()
+            .enterThreadLength("7")
+            .apply(InvestigationPage.class);
+
+        designGuidancePage = new DesignGuidancePage(driver);
+        investigationPage = designGuidancePage.closePanel()
+            .costScenario()
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectInvestigationTopic("Threading")
+            .selectFilterDropdown("Overridden GCDs")
+            .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
+
+        assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("Manual", "7.00"));
     }
 }

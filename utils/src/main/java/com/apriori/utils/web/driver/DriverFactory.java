@@ -33,7 +33,7 @@ public class DriverFactory {
 
     private static final Logger logger_DriverFactory = LoggerFactory.getLogger(DriverFactory.class);
 
-    private WebDriver driver = null;
+    private WebDriver driver;
     private String server = null;
     private boolean headless = false;
 
@@ -62,7 +62,7 @@ public class DriverFactory {
                     StringBuilder serverBuilder = new StringBuilder(seleniumProtocol + "://" + seleniumHost);
 
                     if (seleniumPort != null && !seleniumPort.isEmpty()) {
-                        serverBuilder.append(":" + seleniumPort);
+                        serverBuilder.append(":").append(seleniumPort);
                     }
                     serverBuilder.append(seleniumPrefix);
 
@@ -90,7 +90,7 @@ public class DriverFactory {
     }
 
     private WebDriver getLocalDriver(String browser, Proxy proxy, String downloadPath, String locale) {
-        WebDriver result = null;
+        WebDriver result;
         DesiredCapabilities dc = new DesiredCapabilities();
 
         File downloadDir = new File(downloadPath);
@@ -167,7 +167,7 @@ public class DriverFactory {
 
         String uuid = StringUtils.isEmpty(System.getProperty("uuid")) ? "ParallelTestsRun" : System.getProperty("uuid");
 
-        RemoteWebDriver result = null;
+        RemoteWebDriver result;
         DesiredCapabilities dc = new DesiredCapabilities();
 
         if (downloadPath != null) {
@@ -223,7 +223,7 @@ public class DriverFactory {
     }
 
     private ChromeOptions getChromeOptions(String downloadPath, String locale) {
-        HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+        HashMap<String, Object> chromePrefs = new HashMap<>();
         // Set Custom Download Dir for downloads in chrome
         if (downloadPath != null) {
             chromePrefs.put("download.default_directory", downloadPath);
@@ -234,6 +234,9 @@ public class DriverFactory {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--allow-outdated-plugins");
+        if (!StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"))) {
+            options.addArguments("--ignore-certificate-errors");
+        }
         options.setExperimentalOption("prefs", chromePrefs);
 
         // TODO: 28/02/2020 quick fix for running on linux. this will be reworked with major changes in the near future
@@ -244,7 +247,7 @@ public class DriverFactory {
             options.addArguments("--disable-dev-shm-usage");
         }
 
-        headless = StringUtils.isEmpty(System.getProperty("headless")) ? false : Boolean.parseBoolean(System.getProperty("headless"));
+        headless = !StringUtils.isEmpty(System.getProperty("headless")) && Boolean.parseBoolean(System.getProperty("headless"));
 
         if (headless) {
             // note: the window size in headless is not limited to the display size

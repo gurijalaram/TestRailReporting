@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.SelectStockPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
+import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -16,6 +16,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -28,7 +29,7 @@ public class ChangeStockSelectionTests extends TestBase {
     private CIDLoginPage loginPage;
     private SelectStockPage selectStockPage;
     private StockPage stockPage;
-    private MaterialPage materialPage;
+    private EvaluatePanelToolbar evaluatePanelToolbar;
 
     private File resourceFile;
 
@@ -38,6 +39,7 @@ public class ChangeStockSelectionTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Issue("AP-59839")
     @TestRail(testCaseId = {"960", "1617", "1618", "1619", "873"})
     @Description("Test making changes to the Material Stock in Sheet Metal, the change is respected and the scenario can be re-cost")
     public void changeStockSelectionTestSheetMetal() {
@@ -49,19 +51,20 @@ public class ChangeStockSelectionTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToStockTab()
             .editStock()
             .selectStock("4.00  mm x 1500 mm x 3000 mm")
             .apply();
+
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
 
-        materialPage = new MaterialPage(driver);
-        stockPage = materialPage.closeMaterialAndUtilizationPanel()
+        stockPage.closePanel()
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToStockTab();
-        assertThat(new StockPage(driver).checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
+
+        assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
     }
 
     @Test
@@ -76,7 +79,7 @@ public class ChangeStockSelectionTests extends TestBase {
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
-            .openMaterialComposition()
+            .openMaterialUtilization()
             .goToStockTab()
             .editStock();
 

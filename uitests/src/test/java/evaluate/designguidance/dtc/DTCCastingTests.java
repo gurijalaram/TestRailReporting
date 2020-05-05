@@ -14,7 +14,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -31,6 +31,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -62,8 +63,9 @@ public class DTCCastingTests extends TestBase {
 
     @Test
     @Issue("AP-57941")
+    @Issue("BA-774")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1045", "1050", "1054", "1056", "1058", "1049", "286"})
+    @TestRail(testCaseId = {"3846", "1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
 
@@ -77,17 +79,22 @@ public class DTCCastingTests extends TestBase {
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
-        guidancePage = settingsPage.save(ExplorePage.class)
+        evaluatePage = settingsPage.save(ExplorePage.class)
             .uploadFile(new Util().getScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(8)
-            .openDesignGuidance()
+            .costScenario(8);
+
+        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
+
+        evaluatePage = new EvaluatePage(driver);
+        guidancePage = evaluatePage.openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:18");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
-        guidancePage.selectIssueTypeAndGCD("Hole Issue, Maximum Hole Depth", "Simple Holes", "SimpleHole:2");
+        guidancePage.selectIssueTypeAndGCD("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
 
         guidancePage.selectIssueTypeAndGCD("Hole Issue", "Minimum Hole Diameter", "SimpleHole:10");
@@ -155,7 +162,6 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:6");
 
@@ -198,10 +204,9 @@ public class DTCCastingTests extends TestBase {
             .selectRoutingsButton()
             .selectRouting("Gravity Die Cast")
             .apply()
-            .closeProcessPanel()
+            .closePanel()
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:7");
 
@@ -215,7 +220,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, SanityTests.class})
     @TestRail(testCaseId = {"1044"})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
@@ -235,7 +240,6 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .expandGuidancePanel()
             .openTolerancesTab();
 
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.DIAMTOLERANCE.getToleranceName()), "9"), Matchers.is(true));

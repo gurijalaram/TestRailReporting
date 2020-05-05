@@ -7,7 +7,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
-import com.apriori.pageobjects.utils.AfterTestUtil;
+import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.Util;
@@ -30,6 +30,7 @@ public class MaterialPMITests extends TestBase {
     private UserCredentials currentUser;
 
     private File resourceFile;
+    private File cadResourceFile;
 
     public MaterialPMITests() {
         super();

@@ -18,9 +18,11 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -40,6 +42,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2628", "2647", "2653"})
     @Description("Assembly File Upload - STEP")
@@ -61,6 +64,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2655", "2647", "2643"})
     @Description("Uploaded STEP assembly and components can be recosted")
@@ -112,7 +116,7 @@ public class AssemblyUploadTests extends TestBase {
             .openAssembly(scenarioName, "ASSEMBLY01")
             .costScenario()
             .selectExploreButton()
-            .openAssembly(scenarioName, "Assembly2")
+            .openAssembly(scenarioName, "ASSEMBLY2")
             .costScenario();
 
         assertThat(evaluatePage.isTotalComponents("22"), is(true));
@@ -123,6 +127,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2651"})
     @Description("User can delete STEP Assembly Pre-Costing")
@@ -144,6 +149,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2652"})
     @Description("User can delete STEP Assembly Post-Costing")
@@ -167,6 +173,8 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-59726")
+    @Category({SanityTests.class})
     @TestRail(testCaseId = {"2648"})
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
     public void testSTEPAssemblyPowderCoatCart() {
