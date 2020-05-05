@@ -2,6 +2,7 @@ import com.apriori.apibase.services.cid.objects.response.ExportSchedulesResponse
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.database.actions.cloud.DbMigration;
 import com.apriori.database.entity.MigrationEntity;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import com.fbc.datamodel.shared.ScenarioType;
@@ -19,6 +20,22 @@ public class DataBaseActions extends TestUtil {
     @Before
     public void createNewDbMigrationInstance() {
         dbMigration = new DbMigration();
+    }
+
+    /**
+     * To migrate specific scenario from aPriori Professional database to jasper (reporting) database <br>
+     */
+    @Test
+    public void jenkinsMigrationOfSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated() {
+        ResponseWrapper<ExportSchedulesResponse> response = DbMigration.migrateSpecificScenario(
+                MigrationEntity.initWithNewScenarioNameForMigration(ScenarioType.valueOf(Constants.SCENARIO_TYPE),
+                        Constants.ELEMENT_NAME,
+                        Constants.SCENARIO_NAME,
+                        Constants.EXPORT_SET_NAME
+                )
+        );
+
+        this.validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
     /**
