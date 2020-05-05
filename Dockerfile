@@ -9,7 +9,7 @@ RUN apt-get -y update
 RUN apt-get -y install google-chrome-stable
 
 # Install Chrome Driver.
-RUN wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
+RUN wget https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip
 RUN unzip chromedriver_linux64.zip
 RUN mv chromedriver /usr/bin/chromedriver
 RUN chown root:root /usr/bin/chromedriver
@@ -40,7 +40,7 @@ COPY . .
 
 #Build.
 WORKDIR /automation-workspace/build
-RUN gradle clean fatJar
+RUN gradle clean fatJar -x test
 
 # App image.
 FROM runtime AS final
