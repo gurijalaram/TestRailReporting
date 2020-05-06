@@ -76,7 +76,7 @@ pipeline {
                 // Copy out Allure results
                 sh """
                     docker cp \
-                    ${buildInfo.name}-build-${timeStamp}:app/allure-results \
+                    ${buildInfo.name}-build-${timeStamp}:app/target/allure-results \
                     .
                 """
 

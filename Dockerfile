@@ -15,8 +15,6 @@ RUN mv chromedriver /usr/bin/chromedriver
 RUN chown root:root /usr/bin/chromedriver
 RUN chmod +x /usr/bin/chromedriver
 
-WORKDIR /app
-
 USER root
 COPY apriori-https-cert.cer .
 RUN keytool -import -trustcacerts -noprompt \
