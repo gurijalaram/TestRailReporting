@@ -3,6 +3,15 @@ def buildInfoFile = 'build-info.yml'
 def timeStamp = new Date().format('yyyyMMddHHmmss')
 
 pipeline {
+    parameters {
+        string(name: 'TEST_TYPE', defaultValue: 'apitests', description: "What type of test is running?")
+        string(name: 'TARGET_ENV', defaultValue: 'cid-aut', description: 'What is the target environment for testing?')
+        string(name: 'TEST_SUITE', defaultValue: 'com.apriori.apitests.fms.suite.FmsAPISuite', description: 'What is the test suite?')
+        string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
+        string(name: 'BROWSER', defaultValue: 'chrome', description: 'What is the browser?')
+        string(name: 'HEADLESS', defaultValue: 'true', description: 'No browser window?')
+    }
+
     agent any
     
     stages {
@@ -49,27 +58,30 @@ pipeline {
                 sh """
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
-                        java -jar automation-tests.jar
+                        java \
+                        ${javaArgs} \
+                        -jar automation-tests.jar \
+                        ${testArgs}
                 """
 
                 // Copy out Allure results
                 sh """
                     docker cp \
-                    ${buildInfo.name}-build-${timeStamp}:app/allure-results \
+                    ${buildInfo.name}-build-${timeStamp}:app/target/allure-results \
                     .
                 """
 
-                // Stop and remove container and image
-                sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
-                sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
+                echo 'Publishing Results'
+                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
     }
     post {
         always {
-            // just in case error or something was missed in previous step
-            echo 'Publishing Results & Cleaning up..'
-            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+            echo 'Cleaning up..'
+            cleanWs()
+            sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
+            sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
         }
     }
