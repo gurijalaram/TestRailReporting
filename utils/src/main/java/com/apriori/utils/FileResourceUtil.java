@@ -60,38 +60,19 @@ public class FileResourceUtil {
     }
 
     /**
-     * Get file from resource folder current module.
-     *
-     * @param resourceFileName
-     * @return file object
-     */
-    public static File getLocalResourceFile(String resourceFileName) {
-        try {
-            return new File(
-                    URLDecoder.decode(
-                            ClassLoader.getSystemResource(resourceFileName).getFile(),
-                            "UTF-8"
-                    )
-            );
-        } catch (UnsupportedEncodingException e) {
-            GenerateNameUtil.logger.error(String.format("Resource file: %s was not found", resourceFileName));
-            throw new IllegalArgumentException();
-        }
-    }
-
-    /**
      * Get file from resource folder
      * @param resourceFileName - the file name
      * @return file object
      */
     public static File getResourceAsFile(String resourceFileName) {
+        String fileSuffix = resourceFileName.split("\\.", 2)[1];
         try {
             InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(resourceFileName);
             if (in == null) {
                 return null;
             }
 
-            File tempFile = File.createTempFile(String.valueOf(in.hashCode()), ".tmp");
+            File tempFile = File.createTempFile(String.valueOf(in.hashCode()), ".".concat(fileSuffix));
             tempFile.deleteOnExit();
 
             try (FileOutputStream out = new FileOutputStream(tempFile)) {
@@ -117,5 +98,25 @@ public class FileResourceUtil {
      */
     public static InputStream getResourceFileStream(String resourceFileName) {
         return ClassLoader.getSystemResourceAsStream(resourceFileName);
+    }
+
+    /**
+     * Get file from resource folder current module.
+     *
+     * @param resourceFileName
+     * @return file object
+     */
+    public static File getLocalResourceFile(String resourceFileName) {
+        try {
+            return new File(
+                    URLDecoder.decode(
+                            ClassLoader.getSystemResource(resourceFileName).getFile(),
+                            "UTF-8"
+                    )
+            );
+        } catch (UnsupportedEncodingException e) {
+            GenerateNameUtil.logger.error(String.format("Resource file: %s was not found", resourceFileName));
+            throw new IllegalArgumentException();
+        }
     }
 }
