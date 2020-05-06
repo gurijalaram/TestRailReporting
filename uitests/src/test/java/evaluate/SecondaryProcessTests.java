@@ -16,7 +16,7 @@ import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -73,7 +73,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .openSecondaryProcess()
@@ -107,7 +107,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
@@ -135,7 +135,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
@@ -172,7 +172,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
@@ -201,7 +201,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -235,7 +235,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
@@ -263,7 +263,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
@@ -286,7 +286,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -309,7 +309,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -335,7 +335,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -364,7 +364,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -401,7 +401,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Paint", "Wet Coat Line")
@@ -439,7 +439,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -465,7 +465,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -491,7 +491,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -524,7 +524,7 @@ public class SecondaryProcessTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         secondaryProcessPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -544,7 +544,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -574,7 +574,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -604,7 +604,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -634,7 +634,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -661,7 +661,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -688,7 +688,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -715,7 +715,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -743,7 +743,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -770,7 +770,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -798,7 +798,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
@@ -820,7 +820,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment", "Passivation")
@@ -842,7 +842,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment", "Passivation")

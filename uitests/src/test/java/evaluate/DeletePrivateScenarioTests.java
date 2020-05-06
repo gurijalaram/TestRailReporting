@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -38,7 +38,7 @@ public class DeletePrivateScenarioTests extends TestBase {
     public void testDeletePrivateScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());

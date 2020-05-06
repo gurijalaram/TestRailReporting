@@ -115,7 +115,7 @@ public class FileResourceUtil {
                     )
             );
         } catch (UnsupportedEncodingException e) {
-            GenerateNameUtil.logger.error(String.format("Resource file: %s was not found", resourceFileName));
+            GenerateStringUtil.logger.error(String.format("Resource file: %s was not found", resourceFileName));
             throw new IllegalArgumentException();
         }
     }

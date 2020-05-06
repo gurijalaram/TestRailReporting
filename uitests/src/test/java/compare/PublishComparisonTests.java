@@ -11,7 +11,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
@@ -49,8 +49,8 @@ public class PublishComparisonTests extends TestBase {
     public void testPublishComparisonComparePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
-        String testComparisonName = new GenerateNameUtil().generateComparisonName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -102,8 +102,8 @@ public class PublishComparisonTests extends TestBase {
     public void testPublishComparisonExplorePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
-        String testComparisonName = new GenerateNameUtil().generateComparisonName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())

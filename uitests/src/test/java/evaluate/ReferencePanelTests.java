@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.ReferenceComparePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -38,7 +38,7 @@ public class ReferencePanelTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -61,7 +61,7 @@ public class ReferencePanelTests extends TestBase {
     public void referencePublicIteration() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
-        String scenarioName = new GenerateNameUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -96,7 +96,7 @@ public class ReferencePanelTests extends TestBase {
     public void expandCollapseReferencePanel() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
-        String scenarioName = new GenerateNameUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
@@ -117,9 +117,9 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate the compare panel can show the comparison between any named scenario of the same component")
     public void compareMultiScenario() {
 
-        String scenarioName = new GenerateNameUtil().generateScenarioName();
-        String scenarioName2 = new GenerateNameUtil().generateScenarioName();
-        String scenarioName3 = new GenerateNameUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
         String componentName = "Rapid Prototyping";
         resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
 

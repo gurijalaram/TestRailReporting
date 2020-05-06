@@ -8,7 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
@@ -38,7 +38,7 @@ public class DeletePublicScenarioTests extends TestBase {
     public void testDeletePublicScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
-        testScenarioName = new GenerateNameUtil().generateScenarioName();
+        testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());

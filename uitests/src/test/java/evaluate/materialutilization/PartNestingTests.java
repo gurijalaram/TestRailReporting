@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtiliz
 import com.apriori.pageobjects.pages.evaluate.materialutilization.PartNestingPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
@@ -44,7 +44,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -63,7 +63,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -86,7 +86,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -110,7 +110,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -134,7 +134,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openMaterialUtilization();

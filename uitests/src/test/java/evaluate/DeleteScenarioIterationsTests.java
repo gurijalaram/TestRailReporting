@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
@@ -41,7 +41,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     public void testDeletePublicScenarioIteration() {
 
         resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -76,7 +76,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     public void testDeletePrivateScenarioIteration() {
 
         resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());

@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -45,11 +45,11 @@ public class NewScenarioNameTests extends TestBase {
     public void testEnterNewScenarioName() {
 
         resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .createNewScenario()
             .enterScenarioName(testScenarioName)
             .save();
@@ -64,8 +64,8 @@ public class NewScenarioNameTests extends TestBase {
     public void testPublishEnterNewScenarioName() {
 
         resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
-        String testNewScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testNewScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -96,9 +96,9 @@ public class NewScenarioNameTests extends TestBase {
     public void multipleUpload() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
-        String scenarioA = new GenerateNameUtil().generateScenarioName();
-        String scenarioB = new GenerateNameUtil().generateScenarioName();
-        String scenarioC = new GenerateNameUtil().generateScenarioName();
+        String scenarioA = new GenerateStringUtil().generateScenarioName();
+        String scenarioB = new GenerateStringUtil().generateScenarioName();
+        String scenarioC = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());

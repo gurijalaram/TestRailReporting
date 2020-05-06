@@ -5,10 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
+public class GenerateStringUtil {
 
-public class GenerateNameUtil {
-
-    static final Logger logger = LoggerFactory.getLogger(GenerateNameUtil.class);
+    static final Logger logger = LoggerFactory.getLogger(GenerateStringUtil.class);
 
     /**
      * Generates the scenario name and adds random number and nano time

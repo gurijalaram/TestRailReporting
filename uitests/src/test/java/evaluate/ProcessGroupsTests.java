@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -47,7 +47,7 @@ public class ProcessGroupsTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
@@ -64,7 +64,7 @@ public class ProcessGroupsTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -78,7 +78,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupBarTube() {
 
         resourceFile = new FileResourceUtil().getResourceFile("350611.prt.1");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -105,7 +105,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupCasting() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_012_009-0020647_hinge_2.prt.1");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -132,7 +132,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupExtrusion() {
 
         resourceFile = new FileResourceUtil().getResourceFile("700-33770-01_A0.stp");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
@@ -159,7 +159,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupFilleting() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_005_flat end mill contouring.SLDPRT");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -186,7 +186,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupGearMaking() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -213,7 +213,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachiningContouring() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -240,7 +240,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachiningGageParts() {
 
         resourceFile = new FileResourceUtil().getResourceFile("GagePart_Case_011_gundrillgagepart-01.prt.1");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -267,7 +267,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachining4AxisMill() {
 
         resourceFile = new FileResourceUtil().getResourceFile("prt0001.prt.1");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -294,7 +294,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachining5AxisMill() {
 
         resourceFile = new FileResourceUtil().getResourceFile("7021021-2_rib.prt.1");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -321,7 +321,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachiningMillTurn() {
 
         resourceFile = new FileResourceUtil().getResourceFile("ms16555-627_1.prt.1");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -348,7 +348,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPartiallyAutomatedMachining() {
 
         resourceFile = new FileResourceUtil().getResourceFile("14100640.stp");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -375,7 +375,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPerimeterMilling() {
 
         resourceFile = new FileResourceUtil().getResourceFile("14100640.stp");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -402,7 +402,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPocketRecognitionSharedWalls() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -429,7 +429,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupRoughMilling() {
 
         resourceFile = new FileResourceUtil().getResourceFile("16-340053-00-04.prt.1");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -456,7 +456,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupSlotExamples() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -483,7 +483,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupTurning() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -510,7 +510,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupBlowMolding() {
 
         resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -537,7 +537,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPowderMetal() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_31_test_part_6_small.prt.2");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -564,7 +564,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupRollBending() {
 
         resourceFile = new FileResourceUtil().getResourceFile("AGCO _ 71421375.prt.1");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -585,7 +585,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupTransferDie() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_011_CENA-009-A1-LH-Rear-Body-Mount.prt");
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());

@@ -11,7 +11,7 @@ import com.apriori.pageobjects.pages.jobqueue.JobQueuePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateNameUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -46,7 +46,7 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "testpart-4";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
@@ -78,8 +78,8 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
 
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
-        String scenarioNameB = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioNameB = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
 
@@ -122,7 +122,7 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
 
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".stp");
 
@@ -153,8 +153,8 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
 
-        String testScenarioName = new GenerateNameUtil().generateScenarioName();
-        String testScenarioName2 = new GenerateNameUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName2 = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".stp");
 
