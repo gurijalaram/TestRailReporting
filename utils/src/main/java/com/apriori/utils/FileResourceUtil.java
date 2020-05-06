@@ -104,7 +104,7 @@ public class FileResourceUtil {
             }
             return tempFile;
         } catch (IOException e) {
-            Util.logger.error(String.format("Resource file: %s was not found", resourceFileName));
+            logger.error(String.format("Resource file: %s was not found", resourceFileName));
             throw new IllegalArgumentException();
         }
     }
