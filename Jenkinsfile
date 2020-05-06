@@ -6,7 +6,7 @@ pipeline {
     parameters {
         string(name: 'TARGET_URL', defaultValue: 'https://automation.awsdev.apriori.com/', description: 'What is the target URL for testing?')
         choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'customer-smoke'], description: 'What is the target environment for testing?')
-        choice(name: 'TEST_SUITE', choices: ['AdminSuite', 'SmokeTestSuite','CIDTestSuite','AdhocTestSuite','CustomerSmokeTestSuite', 'SanityTestSuite'], description: 'What is the test suite?')
+        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'SmokeTestSuite','CIDTestSuite','AdhocTestSuite','CustomerSmokeTestSuite'], description: 'What is the test suite?')
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'What is the browser?')
         string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
