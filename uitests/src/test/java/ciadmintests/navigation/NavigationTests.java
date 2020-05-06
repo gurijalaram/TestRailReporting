@@ -86,8 +86,8 @@ public class NavigationTests extends TestBase {
             .login(UserUtil.getUser())
             .navigateToHelpAdminGuide();
 
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo("Cost Insight Admin:User Guide")));
-        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString("CI_ADMIN_USER_GUIDE")));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
+        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
         assertThat(ciaUserGuide.getTabCount(), is(2));
     }
 

@@ -6,7 +6,6 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
-import com.sun.tools.jxc.ap.Const;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -298,12 +297,14 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Moves to new tab (Casting DTC to Casting DTC Comparison)
+     * @return current page object
      */
-    public void newTabTransfer() {
+    public GenericReportPage newTabTransfer() {
         if (pageUtils.getCountOfOpenTabs() == 2) {
             pageUtils.windowHandler(1);
         }
         pageUtils.waitForElementToAppear(comparisonButton);
+        return this;
     }
 
     /**
