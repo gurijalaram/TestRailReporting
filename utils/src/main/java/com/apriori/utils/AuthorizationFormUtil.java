@@ -5,6 +5,11 @@ import java.util.Map;
 
 public class AuthorizationFormUtil {
 
+    /**
+     * Gets token authorization
+     * @param token - the token
+     * @return string, string
+     */
     public static Map<String, String> getTokenAuthorizationForm(final String token) {
         return new HashMap<String, String>() {{
                 put("Authorization", "Bearer " + token);
@@ -13,6 +18,12 @@ public class AuthorizationFormUtil {
             }};
     }
 
+    /**
+     * Gets default token authorization
+     * @param username - the username
+     * @param password - the password
+     * @return string, string
+     */
     public static Map<String, String> getDefaultAuthorizationForm(final String username, final String password) {
         return new HashMap<String, String>() {{
                 put("grant_type", "password");
