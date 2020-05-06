@@ -143,7 +143,7 @@ public class NavigationTests extends TestBase {
         assertThat(reportsHomePage.isReportsLogoutEnabled(), is(true));
 
         assertThat(reportsHomePage.getCurrentUrl(), containsString(urlToCheck));
-        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.reportsUrlSuffix));
-        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.reportsLoginLocalSuffix));
+        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.REPORTS_URL_SUFFIX));
+        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.REPORTS_LOGIN_LOCAL_SUFFIX));
     }
 }

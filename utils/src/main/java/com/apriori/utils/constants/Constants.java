@@ -19,7 +19,7 @@ public class Constants {
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-aut";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "mssqloraclelocalhost";
 
     public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
     public static final String DEFAULT_EXPORT_SET_NAME_KEY = "exportSetName";
@@ -43,6 +43,7 @@ public class Constants {
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
     public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
     public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
+    public static final String REPORTS_LOGIN_LOCAL_SUFFIX = "login.html";
     public static final String REPORTING_HELP_URL = "http://help.jaspersoft.com/Default";
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
 
