@@ -15,16 +15,6 @@ public class FileResourceUtil {
     private static final Logger logger = LoggerFactory.getLogger(FileResourceUtil.class);
 
     /**
-     * Get resource file stream from a jar file. {getResource}
-     *
-     * @param resourceFileName
-     * @return
-     */
-    public static InputStream getResourceFileStream(String resourceFileName) {
-        return ClassLoader.getSystemResourceAsStream(resourceFileName);
-    }
-
-    /**
      * Gets resource file
      *
      * @param fileName - the file name
@@ -73,7 +63,7 @@ public class FileResourceUtil {
      * Get file from resource folder current module.
      *
      * @param resourceFileName
-     * @return
+     * @return file object
      */
     public static File getLocalResourceFile(String resourceFileName) {
         try {
@@ -89,6 +79,11 @@ public class FileResourceUtil {
         }
     }
 
+    /**
+     * Get file from resource folder
+     * @param resourceFileName - the file name
+     * @return file object
+     */
     public static File getResourceAsFile(String resourceFileName) {
         try {
             InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(resourceFileName);
@@ -112,5 +107,15 @@ public class FileResourceUtil {
             Util.logger.error(String.format("Resource file: %s was not found", resourceFileName));
             throw new IllegalArgumentException();
         }
+    }
+
+    /**
+     * Get resource file stream from a jar file. {getResource}
+     *
+     * @param resourceFileName - the file name
+     * @return input stream
+     */
+    public static InputStream getResourceFileStream(String resourceFileName) {
+        return ClassLoader.getSystemResourceAsStream(resourceFileName);
     }
 }
