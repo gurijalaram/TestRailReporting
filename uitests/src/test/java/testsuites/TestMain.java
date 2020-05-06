@@ -37,8 +37,8 @@ public class TestMain {
                     testsToRun.add(Class.forName(testName));
                 } catch (ClassNotFoundException e) {
                     throw new IllegalArgumentException(String.format(
-                        "Could not find class with name '%s'",
-                        testName
+                            "Could not find class with name '%s'",
+                            testName
                     ));
                 }
             });
@@ -56,10 +56,10 @@ public class TestMain {
         Options options = new Options();
 
         Option testsOption = new Option(
-            "t",
-            "tests",
-            true,
-            "The tests to run. This is a comma-delimited string that cannot include spaces."
+                "t",
+                "tests",
+                true,
+                "The tests to run. This is a comma-delimited string that cannot include spaces."
         );
         testsOption.setRequired(false);
         options.addOption(testsOption);
