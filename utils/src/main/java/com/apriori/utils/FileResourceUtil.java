@@ -4,6 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class FileResourceUtil {
 
@@ -32,11 +35,27 @@ public class FileResourceUtil {
     }
 
     private File resourceFile(String fileName) {
+        String fileSuffix = fileName.split("\\.", 2)[1];
         try {
-            file = new File(ClassLoader.getSystemResource(fileName).getFile());
-        } catch (RuntimeException e) {
+            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
+            if (in == null) {
+                return null;
+            }
+
+            File file = File.createTempFile(String.valueOf(in.hashCode()), ".".concat(fileSuffix));
+            file.deleteOnExit();
+
+            try (FileOutputStream out = new FileOutputStream(file)) {
+                //copy stream
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, bytesRead);
+                }
+            }
+            return file;
+        } catch (RuntimeException | IOException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
         }
-        return file;
     }
 }
