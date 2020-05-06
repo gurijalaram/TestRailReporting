@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class TestMain {
     public static Class defaultTest = CIDTestSuite.class;
 
