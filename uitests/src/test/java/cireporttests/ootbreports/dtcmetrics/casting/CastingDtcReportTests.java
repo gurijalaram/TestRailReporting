@@ -21,6 +21,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.sun.tools.jxc.ap.Const;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -187,8 +188,8 @@ public class CastingDtcReportTests extends TestBase {
             .clickOk();
 
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
-        String partName = genericReportPage.getPartNameReports();
-        genericReportPage.openNewTabAndFocus(2);
+        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_REPORT_NAME);
+        genericReportPage.openNewTabAndFocus(1);
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
         String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
@@ -224,7 +225,7 @@ public class CastingDtcReportTests extends TestBase {
         genericReportPage.clickComparison();
         genericReportPage.newTabTransfer();
 
-        String partName = genericReportPage.getPartNameFromComparisionReport();
+        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_COMPARISON_REPORT_NAME);
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
         genericReportPage.openNewTabAndFocus(2);
 
@@ -255,7 +256,7 @@ public class CastingDtcReportTests extends TestBase {
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk();
 
-        String partName = genericReportPage.getPartNameFromDetailsReport();
+        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_DETAILS_REPORT_NAME);
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
         genericReportPage.openNewTabAndFocus(1);
 
@@ -270,6 +271,7 @@ public class CastingDtcReportTests extends TestBase {
                 .openDesignGuidance();
 
         String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
+        
         assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
 }

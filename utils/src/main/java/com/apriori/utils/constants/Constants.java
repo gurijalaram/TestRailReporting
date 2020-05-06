@@ -49,6 +49,10 @@ public class Constants {
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design (AUTOMATIONENVIRONMENT)";
 
+    public static final String CASTING_DTC_REPORT_NAME = "DTC Casting";
+    public static final String CASTING_DTC_COMPARISON_REPORT_NAME = "DTC Casting Comparison";
+    public static final String CASTING_DTC_DETAILS_REPORT_NAME = "DTC Casting Details";
+
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
     public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
