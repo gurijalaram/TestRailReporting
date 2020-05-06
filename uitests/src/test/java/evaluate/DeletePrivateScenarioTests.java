@@ -38,7 +38,7 @@ public class DeletePrivateScenarioTests extends TestBase {
     public void testDeletePrivateScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());

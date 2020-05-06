@@ -38,7 +38,7 @@ public class ReferencePanelTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -61,7 +61,7 @@ public class ReferencePanelTests extends TestBase {
     public void referencePublicIteration() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -96,7 +96,7 @@ public class ReferencePanelTests extends TestBase {
     public void expandCollapseReferencePanel() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
@@ -117,9 +117,9 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate the compare panel can show the comparison between any named scenario of the same component")
     public void compareMultiScenario() {
 
-        String scenarioName = new Util().getScenarioName();
-        String scenarioName2 = new Util().getScenarioName();
-        String scenarioName3 = new Util().getScenarioName();
+        String scenarioName = new Util().generateScenarioName();
+        String scenarioName2 = new Util().generateScenarioName();
+        String scenarioName3 = new Util().generateScenarioName();
         String componentName = "Rapid Prototyping";
         resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
 

@@ -39,7 +39,7 @@ public class PublishNewCostedTests extends TestBase {
     @TestRail(testCaseId = {"386", "388"})
     public void testPublishNewCostedScenario() {
 
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
         String partName = "Testpart-4";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
@@ -60,7 +60,7 @@ public class PublishNewCostedTests extends TestBase {
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
 
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
         String partName = "Testpart-4";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 

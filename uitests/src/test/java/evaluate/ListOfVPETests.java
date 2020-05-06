@@ -34,7 +34,7 @@ public class ListOfVPETests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile);
+            .uploadFile(new Util().generateScenarioName(), resourceFile);
 
         assertThat(evaluatePage.getListOfVPEs(), hasItems(VPEEnum.getNames()));
     }

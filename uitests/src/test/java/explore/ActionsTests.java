@@ -51,7 +51,7 @@ public class ActionsTests extends TestBase {
     public void addScenarioNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -83,7 +83,7 @@ public class ActionsTests extends TestBase {
     public void addStatusColumn() {
 
         resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -122,7 +122,7 @@ public class ActionsTests extends TestBase {
     public void lockUnlockScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -158,7 +158,7 @@ public class ActionsTests extends TestBase {
     public void actionsEvaluatePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
@@ -187,7 +187,7 @@ public class ActionsTests extends TestBase {
     public void infoNotesPanel() {
 
         resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
@@ -216,7 +216,7 @@ public class ActionsTests extends TestBase {
     public void actionsAssign() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -248,7 +248,7 @@ public class ActionsTests extends TestBase {
     public void actionsAssignEvaluatePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -281,7 +281,7 @@ public class ActionsTests extends TestBase {
     public void filterAssignee() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -304,7 +304,7 @@ public class ActionsTests extends TestBase {
     public void editNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -342,7 +342,7 @@ public class ActionsTests extends TestBase {
     public void cancelEditNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -378,7 +378,7 @@ public class ActionsTests extends TestBase {
     public void deleteNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -416,7 +416,7 @@ public class ActionsTests extends TestBase {
     public void readUsersNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
 
@@ -455,7 +455,7 @@ public class ActionsTests extends TestBase {
     public void filterStatusCost() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -485,7 +485,7 @@ public class ActionsTests extends TestBase {
     public void deleteDescription() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -522,7 +522,7 @@ public class ActionsTests extends TestBase {
     public void cannotUseScript() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())

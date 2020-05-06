@@ -50,7 +50,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -68,7 +68,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -86,7 +86,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
@@ -104,7 +104,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
@@ -122,7 +122,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 

@@ -48,7 +48,7 @@ public class ChangeStockSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -76,7 +76,7 @@ public class ChangeStockSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         selectStockPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()

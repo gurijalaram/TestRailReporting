@@ -85,7 +85,7 @@ public class Util {
      *
      * @return string
      */
-    public String getScenarioName() {
+    public String generateScenarioName() {
         return "AutoScenario" + new Random().nextInt(1000) + "-" + System.nanoTime();
     }
 
@@ -94,7 +94,7 @@ public class Util {
      *
      * @return string
      */
-    public String getComparisonName() {
+    public String generateComparisonName() {
         return "AutoComparison" + new Random().nextInt(1000) + "-" + System.nanoTime();
     }
 }

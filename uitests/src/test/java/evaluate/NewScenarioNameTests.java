@@ -45,11 +45,11 @@ public class NewScenarioNameTests extends TestBase {
     public void testEnterNewScenarioName() {
 
         resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .createNewScenario()
             .enterScenarioName(testScenarioName)
             .save();
@@ -64,8 +64,8 @@ public class NewScenarioNameTests extends TestBase {
     public void testPublishEnterNewScenarioName() {
 
         resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
-        String testScenarioName = new Util().getScenarioName();
-        String testNewScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
+        String testNewScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -96,9 +96,9 @@ public class NewScenarioNameTests extends TestBase {
     public void multipleUpload() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
-        String scenarioA = new Util().getScenarioName();
-        String scenarioB = new Util().getScenarioName();
-        String scenarioC = new Util().getScenarioName();
+        String scenarioA = new Util().generateScenarioName();
+        String scenarioB = new Util().generateScenarioName();
+        String scenarioC = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());

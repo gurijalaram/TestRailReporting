@@ -37,7 +37,7 @@ public class PreviewPanelTests extends TestBase {
     public void testPreviewPanelDisplay() {
 
         String partName = "Casting";
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);
@@ -61,7 +61,7 @@ public class PreviewPanelTests extends TestBase {
     public void previewPanelMetrics() {
 
         resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())

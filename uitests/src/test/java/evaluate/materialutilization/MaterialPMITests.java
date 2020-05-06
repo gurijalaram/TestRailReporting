@@ -62,7 +62,7 @@ public class MaterialPMITests extends TestBase {
             .selectMaterial("Aluminum, Stock, ANSI 6061");
         new SettingsPage(driver).save(ExplorePage.class);
 
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
+        new ExplorePage(driver).uploadFile(new Util().generateScenarioName(), resourceFile)
             .costScenario(3);
 
         evaluatePage = new EvaluatePage(driver);

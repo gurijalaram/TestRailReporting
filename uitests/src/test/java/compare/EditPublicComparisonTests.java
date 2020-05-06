@@ -46,7 +46,7 @@ public class EditPublicComparisonTests extends TestBase {
     @Description("Test publishing a comparison shows the comparison in the comparison table")
     public void testPublishComparison() {
 
-        String testComparisonName = new Util().getComparisonName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -69,7 +69,7 @@ public class EditPublicComparisonTests extends TestBase {
     @Description("Test editing a published comparison shows the comparison view")
     public void testEditPublicComparison() {
 
-        String testComparisonName = new Util().getComparisonName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -96,8 +96,8 @@ public class EditPublicComparisonTests extends TestBase {
     public void testRemoveFromComparison() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
-        String testScenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String testScenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -126,8 +126,8 @@ public class EditPublicComparisonTests extends TestBase {
     public void testChangeComparisonBasis() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
-        String scenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String scenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
         String testAssemblyName = "Assembly2";
         String partName = "PART0001";
 

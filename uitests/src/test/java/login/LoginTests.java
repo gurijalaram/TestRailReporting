@@ -127,7 +127,7 @@ public class LoginTests extends TestBase {
     public void cadConnectionRemains() {
 
         resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())

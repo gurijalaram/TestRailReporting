@@ -42,7 +42,7 @@ public class AddScenarioTests extends TestBase {
     public void filterAddPrivateScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -53,7 +53,7 @@ public class AddScenarioTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new Util().getComparisonName())
+        scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new Util().generateComparisonName())
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -69,7 +69,7 @@ public class AddScenarioTests extends TestBase {
     public void filterAddPublicScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
 
@@ -80,7 +80,7 @@ public class AddScenarioTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .createNewComparison()
-            .enterComparisonName(new Util().getComparisonName())
+            .enterComparisonName(new Util().generateComparisonName())
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -108,7 +108,7 @@ public class AddScenarioTests extends TestBase {
     @Description("Test all available characters in a comparison name")
     public void comparisonAllCharacters() {
 
-        String testComparisonName = (new Util().getComparisonName() + "!£$%^&*()_+{}~:?><`1-=[]#';|@");
+        String testComparisonName = (new Util().generateComparisonName() + "!£$%^&*()_+{}~:?><`1-=[]#';|@");
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())

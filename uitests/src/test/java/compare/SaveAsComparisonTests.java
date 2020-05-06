@@ -51,9 +51,9 @@ public class SaveAsComparisonTests extends TestBase {
     public void testSaveAsPrivateComparison() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String scenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
-        String testSaveAsComparisonName = new Util().getComparisonName();
+        String scenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
+        String testSaveAsComparisonName = new Util().generateComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         loginPage = new CIDLoginPage(driver);
@@ -87,8 +87,8 @@ public class SaveAsComparisonTests extends TestBase {
     @Description("Test a public comparison can be have Save As performed on it")
     public void testSaveAsPublicComparison() {
 
-        String testComparisonName = new Util().getComparisonName();
-        String testSaveAsComparisonName = new Util().getComparisonName();
+        String testComparisonName = new Util().generateComparisonName();
+        String testSaveAsComparisonName = new Util().generateComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         new CIDLoginPage(driver).login(UserUtil.getUser())
@@ -123,8 +123,8 @@ public class SaveAsComparisonTests extends TestBase {
     public void comparisonNameExists() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String scenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String scenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())

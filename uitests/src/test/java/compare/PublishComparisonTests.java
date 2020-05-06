@@ -49,8 +49,8 @@ public class PublishComparisonTests extends TestBase {
     public void testPublishComparisonComparePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
-        String testScenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String testScenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -102,8 +102,8 @@ public class PublishComparisonTests extends TestBase {
     public void testPublishComparisonExplorePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
-        String testScenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String testScenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())

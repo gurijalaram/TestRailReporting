@@ -46,7 +46,7 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
         String partName = "testpart-4";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
@@ -78,8 +78,8 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
 
-        String testScenarioName = new Util().getScenarioName();
-        String scenarioNameB = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
+        String scenarioNameB = new Util().generateScenarioName();
         String partName = "PowderMetalShaft";
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
 
@@ -122,7 +122,7 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
 
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
         String partName = "PowderMetalShaft";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".stp");
 
@@ -153,8 +153,8 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
 
-        String testScenarioName = new Util().getScenarioName();
-        String testScenarioName2 = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName2 = new Util().generateScenarioName();
         String partName = "PowderMetalShaft";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".stp");
 

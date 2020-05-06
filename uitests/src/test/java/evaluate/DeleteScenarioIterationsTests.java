@@ -41,7 +41,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     public void testDeletePublicScenarioIteration() {
 
         resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
@@ -76,7 +76,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     public void testDeletePrivateScenarioIteration() {
 
         resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());

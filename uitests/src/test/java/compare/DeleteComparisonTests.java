@@ -49,8 +49,8 @@ public class DeleteComparisonTests extends TestBase {
     public void testDeletePrivateComparisonExplore() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
-        String testScenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String testScenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
 
         new CIDLoginPage(driver).login(UserUtil.getUser())
             .uploadFile(testScenarioName, resourceFile)
@@ -92,7 +92,7 @@ public class DeleteComparisonTests extends TestBase {
     @Description("Test a private comparison can be deleted from the comparison page")
     public void testDeletePrivateComparison() {
 
-        String testComparisonName = new Util().getComparisonName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -117,8 +117,8 @@ public class DeleteComparisonTests extends TestBase {
     public void testPublicComparisonDeleteExplore() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
-        String testScenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String testScenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
 
@@ -164,8 +164,8 @@ public class DeleteComparisonTests extends TestBase {
     public void deletePublicComparisonPage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("testpart-4.prt");
-        String testScenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String testScenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
 
@@ -209,8 +209,8 @@ public class DeleteComparisonTests extends TestBase {
     public void deletePublicPrivateComparison() {
 
         resourceFile = new FileResourceUtil().getResourceFile("testpart-4.prt");
-        String testScenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String testScenarioName = new Util().generateScenarioName();
+        String testComparisonName = new Util().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())

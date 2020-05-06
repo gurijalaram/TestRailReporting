@@ -36,7 +36,7 @@ public class ListProcessGroupTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile);
+            .uploadFile(new Util().generateScenarioName(), resourceFile);
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
     }
@@ -49,7 +49,7 @@ public class ListProcessGroupTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile);
+            .uploadFile(new Util().generateScenarioName(), resourceFile);
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(AssemblyProcessGroupEnum.getNames()));
     }

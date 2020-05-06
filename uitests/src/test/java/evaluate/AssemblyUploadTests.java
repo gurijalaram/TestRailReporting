@@ -52,7 +52,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new Util().generateScenarioName(), resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
 
@@ -71,7 +71,7 @@ public class AssemblyUploadTests extends TestBase {
     public void costAssembly() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -134,7 +134,7 @@ public class AssemblyUploadTests extends TestBase {
     public void testSTEPAssemblyDeletePreCost() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
-        scenarioName = new Util().getScenarioName();
+        scenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -156,7 +156,7 @@ public class AssemblyUploadTests extends TestBase {
     public void testSTEPAssemblyDeletePostCost() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
-        scenarioName = new Util().getScenarioName();
+        scenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -180,7 +180,7 @@ public class AssemblyUploadTests extends TestBase {
     public void testSTEPAssemblyPowderCoatCart() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
-        scenarioName = new Util().getScenarioName();
+        scenarioName = new Util().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
