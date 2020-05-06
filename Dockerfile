@@ -31,5 +31,5 @@ RUN gradle clean fatJar
 
 # App image.
 FROM runtime AS final
-ARG MODULE=uitests
+ARG MODULE=apitests
 COPY --from=sdk automation-workspace/$MODULE/build/libs/automation-qa*.jar ./automation-tests.jar
