@@ -12,8 +12,8 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.pageobjects.toolbars.PageHeader;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateNameUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
@@ -51,9 +51,9 @@ public class SaveAsComparisonTests extends TestBase {
     public void testSaveAsPrivateComparison() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String scenarioName = new Util().generateScenarioName();
-        String testComparisonName = new Util().generateComparisonName();
-        String testSaveAsComparisonName = new Util().generateComparisonName();
+        String scenarioName = new GenerateNameUtil().generateScenarioName();
+        String testComparisonName = new GenerateNameUtil().generateComparisonName();
+        String testSaveAsComparisonName = new GenerateNameUtil().generateComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         loginPage = new CIDLoginPage(driver);
@@ -87,8 +87,8 @@ public class SaveAsComparisonTests extends TestBase {
     @Description("Test a public comparison can be have Save As performed on it")
     public void testSaveAsPublicComparison() {
 
-        String testComparisonName = new Util().generateComparisonName();
-        String testSaveAsComparisonName = new Util().generateComparisonName();
+        String testComparisonName = new GenerateNameUtil().generateComparisonName();
+        String testSaveAsComparisonName = new GenerateNameUtil().generateComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         new CIDLoginPage(driver).login(UserUtil.getUser())
@@ -123,8 +123,8 @@ public class SaveAsComparisonTests extends TestBase {
     public void comparisonNameExists() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String scenarioName = new Util().generateScenarioName();
-        String testComparisonName = new Util().generateComparisonName();
+        String scenarioName = new GenerateNameUtil().generateScenarioName();
+        String testComparisonName = new GenerateNameUtil().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())

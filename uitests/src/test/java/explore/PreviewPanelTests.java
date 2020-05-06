@@ -7,8 +7,8 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPanelPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateNameUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
@@ -37,7 +37,7 @@ public class PreviewPanelTests extends TestBase {
     public void testPreviewPanelDisplay() {
 
         String partName = "Casting";
-        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName = new GenerateNameUtil().generateScenarioName();
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);
@@ -61,7 +61,7 @@ public class PreviewPanelTests extends TestBase {
     public void previewPanelMetrics() {
 
         resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
-        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName = new GenerateNameUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())

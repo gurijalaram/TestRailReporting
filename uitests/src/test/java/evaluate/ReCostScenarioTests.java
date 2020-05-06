@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateNameUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -42,7 +42,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -60,7 +60,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -78,7 +78,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -97,7 +97,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -116,7 +116,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
@@ -135,7 +135,7 @@ public class ReCostScenarioTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().generateScenarioName(), resourceFile)
+            .uploadFile(new GenerateNameUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())

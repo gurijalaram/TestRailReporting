@@ -10,8 +10,8 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateNameUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -40,7 +40,7 @@ public class FilterCriteriaTests extends TestBase {
     public void testPrivateCriteriaPart() {
 
         resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
-        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName = new GenerateNameUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -60,7 +60,7 @@ public class FilterCriteriaTests extends TestBase {
     public void testPrivateCriteriaAttribute() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
-        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName = new GenerateNameUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -82,7 +82,7 @@ public class FilterCriteriaTests extends TestBase {
     public void testPrivateCriteriaContains() {
 
         resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
-        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName = new GenerateNameUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -102,7 +102,7 @@ public class FilterCriteriaTests extends TestBase {
     public void testPrivateCriteriaAssembly() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
-        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName = new GenerateNameUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -122,7 +122,7 @@ public class FilterCriteriaTests extends TestBase {
     public void testPublicCriteriaAssemblyStatus() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
-        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName = new GenerateNameUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -150,7 +150,7 @@ public class FilterCriteriaTests extends TestBase {
     public void testPublicCriteriaPart() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName = new GenerateNameUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -171,7 +171,7 @@ public class FilterCriteriaTests extends TestBase {
     public void testPublicCriteriaAssemblyDesc() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
-        String testScenarioName = new Util().generateScenarioName();
+        String testScenarioName = new GenerateNameUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -197,7 +197,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test public criteria comparison")
     public void testPublicCriteriaComparison() {
 
-        String testComparisonName = new Util().generateScenarioName();
+        String testComparisonName = new GenerateNameUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
