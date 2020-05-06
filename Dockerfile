@@ -23,6 +23,7 @@ RUN keytool -import -trustcacerts -noprompt \
     -keystore $JAVA_HOME/lib/security/cacerts \
     -storepass changeit
 
+WORKDIR /app
 # Prepare build workspace.
 FROM gradle:6.1.1-jdk8 AS sdk
 WORKDIR /automation-workspace
