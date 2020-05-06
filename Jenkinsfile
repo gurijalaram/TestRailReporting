@@ -59,9 +59,7 @@ pipeline {
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
-                        ${javaArgs} \
-                        -jar automation-tests.jar \
-                        ${testArgs}
+                        -jar automation-tests.jar
                 """
 
                 // Copy out Allure results
