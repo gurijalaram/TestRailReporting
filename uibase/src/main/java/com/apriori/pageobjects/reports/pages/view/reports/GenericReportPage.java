@@ -6,6 +6,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
+import com.sun.tools.jxc.ap.Const;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -31,6 +32,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
+    private Map<String, WebElement> partNameMap = new HashMap<>();
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name()='path']")
     private WebElement castingDtcBubble;
@@ -42,7 +44,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement tooltipFbcElement;
 
     @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
-    private WebElement tooltipPartNameElement;
+    private WebElement partNameCastingDtcReport;
 
     @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name()='text' and position()=2]")
     private WebElement partNameCastingDtcComparisonReport;
@@ -227,6 +229,7 @@ public class GenericReportPage extends ReportsPageHeader {
         initialiseExportSetHashMap();
         initialiseAssemblyHashMap();
         initialiseCurrencyMap();
+        initialisePartNameMap();
     }
 
     @Override
@@ -508,34 +511,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCurrentCurrency() {
         return pageUtils.getElementText(currentCurrency);
-    }
-
-    /**
-     * Initialises export set hash map
-     */
-    private void initialiseCurrencyMap() {
-        currencyMap.put("GBP", gbpCurrencyOption);
-        currencyMap.put("USD", usdCurrencyOption);
-    }
-
-    /**
-     * Initialises export set hash map
-     */
-    private void initialiseExportSetHashMap() {
-        exportSetMap.put("top-level", topLevelExportSet);
-        exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
-        exportSetMap.put("DTC_Casting", dtcCastingExportSet);
-        exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
-        exportSetMap.put("ROLL_UP A", rollupAExportSet);
-    }
-
-    /**
-     * Initialises assembly hash map
-     */
-    private void initialiseAssemblyHashMap() {
-        assemblyMap.put("SUB-ASSEMBLY (Initial)", subAssemblyOption);
-        assemblyMap.put("SUB-SUB-ASM (Initial)", subSubAsmOption);
-        assemblyMap.put("TOP-LEVEL (Initial)", topLevelOption);
     }
 
     /**
@@ -852,26 +827,19 @@ public class GenericReportPage extends ReportsPageHeader {
      * Get part name from Casting DTC or Machining DTC Report
      * @return String of part name
      */
-    public String getPartNameReports() {
-        return tooltipPartNameElement.getText();
+    public String getPartNameDtcCastingReports(String reportName) {
+        WebElement elementToUse = partNameMap.get(reportName);
+        pageUtils.waitForElementToAppear(elementToUse);
+        return pageUtils.getElementText(elementToUse);
     }
 
     /**
-     * Gets part name from DTC Casting Comparison Report
-     * @return String - part name
+     * Gets Hole Issue number from DTC Casting Details Report
+     * @return String - value
      */
-    public String getPartNameFromComparisionReport() {
-        pageUtils.waitForElementToAppear(partNameCastingDtcComparisonReport);
-        return partNameCastingDtcComparisonReport.getText();
-    }
-
-    /**
-     * Gets part name from DTC Casting Details Report
-     * @return String - part name
-     */
-    public String getPartNameFromDetailsReport() {
-        pageUtils.waitForElementToAppear(partNameCastingDtcDetailsReport);
-        return partNameCastingDtcDetailsReport.getText();
+    public String getHoleIssuesFromDetailsReport() {
+        pageUtils.waitForElementAndClick(holeIssuesCastingDtcDetailsTitle);
+        return pageUtils.getElementText(holeIssuesCastingDtcDetailsValue);
     }
 
     /**
@@ -888,14 +856,6 @@ public class GenericReportPage extends ReportsPageHeader {
         return holeIssuesChartOneComparisonReport.getText();
     }
 
-    /**
-     * Gets Hole Issue number from DTC Casting Details Report
-     * @return String - value
-     */
-    public String getHoleIssuesFromDetailsReport() {
-        pageUtils.waitForElementAndClick(holeIssuesCastingDtcDetailsTitle);
-        return holeIssuesCastingDtcDetailsValue.getText();
-    }
 
     /**
      * Gets name of selected rollup on Casting DTC Report
@@ -904,5 +864,42 @@ public class GenericReportPage extends ReportsPageHeader {
     public String getSelectedRollupName() {
         pageUtils.waitForElementToAppear(dtcCastingSelectedRollup);
         return dtcCastingSelectedRollup.getText();
+    }
+
+    /**
+     * Initialises export set hash map
+     */
+    private void initialiseCurrencyMap() {
+        currencyMap.put("GBP", gbpCurrencyOption);
+        currencyMap.put("USD", usdCurrencyOption);
+    }
+
+    /**
+     * Initialises export set hash map
+     */
+    private void initialiseExportSetHashMap() {
+        exportSetMap.put("top-level", topLevelExportSet);
+        exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
+        exportSetMap.put("DTC_Casting", dtcCastingExportSet);
+        exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
+        exportSetMap.put("ROLL_UP A", rollupAExportSet);
+    }
+
+    /**
+     * Initialises assembly hash map
+     */
+    private void initialiseAssemblyHashMap() {
+        assemblyMap.put("SUB-ASSEMBLY (Initial)", subAssemblyOption);
+        assemblyMap.put("SUB-SUB-ASM (Initial)", subSubAsmOption);
+        assemblyMap.put("TOP-LEVEL (Initial)", topLevelOption);
+    }
+
+    /**
+     * Initialises part name map
+     */
+    private void initialisePartNameMap() {
+        partNameMap.put(Constants.CASTING_DTC_REPORT_NAME, partNameCastingDtcReport);
+        partNameMap.put(Constants.CASTING_DTC_COMPARISON_REPORT_NAME, partNameCastingDtcComparisonReport);
+        partNameMap.put(Constants.CASTING_DTC_DETAILS_REPORT_NAME, partNameCastingDtcDetailsReport);
     }
 }
