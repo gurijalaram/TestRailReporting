@@ -62,7 +62,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
-    @Test
+    /*@Test
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
 
@@ -72,7 +72,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
-    /*@Category(CustomerSmokeTests.class)
+    @Category(CustomerSmokeTests.class)
     @Test
     @TestRail(testCaseId = {"1574"})
     @Description("Validate Login Dialog")
