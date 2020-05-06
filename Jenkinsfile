@@ -10,12 +10,11 @@ pipeline {
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'What is the browser?')
         string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
-        choice(name: 'VM', choices: ['loki','hela','ragnarok'], description: 'What is the VM?')
         string(name: 'HEADLESS', defaultValue: 'true', description: 'No browser window?')
     }
 
     agent {
-        label "${params.VM}"
+        label "automation"
     }
 
     tools {
