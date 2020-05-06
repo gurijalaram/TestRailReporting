@@ -15,6 +15,8 @@ RUN mv chromedriver /usr/bin/chromedriver
 RUN chown root:root /usr/bin/chromedriver
 RUN chmod +x /usr/bin/chromedriver
 
+WORKDIR /app
+
 USER root
 COPY apriori-https-cert.cer .
 RUN keytool -import -trustcacerts -noprompt \
@@ -23,7 +25,6 @@ RUN keytool -import -trustcacerts -noprompt \
     -keystore $JAVA_HOME/lib/security/cacerts \
     -storepass changeit
 
-WORKDIR /app
 # Prepare build workspace.
 FROM gradle:6.1.1-jdk8 AS sdk
 WORKDIR /automation-workspace
