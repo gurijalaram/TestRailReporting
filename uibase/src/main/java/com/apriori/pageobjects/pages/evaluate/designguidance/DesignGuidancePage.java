@@ -134,6 +134,6 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
      */
     public String getHoleIssueValue() {
         pageUtils.waitForElementToAppear(holeIssueValue);
-        return holeIssueValue.getText();
+        return pageUtils.getElementText(holeIssueValue);
     }
 }

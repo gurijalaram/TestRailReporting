@@ -21,7 +21,6 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.sun.tools.jxc.ap.Const;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -220,10 +219,9 @@ public class CastingDtcReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk();
-
-        genericReportPage.clickComparison();
-        genericReportPage.newTabTransfer();
+            .clickOk()
+            .clickComparison()
+            .newTabTransfer();
 
         String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_COMPARISON_REPORT_NAME);
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();

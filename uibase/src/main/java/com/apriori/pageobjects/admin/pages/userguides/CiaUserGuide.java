@@ -14,14 +14,11 @@ public class CiaUserGuide extends PageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(CiaUserGuide.class);
 
-    @FindBy(xpath = "//*[contains(text(), 'Cost Insight Report:User Guide')]")
+    @FindBy(css = "div[class='aPriori_Cover_Page_Title']")
     private WebElement pageTitle;
 
     @FindBy(css = "iframe[id='page_iframe']")
     private WebElement mainContentIframe;
-
-    @FindBy(css = ".Heading_1")
-    private WebElement adminUserGuideTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -71,7 +68,7 @@ public class CiaUserGuide extends PageHeader {
         pageUtils.windowHandler(1);
         pageUtils.waitForElementToAppear(mainContentIframe);
         driver.switchTo().frame(mainContentIframe);
-        pageUtils.waitForElementAppear(adminUserGuideTitle);
-        return adminUserGuideTitle.getText();
+        pageUtils.waitForElementAppear(pageTitle);
+        return pageTitle.getText();
     }
 }
