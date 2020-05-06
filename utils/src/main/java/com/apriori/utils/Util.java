@@ -6,12 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Random;
-import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,30 +16,6 @@ import java.util.stream.Stream;
 public class Util {
 
     static final Logger logger = LoggerFactory.getLogger(Util.class);
-
-    /**
-     * Returns a formatted date and time string
-     *
-     * @return
-     */
-    public static String getTimestamp() {
-        return new Timestamp(System.currentTimeMillis()).toString();
-    }
-
-    /**
-     * Extracts current date to be used in various queries
-     *
-     * @return
-     */
-    public static String now() {
-
-        String now = "dd-HH-mm-ss";
-
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(now);
-        return (sdf.format(cal.getTime()) + UUID.randomUUID().toString().replace("-", "").substring(0, 5)).toUpperCase();
-
-    }
 
     /**
      * highlights given element. This would be mainly used for debugging
