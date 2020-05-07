@@ -5,6 +5,7 @@ import com.apriori.utils.web.driver.TestMode;
 import com.apriori.utils.web.driver.TestType;
 import com.apriori.utils.web.util.ConsoleLogger;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -76,7 +77,7 @@ public class TestRule implements MethodRule {
                     logger.debug("FAILURE IN " + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "." + frameworkMethod.getName() + " with driver: " + driverHash);
                     String retryingScreenshot = captureScreenshot(testBaseNew.getClass().getCanonicalName(), frameworkMethod.getName(), testBaseNew, times + 1);
                     saveImageAttach(new File(retryingScreenshot).getPath(), frameworkMethod.getMethod().getDeclaringClass().getName() + "." + frameworkMethod.getName());
-
+                    Allure.addAttachment(frameworkMethod.getMethod().getDeclaringClass().getName() + "." + frameworkMethod.getName(),"image/png", new File(retryingScreenshot).getPath());
                     MDC.remove("methodName");
                     if (retry) {
                         throw originalException; // rethrow to allow the failure to be reported to JUnit

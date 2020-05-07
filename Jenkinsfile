@@ -4,7 +4,7 @@ def timeStamp = new Date().format('yyyyMMddHHmmss')
 
 pipeline {
     parameters {
-        string(name: 'TEST_TYPE', defaultValue: 'apitests', description: "What type of test is running?")
+        choice(name: 'TEST_TYPE', choices: ['uitests','apitests'] , description: "What type of test is running?")
         string(name: 'TARGET_ENV', defaultValue: 'cid-aut', description: 'What is the target environment for testing?')
         string(name: 'TEST_SUITE', defaultValue: 'com.apriori.apitests.fms.suite.FmsAPISuite', description: 'What is the test suite?')
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
@@ -41,6 +41,7 @@ pipeline {
                 echo 'Building..'
                 sh """
                     docker build \
+                        --build-arg MODULE=${TEST_TYPE}
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
