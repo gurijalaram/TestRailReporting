@@ -18,6 +18,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
@@ -468,18 +469,23 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         List<String> columnsToAdd = Arrays.asList(
             ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
-            ComponentInfoColumnEnum.PER_PART_COST.getColumnName(),
+            ComponentInfoColumnEnum.PIECE_PART_COST.getColumnName(),
             ComponentInfoColumnEnum.FULLY_BURDENED_COST.getColumnName(),
             ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName()
         );
 
+        String[] attributesArray = { "Part Name", "Scenario Name" };
+        String[] valuesArray = { Constants.PISTON_ASSEMBLY_CID_NAME, Constants.DEFAULT_SCENARIO_NAME };
+
         EvaluatePage evaluatePage = new ExplorePage(driver)
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openAssembly("Initial", "PISTON_ASSEMBLY")
-            .openComponentsTable()
-            .openColumnsTable()
-            .checkColumnSettings(columnsToAdd, columnsToRemove)
-            .selectSaveButton();
+                .filterCriteria()
+                .multiFilterPublicCriteria(Constants.ASSEMBLY_SCENARIO_TYPE, attributesArray, valuesArray)
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openComponentsTable()
+                .openColumnsTable()
+                .checkColumnSettings(columnsToAdd, columnsToRemove)
+                .selectSaveButton();
 
         ArrayList<BigDecimal> cidPartOneValues = evaluatePage
             .getTableValsByRow(
