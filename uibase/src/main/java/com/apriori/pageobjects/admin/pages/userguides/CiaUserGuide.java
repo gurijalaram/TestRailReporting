@@ -14,7 +14,7 @@ public class CiaUserGuide extends PageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(CiaUserGuide.class);
 
-    @FindBy(css = "div[class='aPriori_Cover_Page_Title']")
+    @FindBy(css = "div[id='page_content'] > div")
     private WebElement pageTitle;
 
     @FindBy(css = "iframe[id='page_iframe']")
