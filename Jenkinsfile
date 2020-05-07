@@ -12,8 +12,10 @@ pipeline {
         string(name: 'HEADLESS', defaultValue: 'true', description: 'No browser window?')
     }
 
-    agent any
-    
+    agent {
+        label 'automation'
+    }
+
     stages {
         stage('Initialize') {
             steps {
