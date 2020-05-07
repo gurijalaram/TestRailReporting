@@ -4,14 +4,12 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import evaluate.ProcessGroupsTests;
-import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("177")
 @RunWith(CategorySuiteRunner.class)
-@Categories.ExcludeCategory(SmokeTests.class)
+//@Categories.ExcludeCategory(SmokeTests.class)
 @Suite.SuiteClasses({
 //    AddScenarioTests.class,
 //    DeleteComparisonTests.class,
