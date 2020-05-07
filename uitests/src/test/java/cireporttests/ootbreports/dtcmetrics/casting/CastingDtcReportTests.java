@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
@@ -206,70 +205,5 @@ public class CastingDtcReportTests extends TestBase {
             Currency in Reports and CID needs to match for this test also (both default to USD)
          */
         assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
-    }
-
-    @Test
-    @TestRail(testCaseId = "102990")
-    @Description("Verify that aPriori costed scenarios are represented correctly")
-    public void testVerifyComparisonReportAvailableAndCorrectData() {
-        genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
-            .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
-            .clickComparison()
-            .newTabTransfer();
-
-        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_COMPARISON_REPORT_NAME);
-        String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
-        genericReportPage.openNewTabAndFocus(2);
-
-        String[] attributesArray = { "Part Name", "Scenario Name" };
-        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
-        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-                .filterCriteria()
-                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray)
-                .apply(ExplorePage.class)
-                .openFirstScenario()
-                .openDesignGuidance();
-
-        String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
-
-        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
-    }
-
-    @Test
-    @TestRail(testCaseId = "102990")
-    @Description("Verify that aPriori costed scenarios are represented correctly")
-    public void testVerifyDetailsReportAvailableAndCorrectData() {
-        genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
-            .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk();
-
-        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_DETAILS_REPORT_NAME);
-        String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
-        genericReportPage.openNewTabAndFocus(1);
-
-        String[] attributesArray = { "Part Name", "Scenario Name" };
-        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
-
-        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-                .filterCriteria()
-                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray)
-                .apply(ExplorePage.class)
-                .openFirstScenario()
-                .openDesignGuidance();
-
-        String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
-        
-        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
 }
