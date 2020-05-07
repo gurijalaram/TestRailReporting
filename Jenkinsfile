@@ -41,7 +41,7 @@ pipeline {
                 echo 'Building..'
                 sh """
                     docker build \
-                        --build-arg MODULE=${TEST_TYPE}
+                        --build-arg MODULE=${TEST_TYPE} \
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
