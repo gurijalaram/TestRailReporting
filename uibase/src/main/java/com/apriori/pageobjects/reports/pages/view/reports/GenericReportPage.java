@@ -2,10 +2,13 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
+import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
+import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
+import com.apriori.utils.enums.CurrencyEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -857,42 +860,32 @@ public class GenericReportPage extends ReportsPageHeader {
         return holeIssuesChartOneComparisonReport.getText();
     }
 
-
-    /**
-     * Gets name of selected rollup on Casting DTC Report
-     * @return Rollup name
-     */
-    public String getSelectedRollupName() {
-        pageUtils.waitForElementToAppear(dtcCastingSelectedRollup);
-        return dtcCastingSelectedRollup.getText();
-    }
-
     /**
      * Initialises export set hash map
      */
     private void initialiseCurrencyMap() {
-        currencyMap.put("GBP", gbpCurrencyOption);
-        currencyMap.put("USD", usdCurrencyOption);
+        currencyMap.put(CurrencyEnum.GBP.getCurrency(), gbpCurrencyOption);
+        currencyMap.put(CurrencyEnum.USD.getCurrency(), usdCurrencyOption);
     }
 
     /**
      * Initialises export set hash map
      */
     private void initialiseExportSetHashMap() {
-        exportSetMap.put("top-level", topLevelExportSet);
-        exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
-        exportSetMap.put("DTC_Casting", dtcCastingExportSet);
-        exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
-        exportSetMap.put("ROLL_UP A", rollupAExportSet);
+        exportSetMap.put(ExportSetEnum.TOP_LEVEL.getExportSetName(), topLevelExportSet);
+        exportSetMap.put(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName(), pistonAssemblyExportSet);
+        exportSetMap.put(ExportSetEnum.CASTING_DTC.getExportSetName(), dtcCastingExportSet);
+        exportSetMap.put(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), machiningDtcDataSetExportSet);
+        exportSetMap.put(ExportSetEnum.ROLL_UP_A.getExportSetName(), rollupAExportSet);
     }
 
     /**
      * Initialises assembly hash map
      */
     private void initialiseAssemblyHashMap() {
-        assemblyMap.put("SUB-ASSEMBLY (Initial)", subAssemblyOption);
-        assemblyMap.put("SUB-SUB-ASM (Initial)", subSubAsmOption);
-        assemblyMap.put("TOP-LEVEL (Initial)", topLevelOption);
+        assemblyMap.put(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName(), subAssemblyOption);
+        assemblyMap.put(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName(), subSubAsmOption);
+        assemblyMap.put(AssemblySetEnum.TOP_LEVEL.getAssemblySetName(), topLevelOption);
     }
 
     /**
