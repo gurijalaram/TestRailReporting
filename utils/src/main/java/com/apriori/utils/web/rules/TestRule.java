@@ -77,7 +77,7 @@ public class TestRule implements MethodRule {
                     logger.debug("FAILURE IN " + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "." + frameworkMethod.getName() + " with driver: " + driverHash);
                     String retryingScreenshot = captureScreenshot(testBaseNew.getClass().getCanonicalName(), frameworkMethod.getName(), testBaseNew, times + 1);
                     saveImageAttach(new File(retryingScreenshot).getPath(), frameworkMethod.getMethod().getDeclaringClass().getName() + "." + frameworkMethod.getName());
-                    Allure.addAttachment(frameworkMethod.getMethod().getDeclaringClass().getName() + "." + frameworkMethod.getName(),"image/png", new File(retryingScreenshot).getPath());
+
                     MDC.remove("methodName");
                     if (retry) {
                         throw originalException; // rethrow to allow the failure to be reported to JUnit
@@ -178,6 +178,7 @@ public class TestRule implements MethodRule {
             filename = File.separator + "target" + File.separator + "screenshots" + File.separator + "screenshot-" + className + "-" + testName + "-" + testBase.getBrowser() + errorNumber + ".png";
             filePath = new File(filename).getCanonicalPath();
             FileUtils.copyFile(screenshot, new File(filename));
+            Allure.addAttachment(filename, FileUtils.openInputStream(screenshot));
         } catch (Exception e) {
             logger.debug(e.getMessage());
         }
