@@ -4,12 +4,37 @@ def timeStamp = new Date().format('yyyyMMddHHmmss')
 
 pipeline {
     parameters {
+        choice(name: 'TARGET_ENV', choices: ['cid-aut','cid-te','cid-perf','customer-smoke'], description: 'What is the target environment for testing?')
         choice(name: 'TEST_TYPE', choices: ['uitests','apitests'] , description: "What type of test is running?")
-        string(name: 'TARGET_ENV', defaultValue: 'cid-aut', description: 'What is the target environment for testing?')
-        string(name: 'TEST_SUITE', defaultValue: 'com.apriori.apitests.fms.suite.FmsAPISuite', description: 'What is the test suite?')
+        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'SmokeTestSuite','CIDTestSuite','AdhocTestSuite','CustomerSmokeTestSuite','Other'], description: 'What is the test suite?')
+        string(name: 'OTHER_TEST', description: 'What is the test/suite to execute')
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
-        string(name: 'BROWSER', defaultValue: 'chrome', description: 'What is the browser?')
-        string(name: 'HEADLESS', defaultValue: 'true', description: 'No browser window?')
+        choice(name: 'BROWSER', choices: ['chrome', 'firefox', "none"], description: 'What is the browser?')
+        booleanParam(name: 'HEADLESS', defaultValue: false, description: 'No browser window?')
+    }
+
+    def JAVA_OPTS = new StringBuilder()
+    JAVA_OPTS.append('-Dmode=QA ')
+    JAVA_OPTS.append('-Denv=${params.TARGET_ENV} ')
+
+    def threadCount = ${params.THREAD_COUNT}
+    if (threadCount.toInteger() > 0) {
+        JAVA_OPTS.append('-DthreadCounts=${threadCount} ')
+    }
+
+    def browser = ${params.BROWSER}
+    if (browser != 'none') {
+        JAVA_OPTS.append('-Dbrowser=${browser} ')
+    }
+
+    if(${params.THREAD_COUNT})
+    {
+        JAVA_OPTS.append('-Dheadless=true} ')
+    }
+
+    def testSuite = ${params.TEST_SUITE}
+    if (testSuite = 'Other') {
+        testSuite = ${params.OTHER_TEST}
     }
 
     agent {
@@ -62,8 +87,9 @@ pipeline {
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
+                        ${JAVA_OPTS} \
                         -jar automation-tests.jar \
-                        --tests ${TEST_SUITE}
+                        --tests ${testSuite}
                 """
 
                 // Copy out Allure results
