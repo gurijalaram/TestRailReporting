@@ -1,6 +1,10 @@
 def buildInfo
 def buildInfoFile = 'build-info.yml'
 def timeStamp = new Date().format('yyyyMMddHHmmss')
+def JAVA_OPTS = new StringBuilder()
+def threadCount
+def browser
+def testSuite
 
 pipeline {
     parameters {
@@ -11,30 +15,6 @@ pipeline {
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', "none"], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: false, description: 'No browser window?')
-    }
-
-    def JAVA_OPTS = new StringBuilder()
-    JAVA_OPTS.append('-Dmode=QA ')
-    JAVA_OPTS.append('-Denv=${params.TARGET_ENV} ')
-
-    def threadCount = ${params.THREAD_COUNT}
-    if (threadCount.toInteger() > 0) {
-        JAVA_OPTS.append('-DthreadCounts=${threadCount} ')
-    }
-
-    def browser = ${params.BROWSER}
-    if (browser != 'none') {
-        JAVA_OPTS.append('-Dbrowser=${browser} ')
-    }
-
-    if(${params.THREAD_COUNT})
-    {
-        JAVA_OPTS.append('-Dheadless=true} ')
-    }
-
-    def testSuite = ${params.TEST_SUITE}
-    if (testSuite == 'Other') {
-        testSuite = ${params.OTHER_TEST}
     }
 
     agent {
@@ -58,6 +38,30 @@ pipeline {
 
                     // Log file.
                     sh "cat ${buildInfoFile}"
+
+                    // Set run time parameters
+                    JAVA_OPTS.append('-Dmode=QA ')
+                    JAVA_OPTS.append('-Denv=${params.TARGET_ENV} ')
+
+                    threadCount = ${params.THREAD_COUNT}
+                    if (threadCount.toInteger() > 0) {
+                        JAVA_OPTS.append('-DthreadCounts=${threadCount} ')
+                    }
+
+                    browser = ${params.BROWSER}
+                    if (browser != 'none') {
+                        JAVA_OPTS.append('-Dbrowser=${browser} ')
+                    }
+
+                    if(${params.THREAD_COUNT})
+                    {
+                        JAVA_OPTS.append('-Dheadless=true} ')
+                    }
+
+                    testSuite = ${params.TEST_SUITE}
+                    if (testSuite == 'Other') {
+                        testSuite = ${params.OTHER_TEST}
+                    }
                 }
             }
         }
