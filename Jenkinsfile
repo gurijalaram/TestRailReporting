@@ -54,7 +54,7 @@ pipeline {
                     }
 
                     if (params.HEADLESS) {
-                        javaOpts = javaOpts + " -Dheadless=true}"
+                        javaOpts = javaOpts + " -Dheadless=true"
                     }
 
                     testSuite = params.TEST_SUITE
