@@ -38,30 +38,29 @@ pipeline {
 
                     // Log file.
                     sh "cat ${buildInfoFile}"
-                }
 
-                // Set run time parameters
-                JAVA_OPTS.append('-Dmode=QA ')
-                JAVA_OPTS.append('-Denv=${params.TARGET_ENV} ')
+                    // Set run time parameters
+                    JAVA_OPTS.append('-Dmode=QA ')
+                    JAVA_OPTS.append('-Denv=${params.TARGET_ENV} ')
 
-                threadCount = ${params.THREAD_COUNT}
-                if (threadCount.toInteger() > 0) {
-                    JAVA_OPTS.append('-DthreadCounts=${threadCount} ')
-                }
+                    threadCount = $ { params.THREAD_COUNT }
+                    if (threadCount.toInteger() > 0) {
+                        JAVA_OPTS.append('-DthreadCounts=${threadCount} ')
+                    }
 
-                browser = ${params.BROWSER}
-                if (browser != 'none') {
-                    JAVA_OPTS.append('-Dbrowser=${browser} ')
-                }
+                    browser = $ { params.BROWSER }
+                    if (browser != 'none') {
+                        JAVA_OPTS.append('-Dbrowser=${browser} ')
+                    }
 
-                if(${params.THREAD_COUNT})
-                {
-                    JAVA_OPTS.append('-Dheadless=true} ')
-                }
+                    if ($ { params.THREAD_COUNT }) {
+                        JAVA_OPTS.append('-Dheadless=true} ')
+                    }
 
-                testSuite = ${params.TEST_SUITE}
-                if (testSuite == 'Other') {
-                    testSuite = $ { params.OTHER_TEST }
+                    testSuite = $ { params.TEST_SUITE }
+                    if (testSuite == 'Other') {
+                        testSuite = $ { params.OTHER_TEST }
+                    }
                 }
             }
         }
