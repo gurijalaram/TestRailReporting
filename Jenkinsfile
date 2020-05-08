@@ -61,7 +61,7 @@ pipeline {
                     if (testSuite == 'Other') {
                         testSuite = params.OTHER_TEST
                     }
-                    echo '${javaOpts}'
+                    echo '${testSuite}'
                 }
             }
         }
