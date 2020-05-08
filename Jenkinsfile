@@ -1,7 +1,7 @@
 def buildInfo
 def buildInfoFile = 'build-info.yml'
 def timeStamp = new Date().format('yyyyMMddHHmmss')
-def JAVA_OPTS = ''
+def javaOpts
 def threadCount
 def browser
 def testSuite
@@ -40,21 +40,21 @@ pipeline {
                     sh "cat ${buildInfoFile}"
 
                     // Set run time parameters
-                    JAVA_OPTS = JAVA_OPTS + '-Dmode=QA'
-                    JAVA_OPTS = JAVA_OPTS + ' -Denv=${params.TARGET_ENV}'
+                    javaOpts = javaOpts + '-Dmode=QA'
+                    javaOpts = javaOpts + ' -Denv=${params.TARGET_ENV}'
 
                     threadCount = params.THREAD_COUNT
                     if (threadCount.toInteger() > 0) {
-                        JAVA_OPTS = JAVA_OPTS + ' -DthreadCounts=${threadCount}'
+                        javaOpts = javaOpts + ' -DthreadCounts=${threadCount}'
                     }
 
                     browser = params.BROWSER
                     if (browser != 'none') {
-                        JAVA_OPTS = JAVA_OPTS + ' -Dbrowser=${browser}'
+                        javaOpts = javaOpts + ' -Dbrowser=${browser}'
                     }
 
                     if (params.HEADLESS) {
-                        JAVA_OPTS = JAVA_OPTS + ' -Dheadless=true}'
+                        javaOpts = javaOpts + ' -Dheadless=true}'
                     }
 
                     testSuite = params.TEST_SUITE
@@ -79,30 +79,31 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                echo 'Running..'
                 sh """
                     docker run \
                         -itd \
                         --name ${buildInfo.name}-build-${timeStamp} \
                         ${buildInfo.name}-build-${timeStamp}:latest
                 """
+
+                echo 'Testing..'
                 sh """
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
-                        ${JAVA_OPTS} \
+                        ${javaOpts} \
                         -jar automation-tests.jar \
                         --tests ${testSuite}
                 """
 
                 // Copy out Allure results
+                echo 'Publishing Results'
                 sh """
                     docker cp \
                     ${buildInfo.name}-build-${timeStamp}:app/target/allure-results \
                     .
                 """
-
-                echo 'Publishing Results'
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
