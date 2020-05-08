@@ -44,7 +44,7 @@ pipeline {
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
 
                     threadCount = params.THREAD_COUNT
-                    if (threadCount.toInteger() > 0) {
+                    if (threadCount.isInteger() && threadCount.toInteger() > 0) {
                         javaOpts = javaOpts + " -DthreadCounts=${threadCount}"
                     }
 
