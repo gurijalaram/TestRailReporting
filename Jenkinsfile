@@ -40,21 +40,21 @@ pipeline {
                     sh "cat ${buildInfoFile}"
 
                     // Set run time parameters
-                    JAVA_OPTS.concat('-Dmode=QA ')
-                    JAVA_OPTS.concat('-Denv=${params.TARGET_ENV} ')
+                    JAVA_OPTS = JAVA_OPTS + '-Dmode=QA'
+                    JAVA_OPTS = JAVA_OPTS + ' -Denv=${params.TARGET_ENV}'
 
                     threadCount = $ { params.THREAD_COUNT }
                     if (threadCount.toInteger() > 0) {
-                        JAVA_OPTS.concat('-DthreadCounts=${threadCount} ')
+                        JAVA_OPTS = JAVA_OPTS + ' -DthreadCounts=${threadCount}'
                     }
 
                     browser = $ { params.BROWSER }
                     if (browser != 'none') {
-                        JAVA_OPTS.concat('-Dbrowser=${browser} ')
+                        JAVA_OPTS = JAVA_OPTS + ' -Dbrowser=${browser}'
                     }
 
                     if ($ { params.THREAD_COUNT }) {
-                        JAVA_OPTS.concat('-Dheadless=true} ')
+                        JAVA_OPTS = JAVA_OPTS + ' -Dheadless=true}'
                     }
 
                     testSuite = $ { params.TEST_SUITE }
