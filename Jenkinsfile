@@ -33,7 +33,7 @@ pipeline {
     }
 
     def testSuite = ${params.TEST_SUITE}
-    if (testSuite = 'Other') {
+    if (testSuite == 'Other') {
         testSuite = ${params.OTHER_TEST}
     }
 
