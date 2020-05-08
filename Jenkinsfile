@@ -27,7 +27,7 @@ pipeline {
                 echo 'Initializing..'
 
                 // Read file.
-                buildInfo = readYaml file: buildInfoFile
+                ${buildInfo} = readYaml file: ${buildInfoFile}
                 sh "rm ${buildInfoFile}"
 
                 // Write file.
