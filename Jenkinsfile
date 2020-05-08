@@ -1,7 +1,7 @@
 def buildInfo
 def buildInfoFile = 'build-info.yml'
 def timeStamp = new Date().format('yyyyMMddHHmmss')
-def javaOpts
+def javaOpts = ''
 def threadCount
 def browser
 def testSuite
