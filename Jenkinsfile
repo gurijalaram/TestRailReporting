@@ -25,19 +25,20 @@ pipeline {
         stage('Initialize') {
             steps {
                 echo 'Initializing..'
+                script {
+                    // Read file.
+                    buildInfo = readYaml file: buildInfoFile
+                    sh "rm ${buildInfoFile}"
 
-                // Read file.
-                ${buildInfo} = readYaml file: ${buildInfoFile}
-                sh "rm ${buildInfoFile}"
+                    // Write file.
+                    buildInfo.buildNumber = env.BUILD_TAG
+                    buildInfo.buildTimestamp = timeStamp
+                    buildInfo.commitHash = env.GIT_COMMIT
+                    writeYaml file: buildInfoFile, data: buildInfo
 
-                // Write file.
-                buildInfo.buildNumber = env.BUILD_TAG
-                buildInfo.buildTimestamp = timeStamp
-                buildInfo.commitHash = env.GIT_COMMIT
-                writeYaml file: buildInfoFile, data: buildInfo
-
-                // Log file.
-                sh "cat ${buildInfoFile}"
+                    // Log file.
+                    sh "cat ${buildInfoFile}"
+                }
 
                 // Set run time parameters
                 JAVA_OPTS.append('-Dmode=QA ')
@@ -58,10 +59,9 @@ pipeline {
                     JAVA_OPTS.append('-Dheadless=true} ')
                 }
 
-                // Set test suite
                 testSuite = ${params.TEST_SUITE}
                 if (testSuite == 'Other') {
-                    testSuite = ${params.OTHER_TEST}
+                    testSuite = $ { params.OTHER_TEST }
                 }
             }
         }
