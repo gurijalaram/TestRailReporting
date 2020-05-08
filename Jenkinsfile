@@ -25,43 +25,43 @@ pipeline {
         stage('Initialize') {
             steps {
                 echo 'Initializing..'
-                script {
-                    // Read file.
-                    buildInfo = readYaml file: buildInfoFile
-                    sh "rm ${buildInfoFile}"
 
-                    // Write file.
-                    buildInfo.buildNumber = env.BUILD_TAG
-                    buildInfo.buildTimestamp = timeStamp
-                    buildInfo.commitHash = env.GIT_COMMIT
-                    writeYaml file: buildInfoFile, data: buildInfo
+                // Read file.
+                buildInfo = readYaml file: buildInfoFile
+                sh "rm ${buildInfoFile}"
 
-                    // Log file.
-                    sh "cat ${buildInfoFile}"
+                // Write file.
+                buildInfo.buildNumber = env.BUILD_TAG
+                buildInfo.buildTimestamp = timeStamp
+                buildInfo.commitHash = env.GIT_COMMIT
+                writeYaml file: buildInfoFile, data: buildInfo
 
-                    // Set run time parameters
-                    JAVA_OPTS.append('-Dmode=QA ')
-                    JAVA_OPTS.append('-Denv=${params.TARGET_ENV} ')
+                // Log file.
+                sh "cat ${buildInfoFile}"
 
-                    threadCount = ${params.THREAD_COUNT}
-                    if (threadCount.toInteger() > 0) {
-                        JAVA_OPTS.append('-DthreadCounts=${threadCount} ')
-                    }
+                // Set run time parameters
+                JAVA_OPTS.append('-Dmode=QA ')
+                JAVA_OPTS.append('-Denv=${params.TARGET_ENV} ')
 
-                    browser = ${params.BROWSER}
-                    if (browser != 'none') {
-                        JAVA_OPTS.append('-Dbrowser=${browser} ')
-                    }
+                threadCount = ${params.THREAD_COUNT}
+                if (threadCount.toInteger() > 0) {
+                    JAVA_OPTS.append('-DthreadCounts=${threadCount} ')
+                }
 
-                    if(${params.THREAD_COUNT})
-                    {
-                        JAVA_OPTS.append('-Dheadless=true} ')
-                    }
+                browser = ${params.BROWSER}
+                if (browser != 'none') {
+                    JAVA_OPTS.append('-Dbrowser=${browser} ')
+                }
 
-                    testSuite = ${params.TEST_SUITE}
-                    if (testSuite == 'Other') {
-                        testSuite = ${params.OTHER_TEST}
-                    }
+                if(${params.THREAD_COUNT})
+                {
+                    JAVA_OPTS.append('-Dheadless=true} ')
+                }
+
+                // Set test suite
+                testSuite = ${params.TEST_SUITE}
+                if (testSuite == 'Other') {
+                    testSuite = ${params.OTHER_TEST}
                 }
             }
         }
