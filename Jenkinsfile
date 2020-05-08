@@ -1,7 +1,7 @@
 def buildInfo
 def buildInfoFile = 'build-info.yml'
 def timeStamp = new Date().format('yyyyMMddHHmmss')
-def JAVA_OPTS = new StringBuilder()
+def JAVA_OPTS
 def threadCount
 def browser
 def testSuite
@@ -40,21 +40,21 @@ pipeline {
                     sh "cat ${buildInfoFile}"
 
                     // Set run time parameters
-                    JAVA_OPTS.append('-Dmode=QA ')
-                    JAVA_OPTS.append('-Denv=${params.TARGET_ENV} ')
+                    JAVA_OPTS.concat('-Dmode=QA ')
+                    JAVA_OPTS.concat('-Denv=${params.TARGET_ENV} ')
 
                     threadCount = $ { params.THREAD_COUNT }
                     if (threadCount.toInteger() > 0) {
-                        JAVA_OPTS.append('-DthreadCounts=${threadCount} ')
+                        JAVA_OPTS.concat('-DthreadCounts=${threadCount} ')
                     }
 
                     browser = $ { params.BROWSER }
                     if (browser != 'none') {
-                        JAVA_OPTS.append('-Dbrowser=${browser} ')
+                        JAVA_OPTS.concat('-Dbrowser=${browser} ')
                     }
 
                     if ($ { params.THREAD_COUNT }) {
-                        JAVA_OPTS.append('-Dheadless=true} ')
+                        JAVA_OPTS.concat('-Dheadless=true} ')
                     }
 
                     testSuite = $ { params.TEST_SUITE }
