@@ -43,23 +43,23 @@ pipeline {
                     JAVA_OPTS = JAVA_OPTS + '-Dmode=QA'
                     JAVA_OPTS = JAVA_OPTS + ' -Denv=${params.TARGET_ENV}'
 
-                    threadCount = ${params.THREAD_COUNT}
+                    threadCount = params.THREAD_COUNT
                     if (threadCount.toInteger() > 0) {
                         JAVA_OPTS = JAVA_OPTS + ' -DthreadCounts=${threadCount}'
                     }
 
-                    browser = ${params.BROWSER}
+                    browser = params.BROWSER
                     if (browser != 'none') {
                         JAVA_OPTS = JAVA_OPTS + ' -Dbrowser=${browser}'
                     }
 
-                    if (${params.HEADLESS}) {
+                    if (params.HEADLESS) {
                         JAVA_OPTS = JAVA_OPTS + ' -Dheadless=true}'
                     }
 
-                    testSuite = ${params.TEST_SUITE}
+                    testSuite = params.TEST_SUITE
                     if (testSuite == 'Other') {
-                        testSuite = $ { params.OTHER_TEST }
+                        testSuite = params.OTHER_TEST
                     }
                 }
             }
