@@ -63,7 +63,7 @@ pipeline {
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
                         -jar automation-tests.jar \
-                        --tests TEST_SUITE
+                        --tests ${TEST_SUITE}
                 """
 
                 // Copy out Allure results
