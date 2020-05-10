@@ -6,6 +6,7 @@ import com.apriori.apibase.services.cid.objects.request.SchedulesConfigurationRe
 import com.apriori.apibase.services.cid.objects.request.SpecificExportSchedulesRequest;
 import com.apriori.apibase.services.cid.objects.response.ExportSchedulesResponse;
 import com.apriori.database.entity.MigrationEntity;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaClearRequest;
@@ -88,8 +89,7 @@ public class DbMigration {
     public ResponseWrapper<Object> doCreateExportSchedules(Object body) {
         RequestEntity requestEntity =
                 this.initDefaultRequest(CidAdminHttpEnum.POST_EXPORT_SCHEDULES)
-                        .setBody(body)
-                        .setStatusCode(HttpStatus.SC_CREATED);
+                        .setBody(body);
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaClearRequest());
     }
@@ -168,10 +168,19 @@ public class DbMigration {
     }
 
     private RequestEntity initDefaultRequest(final EndpointEnum endpoint) {
+
+        UserCredentials userCredentials;
+
+        if (Constants.PROP_USER_NAME != null && Constants.PROP_USER_PASSWORD != null) {
+            userCredentials = UserCredentials.init(Constants.PROP_USER_NAME, Constants.PROP_USER_PASSWORD);
+        } else {
+            //TODO z: should be uncommented when auth0 and jasper server will have the same test users credentials
+            //migrationUser
+            userCredentials = UserCredentials.init("qa-automation-01@apriori.com", "qa-automation-01");
+        }
+
         return RequestEntity.init(endpoint,
-                //TODO z: should be uncommented when auth0 and jasper server will have the same test users credentials
-                //migrationUser
-                UserCredentials.init("qa-automation-01@apriori.com", "qa-automation-01"),
+                userCredentials,
                 null
         ).setAutoLogin(true);
     }

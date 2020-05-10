@@ -12,6 +12,46 @@ public class UserProfile {
     private String timezone;
     private String townCity;
     private String countryCode;
+    private String prefix;
+    private String suffix;
+    private String stateProvince;
+    private String county;
+
+    public String getCounty() {
+        return county;
+    }
+
+    public UserProfile setCounty(String county) {
+        this.county = county;
+        return this;
+    }
+
+    public String getStateProvince() {
+        return stateProvince;
+    }
+
+    public UserProfile setStateProvince(String stateProvince) {
+        this.stateProvince = stateProvince;
+        return this;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public UserProfile setSuffix(String suffix) {
+        this.suffix = suffix;
+        return this;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public UserProfile setPrefix(String prefix) {
+        this.prefix = prefix;
+        return this;
+    }
 
     public String getCountryCode() {
         return this.countryCode;

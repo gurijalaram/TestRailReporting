@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  * - if false: will return each time single user
  * - users.csv.file: the name of csv file with users list from resources/{@link com.apriori.utils.constants.Constants#environment} folder
  * (if users are absent, return default user with:
- * - username:{@link com.apriori.utils.constants.Constants#defaultUserName}
- * - password:{@link com.apriori.utils.constants.Constants#defaultPassword}
+ * - username:{@link com.apriori.utils.constants.Constants#DEFAULT_USER_NAME}
+ * - password:{@link com.apriori.utils.constants.Constants#DEFAULT_PASSWORD}
  * )
  * <p>
  * Users list is global for two Collections:

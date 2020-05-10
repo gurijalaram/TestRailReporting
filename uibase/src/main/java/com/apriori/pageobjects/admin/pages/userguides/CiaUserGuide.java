@@ -20,7 +20,7 @@ public class CiaUserGuide extends PageHeader {
     @FindBy(css = "iframe[id='page_iframe']")
     private WebElement mainContentIframe;
 
-    @FindBy(css = ".aPriori_Cover_Page_Title")
+    @FindBy(css = ".Heading_1")
     private WebElement adminUserGuideTitle;
 
     private WebDriver driver;
@@ -65,7 +65,6 @@ public class CiaUserGuide extends PageHeader {
 
     /**
      * Gets page heading of Admin User Guide page
-     *
      * @return String - page title
      */
     public String getAdminUserGuidePageHeading() {
@@ -73,6 +72,6 @@ public class CiaUserGuide extends PageHeader {
         pageUtils.waitForElementToAppear(mainContentIframe);
         driver.switchTo().frame(mainContentIframe);
         pageUtils.waitForElementAppear(adminUserGuideTitle);
-        return adminUserGuideTitle.getAttribute("textContent");
+        return adminUserGuideTitle.getText();
     }
 }

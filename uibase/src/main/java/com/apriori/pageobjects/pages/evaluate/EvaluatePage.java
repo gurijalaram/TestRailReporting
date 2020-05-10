@@ -511,6 +511,17 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
+     * Returns fully burdened cost value
+     * @return BigDecimal - Fully Burdened Cost (rounded down - thus ROUND_FLOOR)
+     */
+    public BigDecimal getBurdenedCostValue() {
+        return new BigDecimal(
+                burdenedCost.getText()
+                        .replace(",", ""))
+                .setScale(2, BigDecimal.ROUND_FLOOR);
+    }
+
+    /**
      * Gets the capital investment
      *
      * @return string
