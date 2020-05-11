@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
@@ -12,6 +14,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportHeader;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -128,5 +131,38 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .waitForExpectedExportCount("0");
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyComparisonReportAvailableAndCorrectData() {
+        genericReportPage = new LoginPage(driver)
+                .login(UserUtil.getUser())
+                .navigateToLibraryPage()
+                .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk()
+                .clickComparison()
+                .newTabTransfer();
+
+        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_COMPARISON_REPORT_NAME);
+        String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
+        genericReportPage.openNewTabAndFocus(2);
+
+        String[] attributesArray = { "Part Name", "Scenario Name" };
+        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
+        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
+                .filterCriteria()
+                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray)
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
+
+        String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
+
+        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
 }

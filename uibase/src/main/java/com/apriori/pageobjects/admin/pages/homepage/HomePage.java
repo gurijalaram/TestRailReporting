@@ -92,4 +92,39 @@ public class HomePage extends PageHeader {
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
     }
+	
+    /**
+     * Gets url to check
+     *
+     * @return String
+     */
+    public String getUrlToCheck() {
+        return pageUtils.getUrlToCheck();
+    }
+
+    /**
+     * Wait for element to appear
+     */
+    public void waitForReportsLogoutDisplayedToAppear() {
+        pageUtils.windowHandler(1);
+        pageUtils.waitForElementToAppear(reportsLogoutOption);
+    }
+
+    /**
+     * Checks if Reports Logout button element is displayed
+     *
+     * @return boolean
+     */
+    public boolean isReportsLogoutDisplayed() {
+        return pageUtils.isElementDisplayed(reportsLogoutOption);
+    }
+
+    /**
+     * Checks if Reports Logout button element is enabled
+     *
+     * @return boolean
+     */
+    public boolean isReportsLogoutEnabled() {
+        return pageUtils.isElementEnabled(reportsLogoutOption);
+    }
 }

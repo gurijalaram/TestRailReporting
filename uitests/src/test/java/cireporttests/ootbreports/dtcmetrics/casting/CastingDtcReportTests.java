@@ -193,8 +193,8 @@ public class CastingDtcReportTests extends TestBase {
             .clickOk();
 
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
-        String partName = genericReportPage.getPartNameReports();
-        genericReportPage.openNewTabAndFocus();
+        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_REPORT_NAME);
+        genericReportPage.openNewTabAndFocus(1);
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
         String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};

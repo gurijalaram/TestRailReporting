@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
 import org.jsoup.Jsoup;
@@ -559,19 +558,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public int getAmountOfTopLevelExportSets() {
         List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
         return list.size();
-    }
-
-    /**
-     * Opens new tab and switches to it
-     *
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage openNewTabAndFocus() {
-        pageUtils.jsNewTab();
-        pageUtils.windowHandler();
-        driver.get(Constants.cidURL);
-        pageUtils.waitForElementToAppear(cidLogo);
-        return this;
     }
 
     /**
