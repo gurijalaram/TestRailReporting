@@ -1,6 +1,5 @@
 package evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -51,7 +50,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -68,7 +67,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -95,513 +94,513 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Casting")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupCasting() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("case_012_009-0020647_hinge_2.prt.1");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_012_009-0020647_hinge_2");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Extrusion")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupExtrusion() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("700-33770-01_A0.stp");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "700-33770-01_A0");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Filleting")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupFilleting() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("case_005_flat end mill contouring.SLDPRT");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_005_flat end mill contouring");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Gear Making")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupGearMaking() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "Case_001_-_Rockwell_2075-0243G");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Machining-Contouring")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupMachiningContouring() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_002_00400016-003M10_A");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Machining-Gage Parts")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupMachiningGageParts() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("GagePart_Case_011_gundrillgagepart-01.prt.1");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "GagePart_Case_011_gundrillgagepart-01");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Machining-Milling-4 Axis Mill")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupMachining4AxisMill() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("prt0001.prt.1");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "prt0001");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Machining-Milling-5 Axis Mill")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupMachining5AxisMill() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("7021021-2_rib.prt.1");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "7021021-2_rib");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario(5);
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Machining-Milling-Mill Turn")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupMachiningMillTurn() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("ms16555-627_1.prt.1");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "ms16555-627_1");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Partially Automated Machining")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupPartiallyAutomatedMachining() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("14100640.stp");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "14100640");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Perimeter Milling")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupPerimeterMilling() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("14100640.stp");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "14100640");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Pocket Recognition - shared walls")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupPocketRecognitionSharedWalls() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_066_SpaceX_00128711-001_A");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Rough Milling")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupRoughMilling() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("16-340053-00-04.prt.1");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "16-340053-00-04");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Slot Examples")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupSlotExamples() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_007_SpaceX_00088481-001_C");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Turning")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupTurning() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_002_006-8611543_prt");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Blow Molding")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupBlowMolding() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "225_gasket-1-solid1");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Powder Metal")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupPowderMetal() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("case_31_test_part_6_small.prt.2");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_31_test_part_6_small");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Roll Bending")
-    @TestRail(testCaseId = {"1591", "3836"})
-    public void testProcessGroupRollBending() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("AGCO _ 71421375.prt.1");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile(testScenarioName, resourceFile)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
-    }
-
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @Description("Testing process group Sheet Metal-Transfer Die")
-    @TestRail(testCaseId = {"1591"})
-    public void testProcessGroupTransferDie() {
-
-        resourceFile = new FileResourceUtil().getResourceFile("case_011_CENA-009-A1-LH-Rear-Body-Mount.prt");
-        String testScenarioName = new Util().getScenarioName();
-
-        loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "case_011_CENA-009-A1-LH-Rear-Body-Mount");
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
-    }
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Casting")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupCasting() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("case_012_009-0020647_hinge_2.prt.1");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "case_012_009-0020647_hinge_2");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Extrusion")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupExtrusion() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("700-33770-01_A0.stp");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        explorePage = loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "700-33770-01_A0");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Filleting")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupFilleting() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("case_005_flat end mill contouring.SLDPRT");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "case_005_flat end mill contouring");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Gear Making")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupGearMaking() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "Case_001_-_Rockwell_2075-0243G");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Machining-Contouring")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupMachiningContouring() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "case_002_00400016-003M10_A");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Machining-Gage Parts")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupMachiningGageParts() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("GagePart_Case_011_gundrillgagepart-01.prt.1");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "GagePart_Case_011_gundrillgagepart-01");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Machining-Milling-4 Axis Mill")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupMachining4AxisMill() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("prt0001.prt.1");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "prt0001");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Machining-Milling-5 Axis Mill")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupMachining5AxisMill() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("7021021-2_rib.prt.1");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "7021021-2_rib");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario(5);
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Machining-Milling-Mill Turn")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupMachiningMillTurn() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("ms16555-627_1.prt.1");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "ms16555-627_1");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Partially Automated Machining")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupPartiallyAutomatedMachining() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("14100640.stp");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "14100640");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Perimeter Milling")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupPerimeterMilling() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("14100640.stp");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "14100640");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Pocket Recognition - shared walls")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupPocketRecognitionSharedWalls() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "case_066_SpaceX_00128711-001_A");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Rough Milling")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupRoughMilling() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("16-340053-00-04.prt.1");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "16-340053-00-04");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+//    }
+
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Slot Examples")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupSlotExamples() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "case_007_SpaceX_00088481-001_C");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Turning")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupTurning() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "case_002_006-8611543_prt");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Blow Molding")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupBlowMolding() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "225_gasket-1-solid1");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Powder Metal")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupPowderMetal() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("case_31_test_part_6_small.prt.2");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "case_31_test_part_6_small");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Roll Bending")
+//    @TestRail(testCaseId = {"1591", "3836"})
+//    public void testProcessGroupRollBending() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("AGCO _ 71421375.prt.1");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.uploadFile(testScenarioName, resourceFile)
+//            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
+//        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+//    }
+//
+//    @Category({CustomerSmokeTests.class, SmokeTests.class})
+//    @Test
+//    @Description("Testing process group Sheet Metal-Transfer Die")
+//    @TestRail(testCaseId = {"1591"})
+//    public void testProcessGroupTransferDie() {
+//
+//        resourceFile = new FileResourceUtil().getResourceFile("case_011_CENA-009-A1-LH-Rear-Body-Mount.prt");
+//        String testScenarioName = new Util().getScenarioName();
+//
+//        loginPage = new CIDLoginPage(driver);
+//        loginPage.login(UserUtil.getUser());
+//
+//        explorePage = new ExplorePage(driver);
+//        explorePage.uploadFile(testScenarioName, resourceFile)
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .highlightScenario(testScenarioName, "case_011_CENA-009-A1-LH-Rear-Body-Mount");
+//
+//        explorePage = new ExplorePage(driver);
+//        evaluatePage = explorePage.editScenario(EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
+//    }
 }
