@@ -64,7 +64,7 @@ pipeline {
                 """
 
                 sh """
-                    docker compose up -d
+                    docker-compose up -d
                 """
 
                 sh """
