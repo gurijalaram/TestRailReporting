@@ -111,27 +111,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Generic method to get numeric values in a given row
-     */
-    public ArrayList<BigDecimal> getValuesByRow(String row) {
-        ArrayList<BigDecimal> valsToReturn = new ArrayList<>();
-        Document reportsPartPage = Jsoup.parse(driver.getPageSource());
-
-        String baseCssSelector = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr:nth-child(%s) td span";
-        baseCssSelector = String.format(baseCssSelector, row);
-        // 5, 8, 10, 13 row indexes
-
-        List<Element> valueElements = reportsPartPage.select(baseCssSelector);
-
-        for (Element valueCell : valueElements) {
-            if (!valueCell.text().isEmpty() && valueCell.text().matches("[0-9]*[.][0-9]{2}")) {
-                valsToReturn.add(new BigDecimal(valueCell.text()));
-            }
-        }
-        return valsToReturn;
-    }
-
-    /**
      * Gets quantities that are blank and returns them as 0
      *
      * @param assemblyType
