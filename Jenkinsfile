@@ -21,10 +21,6 @@ pipeline {
         gradle "Gradle"
     }
 
-    environment {
-        PATH = "$PATH:/usr/local/bin"
-    }
-
     stages {
         stage('Initialize') {
             steps {
@@ -68,7 +64,7 @@ pipeline {
                 """
 
                 sh """
-                    docker-compose up -d
+                    sh '/usr/bin/docker-compose -f docker-compose.yml up -d --build'
                 """
 
                 sh """
