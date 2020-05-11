@@ -76,6 +76,7 @@ public class TestMain {
     private static void run(Class testClass) {
 
         JUnitCore runner = new JUnitCore();
+        runner.addListener(new TestMain.ExecutionListener());
         runner.addListener(new AllureJunit4());
         Result result = runner.run(testClass);
 
