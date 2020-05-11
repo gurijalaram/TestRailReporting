@@ -51,7 +51,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -68,7 +68,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -95,7 +95,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -122,7 +122,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -149,7 +149,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -176,7 +176,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -203,7 +203,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -230,7 +230,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -257,7 +257,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -284,7 +284,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -311,7 +311,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario(5);
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -338,7 +338,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -365,7 +365,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -392,7 +392,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -419,7 +419,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -446,7 +446,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
