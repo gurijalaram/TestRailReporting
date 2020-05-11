@@ -55,6 +55,6 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
      * @return string
      */
     public String getChildPageTitle() {
-        return pageUtils.windowHandler().getTitle();
+        return pageUtils.windowHandler(1).getTitle();
     }
 }

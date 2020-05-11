@@ -59,6 +59,6 @@ public class LearnMorePage extends LoadableComponent<LearnMorePage> {
      * @return - string
      */
     public String getChildWindowURL() {
-        return pageUtils.windowHandler().getCurrentUrl();
+        return pageUtils.windowHandler(1).getCurrentUrl();
     }
 }
