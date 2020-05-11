@@ -23,7 +23,7 @@ RUN keytool -import -trustcacerts -noprompt \
     -keystore $JAVA_HOME/lib/security/cacerts \
     -storepass changeit
 
-# Install docker-compose
+# Copy docker-compose
 COPY docker-compose.yml .
 
 # Prepare build workspace.
