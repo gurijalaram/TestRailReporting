@@ -9,6 +9,9 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -24,6 +27,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -858,6 +862,27 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(holeIssuesChartOneComparisonReport);
 
         return holeIssuesChartOneComparisonReport.getText();
+    }
+
+    /**
+     * Generic method to get numeric values in a given row
+     */
+    public ArrayList<BigDecimal> getValuesByRow(String row) {
+        ArrayList<BigDecimal> valsToReturn = new ArrayList<>();
+        Document reportsPartPage = Jsoup.parse(driver.getPageSource());
+
+        String baseCssSelector = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr:nth-child(%s) td span";
+        baseCssSelector = String.format(baseCssSelector, row);
+        // 5, 8, 10, 13 row indexes
+
+        List<Element> valueElements = reportsPartPage.select(baseCssSelector);
+
+        for (Element valueCell : valueElements) {
+            if (!valueCell.text().isEmpty() && valueCell.text().matches("[0-9]*[.][0-9]{2}")) {
+                valsToReturn.add(new BigDecimal(valueCell.text()));
+            }
+        }
+        return valsToReturn;
     }
 
     /**

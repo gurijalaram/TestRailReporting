@@ -508,19 +508,19 @@ public class AssemblyDetailsReportTests extends TestBase {
             );
 
         evaluatePage.switchBackToTabOne();
-        ArrayList<BigDecimal> reportsPartOneValues = assemblyDetailsReport
+        ArrayList<BigDecimal> reportsPartOneValues = genericReportPage
             .getValuesByRow(
                 ColumnIndexEnum.CIR_PART_ONE.getColumnIndex()
             );
-        ArrayList<BigDecimal> reportsPartTwoValues = assemblyDetailsReport
+        ArrayList<BigDecimal> reportsPartTwoValues = genericReportPage
             .getValuesByRow(
                 ColumnIndexEnum.CIR_PART_TWO.getColumnIndex()
             );
-        ArrayList<BigDecimal> reportsPartThreeValues = assemblyDetailsReport
+        ArrayList<BigDecimal> reportsPartThreeValues = genericReportPage
             .getValuesByRow(
                 ColumnIndexEnum.CIR_PART_THREE.getColumnIndex()
             );
-        ArrayList<BigDecimal> reportsPartFourValues = assemblyDetailsReport
+        ArrayList<BigDecimal> reportsPartFourValues = genericReportPage
             .getValuesByRow(
                 ColumnIndexEnum.CIR_PART_FOUR.getColumnIndex()
             );
