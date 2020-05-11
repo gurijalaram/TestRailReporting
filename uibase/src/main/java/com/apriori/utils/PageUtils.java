@@ -750,9 +750,9 @@ public class PageUtils {
      *
      * @return webdriver functions
      */
-    public WebDriver windowHandler() {
+    public WebDriver windowHandler(int index) {
         List<String> windowList = new ArrayList<>(driver.getWindowHandles());
-        return driver.switchTo().window(windowList.get(1));
+        return driver.switchTo().window(windowList.get(index));
     }
 
     /**
@@ -799,7 +799,7 @@ public class PageUtils {
      * @return String
      */
     public String getTabTwoUrl() {
-        return windowHandler().getCurrentUrl();
+        return windowHandler(1).getCurrentUrl();
     }
 
     /**

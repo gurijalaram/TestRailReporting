@@ -449,15 +449,15 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1930")
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
-        assemblyDetailsReport = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class)
-            .openNewTabAndFocus();
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .openNewTabAndFocus(1);
 
         List<String> columnsToRemove = Arrays.asList(
             ComponentInfoColumnEnum.QUANTITY.getColumnName(),
