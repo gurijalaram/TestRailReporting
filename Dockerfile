@@ -38,6 +38,8 @@ RUN keytool -import -trustcacerts -noprompt \
 # Copy.
 COPY . .
 
+RUN docker-compose up -d
+
 #Build.
 WORKDIR /automation-workspace/build
 RUN gradle clean fatJar
