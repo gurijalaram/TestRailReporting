@@ -23,11 +23,6 @@ RUN keytool -import -trustcacerts -noprompt \
     -keystore $JAVA_HOME/lib/security/cacerts \
     -storepass changeit
 
-RUN curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)"  -o /usr/local/bin/docker-compose
-RUN mv /usr/local/bin/docker-compose /usr/bin/docker-compose
-RUN chmod +x /usr/bin/docker-compose
-COPY docker-compose.yml .
-
 # Prepare build workspace.
 FROM gradle:6.1.1-jdk8 AS sdk
 WORKDIR /automation-workspace

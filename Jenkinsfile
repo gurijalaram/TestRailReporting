@@ -64,7 +64,7 @@ pipeline {
                 """
 
                 sh """
-                    sh '/usr/bin/docker-compose -f docker-compose.yml up -d --build'
+                    docker-compose up -d
                 """
 
                 sh """
