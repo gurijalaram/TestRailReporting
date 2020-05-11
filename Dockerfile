@@ -45,7 +45,7 @@ COPY . .
 
 #Build.
 WORKDIR /automation-workspace/build
-#RUN gradle clean fatJar
+RUN gradle clean fatJar
 
 # App image.
 FROM runtime AS final
