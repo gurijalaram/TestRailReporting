@@ -88,7 +88,7 @@ public class HomePage extends ReportsPageHeader {
      * Wait for element to appear
      */
     public void waitForReportsLogoutDisplayedToAppear() {
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(1);
         isLoadedNow();
         //pageUtils.waitForElementToAppear(reportsLogoutOption);
     }
@@ -113,7 +113,7 @@ public class HomePage extends ReportsPageHeader {
 
     private void isLoadedNow() {
         //pageUtils.waitForElementToAppear(reportsLogoutOption);
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(1);
         pageUtils.waitForElementToAppear(email);
     }
 }
