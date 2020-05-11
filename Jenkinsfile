@@ -87,6 +87,7 @@ pipeline {
                 // Stop and remove container and image
                 sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
                 sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
+                sh "docker-compose down --remove-orphans"
             }
         }
     }
@@ -96,7 +97,6 @@ pipeline {
             echo 'Publishing Results & Cleaning up..'
             allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
-            sh "docker-compose down --remove-orphans"
         }
     }
 }
