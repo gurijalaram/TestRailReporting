@@ -64,6 +64,10 @@ pipeline {
                 """
 
                 sh """
+                    docker-compose up
+                """
+
+                sh """
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
