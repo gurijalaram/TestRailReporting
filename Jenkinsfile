@@ -63,9 +63,9 @@ pipeline {
                         ${buildInfo.name}-build-${timeStamp}:latest
                 """
 
-                sh """
-                    docker-compose up -d
-                """
+//                sh """
+//                    docker-compose up -d
+//                """
 
                 sh """
                     docker exec \
