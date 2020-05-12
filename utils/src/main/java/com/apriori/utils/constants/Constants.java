@@ -39,15 +39,22 @@ public class Constants {
 
     public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_ONE = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
     public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_TWO = "CIA_UG";
+    public static final String CIA_USER_GUIDE_URL_SUBSTRING = "CI_ADMIN_USER_GUIDE";
+    public static final String CIA_USER_GUIDE_TITLE = "Cost Insight Admin:\nUser Guide";
     public static final String SCENARIO_EXPORT_CHAPTER_PAGE_TITLE = "2 Scenario and System Data Exports";
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
     public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
     public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
     public static final String REPORTING_HELP_URL = "http://help.jaspersoft.com/Default";
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
+    public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design (AUTOMATIONENVIRONMENT)";
+
+    public static final String CASTING_DTC_REPORT_NAME = "DTC Casting";
+    public static final String CASTING_DTC_COMPARISON_REPORT_NAME = "DTC Casting Comparison";
+    public static final String CASTING_DTC_DETAILS_REPORT_NAME = "DTC Casting Details";
 
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";

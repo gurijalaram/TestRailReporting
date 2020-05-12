@@ -146,7 +146,7 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario();
         assertThat(evaluatePage.isProcessRoutingDetails("Carburize"), is(true));
 
-        evaluatePage.openProcessDetails()
+        processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Carburize")
             .selectOptions()
             .setCaseOverrideInput("0.46")
@@ -157,7 +157,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Carburize")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isCaseOverride("0.46"), is(true));
+        assertThat(processSetupOptionsPage.getCaseOverride(), is("0.46"));
         assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
     }
 
