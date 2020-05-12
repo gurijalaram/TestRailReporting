@@ -833,12 +833,11 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
 
     /**
      * Checks case override
-     *
-     * @param text - the text
-     * @return true false
+     * @return title
      */
-    public boolean isCaseOverride(String text) {
-        return checkAttribute(caseOverrideInput, text);
+    public String getCaseOverride() {
+        pageUtils.waitForElementToAppear(caseOverrideInput);
+        return caseOverrideInput.getAttribute("title");
     }
 
     /**

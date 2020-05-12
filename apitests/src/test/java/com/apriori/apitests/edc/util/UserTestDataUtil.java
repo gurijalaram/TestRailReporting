@@ -4,7 +4,7 @@ import com.apriori.apibase.services.response.objects.BillOfMaterial;
 import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
 import com.apriori.apibase.services.response.objects.MaterialLineItem;
 import com.apriori.apibase.services.response.objects.MaterialsLineItemsWrapper;
-import com.apriori.utils.Util;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaUiAuth;
@@ -100,7 +100,7 @@ public class UserTestDataUtil {
     }
 
     public void uploadTestData(final UserDataEDC userDataEDC) {
-        final File testData = Util.getLocalResourceFile("test-data/apriori-4-items.csv");
+        final File testData = FileResourceUtil.getLocalResourceFile("test-data/apriori-4-items.csv");
 
         RequestEntity requestEntity = RequestEntity.init(
                 BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS, userDataEDC.getUserCredentials(), null)
