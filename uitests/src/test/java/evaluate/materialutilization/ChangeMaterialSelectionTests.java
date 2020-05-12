@@ -472,9 +472,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .openMaterialCompositionTable()
-            .method("MCAD <material not found - VPE default used>")
-            .apply()
             .costScenario()
             .selectExploreButton()
             .openScenario(scenarioName, "MACHINED BOX AMERICAS");
