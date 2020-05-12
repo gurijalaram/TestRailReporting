@@ -18,8 +18,8 @@ import com.apriori.pageobjects.pages.settings.SelectionSettingsPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -102,7 +102,7 @@ public class SettingsTests extends TestBase {
     public void defaultPG() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -131,7 +131,7 @@ public class SettingsTests extends TestBase {
     public void defaultVPE() {
 
         resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -158,7 +158,7 @@ public class SettingsTests extends TestBase {
     public void defaultProductionLife() {
 
         resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -188,7 +188,7 @@ public class SettingsTests extends TestBase {
         String partName = "Push Pin.stp";
         String batchSize = "46";
         resourceFile = new FileResourceUtil().getResourceFile(partName);
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();

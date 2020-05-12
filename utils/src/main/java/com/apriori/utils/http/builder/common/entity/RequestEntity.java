@@ -1,6 +1,6 @@
 package com.apriori.utils.http.builder.common.entity;
 
-import com.apriori.utils.Util;
+import com.apriori.utils.AuthorizationFormUtil;
 import com.apriori.utils.http.builder.service.RequestInitService;
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http.enums.EndpointType;
@@ -121,7 +121,7 @@ public class RequestEntity {
     }
 
     private List<Map<String, ?>> initDefaultFormAuthorization() {
-        this.xwwwwFormUrlEncoded.add(Util.getDefaultAuthorizationForm(this.userAuthenticationEntity.getEmailAddress(), this.userAuthenticationEntity.getPassword()));
+        this.xwwwwFormUrlEncoded.add(AuthorizationFormUtil.getDefaultAuthorizationForm(this.userAuthenticationEntity.getEmailAddress(), this.userAuthenticationEntity.getPassword()));
 
         return this.xwwwwFormUrlEncoded;
     }

@@ -2,7 +2,7 @@ package com.apriori.apibase.services.fms.apicalls;
 
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.fms.objects.FilesResponse;
-import com.apriori.utils.Util;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -45,7 +45,7 @@ public class FileManagementService {
         RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, Constants.getFmsServiceHost()), FileResponse.class)
                 .setHeaders(initHeaders(token, true))
                 .setMultiPartFiles(new MultiPartFiles()
-                        .use("data", Util.getResourceAsFile(fileName))
+                        .use("data", FileResourceUtil.getResourceAsFile(fileName))
                 )
                 .setFormParams(new FormParams()
                         .use("filename", fileName)
