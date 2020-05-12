@@ -1,5 +1,6 @@
 package testsuites;
 
+import io.qameta.allure.junit4.AllureJunit4;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -77,6 +78,7 @@ public class TestMain {
 
         JUnitCore runner = new JUnitCore();
         runner.addListener(new TestMain.ExecutionListener());
+        runner.addListener(new AllureJunit4());
         Result result = runner.run(testClass);
 
         // Report failures that occurred during testing.

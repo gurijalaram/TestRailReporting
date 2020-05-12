@@ -3,13 +3,12 @@ package com.apriori.utils.http.builder.dao;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.Matchers.isOneOf;
 
-import com.apriori.utils.Util;
+import com.apriori.utils.AuthorizationFormUtil;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.utils.http.builder.common.response.common.PayloadJSON;
-import com.apriori.utils.http.builder.service.HTTPRequest;
 import com.apriori.utils.http.builder.service.RequestAreaClearRequest;
 import com.apriori.utils.http.builder.service.RequestInitService;
 import com.apriori.utils.http.enums.Schema;
@@ -24,7 +23,6 @@ import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
@@ -75,7 +73,7 @@ public class ConnectionManager<T> {
         FormParams formParams = requestEntity.getFormParams();
 
         if (requestEntity.isAutoLogin()) {
-            requestEntity.setHeaders(Util.getTokenAuthorizationForm(this.getAuthToken()));
+            requestEntity.setHeaders(AuthorizationFormUtil.getTokenAuthorizationForm(this.getAuthToken()));
         }
 
         if (multiPartFiles != null) {
