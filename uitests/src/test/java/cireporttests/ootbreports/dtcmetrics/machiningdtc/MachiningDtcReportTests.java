@@ -12,7 +12,6 @@ import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
-import com.apriori.pageobjects.reports.pages.view.reports.MachiningDTCReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
@@ -25,7 +24,6 @@ import java.math.BigDecimal;
 
 public class MachiningDtcReportTests extends TestBase {
 
-    private MachiningDTCReportPage machiningDTCReportPage;
     private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
@@ -85,7 +83,7 @@ public class MachiningDtcReportTests extends TestBase {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
-        machiningDTCReportPage = new LoginPage(driver)
+        genericReportPage = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToLibraryPage()
             .navigateToReport(reportName)
@@ -94,18 +92,18 @@ public class MachiningDtcReportTests extends TestBase {
             .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDTCReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        usdGrandTotal = machiningDTCReportPage.getFBCValueFromBubbleTooltip(false);
+        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip(false);
 
-        machiningDTCReportPage.clickInputControlsButton()
+        genericReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), MachiningDTCReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
 
-        gbpGrandTotal = machiningDTCReportPage.getFBCValueFromBubbleTooltip(false);
+        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip(false);
 
-        assertThat(machiningDTCReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
     }
 
