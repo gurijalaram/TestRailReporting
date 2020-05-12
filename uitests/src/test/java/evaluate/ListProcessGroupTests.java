@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.hasItems;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.Util;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
@@ -36,7 +36,7 @@ public class ListProcessGroupTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile);
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile);
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
     }
@@ -49,7 +49,7 @@ public class ListProcessGroupTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile);
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile);
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(AssemblyProcessGroupEnum.getNames()));
     }

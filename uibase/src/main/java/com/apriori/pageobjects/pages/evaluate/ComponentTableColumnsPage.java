@@ -5,6 +5,7 @@ import com.apriori.utils.PageUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -118,20 +119,30 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
      * @return current page object
      */
     public ComponentTableColumnsPage checkColumnSettings(List<String> columnsToAdd, List<String> columnsToRemove) {
-        Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
-        int count = 0;
-        for (Element header : evaluateComponentView.select("div[class='v-grid-tablewrapper'] > table > thead > tr:nth-child(1) > th")) {
-            if (header.text().equals("Cycle Time (s)") || header.text().equals("Per Part Cost (USD)")
-                || header.text().equals("Fully Burdened Cost (USD)") || header.text().equals("Capital Investment (USD)")) {
-                count++;
+        int availableCount = Integer.parseInt(availableList.getAttribute("childElementCount"));
+        List<String> leftListContents = new ArrayList<>();
+        for (int i = 0; i < availableCount; i++) {
+            leftListContents.add(driver.findElements(By.xpath("//select[@data-ap-comp='leftList']/option")).get(i).getText());
+        }
+
+        int includedCount = Integer.parseInt(includedList.getAttribute("childElementCount"));
+        List<String> rightListContents = new ArrayList<>();
+        for (int j = 0; j < includedCount; j++) {
+            rightListContents.add(driver.findElements(By.xpath("//select[@data-ap-comp='rightList']/option")).get(j).getText());
+        }
+
+        for (String columnName : columnsToAdd) {
+            if (leftListContents.contains(columnName) && !rightListContents.contains(columnName)) {
+                addColumn(columnName);
             }
         }
 
-        if (count != 4) {
-            logger.debug("continue...");
-            addMultipleColumns(columnsToAdd);
-            removeMultipleColumns(columnsToRemove);
+        for (String columnName : columnsToRemove) {
+            if (!leftListContents.contains(columnName) && rightListContents.contains(columnName)) {
+                removeColumn(columnName);
+            }
         }
+
         return this;
     }
 
