@@ -58,7 +58,7 @@ pipeline {
                         javaOpts = javaOpts + " -Dheadless=true"
                     }
 
-                    testSuite = params.TEST_SUITE
+                    testSuite = "testsuites." + params.TEST_SUITE
                     if (testSuite == "Other") {
                         testSuite = params.OTHER_TEST
                     }
@@ -101,7 +101,7 @@ pipeline {
                         java \
                         ${javaOpts} \
                         -jar automation-tests.jar \
-                        --tests testsuites.${testSuite}
+                        --tests ${testSuite}
                 """
 
                 // Copy out Allure results
