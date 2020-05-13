@@ -101,7 +101,7 @@ pipeline {
                         java \
                         ${javaOpts} \
                         -jar automation-tests.jar \
-                        --tests ${testSuite}
+                        --tests testsuites.${testSuite}
                 """
 
                 // Copy out Allure results
