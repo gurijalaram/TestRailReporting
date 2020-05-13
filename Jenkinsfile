@@ -9,7 +9,7 @@ pipeline {
         choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'SmokeTestSuite','CIDTestSuite','AdhocTestSuite','CustomerSmokeTestSuite'], description: 'What is the test suite?')
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'What is the browser?')
-        string(name: 'TEST_MODE', defaultValue: 'LOCAL', description: 'What is target test mode?')
+        choice(name: 'TEST_MODE', choices: ['DOCKER', 'LOCAL'], description: 'What is target test mode?')
         string(name: 'HEADLESS', defaultValue: 'true', description: 'No browser window?')
     }
 
