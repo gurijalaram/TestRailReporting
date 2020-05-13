@@ -14,7 +14,7 @@ pipeline {
         string(name: "OTHER_TEST", description: "What is the test/suite to execute")
         string(name: "THREAD_COUNT", defaultValue: "1", description: "What is the amount of browser instances?")
         choice(name: "BROWSER", choices: ["chrome", "firefox", "none"], description: "What is the browser?")
-        choice(name: 'TEST_MODE', choices: ['DOCKER', 'LOCAL'], description: 'What is target test mode?')
+        choice(name: 'TEST_MODE', choices: ['DOCKER', 'LOCAL', 'QA'], description: 'What is target test mode?')
         booleanParam(name: "HEADLESS", defaultValue: false, description: "No browser window?")
     }
 
@@ -41,7 +41,7 @@ pipeline {
                     sh "cat ${buildInfoFile}"
 
                     // Set run time parameters
-                    javaOpts = javaOpts + "-Dmode=QA"
+                    javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
 
                     threadCount = params.THREAD_COUNT
