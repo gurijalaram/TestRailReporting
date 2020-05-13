@@ -1,6 +1,9 @@
 package testsuites;
 
+import com.apriori.apitests.fms.suite.FmsAPISuite;
+
 import io.qameta.allure.junit4.AllureJunit4;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -18,8 +21,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class TestMain {
-    public static Class defaultTest = CIDTestSuite.class;
+    public static Class defaultTest = FmsAPISuite.class;
 
     public static void main(String[] args) {
 
