@@ -29,6 +29,7 @@ public class UserCommonService {
      * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser() {
+        Boolean val = Constants.useMsSqlOracleUsers;
         return Constants.useDifferentUsers ? getNewUser() : getGlobalUser();
     }
 

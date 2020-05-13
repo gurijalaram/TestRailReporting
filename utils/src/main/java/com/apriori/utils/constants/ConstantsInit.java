@@ -1,5 +1,6 @@
 package com.apriori.utils.constants;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.aeonbits.owner.Config;
 
 @Config.Sources({
@@ -87,4 +88,7 @@ public interface ConstantsInit extends Config {
 
     @Key("fms.file.identity")
     String fmsFileIdentity();
+
+    @Key("mssql.oracle.users")
+    Boolean useMsSqlOracleUsers();
 }
