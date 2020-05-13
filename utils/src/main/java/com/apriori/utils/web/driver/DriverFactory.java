@@ -75,6 +75,7 @@ public class DriverFactory {
                     }
                     break;
                 case DOCKER:
+                    logger_DriverFactory.info(String.valueOf(System.getProperties()));
                     String serverAddress = System.getProperty("java.vendor").contains("Oracle") ? "host.docker.internal" : "172.17.0.1";
                     driver = getQADriver(("http://").concat(serverAddress).concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
                     break;
