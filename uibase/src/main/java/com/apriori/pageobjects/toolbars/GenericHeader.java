@@ -139,7 +139,7 @@ public class GenericHeader extends PageHeader {
     public EvaluatePage uploadCadFile(File filename) {
         pageUtils.waitForElementAndClick(actionsDropdown);
         for (int sendFile = 0; sendFile < 4; sendFile++) {
-            fileInput.sendKeys(filename.getAbsolutePath().replace("%20", " "));
+            fileInput.sendKeys(filename.getAbsolutePath().replace("%5c", File.separator));
         }
         pageUtils.waitForElementAndClick(actionsDropdown);
         return new EvaluatePage(driver);
