@@ -116,3 +116,4 @@ screenshots/
 /pageobjects/build/
 /utils/build/
 build/
+/vim.exe.stackdump

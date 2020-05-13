@@ -18,6 +18,7 @@ subprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'io.qameta.allure'
     apply plugin: 'org.sonarqube'
+    apply plugin: 'project-report'
 
     def encodingType = 'UTF-8'
 
@@ -74,7 +75,7 @@ subprojects {
         }
 
         from sourceSets.test.output
-        from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+        from { configurations.runtimeClasspath.findAll{ !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
         with jar
     }
@@ -147,7 +148,8 @@ subprojects {
         implementation 'org.apache.commons:commons-collections4:4.1'
         implementation 'org.aeonbits.owner:owner:1.0.8'
         implementation 'org.apache.commons:commons-lang3:3.9'
-        implementation 'io.qameta.allure:allure-java-commons:2.6.0'
+        implementation 'io.qameta.allure:allure-junit4:2.13.0'
+        implementation 'io.qameta.allure:allure-java-commons:2.13.0'
         implementation 'io.qameta.allure:allure-gradle:2.8.1'
         implementation 'io.qameta.allure:allure-junit4:2.13.1'
         implementation 'io.rest-assured:rest-assured:3.2.0'
