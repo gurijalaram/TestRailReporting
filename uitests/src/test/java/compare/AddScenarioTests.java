@@ -11,8 +11,8 @@ import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -42,7 +42,7 @@ public class AddScenarioTests extends TestBase {
     public void filterAddPrivateScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -53,7 +53,7 @@ public class AddScenarioTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new Util().getComparisonName())
+        scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new GenerateStringUtil().generateComparisonName())
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -69,7 +69,7 @@ public class AddScenarioTests extends TestBase {
     public void filterAddPublicScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
 
@@ -80,7 +80,7 @@ public class AddScenarioTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .createNewComparison()
-            .enterComparisonName(new Util().getComparisonName())
+            .enterComparisonName(new GenerateStringUtil().generateComparisonName())
             .save(ComparePage.class)
             .addScenario()
             .filterCriteria()
@@ -107,8 +107,8 @@ public class AddScenarioTests extends TestBase {
     @TestRail(testCaseId = {"414"})
     @Description("Test all available characters in a comparison name")
     public void comparisonAllCharacters() {
-
-        String testComparisonName = (new Util().getComparisonName() + "!£$%^&()_+{}~`1-=[]#';@");
+      
+        String testComparisonName = (new GenerateStringUtil().generateComparisonName() + "!£$%^&()_+{}~`1-=[]#';@");
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
