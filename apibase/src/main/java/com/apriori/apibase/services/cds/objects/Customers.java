@@ -9,19 +9,6 @@ import java.util.List;
 public class Customers extends Pagination {
     private List<Customer> items;
     private Customers response;
-    /*
-    private String salesforceId;
-
-    public String getSalesforceId() {
-        return this.salesforceId;
-    }
-
-    public Customers setSalesforceId(String salesforceId) {
-        this.salesforceId = salesforceId;
-        return this;
-    }
-    *
-     */
 
     public Customers getResponse() {
         return this.response;
@@ -40,6 +27,5 @@ public class Customers extends Pagination {
     public List<Customer> getItems() {
         return this.items;
     }
-
 
 }
