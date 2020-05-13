@@ -115,7 +115,6 @@ public class Constants {
     public static final String ciaURL = getBaseUrl() + constantsInit.ciaURL();
     public static final String usersFile = constantsInit.usersCsvFileName();
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
-    public static final Boolean useMsSqlOracleUsers = constantsInit.useMsSqlOracleUsers();
 
     private static String buildMode;
 
