@@ -75,7 +75,6 @@ public class DriverFactory {
                     }
                     break;
                 case DOCKER:
-                    logger_DriverFactory.info(String.valueOf(System.getProperties()));
                     String serverAddress = testType.equals(TestType.UI) ? "172.17.0.1" : "host.docker.internal";
                     driver = getQADriver(("http://").concat(serverAddress).concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
                     break;
