@@ -4,7 +4,5 @@
 
 dependencies {
     implementation project(':apibase')
-    implementation project(':uibase')
     implementation project(':utils')
-    implementation project(':database')
 }

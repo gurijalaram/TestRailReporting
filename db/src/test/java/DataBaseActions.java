@@ -41,7 +41,7 @@ public class DataBaseActions extends TestUtil {
     /**
      * To migrate specific scenario from aPriori Professional database to jasper (reporting) database <br>
      * run this command in cmd from build folder: <br>
-     * gradle clean -Denv=<env name> :database:test --tests "DataBaseActions.migrateSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated"
+     * gradle clean -Denv={env name} :database:test --tests "DataBaseActions.migrateSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated"
      */
     @Test
     public void migrateSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated() {
@@ -56,7 +56,7 @@ public class DataBaseActions extends TestUtil {
     /**
      * To migrate data from aPriori Professional database to jasper (reporting) database <br>
      * run this command in cmd from build folder: <br>
-     * gradle clean -Denv=<env name> :database:test --tests "DataBaseActions.migrateDataFromProfessionalToReportingFailedIfDataIsNotMigrated"
+     * gradle clean -Denv={env name} :database:test --tests "DataBaseActions.migrateDataFromProfessionalToReportingFailedIfDataIsNotMigrated"
      */
     @Test
     public void migrateDataFromProfessionalToReportingFailedIfDataIsNotMigrated() {

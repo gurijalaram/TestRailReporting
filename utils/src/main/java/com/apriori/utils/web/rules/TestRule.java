@@ -5,6 +5,7 @@ import com.apriori.utils.web.driver.TestMode;
 import com.apriori.utils.web.driver.TestType;
 import com.apriori.utils.web.util.ConsoleLogger;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -177,6 +178,7 @@ public class TestRule implements MethodRule {
             filename = File.separator + "target" + File.separator + "screenshots" + File.separator + "screenshot-" + className + "-" + testName + "-" + testBase.getBrowser() + errorNumber + ".png";
             filePath = new File(filename).getCanonicalPath();
             FileUtils.copyFile(screenshot, new File(filename));
+            Allure.addAttachment(filename, FileUtils.openInputStream(screenshot));
         } catch (Exception e) {
             logger.debug(e.getMessage());
         }
