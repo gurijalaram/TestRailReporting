@@ -30,8 +30,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
