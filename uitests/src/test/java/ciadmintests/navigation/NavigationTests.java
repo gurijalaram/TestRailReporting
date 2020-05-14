@@ -22,6 +22,7 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class NavigationTests extends TestBase {
 
@@ -37,7 +38,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -78,8 +79,8 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "2983")
-    @Issue("AP-58758")
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
         ciaUserGuide = new LoginPage(driver)
@@ -107,6 +108,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "2985")
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
@@ -122,7 +124,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
