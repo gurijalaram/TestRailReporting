@@ -87,6 +87,13 @@ public class Constants {
     private static String atsAuthTargetCloudContext;
     private static String fmsServiceHost;
     private static String fmsFileIdentity;
+    private static String cisCustomerIdentity;
+    private static String cisServiceHost;
+    private static String cisPartIdentity;
+    private static String cisReportIdentity;
+    private static String cisReportTypeIdentity;
+    private static String cisBatchIdentity;
+    private static String apitestsBasePath;
     public static final String defaultServiceHostKey = "serverHost";
     public static final String defaultServicePortKey = "serverPort";
     public static final String defaultServiceNameKey = "serverName";
@@ -269,4 +276,60 @@ public class Constants {
         return atsAuthTargetCloudContext;
     }
 
+    public static String getCisCustomerIdentity() {
+        if (cisCustomerIdentity == null) {
+            cisCustomerIdentity = System.getProperty("cisCustomerIdentity", constantsInit.cisCustomerIdentity());
+        }
+
+        return cisCustomerIdentity;
+    }
+
+    public static String getCisServiceHost() {
+        if (cisServiceHost == null) {
+            cisServiceHost = System.getProperty("cisServiceHost", constantsInit.cisServiceHost());
+        }
+
+        return cisServiceHost;
+    }
+
+    public static String getCisPartIdentity() {
+        if (cisPartIdentity == null) {
+            cisPartIdentity = System.getProperty("cisPartIdentity", constantsInit.cisPartIdentity());
+        }
+        
+        return cisPartIdentity;
+    }
+
+    public static String getCisReportIdentity() {
+        if (cisReportIdentity == null) {
+            cisReportIdentity = System.getProperty("cisReportIdentity", constantsInit.cisReportIdentity());
+        }
+
+        return cisReportIdentity;
+    }
+
+    public static String getCisReportTypeIdentity() {
+        if (cisReportTypeIdentity == null) {
+            cisReportTypeIdentity = System.getProperty("cisReportTypeIdentity", constantsInit.cisReportTypeIdentity());
+        }
+
+        return cisReportTypeIdentity;
+    }
+
+    public static String getCisBatchIdentity() {
+        if (cisBatchIdentity == null) {
+            cisBatchIdentity = System.getProperty("cisBatchIdentity", constantsInit.cisBatchIdentity());
+        }
+
+        return cisBatchIdentity;
+    }
+
+    public static String getApitestsBasePath() {
+        if (apitestsBasePath == null) {
+            apitestsBasePath = System.getProperty("apitestsBasePath", constantsInit.apitestsBasePath());
+        }
+
+        return apitestsBasePath;
+
+    }
 }
