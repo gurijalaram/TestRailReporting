@@ -33,11 +33,6 @@ RUN if [ "$MODULE" = "uitests" ]; then \
 	&& ln -s /opt/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver; \
     fi
 
-# Copy docker-compose
-RUN if [ "$MODULE" = "uitests" ]; then \
-    COPY docker-compose.yml .; \
-    fi
-
 # Prepare build workspace.
 FROM gradle:6.1.1-jdk8 AS sdk
 WORKDIR /automation-workspace
