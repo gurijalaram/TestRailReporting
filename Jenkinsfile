@@ -8,14 +8,15 @@ def testSuite
 
 pipeline {
     parameters {
-        choice(name: "TARGET_ENV", choices: ["cid-aut","cid-te","cid-perf","customer-smoke"], description: "What is the target environment for testing?")
-        choice(name: "TEST_TYPE", choices: ["uitests","apitests"] , description: "What type of test is running?")
-        choice(name: "TEST_SUITE", choices: ["SanityTestSuite", "AdminSuite", "SmokeTestSuite","CIDTestSuite","AdhocTestSuite","CustomerSmokeTestSuite","Other"], description: "What is the test suite?")
-        string(name: "OTHER_TEST", description: "What is the test/suite to execute")
-        string(name: "THREAD_COUNT", defaultValue: "1", description: "What is the amount of browser instances?")
-        choice(name: "BROWSER", choices: ["chrome", "firefox", "none"], description: "What is the browser?")
+        choice(name: 'TARGET_ENV', choices: ['cid-aut','cid-te','cid-perf','customer-smoke'], description: 'What is the target environment for testing?')
+        string(name: 'TARGET_URL', defaultValue: 'https://automation.awsdev.apriori.com/', description: 'What is the target URL for testing?')
+        choice(name: 'TEST_TYPE', choices: ['uitests','apitests'] , description: 'What type of test is running?')
+        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'SmokeTestSuite','CIDTestSuite','AdhocTestSuite','CustomerSmokeTestSuite','Other'], description: 'What is the test suite?')
+        string(name: 'OTHER_TEST', description: 'What is the test/suite to execute')
+        string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
+        choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         choice(name: 'TEST_MODE', choices: ['DOCKER', 'LOCAL', 'QA'], description: 'What is target test mode?')
-        booleanParam(name: "HEADLESS", defaultValue: false, description: "No browser window?")
+        booleanParam(name: 'HEADLESS', defaultValue: true)
     }
 
     agent {
