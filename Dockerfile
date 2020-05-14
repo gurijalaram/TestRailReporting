@@ -34,7 +34,9 @@ RUN if [ "$MODULE" = "uitests" ]; then \
     fi
 
 # Copy docker-compose
-COPY docker-compose.yml .
+RUN if [ "$MODULE" = "uitests" ]; then \
+    COPY docker-compose.yml .; \
+    fi
 
 # Prepare build workspace.
 FROM gradle:6.1.1-jdk8 AS sdk
