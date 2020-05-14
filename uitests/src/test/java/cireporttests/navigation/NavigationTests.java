@@ -76,7 +76,6 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "2986")
     @Description("Ensure that the CI Reports Logout Link works")
     public void testCIReportsLogoutNavigation() {
