@@ -74,7 +74,7 @@ public class DriverFactory {
                         driver = getQADriver(server.concat("/wd/hub"), browser, proxy, null, null, locale);
                     }
                     break;
-                case DOCKER:
+                case GRID:
                     String serverAddress = testType.equals(TestType.UI) ? "172.17.0.1" : "host.docker.internal";
                     driver = getQADriver(("http://").concat(serverAddress).concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
                     break;

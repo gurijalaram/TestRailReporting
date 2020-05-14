@@ -133,8 +133,8 @@ public class TestBase {
             case "EXPORT":
                 result = TestMode.EXPORT;
                 break;
-            case "DOCKER":
-                result = TestMode.DOCKER;
+            case "GRID":
+                result = TestMode.GRID;
                 break;
             default:
                 throw new IllegalStateException("testMode could not be identified");

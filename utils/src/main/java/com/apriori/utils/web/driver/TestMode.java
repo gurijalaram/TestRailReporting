@@ -4,7 +4,7 @@ public enum TestMode {
     QA("QA"), // test against env that QA uses like cid-te
     LOCAL("LOCAL"), // test locally, default
     EXPORT("EXPORT"), // run export tests, handy when running over RemoteWebDriver as download will happen on remote machine ;
-    DOCKER("DOCKER");
+    GRID("GRID");
 
     private final String value;
 

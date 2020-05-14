@@ -16,7 +16,7 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
-        choice(name: 'TEST_MODE', choices: ['DOCKER', 'LOCAL', 'QA'], description: 'What is target test mode?')
+        choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
     }
 
     agent {
