@@ -50,7 +50,7 @@ public class Constants {
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
-    public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";
+    public static final String CID_AUT_HEADER_TEXT = "CI Design (AUTOMATIONENVIRONMENT)";
 
     public static final String CASTING_DTC_REPORT_NAME = "DTC Casting";
     public static final String CASTING_DTC_COMPARISON_REPORT_NAME = "DTC Casting Comparison";
