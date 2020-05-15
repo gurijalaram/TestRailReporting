@@ -13,6 +13,16 @@ public class VPE extends Pagination {
     private Integer defaultAnnualVolume;
     private VPE response;
     private List<VPE> items;
+    private List<ProcessGroup> processGroupInfo;
+
+    public List<ProcessGroup> getProcessGroupInfo() {
+        return processGroupInfo;
+    }
+
+    public VPE setProcessGroupInfo(List<ProcessGroup> processGroupInfo) {
+        this.processGroupInfo = processGroupInfo;
+        return this;
+    }
 
     public List<VPE> getItems() {
         return this.items;
