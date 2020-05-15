@@ -35,7 +35,7 @@ public class LoginTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"2696"})
     @Description("Failed login to CI Report, wrong password")
-    public void failedLogin() {
+    public void testFailedLogin() {
         String loginErrorMessage = "Wrong email or password.";
         loginPage = new LoginPage(driver);
         loginPage.failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
@@ -46,7 +46,7 @@ public class LoginTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"2697"})
     @Description("Forgotten password functionality")
-    public void forgotPassword() {
+    public void testForgotPassword() {
         String passwordResetMsg = "We've just sent you an email to reset your password.";
         loginPage = new LoginPage(driver);
         loginPage.clickForgotPassword()
@@ -58,7 +58,7 @@ public class LoginTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"2698"})
     @Description("Empty email/password field message displayed")
-    public void emptyFieldsMessage() {
+    public void testEmptyFieldsMessage() {
         String emptyFieldMsg = "Can't be blank";
         loginPage = new LoginPage(driver);
         loginPage.failedLogin("", "");
@@ -69,7 +69,7 @@ public class LoginTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"2699"})
     @Description("Invalid email address, wrong format")
-    public void invalidEmail() {
+    public void testInvalidEmail() {
         String invalidEmailMsg = "Invalid";
         loginPage = new LoginPage(driver);
         loginPage.failedLogin("a@b", "fakePassword");

@@ -107,8 +107,8 @@ public class AddScenarioTests extends TestBase {
     @TestRail(testCaseId = {"414"})
     @Description("Test all available characters in a comparison name")
     public void comparisonAllCharacters() {
-
-        String testComparisonName = (new GenerateStringUtil().generateComparisonName() + "!£$%^&*()_+{}~:?><`1-=[]#';|@");
+      
+        String testComparisonName = (new GenerateStringUtil().generateComparisonName() + "!£$%^&()_+{}~`1-=[]#';@");
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
