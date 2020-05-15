@@ -24,6 +24,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -40,6 +41,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -101,6 +103,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -151,6 +154,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
