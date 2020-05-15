@@ -1,6 +1,7 @@
 # Prepare runtime.
 FROM openjdk:8-jre-stretch AS runtime
 ARG MODULE
+ARG TEST_MODE
 WORKDIR /app
 
 USER root
@@ -12,7 +13,7 @@ RUN keytool -import -trustcacerts -noprompt \
     -storepass changeit
 
 ARG CHROME_VERSION=81.0.4044.138-1
-RUN if [ "$MODULE" = "uitests" ]; then \
+RUN if [ "$MODULE" = "uitests" ] && [ "$TEST_MODE" != "GRID" ]; then \
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
 	&& echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
 	&& apt-get update -qqy \
@@ -24,7 +25,7 @@ RUN if [ "$MODULE" = "uitests" ]; then \
 
 # Install Chrome Driver.
 ARG CHROME_DRIVER_VERSION=81.0.4044.138
-RUN if [ "$MODULE" = "uitests" ]; then \
+RUN if [ "$MODULE" = "uitests" ] && [ "$TEST_MODE" != "GRID" ]; then \
     wget -q -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
 	&& unzip /tmp/chromedriver.zip -d /opt \
 	&& rm /tmp/chromedriver.zip \

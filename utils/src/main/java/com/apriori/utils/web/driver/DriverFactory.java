@@ -74,6 +74,11 @@ public class DriverFactory {
                         driver = getQADriver(server.concat("/wd/hub"), browser, proxy, null, null, locale);
                     }
                     break;
+                case GRID:
+                    // docker.internal is used for running on docker local, the ip is used for running on docker jenkins
+                    String serverAddress = testType.equals(TestType.UI) ? "172.17.0.1" : "host.docker.internal";
+                    driver = getQADriver(("http://").concat(serverAddress).concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
+                    break;
                 case EXPORT:
                     throw new InvalidParameterException("Use QA mode with EXPORT type instead: " + testMode);
                 case LOCAL:
