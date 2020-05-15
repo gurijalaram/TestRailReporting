@@ -13,7 +13,7 @@ RUN keytool -import -trustcacerts -noprompt \
     -storepass changeit
 
 ARG CHROME_VERSION=81.0.4044.138-1
-RUN if [ "$MODULE" = "uitests" ] && ["$TEST_MODE" != "GRID"]; then \
+RUN if [ "$MODULE" = "uitests" ] && [ "$TEST_MODE" != "GRID" ]; then \
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
 	&& echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
 	&& apt-get update -qqy \
