@@ -21,6 +21,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
@@ -38,7 +39,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class})
+    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -81,9 +82,8 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "2983")
-    @Issue("AP-58758")
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
         ciaUserGuide = new LoginPage(driver)
@@ -128,7 +128,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class})
+    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {

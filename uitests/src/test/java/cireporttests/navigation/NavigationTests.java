@@ -33,6 +33,7 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class NavigationTests extends TestBase {
 
@@ -103,7 +104,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = {"2968"})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
@@ -251,22 +252,5 @@ public class NavigationTests extends TestBase {
             .navigateToCreateDataSourcePage();
 
         assertThat(dataSource.getDataSourceTitleText(), is(equalTo("New Data Source")));
-    }
-
-    @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
-    @TestRail(testCaseId = {"2701"})
-    @Description("Ensure that the link to the help page works")
-    public void testHelpNavigation() {
-        String iframeId = "topic";
-        helpPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
-            .navigateToHelpPage()
-            .switchToIFrameHelpPage(iframeId)
-            .ensurePageIsLoaded();
-
-        assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
-        assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.REPORTING_HELP_URL)));
-        assertThat(helpPage.getTabCount(), is(2));
     }
 }

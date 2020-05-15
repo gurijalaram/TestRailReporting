@@ -14,6 +14,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class LoginTests extends TestBase {
 
@@ -24,8 +25,8 @@ public class LoginTests extends TestBase {
         super();
     }
 
-    @Category(MsSQLOracleLocalInstallTest.class)
     @Test
+    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
     public void testLogin() {
@@ -35,8 +36,8 @@ public class LoginTests extends TestBase {
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }
 
-    @Category(MsSQLOracleLocalInstallTest.class)
     @Test
+    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = {"2696"})
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
@@ -59,9 +60,9 @@ public class LoginTests extends TestBase {
         assertThat(loginPage.getLoginMessage(), is(equalTo(passwordResetMsg.toUpperCase())));
     }
 
-    @Category(MsSQLOracleLocalInstallTest.class)
     @Test
-    @TestRail(testCaseId = {"2698"})
+    @Category(MsSQLOracleLocalInstallTest.class)
+	@TestRail(testCaseId = {"2698"})
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
         String emptyFieldMsg = "Invalid credentials supplied. Could not login to JasperReports Server.";
@@ -71,8 +72,8 @@ public class LoginTests extends TestBase {
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(emptyFieldMsg)));
     }
 
-    @Category(MsSQLOracleLocalInstallTest.class)
     @Test
+	@Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2699"})
     @Description("Invalid email address, wrong format")
     public void invalidEmail() {
