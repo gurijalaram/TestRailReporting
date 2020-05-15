@@ -96,7 +96,7 @@ pipeline {
                 echo "Testing.."
 
                 script {
-                    if (params.TEST_MODE == "Grid") {
+                    if (params.TEST_MODE == "GRID") {
                         sh """
                             docker-compose up -d
                         """
