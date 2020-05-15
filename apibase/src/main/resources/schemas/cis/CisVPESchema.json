@@ -19,7 +19,8 @@
               "name",
               "batchesPerYear",
               "defaultProductionLife",
-              "defaultAnnualVolume"
+              "defaultAnnualVolume",
+              "processGroupInfo"
             ],
             "properties": {
               "name": {
@@ -34,6 +35,27 @@
               },
               "defaultAnnualVolume": {
                 "type": "integer"
+              },
+              "processGroupInfo": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "vpeName",
+                    "processGroupName"
+                  ],
+                  "properties": {
+                    "defaultMaterialName": {
+                      "type": "string"
+                    },
+                    "processGroupName": {
+                      "type": "string"
+                    },
+                    "vpeName": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
