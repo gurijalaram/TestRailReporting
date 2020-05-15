@@ -59,7 +59,7 @@ pipeline {
                         javaOpts = javaOpts + " -Dheadless=true"
                     }
 
-                    if (testSuite == "Other") {
+                    if (${TEST_SUITE} == "Other") {
                         testSuite = params.OTHER_TEST
                     } else {
                         testSuite = "testsuites." + params.TEST_SUITE
