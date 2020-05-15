@@ -42,7 +42,7 @@ pipeline {
 
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
-                    javaOpts = javaOpts + "-Durl=${params.TARGET_URL}"
+                    javaOpts = javaOpts + " -Durl=${params.TARGET_URL}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
 
                     threadCount = params.THREAD_COUNT
