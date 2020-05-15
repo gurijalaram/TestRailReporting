@@ -39,12 +39,24 @@ public class LoginTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"2696"})
     @Description("Failed login to CI Report, wrong password")
-    public void failedLogin() {
+    public void testFailedLogin() {
         String loginErrorMessage = "Invalid credentials supplied. Could not login to JasperReports Server.";
         loginPage = new LoginPage(driver);
         loginPage.failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(loginErrorMessage)));
+	}
+
+    @Test
+    @TestRail(testCaseId = {"2697"})
+    @Description("Forgotten password functionality")
+    public void testForgotPassword() {
+        String passwordResetMsg = "We've just sent you an email to reset your password.";
+        loginPage = new LoginPage(driver);
+        loginPage.clickForgotPassword()
+            .submitEmail("fakeEmail@apriori.com");
+
+        assertThat(loginPage.getLoginMessage(), is(equalTo(passwordResetMsg.toUpperCase())));
     }
 
     @Category(MsSQLOracleLocalInstallTest.class)

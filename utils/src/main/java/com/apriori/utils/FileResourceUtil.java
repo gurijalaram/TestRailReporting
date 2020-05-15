@@ -1,5 +1,7 @@
 package com.apriori.utils;
 
+import static com.google.common.io.Files.createTempDir;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,17 +37,16 @@ public class FileResourceUtil {
     }
 
     private File resourceFile(String fileName) {
-        String fileSuffix = fileName.split("\\.", 2)[1];
         try {
             InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
             if (in == null) {
                 return null;
             }
 
-            File file = File.createTempFile(String.valueOf(in.hashCode()), ".".concat(fileSuffix));
-            file.deleteOnExit();
+            File tempFile = new File(createTempDir(), fileName);
+            tempFile.deleteOnExit();
 
-            try (FileOutputStream out = new FileOutputStream(file)) {
+            try (FileOutputStream out = new FileOutputStream(tempFile)) {
                 //copy stream
                 byte[] buffer = new byte[1024];
                 int bytesRead;
@@ -53,7 +54,7 @@ public class FileResourceUtil {
                     out.write(buffer, 0, bytesRead);
                 }
             }
-            return file;
+            return tempFile;
         } catch (RuntimeException | IOException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
         }
@@ -65,14 +66,13 @@ public class FileResourceUtil {
      * @return file object
      */
     public static File getResourceAsFile(String resourceFileName) {
-        String fileSuffix = resourceFileName.split("\\.", 2)[1];
         try {
             InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(resourceFileName);
             if (in == null) {
                 return null;
             }
 
-            File tempFile = File.createTempFile(String.valueOf(in.hashCode()), ".".concat(fileSuffix));
+            File tempFile = new File(createTempDir(), resourceFileName);
             tempFile.deleteOnExit();
 
             try (FileOutputStream out = new FileOutputStream(tempFile)) {

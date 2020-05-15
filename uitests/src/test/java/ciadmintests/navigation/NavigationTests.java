@@ -3,6 +3,7 @@ package ciadmintests.navigation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.admin.pages.login.LoginPage;
@@ -121,7 +122,7 @@ public class NavigationTests extends TestBase {
 
         String headerToCheck = logout.getHeaderToCheck();
 
-        assertThat(logout.getHeaderText(), containsString(headerToCheck));
+        assertThat(logout.getHeaderText(), startsWith(headerToCheck));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
