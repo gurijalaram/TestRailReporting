@@ -47,6 +47,9 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
+    @FindBy(xpath = "//div[contains(text(), 'Hole Issue')]/ancestor::td/following-sibling::td")
+    private WebElement holeIssueValue;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -123,5 +126,14 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
         expandPanel();
         pageUtils.waitForElementAndClick(geometryTab);
         return new GeometryPage(driver);
+    }
+
+    /**
+     * Gets the Hole Issue value
+     * @return String - Hole Issue value
+     */
+    public String getHoleIssueValue() {
+        pageUtils.waitForElementToAppear(holeIssueValue);
+        return pageUtils.getElementText(holeIssueValue);
     }
 }

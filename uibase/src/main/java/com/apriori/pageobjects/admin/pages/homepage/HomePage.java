@@ -97,7 +97,7 @@ public class HomePage extends PageHeader {
      * Wait for element to appear
      */
     public void waitForReportsLogoutDisplayedToAppear() {
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(1);
         pageUtils.waitForElementToAppear(reportsLogoutOption);
     }
 

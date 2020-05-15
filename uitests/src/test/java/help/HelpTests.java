@@ -7,8 +7,8 @@ import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -50,7 +50,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openMoreInputs()
@@ -68,7 +68,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -86,7 +86,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -104,7 +104,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -122,7 +122,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openCostDetails()

@@ -1,6 +1,6 @@
 package com.apriori.utils.users.service;
 
-import com.apriori.utils.Util;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
 
@@ -58,7 +58,7 @@ class InitUsersData {
     }
 
     private static List<UserCredentials> initUsers() {
-        InputStream usersListStream = Util.getResourceFileStream(initPathToFileWithUsers());
+        InputStream usersListStream = FileResourceUtil.getResourceFileStream(initPathToFileWithUsers());
 
         if (fileNotExist(usersListStream)) {
             return Collections.singletonList(logErrorAndCreateDefaultUser("File with users list not found."));
