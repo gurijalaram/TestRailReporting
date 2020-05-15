@@ -93,10 +93,12 @@ pipeline {
 
                 echo "Testing.."
 
-                if ($TEST_MODE == "Grid") {
-                    sh """
+                script {
+                    if ($TEST_MODE == "Grid") {
+                        sh """
                     docker-compose up -d
                 """
+                    }
                 }
 
                 sh """
