@@ -93,14 +93,6 @@ pipeline {
 
                 echo "Testing.."
 
-                script {
-                    if (${TEST_MODE} == "Grid") {
-                        sh """
-                    docker-compose up -d
-                """
-                    }
-                }
-
                 sh """
                     sleep 5s
                     docker exec \
