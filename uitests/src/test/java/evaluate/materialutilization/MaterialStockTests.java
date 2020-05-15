@@ -70,7 +70,7 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59839")
+    @Issue("AP-56984")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
@@ -84,7 +84,7 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("18.56")));
+        assertThat(evaluatePage.getPartCost(), is(equalTo("19.73")));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
