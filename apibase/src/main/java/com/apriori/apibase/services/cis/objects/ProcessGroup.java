@@ -9,6 +9,26 @@ public class ProcessGroup {
     private Boolean supportsMaterials;
     private Boolean supportsCompositesMapping;
     private List<String> vpeNames;
+    private String vpeName;
+    private String processGroupName;
+
+    public String getVpeName() {
+        return vpeName;
+    }
+
+    public ProcessGroup setVpeName(String vpeName) {
+        this.vpeName = vpeName;
+        return this;
+    }
+
+    public String getProcessGroupName() {
+        return processGroupName;
+    }
+
+    public ProcessGroup setProcessGroupName(String processGroupName) {
+        this.processGroupName = processGroupName;
+        return this;
+    }
 
     public String getName() {
         return name;
