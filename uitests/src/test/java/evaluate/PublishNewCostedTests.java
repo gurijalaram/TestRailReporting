@@ -61,7 +61,7 @@ public class PublishNewCostedTests extends TestBase {
     public void testPublishWithStatus() {
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String partName = "testpart-4.prt";
+        String partName = "testpart-4";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);
