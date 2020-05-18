@@ -82,7 +82,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class)
+    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "2983")
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {

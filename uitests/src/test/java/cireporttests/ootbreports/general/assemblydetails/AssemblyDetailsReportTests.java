@@ -74,7 +74,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
