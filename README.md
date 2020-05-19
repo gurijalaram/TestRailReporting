@@ -5,9 +5,16 @@
 3. Import all of the modules into an IDE of your choice
 4. You are ready to run the tests if you have chrome installed, install it in case you don't
 
+## List of special modules that are not included into a common build
+ - **database** module location "../db"
+
 ## Building the project (you will need this for the very first time):
 1. Open Terminal to root `build` directory
 2. Right click `build.gradle` and `Import Gradle project`
+
+## Building all modules (include special modules):
+1. Open Terminal to root `build` directory
+2. Run `gradle clean build -x test -Dall`
 
 ## Run Gradle tests with JVM args
 1. Open Terminal to root `build` directory
