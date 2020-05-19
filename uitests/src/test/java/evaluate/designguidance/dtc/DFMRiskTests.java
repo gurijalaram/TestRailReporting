@@ -10,7 +10,6 @@ import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
@@ -136,7 +135,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario();
 
@@ -154,7 +153,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
@@ -180,7 +179,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -208,7 +207,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
@@ -234,7 +233,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -263,7 +262,7 @@ public class DFMRiskTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario();
 
