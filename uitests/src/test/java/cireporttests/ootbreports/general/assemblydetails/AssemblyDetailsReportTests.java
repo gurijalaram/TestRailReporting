@@ -23,7 +23,6 @@ import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -31,6 +30,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -71,6 +71,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -101,7 +102,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "1922")
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -264,6 +265,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {

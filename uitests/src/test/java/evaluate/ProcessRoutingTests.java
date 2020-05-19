@@ -847,7 +847,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
     public void routingTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();

@@ -345,7 +345,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);

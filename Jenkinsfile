@@ -8,13 +8,15 @@ def testSuite
 
 pipeline {
     parameters {
-        choice(name: "TARGET_ENV", choices: ["cid-aut","cid-te","cid-perf","customer-smoke"], description: "What is the target environment for testing?")
-        choice(name: "TEST_TYPE", choices: ["uitests","apitests"] , description: "What type of test is running?")
-        choice(name: "TEST_SUITE", choices: ["SanityTestSuite", "AdminSuite", "SmokeTestSuite","CIDTestSuite","AdhocTestSuite","CustomerSmokeTestSuite","Other"], description: "What is the test suite?")
-        string(name: "OTHER_TEST", description: "What is the test/suite to execute")
-        string(name: "THREAD_COUNT", defaultValue: "1", description: "What is the amount of browser instances?")
-        choice(name: "BROWSER", choices: ["chrome", "firefox", "none"], description: "What is the browser?")
-        booleanParam(name: "HEADLESS", defaultValue: false, description: "No browser window?")
+        string(name: 'TARGET_URL', defaultValue: 'https://automation.awsdev.apriori.com/', description: 'What is the target URL for testing?')
+        choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke'], description: 'What is the target environment for testing?')
+        choice(name: 'TEST_TYPE', choices: ['uitests', 'apitests'], description: 'What type of test is running?')
+        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'Other'], description: 'What is the test suite?')
+        string(name: 'OTHER_TEST', description: 'What is the test/suite to execute')
+        choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
+        booleanParam(name: 'HEADLESS', defaultValue: true)
+        string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
+        choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
     }
 
     agent {
@@ -40,7 +42,8 @@ pipeline {
                     sh "cat ${buildInfoFile}"
 
                     // Set run time parameters
-                    javaOpts = javaOpts + "-Dmode=QA"
+                    javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
+                    javaOpts = javaOpts + " -Durl=${params.TARGET_URL}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
 
                     threadCount = params.THREAD_COUNT
@@ -57,9 +60,10 @@ pipeline {
                         javaOpts = javaOpts + " -Dheadless=true"
                     }
 
-                    testSuite = params.TEST_SUITE
-                    if (testSuite == "Other") {
+                    if (params.TEST_SUITE == "Other") {
                         testSuite = params.OTHER_TEST
+                    } else {
+                        testSuite = "testsuites." + params.TEST_SUITE
                     }
                     echo "${javaOpts}"
                 }
@@ -71,6 +75,7 @@ pipeline {
                 sh """
                     docker build \
                         --build-arg MODULE=${TEST_TYPE} \
+                        --build-arg TEST_MODE=${TEST_MODE} \
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
@@ -89,7 +94,17 @@ pipeline {
                 """
 
                 echo "Testing.."
+
+                script {
+                    if ("${params.TEST_MODE}" == "GRID") {
+                        sh """
+                            docker-compose up -d
+                        """
+                    }
+                }
+
                 sh """
+                    sleep 5s
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
@@ -112,10 +127,11 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
-            cleanWs()
+            sh "docker-compose down --remove-orphans"
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
+            cleanWs()
         }
     }
 }
