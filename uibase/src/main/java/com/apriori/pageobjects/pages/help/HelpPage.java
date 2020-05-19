@@ -73,7 +73,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     }
 
     public String getChildPageTitle() {
-        return pageUtils.windowHandler().getTitle();
+        return pageUtils.windowHandler(1).getTitle();
         // TODO remove code duplication
     }
 }

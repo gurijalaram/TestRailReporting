@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
@@ -13,6 +15,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportHeader;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -20,7 +23,10 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
+
+import java.math.BigDecimal;
 
 public class CastingDtcReportTests extends TestBase {
 
@@ -34,6 +40,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -87,7 +94,7 @@ public class CastingDtcReportTests extends TestBase {
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
-            .clickApplyAndOk()
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
         assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC.getReportName()),
@@ -95,6 +102,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -145,6 +153,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -165,5 +174,40 @@ public class CastingDtcReportTests extends TestBase {
         genericReportPage.clickRemove();
 
         assertThat(genericReportPage.isOptionInDropDown("Saved Config", 1), is(false));
+    }
+
+    @Test
+    @TestRail(testCaseId = "102990")
+    @Description("Verify that aPriori costed scenarios are represented correctly")
+    public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
+        genericReportPage = new LoginPage(driver)
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+            .clickOk();
+
+        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
+        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_REPORT_NAME);
+        genericReportPage.openNewTabAndFocus(1);
+
+        String[] attributesArray = { "Part Name", "Scenario Name" };
+        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .filterCriteria()
+                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray)
+                .apply(ExplorePage.class)
+                .openFirstScenario();
+
+        BigDecimal cidFbcValue = evaluatePage.getBurdenedCostValue();
+
+        /*
+            This is great now, but rounding in CID is not done at all really (long story)
+            Thus this may start failing in due course, and can be fixed then
+            Currency in Reports and CID needs to match for this test also (both default to USD)
+         */
+        assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
 }

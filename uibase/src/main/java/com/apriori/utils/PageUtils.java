@@ -591,7 +591,7 @@ public class PageUtils {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nExpected: " + text + "\nFound: " + locator.getText())
+            .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + locator.getText())
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
     }
@@ -750,9 +750,9 @@ public class PageUtils {
      *
      * @return webdriver functions
      */
-    public WebDriver windowHandler() {
+    public WebDriver windowHandler(int index) {
         List<String> windowList = new ArrayList<>(driver.getWindowHandles());
-        return driver.switchTo().window(windowList.get(1));
+        return driver.switchTo().window(windowList.get(index));
     }
 
     /**
@@ -799,7 +799,7 @@ public class PageUtils {
      * @return String
      */
     public String getTabTwoUrl() {
-        return windowHandler().getCurrentUrl();
+        return windowHandler(1).getCurrentUrl();
     }
 
     /**
@@ -845,9 +845,9 @@ public class PageUtils {
     public String getHeaderToCheck() {
         String headerToCheck;
         if (isEnvTE()) {
-            headerToCheck = Constants.cidTeHeaderText;
+            headerToCheck = Constants.CID_TE_HEADER_TEXT;
         } else {
-            headerToCheck = Constants.cidAutHeaderText;
+            headerToCheck = Constants.CID_AUT_HEADER_TEXT;
         }
         return headerToCheck;
     }

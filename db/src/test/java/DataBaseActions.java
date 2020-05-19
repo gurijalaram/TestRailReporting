@@ -2,6 +2,7 @@ import com.apriori.apibase.services.cid.objects.response.ExportSchedulesResponse
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.database.actions.cloud.DbMigration;
 import com.apriori.database.entity.MigrationEntity;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import com.fbc.datamodel.shared.ScenarioType;
@@ -23,8 +24,24 @@ public class DataBaseActions extends TestUtil {
 
     /**
      * To migrate specific scenario from aPriori Professional database to jasper (reporting) database <br>
+     */
+    @Test
+    public void jenkinsMigrationOfSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated() {
+        ResponseWrapper<ExportSchedulesResponse> response = DbMigration.migrateSpecificScenario(
+                MigrationEntity.initWithNewScenarioNameForMigration(ScenarioType.valueOf(Constants.SCENARIO_TYPE),
+                        Constants.ELEMENT_NAME,
+                        Constants.SCENARIO_NAME,
+                        Constants.EXPORT_SET_NAME
+                )
+        );
+
+        this.validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+    }
+
+    /**
+     * To migrate specific scenario from aPriori Professional database to jasper (reporting) database <br>
      * run this command in cmd from build folder: <br>
-     * gradle clean -Denv=<env name> :database:test --tests "DataBaseActions.migrateSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated"
+     * gradle clean -Denv={env name} :database:test --tests "DataBaseActions.migrateSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated"
      */
     @Test
     public void migrateSpecificScenarioFromProfessionalToReportingFailedIfDataIsNotMigrated() {
@@ -39,7 +56,7 @@ public class DataBaseActions extends TestUtil {
     /**
      * To migrate data from aPriori Professional database to jasper (reporting) database <br>
      * run this command in cmd from build folder: <br>
-     * gradle clean -Denv=<env name> :database:test --tests "DataBaseActions.migrateDataFromProfessionalToReportingFailedIfDataIsNotMigrated"
+     * gradle clean -Denv={env name} :database:test --tests "DataBaseActions.migrateDataFromProfessionalToReportingFailedIfDataIsNotMigrated"
      */
     @Test
     public void migrateDataFromProfessionalToReportingFailedIfDataIsNotMigrated() {
