@@ -110,7 +110,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.05, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.05, Total Capital Investments (USD): 11,753.83"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.93, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.05, Total Capital Investments (USD): 11,753.83"));
     }
 
     @Test
