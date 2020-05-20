@@ -21,17 +21,40 @@ public class Constants {
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-aut";
 
+    public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
+    public static final String DEFAULT_EXPORT_SET_NAME_KEY = "exportSetName";
+    public static final String DEFAULT_ELEMENT_NAME_KEY = "elementName";
+    public static final String DEFAULT_SCENARIO_TYPE_KEY = "scenarioType";
+
+    public static final String DEFAULT_USER_NAME_KEY = "username";
+    public static final String DEFAULT_PASSWORD_KEY = "password";
+
+    public static final String SCENARIO_NAME = System.getProperty(DEFAULT_SCENARIO_NAME_KEY);
+    public static final String EXPORT_SET_NAME = System.getProperty(DEFAULT_EXPORT_SET_NAME_KEY);
+    public static final String ELEMENT_NAME = System.getProperty(DEFAULT_ELEMENT_NAME_KEY);
+    public static final String SCENARIO_TYPE = System.getProperty(DEFAULT_SCENARIO_TYPE_KEY);
+
+    public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
+    public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
+
     public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_ONE = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
     public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_TWO = "CIA_UG";
+    public static final String CIA_USER_GUIDE_URL_SUBSTRING = "CI_ADMIN_USER_GUIDE";
+    public static final String CIA_USER_GUIDE_TITLE = "Cost Insight Admin:\nUser Guide";
     public static final String SCENARIO_EXPORT_CHAPTER_PAGE_TITLE = "2 Scenario and System Data Exports";
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
     public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
     public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
     public static final String REPORTING_HELP_URL = "http://help.jaspersoft.com/Default";
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
+    public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
-    public static final String CID_AUT_HEADER_TEXT = "CI Design (AUTOMATIONENVIRONMENT)";
+    public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";
+
+    public static final String CASTING_DTC_REPORT_NAME = "DTC Casting";
+    public static final String CASTING_DTC_COMPARISON_REPORT_NAME = "DTC Casting Comparison";
+    public static final String CASTING_DTC_DETAILS_REPORT_NAME = "DTC Casting Details";
 
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
@@ -63,6 +86,13 @@ public class Constants {
     private static String atsAuthTargetCloudContext;
     private static String fmsServiceHost;
     private static String fmsFileIdentity;
+    private static String cisCustomerIdentity;
+    private static String cisServiceHost;
+    private static String cisPartIdentity;
+    private static String cisReportIdentity;
+    private static String cisReportTypeIdentity;
+    private static String cisBatchIdentity;
+    private static String apitestsBasePath;
     public static final String defaultServiceHostKey = "serverHost";
     public static final String defaultServicePortKey = "serverPort";
     public static final String defaultServiceNameKey = "serverName";
@@ -245,4 +275,60 @@ public class Constants {
         return atsAuthTargetCloudContext;
     }
 
+    public static String getCisCustomerIdentity() {
+        if (cisCustomerIdentity == null) {
+            cisCustomerIdentity = System.getProperty("cisCustomerIdentity", constantsInit.cisCustomerIdentity());
+        }
+
+        return cisCustomerIdentity;
+    }
+
+    public static String getCisServiceHost() {
+        if (cisServiceHost == null) {
+            cisServiceHost = System.getProperty("cisServiceHost", constantsInit.cisServiceHost());
+        }
+
+        return cisServiceHost;
+    }
+
+    public static String getCisPartIdentity() {
+        if (cisPartIdentity == null) {
+            cisPartIdentity = System.getProperty("cisPartIdentity", constantsInit.cisPartIdentity());
+        }
+        
+        return cisPartIdentity;
+    }
+
+    public static String getCisReportIdentity() {
+        if (cisReportIdentity == null) {
+            cisReportIdentity = System.getProperty("cisReportIdentity", constantsInit.cisReportIdentity());
+        }
+
+        return cisReportIdentity;
+    }
+
+    public static String getCisReportTypeIdentity() {
+        if (cisReportTypeIdentity == null) {
+            cisReportTypeIdentity = System.getProperty("cisReportTypeIdentity", constantsInit.cisReportTypeIdentity());
+        }
+
+        return cisReportTypeIdentity;
+    }
+
+    public static String getCisBatchIdentity() {
+        if (cisBatchIdentity == null) {
+            cisBatchIdentity = System.getProperty("cisBatchIdentity", constantsInit.cisBatchIdentity());
+        }
+
+        return cisBatchIdentity;
+    }
+
+    public static String getApitestsBasePath() {
+        if (apitestsBasePath == null) {
+            apitestsBasePath = System.getProperty("apitestsBasePath", constantsInit.apitestsBasePath());
+        }
+
+        return apitestsBasePath;
+
+    }
 }
