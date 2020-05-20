@@ -45,6 +45,16 @@ public class Part {
     private Object udas;
     private String partName;
     private String batchIdentity;
+    private String errors;
+
+    public String getErrors() {
+        return errors;
+    }
+
+    public Part setErrors(String errors) {
+        this.errors = errors;
+        return this;
+    }
 
     public String getBatchIdentity() {
         return this.batchIdentity;
