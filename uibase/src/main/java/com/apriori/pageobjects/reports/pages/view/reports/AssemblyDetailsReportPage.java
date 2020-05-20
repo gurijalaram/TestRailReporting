@@ -207,13 +207,13 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets expected Cycle Time grand total
+     * Gets expected Capital Investment and Cycle Time grand total
      *
      * @param assemblyType
      * @param columnName
      * @return BigDecimal
      */
-    public BigDecimal getExpectedCTGrandTotal(String assemblyType, String columnName) {
+    public BigDecimal getInvestmentCycleTimeGrandTotal(String assemblyType, String columnName) {
         List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> trimmedValueList;
@@ -232,11 +232,11 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets expected Piece Part Cost grand total
+     * Gets expected grand total
      *
      * @return BigDecimal
      */
-    public BigDecimal getExpectedPPCGrandTotal(String assemblyType, String columnName) {
+    public BigDecimal getExpectedCostGrandTotal(String assemblyType, String columnName) {
         List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
         List<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> quantityList = checkQuantityList(assemblyType);
@@ -245,47 +245,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
 
         return finalValues
-            .stream()
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    /**
-     * Gets expected Fully Burdened Cost grand total
-     *
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedFBCGrandTotal(String assemblyType, String columnName) {
-        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
-        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> quantityList = checkQuantityList(assemblyType);
-
-        List<BigDecimal> trimmedValueList = checkPPCValues(assemblyType, levels, allValues, quantityList);
-        List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
-
-        return finalValues
-            .stream()
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    /**
-     * Gets expected Capital Investment grand total
-     *
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedCIGrandTotal(String assemblyType, String columnName) {
-        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
-        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> trimmedValueList;
-
-        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
-            trimmedValueList = checkCISubAssemblyValues(assemblyType, levels, allValues);
-        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
-            trimmedValueList = checkCISubSubAsmValues(assemblyType, levels, allValues);
-        } else {
-            trimmedValueList = checkCITopLevelValues(assemblyType, levels, allValues);
-        }
-
-        return trimmedValueList
             .stream()
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
