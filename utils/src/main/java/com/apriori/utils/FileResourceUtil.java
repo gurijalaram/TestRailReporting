@@ -63,7 +63,7 @@ public class FileResourceUtil {
      * @param fileName - the file name
      * @return file object
      */
-    public static File getResourceCadFile(String fileName) {
+    public File getResourceCadFile(String fileName) {
         return getResourceAsFile("cad-files",  fileName);
     }
 

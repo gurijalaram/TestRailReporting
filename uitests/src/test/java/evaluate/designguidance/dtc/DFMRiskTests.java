@@ -172,7 +172,7 @@ public class DFMRiskTests extends TestBase {
 
         String file = "1379344.stp";
         resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -199,7 +199,7 @@ public class DFMRiskTests extends TestBase {
 
         String file = "bracketdfm.SLDPRT";
         resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -225,7 +225,7 @@ public class DFMRiskTests extends TestBase {
 
         String file = "manifold.prt.1";
         resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -254,7 +254,7 @@ public class DFMRiskTests extends TestBase {
 
         String file = "SandCastBox.SLDPRT";
         resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
