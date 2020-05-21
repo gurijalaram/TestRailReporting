@@ -52,7 +52,7 @@ public class FileResourceUtil {
      * @return file object
      */
     public File getResourceFile(String fileName) {
-        return resourceFile(fileName);
+        return getResourceAsFile(fileName);
     }
 
     /**
@@ -63,18 +63,24 @@ public class FileResourceUtil {
      * @param fileName - the file name
      * @return file object
      */
-    public File getResourceCadFile(String fileName) {
-        return resourceFile("cad-files",  fileName);
+    public static File getResourceCadFile(String fileName) {
+        return getResourceAsFile("cad-files",  fileName);
     }
 
-    private File resourceFile(String fileName) {
+    /**
+     * Get file from resource folder
+     *
+     * @param resourceFileName - the file name
+     * @return file object
+     */
+    public static File getResourceAsFile(String path, String resourceFileName) {
         try {
-            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
+            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(path.replace(",", File.separator).trim() + File.separator + resourceFileName);
             if (in == null) {
                 return null;
             }
 
-            File tempFile = new File(createTempDir(), fileName);
+            File tempFile = new File(createTempDir(path), resourceFileName);
             tempFile.deleteOnExit();
 
             try (FileOutputStream out = new FileOutputStream(tempFile)) {
@@ -87,31 +93,7 @@ public class FileResourceUtil {
             }
             return tempFile;
         } catch (RuntimeException | IOException e) {
-            throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
-        }
-    }
-
-    private File resourceFile(String path, String fileName) {
-        try {
-            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(path.replace(",", File.separator).trim() + File.separator + fileName);
-            if (in == null) {
-                return null;
-            }
-
-            File tempFile = new File(createTempDir(path), fileName);
-            tempFile.deleteOnExit();
-
-            try (FileOutputStream out = new FileOutputStream(tempFile)) {
-                //copy stream
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, bytesRead);
-                }
-            }
-            return tempFile;
-        } catch (RuntimeException | IOException e) {
-            throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", fileName, e));
+            throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", resourceFileName, e));
         }
     }
 
