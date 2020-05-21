@@ -347,7 +347,7 @@ public class PageUtils {
     }
 
     private WebElement waitForAppear(WebElement element) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2)
             .ignoreAll(ignoredWebDriverExceptions)
             .until(visibilityOf(element));
     }

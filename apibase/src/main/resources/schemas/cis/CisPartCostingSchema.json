@@ -197,6 +197,9 @@
         "sgaCost": {
           "type": "number"
         },
+        "stockPropertyHeight": {
+          "type": "number"
+        },
         "stockPropertyLength": {
           "type": "number"
         },
@@ -205,6 +208,18 @@
         },
         "stockPropertyWidth": {
           "type": "number"
+        },
+        "stockPropertyInsideDia": {
+          "type": "number"
+        },
+        "stockPropertyOutsideDia": {
+          "type": "number"
+        },
+        "stockPropertyWallThickness": {
+          "type": "number"
+        },
+        "virtualMaterialStockName": {
+          "type": "string"
         },
         "stripNestingPitch": {
           "type": "number"
