@@ -16,6 +16,36 @@ public class FileResourceUtil {
     private static final int TEMP_DIR_ATTEMPTS = 50;
 
     /**
+     * Get resource file stream from a jar file. {getResource}
+     *
+     * @param resourceFileName - the file name
+     * @return input stream
+     */
+    public static InputStream getResourceFileStream(String resourceFileName) {
+        return ClassLoader.getSystemResourceAsStream(resourceFileName);
+    }
+
+    /**
+     * Get file from resource folder current module.
+     *
+     * @param resourceFileName
+     * @return file object
+     */
+    public static File getLocalResourceFile(String resourceFileName) {
+        try {
+            return new File(
+                URLDecoder.decode(
+                    ClassLoader.getSystemResource(resourceFileName).getFile(),
+                    "UTF-8"
+                )
+            );
+        } catch (UnsupportedEncodingException e) {
+            GenerateStringUtil.logger.error(String.format("Resource file: %s was not found", resourceFileName));
+            throw new IllegalArgumentException();
+        }
+    }
+
+    /**
      * Gets resource file
      *
      * @param fileName - the file name
@@ -32,7 +62,7 @@ public class FileResourceUtil {
      * @return file object
      */
     public File getResourceCadFile(String fileName) {
-        return resourceFile("cad-files", fileName);
+        return resourceFile("cad-files",  fileName);
     }
 
     private File resourceFile(String fileName) {
@@ -61,7 +91,7 @@ public class FileResourceUtil {
 
     private File resourceFile(String path, String fileName) {
         try {
-            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
+            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(path + File.separator + fileName);
             if (in == null) {
                 return null;
             }
@@ -85,6 +115,7 @@ public class FileResourceUtil {
 
     /**
      * Get file from resource folder
+     *
      * @param resourceFileName - the file name
      * @return file object
      */
@@ -109,36 +140,6 @@ public class FileResourceUtil {
             return tempFile;
         } catch (IOException e) {
             logger.error(String.format("Resource file: %s was not found", resourceFileName));
-            throw new IllegalArgumentException();
-        }
-    }
-
-    /**
-     * Get resource file stream from a jar file. {getResource}
-     *
-     * @param resourceFileName - the file name
-     * @return input stream
-     */
-    public static InputStream getResourceFileStream(String resourceFileName) {
-        return ClassLoader.getSystemResourceAsStream(resourceFileName);
-    }
-
-    /**
-     * Get file from resource folder current module.
-     *
-     * @param resourceFileName
-     * @return file object
-     */
-    public static File getLocalResourceFile(String resourceFileName) {
-        try {
-            return new File(
-                    URLDecoder.decode(
-                            ClassLoader.getSystemResource(resourceFileName).getFile(),
-                            "UTF-8"
-                    )
-            );
-        } catch (UnsupportedEncodingException e) {
-            GenerateStringUtil.logger.error(String.format("Resource file: %s was not found", resourceFileName));
             throw new IllegalArgumentException();
         }
     }
@@ -169,7 +170,7 @@ public class FileResourceUtil {
         String baseName = System.currentTimeMillis() + "-";
 
         for (int counter = 0; counter < TEMP_DIR_ATTEMPTS; counter++) {
-            File tempDir = new File(baseDir, "Automation-" + baseName + counter + File.separator + path);
+            File tempDir = new File(baseDir, "Automation-" + baseName + counter + File.separator + path + File.separator);
             if (tempDir.mkdirs()) {
                 return tempDir;
             }
