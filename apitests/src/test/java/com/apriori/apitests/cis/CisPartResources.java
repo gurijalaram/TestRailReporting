@@ -2,6 +2,7 @@ package com.apriori.apitests.cis;
 
 import com.apriori.apibase.services.cis.apicalls.PartResources;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import com.apriori.utils.constants.Constants;
@@ -13,7 +14,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class CisPartResources {
+public class CisPartResources extends TestUtil {
 
     @Test
     @TestRail(testCaseId = "4174")

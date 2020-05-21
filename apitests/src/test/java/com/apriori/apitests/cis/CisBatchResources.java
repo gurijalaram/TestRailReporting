@@ -1,12 +1,13 @@
 package com.apriori.apitests.cis;
 
 import com.apriori.apibase.services.cis.apicalls.BatchResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
 
-public class CisBatchResources {
+public class CisBatchResources extends TestUtil {
 
     @Test
     @TestRail(testCaseId = "4275")
