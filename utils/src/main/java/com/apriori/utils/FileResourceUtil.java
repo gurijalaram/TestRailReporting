@@ -91,7 +91,7 @@ public class FileResourceUtil {
 
     private File resourceFile(String path, String fileName) {
         try {
-            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(path + File.separator + fileName);
+            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(path.replace(",", File.separator) + File.separator + fileName);
             if (in == null) {
                 return null;
             }
@@ -170,7 +170,7 @@ public class FileResourceUtil {
         String baseName = System.currentTimeMillis() + "-";
 
         for (int counter = 0; counter < TEMP_DIR_ATTEMPTS; counter++) {
-            File tempDir = new File(baseDir, "Automation-" + baseName + counter + File.separator + path + File.separator);
+            File tempDir = new File(baseDir, "Automation-" + baseName + counter + File.separator + path.replace(",", File.separator));
             if (tempDir.mkdirs()) {
                 return tempDir;
             }
