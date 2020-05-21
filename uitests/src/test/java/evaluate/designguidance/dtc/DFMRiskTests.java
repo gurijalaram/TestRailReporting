@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
-import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -26,7 +25,6 @@ public class DFMRiskTests extends TestBase {
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
-    private GenericHeader genericHeader;
 
     private File resourceFile;
     private File cadResourceFile;
@@ -174,7 +172,7 @@ public class DFMRiskTests extends TestBase {
 
         String file = "1379344.stp";
         resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -201,7 +199,7 @@ public class DFMRiskTests extends TestBase {
 
         String file = "bracketdfm.SLDPRT";
         resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -227,7 +225,7 @@ public class DFMRiskTests extends TestBase {
 
         String file = "manifold.prt.1";
         resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -256,7 +254,7 @@ public class DFMRiskTests extends TestBase {
 
         String file = "SandCastBox.SLDPRT";
         resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
