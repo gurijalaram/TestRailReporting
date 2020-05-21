@@ -58,6 +58,8 @@ public class FileResourceUtil {
     /**
      * Gets resource file from specified path
      *
+     * Nested folders should be separated by a comma eg. cad-files, files
+     *
      * @param fileName - the file name
      * @return file object
      */
@@ -91,7 +93,7 @@ public class FileResourceUtil {
 
     private File resourceFile(String path, String fileName) {
         try {
-            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(path.replace(",", File.separator) + File.separator + fileName);
+            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(path.replace(",", File.separator).trim() + File.separator + fileName);
             if (in == null) {
                 return null;
             }
@@ -170,7 +172,7 @@ public class FileResourceUtil {
         String baseName = System.currentTimeMillis() + "-";
 
         for (int counter = 0; counter < TEMP_DIR_ATTEMPTS; counter++) {
-            File tempDir = new File(baseDir, "Automation-" + baseName + counter + File.separator + path.replace(",", File.separator));
+            File tempDir = new File(baseDir, "Automation-" + baseName + counter + File.separator + path.replace(",", File.separator).trim());
             if (tempDir.mkdirs()) {
                 return tempDir;
             }
