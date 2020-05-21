@@ -186,7 +186,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage.uploadCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile);
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
         evaluatePage.costScenario();
@@ -213,9 +213,9 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
-        evaluatePage.uploadCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile);
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
-        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
     }
@@ -239,7 +239,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
-        evaluatePage.uploadCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile);
       /*  assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
 */
@@ -268,7 +268,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage.uploadCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile);
        /* assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
 */

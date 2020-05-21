@@ -136,7 +136,7 @@ public class GenericHeader extends PageHeader {
      * @param filename - the file name
      * @return new page object
      */
-    public EvaluatePage uploadCadFile(File filename) {
+    public EvaluatePage updateCadFile(File filename) {
         pageUtils.waitForElementAndClick(actionsDropdown);
         for (int sendFile = 0; sendFile < 4; sendFile++) {
             fileInput.sendKeys(filename.getAbsolutePath().replace("%5c", File.separator));

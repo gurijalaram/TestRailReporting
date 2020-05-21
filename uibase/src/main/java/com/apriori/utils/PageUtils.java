@@ -588,7 +588,7 @@ public class PageUtils {
      * @return true/false
      */
     public boolean checkElementContains(WebElement locator, String text) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 3;
 
         return new WebDriverWait(driver, timeoutInMinutes)
             .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + locator.getText())
