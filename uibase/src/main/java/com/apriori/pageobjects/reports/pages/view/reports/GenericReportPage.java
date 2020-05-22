@@ -243,8 +243,18 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
+        pageUtils.waitForElementAndClick(exportSetSearchInput);
         exportSetSearchInput.sendKeys(exportSet);
-        pageUtils.waitForElementAndClick(exportSetToSelect);
+        By exportSetToSelect = By.xpath("//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a");
+        By elementTwo = By.xpath("//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']/li");
+        if (driver.findElement(exportSetToSelect).isDisplayed()) {
+            pageUtils.waitForElementToAppear(exportSetToSelect);
+            pageUtils.waitForElementToBeClickable(exportSetToSelect);
+            if (!driver.findElement(elementTwo).getAttribute("className").contains("jr-isSelected")) {
+                driver.findElement(elementTwo).click();
+                exportSetSearchInput.sendKeys(Keys.ENTER);
+            }
+        }
         return this;
     }
 
