@@ -4,7 +4,6 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.WorkspaceEnum;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -45,6 +44,9 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
+
+    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
+    private WebElement publishButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -120,7 +122,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return new page object
      */
     public ExplorePage selectPublishButton() {
-        By publishButton = By.cssSelector("button[data-ap-comp='publishScenarioButton'] .fa");
+        pageUtils.checkElementAttributeEmpty(publishButton, "title");
         pageUtils.waitForElementAndClick(publishButton);
         pageUtils.checkElementAttribute(exploreButton, "className", "active-tab");
         return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
