@@ -14,6 +14,7 @@ import com.apriori.utils.PageUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -741,9 +742,9 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return dfm risk score
      */
-    public String getDfmRisk() {
-        pageUtils.waitForElementAppear(dfmRisk);
-        return dfmRisk.getText();
+    public boolean isDfmRisk(String risk) {
+        By dfmRisk = By.xpath(String.format("//td[.='%s']", risk));
+        return pageUtils.waitForElementToAppear(dfmRisk).isDisplayed();
     }
 
     /**
@@ -757,13 +758,13 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets the dfm risk Icon
+     * Checks the dfm risk Icon
      *
      * @return Risk Level
      */
-    public String getDFMRiskIcon() {
-        pageUtils.isElementDisplayed(dfmRiskIcon);
-        return dfmRiskIcon.getAttribute("outerHTML");
+    public boolean isDFMRiskIcon(String icon) {
+        By dfmRiskIcon = By.xpath(String.format("//span[contains(@class,'%s')]", icon));
+        return pageUtils.waitForElementToAppear(dfmRiskIcon).isDisplayed();
     }
 
     /**
