@@ -1,10 +1,11 @@
 package com.apriori.apibase.services;
 
 import com.apriori.apibase.services.cis.objects.CisCustomer;
+import com.apriori.apibase.utils.TestUtil;
 
 import java.util.List;
 
-public class CustomerBase { 
+public class CustomerBase  extends TestUtil {
     private String identity;
     private String createdBy;
     private String name;
