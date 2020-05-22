@@ -186,7 +186,7 @@ public class DFMRiskTests extends TestBase {
         evaluatePage.updateCadFile(cadResourceFile);
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-        evaluatePage.costScenario();
+
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
     }
@@ -237,11 +237,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
 
         evaluatePage.updateCadFile(cadResourceFile);
-      /*  assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-*/
-        evaluatePage.openDesignGuidance()
-            .closePanel();
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
     }
@@ -266,11 +263,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         evaluatePage.updateCadFile(cadResourceFile);
-       /* assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
-*/
-        evaluatePage.openDesignGuidance()
-            .closePanel();
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
     }
