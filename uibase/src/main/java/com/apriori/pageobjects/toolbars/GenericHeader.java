@@ -225,7 +225,6 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public <T> T publishScenario(Class<T> className) {
-        pageUtils.checkElementAttributeEmpty(publishButton,"title");
         pageUtils.waitForElementAndClick(publishButton);
         return PageFactory.initElements(driver, className);
     }
@@ -239,7 +238,6 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        pageUtils.checkElementAttributeEmpty(publishButton,"title");
         pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
