@@ -6,6 +6,7 @@ import com.apriori.apibase.services.cis.apicalls.BatchResources;
 import com.apriori.apibase.services.cis.objects.Batch;
 import com.apriori.apibase.services.cis.objects.Part;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.json.utils.JsonManager;
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public class CisCostingScenario {
+public class CisCostingScenario extends TestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CisCostingScenario.class);
 

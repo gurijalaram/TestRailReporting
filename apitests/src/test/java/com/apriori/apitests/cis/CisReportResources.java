@@ -3,6 +3,7 @@ package com.apriori.apitests.cis;
 import com.apriori.apibase.services.cis.apicalls.ReportResources;
 import com.apriori.apibase.services.cis.objects.Report;
 import com.apriori.apibase.services.cis.objects.requests.NewReportRequest;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.json.utils.JsonManager;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public class CisReportResources {
+public class CisReportResources extends TestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CisReportResources.class);
 

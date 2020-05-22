@@ -113,6 +113,9 @@
         },
         "batchIdentity": {
           "type": "string"
+        },
+        "errors": {
+          "type": "string"
         }
       }
     }
