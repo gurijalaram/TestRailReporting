@@ -33,7 +33,7 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
 
-    @FindBy(css = "button[data-ap-comp='publishScenarioButton'] .fa")
+    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
     private WebElement publishButton;
 
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
@@ -225,8 +225,8 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public <T> T publishScenario(Class<T> className) {
-        pageUtils.waitForElementToAppear(publishButton);
-        pageUtils.actionClick(publishButton);
+        pageUtils.checkElementAttributeEmpty(publishButton,"title");
+        pageUtils.waitForElementAndClick(publishButton);
         return PageFactory.initElements(driver, className);
     }
 
@@ -239,6 +239,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
+        pageUtils.checkElementAttributeEmpty(publishButton,"title");
         pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
