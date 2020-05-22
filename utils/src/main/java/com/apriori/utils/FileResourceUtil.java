@@ -40,7 +40,7 @@ public class FileResourceUtil {
                 )
             );
         } catch (UnsupportedEncodingException e) {
-            GenerateStringUtil.logger.error(String.format("Resource file: %s was not found", resourceFileName));
+            logger.error(String.format("Resource file: %s was not found", resourceFileName));
             throw new IllegalArgumentException();
         }
     }
@@ -69,6 +69,8 @@ public class FileResourceUtil {
 
     /**
      * Get file from resource folder
+     *
+     * Subfolders should be separated by a comma eg. cad-files, files
      *
      * @param resourceFileName - the file name
      * @return file object
