@@ -25,7 +25,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
     private WebElement gcdTable;
 
     @FindBy(css = "div[data-ap-comp='gcdTreeTable'] thead[class='v-grid-header']")
-    private WebElement gcdTableRow;
+    private WebElement gcdTableHeader;
 
     @FindBy(css = "div[data-ap-comp='gcdTreeTable'] div.v-grid-scroller-vertical")
     private WebElement gcdTableScroller;
@@ -55,7 +55,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(gcdTable);
-        pageUtils.waitForElementToAppear(gcdTableRow);
+        pageUtils.waitForElementToAppear(gcdTableHeader);
     }
 
     /**
