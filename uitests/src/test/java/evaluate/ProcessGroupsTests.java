@@ -1,6 +1,5 @@
 package evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -574,8 +573,8 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-medium-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
