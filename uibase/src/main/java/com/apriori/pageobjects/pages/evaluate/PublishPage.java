@@ -42,11 +42,11 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "input[data-ap-field='locked']")
     private WebElement lockCheckBox;
 
-    @FindBy(css = "button.gwt-SubmitButton")
-    private WebElement publishButton;
-
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
+
+    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
+    private WebElement publishButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -122,6 +122,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return new page object
      */
     public ExplorePage selectPublishButton() {
+        pageUtils.checkElementAttributeEmpty(publishButton, "title");
         pageUtils.waitForElementAndClick(publishButton);
         pageUtils.checkElementAttribute(exploreButton, "className", "active-tab");
         return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
