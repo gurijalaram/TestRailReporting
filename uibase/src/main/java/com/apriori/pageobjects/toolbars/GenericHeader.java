@@ -246,7 +246,7 @@ public class GenericHeader extends PageHeader {
     }
 
     /**
-     * Clicks the publish button
+     * Checks the element attribute is empty before clicking
      */
     private void clickPublishButton() {
         pageUtils.checkElementAttributeEmpty(publishButton, "title");
