@@ -13,7 +13,6 @@ import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.pages.explore.ScenarioPage;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,6 +32,9 @@ public class GenericHeader extends PageHeader {
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
+
+    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
+    private WebElement publishButton;
 
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
     private WebElement revertButton;
@@ -134,7 +136,7 @@ public class GenericHeader extends PageHeader {
      * @param filename - the file name
      * @return new page object
      */
-    public EvaluatePage uploadCadFile(File filename) {
+    public EvaluatePage updateCadFile(File filename) {
         pageUtils.waitForElementAndClick(actionsDropdown);
         for (int sendFile = 0; sendFile < 4; sendFile++) {
             fileInput.sendKeys(filename.getAbsolutePath().replace("%5c", File.separator));
@@ -223,7 +225,6 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public <T> T publishScenario(Class<T> className) {
-        By publishButton = By.cssSelector("button[data-ap-comp='publishScenarioButton'] .fa");
         pageUtils.waitForElementAndClick(publishButton);
         return PageFactory.initElements(driver, className);
     }
@@ -237,7 +238,6 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        By publishButton = By.cssSelector("button[data-ap-comp='publishScenarioButton'] .fa");
         pageUtils.waitForElementAndClick(publishButton);
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)

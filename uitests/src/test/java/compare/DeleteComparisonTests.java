@@ -129,8 +129,8 @@ public class DeleteComparisonTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-critical-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
 
         explorePage = evaluatePage.publishScenario(PublishPage.class)
             .selectPublishButton()

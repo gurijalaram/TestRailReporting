@@ -50,8 +50,8 @@ public class AddScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("High"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new GenerateStringUtil().generateComparisonName())
             .save(ComparePage.class)
