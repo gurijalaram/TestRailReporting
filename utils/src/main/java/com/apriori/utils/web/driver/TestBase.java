@@ -26,6 +26,9 @@ import java.io.File;
 @RunWith(ConcurrentTestRunner.class)
 public class TestBase extends TestHelper {
 
+    @Rule
+    public TestRule testRule = new TestRule();
+
     protected String browser;
     protected String locale;
     private static Proxy seleniumProxy;

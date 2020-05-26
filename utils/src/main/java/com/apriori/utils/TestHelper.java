@@ -22,8 +22,6 @@ public class TestHelper {
     @Rule
     public MyTestWatcher watchman = new MyTestWatcher();
     @Rule
-    public TestRule testRule = new TestRule();
-    @Rule
     public TestRailRule testRailRule = new TestRailRule();
 
     protected TestMode mode;
