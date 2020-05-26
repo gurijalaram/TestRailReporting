@@ -60,10 +60,10 @@ pipeline {
                         javaOpts = javaOpts + " -Dheadless=true"
                     }
 
-                    if (params.TEST_SUITE == "Other") {
+                    testSuite = "testsuites." + params.TEST_SUITE
+                    if (params.TEST_SUITE == "Other")
+                    {
                         testSuite = params.OTHER_TEST
-                    } else {
-                        testSuite = "testsuites." + params.TEST_SUITE
                     }
                     echo "${javaOpts}"
                 }
