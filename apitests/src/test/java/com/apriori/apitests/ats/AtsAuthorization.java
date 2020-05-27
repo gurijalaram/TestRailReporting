@@ -2,6 +2,7 @@ package com.apriori.apitests.ats;
 
 import com.apriori.apibase.services.ats.apicalls.SecurityManager;
 import com.apriori.apibase.services.ats.objects.AuthorizationResponse;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.dao.ServiceConnector;
@@ -12,7 +13,7 @@ import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AtsAuthorization {
+public class AtsAuthorization extends TestUtil {
     private String url;
 
     @Before

@@ -11,8 +11,8 @@ import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
@@ -43,7 +43,7 @@ public class TwoModelMachiningTests extends TestBase {
     @TestRail(testCaseId = {"3927", "3928", "3929", "3930", "3947"})
     public void testTwoModelMachining() {
 
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "casting_before_machining";
 
         resourceFile = new FileResourceUtil().getResourceFile("casting_BEFORE_machining.stp");
@@ -56,7 +56,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario()
             .selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(new Util().getScenarioName(), twoModelFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), twoModelFile)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(testScenarioName, "casting_BEFORE_machining")
@@ -83,10 +83,10 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate the User can open the source part in the evaluate tab")
-    @TestRail(testCaseId = {"3941"})
+    @TestRail(testCaseId = {"3844", "3941"})
     public void testOpenSourceModel() {
 
-        String sourceScenarioName = new Util().getScenarioName();
+        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "VulcainCasting";
 
         resourceFile = new FileResourceUtil().getResourceFile("VulcainCasting.CATPart");
@@ -96,10 +96,14 @@ public class TwoModelMachiningTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(sourceScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .selectExploreButton()
+            .costScenario();
+
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+
+        evaluatePage.selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(new Util().getScenarioName(), twoModelFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), twoModelFile)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(sourceScenarioName, sourcePartName)
@@ -115,9 +119,9 @@ public class TwoModelMachiningTests extends TestBase {
     @TestRail(testCaseId = {"3940", "3946", "4133"})
     public void multiLevel2Model() {
 
-        String sourceScenarioName = new Util().getScenarioName();
-        String twoModel1ScenarioName = new Util().getScenarioName();
-        String twoModel2ScenarioName = new Util().getScenarioName();
+        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModel1ScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModel2ScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "2modeltest-cast";
         String twoModel1PartName = "2modeltest-machine1";
 
@@ -167,8 +171,8 @@ public class TwoModelMachiningTests extends TestBase {
     @TestRail(testCaseId = {"4178", "4138"})
     public void testOpenPublicSourceModel() {
 
-        String sourceScenarioName = new Util().getScenarioName();
-        String twoModelScenarioName = new Util().getScenarioName();
+        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "Raw Casting";
         String twoModelPartName = "Machined Casting";
 
@@ -204,9 +208,9 @@ public class TwoModelMachiningTests extends TestBase {
     @TestRail(testCaseId = {"3845", "4134", "4315"})
     public void switchSourcePart() {
 
-        String sourceScenarioName = new Util().getScenarioName();
-        String source2ScenarioName = new Util().getScenarioName();
-        String twoModelScenarioName = new Util().getScenarioName();
+        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
+        String source2ScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
         String source2PartName = "Die Casting Lower Control Arm (Source1)";
 
@@ -220,8 +224,8 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
@@ -256,7 +260,7 @@ public class TwoModelMachiningTests extends TestBase {
     @TestRail(testCaseId = {"3948"})
     public void testTwoModelCorrectCADModels() {
 
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "casting_before_machining";
 
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
@@ -269,7 +273,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario()
             .selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(new Util().getScenarioName(), twoModelFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), twoModelFile)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(testScenarioName, "PowderMetalShaft")

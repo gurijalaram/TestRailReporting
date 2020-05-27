@@ -32,6 +32,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class NavigationTests extends TestBase {
 
@@ -83,7 +85,7 @@ public class NavigationTests extends TestBase {
 
         String headerToCheck = logout.getHeaderToCheck();
 
-        assertThat(logout.getHeaderText(), equalTo(headerToCheck));
+        assertThat(logout.getHeaderText(), startsWith(headerToCheck));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
@@ -100,6 +102,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2968"})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
@@ -239,6 +242,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2700"})
     @Description("Ensure that the link to the privacy policy works")
     public void testPrivacyPolicyNavigation() {

@@ -9,8 +9,8 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
@@ -30,7 +30,7 @@ public class MaterialPMITests extends TestBase {
     private UserCredentials currentUser;
 
     private File resourceFile;
-    private File cadResourceFile;
+
 
     public MaterialPMITests() {
         super();
@@ -62,7 +62,7 @@ public class MaterialPMITests extends TestBase {
             .selectMaterial("Aluminum, Stock, ANSI 6061");
         new SettingsPage(driver).save(ExplorePage.class);
 
-        new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
+        new ExplorePage(driver).uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .costScenario(3);
 
         evaluatePage = new EvaluatePage(driver);

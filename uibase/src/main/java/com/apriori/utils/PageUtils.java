@@ -347,7 +347,7 @@ public class PageUtils {
     }
 
     private WebElement waitForAppear(WebElement element) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2)
             .ignoreAll(ignoredWebDriverExceptions)
             .until(visibilityOf(element));
     }
@@ -588,10 +588,10 @@ public class PageUtils {
      * @return true/false
      */
     public boolean checkElementContains(WebElement locator, String text) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 3;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nExpected: " + text + "\nFound: " + locator.getText())
+            .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + locator.getText())
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
     }
@@ -676,7 +676,7 @@ public class PageUtils {
      * @param locator - the element as list
      * @return true/false
      */
-    public <T> Boolean checkElementVisibleByBoolean(List<T> locator) {
+    public <T> boolean checkElementVisibleByBoolean(List<T> locator) {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
 
         return new WebDriverWait(driver, timeoutInMinutes)
@@ -750,9 +750,9 @@ public class PageUtils {
      *
      * @return webdriver functions
      */
-    public WebDriver windowHandler() {
+    public WebDriver windowHandler(int index) {
         List<String> windowList = new ArrayList<>(driver.getWindowHandles());
-        return driver.switchTo().window(windowList.get(1));
+        return driver.switchTo().window(windowList.get(index));
     }
 
     /**
@@ -799,7 +799,7 @@ public class PageUtils {
      * @return String
      */
     public String getTabTwoUrl() {
-        return windowHandler().getCurrentUrl();
+        return windowHandler(1).getCurrentUrl();
     }
 
     /**

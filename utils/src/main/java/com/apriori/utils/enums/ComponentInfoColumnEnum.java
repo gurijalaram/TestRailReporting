@@ -8,7 +8,7 @@ public enum ComponentInfoColumnEnum {
     LAST_SAVED("Last Saved"),
     LAST_COSTED("Last Costed"),
     CYCLE_TIME("Cycle Time (s)"),
-    PER_PART_COST("Per Part Cost (USD)"),
+    PIECE_PART_COST("Piece Part Cost (USD)"),
     FULLY_BURDENED_COST("Fully Burdened Cost (USD)"),
     CAPITAL_INVESTMENT("Capital Investment (USD)");
 

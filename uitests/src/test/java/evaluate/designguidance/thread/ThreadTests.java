@@ -14,8 +14,8 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningP
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -24,7 +24,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -65,7 +64,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -86,7 +85,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -110,7 +109,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -143,7 +142,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -167,13 +166,13 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario(3);
 
-        assertThat(evaluatePage.getDFMRiskIcon(), CoreMatchers.containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("High"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         threadingPage = evaluatePage.openDesignGuidance()
             .openInvestigationTab()
@@ -196,7 +195,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -226,7 +225,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -254,7 +253,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -277,7 +276,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -301,7 +300,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -321,7 +320,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing a public thread cannot be edited")
     public void cannotEditPublicThread() {
 
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
 
@@ -345,12 +344,12 @@ public class ThreadTests extends TestBase {
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPart");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -388,7 +387,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
@@ -412,7 +411,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
@@ -440,7 +439,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -476,7 +475,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -498,7 +497,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -520,7 +519,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -541,7 +540,7 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()

@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 
 import org.jsoup.Jsoup;
@@ -109,27 +108,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
         return IntStream.range(0, valueElements.size()).filter(i -> isValueValid(valueElements.get(i).text()) || columnName.equals("Cycle Time") && i <= (valueElements.size() - 2))
             .mapToObj(i -> new BigDecimal(valueElements.get(i).text().replaceAll(",", ""))).collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    /**
-     * Generic method to get numeric values in a given row
-     */
-    public ArrayList<BigDecimal> getValuesByRow(String row) {
-        ArrayList<BigDecimal> valsToReturn = new ArrayList<>();
-        Document reportsPartPage = Jsoup.parse(driver.getPageSource());
-
-        String baseCssSelector = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr:nth-child(%s) td span";
-        baseCssSelector = String.format(baseCssSelector, row);
-        // 5, 8, 10, 13 row indexes
-
-        List<Element> valueElements = reportsPartPage.select(baseCssSelector);
-
-        for (Element valueCell : valueElements) {
-            if (!valueCell.text().isEmpty() && valueCell.text().matches("[0-9]*[.][0-9]{2}")) {
-                valsToReturn.add(new BigDecimal(valueCell.text()));
-            }
-        }
-        return valsToReturn;
     }
 
     /**
@@ -534,19 +512,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     public int getAmountOfTopLevelExportSets() {
         List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
         return list.size();
-    }
-
-    /**
-     * Opens new tab and switches to it
-     *
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage openNewTabAndFocus() {
-        pageUtils.jsNewTab();
-        pageUtils.windowHandler();
-        driver.get(Constants.cidURL);
-        pageUtils.waitForElementToAppear(cidLogo);
-        return this;
     }
 
     /**
