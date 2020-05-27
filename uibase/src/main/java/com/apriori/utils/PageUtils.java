@@ -771,22 +771,11 @@ public class PageUtils {
     }
 
     /**
-     * Get name of a report
-     *
-     * @return String - text of report name
-     */
-    public String getReportNameText(String reportName) {
-        By reportLinkLocator = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
-        waitForElementToAppear(reportLinkLocator);
-        return driver.findElement(reportLinkLocator).getText();
-    }
-
-    /**
      * Get report link element
      *
      * @return WebElement
      */
-    public WebElement getReportLinkElement(String reportName) {
+    public WebElement getReportElement(String reportName) {
         By reportLinkLocator = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
         waitForElementToAppear(reportLinkLocator);
         return driver.findElement(reportLinkLocator);
