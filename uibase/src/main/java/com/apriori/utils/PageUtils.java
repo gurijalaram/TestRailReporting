@@ -536,20 +536,6 @@ public class PageUtils {
     }
 
     /**
-     * Checks the element is not visible
-     *
-     * @param locator - the element's locator
-     * @return true/false
-     */
-    public boolean waitForElementInvisible(WebElement locator) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
-
-        return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nElement with locator should not be visible: " + locator)
-            .until((ExpectedConditions.invisibilityOf(locator)));
-    }
-
-    /**
      * Selects the correct option in the dropdown.  Conditional statement is included because the system
      * tends to revert to previous selection.
      *
@@ -692,6 +678,7 @@ public class PageUtils {
      * @param text      - expected value
      * @return - boolean
      */
+    // TODO: 27/05/2020 come back to this
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
@@ -772,16 +759,6 @@ public class PageUtils {
      */
     public int getCountOfOpenTabs() {
         return driver.getWindowHandles().size();
-    }
-
-    /**
-     * Gets text of an element
-     *
-     * @param element WebElement
-     * @return String heading
-     */
-    public String getElementText(WebElement element) {
-        return element.getText();
     }
 
     /**
