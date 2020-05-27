@@ -762,15 +762,6 @@ public class PageUtils {
     }
 
     /**
-     * Gets current URL
-     *
-     * @return String
-     */
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
-    }
-
-    /**
      * Gets tab two URL
      *
      * @return String
