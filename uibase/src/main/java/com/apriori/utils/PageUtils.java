@@ -680,7 +680,6 @@ public class PageUtils {
      * @param text      - expected value
      * @return - boolean
      */
-    // TODO: 27/05/2020 come back to this
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
