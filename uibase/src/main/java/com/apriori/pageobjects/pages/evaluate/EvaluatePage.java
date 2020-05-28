@@ -599,12 +599,14 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Checks the input value is correct
+     * Get the input value is correct
      *
      * @return true/false
      */
-    public boolean getProductionLife(String text) {
-        return pageUtils.checkElementAttribute(annualVolumeYrs, "value", text);
+    public String getProductionLife() {
+        By productionLife = By.cssSelector("input[data-ap-field='productionLife']");
+        pageUtils.waitForElementToAppear(productionLife);
+        return driver.findElement(productionLife).getAttribute("value");
     }
 
     /**
