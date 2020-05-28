@@ -127,6 +127,6 @@ public class EvaluateHeader extends GenericHeader {
      */
     private void checkForCostLabel(int timeoutInMinutes) {
         pageUtils.textPresentInElement(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
-        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
+        pageUtils.textNotPresentInElement(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
     }
 }

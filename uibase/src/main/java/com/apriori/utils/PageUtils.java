@@ -590,7 +590,7 @@ public class PageUtils {
      * @param text
      * @return true/false
      */
-    public boolean checkElementNotContain(WebElement locator, String text, int timeoutInMinutes) {
+    public boolean textNotPresentInElement(WebElement locator, String text, int timeoutInMinutes) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
                 .withMessage("\nNot expecting: " + text + "\nFound: " + locator.getText())
                 .ignoreAll(ignoredWebDriverExceptions)
