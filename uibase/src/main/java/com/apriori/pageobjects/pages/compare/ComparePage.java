@@ -87,13 +87,13 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     /**
-     * Checks the comparison name
+     * Gets the comparison name
      *
-     * @param text - the text
-     * @return true/false
+     * @return string
      */
-    public boolean isComparisonName(String text) {
-        return pageUtils.checkElementAttribute(comparisonName, "title", text);
+    public String getComparisonName() {
+        pageUtils.waitForElementToAppear(comparisonName);
+        return comparisonName.getText();
     }
 
     /**
