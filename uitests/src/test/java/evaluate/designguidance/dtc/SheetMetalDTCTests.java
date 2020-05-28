@@ -172,8 +172,8 @@ public class SheetMetalDTCTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getWarningsCount(), is("5"));
-        assertThat(evaluatePage.getGuidanceIssuesCount("9"), is(true));
-        assertThat(evaluatePage.getGcdTolerancesCount("22"), is(true));
+        assertThat(evaluatePage.getGuidanceIssuesCount(), is("9"));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("22"));
     }
 
     @Test

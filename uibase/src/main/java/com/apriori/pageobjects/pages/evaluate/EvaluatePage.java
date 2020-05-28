@@ -108,12 +108,6 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "td[data-ap-field='failuresWarningsCount']")
     private WebElement warningsCount;
 
-    @FindBy(css = "td[data-ap-field='dtcMessagesCount']")
-    private WebElement guidanceIssuesCount;
-
-    @FindBy(css = "td[data-ap-field='gcdWithTolerancesCount']")
-    private WebElement gcdTolerancesCount;
-
     @FindBy(css = "td[data-ap-field='cycleTime']")
     private WebElement cycleTimeCount;
 
@@ -305,7 +299,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public String getProcessRoutingDetails() {
         pageUtils.scrollWithJavaScript(processRoutingName, true);
-        By processRouting = By.xpath("//div[@data-ap-field='processRoutingName'] div");
+        By processRouting = By.cssSelector("div[data-ap-field='processRoutingName'] div");
         pageUtils.waitForElementToAppear(processRouting);
         return driver.findElement(processRouting).getAttribute("title");
     }
@@ -414,7 +408,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return material info as string
      */
     public String getMaterialInfo() {
-        By materialsInfo = By.xpath("//input[@data-ap-field='materialNameOverride']");
+        By materialsInfo = By.cssSelector("input[data-ap-field='materialNameOverride']");
         pageUtils.waitForElementToAppear(materialsInfo);
         return driver.findElement(materialsInfo).getAttribute("value");
     }
@@ -435,9 +429,9 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public String getWarningsCount() {
-        By warningsCount = By.xpath("//td[@data-ap-field='failuresWarningsCount']");
-        pageUtils.waitForElementToAppear(warningsCount);
-        return driver.findElement(warningsCount).getAttribute("outerText");
+        By warnings = By.cssSelector("td[data-ap-field='failuresWarningsCount']");
+        pageUtils.waitForElementToAppear(warnings);
+        return driver.findElement(warnings).getAttribute("outerText");
     }
 
     /**
@@ -445,8 +439,10 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public boolean getGuidanceIssuesCount(String count) {
-        return pageUtils.checkElementAttribute(guidanceIssuesCount, "outerText", count);
+    public String getGuidanceIssuesCount() {
+        By guidanceIssues = By.cssSelector("td[data-ap-field='dtcMessagesCount']");
+        pageUtils.waitForElementToAppear(guidanceIssues);
+        return driver.findElement(guidanceIssues).getAttribute("outerText");
     }
 
     /**
@@ -454,8 +450,10 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public boolean getGcdTolerancesCount(String count) {
-        return pageUtils.checkElementAttribute(gcdTolerancesCount, "outerText", count);
+    public String getGcdTolerancesCount() {
+        By gcdTolerancesCount = By.cssSelector("td[data-ap-field='gcdWithTolerancesCount']");
+        pageUtils.waitForElementToAppear(gcdTolerancesCount);
+        return driver.findElement(gcdTolerancesCount).getAttribute("outerText");
     }
 
     /**

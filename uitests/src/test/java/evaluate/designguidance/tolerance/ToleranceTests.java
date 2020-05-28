@@ -470,7 +470,7 @@ public class ToleranceTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getGcdTolerancesCount("0"), is(true));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("0"));
     }
 
     @Test
@@ -671,7 +671,7 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(3);
 
-        assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
@@ -685,7 +685,7 @@ public class ToleranceTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
 
-        assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
     }
 
     @Test
