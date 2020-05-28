@@ -11,8 +11,7 @@
         "processGroup",
         "scenarioName",
         "tolerances",
-        "useVpeForAllProcesses",
-        "vpeName"
+        "useVpeForAllProcesses"
       ],
       "properties": {
         "cadTolerances": {
