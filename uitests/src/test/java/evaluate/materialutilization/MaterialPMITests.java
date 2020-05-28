@@ -66,6 +66,6 @@ public class MaterialPMITests extends TestBase {
             .costScenario(3);
 
         evaluatePage = new EvaluatePage(driver);
-        assertThat(evaluatePage.isMaterialInfo("Aluminum, Stock, ANSI 6061"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Aluminum, Stock, ANSI 6061"));
     }
 }

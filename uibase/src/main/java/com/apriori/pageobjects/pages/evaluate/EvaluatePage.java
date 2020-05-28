@@ -412,12 +412,14 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Checks material info
+     * Gets material info
      *
      * @return material info as string
      */
-    public boolean isMaterialInfo(String text) {
-        return pageUtils.checkElementAttribute(materialsInfo, "value", text);
+    public String getMaterialInfo() {
+        By materialInfo = By.xpath("//input[@data-ap-field='materialNameOverride']");
+        pageUtils.waitForElementToAppear(materialInfo);
+        return materialsInfo.getAttribute("value");
     }
 
     /**
