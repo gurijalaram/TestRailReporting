@@ -90,9 +90,6 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "a[data-ap-nav-viewport='showMaterialDetails']")
     private WebElement materialsDetails;
 
-    @FindBy(css = "input[data-ap-field='materialNameOverride']")
-    private WebElement materialsInfo;
-
     @FindBy(css = "button[data-ap-comp='materialSelectionButton']")
     private WebElement materialsButton;
 
@@ -417,9 +414,9 @@ public class EvaluatePage extends EvaluateHeader {
      * @return material info as string
      */
     public String getMaterialInfo() {
-        By materialInfo = By.xpath("//input[@data-ap-field='materialNameOverride']");
-        pageUtils.waitForElementToAppear(materialInfo);
-        return materialsInfo.getAttribute("value");
+        By materialsInfo = By.xpath("//input[@data-ap-field='materialNameOverride']");
+        pageUtils.waitForElementToAppear(materialsInfo);
+        return driver.findElement(materialsInfo).getAttribute("value");
     }
 
     /**
@@ -437,8 +434,10 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public boolean getWarningsCount(String count) {
-        return pageUtils.checkElementAttribute(warningsCount, "outerText", count);
+    public String getWarningsCount() {
+        By warningsCount = By.xpath("//td[@data-ap-field='failuresWarningsCount']");
+        pageUtils.waitForElementToAppear(warningsCount);
+        return driver.findElement(warningsCount).getAttribute("outerText");
     }
 
     /**

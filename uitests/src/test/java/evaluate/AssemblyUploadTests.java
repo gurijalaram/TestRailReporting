@@ -58,7 +58,7 @@ public class AssemblyUploadTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
         assertThat(evaluatePage.isTotalComponents("4"), is(true));
         assertThat(evaluatePage.isUniqueComponents("4"), is(true));
-        assertThat(evaluatePage.getWarningsCount("4"), is(true));
+        assertThat(evaluatePage.getWarningsCount(), is("4"));
         assertThat(evaluatePage.getCycleTimeCount(), is("0.00"));
     }
 
