@@ -113,7 +113,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterialComposition("ABS, 10% Glass")
             .apply()
             .costScenario();
-        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
 
         new EvaluatePage(driver).openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
@@ -121,7 +121,7 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Xray Inspection"));
-        assertThat(evaluatePage.isSecondaryProcesses("1 Selected"), is(true));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("1 Selected"));
     }
 
     @Test
@@ -805,7 +805,7 @@ public class SecondaryProcessTests extends TestBase {
             .cancel()
             .costScenario();
 
-        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
     }
 
     @Test
@@ -851,7 +851,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
 
         evaluatePage.openProcessDetails()
             .selectSecondaryProcessButton()
@@ -861,6 +861,6 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
     }
 }

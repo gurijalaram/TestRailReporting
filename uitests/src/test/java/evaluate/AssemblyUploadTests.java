@@ -56,8 +56,8 @@ public class AssemblyUploadTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
-        assertThat(evaluatePage.isTotalComponents("4"), is(true));
-        assertThat(evaluatePage.isUniqueComponents("4"), is(true));
+        assertThat(evaluatePage.getTotalComponents(), is("4"));
+        assertThat(evaluatePage.getUniqueComponents(), is("4"));
         assertThat(evaluatePage.getWarningsCount(), is("4"));
         assertThat(evaluatePage.getCycleTimeCount(), is("0.00"));
     }
@@ -118,11 +118,11 @@ public class AssemblyUploadTests extends TestBase {
             .openAssembly(scenarioName, "ASSEMBLY2")
             .costScenario();
 
-        assertThat(evaluatePage.isTotalComponents("22"), is(true));
-        assertThat(evaluatePage.isUniqueComponents("10"), is(true));
-        assertThat(evaluatePage.isUncostedUnique("0"), is(true));
-        assertThat(evaluatePage.isFinishMass("0.80"), is(true));
-        assertThat(evaluatePage.isTargetMass("0.00"), is(true));
+        assertThat(evaluatePage.getTotalComponents(), is("22"));
+        assertThat(evaluatePage.getUniqueComponents(), is("10"));
+        assertThat(evaluatePage.getUncostedUnique(), is("0"));
+        assertThat(evaluatePage.getFinishMass(), is("0.80"));
+        assertThat(evaluatePage.getTargetMass(), is("0.00"));
     }
 
     @Test

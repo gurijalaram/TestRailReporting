@@ -630,63 +630,69 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Checks the value of the total components
+     * Gets the value of the total components
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isTotalComponents(String value) {
-        return pageUtils.checkElementAttribute(totalComponents, "innerText", value);
+    public String getTotalComponents() {
+        By totalComponents = By.cssSelector("td[data-ap-field='totalComponents']");
+        pageUtils.waitForElementToAppear(totalComponents);
+        return driver.findElement(totalComponents).getAttribute("innerText");
     }
 
     /**
-     * Checks the value of unique components
+     * Gets the value of unique components
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isUniqueComponents(String value) {
-        return pageUtils.checkElementAttribute(uniqueComponents, "innerText", value);
+    public String getUniqueComponents() {
+        By uniqueComponents = By.cssSelector("td[data-ap-field='uniqueComponents']");
+        pageUtils.waitForElementToAppear(uniqueComponents);
+        return driver.findElement(uniqueComponents).getAttribute("innerText");
     }
 
     /**
-     * Checks the uncosted unique value
+     * Gets the uncosted unique value
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isUncostedUnique(String value) {
-        return pageUtils.checkElementAttribute(uncostedComponents, "innerText", value);
+    public String getUncostedUnique() {
+        By uncostedComponents = By.cssSelector("td[data-ap-field='uncostedComponentsCount']");
+        pageUtils.waitForElementToAppear(uncostedComponents);
+        return driver.findElement(uncostedComponents).getAttribute("innerText");
     }
 
     /**
-     * Checks the value of finish mass
+     * Gets the value of finish mass
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isFinishMass(String value) {
-        return pageUtils.checkElementAttribute(finishMass, "innerText", value);
+    public String getFinishMass() {
+        By finishMass = By.cssSelector("td[data-ap-field='finishMass']");
+        pageUtils.waitForElementToAppear(finishMass);
+        return driver.findElement(finishMass).getAttribute("innerText");
     }
 
     /**
-     * Checks the value of target mass
+     * Gets the value of target mass
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isTargetMass(String value) {
-        return pageUtils.checkElementAttribute(targetMass, "innerText", value);
+    public String getTargetMass() {
+        By targetMass = By.cssSelector("td[data-ap-field='targetFinishMass']");
+        pageUtils.waitForElementToAppear(targetMass);
+        return driver.findElement(targetMass).getAttribute("innerText");
     }
 
     /**
-     * Checks the value of secondary processes
+     * Gets the value of secondary processes
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isSecondaryProcesses(String value) {
-        return pageUtils.checkElementAttribute(secondaryProcesses, "value", value);
+    public String getSecondaryProcesses() {
+        By secondaryProcess = By.cssSelector("[data-ap-field='userOverridesCount']");
+        pageUtils.waitForElementToAppear(secondaryProcess);
+        return driver.findElement(secondaryProcess).getAttribute("value");
     }
 
     /**
