@@ -90,7 +90,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("3 Axis Mill"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("3 Axis Mill"));
     }
 
     @Test
@@ -160,7 +160,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Reaction Injection Molding"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Reaction Injection Molding"));
     }
 
     @Test
@@ -192,7 +192,7 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Injection Molding"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Injection Molding"));
     }
 
     @Test
@@ -344,7 +344,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Printing / Breakoff"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Printing / Breakoff"));
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
@@ -357,7 +357,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Stress Relief / Ultrasonic Cleaning"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Stress Relief / Ultrasonic Cleaning"));
     }
 
     @Test
@@ -444,7 +444,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("High Pressure Die Casting"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("High Pressure Die Casting"));
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
@@ -453,7 +453,7 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Gravity Die Casting"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Gravity Die Casting"));
     }
 
     @Test
@@ -865,7 +865,8 @@ public class ProcessRoutingTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / Reciprocating Surface Grinder"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / " +
+                "Reciprocating Surface Grinder"));
 
         processRoutingPage = evaluatePage.openProcessDetails()
             .selectRoutingsButton()

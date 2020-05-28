@@ -302,14 +302,15 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Checks the process routing details
+     * Gets the process routing details
      *
      * @return the details as string
      */
-    public boolean isProcessRoutingDetails(String text) {
+    public String getProcessRoutingDetails() {
         pageUtils.scrollWithJavaScript(processRoutingName, true);
-        pageUtils.waitForElementToAppear(processRoutingName);
-        return pageUtils.checkElementAttribute(processRoutingName, "title", text);
+        By processRouting = By.xpath("//div[@data-ap-field='processRoutingName'] div");
+        pageUtils.waitForElementToAppear(processRouting);
+        return driver.findElement(processRouting).getAttribute("title");
     }
 
     /**
