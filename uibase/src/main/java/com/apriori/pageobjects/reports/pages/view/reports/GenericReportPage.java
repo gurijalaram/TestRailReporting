@@ -2,33 +2,76 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
+import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
+import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
+import com.apriori.utils.enums.CurrencyEnum;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class GenericReportPage extends ReportsPageHeader {
 
-    private final static Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
     private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
+    private Map<String, WebElement> partNameMap = new HashMap<>();
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name()='path']")
+    private WebElement castingDtcBubble;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name()='path'][43]")
+    private WebElement machiningDtcBubble;
+
+    @FindBy(xpath = "//*[text()=\"Fully Burdened Cost : \"]/following-sibling::*[1]")
+    private WebElement tooltipFbcElement;
+
+    @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
+    private WebElement partNameCastingDtcReport;
+
+    @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name()='text' and position()=2]")
+    private WebElement partNameCastingDtcComparisonReport;
+
+    @FindBy(xpath = "//*[local-name()='rect' and @y='180.5']")
+    private WebElement partOfCastingChartComparisonReport;
+
+    @FindBy(xpath = "//*[contains(text(), 'Hole Issues')]/following-sibling::*[1]")
+    private WebElement holeIssuesChartOneComparisonReport;
+
+    @FindBy(xpath = "//span[contains(text(), 'Comparison')]")
+    private WebElement comparisonButton;
+
+    @FindBy(xpath = "//span[contains(text(), 'MLDES')]")
+    private WebElement partNameCastingDtcDetailsReport;
+
+    @FindBy(xpath = "//table[@class='jrPage superfocus']//span[text()='23']")
+    private WebElement holeIssuesCastingDtcDetailsValue;
+
+    @FindBy(xpath = "//span[contains(text(), 'Hole Issues')]")
+    private WebElement holeIssuesCastingDtcDetailsTitle;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
@@ -38,6 +81,12 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(css = "a[id='logo']")
     private WebElement cidLogo;
+
+    @FindBy(xpath = "//span[contains(text(), 'Casting DTC Comparison')]")
+    private WebElement dtcCastingReportTitle;
+
+    @FindBy(xpath = "//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span")
+    private WebElement dtcCastingSelectedRollup;
 
     @FindBy(xpath = "//label[contains(@title, 'Earliest Export Date')]/input")
     protected WebElement earliestExportDateInput;
@@ -53,6 +102,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_Casting']")
     protected WebElement dtcCastingExportSet;
+
+    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='ROLL_UP A']")
+    protected WebElement rollupAExportSet;
 
     @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_MachiningDataset']/div/a")
     protected WebElement machiningDtcDataSetExportSet;
@@ -183,6 +235,7 @@ public class GenericReportPage extends ReportsPageHeader {
         initialiseExportSetHashMap();
         initialiseAssemblyHashMap();
         initialiseCurrencyMap();
+        initialisePartNameMap();
     }
 
     @Override
@@ -193,7 +246,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(okButton);
-
     }
 
     /**
@@ -251,27 +303,48 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Opens new tab and switches to it
-     *
-     * @return
+     * Moves to new tab (Casting DTC to Casting DTC Comparison)
+     * @return current page object
      */
-    public GenericReportPage openNewTabAndFocus() {
+    public GenericReportPage newTabTransfer() {
+        if (pageUtils.getCountOfOpenTabs() == 2) {
+            pageUtils.windowHandler(1);
+        }
+        pageUtils.waitForElementToAppear(comparisonButton);
+        return this;
+    }
+
+    /**
+     * Opens new tab with CID open and switches to it
+     * @return current page object
+     */
+    public GenericReportPage openNewTabAndFocus(int index) {
         pageUtils.jsNewTab();
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(index);
+
         driver.get(Constants.cidURL);
         pageUtils.waitForElementToAppear(cidLogo);
+
         return new GenericReportPage(driver);
     }
 
     /**
-     * Clicks apply and ok
-     *
-     * @return Generic Report page object
+     * Clicks ok
+     * @return Instance of Generic Report Page object
      */
-    public GenericReportPage clickApplyAndOk() {
+    public GenericReportPage clickOk() {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        okButton.click();
+        return this;
+    }
+
+    /**
+     * Click comparison link
+     * @return instance of current page object
+     */
+    public GenericReportPage clickComparison() {
+        pageUtils.waitForElementToAppear(castingDtcBubble);
+        pageUtils.waitForElementAndClick(comparisonButton);
         return this;
     }
 
@@ -449,33 +522,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Initialises export set hash map
-     */
-    private void initialiseCurrencyMap() {
-        currencyMap.put("GBP", gbpCurrencyOption);
-        currencyMap.put("USD", usdCurrencyOption);
-    }
-
-    /**
-     * Initialises export set hash map
-     */
-    private void initialiseExportSetHashMap() {
-        exportSetMap.put("top-level", topLevelExportSet);
-        exportSetMap.put("Piston Assembly", pistonAssemblyExportSet);
-        exportSetMap.put("DTC_Casting", dtcCastingExportSet);
-        exportSetMap.put("DTC_MachiningDataset", machiningDtcDataSetExportSet);
-    }
-
-    /**
-     * Initialises assembly hash map
-     */
-    private void initialiseAssemblyHashMap() {
-        assemblyMap.put("SUB-ASSEMBLY (Initial)", subAssemblyOption);
-        assemblyMap.put("SUB-SUB-ASM (Initial)", subSubAsmOption);
-        assemblyMap.put("TOP-LEVEL (Initial)", topLevelOption);
-    }
-
-    /**
      * Click export set select all button
      *
      * @return current page object
@@ -646,7 +692,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage clickApply() {
         pageUtils.waitForElementAndClick(applyButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        applyButton.click();
         return this;
     }
 
@@ -766,5 +811,114 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage waitForExpectedExportCount(String expected) {
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
         return this;
+    }
+
+    /**
+     * Method to return value from Bubble in DTC Casting or Machining DTC Report
+     * @return BigDecimal value
+     */
+    public BigDecimal getFBCValueFromBubbleTooltip(boolean isCastingDtcReport) {
+        WebElement elementToUse = isCastingDtcReport ? castingDtcBubble : machiningDtcBubble;
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
+        builder.perform();
+
+        pageUtils.waitForElementToAppear(tooltipFbcElement);
+
+        return new BigDecimal(
+                tooltipFbcElement.getText()
+                        .replace(",", "")
+        );
+    }
+
+    /**
+     * Get part name from Casting DTC or Machining DTC Report
+     * @return String of part name
+     */
+    public String getPartNameDtcCastingReports(String reportName) {
+        WebElement elementToUse = partNameMap.get(reportName);
+        pageUtils.waitForElementToAppear(elementToUse);
+        return pageUtils.getElementText(elementToUse);
+    }
+
+    /**
+     * Gets Hole Issue number from DTC Casting Details Report
+     * @return String - value
+     */
+    public String getHoleIssuesFromDetailsReport() {
+        pageUtils.waitForElementAndClick(holeIssuesCastingDtcDetailsTitle);
+        return pageUtils.getElementText(holeIssuesCastingDtcDetailsValue);
+    }
+
+    /**
+     * Gets Hole Issue number from DTC Casting Comparison Report
+     * @return String - value
+     */
+    public String getHoleIssuesFromComparisonReport() {
+        pageUtils.waitForElementToAppear(partOfCastingChartComparisonReport);
+        Actions builder = new Actions(driver).moveToElement(partOfCastingChartComparisonReport);
+        builder.perform();
+
+        pageUtils.waitForElementToAppear(holeIssuesChartOneComparisonReport);
+
+        return holeIssuesChartOneComparisonReport.getText();
+    }
+
+    /**
+     * Generic method to get numeric values in a given row
+     */
+    public ArrayList<BigDecimal> getValuesByRow(String row) {
+        ArrayList<BigDecimal> valsToReturn = new ArrayList<>();
+        Document reportsPartPage = Jsoup.parse(driver.getPageSource());
+
+        String baseCssSelector = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr:nth-child(%s) td span";
+        baseCssSelector = String.format(baseCssSelector, row);
+        // 5, 8, 10, 13 row indexes
+
+        List<Element> valueElements = reportsPartPage.select(baseCssSelector);
+
+        for (Element valueCell : valueElements) {
+            if (!valueCell.text().isEmpty() && valueCell.text().matches("[0-9]*[.][0-9]{2}")) {
+                valsToReturn.add(new BigDecimal(valueCell.text()));
+            }
+        }
+        return valsToReturn;
+    }
+
+    /**
+     * Initialises export set hash map
+     */
+    private void initialiseCurrencyMap() {
+        currencyMap.put(CurrencyEnum.GBP.getCurrency(), gbpCurrencyOption);
+        currencyMap.put(CurrencyEnum.USD.getCurrency(), usdCurrencyOption);
+    }
+
+    /**
+     * Initialises export set hash map
+     */
+    private void initialiseExportSetHashMap() {
+        exportSetMap.put(ExportSetEnum.TOP_LEVEL.getExportSetName(), topLevelExportSet);
+        exportSetMap.put(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName(), pistonAssemblyExportSet);
+        exportSetMap.put(ExportSetEnum.CASTING_DTC.getExportSetName(), dtcCastingExportSet);
+        exportSetMap.put(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), machiningDtcDataSetExportSet);
+        exportSetMap.put(ExportSetEnum.ROLL_UP_A.getExportSetName(), rollupAExportSet);
+    }
+
+    /**
+     * Initialises assembly hash map
+     */
+    private void initialiseAssemblyHashMap() {
+        assemblyMap.put(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName(), subAssemblyOption);
+        assemblyMap.put(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName(), subSubAsmOption);
+        assemblyMap.put(AssemblySetEnum.TOP_LEVEL.getAssemblySetName(), topLevelOption);
+    }
+
+    /**
+     * Initialises part name map
+     */
+    private void initialisePartNameMap() {
+        partNameMap.put(Constants.CASTING_DTC_REPORT_NAME, partNameCastingDtcReport);
+        partNameMap.put(Constants.CASTING_DTC_COMPARISON_REPORT_NAME, partNameCastingDtcComparisonReport);
+        partNameMap.put(Constants.CASTING_DTC_DETAILS_REPORT_NAME, partNameCastingDtcDetailsReport);
     }
 }

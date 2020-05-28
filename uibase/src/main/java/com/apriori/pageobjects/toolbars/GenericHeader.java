@@ -28,12 +28,12 @@ import java.io.File;
 
 public class GenericHeader extends PageHeader {
 
-    private final static Logger logger = LoggerFactory.getLogger(GenericHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(GenericHeader.class);
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
 
-    @FindBy(css = "button[data-ap-comp='publishScenarioButton'] .fa")
+    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
     private WebElement publishButton;
 
     @FindBy(css = "button[data-ap-comp='revertScenarioButton']")
@@ -136,10 +136,10 @@ public class GenericHeader extends PageHeader {
      * @param filename - the file name
      * @return new page object
      */
-    public EvaluatePage uploadCadFile(File filename) {
+    public EvaluatePage updateCadFile(File filename) {
         pageUtils.waitForElementAndClick(actionsDropdown);
         for (int sendFile = 0; sendFile < 4; sendFile++) {
-            fileInput.sendKeys(filename.getAbsolutePath().replace("%20", " "));
+            fileInput.sendKeys(filename.getAbsolutePath().replace("%5c", File.separator));
         }
         pageUtils.waitForElementAndClick(actionsDropdown);
         return new EvaluatePage(driver);
@@ -225,8 +225,7 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public <T> T publishScenario(Class<T> className) {
-        pageUtils.waitForElementToAppear(publishButton);
-        pageUtils.actionClick(publishButton);
+        clickPublishButton();
         return PageFactory.initElements(driver, className);
     }
 
@@ -239,11 +238,19 @@ public class GenericHeader extends PageHeader {
      * @return new page object
      */
     public PublishPage publishScenario(String status, String costMaturity, String assignee) {
-        pageUtils.waitForElementAndClick(publishButton);
+        clickPublishButton();
         new PublishPage(driver).selectStatus(status)
             .selectCostMaturity(costMaturity)
             .selectAssignee(assignee);
         return new PublishPage(driver);
+    }
+
+    /**
+     * Checks the element attribute is empty before clicking
+     */
+    private void clickPublishButton() {
+        pageUtils.checkElementAttributeEmpty(publishButton, "title");
+        pageUtils.waitForElementAndClick(publishButton);
     }
 
     /**

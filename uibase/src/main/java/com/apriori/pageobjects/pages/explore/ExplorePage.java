@@ -39,9 +39,9 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "[data-ap-comp='previewPanel']")
     private WebElement previewPanelData;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
     private ScenarioTablePage scenarioTablePage;
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
@@ -81,7 +81,16 @@ public class ExplorePage extends ExploreHeader {
      * @return a new page object
      */
     public EvaluatePage openScenario(String scenarioName, String partName) {
-        return scenarioTablePage.openScenario(scenarioName, partName);
+        return scenarioTablePage.openScenario(scenarioName, partName.toUpperCase());
+    }
+
+    /**
+     * Opens first scenario in list
+     * @return new page object
+     */
+    public EvaluatePage openFirstScenario() {
+        pageUtils.waitForElementAndClick(driver.findElements(By.cssSelector("a[class='gwt-Anchor']")).get(0));
+        return new EvaluatePage(driver);
     }
 
     /**
@@ -102,7 +111,7 @@ public class ExplorePage extends ExploreHeader {
      * @return the part as webelement
      */
     public WebElement findScenario(String scenarioName, String partName) {
-        return scenarioTablePage.findScenario(partName, scenarioName);
+        return scenarioTablePage.findScenario(scenarioName, partName);
     }
 
     /**
@@ -123,7 +132,7 @@ public class ExplorePage extends ExploreHeader {
      * @return a new page object
      */
     public EvaluatePage openAssembly(String scenarioName, String partName) {
-        return scenarioTablePage.openAssembly(scenarioName, partName);
+        return scenarioTablePage.openAssembly(scenarioName, partName.toUpperCase());
     }
 
     /**

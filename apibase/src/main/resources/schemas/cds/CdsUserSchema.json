@@ -31,6 +31,14 @@
           "type": "string",
           "pattern": "^(.*)$"
         },
+        "updatedBy": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "updatedAt": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
         "userType": {
           "type": "string",
           "pattern": "^(.*)$"
@@ -82,6 +90,28 @@
               "pattern": "^(.*)$"
             },
             "townCity": {
+              "type": "string",
+              "pattern": "^(.*)$"
+            },
+            "countryCode": {
+              "type": "string",
+              "pattern": "^(.*)$"
+            },
+            "prefix": {
+              "type": "string",
+              "pattern": "^(.*)$"
+
+            },
+            "suffix": {
+              "type": "string",
+              "pattern": "^(.*)$"
+
+            },
+            "stateProvince": {
+              "type": "string",
+              "pattern": "^(.*)$"
+            },
+            "county": {
               "type": "string",
               "pattern": "^(.*)$"
             }

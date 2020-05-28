@@ -3,12 +3,13 @@ package com.apriori.utils.http.builder.dao;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.Matchers.isOneOf;
 
+import com.apriori.utils.AuthorizationFormUtil;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.utils.http.builder.common.response.common.PayloadJSON;
-import com.apriori.utils.http.builder.service.HTTPRequest;
+import com.apriori.utils.http.builder.service.RequestAreaClearRequest;
 import com.apriori.utils.http.builder.service.RequestInitService;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.http.enums.common.api.AuthEndpointEnum;
@@ -22,6 +23,7 @@ import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
+import io.restassured.http.Headers;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
@@ -32,7 +34,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Type;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -72,12 +73,7 @@ public class ConnectionManager<T> {
         FormParams formParams = requestEntity.getFormParams();
 
         if (requestEntity.isAutoLogin()) {
-            String authToken = setAuthToken();
-            // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
-            //TODO handle null
-            Map<String, String> auth = new HashMap<>();
-            auth.put("auth", authToken);
-            urlParams.add(auth);
+            requestEntity.setHeaders(AuthorizationFormUtil.getTokenAuthorizationForm(this.getAuthToken()));
         }
 
         if (multiPartFiles != null) {
@@ -158,24 +154,25 @@ public class ConnectionManager<T> {
     }
 
     // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
-    private String setAuthToken() {
+    private String getAuthToken() {
 
         UserAuthenticationEntity userAuthenticationEntity = requestEntity.getUserAuthenticationEntity();
 
         if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
             logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
+            RequestEntity authEntity = RequestEntity
+                    .initDefaultFormAuthorizationData(requestEntity.getUserAuthenticationEntity().getEmailAddress(),
+                            requestEntity.getUserAuthenticationEntity().getPassword()
+                    )
+                    .setReturnType(AuthenticateJSON.class)
+                    .setEndpoint(AuthEndpointEnum.POST_AUTH)
+                    .setAutoLogin(false)
+                    .setFollowRedirection(false);
 
-            String authToken = AuthenticateJSON.class.cast(
-                    new HTTPRequest().defaultFormAuthorization(userAuthenticationEntity.getEmailAddress(), userAuthenticationEntity.getPassword())
-                            .customizeRequest()
-                            .setEndpoint(AuthEndpointEnum.POST_AUTH)
-                            .setAutoLogin(false)
-                            .setFollowRedirection(false)
-                            .setReturnType(AuthenticateJSON.class)
-                            .commitChanges()
-                            .connect()
-                            .post()
-            ).getAccessToken();
+            String authToken =
+                    ((AuthenticateJSON) GenericRequestUtil.post(authEntity, new RequestAreaClearRequest())
+                            .getResponseEntity()
+                    ).getAccessToken();
 
             authTokens.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), authToken);
         }
@@ -184,10 +181,24 @@ public class ConnectionManager<T> {
 
     }
 
+    private UserAuthenticationEntity initUserConnectionData(final String username, final String password) {
+        return new UserAuthenticationEntity(
+                username,
+                password,
+                null,
+                "password",
+                "apriori-web-cost",
+                "donotusethiskey",
+                "tenantGroup%3Ddefault%20tenant%3Ddefault",
+                false
+        );
+    }
+
     private <T> ResponseWrapper<T> resultOf(ValidatableResponse response) {
 
         final int responseCode = response.extract().statusCode();
         final String responseBody = response.extract().body().asString();
+        final Headers responseHeaders = response.extract().headers();
 
         if (returnType != null) {
             String schemaLocation;
@@ -211,9 +222,9 @@ public class ConnectionManager<T> {
                     .response()
                     .as((Type) returnType);
 
-            return ResponseWrapper.build(responseCode, responseBody, responseEntity);
+            return ResponseWrapper.build(responseCode, responseHeaders, responseBody, responseEntity);
         } else {
-            return ResponseWrapper.build(responseCode, responseBody, null);
+            return ResponseWrapper.build(responseCode, responseHeaders, responseBody, null);
         }
     }
 

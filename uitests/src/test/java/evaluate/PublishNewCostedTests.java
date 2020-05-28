@@ -7,8 +7,8 @@ import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -39,8 +39,8 @@ public class PublishNewCostedTests extends TestBase {
     @TestRail(testCaseId = {"386", "388"})
     public void testPublishNewCostedScenario() {
 
-        String testScenarioName = new Util().getScenarioName();
-        String partName = "Testpart-4";
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String partName = "testpart-4";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);
@@ -60,8 +60,8 @@ public class PublishNewCostedTests extends TestBase {
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
 
-        String testScenarioName = new Util().getScenarioName();
-        String partName = "Testpart-4";
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String partName = "testpart-4";
         resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);

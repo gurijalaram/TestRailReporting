@@ -4,8 +4,7 @@ import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.pageobjects.pages.evaluate.analysis.AnalysisPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.MoreInputsPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialCompositionPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialPage;
+import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
 import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
@@ -15,6 +14,7 @@ import com.apriori.utils.PageUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -186,17 +186,23 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-region='sourceAndUtilizationTile']")
     private WebElement sourceAndUtilTile;
 
-    @FindBy(css = "[data-ap-field='sourceModelPartName']")
+    @FindBy(css = "[data-ap-field='sourceModelKeyPartName']")
     private WebElement sourceModelPartName;
 
     @FindBy(css = "[data-ap-comp='selectSourceLink']")
     private WebElement selectSourceButton;
 
-    @FindBy(css = "[data-ap-field='sourceModelScenario']")
+    @FindBy(css = "[data-ap-field='sourceModelKeyScenarioName']")
     private WebElement sourceModelScenarioName;
 
     @FindBy(css = "[data-ap-field='materialName']")
     private WebElement sourceMaterial;
+
+    @FindBy(css = "[data-ap-field='utilization']")
+    private WebElement utilizationPercentage;
+
+    @FindBy(css = "[data-ap-comp='twoModelProdInfo'] [data-ap-field='utilization']")
+    private WebElement twoModelUtilPercentage;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -344,9 +350,9 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return new page object
      */
-    public MaterialPage openMaterialComposition() {
+    public MaterialUtilizationPage openMaterialUtilization() {
         pageUtils.waitForElementAndClick(materialsDetails);
-        return new MaterialPage(driver);
+        return new MaterialUtilizationPage(driver);
     }
 
     /**
@@ -505,6 +511,17 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public boolean getBurdenedCost(String text) {
         return pageUtils.checkElementContains(burdenedCost, text);
+    }
+
+    /**
+     * Returns fully burdened cost value
+     * @return BigDecimal - Fully Burdened Cost (rounded down - thus ROUND_FLOOR)
+     */
+    public BigDecimal getBurdenedCostValue() {
+        return new BigDecimal(
+                burdenedCost.getText()
+                        .replace(",", ""))
+                .setScale(2, BigDecimal.ROUND_FLOOR);
     }
 
     /**
@@ -737,19 +754,29 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return dfm risk score
      */
-    public String getDfmRisk() {
-        pageUtils.waitForElementAppear(dfmRisk);
-        return dfmRisk.getText();
+    public boolean isDfmRisk(String risk) {
+        By dfmRisk = By.xpath(String.format("//td[.='%s']", risk));
+        return pageUtils.waitForElementToAppear(dfmRisk).isDisplayed();
     }
 
     /**
-     * Gets the dfm risk Icon
+     * Checks if DFM Risk Icon is displayed
      *
      * @return Risk Level
      */
-    public String getDFMRiskIcon() {
-        pageUtils.waitForElementToAppear(dfmRiskIcon);
-        return dfmRiskIcon.getAttribute("outerHTML");
+    public boolean isDFMRiskIconDisplayed() {
+        return pageUtils.isElementDisplayed(dfmRiskIcon);
+
+    }
+
+    /**
+     * Checks the dfm risk Icon
+     *
+     * @return Risk Level
+     */
+    public boolean isDFMRiskIcon(String icon) {
+        By dfmRiskIcon = By.xpath(String.format("//span[contains(@class,'%s')]", icon));
+        return pageUtils.waitForElementToAppear(dfmRiskIcon).isDisplayed();
     }
 
     /**
@@ -801,5 +828,29 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementToAppear(selectSourceButton);
         pageUtils.waitForElementAndClick(selectSourceButton);
         return new ScenarioTablePage(driver);
+    }
+
+    /**
+     * Get Two Model Utilization Percentage
+     *
+     * @return Utilization Percentage
+     */
+    public String getTwoModelUtilizationPercentage() {
+        return getUtilPercentage(twoModelUtilPercentage);
+    }
+
+
+    /**
+     * Get Utilization Percentage
+     *
+     * @return Utilization Percentage
+     */
+    public String getUtilizationPercentage() {
+        return getUtilPercentage(utilizationPercentage);
+    }
+
+    private String getUtilPercentage(WebElement utilPercentage) {
+        pageUtils.waitForElementAppear(utilPercentage);
+        return utilPercentage.getText();
     }
 }

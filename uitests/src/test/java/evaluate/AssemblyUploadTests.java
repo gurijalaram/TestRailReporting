@@ -8,8 +8,8 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -52,7 +52,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
 
@@ -71,7 +71,7 @@ public class AssemblyUploadTests extends TestBase {
     public void costAssembly() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -116,7 +116,7 @@ public class AssemblyUploadTests extends TestBase {
             .openAssembly(scenarioName, "ASSEMBLY01")
             .costScenario()
             .selectExploreButton()
-            .openAssembly(scenarioName, "Assembly2")
+            .openAssembly(scenarioName, "ASSEMBLY2")
             .costScenario();
 
         assertThat(evaluatePage.isTotalComponents("22"), is(true));
@@ -134,7 +134,7 @@ public class AssemblyUploadTests extends TestBase {
     public void testSTEPAssemblyDeletePreCost() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
-        scenarioName = new Util().getScenarioName();
+        scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -156,7 +156,7 @@ public class AssemblyUploadTests extends TestBase {
     public void testSTEPAssemblyDeletePostCost() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
-        scenarioName = new Util().getScenarioName();
+        scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -180,7 +180,7 @@ public class AssemblyUploadTests extends TestBase {
     public void testSTEPAssemblyPowderCoatCart() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
-        scenarioName = new Util().getScenarioName();
+        scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())

@@ -1,6 +1,6 @@
 package com.apriori.utils.http.builder.common.entity;
 
-import com.apriori.utils.Util;
+import com.apriori.utils.AuthorizationFormUtil;
 import com.apriori.utils.http.builder.service.RequestInitService;
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http.enums.EndpointType;
@@ -50,6 +50,12 @@ public class RequestEntity {
     private int connectionTimeout = 60000;
     private int socketTimeout = 60000;
     private boolean urlEncodingEnabled = true;
+
+    public static RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
+        return new RequestEntity(null, null)
+                .setEndpoint(endpoint)
+                .setReturnType(returnType);
+    }
 
     public static RequestEntity init(String url, Class<?> returnType) {
         return new RequestEntity(null, null)
@@ -115,7 +121,7 @@ public class RequestEntity {
     }
 
     private List<Map<String, ?>> initDefaultFormAuthorization() {
-        this.xwwwwFormUrlEncoded.add(Util.getDefaultAuthorizationForm(this.userAuthenticationEntity.getEmailAddress(), this.userAuthenticationEntity.getPassword()));
+        this.xwwwwFormUrlEncoded.add(AuthorizationFormUtil.getDefaultAuthorizationForm(this.userAuthenticationEntity.getEmailAddress(), this.userAuthenticationEntity.getPassword()));
 
         return this.xwwwwFormUrlEncoded;
     }
@@ -259,6 +265,13 @@ public class RequestEntity {
     public RequestEntity setHeaders(Map<String, String> headers) {
         if (headers != null) {
             this.headers = headers;
+        }
+        return this;
+    }
+
+    public RequestEntity addHeaders(final String key, final String value) {
+        if (headers != null) {
+            this.headers.put(key, value);
         }
         return this;
     }
