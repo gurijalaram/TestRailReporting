@@ -45,7 +45,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
 
-    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
+    @FindBy(css = "button.gwt-SubmitButton")
     private WebElement publishButton;
 
     private WebDriver driver;
@@ -122,7 +122,6 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return new page object
      */
     public ExplorePage selectPublishButton() {
-        pageUtils.checkElementAttributeEmpty(publishButton, "title");
         pageUtils.waitForElementAndClick(publishButton);
         pageUtils.checkElementAttribute(exploreButton, "className", "active-tab");
         return new ExplorePage(driver).selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());

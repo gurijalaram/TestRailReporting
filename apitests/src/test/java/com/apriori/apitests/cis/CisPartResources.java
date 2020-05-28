@@ -32,14 +32,6 @@ public class CisPartResources extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "4177")
-    @Description("API returns costing results for a single part in the CIS DB")
-    public void getCostingResults() {
-        PartResources.getPartCosting();
-    }
-
-
-    @Test
     @TestRail(testCaseId = "4175")
     @Description("Create a new part using the CIS API")
     public void createNewPart() {
