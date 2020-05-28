@@ -99,11 +99,11 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     /**
      * Checks if the comparison is locked
      *
-     * @param text - the text
      * @return true/false
      */
-    public boolean isComparisonLocked(String text) {
-        return pageUtils.checkElementAttribute(lockedIcon, "title", text);
+    public boolean isComparisonLocked() {
+        pageUtils.waitForElementToAppear(lockedIcon);
+        return lockedIcon.isDisplayed();
     }
 
     /**

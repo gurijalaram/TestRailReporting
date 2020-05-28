@@ -82,7 +82,7 @@ public class PublishComparisonTests extends TestBase {
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
             .closeJobQueue(ComparePage.class);
 
-        assertThat(comparePage.isComparisonLocked("Locked"), CoreMatchers.is(true));
+        assertThat(comparePage.isComparisonLocked(), CoreMatchers.is(true));
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.toggleLock()
