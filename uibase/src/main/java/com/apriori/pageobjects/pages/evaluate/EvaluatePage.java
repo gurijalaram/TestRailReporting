@@ -380,7 +380,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public boolean getCurrentScenarioName(String text) {
-        return pageUtils.checkElementContains(scenarioDropdown, text);
+        return pageUtils.textPresentInElement(scenarioDropdown, text);
     }
 
     /**
@@ -508,7 +508,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public boolean getBurdenedCost(String text) {
-        return pageUtils.checkElementContains(burdenedCost, text);
+        return pageUtils.textPresentInElement(burdenedCost, text);
     }
 
     /**

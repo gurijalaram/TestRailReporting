@@ -94,7 +94,7 @@ public class EvaluateHeader extends GenericHeader {
      * @return true/false
      */
     public boolean getCostLabel(String text) {
-        return pageUtils.checkElementContains(costLabel, text);
+        return pageUtils.textPresentInElement(costLabel, text);
     }
 
     /**
@@ -126,7 +126,7 @@ public class EvaluateHeader extends GenericHeader {
      * Method to check cost label contains/doesn't contain text
      */
     private void checkForCostLabel(int timeoutInMinutes) {
-        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.textPresentInElement(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
         pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
     }
 }

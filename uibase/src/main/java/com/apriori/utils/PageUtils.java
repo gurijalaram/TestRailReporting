@@ -574,7 +574,7 @@ public class PageUtils {
      * @param text
      * @return true/false
      */
-    public boolean checkElementContains(WebElement locator, String text) {
+    public boolean textPresentInElement(WebElement locator, String text) {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 3;
 
         return new WebDriverWait(driver, timeoutInMinutes)
