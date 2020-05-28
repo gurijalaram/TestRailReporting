@@ -553,10 +553,12 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the locked status
      *
-     * @return current page object
+     * @return string
      */
-    public boolean isLockedStatus(String status) {
-        return pageUtils.checkElementAttribute(lockedStatusIcon, "title", status);
+    public String getLockedStatus() {
+        By lockedStatus = By.cssSelector(".locked-status-icon");
+        pageUtils.waitForElementToAppear(lockedStatus);
+        return driver.findElement(lockedStatus).getAttribute("title");
     }
 
     /**

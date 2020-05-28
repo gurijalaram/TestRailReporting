@@ -144,11 +144,11 @@ public class ActionsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.openScenario(testScenarioName, "bracket_basic");
 
-        assertThat(evaluatePage.isLockedStatus("Locked"), is(true));
+        assertThat(evaluatePage.getLockedStatus(), is("Locked"));
 
         new GenericHeader(driver).toggleLock();
 
-        assertThat(new EvaluatePage(driver).isLockedStatus("Unlocked"), is(true));
+        assertThat(new EvaluatePage(driver).getLockedStatus(), is("Unlocked"));
     }
 
     @Test
