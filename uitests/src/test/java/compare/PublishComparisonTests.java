@@ -20,7 +20,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -82,7 +81,7 @@ public class PublishComparisonTests extends TestBase {
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
             .closeJobQueue(ComparePage.class);
 
-        assertThat(comparePage.isComparisonLocked(), CoreMatchers.is(true));
+        assertThat(comparePage.isComparisonLockStatus("lock"), is(true));
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.toggleLock()
@@ -90,7 +89,7 @@ public class PublishComparisonTests extends TestBase {
             .checkJobQueueRow("okay")
             .closeJobQueue(ComparePage.class);
 
-        assertThat(comparePage.isComparisonUnlocked("Unlocked"), CoreMatchers.is(true));
+        assertThat(comparePage.isComparisonLockStatus("unlock"), is(true));
     }
 
 

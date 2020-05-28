@@ -33,12 +33,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "button.comparison-table-add-scenarios-button")
     private WebElement addScenariosButton;
 
-    @FindBy(css = "[class='locked-status-icon fa fa-lock']")
-    private WebElement lockedIcon;
-
-    @FindBy(css = "[class='locked-status-icon fa fa-unlock']")
-    private WebElement unlockedIcon;
-
     @FindBy(css = "[data-ap-comp='loadingComparisonData']")
     private WebElement loadingComparisonData;
 
@@ -97,23 +91,13 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     /**
-     * Checks if the comparison is locked
+     * Gets the locking status of the comparison
      *
      * @return true/false
      */
-    public boolean isComparisonLocked() {
-        pageUtils.waitForElementToAppear(lockedIcon);
-        return lockedIcon.isDisplayed();
-    }
-
-    /**
-     * Checks if the comparison is unlocked
-     *
-     * @param text - the text
-     * @return true/false
-     */
-    public boolean isComparisonUnlocked(String text) {
-        return pageUtils.checkElementAttribute(unlockedIcon, "title", text);
+    public boolean isComparisonLockStatus(String lockStatus) {
+        By lockedIcon = By.xpath(String.format("//div[@class='locked-status-icon fa fa-%s']",lockStatus));
+        return pageUtils.waitForElementToAppear(lockedIcon).isDisplayed();
     }
 
     /**
