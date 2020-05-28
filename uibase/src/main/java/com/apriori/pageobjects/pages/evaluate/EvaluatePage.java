@@ -138,9 +138,6 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = ".locked-status-icon")
     private WebElement lockedStatusIcon;
 
-    @FindBy(css = ".cad-connection-status-icon")
-    private WebElement cadConnectedIcon;
-
     @FindBy(css = "a[data-ap-nav-viewport='showAssemblyComponentsDetails']")
     private WebElement componentsDetails;
 
@@ -564,10 +561,12 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the CAD Connection status
      *
-     * @return current page object
+     * @return string
      */
-    public boolean isCADConnectionStatus(String status) {
-        return pageUtils.checkElementAttribute(cadConnectedIcon, "title", status);
+    public String isCADConnectionStatus() {
+        By cadConnection = By.cssSelector(".cad-connection-status-icon");
+        pageUtils.waitForElementToAppear(cadConnection);
+        return driver.findElement(cadConnection).getAttribute("title");
     }
 
     /**
@@ -589,12 +588,14 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Checks the input value is correct
+     * Gets the input value
      *
      * @return true/false
      */
-    public boolean getAnnualVolume(String text) {
-        return pageUtils.checkElementAttribute(annVolume, "value", text);
+    public String getAnnualVolume() {
+        By annualVolume = By.cssSelector("input[data-ap-field='annualVolume']");
+        pageUtils.waitForElementToAppear(annualVolume);
+        return driver.findElement(annualVolume).getAttribute("value");
     }
 
     /**

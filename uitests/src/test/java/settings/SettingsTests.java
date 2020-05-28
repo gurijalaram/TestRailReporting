@@ -175,8 +175,8 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getAnnualVolume("9,524"), Matchers.is(true));
-        assertThat(evaluatePage.getProductionLife("7"), Matchers.is(true));
+        assertThat(evaluatePage.getAnnualVolume(), is("9,524"));
+        assertThat(evaluatePage.getProductionLife("7"), is(true));
     }
 
     @Test
