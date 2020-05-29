@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.designguidance.tolerances;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -103,10 +104,12 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     /**
      * Checks the thread length
      *
-     * @return - the thread length
+     * @return webelement
      */
-    public boolean isThreadLength(String text) {
-        return pageUtils.checkElementAttribute(lengthInput, "value", text);
+    public WebElement isThreadLength(String text) {
+        By lengthInput = By.xpath(String.format("//input[contains(@title,'%s')]", text));
+        pageUtils.waitForElementToAppear(lengthInput);
+        return driver.findElement(lengthInput);
     }
 
     /**
