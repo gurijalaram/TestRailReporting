@@ -521,11 +521,11 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessChart("Band Saw");
 
         assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("16 (45%)"));
-        assertThat(processRoutingPage.isMachineName("DoAll 3613-1 Vert"), is(true));
+        assertThat(processRoutingPage.getMachineName(), is("DoAll 3613-1 Vert"));
 
         processRoutingPage.selectProcessChart("2 Axis Lathe");
         assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 19.47"));
-        assertThat(processRoutingPage.isMachineName("Virtual 2 Axis Lathe - Small"), is(true));
+        assertThat(processRoutingPage.getMachineName(), is("Virtual 2 Axis Lathe - Small"));
     }
 
     @Test
