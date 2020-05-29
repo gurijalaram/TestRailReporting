@@ -271,4 +271,18 @@ public class CostAllCadTests extends TestBase {
 
         assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
     }
+
+    @Test
+    @TestRail(testCaseId = {"580"})
+    @Description("Failure to create a new scenario that has a blank scenario name or is named using unsupported characters")
+    public void failedBlankScenarioName() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+
+        loginPage = new CIDLoginPage(driver);
+        warningPage = loginPage.login(UserUtil.getUser())
+            .failedUploadFile("", resourceFile);
+
+        assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
+    }
 }
