@@ -84,10 +84,10 @@ public class CostAllCadTests extends TestBase {
             .costScenario()
             .openReferenceCompare();
 
-        assertThat(referenceComparePage.getMaterialCostDelta(), is("up"));
-        assertThat(referenceComparePage.getPiecePartCostDelta(), is("down"));
-        assertThat(referenceComparePage.getFullyBurdenedCostDelta(), is("down"));
-        assertThat(referenceComparePage.getTotalCapitalInvestmentsDelta(), is("up"));
+        assertThat(referenceComparePage.getMaterialCostDelta(), containsString("up"));
+        assertThat(referenceComparePage.getPiecePartCostDelta(), containsString("down"));
+        assertThat(referenceComparePage.getFullyBurdenedCostDelta(), containsString("down"));
+        assertThat(referenceComparePage.getTotalCapitalInvestmentsDelta(), containsString("up"));
     }
 
     @Test
