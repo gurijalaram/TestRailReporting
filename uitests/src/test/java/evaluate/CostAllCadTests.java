@@ -259,7 +259,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2317"})
+    @TestRail(testCaseId = {"2316", "2317"})
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {
 

@@ -171,7 +171,7 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3862"})
+    @TestRail(testCaseId = {"3862", "1239"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
 
@@ -275,5 +275,35 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1245"})
+    @Description("CAD file association can be updated & subsequently reverted")
+    public void revertCADUpdate() {
+
+        String file = "1379344.stp";
+        resourceFile = new FileResourceUtil().getResourceFile(file);
+        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getBurdenedCost("744"), is(true));
+
+        evaluatePage.updateCadFile(cadResourceFile);
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+
+        assertThat(evaluatePage.getBurdenedCost("372"), is(true));
+
+        evaluatePage.revert()
+            .revertScenario();
+
+        assertThat(evaluatePage.getBurdenedCost("744"), is(true));
     }
 }
