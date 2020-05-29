@@ -47,6 +47,7 @@ public class DecimalPlaceTests extends TestBase {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -73,6 +74,7 @@ public class DecimalPlaceTests extends TestBase {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -100,6 +102,7 @@ public class DecimalPlaceTests extends TestBase {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -139,6 +142,7 @@ public class DecimalPlaceTests extends TestBase {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
