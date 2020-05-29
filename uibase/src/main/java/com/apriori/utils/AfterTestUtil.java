@@ -78,6 +78,8 @@ public class AfterTestUtil {
             .setAutoLogin(false)
             .setBody(new DisplayPreferencesEntity().setSystemUnits(true)
                 .setCurrencyCode(CurrencyEnum.USD.getCurrency()))
+            .setBody(new DisplayPreferencesEntity().setDecimalPlaces("TWO")
+                .setCurrencyCode(CurrencyEnum.USD.getCurrency()))
             .commitChanges()
             .connect()
             .post();

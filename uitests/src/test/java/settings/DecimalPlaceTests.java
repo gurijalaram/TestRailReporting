@@ -8,8 +8,8 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.DecimalPlaceEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -40,18 +40,16 @@ public class DecimalPlaceTests extends TestBase {
         }
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"3730", "3738", "3764"})
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaultsMax() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
-        String testScenarioName = new Util().getScenarioName();
-        currentUser = UserUtil.getUser();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.SIX.getDecimalPlaces())
             .save(ExplorePage.class)
@@ -68,18 +66,16 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCapitalInvestment(), is("0.000000"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"3730", "3738", "3764"})
     @Description("User can change the default Displayed Decimal Places to the minimum")
     public void changeDecimalPlaceDefaultsMin() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
-        String testScenarioName = new Util().getScenarioName();
-        currentUser = UserUtil.getUser();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
             .save(ExplorePage.class)
@@ -96,20 +92,19 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCapitalInvestment(), is("51,265.177987"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"3730", "3738", "3792", "3764"})
     @Description("User can change the default Displayed Decimal Places multiple times and rounding adjusts")
     public void changeDecimalPlaceDefaultsUpdates() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
-        String testScenarioName = new Util().getScenarioName();
-        currentUser = UserUtil.getUser();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
+            .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
             .save(ExplorePage.class)
             .uploadFile(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -143,11 +138,10 @@ public class DecimalPlaceTests extends TestBase {
     public void changeDecimalPlaceDefaultsRecost() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
-        String testScenarioName = new Util().getScenarioName();
-        currentUser = UserUtil.getUser();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
             .save(ExplorePage.class)
