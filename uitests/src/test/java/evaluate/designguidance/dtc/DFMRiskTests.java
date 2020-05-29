@@ -225,7 +225,7 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3872"})
+    @TestRail(testCaseId = {"3872", "596"})
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
 
