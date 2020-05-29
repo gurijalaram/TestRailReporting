@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.process;
 import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -242,12 +243,14 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Check Optimize for minimum cost is selected
+     * Gets Optimize for minimum cost is selected
      *
      * @return current page object
      */
-    public boolean isOptimizeForMinimumCostSelected(String text) {
-        return pageUtils.checkElementAttribute(optimizeRadioButton, "outerHTML", text);
+    public String getOptimizeForMinimumCostSelected() {
+        By radioButton = By.cssSelector("input[data-ap-comp='numberOfCavities.radioButtons.optimize']");
+        pageUtils.waitForElementToAppear(radioButton);
+        return driver.findElement(radioButton).getAttribute("outerHTML");
     }
 
     /**
@@ -533,8 +536,8 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
      * @param text - the value
      * @return true/false
      */
-    public boolean isCoolingTime(String text) {
-        return checkAttribute(coolingTimeInput, text);
+    public String isCoolingTime() {
+        return checkAttribute(coolingTimeInput);
     }
 
     private void setInput(WebElement locator, String value) {
@@ -543,7 +546,13 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     private boolean checkAttribute(WebElement locator, String text) {
+        pageUtils.waitForElementToAppear(locator);
         return pageUtils.checkElementAttribute(locator, "value", text);
+    }
+
+    private String checkAttribute(WebElement locator) {
+        pageUtils.waitForElementToAppear(locator);
+        return locator.getAttribute("value");
     }
 
     /**
