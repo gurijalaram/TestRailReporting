@@ -91,7 +91,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Hydrostatic Leak Testing")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isPartThickness("0.21"), is(true));
+        assertThat(processSetupOptionsPage.getPartThickness(), is("0.21"));
     }
 
     @Test
@@ -158,7 +158,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.getCaseOverride(), is("0.46"));
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -187,7 +187,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("2"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("2"));
     }
 
     @Test
@@ -221,7 +221,7 @@ public class SecondaryProcessTests extends TestBase {
         processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Standard Anneal")
             .selectOptions();
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -250,7 +250,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("3"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("3"));
     }
 
     @Test
@@ -384,10 +384,10 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Powder Coat Cart")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isFractionPainted("0.3"), is(true));
+        assertThat(processSetupOptionsPage.getFractionPainted(), is( "0.3"));
         assertThat(processSetupOptionsPage.isNoMaskingSelected("checked"), is("true"));
-        assertThat(processSetupOptionsPage.isSpecifyPainted("414"), is(true));
-        assertThat(processSetupOptionsPage.isSpecified("2"), is(true));
+        assertThat(processSetupOptionsPage.getSpecifyPainted(), is("414"));
+        assertThat(processSetupOptionsPage.getSpecified("2"), is(true));
     }
 
     @Test
@@ -423,10 +423,10 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Wet Coat Line")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isFractionPainted("0.4"), is(true));
-        assertThat(processSetupOptionsPage.isTheNumberOfMaskedFeatures("1"), is(true));
-        assertThat(processSetupOptionsPage.isSpecifyPainted("254"), is(true));
-        assertThat(processSetupOptionsPage.isComponentsPerLoad("1"), is(true));
+        assertThat(processSetupOptionsPage.getFractionPainted(), is("0.4"));
+        assertThat(processSetupOptionsPage.getTheNumberOfMaskedFeatures(), is("1"));
+        assertThat(processSetupOptionsPage.getSpecifyPainted(), is("254"));
+        assertThat(processSetupOptionsPage.getComponentsPerLoad(), is("1"));
     }
 
     @Test
@@ -560,7 +560,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -590,7 +590,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("2"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("2"));
     }
 
     @Test
@@ -620,7 +620,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -647,7 +647,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("3"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("3"));
     }
 
     @Test
@@ -674,7 +674,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -701,7 +701,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("3"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("3"));
     }
 
     @Test
@@ -728,7 +728,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("4"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("4"));
     }
 
     @Test
@@ -756,7 +756,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("2"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("2"));
     }
 
     @Test
@@ -783,7 +783,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test

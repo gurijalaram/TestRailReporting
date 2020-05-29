@@ -56,9 +56,9 @@ public class PsoEditTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("8"), is(true));
-        assertThat(processSetupOptionsPage.isNominalWallThicknessOverride("0.4"), is(true));
+        assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.4"));
         assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
-        assertThat(processSetupOptionsPage.isMaterialRegrind("0.3"), is(true));
+        assertThat(processSetupOptionsPage.getMaterialRegrind(), is("0.3"));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Band Saw")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isBundleCount("3"), is(true));
+        assertThat(processSetupOptionsPage.getBundleCount(), is("3"));
     }
 
     @Test
@@ -166,7 +166,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Compaction Pressing")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isMaterialAllowance("0.611"), is(true));
+        assertThat(processSetupOptionsPage.getMaterialAllowance(), is("0.611"));
     }
 
     @Test
@@ -191,7 +191,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("4 Cavities Drape Forming")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isCoolingTime(), is("150.29"));
+        assertThat(processSetupOptionsPage.getCoolingTime(), is("150.29"));
     }
 
     @Test
@@ -221,8 +221,8 @@ public class PsoEditTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is("checked"));
-        assertThat(processSetupOptionsPage.isNominalWallThicknessOverride("0.13"), is(true));
-        assertThat(processSetupOptionsPage.isColorChargeOverride("0.68"), is(true));
+        assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.13"));
+        assertThat(processSetupOptionsPage.getColorChargeOverride(), is("0.68"));
 
         processSetupOptionsPage.closePanel()
             .openProcessDetails()
@@ -246,7 +246,7 @@ public class PsoEditTests extends TestBase {
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("4"), is(true));
         assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
-        assertThat(processSetupOptionsPage.isMaterialRegrind("1.00"), is(true));
+        assertThat(processSetupOptionsPage.getMaterialRegrind(), is("1.00"));
     }
 
     @Test
@@ -272,6 +272,6 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Band Saw")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isBundleCount(""), is(true));
+        assertThat(processSetupOptionsPage.getBundleCount(), is(""));
     }
 }
