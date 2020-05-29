@@ -45,7 +45,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
 
-    @FindBy(css = "button[data-ap-comp='publishScenarioButton']")
+    @FindBy(css = "button.gwt-SubmitButton")
     private WebElement publishButton;
 
     private WebDriver driver;
