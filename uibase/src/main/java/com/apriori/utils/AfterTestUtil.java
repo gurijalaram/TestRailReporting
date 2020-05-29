@@ -77,9 +77,8 @@ public class AfterTestUtil {
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
             .setAutoLogin(false)
             .setBody(new DisplayPreferencesEntity().setSystemUnits(true)
-                .setCurrencyCode(CurrencyEnum.USD.getCurrency()))
-            .setBody(new DisplayPreferencesEntity().setDecimalPlaces("TWO")
-                .setCurrencyCode(CurrencyEnum.USD.getCurrency()))
+                .setCurrencyCode(CurrencyEnum.USD.getCurrency())
+                .setDecimalPlaces("2"))
             .commitChanges()
             .connect()
             .post();

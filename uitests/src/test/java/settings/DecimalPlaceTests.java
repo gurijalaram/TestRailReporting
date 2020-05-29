@@ -59,10 +59,10 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.isFinishMass("5.309458"), is(true));
         assertThat(evaluatePage.isUtilization("81.163688"), is(true));
-        assertThat(evaluatePage.getCycleTimeCount(), is("110.120000"));
+        assertThat(evaluatePage.getCycleTimeCount(), is("110.820000"));
         assertThat(evaluatePage.getMaterialCost(), is("16.151375"));
-        assertThat(evaluatePage.getPartCost(), is("19.723087"));
-        assertThat(evaluatePage.getBurdenedCost("19.723087"), is(true));
+        assertThat(evaluatePage.getPartCost(), is("19.734327"));
+        assertThat(evaluatePage.getBurdenedCost("19.734327"), is(true));
         assertThat(evaluatePage.getCapitalInvestment(), is("0.000000"));
     }
 
