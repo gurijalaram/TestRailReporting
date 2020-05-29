@@ -104,12 +104,12 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     /**
      * Checks the thread length
      *
-     * @return webelement
+     * @return true/false
      */
-    public WebElement isThreadLength(String text) {
+    public boolean isThreadLength(String text) {
         By lengthInput = By.xpath(String.format("//input[contains(@title,'%s')]", text));
         pageUtils.waitForElementToAppear(lengthInput);
-        return driver.findElement(lengthInput);
+        return driver.findElement(lengthInput).isDisplayed();
     }
 
     /**
