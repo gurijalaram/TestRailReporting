@@ -39,6 +39,9 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
 
+    @FindBy(xpath = "//div[@id='inputControls']//div[contains(text(), 'Input Controls')]")
+    private WebElement inputControlsTitle;
+
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name()='path']")
     private WebElement castingDtcBubble;
 
@@ -113,6 +116,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
     private WebElement subAssemblyOption;
+
+    @FindBy(xpath = "//li[@title='A257280C (Initial)']/..")
+    private WebElement assemblyResultList;
 
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement inputBox;
@@ -273,16 +279,30 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
-        currentAssemblyElement.click();
-        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
-        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            if (assemblyName.equals("TOP-LEVEL (Initial)")) {
-                selectAssemblyOption(3);
-            } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
-                selectAssemblyOption(2);
-            }
-            inputBox.sendKeys(Keys.ENTER);
-        }
+        By assemblyToSelect = By.xpath(String.format("//li[@title='%s']/div/a", assemblyName));
+        //currentAssemblyElement.click();
+        //currentAssemblyElement.click();
+        pageUtils.javaScriptClick(currentAssemblyElement);
+        //pageUtils.waitFor(1000);
+        pageUtils.waitForElementToAppear(assemblyInput);
+        pageUtils.waitForElementToBeClickable(assemblyInput);
+        assemblyInput.sendKeys(assemblyName);
+        driver.findElement(assemblyToSelect).click();
+
+        pageUtils.waitForElementAndClick(inputControlsTitle);
+
+        String fun = "hello";
+
+        // "className", "jr-mSingleselect-input jr jr-isOpen" or "jr-mSingleselect-input jr jr-isFocused"
+        //pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
+        //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
+        //    if (assemblyName.equals("TOP-LEVEL (Initial)")) {
+        //        selectAssemblyOption(3);
+        //    } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
+        //        selectAssemblyOption(2);
+        //    }
+        //    inputBox.sendKeys(Keys.ENTER);
+        //}
         return this;
     }
 
@@ -501,7 +521,7 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @param currencyToCheck
      * @param className
-     * @param <T>             return type - any page object that is specified
+     * @param <T> return type - any page object that is specified
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
