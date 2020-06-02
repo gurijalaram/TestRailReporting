@@ -39,6 +39,9 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
 
+    @FindBy(xpath = "//div[@id='inputControls']")
+    private WebElement inputControlsBox;
+
     @FindBy(xpath = "//div[@id='inputControls']//div[contains(text(), 'Input Controls')]")
     private WebElement inputControlsTitle;
 
@@ -105,13 +108,19 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
 
+    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div")
+    private WebElement currentAssemblyOuterDiv;
+
+    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/div")
+    private WebElement currentAssemblyInputDiv;
+
     @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
     private WebElement currentAssElement;
 
     @FindBy(xpath = "//a[contains(text(), 'SUB-ASSEMBLY')]")
     private WebElement subAssOption;
 
-    @FindBy(xpath = "//div[@id='assemblySelect']//input")
+    @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement assemblyInput;
 
     @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
@@ -279,17 +288,36 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
-        By assemblyToSelect = By.xpath(String.format("//li[@title='%s']/div/a", assemblyName));
-        //currentAssemblyElement.click();
-        //currentAssemblyElement.click();
-        pageUtils.javaScriptClick(currentAssemblyElement);
-        //pageUtils.waitFor(1000);
-        pageUtils.waitForElementToAppear(assemblyInput);
-        pageUtils.waitForElementToBeClickable(assemblyInput);
-        assemblyInput.sendKeys(assemblyName);
-        driver.findElement(assemblyToSelect).click();
+        //By assemblyToSelect = By.xpath(String.format("//li[@title='%s']/div/a", assemblyName));
+        //pageUtils.javaScriptClick(currentAssemblyElement);
+        //pageUtils.waitFor(2000);
+        //assemblyInput.sendKeys(assemblyName);
+        //pageUtils.waitFor(500);
+        //driver.findElement(assemblyToSelect).click();
 
-        pageUtils.waitForElementAndClick(inputControlsTitle);
+        //pageUtils.waitFor(2000);
+        By assemblyToSelect = By.xpath(String.format("//li[@title='%s']/div/a", assemblyName));
+        String inputControlsBoxClasses = inputControlsBox.getAttribute("className");
+        for (int i = 0; i < 2; i++) {
+            if (inputControlsTitle.isDisplayed() &&
+                    inputControlsTitle.isEnabled() &&
+                    !inputControlsBoxClasses.contains("hidden") &&
+                    loadingPopup.getAttribute("className").contains("hidden")) {
+                pageUtils.waitFor(300);
+                pageUtils.javaScriptClick(currentAssemblyElement);
+            }
+
+            if (currentAssemblyOuterDiv.getAttribute("className").contains("jr-mSingleselectTop")) {
+                if (currentAssemblyElement.getAttribute("className").contains("jr-isOpen")) {
+                    if (currentAssemblyInputDiv.getAttribute("className").contains("jr-isOpen")) {
+                        // wait here?
+                        assemblyInput.sendKeys(assemblyName);
+                        driver.findElement(assemblyToSelect).click();
+                    }
+                }
+            }
+            //pageUtils.waitForElementAndClick(inputControlsTitle);
+        }
 
         String fun = "hello";
 
