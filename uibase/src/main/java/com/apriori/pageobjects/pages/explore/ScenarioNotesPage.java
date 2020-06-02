@@ -213,12 +213,14 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     }
 
     /**
-     * Checks the assignee
+     * Get the assignee
      *
      * @return the assignee as string
      */
-    public boolean isAssignee(String text) {
-        return pageUtils.checkElementAttribute(assigneeField, "innerText", text);
+    public String isAssignee() {
+        By assignee = By.cssSelector("[data-ap-field='assignee']");
+        pageUtils.waitForElementToAppear(assignee);
+        return driver.findElement(assignee).getAttribute("innerText");
     }
 
     /**

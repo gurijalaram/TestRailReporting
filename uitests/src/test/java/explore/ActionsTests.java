@@ -238,7 +238,7 @@ public class ActionsTests extends TestBase {
             .openScenario(testScenarioName, "PowderMetalShaft")
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isAssignee("Moya Parker"), is(true));
+        assertThat(scenarioNotesPage.isAssignee(), is("Moya Parker"));
     }
 
     @Test
