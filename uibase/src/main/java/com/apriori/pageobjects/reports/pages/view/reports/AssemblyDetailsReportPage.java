@@ -232,29 +232,11 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets expected Piece Part Cost grand total
+     * Gets expected Fully Burdened Cost/Piece Part Cost grand total
      *
      * @return BigDecimal
      */
-    public BigDecimal getExpectedPPCGrandTotal(String assemblyType, String columnName) {
-        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
-        List<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> quantityList = checkQuantityList(assemblyType);
-
-        List<BigDecimal> trimmedValueList = checkPPCValues(assemblyType, levels, allValues, quantityList);
-        List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
-
-        return finalValues
-            .stream()
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    /**
-     * Gets expected Fully Burdened Cost grand total
-     *
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedFBCGrandTotal(String assemblyType, String columnName) {
+    public BigDecimal getExpectedFbcPpcGrandTotal(String assemblyType, String columnName) {
         List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> quantityList = checkQuantityList(assemblyType);
