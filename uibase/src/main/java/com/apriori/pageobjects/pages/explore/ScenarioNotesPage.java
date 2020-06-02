@@ -213,7 +213,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     }
 
     /**
-     * Get the assignee
+     * Gets the assignee
      *
      * @return the assignee as string
      */
