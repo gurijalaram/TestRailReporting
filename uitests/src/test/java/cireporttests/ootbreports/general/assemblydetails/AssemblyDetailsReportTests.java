@@ -199,22 +199,22 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
-            assemblyDetailsReport.getInvestmentCycleTimeGrandTotal(assemblyType, "Cycle Time")
+            assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Piece Part Cost"),
-            assemblyDetailsReport.getExpectedCostGrandTotal(assemblyType, "Piece Part Cost")
+            assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Fully Burdened Cost"),
-            assemblyDetailsReport.getExpectedCostGrandTotal(assemblyType, "Fully Burdened Cost")
+            assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments"),
-            assemblyDetailsReport.getInvestmentCycleTimeGrandTotal(assemblyType, "Capital Investments")
+            assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
 
@@ -245,22 +245,22 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
-            assemblyDetailsReport.getInvestmentCycleTimeGrandTotal(assemblyType, "Cycle Time")
+            assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Piece Part Cost"),
-            assemblyDetailsReport.getExpectedCostGrandTotal(assemblyType, "Piece Part Cost")
+            assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Fully Burdened Cost"),
-            assemblyDetailsReport.getExpectedCostGrandTotal(assemblyType, "Fully Burdened Cost")
+            assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments"),
-            assemblyDetailsReport.getInvestmentCycleTimeGrandTotal(assemblyType, "Capital Investments")
+            assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
 
@@ -292,22 +292,22 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
-            assemblyDetailsReport.getInvestmentCycleTimeGrandTotal(assemblyType, "Cycle Time")
+            assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Piece Part Cost"),
-            assemblyDetailsReport.getExpectedCostGrandTotal(assemblyType, "Piece Part Cost")
+            assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Fully Burdened Cost"),
-            assemblyDetailsReport.getExpectedCostGrandTotal(assemblyType, "Fully Burdened Cost")
+            assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Capital Investments"),
-            assemblyDetailsReport.getInvestmentCycleTimeGrandTotal(assemblyType, "Capital Investments")
+            assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
 
