@@ -24,6 +24,9 @@ public class GeometryPage extends EvaluatePanelToolbar {
     @FindBy(css = "div[data-ap-comp='gcdTreeTable']")
     private WebElement gcdTable;
 
+    @FindBy(css = "div[data-ap-comp='gcdTreeTable'] thead[class='v-grid-header']")
+    private WebElement gcdTableHeader;
+
     @FindBy(css = "div[data-ap-comp='gcdTreeTable'] div.v-grid-scroller-vertical")
     private WebElement gcdTableScroller;
 
@@ -52,6 +55,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(gcdTable);
+        pageUtils.waitForElementToAppear(gcdTableHeader);
     }
 
     /**
@@ -64,7 +68,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
      */
     public GeometryPage selectGCDAndGCDProperty(String gcdParent, String gcdChild, String gcdProperty) {
         findGCDType(gcdParent).click();
-        findGCDChild(gcdChild).click();
+        pageUtils.waitForElementAndClick(findGCDChild(gcdChild));
         selectGCDProperty(gcdProperty);
         return this;
     }

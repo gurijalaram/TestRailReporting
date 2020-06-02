@@ -450,7 +450,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"556"})
+    @TestRail(testCaseId = {"556", "594"})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
 
@@ -480,7 +480,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Issue("BA-932")
-    @TestRail(testCaseId = {"740"})
+    @TestRail(testCaseId = {"740", "595"})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
 
