@@ -88,7 +88,7 @@ public class SettingsTests extends TestBase {
         productionDefaultPage = explorePage.openSettings()
             .openProdDefaultTab();
 
-        assertThat(productionDefaultPage.getScenarioName("MP Auto Test"), is(true));
+        assertThat(productionDefaultPage.getScenarioName(), is("MP Auto Test"));
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()), is(true));
         assertThat(productionDefaultPage.getSelectedVPE(VPEEnum.APRIORI_BRAZIL.getVpe()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(VPEEnum.APRIORI_EASTERN_EUROPE.getVpe()), is(true));
@@ -397,7 +397,7 @@ public class SettingsTests extends TestBase {
         assertThat(settingsPage.getSelectedUnits(UnitsEnum.ENGLISH.getUnit()), is(true));
 
         productionDefaultPage = new SettingsPage(driver).openProdDefaultTab();
-        assertThat(productionDefaultPage.getScenarioName("Save all tabs test"), is(true));
+        assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));
 
         selectionSettingsPage = new SettingsPage(driver).openSelectionTab();
         assertThat(selectionSettingsPage.getColour(), is(equalTo(ColourEnum.SHAMROCK_GREEN.getColour())));
