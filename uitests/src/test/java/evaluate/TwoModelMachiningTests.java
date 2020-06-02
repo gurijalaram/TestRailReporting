@@ -20,6 +20,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -39,6 +41,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Validate Source and util tile appears when 2 MM is selected")
     @TestRail(testCaseId = {"3927", "3928", "3929", "3930", "3947"})
     public void testTwoModelMachining() {
@@ -82,8 +85,9 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Validate the User can open the source part in the evaluate tab")
-    @TestRail(testCaseId = {"3941"})
+    @TestRail(testCaseId = {"3844", "3941"})
     public void testOpenSourceModel() {
 
         String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -96,8 +100,12 @@ public class TwoModelMachiningTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(sourceScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .selectExploreButton()
+            .costScenario();
+
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+
+        evaluatePage.selectExploreButton()
             .refreshCurrentPage()
             .uploadFile(new GenerateStringUtil().generateScenarioName(), twoModelFile)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
@@ -111,6 +119,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
     @TestRail(testCaseId = {"3940", "3946", "4133"})
     public void multiLevel2Model() {
@@ -163,6 +172,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(testCaseId = {"4178", "4138"})
     public void testOpenPublicSourceModel() {
@@ -220,8 +230,8 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
@@ -252,6 +262,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Validate the user cannot use two completely different CAD models")
     @TestRail(testCaseId = {"3948"})
     public void testTwoModelCorrectCADModels() {

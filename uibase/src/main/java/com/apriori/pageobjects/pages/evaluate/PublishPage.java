@@ -42,11 +42,11 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "input[data-ap-field='locked']")
     private WebElement lockCheckBox;
 
-    @FindBy(css = "button.gwt-SubmitButton")
-    private WebElement publishButton;
-
     @FindBy(css = "button.gwt-Button.btn.btn-default")
     private WebElement cancelButton;
+
+    @FindBy(css = "button.gwt-SubmitButton")
+    private WebElement publishButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;

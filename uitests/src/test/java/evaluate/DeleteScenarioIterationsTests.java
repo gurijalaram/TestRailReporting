@@ -36,7 +36,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"588", "394", "581", "395"})
+    @TestRail(testCaseId = {"588", "394", "581", "395", "589"})
     @Description("Test a public scenario can be deleted from the evaluate page")
     public void testDeletePublicScenarioIteration() {
 

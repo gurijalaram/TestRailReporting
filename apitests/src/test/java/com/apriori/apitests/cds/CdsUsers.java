@@ -26,6 +26,7 @@ public class CdsUsers extends CdsTestUtil {
         url = ServiceConnector.getServiceUrl();
     }
 
+    /*
     @Test
     @TestRail(testCaseId = "3697")
     @Description("API returns a list of all the available users in the CDS DB")
@@ -36,6 +37,7 @@ public class CdsUsers extends CdsTestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
         validateUsers(response.getResponseEntity());
     }
+     */
 
     @Test
     @TestRail(testCaseId = "3698")
