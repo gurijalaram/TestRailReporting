@@ -39,8 +39,8 @@ public class PartResources extends CisBase {
         );
     }
 
-    public static <T> ResponseWrapper<T> getPartCosting() {
-        String url = String.format(getCisUrl(), String.format(endpointPartsWithIdentity, Constants.getCisPartIdentity()).concat(
+    public static <T> ResponseWrapper<T> getPartCosting(String partIdentity) {
+        String url = String.format(getCisUrl(), String.format(endpointPartsWithIdentity, partIdentity).concat(
                 "/results"));
         return GenericRequestUtil.get(
                 RequestEntity.init(url, PartCosting.class),
