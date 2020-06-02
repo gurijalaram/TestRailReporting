@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.pages.explore.ScenarioPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -181,10 +182,12 @@ public class GenericHeader extends PageHeader {
     /**
      * Gets the locked status
      *
-     * @return true false
+     * @return string
      */
-    public boolean isActionLockedStatus(String status) {
-        return pageUtils.checkElementAttribute(lockToggleButton, "innerText", status);
+    public String getActionLockedStatus() {
+        By lockToggle = By.cssSelector("button[data-ap-comp='toggleLockButton']");
+        pageUtils.waitForElementToAppear(lockToggle);
+        return driver.findElement(lockToggle).getAttribute("innerText");
     }
 
     /**

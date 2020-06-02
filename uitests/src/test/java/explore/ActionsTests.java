@@ -138,7 +138,7 @@ public class ActionsTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         genericHeader.selectActions();
 
-        assertThat(genericHeader.isActionLockedStatus("Unlock"), is(true));
+        assertThat(genericHeader.getActionLockedStatus(), is("Unlock"));
         genericHeader.selectActions();
 
         explorePage = new ExplorePage(driver);
