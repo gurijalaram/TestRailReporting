@@ -97,7 +97,7 @@ public class SettingsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"274", "1609", "1602"})
+    @TestRail(testCaseId = {"274", "1609", "1602", "573", "599"})
     @Description("User can change the default Process group")
     public void defaultPG() {
 
