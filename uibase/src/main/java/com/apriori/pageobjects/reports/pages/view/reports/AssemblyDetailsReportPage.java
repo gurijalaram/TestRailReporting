@@ -459,11 +459,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         BigDecimal largerValue = valueOne.max(valueTwo);
         BigDecimal smallerValue = valueOne.min(valueTwo);
         BigDecimal difference = largerValue.subtract(smallerValue);
-        boolean retVal = false;
-        if (difference.compareTo(new BigDecimal("0.00")) >= 0 && difference.compareTo(new BigDecimal("0.03")) <= 0) {
-            retVal = true;
-        }
-        return retVal;
+        return difference.compareTo(new BigDecimal("0.00")) >= 0 && difference.compareTo(new BigDecimal("0.03")) <= 0;
     }
 
     /**
@@ -492,7 +488,11 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return int size of element list
      */
     public int getAmountOfTopLevelExportSets() {
-        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
+        List<WebElement> list =
+                driver.findElements(
+                By.xpath(
+                "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"
+                ));
         return list.size();
     }
 
