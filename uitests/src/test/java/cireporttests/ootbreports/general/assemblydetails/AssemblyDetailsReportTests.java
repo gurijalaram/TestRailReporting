@@ -210,12 +210,12 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Piece Part Cost"),
-            assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
+            assemblyDetailsReport.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Fully Burdened Cost"),
-            assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
+            assemblyDetailsReport.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
@@ -257,12 +257,12 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Piece Part Cost"),
-            assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
+            assemblyDetailsReport.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Fully Burdened Cost"),
-            assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
+            assemblyDetailsReport.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
@@ -304,12 +304,12 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Piece Part Cost"),
-            assemblyDetailsReport.getExpectedPPCGrandTotal(assemblyType, "Piece Part Cost")
+            assemblyDetailsReport.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Fully Burdened Cost"),
-            assemblyDetailsReport.getExpectedFBCGrandTotal(assemblyType, "Fully Burdened Cost")
+            assemblyDetailsReport.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
