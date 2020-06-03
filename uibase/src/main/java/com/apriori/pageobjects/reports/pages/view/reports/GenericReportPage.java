@@ -39,12 +39,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
 
-    @FindBy(xpath = "//div[@id='inputControls']")
-    private WebElement inputControlsBox;
-
-    @FindBy(xpath = "//div[@id='inputControls']//div[contains(text(), 'Input Controls')]")
-    private WebElement inputControlsTitle;
-
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name()='path']")
     private WebElement castingDtcBubble;
 
@@ -108,12 +102,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
 
-    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div")
-    private WebElement currentAssemblyOuterDiv;
-
-    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/div")
-    private WebElement currentAssemblyInputDiv;
-
     @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
     private WebElement currentAssElement;
 
@@ -125,9 +113,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
     private WebElement subAssemblyOption;
-
-    @FindBy(xpath = "//li[@title='A257280C (Initial)']/..")
-    private WebElement assemblyResultList;
 
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement inputBox;
@@ -288,49 +273,16 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
-        //By assemblyToSelect = By.xpath(String.format("//li[@title='%s']/div/a", assemblyName));
-        //pageUtils.javaScriptClick(currentAssemblyElement);
-        //pageUtils.waitFor(2000);
-        //assemblyInput.sendKeys(assemblyName);
-        //pageUtils.waitFor(500);
-        //driver.findElement(assemblyToSelect).click();
-
-        //pageUtils.waitFor(2000);
-        By assemblyToSelect = By.xpath(String.format("//li[@title='%s']/div/a", assemblyName));
-        String inputControlsBoxClasses = inputControlsBox.getAttribute("className");
-        for (int i = 0; i < 2; i++) {
-            if (inputControlsTitle.isDisplayed() &&
-                    inputControlsTitle.isEnabled() &&
-                    !inputControlsBoxClasses.contains("hidden") &&
-                    loadingPopup.getAttribute("className").contains("hidden")) {
-                pageUtils.waitFor(300);
-                pageUtils.javaScriptClick(currentAssemblyElement);
+        currentAssemblyElement.click();
+        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
+        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
+            if (assemblyName.equals("TOP-LEVEL (Initial)")) {
+                selectAssemblyOption(3);
+            } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
+                selectAssemblyOption(2);
             }
-
-            if (currentAssemblyOuterDiv.getAttribute("className").contains("jr-mSingleselectTop")) {
-                if (currentAssemblyElement.getAttribute("className").contains("jr-isOpen")) {
-                    if (currentAssemblyInputDiv.getAttribute("className").contains("jr-isOpen")) {
-                        // wait here?
-                        assemblyInput.sendKeys(assemblyName);
-                        driver.findElement(assemblyToSelect).click();
-                    }
-                }
-            }
-            //pageUtils.waitForElementAndClick(inputControlsTitle);
+            inputBox.sendKeys(Keys.ENTER);
         }
-
-        String fun = "hello";
-
-        // "className", "jr-mSingleselect-input jr jr-isOpen" or "jr-mSingleselect-input jr jr-isFocused"
-        //pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
-        //if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-        //    if (assemblyName.equals("TOP-LEVEL (Initial)")) {
-        //        selectAssemblyOption(3);
-        //    } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
-        //        selectAssemblyOption(2);
-        //    }
-        //    inputBox.sendKeys(Keys.ENTER);
-        //}
         return this;
     }
 
