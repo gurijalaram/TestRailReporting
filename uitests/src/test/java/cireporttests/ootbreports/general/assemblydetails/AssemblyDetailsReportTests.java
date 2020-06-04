@@ -23,6 +23,7 @@ import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -76,7 +77,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
         library = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(new UserCredentials("qa-automation-01@apriori.com", "TrumpetSnakeFridgeToasty18"))
             .navigateToLibraryPage();
 
         AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
@@ -265,7 +266,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
