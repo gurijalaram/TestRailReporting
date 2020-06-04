@@ -7,6 +7,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
 
+import com.apriori.utils.users.UserUtil;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -143,12 +144,19 @@ public class LoginPage extends AdminHeader {
     }
 
     /**
-     * Login to CI Report
+     * Login to CI Admin
      *
-     * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
-    public HomePage login(UserCredentials userCredentials) {
+    public HomePage login() {
+        UserCredentials userCredentials;
+
+        if (Constants.PROP_USER_NAME != null && Constants.PROP_USER_PASSWORD != null) {
+            userCredentials = new UserCredentials(Constants.PROP_USER_NAME, Constants.PROP_USER_PASSWORD);
+        } else {
+            userCredentials = UserUtil.getUser();
+        }
+
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new HomePage(driver);
     }

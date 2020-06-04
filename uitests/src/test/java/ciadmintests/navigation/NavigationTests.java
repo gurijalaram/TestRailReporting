@@ -43,7 +43,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
         scenarioExport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToManageScenarioExport();
 
         assertThat(scenarioExport.isHeaderDisplayed(), is(equalTo(true)));
@@ -55,7 +55,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
         systemDataExport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToManageSystemDataExport();
 
         assertThat(systemDataExport.isHeaderDisplayed(), is(equalTo(true)));
@@ -68,7 +68,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToHelpReportsGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -83,7 +83,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
         ciaUserGuide = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToHelpAdminGuide();
 
         assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
@@ -96,7 +96,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
         ciaUserGuide = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToScenarioExportChapterPage();
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
@@ -111,7 +111,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
         logout = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToAdminLogout();
 
         String headerToCheck = logout.getHeaderToCheck();
@@ -127,7 +127,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
         homePage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToReports();
 
         String urlToCheck = homePage.getUrlToCheck();

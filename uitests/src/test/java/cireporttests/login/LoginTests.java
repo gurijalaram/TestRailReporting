@@ -25,16 +25,18 @@ public class LoginTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
     public void testLogin() {
         loginPage = new LoginPage(driver);
-        homePage = loginPage.login(UserUtil.getUser());
+        homePage = loginPage.login();
 
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2696"})
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
@@ -62,8 +64,8 @@ public class LoginTests extends TestBase {
     @Description("Empty email/password field message displayed")
     public void testEmptyFieldsMessage() {
         String emptyFieldMsg = "Can't be blank";
-        loginPage = new LoginPage(driver);
-        loginPage.failedLogin("", "");
+        loginPage = new LoginPage(driver)
+                .failedLogin("", "");
 
         assertThat(loginPage.getInputErrorMsg(), is(equalTo(emptyFieldMsg)));
     }
@@ -73,8 +75,8 @@ public class LoginTests extends TestBase {
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {
         String invalidEmailMsg = "Invalid";
-        loginPage = new LoginPage(driver);
-        loginPage.failedLogin("a@b", "fakePassword");
+        loginPage = new LoginPage(driver)
+                .failedLogin("a@b", "fakePassword");
 
         assertThat(loginPage.getInputErrorMsg(), is(equalTo(invalidEmailMsg)));
     }

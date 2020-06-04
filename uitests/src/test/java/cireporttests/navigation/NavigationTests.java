@@ -26,7 +26,6 @@ import com.apriori.pageobjects.reports.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -65,7 +64,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToReportUserGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -80,7 +79,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the CI Reports Logout Link works")
     public void testCIReportsLogoutNavigation() {
         logout = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToReportLogout();
 
         String headerToCheck = logout.getHeaderToCheck();
@@ -95,18 +94,19 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Home works (doesn't navigate elsewhere - negative test)")
     public void testHomeNavigation() {
         homePage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToHomePage();
 
         assertThat(homePage.getHomeTitleText(), is(equalTo("Home")));
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2968"})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
         library = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage();
 
         assertThat(library.getLibraryTitleText(), is(equalTo("Library")));
@@ -117,7 +117,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to View Search Results works")
     public void testViewSearchResultsNavigation() {
         searchResults = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToViewSearchResultsPage();
 
         assertThat(searchResults.getSearchResultsTitleText(), is(equalTo("repoSearch")));
@@ -128,7 +128,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to View Repository works")
     public void testViewRepositoryNavigation() {
         repository = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToViewRepositoryPage();
 
         assertThat(repository.getRepositoryTitleText(), is(equalTo("Repository")));
@@ -139,7 +139,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to View Schedules works")
     public void testViewSchedulesNavigation() {
         schedules = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToViewSchedulesPage();
 
         assertThat(schedules.getSchedulesTitleText(), is(equalTo("Schedules")));
@@ -150,7 +150,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to View Messages works")
     public void testViewMessagesNavigation() {
         messages = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToViewMessagesPage();
 
         assertThat(messages.getMessagesTitleText(), is(equalTo("Messages:")));
@@ -161,7 +161,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
         users = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToManageUsersPage();
 
         assertThat(users.getUsersTitleText(), is(equalTo("Users")));
@@ -172,7 +172,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
         roles = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToManageRolesPage();
 
         assertThat(roles.getRolesTitleText(), is(equalTo("Roles")));
@@ -183,7 +183,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Ad Hoc View works")
     public void testCreateAdHocViewNavigation() {
         adHocView = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToCreateAdHocViewPage();
 
         assertThat(adHocView.getAdHocViewTitleText(), is(equalTo("New Ad Hoc View")));
@@ -196,7 +196,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Report works")
     public void testCreateReportNavigation() {
         report = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToCreateReportPage();
 
         assertThat(report.isDialogDisplayed(), is(equalTo(true)));
@@ -208,7 +208,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Dashboard works")
     public void testCreateDashboardNavigation() {
         dashboard = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToCreateDashboardPage();
 
         assertThat(dashboard.getAdHocViewTitleText(), is(equalTo("New Dashboard")));
@@ -219,7 +219,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
         domain = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToCreateDomainPage();
 
         String urlToCheck = domain.getUrlToCheck();
@@ -234,13 +234,14 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {
         dataSource = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToCreateDataSourcePage();
 
         assertThat(dataSource.getDataSourceTitleText(), is(equalTo("New Data Source")));
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2700"})
     @Description("Ensure that the link to the privacy policy works")
     public void testPrivacyPolicyNavigation() {
@@ -259,7 +260,7 @@ public class NavigationTests extends TestBase {
     public void testHelpNavigation() {
         String iframeId = "topic";
         helpPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToHelpPage()
             .switchToIFrameHelpPage(iframeId)
             .ensurePageIsLoaded();
