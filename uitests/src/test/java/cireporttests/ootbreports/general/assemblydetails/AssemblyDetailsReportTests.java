@@ -27,6 +27,7 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.sun.tools.jxc.ap.Const;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -77,7 +78,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
         library = new LoginPage(driver)
-            .login(new UserCredentials("qa-automation-01@apriori.com", "TrumpetSnakeFridgeToasty18"))
+            .login(new UserCredentials(Constants.PROP_USER_NAME, Constants.PROP_USER_PASSWORD))
             .navigateToLibraryPage();
 
         AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
