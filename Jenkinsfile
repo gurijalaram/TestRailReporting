@@ -20,7 +20,7 @@ pipeline {
     }
 
     agent {
-        label "loki"
+        label "automation"
     }
 
     stages {
@@ -129,7 +129,6 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
-            //sh "docker-compose down --remove-orphans"
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
