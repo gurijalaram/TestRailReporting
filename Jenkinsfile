@@ -99,7 +99,6 @@ pipeline {
                 script {
                     if ("${params.TEST_MODE}" == "GRID") {
                         sh """
-                            docker ps | grep "hub" || \
                              docker-compose up -d
                         """
                     }
@@ -129,7 +128,7 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
-            //sh "docker-compose down --remove-orphans"
+            sh "docker-compose down --remove-orphans"
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
