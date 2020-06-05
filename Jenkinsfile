@@ -87,6 +87,7 @@ pipeline {
             steps {
                 echo "Running.."
                 sh """
+                    docker container inspect ${buildInfo.name}-build-${timeStamp} || \
                     docker run \
                         -itd \
                         --name ${buildInfo.name}-build-${timeStamp} \
