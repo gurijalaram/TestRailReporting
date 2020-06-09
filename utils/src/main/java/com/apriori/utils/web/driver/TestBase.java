@@ -1,5 +1,6 @@
 package com.apriori.utils.web.driver;
 
+import com.apriori.utils.TestHelper;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.runner.ConcurrentTestRunner;
 import com.apriori.utils.web.rules.TestRailRule;
@@ -15,8 +16,6 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import java.io.File;
@@ -25,22 +24,12 @@ import java.io.File;
  * @author kpatel
  */
 @RunWith(ConcurrentTestRunner.class)
-public class TestBase {
+public class TestBase extends TestHelper {
 
-    protected static final Logger logger = LoggerFactory.getLogger(TestBase.class);
-
-    @Rule
-    public TestName name = new TestName();
-    @Rule
-    public MyTestWatcher watchman = new MyTestWatcher();
     @Rule
     public TestRule testRule = new TestRule();
-    @Rule
-    public TestRailRule testRailRule = new TestRailRule();
 
     protected String browser;
-    protected TestMode mode;
-    protected TestType type;
     protected String locale;
     private static Proxy seleniumProxy;
 
@@ -50,9 +39,7 @@ public class TestBase {
     protected WebDriver driver = null;
 
     public TestBase() {
-        mode = getTestMode(System.getProperty("mode"));
         browser = getBrowserType(System.getProperty("browser"));
-        type = getTestType(System.getProperty("type"));
         locale = System.getProperty("locale");
 
         logger.debug("Mode from property: " + System.getProperty("mode"));
@@ -72,14 +59,14 @@ public class TestBase {
 
         if (browser.equalsIgnoreCase("chrome")) {
             driver = new EventFiringWebDriver(df.getDriver());
-            logger.info("CONSOLE LOG LEVEL: " + Constants.consoleLogLevel.getName());
+            TestHelper.logger.info("CONSOLE LOG LEVEL: " + Constants.consoleLogLevel.getName());
             ConsoleLogHandler consoleLogHandler = new ConsoleLogHandler(Constants.consoleLogLevel);
             ((EventFiringWebDriver) driver).register(consoleLogHandler);
         }
 
         String os = System.getProperty("os.name");
-        logger.info("Current Operating System:" + os);
-        logger.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth());
+        TestHelper.logger.info("Current Operating System:" + os);
+        TestHelper.logger.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth());
 
         if (!df.isHeadless() && mode.equals(TestMode.LOCAL) && (os.toLowerCase().contains("linux") || os.toLowerCase().contains("mac"))) {
             // Todo 28/02/2020 - Commented out because this is causing headless on linux to crash with error message 'No X11 display...' this will be reworked in the future
@@ -88,16 +75,16 @@ public class TestBase {
             driver.manage().window().maximize();
         }
 
-        logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
+        TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
         driver.manage().deleteAllCookies();
-        logger.debug("Browser window size: " + driver.manage().window().getSize());
+        TestHelper.logger.debug("Browser window size: " + driver.manage().window().getSize());
 
 
         MDC.put("methodName", this.getClass().getSimpleName() + "." + name.getMethodName());
         if (type.equals(TestType.EXPORT)) {
-            logger.debug("Driver for " + this.getClass().getSimpleName() + "." + name.getMethodName() + " started: " + driver.hashCode() + " with download path=" + downloadPath);
+            TestHelper.logger.debug("Driver for " + this.getClass().getSimpleName() + "." + name.getMethodName() + " started: " + driver.hashCode() + " with download path=" + downloadPath);
         } else {
-            logger.debug("Driver for " + this.getClass().getSimpleName() + "." + name.getMethodName() + " started: " + driver.hashCode());
+            TestHelper.logger.debug("Driver for " + this.getClass().getSimpleName() + "." + name.getMethodName() + " started: " + driver.hashCode());
         }
 
     }
@@ -111,62 +98,6 @@ public class TestBase {
         return driver;
     }
 
-    public TestMode getMode() {
-        return mode;
-    }
-
-    private TestMode getTestMode(String testMode) {
-        TestMode result;
-
-        if (testMode == null || testMode.isEmpty()) {
-            logger.info("Test mode was null. Setting LOCAL mode.");
-            return TestMode.LOCAL;
-        }
-
-        switch (testMode) {
-            case "QA":
-                result = TestMode.QA;
-                break;
-            case "LOCAL":
-                result = TestMode.LOCAL;
-                break;
-            case "EXPORT":
-                result = TestMode.EXPORT;
-                break;
-            case "GRID":
-                result = TestMode.GRID;
-                break;
-            default:
-                throw new IllegalStateException("testMode could not be identified");
-        }
-
-        logger.info("Test mode set to: " + result.toString());
-        return result;
-    }
-
-    private TestType getTestType(String testType) {
-        TestType type;
-        if (StringUtils.isEmpty(testType)) {
-            logger.debug("Test Type was not defined, assuming it to be :" + TestType.UI);
-            return TestType.UI;
-        }
-        switch (testType) {
-            case "EXPORT":
-                type = TestType.EXPORT;
-                break;
-            case "API":
-                type = TestType.API;
-                break;
-            default:
-                type = TestType.UI;
-                break;
-        }
-        return type;
-    }
-
-    public TestType getType() {
-        return type;
-    }
 
     private String getBrowserType(String browserProperty) {
         if (browserProperty == null || browserProperty.isEmpty()) {

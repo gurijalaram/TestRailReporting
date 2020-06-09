@@ -108,7 +108,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Testing DTC Plastic Moulding Edge Radius Internal")
     public void testMouldingEdgeInternal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart");
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge radius.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
@@ -126,7 +126,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Testing DTC Plastic Moulding Edge Radius External")
     public void testMouldingEdgeExternal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge Radius.CATPart");
+        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge radius.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
@@ -154,8 +154,8 @@ public class DTCPlasticMouldingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
         guidancePage = evaluatePage.openProcessDetails()
             .selectRoutingsButton()

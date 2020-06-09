@@ -60,7 +60,7 @@ public class CostAllCadTests extends TestBase {
             .expandDropdown("Piece Part Cost")
             .expandDropdown("Total Variable Costs");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("14.64"));
+        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("16.07"));
         assertThat(costDetailsPage.getCostContribution("Labor "), containsString("4.94"));
         assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.32"));
     }
@@ -259,7 +259,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2317"})
+    @TestRail(testCaseId = {"2316", "2317"})
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {
 
@@ -268,6 +268,20 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
             .failedUploadFile("<script>alert(document.cookie)</script>", resourceFile);
+
+        assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"580"})
+    @Description("Failure to create a new scenario that has a blank scenario name or is named using unsupported characters")
+    public void failedBlankScenarioName() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+
+        loginPage = new CIDLoginPage(driver);
+        warningPage = loginPage.login(UserUtil.getUser())
+            .failedUploadFile("", resourceFile);
 
         assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
     }

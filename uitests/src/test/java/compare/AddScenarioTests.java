@@ -41,7 +41,7 @@ public class AddScenarioTests extends TestBase {
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.catpart");
+        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -50,8 +50,8 @@ public class AddScenarioTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("High"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new GenerateStringUtil().generateComparisonName())
             .save(ComparePage.class)

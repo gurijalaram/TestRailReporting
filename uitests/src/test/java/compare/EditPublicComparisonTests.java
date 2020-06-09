@@ -122,6 +122,7 @@ public class EditPublicComparisonTests extends TestBase {
 
     @Test
     @Issue("BA-999")
+    @TestRail(testCaseId = {"2279"})
     @Description("Test you can change the basis of your comparison")
     public void testChangeComparisonBasis() {
 

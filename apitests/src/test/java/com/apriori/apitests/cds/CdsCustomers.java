@@ -29,6 +29,7 @@ public class CdsCustomers extends CdsTestUtil {
         url = ServiceConnector.getServiceUrl();
     }
 
+
     @Test
     @TestRail(testCaseId = "3252")
     @Description("API returns a list of all the available customers in the CDS DB")

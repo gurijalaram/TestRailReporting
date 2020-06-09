@@ -36,6 +36,7 @@ public class PartCosting {
     private Double sgaCost;
     private Double stockPropertyLength;
     private Double stockPropertyThickness;
+    private Double stockPropertyHeight;
     private Double stockPropertyWidth;
     private Double stripNestingPitch;
     private Double toolingCostPerPart;
@@ -82,6 +83,54 @@ public class PartCosting {
     private Double cycleTime;
     private String dfmRisk;
     private Double directOverheadCost;
+    private Double stockPropertyInsideDia;
+    private Double stockPropertyOutsideDia;
+    private Double stockPropertyWallThickness;
+    private String virtualMaterialStockName;
+
+    public String getVirtualMaterialStockName() {
+        return virtualMaterialStockName;
+    }
+
+    public PartCosting setVirtualMaterialStockName(String virtualMaterialStockName) {
+        this.virtualMaterialStockName = virtualMaterialStockName;
+        return this;
+    }
+
+    public Double getStockPropertyInsideDia() {
+        return stockPropertyInsideDia;
+    }
+
+    public PartCosting setStockPropertyInsideDia(Double stockPropertyInsideDia) {
+        this.stockPropertyInsideDia = stockPropertyInsideDia;
+        return this;
+    }
+
+    public Double getStockPropertyOutsideDia() {
+        return stockPropertyOutsideDia;
+    }
+
+    public PartCosting setStockPropertyOutsideDia(Double stockPropertyOutsideDia) {
+        this.stockPropertyOutsideDia = stockPropertyOutsideDia;
+        return this;
+    }
+
+    public Double getStockPropertyWallThickness() {
+        return stockPropertyWallThickness;
+    }
+
+    public PartCosting setStockPropertyWallThickness(Double stockPropertyWallThickness) {
+        this.stockPropertyWallThickness = stockPropertyWallThickness;
+        return this;
+    }
+
+    public Double getStockPropertyHeight() {
+        return stockPropertyHeight;
+    }
+
+    public void setStockPropertyHeight(Double stockPropertyHeight) {
+        this.stockPropertyHeight = stockPropertyHeight;
+    }
 
     public Double getAdditionalDirectCosts() {
         return additionalDirectCosts;

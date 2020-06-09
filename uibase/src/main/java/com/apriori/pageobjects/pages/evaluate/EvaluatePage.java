@@ -14,6 +14,7 @@ import com.apriori.utils.PageUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -200,6 +201,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-comp='twoModelProdInfo'] [data-ap-field='utilization']")
     private WebElement twoModelUtilPercentage;
 
+    @FindBy(xpath = "//div[contains(text(),'Render')]")
+    private WebElement renderButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -317,8 +321,17 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public DesignGuidancePage openDesignGuidance() {
+        waitRenderSelected();
         pageUtils.waitForElementAndClick(guidanceDetails);
         return new DesignGuidancePage(driver);
+    }
+
+    /**
+     * Waits for the render to be selected
+     */
+    private void waitRenderSelected() {
+        pageUtils.waitForElementAndClick(renderButton);
+        pageUtils.waitForElementToAppear(By.cssSelector("button[data-ap-comp='solidViewerToolbarButton'][class='selected']"));
     }
 
     /**
@@ -741,19 +754,29 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return dfm risk score
      */
-    public String getDfmRisk() {
-        pageUtils.waitForElementAppear(dfmRisk);
-        return dfmRisk.getText();
+    public boolean isDfmRisk(String risk) {
+        By dfmRisk = By.xpath(String.format("//td[.='%s']", risk));
+        return pageUtils.waitForElementToAppear(dfmRisk).isDisplayed();
     }
 
     /**
-     * Gets the dfm risk Icon
+     * Checks if DFM Risk Icon is displayed
      *
      * @return Risk Level
      */
-    public String getDFMRiskIcon() {
-        pageUtils.waitForElementToAppear(dfmRiskIcon);
-        return dfmRiskIcon.getAttribute("outerHTML");
+    public boolean isDFMRiskIconDisplayed() {
+        return pageUtils.isElementDisplayed(dfmRiskIcon);
+
+    }
+
+    /**
+     * Checks the dfm risk Icon
+     *
+     * @return Risk Level
+     */
+    public boolean isDFMRiskIcon(String icon) {
+        By dfmRiskIcon = By.xpath(String.format("//span[contains(@class,'%s')]", icon));
+        return pageUtils.waitForElementToAppear(dfmRiskIcon).isDisplayed();
     }
 
     /**

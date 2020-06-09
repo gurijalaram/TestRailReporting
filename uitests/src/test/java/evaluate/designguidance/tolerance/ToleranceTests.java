@@ -16,6 +16,7 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceValueSettingsPage;
+import com.apriori.pageobjects.toolbars.PageHeader;
 import com.apriori.utils.APIValue;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
@@ -75,7 +76,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -92,8 +93,8 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-critical-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
 
         toleranceEditPage = new EvaluatePage(driver).openDesignGuidance()
             .openTolerancesTab()
@@ -119,7 +120,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -153,7 +154,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -186,7 +187,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -218,7 +219,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -277,8 +278,8 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
         evaluatePage = new EvaluatePage(driver);
         tolerancePage = evaluatePage.openDesignGuidance()
@@ -584,7 +585,7 @@ public class ToleranceTests extends TestBase {
 
     @Test
     @Issue("AP-59432")
-    @TestRail(testCaseId = {"1289"})
+    @TestRail(testCaseId = {"1289", "728"})
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
 
@@ -672,8 +673,8 @@ public class ToleranceTests extends TestBase {
             .costScenario(3);
 
         assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("High"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         new EvaluatePage(driver).publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -704,5 +705,33 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
 
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1300"})
+    @Description("Ensure tolerance preferences are maintained for the user")
+    public void tolerancesMaintained() {
+
+        UserCredentials testUser1 = UserUtil.getUser();
+        currentUser = testUser1;
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+
+        new CIDLoginPage(driver).login(testUser1)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        new SettingsPage(driver).save(ExplorePage.class);
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+
+        new PageHeader(driver).openAdminDropdown()
+            .selectLogOut();
+
+        cidLoginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = cidLoginPage.login(testUser1)
+            .openSettings()
+            .openTolerancesTab();
+
+        assertThat(toleranceSettingsPage.isCADSelected("checked"), is("true"));
     }
 }

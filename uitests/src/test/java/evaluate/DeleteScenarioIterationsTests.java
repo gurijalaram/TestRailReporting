@@ -36,11 +36,11 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"588", "394", "581", "395"})
+    @TestRail(testCaseId = {"588", "394", "581", "395", "589"})
     @Description("Test a public scenario can be deleted from the evaluate page")
     public void testDeletePublicScenarioIteration() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
+        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -75,7 +75,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @Description("Test a private scenario can be deleted from the evaluate page")
     public void testDeletePrivateScenarioIteration() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("casting.prt");
+        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);

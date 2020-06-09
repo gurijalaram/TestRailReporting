@@ -3,9 +3,11 @@ package com.apriori.apitests.cis;
 import com.apriori.apibase.services.cis.CisUtils;
 import com.apriori.apibase.services.cis.apicalls.BatchPartResources;
 import com.apriori.apibase.services.cis.apicalls.BatchResources;
+import com.apriori.apibase.services.cis.apicalls.PartResources;
 import com.apriori.apibase.services.cis.objects.Batch;
 import com.apriori.apibase.services.cis.objects.Part;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.json.utils.JsonManager;
@@ -18,13 +20,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public class CisCostingScenario {
+public class CisCostingScenario extends TestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CisCostingScenario.class);
 
     @Test
-    @TestRail(testCaseId = "4275")
-    @Description("API returns a list of Batches in the CIS DB")
+    @TestRail(testCaseId = {"4278", "4284", "4280", "4177"})
+    @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +
+            "process to complete. Then retrieve costing results.")
     public void costPart() {
         Integer defaultTimeout = 18;
 
@@ -42,7 +45,7 @@ public class CisCostingScenario {
         // create batch part
         NewPartRequest newPartRequest =
                 (NewPartRequest)JsonManager.serializeJsonFromFile(Constants.getApitestsBasePath() +
-                "/apitests/cis/testdata/CreatePartData.json", NewPartRequest.class);
+                        "/apitests/cis/testdata/CreatePartData.json", NewPartRequest.class);
         Part batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
 
         String partIdentity = "";
@@ -89,6 +92,8 @@ public class CisCostingScenario {
             count += 1;
         }
         Assert.assertEquals(true, isBatchComplete);
+
+        PartResources.getPartCosting(partIdentity);
     }
 
     private Boolean pollState(Object obj, Class klass) {
