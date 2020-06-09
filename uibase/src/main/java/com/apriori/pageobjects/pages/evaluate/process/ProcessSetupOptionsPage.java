@@ -917,9 +917,9 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
      *
      * @return String
      */
-    public boolean getCadModelSensitivity(String text) {
+    public String getCadModelSensitivity() {
         pageUtils.waitForElementToAppear(overrideSensitivityInput);
-        return pageUtils.checkElementAttribute(overrideSensitivityInput, "title", text);
+        return overrideSensitivityInput.getAttribute("title");
     }
 
     /**

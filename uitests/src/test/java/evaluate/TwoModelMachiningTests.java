@@ -81,7 +81,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessChart("Source Component")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.getCadModelSensitivity("42"), is(true));
+        assertThat(processSetupOptionsPage.getCadModelSensitivity(), is("42"));
     }
 
     @Test
