@@ -118,10 +118,10 @@ public class TolerancePage extends EvaluatePanelToolbar {
     /**
      * Gets the button as a webelement
      *
-     * @return the button as webelement
+     * @return string
      */
-    public WebElement getEditButton() {
-        return editToleranceButton;
+    public String getEditButtonAttribute() {
+        return pageUtils.waitForElementToAppear(editToleranceButton).getAttribute("disabled");
     }
 
     /**

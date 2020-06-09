@@ -355,6 +355,14 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
+     * Gets the secondary process attribute
+     * @return string
+     */
+    public String getSecondaryProcessAttribute() {
+        return pageUtils.waitForElementToAppear(secondaryProcessButton).getAttribute("disabled");
+    }
+
+    /**
      * Opens the material composition dialog
      *
      * @return new page object
@@ -525,6 +533,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Returns fully burdened cost value
+     *
      * @return BigDecimal - Fully Burdened Cost (rounded down - thus ROUND_FLOOR)
      */
     public BigDecimal getBurdenedCostValue() {
