@@ -21,6 +21,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
 
@@ -40,19 +41,19 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "2024")
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
         repository = new LoginPage(driver)
             .login(UserUtil.getUser())
             .navigateToViewRepositoryPage()
-            .navigateToMachiningDTCFolder()
-            .waitForMachiningDTCReportsToAppear();
+            .navigateToMachiningDTCFolder();
+            //.waitForMachiningDTCReportsToAppear();
 
-        assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
 
         assertThat(reportName, is(equalTo(repository.getReportName(reportName))));
+        assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
     }
 
     @Test
