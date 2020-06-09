@@ -653,7 +653,8 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
      * @return string
      */
     public String getFractionPaintedAttribute() {
-        return getElementAttribute(fractionPaintedInput);
+        pageUtils.waitForElementToAppear(fractionPaintedInput);
+        return fractionPaintedInput.getAttribute("disabled");
     }
 
     /**
@@ -718,14 +719,6 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Gets the attribute of the button
-     * @return string
-     */
-    public String getMaskInputAttribute() {
-        return getElementAttribute(maskFeaturesInput);
-    }
-
-    /**
      * Selects production batch
      *
      * @return current page object
@@ -763,14 +756,6 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     public ProcessSetupOptionsPage setSpecifyPainted(String text) {
         setInput(specifyPaintedInput, text);
         return this;
-    }
-
-    /**
-     * Gets the attribute of the button
-     * @return string
-     */
-    public String getPaintBatchAttribute() {
-        return getElementAttribute(specifyPaintedInput);
     }
 
     /**
@@ -917,14 +902,6 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Gets the attribute of the button
-     * @return string
-     */
-    public String getComponentsPerLoadAttribute() {
-        return getElementAttribute(componentsPerLoadInput);
-    }
-
-    /**
      * Checks components per load
      *
      * @param text - the text
@@ -963,9 +940,5 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     public ProcessSetupOptionsPage setCadModelSensitivity(String text) {
         setInput(overrideSensitivityInput, text);
         return this;
-    }
-
-    private String getElementAttribute(WebElement element) {
-        return pageUtils.waitForElementToAppear(element).getAttribute("disabled");
     }
 }
