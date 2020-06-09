@@ -50,7 +50,7 @@ public class DecimalPlaceTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.SIX.getDecimalPlaces())
             .save(ExplorePage.class)
@@ -77,7 +77,7 @@ public class DecimalPlaceTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
             .save(ExplorePage.class)
@@ -85,13 +85,13 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("0.701755"), is(true));
-        assertThat(evaluatePage.isUtilization("95.000000"), is(true));
-        assertThat(evaluatePage.getCycleTimeCount(), is("92.698712"));
-        assertThat(evaluatePage.getMaterialCost(), is("2.227365"));
-        assertThat(evaluatePage.getPartCost(), is("6.513465"));
-        assertThat(evaluatePage.getBurdenedCost("8.377654"), is(true));
-        assertThat(evaluatePage.getCapitalInvestment(), is("51,265.177987"));
+        assertThat(evaluatePage.isFinishMass("5"), is(true));
+        assertThat(evaluatePage.isUtilization("81"), is(true));
+        assertThat(evaluatePage.getCycleTimeCount(), is("111"));
+        assertThat(evaluatePage.getMaterialCost(), is("16"));
+        assertThat(evaluatePage.getPartCost(), is("20"));
+        assertThat(evaluatePage.getBurdenedCost("20"), is(true));
+        assertThat(evaluatePage.getCapitalInvestment(), is("0"));
     }
 
     @Category(SmokeTests.class)
@@ -105,7 +105,7 @@ public class DecimalPlaceTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
             .save(ExplorePage.class)
@@ -113,25 +113,25 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("0.701755"), is(true));
-        assertThat(evaluatePage.isUtilization("95.000000"), is(true));
-        assertThat(evaluatePage.getCycleTimeCount(), is("92.698712"));
-        assertThat(evaluatePage.getMaterialCost(), is("2.227365"));
-        assertThat(evaluatePage.getPartCost(), is("6.513465"));
-        assertThat(evaluatePage.getBurdenedCost("8.377654"), is(true));
-        assertThat(evaluatePage.getCapitalInvestment(), is("51,265.177987"));
+        assertThat(evaluatePage.isFinishMass("5.3095"), is(true));
+        assertThat(evaluatePage.isUtilization("81.1637"), is(true));
+        assertThat(evaluatePage.getCycleTimeCount(), is("110.8200"));
+        assertThat(evaluatePage.getMaterialCost(), is("16.1514"));
+        assertThat(evaluatePage.getPartCost(), is("19.7343"));
+        assertThat(evaluatePage.getBurdenedCost("19.7343"), is(true));
+        assertThat(evaluatePage.getCapitalInvestment(), is("0.0000"));
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
-            .save(ExplorePage.class);
+            .changeDecimalPlaces(DecimalPlaceEnum.ONE.getDecimalPlaces())
+            .save(EvaluatePage.class);
 
-        assertThat(evaluatePage.isFinishMass("0.701755"), is(true));
-        assertThat(evaluatePage.isUtilization("95.000000"), is(true));
-        assertThat(evaluatePage.getCycleTimeCount(), is("92.698712"));
-        assertThat(evaluatePage.getMaterialCost(), is("2.227365"));
-        assertThat(evaluatePage.getPartCost(), is("6.513465"));
-        assertThat(evaluatePage.getBurdenedCost("8.377654"), is(true));
-        assertThat(evaluatePage.getCapitalInvestment(), is("51,265.177987"));
+        assertThat(evaluatePage.isFinishMass("5.3"), is(true));
+        assertThat(evaluatePage.isUtilization("81.2"), is(true));
+        assertThat(evaluatePage.getCycleTimeCount(), is("110.8"));
+        assertThat(evaluatePage.getMaterialCost(), is("16.2"));
+        assertThat(evaluatePage.getPartCost(), is("19.7"));
+        assertThat(evaluatePage.getBurdenedCost("19.7"), is(true));
+        assertThat(evaluatePage.getCapitalInvestment(), is("0.0"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -145,7 +145,7 @@ public class DecimalPlaceTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
             .save(ExplorePage.class)
@@ -153,23 +153,23 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("0.701755"), is(true));
-        assertThat(evaluatePage.isUtilization("95.000000"), is(true));
-        assertThat(evaluatePage.getCycleTimeCount(), is("92.698712"));
-        assertThat(evaluatePage.getMaterialCost(), is("2.227365"));
-        assertThat(evaluatePage.getPartCost(), is("6.513465"));
-        assertThat(evaluatePage.getBurdenedCost("8.377654"), is(true));
-        assertThat(evaluatePage.getCapitalInvestment(), is("51,265.177987"));
+        assertThat(evaluatePage.isFinishMass("5.30946"), is(true));
+        assertThat(evaluatePage.isUtilization("81.16369"), is(true));
+        assertThat(evaluatePage.getCycleTimeCount(), is("110.82000"));
+        assertThat(evaluatePage.getMaterialCost(), is("16.15138"));
+        assertThat(evaluatePage.getPartCost(), is("19.73433"));
+        assertThat(evaluatePage.getBurdenedCost("19.73433"), is(true));
+        assertThat(evaluatePage.getCapitalInvestment(), is("0.00000"));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("0.701755"), is(true));
-        assertThat(evaluatePage.isUtilization("95.000000"), is(true));
-        assertThat(evaluatePage.getCycleTimeCount(), is("92.698712"));
-        assertThat(evaluatePage.getMaterialCost(), is("2.227365"));
-        assertThat(evaluatePage.getPartCost(), is("6.513465"));
-        assertThat(evaluatePage.getBurdenedCost("8.377654"), is(true));
-        assertThat(evaluatePage.getCapitalInvestment(), is("51,265.177987"));
+        assertThat(evaluatePage.isFinishMass("5.30946"), is(true));
+        assertThat(evaluatePage.isUtilization("81.16369"), is(true));
+        assertThat(evaluatePage.getCycleTimeCount(), is("110.82000"));
+        assertThat(evaluatePage.getMaterialCost(), is("16.15138"));
+        assertThat(evaluatePage.getPartCost(), is("19.55601"));
+        assertThat(evaluatePage.getBurdenedCost("19.55601"), is(true));
+        assertThat(evaluatePage.getCapitalInvestment(), is("0.00000"));
     }
 }
