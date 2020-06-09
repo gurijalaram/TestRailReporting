@@ -50,22 +50,4 @@ public class HomePage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(createButton);
         return createButton.isDisplayed();
     }
-
-    /**
-     * Gets current URL of new tab
-     *
-     * @return String
-     */
-    public String getCurrentUrl() {
-        return pageUtils.getTabTwoUrl();
-    }
-
-    /**
-     * Gets count of open tabs
-     *
-     * @return int
-     */
-    public int getTabCount() {
-        return pageUtils.getCountOfOpenTabs();
-    }
 }
