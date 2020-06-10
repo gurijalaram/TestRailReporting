@@ -14,6 +14,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -44,7 +45,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
         repository = new LoginPage(driver)
-            .login()
+            .login(UserUtil.getUser())
             .navigateToViewRepositoryPage()
             .navigateToMachiningDTCFolder()
             .waitForMachiningDTCReportsToAppear();
@@ -59,7 +60,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
         library = new LoginPage(driver)
-            .login()
+            .login(UserUtil.getUser())
             .navigateToLibraryPage();
 
         assertThat(reportName, is(equalTo(library.getReportName(reportName))));
@@ -70,7 +71,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
         homePage = new LoginPage(driver)
-            .login();
+            .login(UserUtil.getUser());
 
         searchResults = new ViewSearchResultsPage(driver);
         homePage.searchForReport(reportName);
@@ -87,7 +88,7 @@ public class MachiningDtcReportTests extends TestBase {
         BigDecimal usdGrandTotal;
 
         genericReportPage = new LoginPage(driver)
-            .login()
+            .login(UserUtil.getUser())
             .navigateToLibraryPage()
             .navigateToReport(reportName)
             .waitForInputControlsLoad()
@@ -115,7 +116,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
         genericReportPage = new LoginPage(driver)
-                .login()
+                .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(reportName)
                 .waitForInputControlsLoad();
@@ -136,7 +137,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
         genericReportPage = new LoginPage(driver)
-                .login()
+                .login(UserUtil.getUser())
                 .navigateToLibraryPage()
                 .navigateToReport(reportName)
                 .waitForInputControlsLoad();
