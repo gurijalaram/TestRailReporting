@@ -14,7 +14,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -59,7 +58,6 @@ public class RevertScenarioTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59845")
     @Category(SmokeTests.class)
     @Description("Test revert unsaved scenario")
     @TestRail(testCaseId = {"586"})

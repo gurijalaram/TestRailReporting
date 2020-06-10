@@ -76,7 +76,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-893")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"554", "555"})
     @Description("Validate status and cost maturity columns can be added")
