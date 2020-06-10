@@ -1,6 +1,6 @@
-package com.apriori.apibase.services.cis.objects.requests;
+package com.apriori.cis.entity.request;
 
-import com.apriori.apibase.services.cis.objects.CostingPreferences;
+import com.apriori.cis.entity.response.CostingPreferences;
 import com.apriori.utils.http.enums.Schema;
 
 @Schema(location = "CisCostingPreferencesSchema.json")

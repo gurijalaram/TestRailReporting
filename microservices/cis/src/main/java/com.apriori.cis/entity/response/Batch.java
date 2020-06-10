@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cis.objects;
+package com.apriori.cis.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
