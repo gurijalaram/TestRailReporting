@@ -3,6 +3,7 @@ package evaluate;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -121,7 +122,7 @@ public class AssemblyUploadTests extends TestBase {
         assertThat(evaluatePage.getTotalComponents(), is("22"));
         assertThat(evaluatePage.getUniqueComponents(), is("10"));
         assertThat(evaluatePage.getUncostedUnique(), is("0"));
-        assertThat(evaluatePage.getFinishMass(), is("0.80"));
+        assertThat(evaluatePage.getFinishMass(), is(closeTo(0.80, 1)));
         assertThat(evaluatePage.getTargetMass(), is("0.00"));
     }
 

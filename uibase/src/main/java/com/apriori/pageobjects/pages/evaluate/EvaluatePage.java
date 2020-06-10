@@ -667,12 +667,12 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the value of finish mass
      *
-     * @return string
+     * @return double
      */
-    public String getFinishMass() {
+    public double getFinishMass() {
         By finishMass = By.cssSelector("td[data-ap-field='finishMass']");
         pageUtils.waitForElementToAppear(finishMass);
-        return driver.findElement(finishMass).getAttribute("innerText");
+        return Double.parseDouble(driver.findElement(finishMass).getAttribute("innerText"));
     }
 
     /**
