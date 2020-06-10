@@ -836,7 +836,7 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return Utilization Percentage
      */
-    public String getTwoModelUtilizationPercentage() {
+    public double getTwoModelUtilizationPercentage() {
         return getUtilPercentage(twoModelUtilPercentage);
     }
 
@@ -846,12 +846,12 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return Utilization Percentage
      */
-    public String getUtilizationPercentage() {
+    public double getUtilizationPercentage() {
         return getUtilPercentage(utilizationPercentage);
     }
 
-    private String getUtilPercentage(WebElement utilPercentage) {
+    private double getUtilPercentage(WebElement utilPercentage) {
         pageUtils.waitForElementAppear(utilPercentage);
-        return utilPercentage.getText();
+        return Double.parseDouble(utilPercentage.getText());
     }
 }

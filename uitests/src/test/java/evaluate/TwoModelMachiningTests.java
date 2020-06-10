@@ -141,7 +141,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getUtilizationPercentage(), is("96.98"));
+        assertThat(evaluatePage.getUtilizationPercentage(), is(closeTo(96.98, 1)));
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(12.88, 1)));
         assertThat(evaluatePage.getFinishMass(), is(closeTo(2.33, 1)));
 
@@ -154,7 +154,7 @@ public class TwoModelMachiningTests extends TestBase {
             .apply(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is("82.71"));
+        assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is(closeTo(82.71, 1)));
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(16.69, 1)));
         assertThat(evaluatePage.getFinishMass(), is(closeTo(1.93, 1)));
 
@@ -167,7 +167,7 @@ public class TwoModelMachiningTests extends TestBase {
             .apply(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is("83.78"));
+        assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is(closeTo(83.78, 1)));
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(19.99, 1)));
         assertThat(evaluatePage.getFinishMass(), is(closeTo(1.62, 1)));
     }
