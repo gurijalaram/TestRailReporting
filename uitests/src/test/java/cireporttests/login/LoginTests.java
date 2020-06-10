@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.pageobjects.reports.pages.login.LoginPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -31,7 +30,7 @@ public class LoginTests extends TestBase {
     @Description("Successful login to CI Report")
     public void testLogin() {
         loginPage = new LoginPage(driver);
-        homePage = loginPage.login(UserUtil.getUser());
+        homePage = loginPage.login();
 
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }

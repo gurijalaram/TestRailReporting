@@ -48,12 +48,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[text()=\"Fully Burdened Cost : \"]/following-sibling::*[1]")
     private WebElement tooltipFbcElement;
 
-    @FindBy(xpath = "//div[@id='exportSetName']//input[contains(@class, 'jr-mInput-search')]")
-    protected WebElement exportSetSearchInput;
-
-    @FindBy(xpath = "//div[@id='inputControls']//div[contains(text(), 'Input Controls')]")
-    private WebElement inputControlsTitle;
-
     @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
     private WebElement partNameCastingDtcReport;
 
@@ -99,11 +93,11 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
     protected WebElement latestExportDateInput;
 
+    @FindBy(xpath = "//div[@id='exportSetName']//input[contains(@class, 'jr-mInput-search')]")
+    protected WebElement exportSetSearchInput;
+
     @FindBy(xpath = "//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a")
     protected WebElement exportSetToSelect;
-
-    @FindBy(xpath = "//div[@id='inputControls']")
-    private WebElement inputControlsBox;
 
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
@@ -153,9 +147,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "save")
     private WebElement saveButton;
 
-    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div")
-    private WebElement currentAssemblyOuterDiv;
-
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
@@ -170,9 +161,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr']")
     private WebElement exportSetList;
-
-    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/div")
-    private WebElement currentAssemblyInputDiv;
 
     @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Invert']/a")
     private WebElement exportSetInvert;
@@ -265,7 +253,6 @@ public class GenericReportPage extends ReportsPageHeader {
             driver.findElement(exportSetToSelect).click();
             exportSetSearchInput.sendKeys(Keys.ENTER);
         }
-        //pageUtils.waitForElementAndClick(exportSetMap.get(exportSet));
         return this;
     }
 
@@ -287,7 +274,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        /*pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
+        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             if (assemblyName.equals("TOP-LEVEL (Initial)")) {
                 selectAssemblyOption(3);
@@ -295,26 +282,6 @@ public class GenericReportPage extends ReportsPageHeader {
                 selectAssemblyOption(2);
             }
             inputBox.sendKeys(Keys.ENTER);
-        }*/
-        By assemblyToSelect = By.xpath(String.format("//li[@title='%s']/div/a", assemblyName));
-        String inputControlsBoxClasses = inputControlsBox.getAttribute("className");
-        if (inputControlsTitle.isDisplayed() &&
-                inputControlsTitle.isEnabled() &&
-                !inputControlsBoxClasses.contains("hidden") &&
-                loadingPopup.getAttribute("className").contains("hidden")) {
-            pageUtils.waitFor(300);
-            pageUtils.javaScriptClick(currentAssemblyElement);
-        }
-
-        if (currentAssemblyOuterDiv.getAttribute("className").contains("jr-mSingleselectTop")) {
-            if (currentAssemblyElement.getAttribute("className").contains("jr-isOpen")) {
-                if (currentAssemblyInputDiv.getAttribute("className").contains("jr-isOpen")) {
-                    // wait here?
-                    pageUtils.waitFor(2000);
-                    assemblyInput.sendKeys(assemblyName);
-                    driver.findElement(assemblyToSelect).click();
-                }
-            }
         }
         return this;
     }
