@@ -504,9 +504,8 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public double getBurdenedCost() {
-        By fullyBurdenedCost = By.cssSelector("td[data-ap-field='fullyBurdenedCost']");
-        pageUtils.waitForElementToAppear(fullyBurdenedCost);
-        return Double.parseDouble(driver.findElement(fullyBurdenedCost).getText());
+        pageUtils.waitForElementToAppear(burdenedCost);
+        return Double.parseDouble(burdenedCost.getText());
     }
 
     /**
