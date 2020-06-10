@@ -264,6 +264,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         ), is(true));
     }
 
+    
     @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"1934", "1929"})
