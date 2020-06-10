@@ -263,7 +263,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
-
     
     @Test
     @Category(CIARStagingSmokeTest.class)
