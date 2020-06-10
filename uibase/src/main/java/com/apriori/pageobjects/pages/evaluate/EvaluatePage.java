@@ -501,11 +501,12 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the fully burdened cost
      *
-     * @param text
      * @return string
      */
-    public boolean getBurdenedCost(String text) {
-        return pageUtils.textPresentInElement(burdenedCost, text);
+    public double getBurdenedCost() {
+        By fullyBurdenedCost = By.cssSelector("td[data-ap-field='fullyBurdenedCost']");
+        pageUtils.waitForElementToAppear(fullyBurdenedCost);
+        return Double.parseDouble(driver.findElement(fullyBurdenedCost).getText());
     }
 
     /**
