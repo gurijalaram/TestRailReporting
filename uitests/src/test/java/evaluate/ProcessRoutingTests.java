@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 
@@ -281,7 +282,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getBurdenedCost("1.56"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(1.56, 0.5)));
 
         new EvaluatePage(driver).openProcessDetails()
             .selectRoutingsButton()
@@ -290,7 +291,7 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("1.96"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(1.96, 0.5)));
     }
 
     @Test
