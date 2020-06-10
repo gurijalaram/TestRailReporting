@@ -832,7 +832,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"671", "672"})
+    @TestRail(testCaseId = {"671", "672", "677"})
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {
 
