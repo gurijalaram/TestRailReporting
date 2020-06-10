@@ -180,8 +180,6 @@ public class LoginPage extends ReportsPageHeader {
      * @return current page object
      */
     public LoginPage failedLogin(String email, String password) {
-        pageUtils.waitForElementToAppear(this.email);
-        pageUtils.waitForElementToAppear(this.password);
         executeLogin(email, password);
         return new LoginPage(driver, false);
     }
