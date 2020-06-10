@@ -35,7 +35,6 @@ import java.util.Map;
 public class GenericReportPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
-    private Map<String, WebElement> exportSetMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
@@ -94,20 +93,11 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
     protected WebElement latestExportDateInput;
 
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a")
-    protected WebElement topLevelExportSet;
+    @FindBy(xpath = "//div[@id='exportSetName']//input[contains(@class, 'jr-mInput-search')]")
+    protected WebElement exportSetSearchInput;
 
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='Piston Assembly']/div/a")
-    protected WebElement pistonAssemblyExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_Casting']")
-    protected WebElement dtcCastingExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='ROLL_UP A']")
-    protected WebElement rollupAExportSet;
-
-    @FindBy(xpath = "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='DTC_MachiningDataset']/div/a")
-    protected WebElement machiningDtcDataSetExportSet;
+    @FindBy(xpath = "//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a")
+    protected WebElement exportSetToSelect;
 
     @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
     private WebElement currentAssemblyElement;
@@ -118,7 +108,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//a[contains(text(), 'SUB-ASSEMBLY')]")
     private WebElement subAssOption;
 
-    @FindBy(xpath = "//div[@id='assemblySelect']//input")
+    @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement assemblyInput;
 
     @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
@@ -232,7 +222,6 @@ public class GenericReportPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        initialiseExportSetHashMap();
         initialiseAssemblyHashMap();
         initialiseCurrencyMap();
         initialisePartNameMap();
@@ -254,7 +243,16 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
-        pageUtils.waitForElementAndClick(exportSetMap.get(exportSet));
+        pageUtils.waitForElementAndClick(exportSetSearchInput);
+        exportSetSearchInput.sendKeys(exportSet);
+        By exportSetToSelect = By.xpath("//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a");
+
+        if (driver.findElement(exportSetToSelect).isDisplayed()) {
+            pageUtils.waitForElementToAppear(exportSetToSelect);
+            pageUtils.waitForElementToBeClickable(exportSetToSelect);
+            driver.findElement(exportSetToSelect).click();
+            exportSetSearchInput.sendKeys(Keys.ENTER);
+        }
         return this;
     }
 
@@ -503,7 +501,7 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @param currencyToCheck
      * @param className
-     * @param <T>             return type - any page object that is specified
+     * @param <T> return type - any page object that is specified
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
@@ -571,7 +569,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage deselectExportSet(String exportSet) {
         int expected = getSelectedExportSetCount() - 1;
-        pageUtils.waitForElementAndClick(exportSetMap.get(exportSet));
+        exportSetSearchInput.sendKeys(exportSet);
+        pageUtils.waitForElementAndClick(exportSetToSelect);
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
         return this;
     }
@@ -891,17 +890,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseCurrencyMap() {
         currencyMap.put(CurrencyEnum.GBP.getCurrency(), gbpCurrencyOption);
         currencyMap.put(CurrencyEnum.USD.getCurrency(), usdCurrencyOption);
-    }
-
-    /**
-     * Initialises export set hash map
-     */
-    private void initialiseExportSetHashMap() {
-        exportSetMap.put(ExportSetEnum.TOP_LEVEL.getExportSetName(), topLevelExportSet);
-        exportSetMap.put(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName(), pistonAssemblyExportSet);
-        exportSetMap.put(ExportSetEnum.CASTING_DTC.getExportSetName(), dtcCastingExportSet);
-        exportSetMap.put(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), machiningDtcDataSetExportSet);
-        exportSetMap.put(ExportSetEnum.ROLL_UP_A.getExportSetName(), rollupAExportSet);
     }
 
     /**

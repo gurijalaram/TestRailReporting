@@ -33,6 +33,7 @@ public class AfterTestUtil {
         resetScenarioName(username);
         resetProductionDefaults(username);
         resetToleranceSettings(username);
+        resetDecimalPlaces(username);
     }
 
     /**
@@ -82,6 +83,23 @@ public class AfterTestUtil {
             .commitChanges()
             .connect()
             .post();
+    }
+
+    /**
+     * Resets the decimal places to default
+     *
+     * @param username - username of logged user
+     */
+    private void resetDecimalPlaces(String username) {
+        new HTTPRequest()
+                .unauthorized()
+                .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
+                .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=cost.table.decimal.places")
+                .setAutoLogin(false)
+                .setCustomBody("2")
+                .commitChanges()
+                .connect()
+                .post();
     }
 
     /**

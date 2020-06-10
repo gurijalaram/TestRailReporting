@@ -16,6 +16,7 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceValueSettingsPage;
+import com.apriori.pageobjects.toolbars.PageHeader;
 import com.apriori.utils.APIValue;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
@@ -584,7 +585,7 @@ public class ToleranceTests extends TestBase {
 
     @Test
     @Issue("AP-59432")
-    @TestRail(testCaseId = {"1289"})
+    @TestRail(testCaseId = {"1289", "728"})
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
 
@@ -704,5 +705,33 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
 
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1300"})
+    @Description("Ensure tolerance preferences are maintained for the user")
+    public void tolerancesMaintained() {
+
+        UserCredentials testUser1 = UserUtil.getUser();
+        currentUser = testUser1;
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+
+        new CIDLoginPage(driver).login(testUser1)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        new SettingsPage(driver).save(ExplorePage.class);
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+
+        new PageHeader(driver).openAdminDropdown()
+            .selectLogOut();
+
+        cidLoginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = cidLoginPage.login(testUser1)
+            .openSettings()
+            .openTolerancesTab();
+
+        assertThat(toleranceSettingsPage.isCADSelected("checked"), is("true"));
     }
 }
