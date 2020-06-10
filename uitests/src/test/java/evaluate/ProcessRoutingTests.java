@@ -32,7 +32,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -613,7 +612,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
 
@@ -634,7 +632,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Forging")
     public void routingsForging() {
 
@@ -675,7 +672,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Powder Metal")
     public void routingsPowderMetal() {
 
@@ -736,7 +732,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Sheet Metal")
     public void routingsSheetMetal() {
 
@@ -820,7 +815,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Stock Machining")
     public void routingsStockMachining() {
 
