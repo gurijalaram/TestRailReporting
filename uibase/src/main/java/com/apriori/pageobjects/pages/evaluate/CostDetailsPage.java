@@ -24,6 +24,21 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
+    @FindBy(css = "[data-ap-field='pieceCost']")
+    private WebElement totalVariableCosts;
+
+    @FindBy(css = "[data-ap-field='periodOverhead']")
+    private WebElement indirectOverhead;
+
+    @FindBy(css = "[data-ap-field='sgaCost']")
+    private WebElement sganda;
+
+    @FindBy(css = "[data-ap-field='margin']")
+    private WebElement margin;
+
+    @FindBy(css = "[data-ap-field='totalCost']")
+    private WebElement piecePartCost;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -77,5 +92,50 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
         By costInfo = By.xpath("//td[.='" + contributor + "']/following-sibling::td");
         //TODO add in ability to scroll when BA-890 is fixed pageUtils.scrollToElement(costInfo, verticalScroller);
         return driver.findElement(costInfo).getText();
+    }
+
+    /**
+     * Gets Total Variable Costs
+     *
+     * @return string
+     */
+    public String getTotalVariableCosts() {
+        return pageUtils.waitForElementToAppear(totalVariableCosts).getText();
+    }
+
+    /**
+     * Gets Indirect Overhead
+     *
+     * @return string
+     */
+    public String getIndirectOverhead() {
+        return pageUtils.waitForElementToAppear(indirectOverhead).getText();
+    }
+
+    /**
+     * Gets SG&A
+     *
+     * @return string
+     */
+    public String getSGandA() {
+        return pageUtils.waitForElementToAppear(sganda).getText();
+    }
+
+    /**
+     * Gets Margin
+     *
+     * @return string
+     */
+    public String getMargin() {
+        return pageUtils.waitForElementToAppear(margin).getText();
+    }
+
+    /**
+     * Gets Piece Part Cost
+     *
+     * @return string
+     */
+    public String getPiecePartCost() {
+        return pageUtils.waitForElementToAppear(piecePartCost).getText();
     }
 }

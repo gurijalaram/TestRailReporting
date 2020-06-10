@@ -102,7 +102,7 @@ public class DecimalPlaceTests extends TestBase {
 
     @Category(SmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"3730", "3738", "3792", "3764"})
+    @TestRail(testCaseId = {"3730", "3738", "3792", "3764", "3765"})
     @Description("User can change the default Displayed Decimal Places multiple times and rounding adjusts")
     public void changeDecimalPlaceDefaultsUpdates() {
 
@@ -127,15 +127,20 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost("19.7343"), is(true));
         assertThat(evaluatePage.getCapitalInvestment(), is("0.0000"));
 
-        evaluatePage.openProcessDetails();
+        processRoutingPage = evaluatePage.openProcessDetails();
 
         assertThat(processRoutingPage.getCycleTime(), is("110.8200"));
         assertThat(processRoutingPage.getPiecePartCost(), is("19.7343"));
         assertThat(processRoutingPage.getFullyBurdenedCost(), is("19.7343"));
         assertThat(processRoutingPage.getCapitalInvestments(), is("0.0000"));
 
-        evaluatePage.openCostDetails();
+        costDetailsPage = evaluatePage.openCostDetails();
 
+        assertThat(costDetailsPage.getTotalVariableCosts(), is("17.6663"));
+        assertThat(costDetailsPage.getIndirectOverhead(), is("0.3180"));
+        assertThat(costDetailsPage.getSGandA(), is("1.7500"));
+        assertThat(costDetailsPage.getMargin(), is("0.0000"));
+        assertThat(costDetailsPage.getPiecePartCost(), is("19.7343"));
 
 
         evaluatePage.openSettings()
@@ -149,6 +154,21 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getPartCost(), is("19.7"));
         assertThat(evaluatePage.getBurdenedCost("19.7"), is(true));
         assertThat(evaluatePage.getCapitalInvestment(), is("0.0"));
+
+        evaluatePage.openProcessDetails();
+
+        assertThat(processRoutingPage.getCycleTime(), is("110.8"));
+        assertThat(processRoutingPage.getPiecePartCost(), is("19.7"));
+        assertThat(processRoutingPage.getFullyBurdenedCost(), is("19.7"));
+        assertThat(processRoutingPage.getCapitalInvestments(), is("0.0"));
+
+        evaluatePage.openCostDetails();
+
+        assertThat(costDetailsPage.getTotalVariableCosts(), is("17.7"));
+        assertThat(costDetailsPage.getIndirectOverhead(), is("0.3"));
+        assertThat(costDetailsPage.getSGandA(), is("1.7"));
+        assertThat(costDetailsPage.getMargin(), is("0.0"));
+        assertThat(costDetailsPage.getPiecePartCost(), is("19.7"));
     }
 
     @Category({CIDTestSuite.class})
