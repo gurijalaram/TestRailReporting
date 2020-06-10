@@ -3,6 +3,7 @@ package evaluate.materialutilization;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
@@ -84,7 +85,7 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("19.73")));
+        assertThat(evaluatePage.getPartCost(), is(closeTo(19.73, 1)));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
@@ -101,7 +102,7 @@ public class MaterialStockTests extends TestBase {
         evaluatePanelToolbar = new EvaluatePanelToolbar(driver);
         evaluatePage = evaluatePanelToolbar.closePanel()
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("19.06")));
+        assertThat(evaluatePage.getPartCost(), is(closeTo(19.06, 1)));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
