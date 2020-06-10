@@ -18,7 +18,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -70,9 +69,8 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-56984")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970"})
+    @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970", "298"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
 
