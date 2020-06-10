@@ -16,9 +16,6 @@ public class DisplayPreferencesEntity {
     @JsonProperty
     private Boolean isSystemUnits;
 
-    @JsonProperty
-    private String decimalPlaces;
-
     public String getCurrencyCode() {
         return currencyCode;
     }
@@ -43,15 +40,6 @@ public class DisplayPreferencesEntity {
 
     public DisplayPreferencesEntity setSystemUnits(Boolean systemUnits) {
         isSystemUnits = systemUnits;
-        return this;
-    }
-
-    public String getDecimalPlaces() {
-        return decimalPlaces;
-    }
-
-    public DisplayPreferencesEntity setDecimalPlaces(String decimalPlaces) {
-        this.decimalPlaces = decimalPlaces;
         return this;
     }
 }
