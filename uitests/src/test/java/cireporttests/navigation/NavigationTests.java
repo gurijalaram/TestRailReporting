@@ -241,7 +241,6 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2700"})
     @Description("Ensure that the link to the privacy policy works")
     public void testPrivacyPolicyNavigation() {
