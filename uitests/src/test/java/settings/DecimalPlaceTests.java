@@ -3,7 +3,9 @@ package settings;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.AfterTestUtil;
@@ -21,7 +23,7 @@ import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.CIDTestSuite;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -30,6 +32,8 @@ public class DecimalPlaceTests extends TestBase {
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
+    private ProcessRoutingPage processRoutingPage;
+    private CostDetailsPage costDetailsPage;
 
     File resourceFile;
 
@@ -40,6 +44,7 @@ public class DecimalPlaceTests extends TestBase {
         }
     }
 
+    @Category({CIDTestSuite.class})
     @Test
     @TestRail(testCaseId = {"3730", "3738", "3764"})
     @Description("User can change the default Displayed Decimal Places")
@@ -67,6 +72,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCapitalInvestment(), is("0.000000"));
     }
 
+    @Category({CIDTestSuite.class})
     @Test
     @TestRail(testCaseId = {"3730", "3738", "3764"})
     @Description("User can change the default Displayed Decimal Places to the minimum")
@@ -121,6 +127,17 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost("19.7343"), is(true));
         assertThat(evaluatePage.getCapitalInvestment(), is("0.0000"));
 
+        evaluatePage.openProcessDetails();
+
+        assertThat(processRoutingPage.getCycleTime(), is("110.8200"));
+        assertThat(processRoutingPage.getPiecePartCost(), is("19.7343"));
+        assertThat(processRoutingPage.getFullyBurdenedCost(), is("19.7343"));
+        assertThat(processRoutingPage.getCapitalInvestments(), is("0.0000"));
+
+        evaluatePage.openCostDetails();
+
+
+
         evaluatePage.openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.ONE.getDecimalPlaces())
             .save(EvaluatePage.class);
@@ -134,9 +151,9 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCapitalInvestment(), is("0.0"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CIDTestSuite.class})
     @Test
-    @TestRail(testCaseId = {"3730", "3738", "3792", "3764"})
+    @TestRail(testCaseId = {"3730", "3738", "3792", "3774"})
     @Description("User can change the default Displayed Decimal Places multiple times and rounding adjusts")
     public void changeDecimalPlaceDefaultsRecost() {
 
