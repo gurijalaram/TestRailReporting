@@ -19,7 +19,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -41,7 +41,6 @@ public class PublishComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-58576")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"421", "434"})
     @Description("Test a private comparison can be published from comparison page")
@@ -95,7 +94,6 @@ public class PublishComparisonTests extends TestBase {
 
     @Test
     @Category({SanityTests.class})
-    @Issue("AP-58576")
     @TestRail(testCaseId = {"421"})
     @Description("Test a private comparison can be published from explore page")
     public void testPublishComparisonExplorePage() {

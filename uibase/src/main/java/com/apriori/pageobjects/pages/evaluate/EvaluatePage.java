@@ -189,6 +189,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-comp='twoModelProdInfo'] [data-ap-field='utilization']")
     private WebElement twoModelUtilPercentage;
 
+    @FindBy(xpath = "//div[contains(text(),'Render')]")
+    private WebElement renderButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -307,8 +310,17 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public DesignGuidancePage openDesignGuidance() {
+        waitRenderSelected();
         pageUtils.waitForElementAndClick(guidanceDetails);
         return new DesignGuidancePage(driver);
+    }
+
+    /**
+     * Waits for the render to be selected
+     */
+    private void waitRenderSelected() {
+        pageUtils.waitForElementAndClick(renderButton);
+        pageUtils.waitForElementToAppear(By.cssSelector("button[data-ap-comp='solidViewerToolbarButton'][class='selected']"));
     }
 
     /**
