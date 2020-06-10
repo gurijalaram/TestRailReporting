@@ -232,29 +232,11 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets expected Piece Part Cost grand total
+     * Gets expected Fully Burdened Cost/Piece Part Cost grand total
      *
      * @return BigDecimal
      */
-    public BigDecimal getExpectedPPCGrandTotal(String assemblyType, String columnName) {
-        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
-        List<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> quantityList = checkQuantityList(assemblyType);
-
-        List<BigDecimal> trimmedValueList = checkPPCValues(assemblyType, levels, allValues, quantityList);
-        List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
-
-        return finalValues
-            .stream()
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    /**
-     * Gets expected Fully Burdened Cost grand total
-     *
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedFBCGrandTotal(String assemblyType, String columnName) {
+    public BigDecimal getExpectedFbcPpcGrandTotal(String assemblyType, String columnName) {
         List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
         ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
         List<BigDecimal> quantityList = checkQuantityList(assemblyType);
@@ -477,11 +459,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         BigDecimal largerValue = valueOne.max(valueTwo);
         BigDecimal smallerValue = valueOne.min(valueTwo);
         BigDecimal difference = largerValue.subtract(smallerValue);
-        boolean retVal = false;
-        if (difference.compareTo(new BigDecimal("0.00")) >= 0 && difference.compareTo(new BigDecimal("0.03")) <= 0) {
-            retVal = true;
-        }
-        return retVal;
+        return difference.compareTo(new BigDecimal("0.00")) >= 0 && difference.compareTo(new BigDecimal("0.03")) <= 0;
     }
 
     /**
@@ -510,19 +488,12 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return int size of element list
      */
     public int getAmountOfTopLevelExportSets() {
-        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
+        List<WebElement> list =
+                driver.findElements(
+                By.xpath(
+                "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"
+                ));
         return list.size();
-    }
-
-    /**
-     * Gets date from two months ago
-     *
-     * @return String
-     */
-    private String getDateTwoMonthsAgo() {
-        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(2).withNano(0);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(pastDate);
     }
 
     /**

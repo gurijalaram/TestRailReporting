@@ -5,7 +5,7 @@ public enum ExportSetEnum {
     PISTON_ASSEMBLY("Piston Assembly"),
     MACHINING_DTC_DATASET("DTC_MachiningDataset"),
     CASTING_DTC("DTC_Casting"),
-    ROLL_UP_A("ROLL_UP A");
+    ROLL_UP_A("ROLL-UP A");
 
     private String exportSetName;
 
