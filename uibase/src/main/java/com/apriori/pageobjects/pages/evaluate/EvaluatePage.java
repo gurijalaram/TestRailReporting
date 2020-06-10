@@ -465,10 +465,11 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the material cost
      *
-     * @return string
+     * @return double
      */
-    public String getMaterialCost() {
-        return pageUtils.waitForElementToAppear(materialCost).getText();
+    public double getMaterialCost() {
+        pageUtils.waitForElementToAppear(materialCost);
+        return Double.parseDouble(materialCost.getText());
     }
 
     /**
@@ -492,16 +493,17 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the piece part cost
      *
-     * @return string
+     * @return double
      */
-    public String getPartCost() {
-        return pageUtils.waitForElementToAppear(partCost).getText();
+    public double getPartCost() {
+        pageUtils.waitForElementToAppear(partCost);
+        return Double.parseDouble(partCost.getText());
     }
 
     /**
      * Gets the fully burdened cost
      *
-     * @return string
+     * @return double
      */
     public double getBurdenedCost() {
         pageUtils.waitForElementToAppear(burdenedCost);
