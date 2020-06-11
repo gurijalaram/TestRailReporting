@@ -80,7 +80,7 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
      */
     public GuidancePage openGuidanceTab() {
         expandPanel();
-        pageUtils.waitForElementToBeClickable(guidanceTab).click();
+        pageUtils.waitForElementAndClick(guidanceTab);
         return new GuidancePage(driver);
     }
 
