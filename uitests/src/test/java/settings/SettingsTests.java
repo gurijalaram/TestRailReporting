@@ -174,7 +174,7 @@ public class SettingsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getAnnualVolume(), is("9,524"));
-        assertThat(evaluatePage.getProductionLife(), is("7"));
+        assertThat(evaluatePage.getProductionLife(), containsString("7"));
     }
 
     @Test
