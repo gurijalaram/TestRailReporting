@@ -3,6 +3,7 @@ package evaluate;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
@@ -140,9 +141,9 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getUtilizationPercentage(), is("96.98"));
-        assertThat(evaluatePage.getBurdenedCost("12.88"), is(true));
-        assertThat(evaluatePage.isFinishMass("2.33"), is(true));
+        assertThat(evaluatePage.getUtilizationPercentage(), is(closeTo(96.98, 1)));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(12.88, 1)));
+        assertThat(evaluatePage.getFinishMass(), is(closeTo(2.33, 1)));
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
@@ -153,9 +154,9 @@ public class TwoModelMachiningTests extends TestBase {
             .apply(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is("82.71"));
-        assertThat(evaluatePage.getBurdenedCost("16.69"), is(true));
-        assertThat(evaluatePage.isFinishMass("1.93"), is(true));
+        assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is(closeTo(82.71, 1)));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(16.69, 1)));
+        assertThat(evaluatePage.getTwoModelFinishMass(), is(closeTo(1.93, 1)));
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
@@ -166,9 +167,9 @@ public class TwoModelMachiningTests extends TestBase {
             .apply(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is("83.78"));
-        assertThat(evaluatePage.getBurdenedCost("19.99"), is(true));
-        assertThat(evaluatePage.isFinishMass("1.62"), is(true));
+        assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is(closeTo(83.78, 1)));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(19.99, 1)));
+        assertThat(evaluatePage.getTwoModelFinishMass(), is(closeTo(1.62, 1)));
     }
 
     @Test
@@ -249,7 +250,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         assertThat(evaluatePage.getSourceScenarioName(), is(sourceScenarioName));
         assertThat(evaluatePage.getSourcePartName(), is(sourcePartName.toUpperCase()));
-        assertThat(evaluatePage.getBurdenedCost("18.05"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(18.05, 1)));
 
         evaluatePage.selectSourcePart()
             .highlightScenario(source2ScenarioName, source2PartName)
@@ -258,7 +259,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         assertThat(evaluatePage.getSourceScenarioName(), is(source2ScenarioName));
         assertThat(evaluatePage.getSourcePartName(), is(source2PartName.toUpperCase()));
-        assertThat(evaluatePage.getBurdenedCost("8.74"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(8.74, 1)));
     }
 
     @Test

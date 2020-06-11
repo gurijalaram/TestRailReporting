@@ -55,7 +55,7 @@ public class LibraryPage extends ReportsPageHeader {
      * @return String - text of report name
      */
     public String getReportName(String reportName) {
-        return pageUtils.getReportNameText(reportName);
+        return pageUtils.getReportElement(reportName).getText();
     }
 
     /**
@@ -65,7 +65,7 @@ public class LibraryPage extends ReportsPageHeader {
      * @return new page object
      */
     public AssemblyDetailsReportPage navigateToReport(String reportName) {
-        WebElement reportLinkElement = pageUtils.getReportLinkElement(reportName);
+        WebElement reportLinkElement = pageUtils.getReportElement(reportName);
         pageUtils.waitForElementToAppear(reportLinkElement);
         reportLinkElement.click();
         return new AssemblyDetailsReportPage(driver);
