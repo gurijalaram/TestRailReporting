@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.inputs.VPESelectionPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -13,6 +14,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -32,6 +34,7 @@ public class AssemblyUploadTests extends TestBase {
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
+    private VPESelectionPage vpeSelectionPage;
 
     private File resourceFile;
     private String scenarioName;
@@ -148,7 +151,7 @@ public class AssemblyUploadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"2652"})
+    @TestRail(testCaseId = {"2652", "1351", "1353", "1354"})
     @Description("User can delete STEP Assembly Post-Costing")
     public void testSTEPAssemblyDeletePostCost() {
 
@@ -156,11 +159,19 @@ public class AssemblyUploadTests extends TestBase {
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
-            .costScenario()
-            .delete()
+            .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
+            .enterAnnualVolume("3126")
+            .enterAnnualYears("9")
+            .costScenario();
+
+        assertThat(evaluatePage.getSelectedVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
+        assertThat(evaluatePage.getAnnualVolume("3126"), is(true));
+        assertThat(evaluatePage.getProductionLife("9"), is(true));
+
+        explorePage = evaluatePage.delete()
             .deleteScenario()
             .filterCriteria()
             .filterPrivateCriteria("Assembly", "Scenario Name", "Contains", scenarioName)
@@ -171,7 +182,7 @@ public class AssemblyUploadTests extends TestBase {
 
     @Test
     @Category({SanityTests.class})
-    @TestRail(testCaseId = {"2648"})
+    @TestRail(testCaseId = {"2648", "1352", "1355"})
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
     public void testSTEPAssemblyPowderCoatCart() {
 
@@ -179,13 +190,25 @@ public class AssemblyUploadTests extends TestBase {
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        vpeSelectionPage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
             .apply()
-            .costScenario();
+            .openMoreInputs()
+            .selectVPEButton()
+            .saveChanges()
+            .closePanel()
+            .costScenario()
+            .openMoreInputs()
+            .selectVPEButton();
+
+        assertThat(vpeSelectionPage.isUsePrimaryVPESelected("checked"), is("true"));
+
+        vpeSelectionPage = new VPESelectionPage(driver);
+        evaluatePage = vpeSelectionPage.close()
+            .closePanel();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Powder Coat Cart"), Matchers.is(true));
     }

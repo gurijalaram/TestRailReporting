@@ -19,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
@@ -65,7 +64,6 @@ public class NavigationTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "2982")
-    @Issue("AP-58758")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)

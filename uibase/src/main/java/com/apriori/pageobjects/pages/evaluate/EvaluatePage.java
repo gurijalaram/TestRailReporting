@@ -267,7 +267,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public EvaluatePage enterAnnualVolume(String annualVolume) {
-        annVolume.clear();
+        pageUtils.clearInput(annVolume);
         annVolume.sendKeys(annualVolume);
         return this;
     }
@@ -279,7 +279,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public EvaluatePage enterAnnualYears(String years) {
-        annualVolumeYrs.clear();
+        pageUtils.clearInput(annualVolumeYrs);
         annualVolumeYrs.sendKeys(years);
         return this;
     }
