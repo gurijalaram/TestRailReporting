@@ -381,7 +381,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Powder Coat Cart")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.getFractionPainted(), is( "0.3"));
+        assertThat(processSetupOptionsPage.getFractionPainted(), is("0.3"));
         assertThat(processSetupOptionsPage.isNoMaskingSelected("checked"), is("true"));
         assertThat(processSetupOptionsPage.getSpecifyPainted(), is("414"));
         assertThat(processSetupOptionsPage.getSpecified("2"), is(true));
