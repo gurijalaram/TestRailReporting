@@ -80,7 +80,7 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
      */
     public GuidancePage openGuidanceTab() {
         expandPanel();
-        pageUtils.waitForElementToBeClickable(guidanceTab).click();
+        pageUtils.waitForElementAndClick(guidanceTab);
         return new GuidancePage(driver);
     }
 
@@ -134,6 +134,6 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
      */
     public String getHoleIssueValue() {
         pageUtils.waitForElementToAppear(holeIssueValue);
-        return pageUtils.getElementText(holeIssueValue);
+        return holeIssueValue.getText();
     }
 }

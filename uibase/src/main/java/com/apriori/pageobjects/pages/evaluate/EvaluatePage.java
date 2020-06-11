@@ -90,9 +90,6 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "a[data-ap-nav-viewport='showMaterialDetails']")
     private WebElement materialsDetails;
 
-    @FindBy(css = "input[data-ap-field='materialNameOverride']")
-    private WebElement materialsInfo;
-
     @FindBy(css = "button[data-ap-comp='materialSelectionButton']")
     private WebElement materialsButton;
 
@@ -110,12 +107,6 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "td[data-ap-field='failuresWarningsCount']")
     private WebElement warningsCount;
-
-    @FindBy(css = "td[data-ap-field='dtcMessagesCount']")
-    private WebElement guidanceIssuesCount;
-
-    @FindBy(css = "td[data-ap-field='gcdWithTolerancesCount']")
-    private WebElement gcdTolerancesCount;
 
     @FindBy(css = "td[data-ap-field='cycleTime']")
     private WebElement cycleTimeCount;
@@ -146,9 +137,6 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = ".locked-status-icon")
     private WebElement lockedStatusIcon;
-
-    @FindBy(css = ".cad-connection-status-icon")
-    private WebElement cadConnectedIcon;
 
     @FindBy(css = "a[data-ap-nav-viewport='showAssemblyComponentsDetails']")
     private WebElement componentsDetails;
@@ -200,6 +188,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "[data-ap-comp='twoModelProdInfo'] [data-ap-field='utilization']")
     private WebElement twoModelUtilPercentage;
+
+    @FindBy(css = "[data-ap-comp='twoModelProdInfo'] [data-ap-field='finishMass']")
+    private WebElement twoModelFinishMass;
 
     @FindBy(xpath = "//div[contains(text(),'Render')]")
     private WebElement renderButton;
@@ -305,14 +296,15 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Checks the process routing details
+     * Gets the process routing details
      *
      * @return the details as string
      */
-    public boolean isProcessRoutingDetails(String text) {
+    public String getProcessRoutingDetails() {
         pageUtils.scrollWithJavaScript(processRoutingName, true);
-        pageUtils.waitForElementToAppear(processRoutingName);
-        return pageUtils.checkElementAttribute(processRoutingName, "title", text);
+        By processRouting = By.cssSelector("[data-ap-field='processRoutingName'] div");
+        pageUtils.waitForElementToAppear(processRouting);
+        return driver.findElement(processRouting).getAttribute("title");
     }
 
     /**
@@ -392,7 +384,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public boolean getCurrentScenarioName(String text) {
-        return pageUtils.checkElementContains(scenarioDropdown, text);
+        return pageUtils.textPresentInElement(scenarioDropdown, text);
     }
 
     /**
@@ -423,12 +415,14 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Checks material info
+     * Gets material info
      *
      * @return material info as string
      */
-    public boolean isMaterialInfo(String text) {
-        return pageUtils.checkElementAttribute(materialsInfo, "value", text);
+    public String getMaterialInfo() {
+        By materialsInfo = By.cssSelector("input[data-ap-field='materialNameOverride']");
+        pageUtils.waitForElementToAppear(materialsInfo);
+        return driver.findElement(materialsInfo).getAttribute("value");
     }
 
     /**
@@ -446,8 +440,10 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public boolean getWarningsCount(String count) {
-        return pageUtils.checkElementAttribute(warningsCount, "outerText", count);
+    public String getWarningsCount() {
+        By warnings = By.cssSelector("td[data-ap-field='failuresWarningsCount']");
+        pageUtils.waitForElementToAppear(warnings);
+        return driver.findElement(warnings).getAttribute("outerText");
     }
 
     /**
@@ -455,8 +451,10 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public boolean getGuidanceIssuesCount(String count) {
-        return pageUtils.checkElementAttribute(guidanceIssuesCount, "outerText", count);
+    public String getGuidanceIssuesCount() {
+        By guidanceIssues = By.cssSelector("td[data-ap-field='dtcMessagesCount']");
+        pageUtils.waitForElementToAppear(guidanceIssues);
+        return driver.findElement(guidanceIssues).getAttribute("outerText");
     }
 
     /**
@@ -464,8 +462,10 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public boolean getGcdTolerancesCount(String count) {
-        return pageUtils.checkElementAttribute(gcdTolerancesCount, "outerText", count);
+    public String getGcdTolerancesCount() {
+        By gcdTolerancesCount = By.cssSelector("td[data-ap-field='gcdWithTolerancesCount']");
+        pageUtils.waitForElementToAppear(gcdTolerancesCount);
+        return driver.findElement(gcdTolerancesCount).getAttribute("outerText");
     }
 
     /**
@@ -480,10 +480,11 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the material cost
      *
-     * @return string
+     * @return double
      */
-    public String getMaterialCost() {
-        return pageUtils.waitForElementToAppear(materialCost).getText();
+    public double getMaterialCost() {
+        pageUtils.waitForElementToAppear(materialCost);
+        return Double.parseDouble(materialCost.getText());
     }
 
     /**
@@ -507,20 +508,21 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the piece part cost
      *
-     * @return string
+     * @return double
      */
-    public String getPartCost() {
-        return pageUtils.waitForElementToAppear(partCost).getText();
+    public double getPartCost() {
+        pageUtils.waitForElementToAppear(partCost);
+        return Double.parseDouble(partCost.getText());
     }
 
     /**
      * Gets the fully burdened cost
      *
-     * @param text
-     * @return string
+     * @return double
      */
-    public boolean getBurdenedCost(String text) {
-        return pageUtils.checkElementContains(burdenedCost, text);
+    public double getBurdenedCost() {
+        pageUtils.waitForElementToAppear(burdenedCost);
+        return Double.parseDouble(burdenedCost.getText());
     }
 
     /**
@@ -565,19 +567,22 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the locked status
      *
-     * @return current page object
+     * @return true/false
      */
     public boolean isLockedStatus(String status) {
-        return pageUtils.checkElementAttribute(lockedStatusIcon, "title", status);
+        By lockedStatus = By.xpath(String.format("//div[@title='%s']", status));
+        return pageUtils.waitForElementToAppear(lockedStatus).isDisplayed();
     }
 
     /**
      * Gets the CAD Connection status
      *
-     * @return current page object
+     * @return string
      */
-    public boolean isCADConnectionStatus(String status) {
-        return pageUtils.checkElementAttribute(cadConnectedIcon, "title", status);
+    public String isCADConnectionStatus() {
+        By cadConnection = By.cssSelector(".cad-connection-status-icon");
+        pageUtils.waitForElementToAppear(cadConnection);
+        return driver.findElement(cadConnection).getAttribute("title");
     }
 
     /**
@@ -599,21 +604,25 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Checks the input value is correct
+     * Gets the input value
      *
      * @return true/false
      */
-    public boolean getAnnualVolume(String text) {
-        return pageUtils.checkElementAttribute(annVolume, "value", text);
+    public String getAnnualVolume() {
+        By annualVolume = By.cssSelector("input[data-ap-field='annualVolume']");
+        pageUtils.waitForElementToAppear(annualVolume);
+        return driver.findElement(annualVolume).getAttribute("value");
     }
 
     /**
-     * Checks the input value is correct
+     * Get the input value is correct
      *
      * @return true/false
      */
-    public boolean getProductionLife(String text) {
-        return pageUtils.checkElementAttribute(annualVolumeYrs, "value", text);
+    public String getProductionLife() {
+        By productionLife = By.cssSelector("input[data-ap-field='productionLife']");
+        pageUtils.waitForElementToAppear(productionLife);
+        return driver.findElement(productionLife).getAttribute("value");
     }
 
     /**
@@ -637,63 +646,69 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Checks the value of the total components
+     * Gets the value of the total components
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isTotalComponents(String value) {
-        return pageUtils.checkElementAttribute(totalComponents, "innerText", value);
+    public String getTotalComponents() {
+        By totalComponents = By.cssSelector("td[data-ap-field='totalComponents']");
+        pageUtils.waitForElementToAppear(totalComponents);
+        return driver.findElement(totalComponents).getAttribute("innerText");
     }
 
     /**
-     * Checks the value of unique components
+     * Gets the value of unique components
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isUniqueComponents(String value) {
-        return pageUtils.checkElementAttribute(uniqueComponents, "innerText", value);
+    public String getUniqueComponents() {
+        By uniqueComponents = By.cssSelector("td[data-ap-field='uniqueComponents']");
+        pageUtils.waitForElementToAppear(uniqueComponents);
+        return driver.findElement(uniqueComponents).getAttribute("innerText");
     }
 
     /**
-     * Checks the uncosted unique value
+     * Gets the uncosted unique value
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isUncostedUnique(String value) {
-        return pageUtils.checkElementAttribute(uncostedComponents, "innerText", value);
+    public String getUncostedUnique() {
+        By uncostedComponents = By.cssSelector("td[data-ap-field='uncostedComponentsCount']");
+        pageUtils.waitForElementToAppear(uncostedComponents);
+        return driver.findElement(uncostedComponents).getAttribute("innerText");
     }
 
     /**
-     * Checks the value of finish mass
+     * Gets the value of finish mass
      *
-     * @param value - the value
-     * @return true/false
+     * @return double
      */
-    public boolean isFinishMass(String value) {
-        return pageUtils.checkElementAttribute(finishMass, "innerText", value);
+    public double getFinishMass() {
+        By finishMass = By.cssSelector("td[data-ap-field='finishMass']");
+        pageUtils.waitForElementToAppear(finishMass);
+        return Double.parseDouble(driver.findElement(finishMass).getAttribute("innerText"));
     }
 
     /**
-     * Checks the value of target mass
+     * Gets the value of target mass
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isTargetMass(String value) {
-        return pageUtils.checkElementAttribute(targetMass, "innerText", value);
+    public String getTargetMass() {
+        By targetMass = By.cssSelector("td[data-ap-field='targetFinishMass']");
+        pageUtils.waitForElementToAppear(targetMass);
+        return driver.findElement(targetMass).getAttribute("innerText");
     }
 
     /**
-     * Checks the value of secondary processes
+     * Gets the value of secondary processes
      *
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isSecondaryProcesses(String value) {
-        return pageUtils.checkElementAttribute(secondaryProcesses, "value", value);
+    public String getSecondaryProcesses() {
+        By secondaryProcess = By.cssSelector("[data-ap-field='userOverridesCount']");
+        pageUtils.waitForElementToAppear(secondaryProcess);
+        return driver.findElement(secondaryProcess).getAttribute("value");
     }
 
     /**
@@ -835,8 +850,17 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return Utilization Percentage
      */
-    public String getTwoModelUtilizationPercentage() {
+    public double getTwoModelUtilizationPercentage() {
         return getUtilPercentage(twoModelUtilPercentage);
+    }
+
+    /**
+     * Get Two Model Finish Mass
+     *
+     * @return Utilization Percentage
+     */
+    public double getTwoModelFinishMass() {
+        return getUtilPercentage(twoModelFinishMass);
     }
 
 
@@ -845,12 +869,12 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return Utilization Percentage
      */
-    public String getUtilizationPercentage() {
+    public double getUtilizationPercentage() {
         return getUtilPercentage(utilizationPercentage);
     }
 
-    private String getUtilPercentage(WebElement utilPercentage) {
+    private double getUtilPercentage(WebElement utilPercentage) {
         pageUtils.waitForElementAppear(utilPercentage);
-        return utilPercentage.getText();
+        return Double.parseDouble(utilPercentage.getText());
     }
 }

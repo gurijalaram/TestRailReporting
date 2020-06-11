@@ -143,6 +143,6 @@ public class LoginTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .openScenario(scenarioName, "225_gasket-1-solid1");
 
-        assertThat(evaluatePage.isCADConnectionStatus("CAD file connected"), is(true));
+        assertThat(evaluatePage.isCADConnectionStatus(), is("CAD file connected"));
     }
 }
