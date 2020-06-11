@@ -42,7 +42,6 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2628", "2647", "2653"})
     @Description("Assembly File Upload - STEP")
@@ -64,7 +63,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59726")
+    @Issue("AP-60916")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2655", "2647", "2643"})
     @Description("Uploaded STEP assembly and components can be recosted")
@@ -127,7 +126,6 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2651"})
     @Description("User can delete STEP Assembly Pre-Costing")
@@ -149,7 +147,6 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2652"})
     @Description("User can delete STEP Assembly Post-Costing")
@@ -173,7 +170,6 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59726")
     @Category({SanityTests.class})
     @TestRail(testCaseId = {"2648"})
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
