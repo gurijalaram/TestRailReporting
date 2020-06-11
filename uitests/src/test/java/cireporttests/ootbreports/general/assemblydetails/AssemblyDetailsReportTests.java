@@ -264,7 +264,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {

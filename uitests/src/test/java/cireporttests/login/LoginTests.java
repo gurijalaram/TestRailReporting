@@ -36,7 +36,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2696"})
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
