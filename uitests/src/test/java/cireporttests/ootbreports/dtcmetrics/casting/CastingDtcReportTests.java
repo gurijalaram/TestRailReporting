@@ -195,9 +195,11 @@ public class CastingDtcReportTests extends TestBase {
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
         String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
+        Boolean[] dropdownFlagArray = { false, false };
+
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filterCriteria()
-                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray)
+                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray, dropdownFlagArray)
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 

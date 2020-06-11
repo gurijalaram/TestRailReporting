@@ -478,10 +478,11 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         String[] attributesArray = { "Part Name", "Scenario Name" };
         String[] valuesArray = { Constants.PISTON_ASSEMBLY_CID_NAME, Constants.DEFAULT_SCENARIO_NAME };
+        Boolean[] dropdownFlagArray = { false, false };
 
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filterCriteria()
-                .multiFilterPublicCriteria(Constants.ASSEMBLY_SCENARIO_TYPE, attributesArray, valuesArray)
+                .multiFilterPublicCriteria(Constants.ASSEMBLY_SCENARIO_TYPE, attributesArray, valuesArray, dropdownFlagArray)
                 .apply(ExplorePage.class)
                 .openFirstScenario()
                 .openComponentsTable()

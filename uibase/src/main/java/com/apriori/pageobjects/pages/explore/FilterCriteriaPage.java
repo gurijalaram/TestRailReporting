@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author cfrith
@@ -23,6 +25,7 @@ import java.util.List;
 public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
+    private Map<String, WebElement> costMaturityOptions = new HashMap<>();
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -60,6 +63,18 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
     private WebElement valueInputDropdown;
 
+    @FindBy(xpath = "//span[contains(text(), 'Initial')]/..")
+    private WebElement costMaturityInitialOption;
+
+    @FindBy(xpath = "//span[contains(text(), 'Low')]/..")
+    private WebElement costMaturityLowOption;
+
+    @FindBy(xpath = "//span[contains(text(), 'Medium')]/..")
+    private WebElement costMaturityMediumOption;
+
+    @FindBy(xpath = "//span[contains(text(), 'High')]/..")
+    private WebElement costMaturityHighOption;
+
     @FindBy(xpath = "//div[@data-ap-comp='scenarioSearchCriteria'] //button[contains(text(),'Apply')]")
     private WebElement applyButton;
 
@@ -81,6 +96,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseCostMaturityMap();
         this.get();
     }
 
@@ -134,12 +150,12 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Multi filter criteria for public selection
      * @return current page object
      */
-    public FilterCriteriaPage multiFilterPublicCriteria(String scenarioType, String[] attributes, String[] values) {
+    public FilterCriteriaPage multiFilterPublicCriteria(String scenarioType, String[] attributes, String[] values, Boolean[] dropdownFlags) {
         clear(FilterCriteriaPage.class)
             .setPublicWorkspace()
             .setScenarioType(scenarioType)
             .multiSelectAttributes(attributes)
-            .multiSelectValue(values);
+            .multiSelectValue(values, dropdownFlags);
         return this;
     }
 
@@ -241,10 +257,16 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param values - values to set
      * @return current page object
      */
-    private FilterCriteriaPage setValues(String[] values) {
+    private FilterCriteriaPage setValues(String[] values, Boolean[] dropdownFlags) {
         for (int i = 0; i < values.length; i++) {
-            WebElement elementToUse = i == 0 ? valueInputOne : valueInputTwo;
-            valueSelectionAction(elementToUse, values[i]);
+            if (!dropdownFlags[i]) {
+                WebElement elementToUse = i == 0 ? valueInputOne : valueInputTwo;
+                valueSelectionActionTextEntry(elementToUse, values[i]);
+            } else {
+                valueInputDropdown.click();
+                costMaturityOptions.get(values[i]).click();
+                valueInputDropdown.click();
+            }
         }
         return this;
     }
@@ -253,8 +275,8 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * Multi select for value
      * @param values -  values to set
      */
-    private void multiSelectValue(String[] values) {
-        setValues(values);
+    private void multiSelectValue(String[] values, Boolean[] dropdownFlags) {
+        setValues(values, dropdownFlags);
     }
 
     /**
@@ -333,7 +355,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param inputToUse - WebElement to enter text into
      * @param valueToEnter - the text to enter in the input
      */
-    private void valueSelectionAction(WebElement inputToUse, String valueToEnter) {
+    private void valueSelectionActionTextEntry(WebElement inputToUse, String valueToEnter) {
         pageUtils.waitForElementAndClick(inputToUse);
         inputToUse.clear();
         inputToUse.sendKeys(valueToEnter);
@@ -371,5 +393,12 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
             inputValue(value);
         }
         return this;
+    }
+
+    private void initialiseCostMaturityMap() {
+        costMaturityOptions.put("Initial", costMaturityInitialOption);
+        costMaturityOptions.put("Low", costMaturityLowOption);
+        costMaturityOptions.put("Medium", costMaturityMediumOption);
+        costMaturityOptions.put("High", costMaturityHighOption);
     }
 }
