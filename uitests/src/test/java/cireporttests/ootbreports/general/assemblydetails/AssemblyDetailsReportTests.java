@@ -481,7 +481,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         Boolean[] dropdownFlagArray = { false, false };
 
         EvaluatePage evaluatePage = new ExplorePage(driver)
-                .filterCriteria()
+                .filter()
                 .multiFilterPublicCriteria(Constants.ASSEMBLY_SCENARIO_TYPE, attributesArray, valuesArray, dropdownFlagArray)
                 .apply(ExplorePage.class)
                 .openFirstScenario()

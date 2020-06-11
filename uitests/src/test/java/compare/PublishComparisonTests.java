@@ -131,7 +131,7 @@ public class PublishComparisonTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 

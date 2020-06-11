@@ -48,7 +48,7 @@ public class FilterCriteriaTests extends TestBase {
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
+        explorePage.filter()
             .filterPrivateCriteria("Part", "Part Name", "Contains", "SheetMetal")
             .apply(ExplorePage.class);
 
@@ -70,7 +70,7 @@ public class FilterCriteriaTests extends TestBase {
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
+        explorePage.filter()
             .filterPrivateCriteria("Part", "Process Group", "is", "Casting - Die")
             .apply(ExplorePage.class);
 
@@ -90,7 +90,7 @@ public class FilterCriteriaTests extends TestBase {
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
+        explorePage.filter()
             .filterPrivateCriteria("Part", "Part Name", "Contains", "Wall")
             .apply(ExplorePage.class);
 
@@ -110,7 +110,7 @@ public class FilterCriteriaTests extends TestBase {
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
+        explorePage.filter()
             .filterPrivateCriteria("Assembly", "Part Name", "Contains", "Piston_assembly")
             .apply(ExplorePage.class);
 
@@ -137,7 +137,7 @@ public class FilterCriteriaTests extends TestBase {
             .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
+        explorePage.filter()
             .filterPublicCriteria("Assembly", "Status", "is", "Analysis")
             .apply(ExplorePage.class);
 
@@ -159,7 +159,7 @@ public class FilterCriteriaTests extends TestBase {
             .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
+        explorePage.filter()
             .filterPublicCriteria("Part", "Part Name", "Contains", "Push Pin")
             .apply(ExplorePage.class);
 
@@ -186,7 +186,7 @@ public class FilterCriteriaTests extends TestBase {
             .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
+        explorePage.filter()
             .filterPublicCriteria("Assembly", "Description", "Contains", "Test Description")
             .apply(ExplorePage.class);
 
@@ -210,7 +210,7 @@ public class FilterCriteriaTests extends TestBase {
             .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
+        explorePage.filter()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 

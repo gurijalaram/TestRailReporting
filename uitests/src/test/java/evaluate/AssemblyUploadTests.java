@@ -139,7 +139,7 @@ public class AssemblyUploadTests extends TestBase {
             .uploadFile(scenarioName, resourceFile)
             .delete()
             .deleteScenario()
-            .filterCriteria()
+            .filter()
             .filterPrivateCriteria("Assembly", "Scenario Name", "Contains", scenarioName)
             .apply(ExplorePage.class);
 
@@ -162,7 +162,7 @@ public class AssemblyUploadTests extends TestBase {
             .costScenario()
             .delete()
             .deleteScenario()
-            .filterCriteria()
+            .filter()
             .filterPrivateCriteria("Assembly", "Scenario Name", "Contains", scenarioName)
             .apply(ExplorePage.class);
 

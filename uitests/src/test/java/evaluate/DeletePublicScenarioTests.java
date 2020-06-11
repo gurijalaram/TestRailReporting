@@ -48,7 +48,7 @@ public class DeletePublicScenarioTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
@@ -56,7 +56,7 @@ public class DeletePublicScenarioTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.delete()
             .deleteScenario()
-            .filterCriteria()
+            .filter()
             .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 

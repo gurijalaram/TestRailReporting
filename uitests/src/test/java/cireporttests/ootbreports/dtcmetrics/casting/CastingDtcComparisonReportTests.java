@@ -153,7 +153,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         Boolean[] dropdownFlags = { false, false };
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-                .filterCriteria()
+                .filter()
                 .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray, dropdownFlags)
                 .apply(ExplorePage.class)
                 .openFirstScenario()

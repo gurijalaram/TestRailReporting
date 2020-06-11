@@ -65,7 +65,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Part", "Part Name", "Contains", partName)
             .apply(ExplorePage.class);
 

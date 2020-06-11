@@ -80,7 +80,7 @@ public class DeleteComparisonTests extends TestBase {
             .highlightComparison(testComparisonName)
             .delete()
             .deleteExploreComparison()
-            .filterCriteria()
+            .filter()
             .filterPrivateCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
@@ -104,7 +104,7 @@ public class DeleteComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.delete()
             .deleteComparison()
-            .filterCriteria()
+            .filter()
             .filterPrivateCriteria("Part", "Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
@@ -152,7 +152,7 @@ public class DeleteComparisonTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
             .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
@@ -191,7 +191,7 @@ public class DeleteComparisonTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class)
             .openComparison(testComparisonName);
@@ -199,7 +199,7 @@ public class DeleteComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.delete()
             .deleteComparison()
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
@@ -246,7 +246,7 @@ public class DeleteComparisonTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
             .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 

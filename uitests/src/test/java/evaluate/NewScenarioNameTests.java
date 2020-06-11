@@ -120,7 +120,7 @@ public class NewScenarioNameTests extends TestBase {
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Part", "Part Name", "Contains", "MultiUpload")
             .apply(ExplorePage.class);
 

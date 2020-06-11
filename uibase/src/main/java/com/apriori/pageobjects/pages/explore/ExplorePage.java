@@ -213,7 +213,7 @@ public class ExplorePage extends ExploreHeader {
      *
      * @return new page object
      */
-    public FilterCriteriaPage filterCriteria() {
+    public FilterCriteriaPage filter() {
         return scenarioTablePage.filterCriteria();
     }
 

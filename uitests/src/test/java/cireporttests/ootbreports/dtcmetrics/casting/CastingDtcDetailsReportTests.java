@@ -152,7 +152,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         Boolean[] dropdownFlagArray = { false, false };
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-                .filterCriteria()
+                .filter()
                 .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray, dropdownFlagArray)
                 .apply(ExplorePage.class)
                 .openFirstScenario()

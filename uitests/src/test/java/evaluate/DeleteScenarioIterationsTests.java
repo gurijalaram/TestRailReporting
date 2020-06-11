@@ -52,7 +52,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectLock()
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
@@ -62,7 +62,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .filterCriteria()
+            .filter()
             .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 
@@ -86,14 +86,14 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .filterCriteria()
+            .filter()
             .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class)
             .openScenario(testScenarioName, "casting")
             .delete()
             .deleteScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .filterCriteria()
+            .filter()
             .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 
