@@ -299,7 +299,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public String getProcessRoutingDetails() {
         pageUtils.scrollWithJavaScript(processRoutingName, true);
-        By processRouting = By.cssSelector("div[data-ap-field='processRoutingName'] div");
+        By processRouting = By.cssSelector("[data-ap-field='processRoutingName'] div");
         pageUtils.waitForElementToAppear(processRouting);
         return driver.findElement(processRouting).getAttribute("title");
     }
