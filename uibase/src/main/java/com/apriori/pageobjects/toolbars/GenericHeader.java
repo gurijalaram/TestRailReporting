@@ -182,12 +182,11 @@ public class GenericHeader extends PageHeader {
     /**
      * Gets the locked status
      *
-     * @return string
+     * @return true/false
      */
-    public String getActionLockedStatus() {
-        By lockToggle = By.cssSelector("button[data-ap-comp='toggleLockButton']");
-        pageUtils.waitForElementToAppear(lockToggle);
-        return driver.findElement(lockToggle).getAttribute("innerText");
+    public boolean isActionLockedStatus(String status) {
+        By lockToggle = By.xpath(String.format("//button[.='%s']", status));
+        return pageUtils.waitForElementToAppear(lockToggle).isDisplayed();
     }
 
     /**
