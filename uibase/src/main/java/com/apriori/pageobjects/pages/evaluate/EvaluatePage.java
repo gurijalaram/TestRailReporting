@@ -189,6 +189,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-comp='twoModelProdInfo'] [data-ap-field='utilization']")
     private WebElement twoModelUtilPercentage;
 
+    @FindBy(css = "[data-ap-comp='twoModelProdInfo'] [data-ap-field='finishMass']")
+    private WebElement twoModelFinishMass;
+
     @FindBy(xpath = "//div[contains(text(),'Render')]")
     private WebElement renderButton;
 
@@ -850,6 +853,15 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getTwoModelUtilizationPercentage() {
         return getUtilPercentage(twoModelUtilPercentage);
+    }
+
+    /**
+     * Get Two Model Finish Mass
+     *
+     * @return Utilization Percentage
+     */
+    public double getTwoModelFinishMass() {
+        return getUtilPercentage(twoModelFinishMass);
     }
 
 
