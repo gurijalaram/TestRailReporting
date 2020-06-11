@@ -157,7 +157,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     /**
      * Gets the selected Units
      *
-     * @return currently selected units
+     * @return true/false
      */
     public boolean getSelectedUnits(String unit) {
         return pageUtils.checkElementFirstOption(unitsDropdown, unit);
