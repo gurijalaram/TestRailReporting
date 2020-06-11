@@ -243,16 +243,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
-        pageUtils.waitForElementAndClick(exportSetSearchInput);
-        exportSetSearchInput.sendKeys(exportSet);
-        By exportSetToSelect = By.xpath("//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a");
-
-        if (driver.findElement(exportSetToSelect).isDisplayed()) {
-            pageUtils.waitForElementToAppear(exportSetToSelect);
-            pageUtils.waitForElementToBeClickable(exportSetToSelect);
-            driver.findElement(exportSetToSelect).click();
-            exportSetSearchInput.sendKeys(Keys.ENTER);
-        }
+        By exportSetToSelect = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        WebElement exportSetToPick = driver.findElement(exportSetToSelect);
+        exportSetToPick.click();
         return this;
     }
 
@@ -274,14 +267,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
-        pageUtils.checkElementAttribute(currentAssemblyElement, "className", "jr-mSingleselect-input jr jr-isFocused");
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            if (assemblyName.equals("TOP-LEVEL (Initial)")) {
-                selectAssemblyOption(3);
-            } else if (assemblyName.equals("SUB-SUB-ASM (Initial)")) {
-                selectAssemblyOption(2);
-            }
-            inputBox.sendKeys(Keys.ENTER);
+            assemblyMap.get(assemblyName).click();
         }
         return this;
     }

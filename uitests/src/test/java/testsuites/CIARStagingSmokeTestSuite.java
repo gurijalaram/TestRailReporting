@@ -1,5 +1,10 @@
 package testsuites;
 
+import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
+import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
+import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
+import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
+import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import ciadmintests.navigation.NavigationTests;
@@ -14,7 +19,12 @@ import testsuites.suiteinterface.CIARStagingSmokeTest;
 @Suite.SuiteClasses({
     NavigationTests.class,
     cireporttests.navigation.NavigationTests.class,
-    LoginTests.class
+    LoginTests.class,
+    AssemblyDetailsReportTests.class,
+    MachiningDtcReportTests.class,
+    CastingDtcReportTests.class,
+    CastingDtcDetailsReportTests.class,
+    CastingDtcComparisonReportTests.class
 })
 
 public class CIARStagingSmokeTestSuite {
