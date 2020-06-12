@@ -727,4 +727,32 @@ public class ToleranceTests extends TestBase {
 
         assertThat(toleranceSettingsPage.isCADSelected("checked"), is("true"));
     }
+
+    @Test
+    @TestRail(testCaseId = {"1298"})
+    @Description("Ensure tolerance policy is for single user.  User 1 preferences should not impact User 2 preferences")
+    public void tolerancesSingleUser() {
+
+        UserCredentials testUser1 = UserUtil.getUser();
+        UserCredentials testUser2 = UserUtil.getUser();
+        currentUser = testUser1;
+
+        loginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = loginPage.login(testUser1)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        new SettingsPage(driver).save(ExplorePage.class);
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+
+        explorePage = new ExplorePage(driver);
+        toleranceSettingsPage = explorePage.openAdminDropdown()
+            .selectLogOut()
+            .login(testUser2)
+            .openSettings()
+            .openTolerancesTab();
+
+        assertThat(toleranceSettingsPage.isAssumeSelected("checked"), is("true"));
+    }
 }
