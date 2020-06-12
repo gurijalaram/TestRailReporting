@@ -110,7 +110,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
             .apply();
-        assertThat(evaluatePage.isSecondaryProcesses(), is("0 Selected"));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
 
         new EvaluatePage(driver).openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
