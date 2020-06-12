@@ -164,6 +164,25 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
+     * Sets the workspace
+     * @param workspace - the workspace
+     * @return current page object
+     */
+    public FilterCriteriaPage setWorkspace(String workspace) {
+        switch (workspace) {
+            case "Private":
+                pageUtils.waitForElementAndClick(privateCheckBox);
+                break;
+            case "Public":
+                pageUtils.waitForElementAndClick(publicCheckBox);
+                break;
+            default:
+                throw new IllegalArgumentException("The workspace '{}' is not found" + workspace);
+        }
+        return this;
+    }
+
+    /**
      * Sets the scenario type
      *
      * @param type - scenario type
@@ -182,25 +201,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
                 break;
             default:
                 throw new IllegalArgumentException("The type '{}' is not found" + type);
-        }
-        return this;
-    }
-
-    /**
-     * Sets the workspace
-     * @param workspace - the workspace
-     * @return current page object
-     */
-    public FilterCriteriaPage setWorkspace(String workspace) {
-        switch (workspace) {
-            case "Private":
-                pageUtils.waitForElementAndClick(privateCheckBox);
-                break;
-            case "Public":
-                pageUtils.waitForElementAndClick(publicCheckBox);
-                break;
-            default:
-                throw new IllegalArgumentException("The workspace '{}' is not found" + workspace);
         }
         return this;
     }
