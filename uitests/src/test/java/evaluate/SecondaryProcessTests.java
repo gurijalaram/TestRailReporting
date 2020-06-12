@@ -109,8 +109,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
-            .apply()
-            .costScenario();
+            .apply();
         assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
 
         new EvaluatePage(driver).openSecondaryProcess()
