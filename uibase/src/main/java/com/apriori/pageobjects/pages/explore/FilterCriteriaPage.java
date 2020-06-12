@@ -257,6 +257,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         setTypeOfValue(value);
     }
 
+    // TODO: 12/06/2020 need to delete
     /**
      * Selects the attribute
      *
@@ -269,6 +270,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    // TODO: 12/06/2020 need to delete
     /**
      * Insert multiple attributes
      *
@@ -280,6 +282,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    // TODO: 12/06/2020 need to delete
     /**
      * Selects the condition
      *
@@ -324,6 +327,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    // TODO: 12/06/2020 need to delete
     /**
      * Set value in more than one row
      *
@@ -344,6 +348,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    // TODO: 12/06/2020 need to delete
     /**
      * Multi select for value
      *
@@ -387,6 +392,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    // TODO: 12/06/2020 need to delete
     /**
      * Sets attribute for multi filter
      *
@@ -401,6 +407,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    // TODO: 12/06/2020 need to delete
     /**
      * Inputs value into input field
      *
@@ -428,6 +435,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    // TODO: 12/06/2020 ask why initialising is done here
     private void initialiseCostMaturityMap() {
         costMaturityOptions.put("Initial", costMaturityInitialOption);
         costMaturityOptions.put("Low", costMaturityLowOption);
