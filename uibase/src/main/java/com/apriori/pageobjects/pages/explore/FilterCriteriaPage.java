@@ -222,11 +222,39 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowOne(String attribute, String condition, String value) {
-        new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
-        this.attribute = attribute;
-        new Select(rowOneConditionDropdown).selectByVisibleText(condition);
-        setTypeOfValue(value);
+        setRow(rowOneAttributeDropdown, rowOneConditionDropdown, attribute, condition, value);
         return this;
+    }
+
+    /**
+     * Sets fields for the second row
+     * @param attribute - the attribute
+     * @param condition - the condition
+     * @param value - the value
+     * @return current page object
+     */
+    public FilterCriteriaPage setRowTwo(String attribute, String condition, String value) {
+        setRow(rowTwoAttributeDropdown, rowTwoConditionDropdown, attribute, condition, value);
+        return this;
+    }
+
+    /**
+     * Sets fields for the third row
+     * @param attribute - the attribute
+     * @param condition - the condition
+     * @param value - the value
+     * @return current page object
+     */
+    public FilterCriteriaPage setRowThree(String attribute, String condition, String value) {
+        setRow(rowThreeAttributeDropdown, rowThreeConditionDropdown, attribute, condition, value);
+        return this;
+    }
+
+    private void setRow(WebElement attributeLocator, WebElement conditionLocator, String attribute, String condition, String value) {
+        this.attribute = attribute;
+        new Select(attributeLocator).selectByVisibleText(attribute);
+        new Select(conditionLocator).selectByVisibleText(condition);
+        setTypeOfValue(value);
     }
 
     /**
