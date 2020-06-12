@@ -168,8 +168,8 @@ public class AssemblyUploadTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSelectedVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
-        assertThat(evaluatePage.getAnnualVolume("3126"), is(true));
-        assertThat(evaluatePage.getProductionLife("9"), is(true));
+        assertThat(evaluatePage.getAnnualVolume(), is("3126"));
+        assertThat(evaluatePage.getProductionLife(), is("9"));
 
         explorePage = evaluatePage.delete()
             .deleteScenario()
