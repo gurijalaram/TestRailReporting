@@ -707,11 +707,12 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Checks the value of Utilization
      *
-     * @param value - the value
-     * @return true/false
+     * @return double
      */
-    public boolean isUtilization(String value) {
-        return pageUtils.checkElementAttribute(utilization, "innerText", value);
+    public double getUtilization() {
+        By utilization = By.cssSelector("td[data-ap-field='utilization']");
+        pageUtils.waitForElementToAppear(utilization);
+        return Double.parseDouble(driver.findElement(utilization).getAttribute("innerText"));
     }
 
     /**
@@ -760,7 +761,7 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets table values by specified row index
      *
-     * @param row
+     * @param row - the row
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getTableValsByRow(String row) {
