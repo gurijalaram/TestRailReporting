@@ -49,11 +49,20 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "select[data-ap-field='criteria0.criteriaName']")
     private WebElement rowOneAttributeDropdown;
 
+    @FindBy(css = "select[data-ap-field='criteria0.operation']")
+    private WebElement rowOneConditionDropdown;
+
     @FindBy(css = "select[data-ap-field='criteria1.criteriaName']")
     private WebElement rowTwoAttributeDropdown;
 
-    @FindBy(css = "select[data-ap-field='criteria0.operation']")
-    private WebElement conditionDropdown;
+    @FindBy(css = "select[data-ap-field='criteria1.operation']")
+    private WebElement rowTwoConditionDropdown;
+
+    @FindBy(css = "select[data-ap-field='criteria2.criteriaName']")
+    private WebElement rowThreeAttributeDropdown;
+
+    @FindBy(css = "select[data-ap-field='criteria2.operation']")
+    private WebElement rowThreeConditionDropdown;
 
     @FindBy(css = "input[data-ap-field='criteria0.value']")
     private WebElement valueInputOne;
@@ -177,7 +186,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
                 pageUtils.waitForElementAndClick(publicCheckBox);
                 break;
             default:
-                throw new IllegalArgumentException("The workspace '{}' is not found" + workspace);
+                throw new IllegalArgumentException(String.format("The workspace '%s' is not found", workspace));
         }
         return this;
     }
@@ -188,7 +197,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param type - scenario type
      * @return current page object
      */
-    protected FilterCriteriaPage setScenarioType(String type) {
+    public FilterCriteriaPage setScenarioType(String type) {
         switch (type) {
             case "Part":
                 pageUtils.waitForElementAndClick(partCheckBox);
@@ -202,6 +211,21 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
             default:
                 throw new IllegalArgumentException("The type '{}' is not found" + type);
         }
+        return this;
+    }
+
+    /**
+     * Sets fields for the first row
+     * @param attribute - the attribute
+     * @param condition - the condition
+     * @param value - the value
+     * @return current page object
+     */
+    public FilterCriteriaPage setRowOne(String attribute, String condition, String value) {
+        new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
+        this.attribute = attribute;
+        new Select(rowOneConditionDropdown).selectByVisibleText(condition);
+        setTypeOfValue(value);
         return this;
     }
 
@@ -235,7 +259,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     private FilterCriteriaPage selectCondition(String condition) {
-        new Select(conditionDropdown).selectByVisibleText(condition);
+        new Select(rowOneConditionDropdown).selectByVisibleText(condition);
         return this;
     }
 
@@ -255,13 +279,19 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     /**
      * Selects the value as a dropdown
      *
-     * @param input - the input value
+     * @param selections - the input value
      * @return current page object
      */
-    private FilterCriteriaPage selectValue(String input) {
-        valueInputDropdown.click();
-        WebElement value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", input)));
-        value.click();
+    private FilterCriteriaPage setValue(String selections) {
+        WebElement value;
+        String[] valuesToSelect = selections.split(",");
+
+        pageUtils.waitForElementAndClick(valueInputDropdown);
+
+        for (String valueToSelect:valuesToSelect) {
+            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
+            pageUtils.waitForElementAndClick(value);
+        }
         valueInputDropdown.sendKeys(Keys.ESCAPE);
         return this;
     }
@@ -363,7 +393,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     private FilterCriteriaPage setTypeOfValue(String value) {
         if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
-            selectValue(value);
+            setValue(value);
         } else {
             inputValue(value);
         }
