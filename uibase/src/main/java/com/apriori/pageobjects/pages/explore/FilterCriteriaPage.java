@@ -181,7 +181,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
                 pageUtils.waitForElementAndClick(comparisonCheckBox);
                 break;
             default:
-                throw new IllegalArgumentException("The type: " + type + " is not found");
+                throw new IllegalArgumentException("The type '{}' is not found" + type);
         }
         return this;
     }
@@ -200,7 +200,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
                 pageUtils.waitForElementAndClick(publicCheckBox);
                 break;
             default:
-                throw new IllegalArgumentException("The workspace: " + workspace + " is not found");
+                throw new IllegalArgumentException("The workspace '{}' is not found" + workspace);
         }
         return this;
     }
