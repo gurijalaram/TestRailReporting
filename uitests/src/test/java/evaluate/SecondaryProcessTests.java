@@ -109,8 +109,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
-            .apply()
-            .costScenario();
+            .apply();
         assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
 
         new EvaluatePage(driver).openSecondaryProcess()
@@ -741,7 +740,6 @@ public class SecondaryProcessTests extends TestBase {
         processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
             .openSecondaryProcess()
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal")
             .setMaskedFeaturesInput("2");
@@ -768,7 +766,6 @@ public class SecondaryProcessTests extends TestBase {
         processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
             .openSecondaryProcess()
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper")
             .setMaskedFeaturesInput("1");
