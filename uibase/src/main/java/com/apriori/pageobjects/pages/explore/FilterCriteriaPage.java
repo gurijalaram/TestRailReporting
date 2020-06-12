@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.WorkspaceEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -121,7 +122,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
         clear()
-            .setPrivateWorkSpace()
+            .setWorkspace(WorkspaceEnum.PRIVATE.getWorkspace())
             .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)
@@ -140,7 +141,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     public FilterCriteriaPage filterPublicCriteria(String type, String attribute, String condition, String value) {
         clear()
-            .setPublicWorkspace()
+            .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
             .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)
@@ -155,7 +156,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     public FilterCriteriaPage multiFilterPublicCriteria(String scenarioType, String[] attributes, String[] values, Boolean[] dropdownFlags) {
         clear()
-            .setPublicWorkspace()
+            .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
             .setScenarioType(scenarioType)
             .multiSelectAttributes(attributes)
             .multiSelectValue(values, dropdownFlags);
@@ -169,27 +170,38 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     protected FilterCriteriaPage setScenarioType(String type) {
-        selectScenarioType(type);
+        switch (type) {
+            case "Part":
+                pageUtils.waitForElementAndClick(partCheckBox);
+                break;
+            case "Assembly":
+                pageUtils.waitForElementAndClick(assemblyCheckBox);
+                break;
+            case "Comparison":
+                pageUtils.waitForElementAndClick(comparisonCheckBox);
+                break;
+            default:
+                throw new IllegalArgumentException("The type: " + type + " is not found");
+        }
         return this;
     }
 
     /**
-     * Selects the checkbox
-     *
+     * Sets the workspace
+     * @param workspace - the workspace
      * @return current page object
      */
-    private FilterCriteriaPage setPrivateWorkSpace() {
-        privateCheckBox.click();
-        return this;
-    }
-
-    /**
-     * Selects the checkbox
-     *
-     * @return current page object
-     */
-    private FilterCriteriaPage setPublicWorkspace() {
-        publicCheckBox.click();
+    public FilterCriteriaPage setWorkspace(String workspace) {
+        switch (workspace) {
+            case "Private":
+                pageUtils.waitForElementAndClick(privateCheckBox);
+                break;
+            case "Public":
+                pageUtils.waitForElementAndClick(publicCheckBox);
+                break;
+            default:
+                throw new IllegalArgumentException("The workspace: " + workspace + " is not found");
+        }
         return this;
     }
 
@@ -341,27 +353,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         pageUtils.waitForElementAndClick(inputToUse);
         inputToUse.clear();
         inputToUse.sendKeys(valueToEnter);
-    }
-
-    /**
-     * Selects scenario type for filter popup
-     *
-     * @param type - scenario name
-     */
-    private void selectScenarioType(String type) {
-        switch (type) {
-            case "Part":
-                pageUtils.waitForElementAndClick(partCheckBox);
-                break;
-            case "Assembly":
-                pageUtils.waitForElementAndClick(assemblyCheckBox);
-                break;
-            case "Comparison":
-                pageUtils.waitForElementAndClick(comparisonCheckBox);
-                break;
-            default:
-                throw new IllegalArgumentException("The type: " + type + " is not found");
-        }
     }
 
     /**
