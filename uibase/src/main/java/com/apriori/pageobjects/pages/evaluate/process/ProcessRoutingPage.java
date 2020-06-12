@@ -194,13 +194,14 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the machine name
+     * Get the machine name
      *
-     * @param name - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isMachineName(String name) {
-        return pageUtils.checkElementAttribute(machineName, "innerText", name);
+    public String getMachineName() {
+        By machine = By.cssSelector("[data-ap-field='machineName']");
+        pageUtils.waitForElementToAppear(machine);
+        return driver.findElement(machine).getAttribute("innerText");
     }
 
     /**

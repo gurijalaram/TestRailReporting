@@ -1,5 +1,6 @@
 package compare;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -87,7 +88,7 @@ public class EditPublicComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.editScenario(ComparePage.class);
 
-        assertThat(comparePage.isComparisonName(testComparisonName.toUpperCase()), is(true));
+        assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
     }
 
     @Test

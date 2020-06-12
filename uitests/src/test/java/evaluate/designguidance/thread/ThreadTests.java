@@ -397,7 +397,7 @@ public class ThreadTests extends TestBase {
             .openInvestigationTab()
             .selectInvestigationTopic("Threading");
 
-        assertThat(investigationPage.getThreadHeader("(in)"), is(true));
+        assertThat(investigationPage.getThreadHeader(), containsString("(in)"));
     }
 
     @Test
@@ -421,7 +421,7 @@ public class ThreadTests extends TestBase {
             .openInvestigationTab()
             .selectInvestigationTopic("Threading");
 
-        assertThat(investigationPage.getThreadHeader("(mm)"), is(true));
+        assertThat(investigationPage.getThreadHeader(), containsString("(mm)"));
 
         investigationPage.editThread("Simple Holes", "SimpleHole:1");
 
