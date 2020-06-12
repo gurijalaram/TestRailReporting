@@ -83,7 +83,7 @@ public class SecondaryProcessTests extends TestBase {
         secondaryProcessPage = new SecondaryProcessPage(driver);
         evaluatePage = secondaryProcessPage.apply()
             .costScenario();
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Hydrostatic Leak Testing"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Hydrostatic Leak Testing"));
 
         evaluatePage = new EvaluatePage(driver);
         processSetupOptionsPage = evaluatePage.openProcessDetails()
@@ -118,7 +118,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Xray Inspection"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Xray Inspection"));
         assertThat(evaluatePage.getSecondaryProcesses(), is("1 Selected"));
     }
 
@@ -342,7 +342,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Powder Coat Cart"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Coat Cart"));
 
         processRoutingPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Powder Coat Cart");
@@ -472,7 +472,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Passivation / Carton Forming / Pack & Load"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation / Carton Forming / Pack & Load"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -499,7 +499,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Anodize / Carton Forming / Pack & Load"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize / Carton Forming / Pack & Load"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
