@@ -112,6 +112,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Filter criteria for private selection
+     *
      * @param type      - type of selection whether private or public
      * @param attribute - the attribute
      * @param condition - specified condition
@@ -119,7 +120,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
-        clear(FilterCriteriaPage.class)
+        clear()
             .setPrivateWorkSpace()
             .setScenarioType(type)
             .selectAttribute(attribute)
@@ -130,6 +131,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Filter criteria for public selection
+     *
      * @param type      - type of selection whether private or public
      * @param attribute - the attribute
      * @param condition - specified condition
@@ -137,7 +139,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage filterPublicCriteria(String type, String attribute, String condition, String value) {
-        clear(FilterCriteriaPage.class)
+        clear()
             .setPublicWorkspace()
             .setScenarioType(type)
             .selectAttribute(attribute)
@@ -148,10 +150,11 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Multi filter criteria for public selection
+     *
      * @return current page object
      */
     public FilterCriteriaPage multiFilterPublicCriteria(String scenarioType, String[] attributes, String[] values, Boolean[] dropdownFlags) {
-        clear(FilterCriteriaPage.class)
+        clear()
             .setPublicWorkspace()
             .setScenarioType(scenarioType)
             .multiSelectAttributes(attributes)
@@ -160,16 +163,8 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     /**
-     * Clears all listed checkboxes
-     * @return current page object
-     */
-    private FilterCriteriaPage clearAllCheckBoxes() {
-        listOfCheckboxes.stream().filter(checkbox -> checkbox.getAttribute("checked") != null).forEach(WebElement::click);
-        return this;
-    }
-
-    /**
      * Sets the scenario type
+     *
      * @param type - scenario type
      * @return current page object
      */
@@ -180,6 +175,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the checkbox
+     *
      * @return current page object
      */
     private FilterCriteriaPage setPrivateWorkSpace() {
@@ -189,6 +185,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the checkbox
+     *
      * @return current page object
      */
     private FilterCriteriaPage setPublicWorkspace() {
@@ -198,6 +195,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the attribute
+     *
      * @param attribute - the attribute
      * @return current page object
      */
@@ -209,6 +207,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Insert multiple attributes
+     *
      * @param attributes - attribute array
      * @return current page object
      */
@@ -219,6 +218,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the condition
+     *
      * @param condition - the condition
      * @return current page object
      */
@@ -229,6 +229,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets the value as input
+     *
      * @param input - the input value
      * @return current page object
      */
@@ -241,6 +242,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the value as a dropdown
+     *
      * @param input - the input value
      * @return current page object
      */
@@ -254,6 +256,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Set value in more than one row
+     *
      * @param values - values to set
      * @return current page object
      */
@@ -273,6 +276,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Multi select for value
+     *
      * @param values -  values to set
      */
     private void multiSelectValue(String[] values, Boolean[] dropdownFlags) {
@@ -281,6 +285,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the apply button
+     *
      * @param className - the class the method should return
      * @param <T>       - the generic declaration type
      * @return generic page object
@@ -304,13 +309,81 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Selects the clear button
-     * @param className - the class the method should return
-     * @param <T>       - the generic declaration type
+     *
      * @return generic page object
      */
-    public <T> T clear(Class<T> className) {
+    public FilterCriteriaPage clear() {
         pageUtils.waitForElementAndClick(clearButton);
-        return PageFactory.initElements(driver, className);
+        return this;
+    }
+
+    /**
+     * Sets attribute for multi filter
+     *
+     * @param attributes - array of attributes to set
+     * @return current page object
+     */
+    private FilterCriteriaPage setAttributes(String[] attributes) {
+        for (int i = 0; i < attributes.length; i++) {
+            WebElement elementToUse = i == 0 ? rowOneAttributeDropdown : rowTwoAttributeDropdown;
+            pageUtils.selectDropdownOption(elementToUse, attributes[i]);
+        }
+        return this;
+    }
+
+    /**
+     * Inputs value into input field
+     *
+     * @param inputToUse   - WebElement to enter text into
+     * @param valueToEnter - the text to enter in the input
+     */
+    private void valueSelectionActionTextEntry(WebElement inputToUse, String valueToEnter) {
+        pageUtils.waitForElementAndClick(inputToUse);
+        inputToUse.clear();
+        inputToUse.sendKeys(valueToEnter);
+    }
+
+    /**
+     * Selects scenario type for filter popup
+     *
+     * @param type - scenario name
+     */
+    private void selectScenarioType(String type) {
+        switch (type) {
+            case "Part":
+                pageUtils.waitForElementAndClick(partCheckBox);
+                break;
+            case "Assembly":
+                pageUtils.waitForElementAndClick(assemblyCheckBox);
+                break;
+            case "Comparison":
+                pageUtils.waitForElementAndClick(comparisonCheckBox);
+                break;
+            default:
+                throw new IllegalArgumentException("The type: " + type + " is not found");
+        }
+    }
+
+    /**
+     * Choose how data is entered either via input or dropdown based on enum
+     *
+     * @param value - enum value
+     * @return current page object
+     */
+    private FilterCriteriaPage setTypeOfValue(String value) {
+        if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
+            selectValue(value);
+        } else {
+            inputValue(value);
+        }
+        return this;
+    }
+
+    private void initialiseCostMaturityMap() {
+        costMaturityOptions.put("Initial", costMaturityInitialOption);
+        costMaturityOptions.put("Low", costMaturityLowOption);
+        costMaturityOptions.put("Medium", costMaturityMediumOption);
+        costMaturityOptions.put("High", costMaturityHighOption);
     }
 
     /**
@@ -335,70 +408,5 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
             return attributeValue;
         }
-    }
-
-    /**
-     * Sets attribute for multi filter
-     * @param attributes - array of attributes to set
-     * @return current page object
-     */
-    private FilterCriteriaPage setAttributes(String[] attributes) {
-        for (int i = 0; i < attributes.length; i++) {
-            WebElement elementToUse = i == 0 ? rowOneAttributeDropdown : rowTwoAttributeDropdown;
-            pageUtils.selectDropdownOption(elementToUse, attributes[i]);
-        }
-        return this;
-    }
-
-    /**
-     * Inputs value into input field
-     * @param inputToUse - WebElement to enter text into
-     * @param valueToEnter - the text to enter in the input
-     */
-    private void valueSelectionActionTextEntry(WebElement inputToUse, String valueToEnter) {
-        pageUtils.waitForElementAndClick(inputToUse);
-        inputToUse.clear();
-        inputToUse.sendKeys(valueToEnter);
-    }
-
-    /**
-     * Selects scenario type for filter popup
-     * @param type - scenario name
-     */
-    private void selectScenarioType(String type) {
-        switch (type) {
-            case "Part":
-                pageUtils.waitForElementAndClick(partCheckBox);
-                break;
-            case "Assembly":
-                pageUtils.waitForElementAndClick(assemblyCheckBox);
-                break;
-            case "Comparison":
-                pageUtils.waitForElementAndClick(comparisonCheckBox);
-                break;
-            default:
-                throw new IllegalArgumentException("The type: " + type + " is not found");
-        }
-    }
-
-    /**
-     * Choose how data is entered either via input or dropdown based on enum
-     * @param value - enum value
-     * @return current page object
-     */
-    private FilterCriteriaPage setTypeOfValue(String value) {
-        if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
-            selectValue(value);
-        } else {
-            inputValue(value);
-        }
-        return this;
-    }
-
-    private void initialiseCostMaturityMap() {
-        costMaturityOptions.put("Initial", costMaturityInitialOption);
-        costMaturityOptions.put("Low", costMaturityLowOption);
-        costMaturityOptions.put("Medium", costMaturityMediumOption);
-        costMaturityOptions.put("High", costMaturityHighOption);
     }
 }
