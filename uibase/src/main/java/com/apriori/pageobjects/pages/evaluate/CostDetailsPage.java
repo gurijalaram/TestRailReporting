@@ -97,45 +97,50 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
     /**
      * Gets Total Variable Costs
      *
-     * @return string
+     * @return double
      */
-    public String getTotalVariableCosts() {
-        return pageUtils.waitForElementToAppear(totalVariableCosts).getText();
+    public Double getTotalVariableCosts() {
+        pageUtils.waitForElementToAppear(totalVariableCosts);
+        return Double.parseDouble(totalVariableCosts.getText());
     }
 
     /**
      * Gets Indirect Overhead
      *
-     * @return string
+     * @return double
      */
-    public String getIndirectOverhead() {
-        return pageUtils.waitForElementToAppear(indirectOverhead).getText();
+    public Double getIndirectOverhead() {
+        pageUtils.waitForElementToAppear(indirectOverhead);
+        return Double.parseDouble(indirectOverhead.getText());
     }
 
     /**
      * Gets SG&A
      *
-     * @return string
+     * @return double
      */
-    public String getSGandA() {
-        return pageUtils.waitForElementToAppear(sganda).getText();
+    public Double getSGandA() {
+        pageUtils.waitForElementToAppear(sganda);
+        return Double.parseDouble(sganda.getText());
     }
 
     /**
      * Gets Margin
      *
-     * @return string
+     * @return double
      */
-    public String getMargin() {
-        return pageUtils.waitForElementToAppear(margin).getText();
+    public Double getMargin() {
+        pageUtils.waitForElementToAppear(margin);
+        return Double.parseDouble(margin.getText());
     }
 
     /**
      * Gets Piece Part Cost
      *
-     * @return string
+     * @return double
      */
-    public String getPiecePartCost() {
-        return pageUtils.waitForElementToAppear(piecePartCost).getText();
+    public Double getPiecePartCost() {
+        pageUtils.waitForElementToAppear(piecePartCost);
+        return Double.parseDouble(piecePartCost.getText());
     }
 }

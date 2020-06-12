@@ -486,10 +486,11 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets cycle time count
      *
-     * @return string
+     * @return double
      */
-    public String getCycleTimeCount() {
-        return pageUtils.waitForElementToAppear(cycleTimeCount).getText();
+    public Double getCycleTimeCount() {
+        pageUtils.waitForElementToAppear(cycleTimeCount);
+        return Double.parseDouble(cycleTimeCount.getText());
     }
 
     /**
@@ -554,10 +555,11 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the capital investment
      *
-     * @return string
+     * @return double
      */
-    public String getCapitalInvestment() {
-        return pageUtils.waitForElementToAppear(capitalInvestments).getText();
+    public Double getCapitalInvestment() {
+        pageUtils.waitForElementToAppear(capitalInvestments);
+        return Double.parseDouble(capitalInvestments.getText());
     }
 
     /**
@@ -702,6 +704,16 @@ public class EvaluatePage extends EvaluateHeader {
         By finishMass = By.cssSelector("td[data-ap-field='finishMass']");
         pageUtils.waitForElementToAppear(finishMass);
         return Double.parseDouble(driver.findElement(finishMass).getAttribute("innerText"));
+    }
+
+    /**
+     * Gets the value of finish mass
+     *
+     * @return string
+     */
+    public boolean isFinishMass(String mass) {
+        By finishMass = By.xpath(String.format("//td[@title='%s']",mass));
+        return pageUtils.waitForElementToAppear(driver.findElement(finishMass)).isDisplayed();
     }
 
     /**

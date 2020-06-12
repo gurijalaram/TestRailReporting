@@ -216,36 +216,40 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
     /**
      * Gets cycle time count
      *
-     * @return string
+     * @return double
      */
-    public String getCycleTime() {
-        return pageUtils.waitForElementToAppear(cycleTime).getText();
+    public Double getCycleTime() {
+        pageUtils.waitForElementToAppear(cycleTime);
+        return Double.parseDouble(cycleTime.getText());
     }
 
     /**
      * Gets Piece Part Cost
      *
-     * @return string
+     * @return double
      */
-    public String getPiecePartCost() {
-        return pageUtils.waitForElementToAppear(piecePartCost).getText();
+    public Double getPiecePartCost() {
+        pageUtils.waitForElementToAppear(piecePartCost);
+        return Double.parseDouble(piecePartCost.getText());
     }
 
     /**
      * Gets Fully Burdened Cost
      *
-     * @return string
+     * @return double
      */
-    public String getFullyBurdenedCost() {
-        return pageUtils.waitForElementToAppear(fullyBurdenedCost).getText();
+    public Double getFullyBurdenedCost() {
+        pageUtils.waitForElementToAppear(fullyBurdenedCost);
+        return Double.parseDouble(fullyBurdenedCost.getText());
     }
 
     /**
      * Gets Total Capital Investments
      *
-     * @return string
+     * @return double
      */
-    public String getCapitalInvestments() {
-        return pageUtils.waitForElementToAppear(capitalInvestment).getText();
+    public Double getCapitalInvestments() {
+        pageUtils.waitForElementToAppear(capitalInvestment);
+        return Double.parseDouble(capitalInvestment.getText());
     }
 }
