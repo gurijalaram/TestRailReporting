@@ -737,7 +737,8 @@ public class ToleranceTests extends TestBase {
         UserCredentials testUser2 = UserUtil.getUser();
         currentUser = testUser1;
 
-        new CIDLoginPage(driver).login(testUser1)
+        loginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = loginPage.login(testUser1)
             .openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
@@ -745,11 +746,10 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
-        new ExplorePage(driver).openAdminDropdown()
-            .selectLogOut();
-
-        cidLoginPage = new CIDLoginPage(driver);
-        toleranceSettingsPage = cidLoginPage.login(testUser2)
+        explorePage = new ExplorePage(driver);
+        toleranceSettingsPage = explorePage.openAdminDropdown()
+            .selectLogOut()
+            .login(testUser2)
             .openSettings()
             .openTolerancesTab();
 

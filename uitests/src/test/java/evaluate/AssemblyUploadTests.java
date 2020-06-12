@@ -206,8 +206,7 @@ public class AssemblyUploadTests extends TestBase {
 
         assertThat(vpeSelectionPage.isUsePrimaryVPESelected("checked"), is("true"));
 
-        vpeSelectionPage = new VPESelectionPage(driver);
-        evaluatePage = vpeSelectionPage.close()
+        evaluatePage = new VPESelectionPage(driver).close()
             .closePanel();
 
         assertThat(evaluatePage.isProcessRoutingDetails("Powder Coat Cart"), Matchers.is(true));
