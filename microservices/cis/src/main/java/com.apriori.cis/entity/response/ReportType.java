@@ -2,7 +2,7 @@ package com.apriori.cis.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "CisReportTypeSchema.json")
+@Schema(location = "ReportTypeSchema.json")
 public class ReportType {
     private String identity;
     private String createdBy;

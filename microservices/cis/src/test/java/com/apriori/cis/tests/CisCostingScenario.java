@@ -1,16 +1,17 @@
 package com.apriori.cis.tests;
 
-import com.apriori.cis.utils.CisUtils;
+import com.apriori.apibase.utils.TestUtil;
+
 import com.apriori.cis.controller.BatchPartResources;
 import com.apriori.cis.controller.BatchResources;
 import com.apriori.cis.controller.PartResources;
+import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
-import com.apriori.cis.entity.request.NewPartRequest;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cis.utils.CisUtils;
+
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
@@ -46,8 +47,8 @@ public class CisCostingScenario extends TestUtil {
 
         // create batch part
         NewPartRequest newPartRequest =
-                (NewPartRequest)JsonManager.serializeJsonFromFile(Constants.getApitestsBasePath() +
-                        "testdata/CreatePartData.json", NewPartRequest.class);
+                (NewPartRequest)JsonManager.serializeJsonFromFile(
+                        getClass().getClassLoader().getResource("CreatePartData.json").getPath(), NewPartRequest.class);
         Part batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
 
         String partIdentity = "";

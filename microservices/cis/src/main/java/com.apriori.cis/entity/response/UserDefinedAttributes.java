@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "CisUserDefinedAttributesSchema.json")
+@Schema(location = "UserDefinedAttributesSchema.json")
 public class UserDefinedAttributes extends Pagination {
     private String name;
     private String displayName;

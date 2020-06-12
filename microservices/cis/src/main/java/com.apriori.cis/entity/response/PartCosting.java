@@ -2,7 +2,7 @@ package com.apriori.cis.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "CisPartCostingSchema.json")
+@Schema(location = "PartCostingSchema.json")
 public class PartCosting {
     private Integer dtcMessagesCount;
     private Integer failedGcdsCount;

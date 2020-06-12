@@ -2,7 +2,7 @@ package com.apriori.cis.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "CisReportExportSchema.json")
+@Schema(location = "ReportExportSchema.json")
 public class ReportExport { 
     private String reportIdentity;
     private String fileName;

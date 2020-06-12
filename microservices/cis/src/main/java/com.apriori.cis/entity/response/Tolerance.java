@@ -2,7 +2,7 @@ package com.apriori.cis.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "cis/CisToleranceSchema.json")
+@Schema(location = "ToleranceSchema.json")
 public class Tolerance {
     private String name;
     private String unit;

@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "cis/CisReportTypesSchema.json")
+@Schema(location = "ReportTypesSchema.json")
 public class ReportTypes extends Pagination {
     private ReportTypes response;
     private List<ReportType> items;

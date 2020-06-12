@@ -5,7 +5,6 @@ import com.apriori.cis.controller.CustomerResources;
 import com.apriori.cis.entity.request.PatchCostingPreferenceRequest;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
@@ -58,8 +57,8 @@ public class CisCustomerResources extends CustomerBase {
     public void patchCostingPreferences() {
         Random rand = new Random();
         PatchCostingPreferenceRequest cp =
-                (PatchCostingPreferenceRequest) JsonManager.serializeJsonFromFile(Constants.getApitestsBasePath() +
-                "/apitests/cis/testdata/UpdateCostingPreferences.json", PatchCostingPreferenceRequest.class);
+                (PatchCostingPreferenceRequest) JsonManager.serializeJsonFromFile(
+                        getClass().getClassLoader().getResource("UpdateCostingPreferences.json").getPath(), PatchCostingPreferenceRequest.class);
         Double value = rand.nextDouble();
         cp.setCadToleranceReplacement(100.00);
         cp.setMinCadToleranceThreshold(value);
