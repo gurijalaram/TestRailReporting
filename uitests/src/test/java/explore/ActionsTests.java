@@ -191,7 +191,6 @@ public class ActionsTests extends TestBase {
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario()
             .selectInfoNotes()
             .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
             .save(EvaluatePage.class)
