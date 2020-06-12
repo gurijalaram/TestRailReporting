@@ -47,6 +47,6 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
      * @return String - text of report name
      */
     public String getReportName(String reportName) {
-        return pageUtils.getReportNameText(reportName);
+        return pageUtils.getReportElement(reportName).getText();
     }
 }
