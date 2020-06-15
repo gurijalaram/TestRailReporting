@@ -84,7 +84,7 @@ subprojects {
     checkstyle {
         configFile file("${project.rootDir}/checkstyle.xml")
         toolVersion '8.24'
-        ignoreFailures = false
+        ignoreFailures = true
     }
 
     //set checkstyle main class

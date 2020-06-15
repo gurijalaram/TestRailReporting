@@ -1,6 +1,7 @@
 package users;
 
 import com.apriori.utils.PageUtils;
+
 import header.GenericHeader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

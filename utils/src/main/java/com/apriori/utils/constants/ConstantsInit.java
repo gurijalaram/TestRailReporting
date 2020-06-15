@@ -25,6 +25,9 @@ public interface ConstantsInit extends Config {
     @Key("url.additional.admin")
     String ciaURL();
 
+    @Key("url.additional.cic")
+    String cicURL();
+
     @Key("url.grid.server")
     String gridServerUrl();
 

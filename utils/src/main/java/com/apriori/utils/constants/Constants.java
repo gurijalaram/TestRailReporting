@@ -19,7 +19,7 @@ public class Constants {
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-aut";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cic-qa";
 
     public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
     public static final String DEFAULT_EXPORT_SET_NAME_KEY = "exportSetName";
@@ -66,6 +66,9 @@ public class Constants {
     public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
+
+    public static String CIC_USERNAME = "kpatel@apriori.com";
+    public static String CIC_PASSWORD = "NewPassword1234";
 
     public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
 
@@ -119,6 +122,7 @@ public class Constants {
     public static final String cidURL = getBaseUrl() + constantsInit.cidURL();
     public static final String cirURL = getBaseUrl() + constantsInit.cirURL();
     public static final String ciaURL = getBaseUrl() + constantsInit.ciaURL();
+    public static final String cicURL = constantsInit.cicURL();
     public static final String usersFile = constantsInit.usersCsvFileName();
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 

@@ -1,6 +1,7 @@
 package workflows;
 
 import com.apriori.utils.PageUtils;
+
 import header.GenericHeader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -61,5 +62,9 @@ public class GenericWorkflow extends GenericHeader {
     public History clickScheduleHistoryTab() {
         scheduleHistoryTab.click();
         return new History(driver);
+    }
+
+    public String getWorkflowText() {
+        return workflowLabel.getText();
     }
 }
