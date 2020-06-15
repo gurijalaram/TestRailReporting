@@ -401,6 +401,15 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    /**
+     * Clears all listed checkboxes
+     * @return current page object
+     */
+    public FilterCriteriaPage clearAllCheckBoxes() {
+        listOfCheckboxes.stream().filter(checkbox -> checkbox.getAttribute("checked") != null).forEach(WebElement::click);
+        return this;
+    }
+
     // TODO: 12/06/2020 need to delete
 
     /**
