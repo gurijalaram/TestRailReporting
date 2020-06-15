@@ -120,6 +120,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         pageUtils.waitForElementToAppear(rowOneAttributeDropdown);
     }
 
+    // TODO: 15/06/2020 need to delete
     /**
      * Filter criteria for private selection
      *
@@ -139,6 +140,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
+    // TODO: 15/06/2020 need to delete
     /**
      * Filter criteria for public selection
      *
