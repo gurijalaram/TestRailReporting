@@ -181,14 +181,14 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     public FilterCriteriaPage setWorkspace(String criteriaWorkspace) {
         String[] workspaces = criteriaWorkspace.split(",");
 
-        for (String workspace : workspaces) {
+        Arrays.stream(workspaces).forEach(workspace -> {
             if (workspace.trim().equalsIgnoreCase("Private")) {
                 pageUtils.waitForElementAndClick(privateCheckBox);
             }
             if (workspace.trim().equalsIgnoreCase("Public")) {
                 pageUtils.waitForElementAndClick(publicCheckBox);
             }
-        }
+        });
         return this;
     }
 
@@ -201,7 +201,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     public FilterCriteriaPage setScenarioType(String scenarioType) {
         String[] scenarios = scenarioType.split(",");
 
-        for (String scenario : scenarios) {
+        Arrays.stream(scenarios).forEach(scenario -> {
             if (scenario.trim().equalsIgnoreCase("Part")) {
                 pageUtils.waitForElementAndClick(partCheckBox);
             }
@@ -209,9 +209,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
                 pageUtils.waitForElementAndClick(assemblyCheckBox);
             }
             if (scenario.trim().equalsIgnoreCase("Comparison")) {
-                pageUtils.waitForElementAndClick(assemblyCheckBox);
+                pageUtils.waitForElementAndClick(comparisonCheckBox);
             }
-        }
+        });
         return this;
     }
 
@@ -322,12 +322,12 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     private FilterCriteriaPage setValue(String selections) {
         WebElement value;
-        String[] valuesToSelect = selections.trim().split(",");
+        String[] valuesToSelect = selections.split(",");
 
         pageUtils.waitForElementAndClick(valueInputDropdown);
 
         for (String valueToSelect : valuesToSelect) {
-            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect)));
+            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
             pageUtils.waitForElementAndClick(value);
         }
         valueInputDropdown.sendKeys(Keys.ESCAPE);
