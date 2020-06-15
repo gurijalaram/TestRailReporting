@@ -174,19 +174,20 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets the workspace
-     * @param workspace - the workspace
+     *
+     * @param criteriaWorkspace - the workspace
      * @return current page object
      */
-    public FilterCriteriaPage setWorkspace(String workspace) {
-        switch (workspace) {
-            case "Private":
+    public FilterCriteriaPage setWorkspace(String criteriaWorkspace) {
+        String[] workspaces = criteriaWorkspace.split(",");
+
+        for (String workspace : workspaces) {
+            if (workspace.trim().equalsIgnoreCase("Private")) {
                 pageUtils.waitForElementAndClick(privateCheckBox);
-                break;
-            case "Public":
+            }
+            if (workspace.trim().equalsIgnoreCase("Public")) {
                 pageUtils.waitForElementAndClick(publicCheckBox);
-                break;
-            default:
-                throw new IllegalArgumentException(String.format("The workspace '%s' is not found", workspace));
+            }
         }
         return this;
     }
@@ -194,31 +195,32 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     /**
      * Sets the scenario type
      *
-     * @param type - scenario type
+     * @param scenarioType - scenario type
      * @return current page object
      */
-    public FilterCriteriaPage setScenarioType(String type) {
-        switch (type) {
-            case "Part":
+    public FilterCriteriaPage setScenarioType(String scenarioType) {
+        String[] scenarios = scenarioType.split(",");
+
+        for (String scenario : scenarios) {
+            if (scenario.trim().equalsIgnoreCase("Part")) {
                 pageUtils.waitForElementAndClick(partCheckBox);
-                break;
-            case "Assembly":
+            }
+            if (scenario.trim().equalsIgnoreCase("Assembly")) {
                 pageUtils.waitForElementAndClick(assemblyCheckBox);
-                break;
-            case "Comparison":
-                pageUtils.waitForElementAndClick(comparisonCheckBox);
-                break;
-            default:
-                throw new IllegalArgumentException("The type '{}' is not found" + type);
+            }
+            if (scenario.trim().equalsIgnoreCase("Comparison")) {
+                pageUtils.waitForElementAndClick(assemblyCheckBox);
+            }
         }
         return this;
     }
 
     /**
      * Sets fields for the first row
+     *
      * @param attribute - the attribute
      * @param condition - the condition
-     * @param value - the value
+     * @param value     - the value
      * @return current page object
      */
     public FilterCriteriaPage setRowOne(String attribute, String condition, String value) {
@@ -228,9 +230,10 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets fields for the second row
+     *
      * @param attribute - the attribute
      * @param condition - the condition
-     * @param value - the value
+     * @param value     - the value
      * @return current page object
      */
     public FilterCriteriaPage setRowTwo(String attribute, String condition, String value) {
@@ -240,9 +243,10 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Sets fields for the third row
+     *
      * @param attribute - the attribute
      * @param condition - the condition
-     * @param value - the value
+     * @param value     - the value
      * @return current page object
      */
     public FilterCriteriaPage setRowThree(String attribute, String condition, String value) {
@@ -258,6 +262,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     // TODO: 12/06/2020 need to delete
+
     /**
      * Selects the attribute
      *
@@ -271,6 +276,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     // TODO: 12/06/2020 need to delete
+
     /**
      * Insert multiple attributes
      *
@@ -283,6 +289,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     // TODO: 12/06/2020 need to delete
+
     /**
      * Selects the condition
      *
@@ -315,12 +322,12 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     private FilterCriteriaPage setValue(String selections) {
         WebElement value;
-        String[] valuesToSelect = selections.split(",");
+        String[] valuesToSelect = selections.trim().split(",");
 
         pageUtils.waitForElementAndClick(valueInputDropdown);
 
-        for (String valueToSelect:valuesToSelect) {
-            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
+        for (String valueToSelect : valuesToSelect) {
+            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect)));
             pageUtils.waitForElementAndClick(value);
         }
         valueInputDropdown.sendKeys(Keys.ESCAPE);
@@ -328,6 +335,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     // TODO: 12/06/2020 need to delete
+
     /**
      * Set value in more than one row
      *
@@ -349,6 +357,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     // TODO: 12/06/2020 need to delete
+
     /**
      * Multi select for value
      *
@@ -393,6 +402,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     // TODO: 12/06/2020 need to delete
+
     /**
      * Sets attribute for multi filter
      *
@@ -408,6 +418,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     }
 
     // TODO: 12/06/2020 need to delete
+
     /**
      * Inputs value into input field
      *
