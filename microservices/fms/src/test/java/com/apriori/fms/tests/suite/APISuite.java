@@ -13,5 +13,5 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         FileManagementControllerTest.class
 })
-public class FmsAPISuite {
+public class APISuite {
 }
