@@ -9,8 +9,7 @@
         "customerIdentity",
         "installationIdentity",
         "state",
-        "externalId",
-        "parts"
+        "externalId"
       ],
       "properties": {
         "identity": {
