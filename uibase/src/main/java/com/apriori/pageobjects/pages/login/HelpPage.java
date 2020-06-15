@@ -64,7 +64,7 @@ public class HelpPage extends ReportsPageHeader {
      * @return - string
      */
     public String getPageHeading() {
-        return pageUtils.getElementText(heading);
+        return heading.getText();
     }
 
     /**

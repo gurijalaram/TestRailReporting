@@ -144,7 +144,7 @@ public class PublishExistingCostedTests extends TestBase {
             .selectPublishButton()
             .openScenario(testScenarioName, partName);
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Material Stock / Band Saw / Preheat / Hammer / Trim"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
 
     @Test

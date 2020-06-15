@@ -431,7 +431,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @return String
      */
     public String getCurrentCurrency() {
-        return pageUtils.getElementText(currentCurrency);
+        return currentCurrency.getText();
     }
 
     /**

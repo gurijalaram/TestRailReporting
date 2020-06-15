@@ -105,14 +105,14 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     }
 
     /**
-     * Checks the value is correct
+     * Gets the tolerance value
      *
      * @param toleranceName - the tolerance
-     * @param text          - the string value
-     * @return true/false
+     * @return string
      */
-    public boolean isTolerance(String toleranceName, String text) {
-        return pageUtils.checkElementAttribute(getMap().get(toleranceName), "value", text);
+    public String getTolerance(String toleranceName) {
+        pageUtils.waitForElementToAppear(getMap().get(toleranceName));
+        return getMap().get(toleranceName).getAttribute("value");
     }
 
     /**
