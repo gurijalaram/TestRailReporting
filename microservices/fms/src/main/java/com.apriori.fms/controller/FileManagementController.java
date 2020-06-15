@@ -14,7 +14,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileManagementService {
+public class FileManagementController {
 
     private static String finalUrl = "https://%s/files/";
 

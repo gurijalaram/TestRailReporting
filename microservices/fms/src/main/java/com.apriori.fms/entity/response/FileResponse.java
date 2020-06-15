@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.fms.objects;
+package com.apriori.fms.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "fms/FmsFileSchema.json")
+@Schema(location = "FileSchema.json")
 public class FileResponse {
     private String identity;
 

@@ -1,15 +1,17 @@
 package com.apriori.fms.tests;
 
-import com.apriori.fms.controller.FileManagementController;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.ats.service.SecurityManager;
+import com.apriori.fms.controller.FileManagementController;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class FmsFileManagementController extends TestUtil {
+public class FileManagementControllerTest extends TestUtil {
 
     private static String token;
 
