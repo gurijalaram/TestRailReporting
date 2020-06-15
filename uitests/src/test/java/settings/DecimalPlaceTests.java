@@ -63,12 +63,12 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("5.309458"), is(true));
+        assertThat(evaluatePage.getFinishMass(), is(5.309458));
         assertThat(evaluatePage.isUtilization("81.163688"), is(true));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.820000"));
         assertThat(evaluatePage.getMaterialCost(), is("16.151375"));
         assertThat(evaluatePage.getPartCost(), is("19.734327"));
-        assertThat(evaluatePage.getBurdenedCost("19.734327"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(19.734327));
         assertThat(evaluatePage.getCapitalInvestment(), is("0.000000"));
     }
 
@@ -91,12 +91,12 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("5"), is(true));
+        assertThat(evaluatePage.getFinishMass(), is(5));
         assertThat(evaluatePage.isUtilization("81"), is(true));
         assertThat(evaluatePage.getCycleTimeCount(), is("111"));
         assertThat(evaluatePage.getMaterialCost(), is("16"));
         assertThat(evaluatePage.getPartCost(), is("20"));
-        assertThat(evaluatePage.getBurdenedCost("20"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(20));
         assertThat(evaluatePage.getCapitalInvestment(), is("0"));
     }
 
@@ -119,12 +119,12 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("5.3095"), is(true));
+        assertThat(evaluatePage.getFinishMass(), is(5.3095));
         assertThat(evaluatePage.isUtilization("81.1637"), is(true));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.8200"));
         assertThat(evaluatePage.getMaterialCost(), is("16.1514"));
         assertThat(evaluatePage.getPartCost(), is("19.7343"));
-        assertThat(evaluatePage.getBurdenedCost("19.7343"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(19.7343));
         assertThat(evaluatePage.getCapitalInvestment(), is("0.0000"));
 
         processRoutingPage = evaluatePage.openProcessDetails();
@@ -147,12 +147,12 @@ public class DecimalPlaceTests extends TestBase {
             .changeDecimalPlaces(DecimalPlaceEnum.ONE.getDecimalPlaces())
             .save(EvaluatePage.class);
 
-        assertThat(evaluatePage.isFinishMass("5.3"), is(true));
+        assertThat(evaluatePage.getFinishMass(), is(5.3));
         assertThat(evaluatePage.isUtilization("81.2"), is(true));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.8"));
         assertThat(evaluatePage.getMaterialCost(), is("16.2"));
         assertThat(evaluatePage.getPartCost(), is("19.7"));
-        assertThat(evaluatePage.getBurdenedCost("19.7"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(19.7));
         assertThat(evaluatePage.getCapitalInvestment(), is("0.0"));
 
         evaluatePage.openProcessDetails();
@@ -190,23 +190,23 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("5.30946"), is(true));
+        assertThat(evaluatePage.getFinishMass(), is(5.30946));
         assertThat(evaluatePage.isUtilization("81.16369"), is(true));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.82000"));
         assertThat(evaluatePage.getMaterialCost(), is("16.15138"));
         assertThat(evaluatePage.getPartCost(), is("19.73433"));
-        assertThat(evaluatePage.getBurdenedCost("19.73433"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(19.73433));
         assertThat(evaluatePage.getCapitalInvestment(), is("0.00000"));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isFinishMass("5.30946"), is(true));
+        assertThat(evaluatePage.getFinishMass(), is(5.30946));
         assertThat(evaluatePage.isUtilization("81.16369"), is(true));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.82000"));
         assertThat(evaluatePage.getMaterialCost(), is("16.15138"));
         assertThat(evaluatePage.getPartCost(), is("19.55601"));
-        assertThat(evaluatePage.getBurdenedCost("19.55601"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(19.55601));
         assertThat(evaluatePage.getCapitalInvestment(), is("0.00000"));
     }
 }
