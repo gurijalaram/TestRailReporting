@@ -1,7 +1,7 @@
 package com.apriori.cis.controller;
 
 import com.apriori.cis.entity.request.PatchCostingPreferenceRequest;
-import com.apriori.cis.entity.response.CisCustomers;
+import com.apriori.cis.entity.response.Customers;
 import com.apriori.cis.entity.response.CostingPreferences;
 import com.apriori.cis.entity.response.ProcessGroups;
 import com.apriori.cis.entity.response.UserDefinedAttributes;
@@ -24,7 +24,7 @@ public class CustomerResources extends CisBase {
     public static <T>  ResponseWrapper<T> getCustomers() {
         String url = String.format(getBaseCisUrl(), "");
         return GenericRequestUtil.get(
-                RequestEntity.init(url, CisCustomers.class),
+                RequestEntity.init(url, Customers.class),
                 new RequestAreaApi()
         );
     }

@@ -13,34 +13,34 @@ import org.junit.Test;
 
 import java.util.Random;
 
-public class CisCustomerResources extends CustomerBase {
+public class CustomerResources extends CustomerBase {
 
     @Test
     @TestRail(testCaseId = "4145")
     @Description("API returns a list of all the available customers in the CIS DB")
     public void getCustomers() {
-        CustomerResources.getCustomers();
+        com.apriori.cis.controller.CustomerResources.getCustomers();
     }
 
     @Test
     @TestRail(testCaseId = "4169")
     @Description("API returns a list of tolerances associated with a specific CIS customer")
     public void getCostingPreferences() {
-        CustomerResources.getCostingPreferences();
+        com.apriori.cis.controller.CustomerResources.getCostingPreferences();
     }
 
     @Test
     @TestRail(testCaseId = "4171")
     @Description("API returns a list of process groups associated with a specific CIS customer")
     public void getProcessGoups() {
-        CustomerResources.getProcessGroups();
+        com.apriori.cis.controller.CustomerResources.getProcessGroups();
     }
 
     @Test
     @TestRail(testCaseId = "4172")
     @Description("API returns a list of user defined attributes associated with a specific CIS customer")
     public void getUserDefinedAttributes() {
-        CustomerResources.getUserDefinedAttributes();
+        com.apriori.cis.controller.CustomerResources.getUserDefinedAttributes();
     }
 
 
@@ -48,7 +48,7 @@ public class CisCustomerResources extends CustomerBase {
     @TestRail(testCaseId = "4173")
     @Description("API returns a list of VPEs associated with a specific CIS customer")
     public void getVirtualProductionEnvironments() {
-        CustomerResources.getVirtualProductEnvironments();
+        com.apriori.cis.controller.CustomerResources.getVirtualProductEnvironments();
     }
 
     @Test
@@ -62,7 +62,7 @@ public class CisCustomerResources extends CustomerBase {
         Double value = rand.nextDouble();
         cp.setCadToleranceReplacement(100.00);
         cp.setMinCadToleranceThreshold(value);
-        CustomerResources.patchCostingPreferences(cp);
+        com.apriori.cis.controller.CustomerResources.patchCostingPreferences(cp);
 
     }
 }

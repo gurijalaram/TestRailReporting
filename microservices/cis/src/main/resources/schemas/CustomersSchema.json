@@ -9,17 +9,15 @@
       "required": [
         "items"
       ],
-      "allOf": [
-        {"$ref": "../PaginationSchema.json"},
-        {"properties": {
+      "$ref": "../PaginationSchema.json",
+      "properties": {
         "items": {
           "type": "array",
           "items": {
-            "$ref": "CisPartSchema.json"
+            "$ref": "CdsCustomerSchema.json"
           }
         }
-      }}
-        ]
+      }
     }
   }
 }

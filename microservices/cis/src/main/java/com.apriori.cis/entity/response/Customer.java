@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 
-@Schema(location = "CdsCustomerSchema.json")
-public class CisCustomer extends CustomerBase {
+@Schema(location = "CustomerSchema.json")
+public class Customer extends CustomerBase {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSX.class)
     private LocalDateTime createdAt;
@@ -21,13 +21,13 @@ public class CisCustomer extends CustomerBase {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSX.class)
     private LocalDateTime updatedAt;
 
-    private CisCustomer response;
+    private Customer response;
 
-    public CisCustomer getResponse() {
+    public Customer getResponse() {
         return this.response;
     }
 
-    public CisCustomer setResponse(CisCustomer response) {
+    public Customer setResponse(Customer response) {
         this.response = response;
         return this;
     }
