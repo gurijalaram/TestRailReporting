@@ -64,7 +64,7 @@ public class DecimalPlaceTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getFinishMass(), is(5.309458));
-        assertThat(evaluatePage.isUtilization("81.163688"), is(true));
+        assertThat(evaluatePage.getUtilization(), is(81.163688));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.820000"));
         assertThat(evaluatePage.getMaterialCost(), is("16.151375"));
         assertThat(evaluatePage.getPartCost(), is("19.734327"));
@@ -92,7 +92,7 @@ public class DecimalPlaceTests extends TestBase {
             .costScenario();
 
         assertThat((int)evaluatePage.getFinishMass(), is(5));
-        assertThat(evaluatePage.isUtilization("81"), is(true));
+        assertThat((int)evaluatePage.getUtilization(), is(81));
         assertThat(evaluatePage.getCycleTimeCount(), is("111"));
         assertThat(evaluatePage.getMaterialCost(), is("16"));
         assertThat(evaluatePage.getPartCost(), is("20"));
@@ -120,7 +120,7 @@ public class DecimalPlaceTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getFinishMass(), is(5.3095));
-        assertThat(evaluatePage.isUtilization("81.1637"), is(true));
+        assertThat(evaluatePage.getUtilization(), is(81.1637));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.8200"));
         assertThat(evaluatePage.getMaterialCost(), is("16.1514"));
         assertThat(evaluatePage.getPartCost(), is("19.7343"));
@@ -148,7 +148,7 @@ public class DecimalPlaceTests extends TestBase {
             .save(EvaluatePage.class);
 
         assertThat(evaluatePage.getFinishMass(), is(5.3));
-        assertThat(evaluatePage.isUtilization("81.2"), is(true));
+        assertThat(evaluatePage.getUtilization(), is(81.2));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.8"));
         assertThat(evaluatePage.getMaterialCost(), is("16.2"));
         assertThat(evaluatePage.getPartCost(), is("19.7"));
@@ -191,7 +191,7 @@ public class DecimalPlaceTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getFinishMass(), is(5.30946));
-        assertThat(evaluatePage.isUtilization("81.16369"), is(true));
+        assertThat(evaluatePage.getUtilization(), is(81.16369));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.82000"));
         assertThat(evaluatePage.getMaterialCost(), is("16.15138"));
         assertThat(evaluatePage.getPartCost(), is("19.73433"));
@@ -202,7 +202,7 @@ public class DecimalPlaceTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getFinishMass(), is(5.30946));
-        assertThat(evaluatePage.isUtilization("81.16369"), is(true));
+        assertThat(evaluatePage.getUtilization(), is(81.16369));
         assertThat(evaluatePage.getCycleTimeCount(), is("110.82000"));
         assertThat(evaluatePage.getMaterialCost(), is("16.15138"));
         assertThat(evaluatePage.getPartCost(), is("19.55601"));
