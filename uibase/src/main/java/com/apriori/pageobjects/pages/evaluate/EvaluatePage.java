@@ -90,6 +90,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "a[data-ap-nav-viewport='showMaterialDetails']")
     private WebElement materialsDetails;
 
+    @FindBy(css = "input[data-ap-field='materialNameOverride']")
+    private WebElement materialsInfo;
+
     @FindBy(css = "button[data-ap-comp='materialSelectionButton']")
     private WebElement materialsButton;
 
@@ -107,6 +110,12 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "td[data-ap-field='failuresWarningsCount']")
     private WebElement warningsCount;
+
+    @FindBy(css = "td[data-ap-field='dtcMessagesCount']")
+    private WebElement guidanceIssuesCount;
+
+    @FindBy(css = "td[data-ap-field='gcdWithTolerancesCount']")
+    private WebElement gcdTolerancesCount;
 
     @FindBy(css = "td[data-ap-field='cycleTime']")
     private WebElement cycleTimeCount;
@@ -137,6 +146,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = ".locked-status-icon")
     private WebElement lockedStatusIcon;
+
+    @FindBy(css = ".cad-connection-status-icon")
+    private WebElement cadConnectedIcon;
 
     @FindBy(css = "a[data-ap-nav-viewport='showAssemblyComponentsDetails']")
     private WebElement componentsDetails;
@@ -695,11 +707,12 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Checks the value of Utilization
      *
-     * @param value - the value
-     * @return true/false
+     * @return double
      */
-    public boolean isUtilization(String value) {
-        return pageUtils.checkElementAttribute(utilization, "innerText", value);
+    public double getUtilization() {
+        By utilization = By.cssSelector("td[data-ap-field='utilization']");
+        pageUtils.waitForElementToAppear(utilization);
+        return Double.parseDouble(driver.findElement(utilization).getAttribute("innerText"));
     }
 
     /**
@@ -748,7 +761,7 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets table values by specified row index
      *
-     * @param row
+     * @param row - the row
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getTableValsByRow(String row) {

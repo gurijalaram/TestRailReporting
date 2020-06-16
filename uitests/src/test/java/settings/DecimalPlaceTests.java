@@ -91,12 +91,12 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getFinishMass(), is(5));
+        assertThat((int)evaluatePage.getFinishMass(), is(5));
         assertThat(evaluatePage.isUtilization("81"), is(true));
         assertThat(evaluatePage.getCycleTimeCount(), is("111"));
         assertThat(evaluatePage.getMaterialCost(), is("16"));
         assertThat(evaluatePage.getPartCost(), is("20"));
-        assertThat(evaluatePage.getBurdenedCost(), is(20));
+        assertThat((int)evaluatePage.getBurdenedCost(), is(20));
         assertThat(evaluatePage.getCapitalInvestment(), is("0"));
     }
 
