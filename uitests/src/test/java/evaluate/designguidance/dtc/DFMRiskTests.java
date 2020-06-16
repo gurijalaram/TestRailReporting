@@ -172,7 +172,7 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3862", "1239"})
+    @TestRail(testCaseId = {"3862", "1239", "3863"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
 
@@ -196,10 +196,51 @@ public class DFMRiskTests extends TestBase {
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+
+        evaluatePage.revert()
+            .revertScenario();
+
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
     }
 
     @Test
-    @TestRail(testCaseId = {"3864"})
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"3877", "3876"})
+    @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
+    public void dfmReducedPlasticMoulding() {
+
+        String file = "DTCPlasticIssues.SLDPRT";
+        resourceFile = new FileResourceUtil().getResourceFile(file);
+        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+
+        evaluatePage.updateCadFile(cadResourceFile);
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+
+        evaluatePage.revert()
+            .revertScenario();
+
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+
+    }
+
+    @Test
+    @TestRail(testCaseId = {"3864", "3865"})
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
 
@@ -222,11 +263,16 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+
+        evaluatePage.revert()
+            .revertScenario();
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
     }
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3872", "596"})
+    @TestRail(testCaseId = {"3872", "596", "3873"})
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
 
@@ -249,11 +295,16 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+
+        evaluatePage.revert()
+            .revertScenario();
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
     }
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3874"})
+    @TestRail(testCaseId = {"3874", "3875"})
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
 
@@ -276,6 +327,11 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+
+        evaluatePage.revert()
+            .revertScenario();
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
     }
 
     @Test
