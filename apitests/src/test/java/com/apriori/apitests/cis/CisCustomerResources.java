@@ -57,7 +57,7 @@ public class CisCustomerResources extends CustomerBase {
     public void patchCostingPreferences() {
         Random rand = new Random();
         PatchCostingPreferenceRequest cp =
-                (PatchCostingPreferenceRequest) JsonManager.serializeJsonFromFile(Constants.getApitestsBasePath() +
+                (PatchCostingPreferenceRequest) JsonManager.deserializeJsonFromFile(Constants.getApitestsBasePath() +
                 "/apitests/cis/testdata/UpdateCostingPreferences.json", PatchCostingPreferenceRequest.class);
         Double value = rand.nextDouble();
         cp.setCadToleranceReplacement(100.00);

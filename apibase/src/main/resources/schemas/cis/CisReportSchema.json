@@ -12,8 +12,7 @@
         "userIdentity",
         "reportType",
         "state",
-        "reportFormat",
-        "parts"
+        "reportFormat"
       ],
       "properties": {
         "identity": {
