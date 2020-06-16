@@ -220,7 +220,7 @@ public class AssemblyUploadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1341", "1342"})
+    @TestRail(testCaseId = {"1341", "1342", "1402", "1405", "1410"})
     @Description("Validate error message and cost status appears, when assembly cost is out of date")
     public void smallAssembly() {
 
@@ -257,5 +257,30 @@ public class AssemblyUploadTests extends TestBase {
             .selectSaveButton();
 
         assertThat(componentsPage.getColumnHeaderNames(), hasItems(ColumnsEnum.PIECE_PART_COST.getColumns(), ColumnsEnum.PROCESS_GROUP.getColumns()));
+
+        componentsPage.openColumnsTable()
+            .removeColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
+            .selectSaveButton();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"2655", "2647", "2643"})
+    @Description("Uploaded STEP assembly and components can be recosted")
+    public void treeViewTests() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CIDLoginPage(driver);
+        componentsPage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, resourceFile)
+            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .costScenario()
+            .openComponentsTable()
+            .selectComponentsView("Tree View")
+            .expandAssembly(scenarioName, "ASSY02")
+            .selectSubcomponent(scenarioName, "PART0002");
+
+        assertThat(componentsPage.getComponentCell("PART0002", "Qty"), Matchers.is(Matchers.equalTo("2")));
     }
 }

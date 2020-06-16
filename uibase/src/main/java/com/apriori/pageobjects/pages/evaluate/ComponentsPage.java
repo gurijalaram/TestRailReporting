@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.common.ScenarioTablePage;
+import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
@@ -13,7 +14,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -41,9 +44,16 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     @FindBy(css = "button[data-ap-scope='assemblyComponentsTableViewSelection']")
     private WebElement columnSelectorButton;
 
+    @FindBy(css = ".panel .glyphicon-remove")
+    private WebElement closePanelButton;
+
+    @FindBy(css = ".v-grid-header")
+    private WebElement columnHeaders;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ScenarioTablePage scenarioTablePage;
+    private ColumnUtils columnUtils;
 
     public ComponentsPage(WebDriver driver) {
         this.driver = driver;
@@ -156,6 +166,28 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * @return column headers as string
      */
     public List<String> getColumnHeaderNames() {
-        return scenarioTablePage.getColumnHeaderNames();
+        return Arrays.stream(columnHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Closes the panel
+     *
+     * @return Evaluate Page
+     */
+    public EvaluatePage closePanel() {
+        pageUtils.waitForElementAndClick(closePanelButton);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Gets the cell details
+     *
+     * @param component    - the assembly component
+     * @param column - the column
+     * @return string
+     */
+    public String getComponentCell(String component, String column) {
+        String rowLocator = "//div[@data-ap-comp='assemblyComponentsGridArea']//td[.='" + component + "']/ancestor::tr[@class]";
+        return columnUtils.columnDetails("assemblyComponentsGridArea", column, rowLocator);
     }
 }
