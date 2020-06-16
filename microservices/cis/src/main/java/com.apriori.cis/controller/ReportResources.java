@@ -1,18 +1,12 @@
 package com.apriori.cis.controller;
 
-import com.apriori.cis.entity.request.NewReportRequest;
-import com.apriori.cis.entity.response.Report;
-import com.apriori.cis.entity.response.ReportExport;
-import com.apriori.cis.entity.response.ReportType;
-import com.apriori.cis.entity.response.ReportTypes;
-import com.apriori.cis.entity.response.Reports;
-
+import com.apriori.apibase.services.cis.objects.*;
+import com.apriori.apibase.services.cis.objects.requests.NewReportRequest;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
 import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
@@ -35,14 +29,7 @@ public class ReportResources extends CisBase {
     }
 
     public static <T> ResponseWrapper<T> getReportRepresentation(String identity) {
-        String id = "";
-
-        if (identity != null) {
-            id = identity;
-        } else {
-            id = Constants.getCisReportIdentity();
-        }
-        String url = String.format(getCisUrl(), String.format(endpointReportRepresentation, id));
+        String url = String.format(getCisUrl(), String.format(endpointReportRepresentation, identity));
         return GenericRequestUtil.get(
                 RequestEntity.init(url, Report.class),
                 new RequestAreaApi()

@@ -1,17 +1,16 @@
 package com.apriori.cis.controller;
 
-import com.apriori.cis.entity.request.PatchCostingPreferenceRequest;
-import com.apriori.cis.entity.response.Customers;
 import com.apriori.cis.entity.response.CostingPreferences;
-import com.apriori.cis.entity.response.ProcessGroups;
 import com.apriori.cis.entity.response.UserDefinedAttributes;
 import com.apriori.cis.entity.response.VPE;
+import com.apriori.cis.entity.response.Customers;
+import com.apriori.cis.entity.response.ProcessGroups;
+import com.apriori.cis.entity.request.PatchCostingPreferenceRequest;
 
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
 import org.apache.http.HttpStatus;
 
 public class CustomerResources extends CisBase {

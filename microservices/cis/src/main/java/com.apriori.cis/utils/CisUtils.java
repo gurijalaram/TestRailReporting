@@ -1,7 +1,6 @@
 package com.apriori.cis.utils;
 
 import com.apriori.apibase.utils.ApiUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,5 +44,23 @@ public class CisUtils extends ApiUtils {
         }
 
         return value;
+    }
+
+    public static Boolean pollState(Object obj, Class klass) {
+        String state = "";
+        try {
+            state = CisUtils.getState(obj, klass);
+
+            if (state.toUpperCase().equals("COMPLETED")) {
+                return true;
+            } else {
+                Thread.sleep(10000);
+            }
+        }  catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.error(Arrays.toString(e.getStackTrace()));
+        }
+
+        return false;
     }
 }

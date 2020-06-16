@@ -1,24 +1,26 @@
 package com.apriori.cis.controller;
 
-import com.apriori.cis.entity.request.NewPartRequest;
+import com.apriori.cis.utils.CisUtils;
 import com.apriori.cis.entity.response.Part;
 import com.apriori.cis.entity.response.PartCosting;
 import com.apriori.cis.entity.response.Parts;
+import com.apriori.cis.entity.request.NewPartRequest;
 
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class PartResources extends CisBase {
+    private static final Logger logger = LoggerFactory.getLogger(PartResources.class);
 
     private static final String endpointParts = "parts";
     private static final String endpointPartsWithIdentity = "parts/%s";
@@ -31,8 +33,8 @@ public class PartResources extends CisBase {
         );
     }
 
-    public static <T> ResponseWrapper<T> getPartRepresentation() {
-        String url = String.format(getCisUrl(), String.format(endpointPartsWithIdentity, Constants.getCisPartIdentity()));
+    public static <T> ResponseWrapper<T> getPartRepresentation(String identity) {
+        String url = String.format(getCisUrl(), String.format(endpointPartsWithIdentity, identity));
         return GenericRequestUtil.get(
                 RequestEntity.init(url, Part.class),
                 new RequestAreaApi()
@@ -48,7 +50,7 @@ public class PartResources extends CisBase {
         );
     }
 
-    public static <T> ResponseWrapper<T> createNewPart(Object obj) {
+    public static Part createNewPart(Object obj) {
         NewPartRequest npr = (NewPartRequest)obj;
         String url = String.format(getCisUrl(), endpointParts);
 
@@ -74,6 +76,19 @@ public class PartResources extends CisBase {
                         .use("MaterialName", npr.getMaterialName()));
 
 
-        return GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi());
+        return (Part) GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
+    }
+
+    public static Boolean isPartComplete(String partIdentity) {
+        Object partDetails = null;
+        Boolean isPartComplete = false;
+        int count = 0;
+        while (count <= 18) {
+            partDetails = PartResources.getPartRepresentation(partIdentity).getResponseEntity();
+            isPartComplete = CisUtils.pollState(partDetails, Part.class);
+            count += 1;
+        }
+
+        return isPartComplete;
     }
 }

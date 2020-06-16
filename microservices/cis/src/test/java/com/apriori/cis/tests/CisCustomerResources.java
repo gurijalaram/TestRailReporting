@@ -5,6 +5,7 @@ import com.apriori.cis.controller.CustomerResources;
 import com.apriori.cis.entity.request.PatchCostingPreferenceRequest;
 
 import com.apriori.utils.TestRail;
+
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
@@ -13,7 +14,7 @@ import org.junit.Test;
 
 import java.util.Random;
 
-public class CustomerResources extends CustomerBase {
+public class CisCustomerResources extends CustomerBase {
 
     @Test
     @TestRail(testCaseId = "4145")
