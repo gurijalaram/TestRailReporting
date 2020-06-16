@@ -76,7 +76,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-893")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"554", "555"})
     @Description("Validate status and cost maturity columns can be added")
@@ -164,7 +163,6 @@ public class ActionsTests extends TestBase {
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
             .save(EvaluatePage.class)
@@ -176,8 +174,8 @@ public class ActionsTests extends TestBase {
 
         assertThat(scenarioNotesPage.isStatusSelected("Complete"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Medium"), is(true));
-        assertThat(scenarioNotesPage.isDescription("Qa Auto Test"), is(true));
-        assertThat(scenarioNotesPage.isScenarioNotes("Uploaded and costed via automation"), is(true));
+        assertThat(scenarioNotesPage.getDescription(), is("Qa Auto Test"));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Uploaded and costed via automation"));
     }
 
     @Test
@@ -193,7 +191,6 @@ public class ActionsTests extends TestBase {
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario()
             .selectInfoNotes()
             .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
             .save(EvaluatePage.class)
@@ -205,8 +202,8 @@ public class ActionsTests extends TestBase {
 
         assertThat(scenarioNotesPage.isStatusSelected("New"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("High"), is(true));
-        assertThat(scenarioNotesPage.isDescription("infoNotesPanel"), is(true));
-        assertThat(scenarioNotesPage.isScenarioNotes("Panel Test"), is(true));
+        assertThat(scenarioNotesPage.getDescription(), is("infoNotesPanel"));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Panel Test"));
     }
 
     @Test
@@ -238,7 +235,7 @@ public class ActionsTests extends TestBase {
             .openScenario(testScenarioName, "PowderMetalShaft")
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isAssignee("Moya Parker"), is(true));
+        assertThat(scenarioNotesPage.isAssignee(), is("Moya Parker"));
     }
 
     @Test
@@ -332,7 +329,7 @@ public class ActionsTests extends TestBase {
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isScenarioNotes("Testing QA notes Validating the ability to edit notes"), is(true));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes Validating the ability to edit notes"));
     }
 
     @Test
@@ -367,7 +364,7 @@ public class ActionsTests extends TestBase {
             .cancel(EvaluatePage.class)
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isScenarioNotes("Testing QA notes"), is(true));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes"));
     }
 
     @Test
@@ -406,7 +403,7 @@ public class ActionsTests extends TestBase {
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isScenarioNotes(""), is(true));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is(""));
     }
 
     @Test
@@ -445,7 +442,7 @@ public class ActionsTests extends TestBase {
             .openScenario(testScenarioName, "Push Pin")
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isScenarioNotes("Testing QA notes"), is(true));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes"));
     }
 
     @Test
@@ -513,7 +510,7 @@ public class ActionsTests extends TestBase {
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isDescription(""), is(true));
+        assertThat(scenarioNotesPage.getDescription(), is(""));
     }
 
     @Test

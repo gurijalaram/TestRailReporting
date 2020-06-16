@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -148,21 +149,25 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     }
 
     /**
-     * Checks the description
+     * Gets the description
      *
      * @return the description as string
      */
-    public boolean isDescription(String text) {
-        return pageUtils.checkElementAttribute(descriptionInput, "value", text);
+    public String getDescription() {
+        By description = By.cssSelector("textarea[data-ap-field='description']");
+        pageUtils.waitForElementToAppear(description);
+        return driver.findElement(description).getAttribute("value");
     }
 
     /**
-     * Checks the scenario notes
+     * Gets the scenario notes
      *
      * @return the scenario notes as string
      */
-    public boolean isScenarioNotes(String text) {
-        return pageUtils.checkElementAttribute(scenarioNotesInput, "value", text);
+    public String getScenarioNotes() {
+        By scenarioNotes = By.cssSelector("textarea[data-ap-field='comments']");
+        pageUtils.waitForElementToAppear(scenarioNotes);
+        return driver.findElement(scenarioNotes).getAttribute("value");
     }
 
     /**
@@ -208,12 +213,14 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
     }
 
     /**
-     * Checks the assignee
+     * Gets the assignee
      *
      * @return the assignee as string
      */
-    public boolean isAssignee(String text) {
-        return pageUtils.checkElementAttribute(assigneeField, "innerText", text);
+    public String isAssignee() {
+        By assignee = By.cssSelector("[data-ap-field='assignee']");
+        pageUtils.waitForElementToAppear(assignee);
+        return driver.findElement(assignee).getAttribute("innerText");
     }
 
     /**

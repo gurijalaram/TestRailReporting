@@ -95,8 +95,8 @@ public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
      *
      * @return new page object
      */
-    protected MoreInputsPage saveChanges() {
-        saveButton.click();
+    public MoreInputsPage saveChanges() {
+        pageUtils.waitForElementAndClick(saveButton);
         return new MoreInputsPage(driver);
     }
 
@@ -105,9 +105,17 @@ public class VPESelectionPage extends LoadableComponent<VPESelectionPage> {
      *
      * @return new page object
      */
-    protected MoreInputsPage close() {
-        closeButton.click();
+    public MoreInputsPage close() {
+        pageUtils.waitForElementAndClick(closeButton);
         return new MoreInputsPage(driver);
     }
 
+    /**
+     * Check use primary VPE as default is selected
+     *
+     * @return current page object
+     */
+    public String isUsePrimaryVPESelected(String attribute) {
+        return pageUtils.waitForElementToAppear(vpeTickBox).getAttribute(attribute);
+    }
 }

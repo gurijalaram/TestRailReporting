@@ -29,7 +29,6 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
@@ -60,7 +59,6 @@ public class NavigationTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "2987")
-    @Issue("AP-58758")
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)

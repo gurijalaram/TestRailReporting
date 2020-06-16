@@ -79,7 +79,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      * @return text as string
      */
     public boolean getCostedRouting(String text) {
-        return pageUtils.checkElementContains(costedRouting, text);
+        return pageUtils.textPresentInElement(costedRouting, text);
     }
 
     /**
@@ -89,7 +89,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      * @return text as string
      */
     public boolean getSelectedRouting(String text) {
-        return pageUtils.checkElementContains(selectedRouting, text);
+        return pageUtils.textPresentInElement(selectedRouting, text);
     }
 
     /**

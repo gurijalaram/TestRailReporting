@@ -56,39 +56,39 @@ public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
     /**
      * Gets piece part cost
      *
-     * @return as true/false
+     * @return string
      */
-    public boolean isPiecePartCost(String text) {
-        return checkAttribute(totalCost, text);
+    public String getPiecePartCost() {
+        return getAttribute(totalCost);
     }
 
     /**
      * Gets piece part cost
      *
-     * @return as true/false
+     * @return string
      */
-    public boolean isFullyBurdenedCost(String text) {
-        return checkAttribute(fullyBurdenedCost, text);
+    public String getFullyBurdenedCost() {
+        return getAttribute(fullyBurdenedCost);
     }
 
     /**
      * Gets piece part cost
      *
-     * @return as true/false
+     * @return string
      */
-    public boolean isTotalCapitalInvestment(String text) {
-        return checkAttribute(totalCapitalInvestment, text);
+    public String getTotalCapitalInvestment() {
+        return getAttribute(totalCapitalInvestment);
     }
 
     /**
      * Refactored method to check element attribute
      *
      * @param locator - the locator
-     * @param text    - the text
      * @return true/false
      */
-    private boolean checkAttribute(WebElement locator, String text) {
-        return pageUtils.checkElementAttribute(locator, "innerText", text);
+    private String getAttribute(WebElement locator) {
+        pageUtils.waitForElementToAppear(locator);
+        return locator.getAttribute("innerText");
     }
 
     /**

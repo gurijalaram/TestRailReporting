@@ -135,9 +135,9 @@ _Validation:_
 1. go to `build` directory, run `gradle check -x test`
 
 ## Add TestRail configuration to _Test Suite_
-Annotate suite class that needs ProjectRunID using following format: `@ProjectRunID("999")`
+Annotate tests.suite class that needs ProjectRunID using following format: `@ProjectRunID("999")`
 
-Annotate suite class that needs RunWith using following format (_class_ should be added from com.apriori.utils.runers, it is required) : `@RunWith(CategorySuiteRunner.class)`
+Annotate tests.suite class that needs RunWith using following format (_class_ should be added from com.apriori.utils.runers, it is required) : `@RunWith(CategorySuiteRunner.class)`
 
 ## Add TestRail testCaseIDs to test methods
 Annotate method that needs testRailID using following format. Tags is optional so if you don't add, its ok

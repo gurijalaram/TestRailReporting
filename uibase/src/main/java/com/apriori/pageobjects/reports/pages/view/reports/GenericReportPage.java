@@ -503,7 +503,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getCurrentCurrency() {
-        return pageUtils.getElementText(currentCurrency);
+        return currentCurrency.getText();
     }
 
     /**
@@ -824,7 +824,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public String getPartNameDtcCastingReports(String reportName) {
         WebElement elementToUse = partNameMap.get(reportName);
         pageUtils.waitForElementToAppear(elementToUse);
-        return pageUtils.getElementText(elementToUse);
+        return elementToUse.getText();
     }
 
     /**
@@ -833,7 +833,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getHoleIssuesFromDetailsReport() {
         pageUtils.waitForElementAndClick(holeIssuesCastingDtcDetailsTitle);
-        return pageUtils.getElementText(holeIssuesCastingDtcDetailsValue);
+        return holeIssuesCastingDtcDetailsValue.getText();
     }
 
     /**

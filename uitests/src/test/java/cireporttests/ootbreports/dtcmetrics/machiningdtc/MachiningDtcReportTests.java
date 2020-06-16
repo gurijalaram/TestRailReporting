@@ -46,12 +46,10 @@ public class MachiningDtcReportTests extends TestBase {
         repository = new LoginPage(driver)
             .login()
             .navigateToViewRepositoryPage()
-            .navigateToMachiningDTCFolder()
-            .waitForMachiningDTCReportsToAppear();
-
-        assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
+            .navigateToMachiningDTCFolder();
 
         assertThat(reportName, is(equalTo(repository.getReportName(reportName))));
+        assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
     }
 
     @Test
