@@ -350,7 +350,7 @@ public class EvaluatePage extends EvaluateHeader {
      * Gets the secondary process attribute
      * @return string
      */
-    public String getSecondaryProcessAttribute() {
+    public String isSecondaryProcessButtonDisabled() {
         return pageUtils.waitForElementToAppear(secondaryProcessButton).getAttribute("disabled");
     }
 
