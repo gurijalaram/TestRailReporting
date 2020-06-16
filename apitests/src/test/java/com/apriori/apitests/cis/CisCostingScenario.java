@@ -1,5 +1,6 @@
 package com.apriori.apitests.cis;
 
+import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.cis.CisUtils;
 import com.apriori.apibase.services.cis.apicalls.BatchPartResources;
 import com.apriori.apibase.services.cis.apicalls.BatchResources;
@@ -44,7 +45,7 @@ public class CisCostingScenario extends TestUtil {
 
         // create batch part
         NewPartRequest newPartRequest =
-                (NewPartRequest)JsonManager.serializeJsonFromFile(Constants.getApitestsBasePath() +
+                (NewPartRequest)JsonManager.deserializeJsonFromFile(Constants.getApitestsBasePath() +
                         "/apitests/cis/testdata/CreatePartData.json", NewPartRequest.class);
         Part batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
 
@@ -94,6 +95,13 @@ public class CisCostingScenario extends TestUtil {
         Assert.assertEquals(true, isBatchComplete);
 
         PartResources.getPartCosting(partIdentity);
+
+        PropertyStore propertyStore = new PropertyStore();
+        propertyStore.setBatchIdentity(batchIdentity);
+        propertyStore.setPartIdentity(partIdentity);
+
+        JsonManager.serializeJsonToFile(Constants.getApitestsResourcePath() +
+                "/property-store.json", propertyStore);
     }
 
     private Boolean pollState(Object obj, Class klass) {

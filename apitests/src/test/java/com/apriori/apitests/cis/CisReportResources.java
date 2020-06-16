@@ -1,5 +1,6 @@
 package com.apriori.apitests.cis;
 
+import com.apriori.apibase.services.cis.CisUtils;
 import com.apriori.apibase.services.cis.apicalls.ReportResources;
 import com.apriori.apibase.services.cis.objects.Report;
 import com.apriori.apibase.services.cis.objects.requests.NewReportRequest;
@@ -9,12 +10,15 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CisReportResources extends TestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CisReportResources.class);
@@ -30,7 +34,7 @@ public class CisReportResources extends TestUtil {
     @TestRail(testCaseId = "4182")
     @Description("API returns a representation of a single report in the CIS DB")
     public void getReport() {
-        ReportResources.getReportRepresentation();
+        ReportResources.getReportRepresentation(Constants.getCisReportIdentity());
     }
 
     @Test
@@ -52,10 +56,18 @@ public class CisReportResources extends TestUtil {
     @TestRail(testCaseId = "4181")
     @Description("Create a new report using the CIS API")
     public void createNewReport() {
-        Object obj = JsonManager.serializeJsonFromFile(Constants.getApitestsBasePath() +
+        Object obj = JsonManager.deserializeJsonFromFile(Constants.getApitestsBasePath() +
                 "/apitests/cis/testdata/CreateReportData.json", NewReportRequest.class);
 
-        ReportResources.createReport(obj);
+        Report report  = ReportResources.createReport(obj);
+
+        try {
+            String reportIdentity = CisUtils.getIdentity(report, Report.class);
+            Constants.setCisReportIdentity(reportIdentity);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.error(Arrays.toString(e.getStackTrace()));
+        }
     }
 
     @Test
@@ -63,7 +75,7 @@ public class CisReportResources extends TestUtil {
     @Description("Export a report using the CIS API")
     public void exportReport() {
         Integer count = 0;
-        Object rptObj = JsonManager.serializeJsonFromFile(Constants.getApitestsBasePath() +
+        Object rptObj = JsonManager.deserializeJsonFromFile(Constants.getApitestsBasePath() +
                 "/apitests/cis/testdata/CreateReportData.json", NewReportRequest.class);
         Report report = ReportResources.createReport(rptObj, Constants.getCisPartIdentity());
         String reportIdentity = report.getResponse().getIdentity();
@@ -91,4 +103,5 @@ public class CisReportResources extends TestUtil {
         ReportResources.exportReport(reportIdentity);
 
     }
+
 }
