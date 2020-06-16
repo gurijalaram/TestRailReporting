@@ -680,10 +680,6 @@ public class ToleranceTests extends TestBase {
             .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
 
         assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
-
-        /*evaluatePage.openDesignGuidance()
-            .openTolerancesTab()
-            .findToleranceType()*/
     }
 
     @Test
