@@ -4,7 +4,9 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.hasItems;
 
+import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.VPESelectionPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -13,6 +15,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.AssemblyProcessGroupEnum;
+import com.apriori.utils.enums.ColumnsEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -22,6 +25,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -35,6 +39,7 @@ public class AssemblyUploadTests extends TestBase {
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private VPESelectionPage vpeSelectionPage;
+    private ComponentsPage componentsPage;
 
     private File resourceFile;
     private String scenarioName;
@@ -211,5 +216,46 @@ public class AssemblyUploadTests extends TestBase {
             .closePanel();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Powder Coat Cart"));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"1341", "1342"})
+    @Description("Validate error message and cost status appears, when assembly cost is out of date")
+    public void smallAssembly() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Hinge assembly.STEP");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, resourceFile)
+            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+            .openScenario(scenarioName, "SMALL RING")
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .openScenario(scenarioName, "BIG RING")
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .openScenario(scenarioName, "PIN")
+            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .openAssembly(scenarioName, "Hinge assembly");
+
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_OUT_OF_DATE.getCostingText()), Matchers.is(true));
+
+        componentsPage = evaluatePage.clickCostStatus(ComponentsPage.class)
+            .selectComponentsView("Tree View")
+            .openColumnsTable()
+            .addColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
+            .selectSaveButton();
+
+        assertThat(componentsPage.getColumnHeaderNames(), hasItems(ColumnsEnum.PIECE_PART_COST.getColumns(), ColumnsEnum.PROCESS_GROUP.getColumns()));
     }
 }

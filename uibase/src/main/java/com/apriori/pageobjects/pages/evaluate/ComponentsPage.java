@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.pageobjects.common.ScenarioTablePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
@@ -11,6 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * @author cfrith
@@ -40,6 +43,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ScenarioTablePage scenarioTablePage;
 
     public ComponentsPage(WebDriver driver) {
         this.driver = driver;
@@ -144,5 +148,14 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     public ComponentTableColumnsPage openColumnsTable() {
         pageUtils.waitForElementToAppear(columnSelectorButton).click();
         return new ComponentTableColumnsPage(driver);
+    }
+
+    /**
+     * Gets all column headers in the table
+     *
+     * @return column headers as string
+     */
+    public List<String> getColumnHeaderNames() {
+        return scenarioTablePage.getColumnHeaderNames();
     }
 }

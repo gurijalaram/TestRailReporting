@@ -129,4 +129,15 @@ public class EvaluateHeader extends GenericHeader {
         pageUtils.textPresentInElement(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
         pageUtils.textNotPresentInElement(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
     }
+
+    /**
+     * Clicks the cost status
+     * @param className - the class the method should return
+     * @param <T>       - the generic declaration type
+     * @return generic page object
+     */
+    public <T> T clickCostStatus(Class<T> className) {
+        pageUtils.waitForElementAndClick(costLabel);
+        return PageFactory.initElements(driver, className);
+    }
 }
