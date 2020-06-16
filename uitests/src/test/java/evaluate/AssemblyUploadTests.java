@@ -150,6 +150,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-1103")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2652", "1351", "1353", "1354"})
     @Description("User can delete STEP Assembly Post-Costing")
