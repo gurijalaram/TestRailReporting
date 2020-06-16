@@ -49,10 +49,10 @@ public class ReferencePanelTests extends TestBase {
             .costScenario(2)
             .openReferenceCompare();
 
-        assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup()), is(true));
-        assertThat(referenceComparePage.isReferenceVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
-        assertThat(referenceComparePage.isReferenceAnnualVolume("5,500"), is(true));
-        assertThat(referenceComparePage.isReferenceProductionLife("5"), is(true));
+        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.POWDER_METAL.getProcessGroup()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
+        assertThat(referenceComparePage.getReferenceAnnualVolume(), is("5,500"));
+        assertThat(referenceComparePage.getReferenceProductionLife(), is("5"));
     }
 
     @Test
@@ -84,10 +84,10 @@ public class ReferencePanelTests extends TestBase {
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PUBLIC.name(), scenarioName);
 
-        assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()), is(true));
-        assertThat(referenceComparePage.isReferenceVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
-        assertThat(referenceComparePage.isReferenceMaterial("ABS"), is(true));
-        assertThat(referenceComparePage.isReferenceUtilization("38.08"), is(true));
+        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
+        assertThat(referenceComparePage.getReferenceMaterial(), is("ABS"));
+        assertThat(referenceComparePage.getReferenceUtilization(), is("38.08"));
     }
 
     @Test
@@ -157,7 +157,7 @@ public class ReferencePanelTests extends TestBase {
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PRIVATE.name(), scenarioName);
 
-        assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()), is(true));
-        assertThat(referenceComparePage.isReferenceVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
+        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
     }
 }

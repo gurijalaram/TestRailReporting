@@ -150,16 +150,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     }
 
     /**
-     * Get page title text
-     *
-     * @return String - page title text
-     */
-    public String getHomeTitleText() {
-        pageUtils.waitForElementToAppear(homePageTitle);
-        return homePageTitle.getText();
-    }
-
-    /**
      * General navigation method
      *
      * @param parentPage

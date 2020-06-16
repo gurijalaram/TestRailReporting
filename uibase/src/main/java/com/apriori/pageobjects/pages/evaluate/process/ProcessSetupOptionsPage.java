@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.process;
 import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -242,12 +243,14 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Check Optimize for minimum cost is selected
+     * Gets Optimize for minimum cost is selected
      *
      * @return current page object
      */
-    public boolean isOptimizeForMinimumCostSelected(String text) {
-        return pageUtils.checkElementAttribute(optimizeRadioButton, "outerHTML", text);
+    public String getOptimizeForMinimumCostSelected() {
+        By radioButton = By.cssSelector("input[data-ap-comp='numberOfCavities.radioButtons.optimize']");
+        pageUtils.waitForElementToAppear(radioButton);
+        return driver.findElement(radioButton).getAttribute("outerHTML");
     }
 
     /**
@@ -302,13 +305,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks number of cavities
+     * Gets number of cavities
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isNumberOfCavities(String text) {
-        return checkAttribute(numberCavitiesInput, text);
+    public String getNumberOfCavities() {
+        return getAttribute(numberCavitiesInput);
     }
 
     /**
@@ -344,13 +346,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the user override value for nominalWallThickness
+     * Gets the user override value for nominalWallThickness
      *
-     * @param text - the value
      * @return true/false
      */
-    public boolean isNominalWallThicknessOverride(String text) {
-        return checkAttribute(overrideInput, text);
+    public String getNominalWallThicknessOverride() {
+        return getAttribute(overrideInput);
     }
 
     /**
@@ -375,13 +376,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the user override value for bundle count
+     * Gets the user override value for bundle count
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isBundleCount(String text) {
-        return checkAttribute(overrideBundleInput, text);
+    public String getBundleCount() {
+        return getAttribute(overrideBundleInput);
     }
 
     /**
@@ -396,13 +396,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the user override value for Material Allowance
+     * Gets the user override value for Material Allowance
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isMaterialAllowance(String text) {
-        return checkAttribute(materialAllowanceInput, text);
+    public String getMaterialAllowance() {
+        return getAttribute(materialAllowanceInput);
     }
 
     /**
@@ -466,13 +465,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the defined value for color charge
+     * Gets the defined value for color charge
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isColorChargeOverride(String text) {
-        return checkAttribute(definedInput, text);
+    public String getColorChargeOverride() {
+        return getAttribute(definedInput);
     }
 
     /**
@@ -507,13 +505,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks material regrind user defined value
+     * Gets material regrind user defined value
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isMaterialRegrind(String text) {
-        return checkAttribute(materialRegrindInput, text);
+    public String getMaterialRegrind() {
+        return getAttribute(materialRegrindInput);
     }
 
     /**
@@ -528,13 +525,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks cooling tme user defined value
+     * Gets cooling tme user defined value
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isCoolingTime(String text) {
-        return checkAttribute(coolingTimeInput, text);
+    public String getCoolingTime() {
+        return getAttribute(coolingTimeInput);
     }
 
     private void setInput(WebElement locator, String value) {
@@ -542,8 +538,9 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
         locator.sendKeys(value);
     }
 
-    private boolean checkAttribute(WebElement locator, String text) {
-        return pageUtils.checkElementAttribute(locator, "value", text);
+    private String getAttribute(WebElement locator) {
+        pageUtils.waitForElementToAppear(locator);
+        return locator.getAttribute("value");
     }
 
     /**
@@ -598,13 +595,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks part thickness value
+     * Get part thickness value
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isPartThickness(String text) {
-        return checkAttribute(partThicknessInput, text);
+    public String getPartThickness() {
+        return getAttribute(partThicknessInput);
     }
 
     /**
@@ -639,13 +635,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the fraction painted
+     * Gets the fraction painted
      *
-     * @param text - the text
      * @return true/false
      */
-    public boolean isFractionPainted(String text) {
-        return checkAttribute(fractionPaintedInput, text);
+    public String getFractionPainted() {
+        return getAttribute(fractionPaintedInput);
     }
 
     /**
@@ -709,13 +704,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
 
 
     /**
-     * Checks mask feature input
+     * Gets mask feature input
      *
-     * @param text - the text
      * @return current page object
      */
-    public boolean isTheNumberOfMaskedFeatures(String text) {
-        return checkAttribute(maskFeaturesInput, text);
+    public String getTheNumberOfMaskedFeatures() {
+        return getAttribute(maskFeaturesInput);
     }
 
     /**
@@ -759,13 +753,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks specify painted batch size
+     * Gets specify painted batch size
      *
-     * @param text - the text
-     * @return true/false
+     * @return string
      */
-    public boolean isSpecifyPainted(String text) {
-        return checkAttribute(specifyPaintedInput, text);
+    public String getSpecifyPainted() {
+        return getAttribute(specifyPaintedInput);
     }
 
     /**
@@ -800,13 +793,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks specified input
+     * Gets specified input
      *
-     * @param text - the text
-     * @return true false
+     * @return string
      */
-    public boolean isSpecified(String text) {
-        return checkAttribute(userSpecifiedInput, text);
+    public String getSpecified(String text) {
+        return getAttribute(userSpecifiedInput);
     }
 
     /**
@@ -881,13 +873,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks masked features
+     * Gets masked features
      *
-     * @param text - the text
-     * @return true false
+     * @return string
      */
-    public boolean isMaskedFeatures(String text) {
-        return checkAttribute(maskModeInput, text);
+    public String getMaskedFeatures() {
+        return getAttribute(maskModeInput);
     }
 
     /**
@@ -902,13 +893,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks components per load
+     * Gets components per load
      *
-     * @param text - the text
-     * @return true false
+     * @return string
      */
-    public boolean isComponentsPerLoad(String text) {
-        return checkAttribute(componentsPerLoadInput, text);
+    public String getComponentsPerLoad() {
+        return getAttribute(componentsPerLoadInput);
     }
 
     /**
@@ -928,7 +918,7 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
      */
     public String getCadModelSensitivity() {
         pageUtils.waitForElementToAppear(overrideSensitivityInput);
-        return overrideSensitivityInput.getText();
+        return overrideSensitivityInput.getAttribute("title");
     }
 
     /**

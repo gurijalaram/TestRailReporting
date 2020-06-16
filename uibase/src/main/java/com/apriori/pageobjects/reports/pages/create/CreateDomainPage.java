@@ -44,7 +44,7 @@ public class CreateDomainPage extends ReportsPageHeader {
      * @return String
      */
     public String getCurrentUrl() {
-        return pageUtils.getCurrentUrl();
+        return driver.getCurrentUrl();
     }
 
     /**
