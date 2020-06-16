@@ -3,8 +3,10 @@ package evaluate;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.inputs.VPESelectionPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -13,13 +15,13 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -32,6 +34,7 @@ public class AssemblyUploadTests extends TestBase {
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
+    private VPESelectionPage vpeSelectionPage;
 
     private File resourceFile;
     private String scenarioName;
@@ -42,7 +45,6 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2628", "2647", "2653"})
     @Description("Assembly File Upload - STEP")
@@ -57,14 +59,14 @@ public class AssemblyUploadTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
-        assertThat(evaluatePage.isTotalComponents("4"), is(true));
-        assertThat(evaluatePage.isUniqueComponents("4"), is(true));
-        assertThat(evaluatePage.getWarningsCount("4"), is(true));
+        assertThat(evaluatePage.getTotalComponents(), is("4"));
+        assertThat(evaluatePage.getUniqueComponents(), is("4"));
+        assertThat(evaluatePage.getWarningsCount(), is("4"));
         assertThat(evaluatePage.getCycleTimeCount(), is("0.00"));
     }
 
     @Test
-    @Issue("AP-59726")
+    @Issue("AP-60916")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2655", "2647", "2643"})
     @Description("Uploaded STEP assembly and components can be recosted")
@@ -119,15 +121,14 @@ public class AssemblyUploadTests extends TestBase {
             .openAssembly(scenarioName, "ASSEMBLY2")
             .costScenario();
 
-        assertThat(evaluatePage.isTotalComponents("22"), is(true));
-        assertThat(evaluatePage.isUniqueComponents("10"), is(true));
-        assertThat(evaluatePage.isUncostedUnique("0"), is(true));
-        assertThat(evaluatePage.isFinishMass("0.80"), is(true));
-        assertThat(evaluatePage.isTargetMass("0.00"), is(true));
+        assertThat(evaluatePage.getTotalComponents(), is("22"));
+        assertThat(evaluatePage.getUniqueComponents(), is("10"));
+        assertThat(evaluatePage.getUncostedUnique(), is("0"));
+        assertThat(evaluatePage.getFinishMass(), is(closeTo(0.80, 1)));
+        assertThat(evaluatePage.getTargetMass(), is("0.00"));
     }
 
     @Test
-    @Issue("AP-59726")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2651"})
     @Description("User can delete STEP Assembly Pre-Costing")
@@ -149,9 +150,8 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59726")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"2652"})
+    @TestRail(testCaseId = {"2652", "1351", "1353", "1354"})
     @Description("User can delete STEP Assembly Post-Costing")
     public void testSTEPAssemblyDeletePostCost() {
 
@@ -159,11 +159,19 @@ public class AssemblyUploadTests extends TestBase {
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
-            .costScenario()
-            .delete()
+            .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
+            .enterAnnualVolume("3126")
+            .enterAnnualYears("9")
+            .costScenario();
+
+        assertThat(evaluatePage.getSelectedVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
+        assertThat(evaluatePage.getAnnualVolume(), is("3126"));
+        assertThat(evaluatePage.getProductionLife(), is("9"));
+
+        explorePage = evaluatePage.delete()
             .deleteScenario()
             .filterCriteria()
             .filterPrivateCriteria("Assembly", "Scenario Name", "Contains", scenarioName)
@@ -173,9 +181,8 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59726")
     @Category({SanityTests.class})
-    @TestRail(testCaseId = {"2648"})
+    @TestRail(testCaseId = {"2648", "1352", "1355"})
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
     public void testSTEPAssemblyPowderCoatCart() {
 
@@ -183,14 +190,25 @@ public class AssemblyUploadTests extends TestBase {
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        vpeSelectionPage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
             .apply()
-            .costScenario();
+            .openMoreInputs()
+            .selectVPEButton()
+            .saveChanges()
+            .closePanel()
+            .costScenario()
+            .openMoreInputs()
+            .selectVPEButton();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Powder Coat Cart"), Matchers.is(true));
+        assertThat(vpeSelectionPage.isUsePrimaryVPESelected("checked"), is("true"));
+
+        evaluatePage = new VPESelectionPage(driver).close()
+            .closePanel();
+
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Powder Coat Cart"));
     }
 }

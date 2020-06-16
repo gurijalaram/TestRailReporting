@@ -2,6 +2,7 @@ package evaluate.designguidance.dtc;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -293,17 +294,17 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("744"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(744, 1)));
 
         evaluatePage.updateCadFile(cadResourceFile);
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
 
-        assertThat(evaluatePage.getBurdenedCost("372"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(372, 1)));
 
         evaluatePage.revert()
             .revertScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("744"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(744, 1)));
     }
 }

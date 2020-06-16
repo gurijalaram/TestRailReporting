@@ -5,8 +5,6 @@ import com.apriori.apibase.services.response.objects.DisplayColumnsEntity;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 
-import io.qameta.allure.Issue;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,6 @@ public class UISetup {
     private APIAuthentication apiAuthentication = new APIAuthentication();
     private DisplayColumnsEntity displayColumns = new DisplayColumnsEntity();
 
-    @Issue("BA-915")
     public void resetDisplayedColumns() {
         String userName = "qa-automation-01@apriori.com";
 

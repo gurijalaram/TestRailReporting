@@ -3,6 +3,7 @@ package evaluate.materialutilization;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
@@ -18,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -70,9 +70,8 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-56984")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970"})
+    @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970", "298"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
 
@@ -84,7 +83,7 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("19.73")));
+        assertThat(evaluatePage.getPartCost(), is(closeTo(18.58, 1)));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
@@ -101,7 +100,7 @@ public class MaterialStockTests extends TestBase {
         evaluatePanelToolbar = new EvaluatePanelToolbar(driver);
         evaluatePage = evaluatePanelToolbar.closePanel()
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("19.06")));
+        assertThat(evaluatePage.getPartCost(), is(closeTo(19.06, 1)));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()

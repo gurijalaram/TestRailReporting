@@ -2,6 +2,7 @@ package compare;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.common.ScenarioTablePage;
@@ -116,6 +117,6 @@ public class AddScenarioTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class);
 
-        assertThat(comparePage.isComparisonName(testComparisonName.toUpperCase()), is(true));
+        assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
     }
 }

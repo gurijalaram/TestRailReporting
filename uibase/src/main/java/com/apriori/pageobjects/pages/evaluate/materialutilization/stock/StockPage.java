@@ -52,7 +52,7 @@ public class StockPage extends EvaluatePanelToolbar {
      * @return stock details as string
      */
     public boolean checkTableDetails(String stock) {
-        return pageUtils.checkElementContains(stockTable, stock);
+        return pageUtils.textPresentInElement(stockTable, stock);
     }
 
     /**
