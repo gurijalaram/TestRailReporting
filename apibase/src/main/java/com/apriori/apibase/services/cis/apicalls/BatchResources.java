@@ -25,14 +25,6 @@ public class BatchResources extends CisBase {
         );
     }
 
-    public static <T> ResponseWrapper<T> getBatchRepresentation() {
-        String url = endpointBatchesWithIdentity;
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, Batch.class),
-                new RequestAreaApi()
-        );
-    }
-
     public static <T> ResponseWrapper<T> getBatchRepresentation(String identity) {
         String url = String.format(getBatchUrl(), "/" + identity);;
         return GenericRequestUtil.get(

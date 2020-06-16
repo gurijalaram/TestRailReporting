@@ -1,5 +1,8 @@
 {
   "type": "object",
+  "required": [
+    "response"
+  ],
   "properties": {
     "response": {
       "type": "object",
@@ -9,34 +12,22 @@
         "createdAt",
         "customerIdentity",
         "deploymentIdentity",
+        "installationIdentity",
+        "applicationIdentity",
         "userIdentity",
-        "reportType",
-        "state",
-        "reportFormat"
+        "filename",
+        "folder",
+        "filesize",
+        "md5hash"
       ],
       "properties": {
         "identity": {
           "type": "string"
         },
-        "fileName": {
-          "type": "string"
-        },
-        "batchIdentity": {
-          "type": "string"
-        },
-        "contentType": {
-          "type": "string"
-        },
         "createdBy": {
           "type": "string"
         },
-        "updatedBy": {
-          "type": "string"
-        },
         "createdAt": {
-          "type": "string"
-        },
-        "updatedAt": {
           "type": "string"
         },
         "customerIdentity": {
@@ -45,26 +36,26 @@
         "deploymentIdentity": {
           "type": "string"
         },
+        "installationIdentity": {
+          "type": "string"
+        },
+        "applicationIdentity": {
+          "type": "string"
+        },
         "userIdentity": {
           "type": "string"
         },
-        "reportType": {
+        "filename": {
           "type": "string"
         },
-        "externalId": {
+        "folder": {
           "type": "string"
         },
-        "state": {
-          "type": "string"
+        "filesize": {
+          "type": "integer"
         },
-        "reportFormat": {
+        "md5hash": {
           "type": "string"
-        },
-        "parts": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       }
     }
