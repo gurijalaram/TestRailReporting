@@ -235,7 +235,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowOne(String attribute, String condition, String value) {
-        setRow(rowOneAttributeDropdown, rowOneConditionDropdown, rowOneValueLocator, attribute, condition, value);
+        setRow(rowOneAttributeDropdown, rowOneConditionDropdown, "1", attribute, condition, value);
         return this;
     }
 
@@ -248,7 +248,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowTwo(String attribute, String condition, String value) {
-        setRow(rowTwoAttributeDropdown, rowTwoConditionDropdown, rowTwoValueLocator, attribute, condition, value);
+        setRow(rowTwoAttributeDropdown, rowTwoConditionDropdown, "2", attribute, condition, value);
         return this;
     }
 
@@ -261,15 +261,15 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowThree(String attribute, String condition, String value) {
-        setRow(rowThreeAttributeDropdown, rowThreeConditionDropdown, rowThreeValueLocator, attribute, condition, value);
+        setRow(rowThreeAttributeDropdown, rowThreeConditionDropdown, "3", attribute, condition, value);
         return this;
     }
 
-    private void setRow(WebElement attributeLocator, WebElement conditionLocator, WebElement valueLocator, String attribute, String condition, String value) {
+    private void setRow(WebElement attributeLocator, WebElement conditionLocator, String row, String attribute, String condition, String value) {
         this.attribute = attribute;
         new Select(attributeLocator).selectByVisibleText(attribute);
         new Select(conditionLocator).selectByVisibleText(condition);
-        setValueType(valueLocator, value);
+        setValueType(row, value);
     }
 
     /**
@@ -278,11 +278,11 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param values - enum value
      * @return current page object
      */
-    private FilterCriteriaPage setValueType(String values) {
+    private FilterCriteriaPage setValueType(String row, String values) {
         if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(attributeValues -> attributeValues.equalsIgnoreCase(attribute))) {
-            setDropdown(values);
+            setDropdown(row, values);
         } else {
-            inputValue(values);
+            inputValue(row, values);
         }
         return this;
     }
@@ -293,31 +293,53 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param values - the input values
      * @return current page object
      */
-    private FilterCriteriaPage setDropdown(String values) {
+    private FilterCriteriaPage setDropdown(String row, String values) {
         WebElement value;
+        WebElement rowLocator = null;
         String[] valuesToSelect = values.split(",");
 
-        pageUtils.waitForElementAndClick(rowThreeValueDropdown);
+        if (row == "1") {
+            rowLocator = rowOneValueDropdown;
+        }
+        if (row == "2") {
+            rowLocator = rowTwoValueDropdown;
+        }
+        if (row == "3") {
+            rowLocator = rowThreeValueDropdown;
+        }
+
+        pageUtils.waitForElementAndClick(rowLocator);
 
         for (String valueToSelect : valuesToSelect) {
             value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
             pageUtils.waitForElementAndClick(value);
         }
-        rowThreeValueDropdown.sendKeys(Keys.ESCAPE);
+        rowLocator.sendKeys(Keys.ESCAPE);
         return this;
     }
 
     /**
      * Sets the value as input
      *
-     * @param valueLocator - the webelement locator for the value
      * @param input - the input value
      * @return current page object
      */
-    private FilterCriteriaPage inputValue(WebElement valueLocator, String input) {
-        pageUtils.waitForElementAndClick(valueLocator);
-        valueLocator.clear();
-        valueLocator.sendKeys(input);
+    private FilterCriteriaPage inputValue(String row, String input) {
+        WebElement rowLocator = null;
+
+        if (row == "1") {
+            rowLocator = rowOneInput;
+        }
+        if (row == "2") {
+            rowLocator = rowTwoInput;
+        }
+        if (row == "3") {
+            rowLocator = rowThreeInput;
+        }
+
+        pageUtils.waitForElementAndClick(rowLocator);
+        rowLocator.clear();
+        rowLocator.sendKeys(input);
         return this;
     }
 
