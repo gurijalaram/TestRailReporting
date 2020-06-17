@@ -296,13 +296,12 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     /**
      * Selects the value as a dropdown
      *
-     * @param valueLocator - the webelement locator for the value
-     * @param selections - the input value
+     * @param values - the input values
      * @return current page object
      */
-    private FilterCriteriaPage setValue(WebElement valueLocator, String selections) {
+    private FilterCriteriaPage setValue(String values) {
         WebElement value;
-        String[] valuesToSelect = selections.split(",");
+        String[] valuesToSelect = values.split(",");
 
         pageUtils.waitForElementAndClick(valueLocator);
 
