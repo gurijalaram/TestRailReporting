@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.WorkspaceEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -115,7 +114,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        initialiseCostMaturityMap();
         this.get();
     }
 
@@ -127,60 +125,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(modalDialog);
         pageUtils.waitForElementToAppear(rowOneAttributeDropdown);
-    }
-
-    // TODO: 15/06/2020 need to delete
-    /**
-     * Filter criteria for private selection
-     *
-     * @param type      - type of selection whether private or public
-     * @param attribute - the attribute
-     * @param condition - specified condition
-     * @param value     - the value
-     * @return current page object
-     */
-    public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
-        clear()
-            .setWorkspace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .setScenarioType(type)
-            .selectAttribute(attribute)
-            .selectCondition(condition)
-            .setValueType(value);
-        return this;
-    }
-
-    // TODO: 15/06/2020 need to delete
-    /**
-     * Filter criteria for public selection
-     *
-     * @param type      - type of selection whether private or public
-     * @param attribute - the attribute
-     * @param condition - specified condition
-     * @param value     - the value
-     * @return current page object
-     */
-    public FilterCriteriaPage filterPublicCriteria(String type, String attribute, String condition, String value) {
-        clear()
-            .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .setScenarioType(type)
-            .selectAttribute(attribute)
-            .selectCondition(condition)
-            .setValueType(value);
-        return this;
-    }
-
-    /**
-     * Multi filter criteria for public selection
-     *
-     * @return current page object
-     */
-    public FilterCriteriaPage multiFilterPublicCriteria(String scenarioType, String[] attributes, String[] values, Boolean[] dropdownFlags) {
-        clear()
-            .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .setScenarioType(scenarioType)
-            .multiSelectAttributes(attributes)
-            .multiSelectValue(values, dropdownFlags);
-        return this;
     }
 
     /**
@@ -343,79 +287,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         return this;
     }
 
-    // TODO: 12/06/2020 need to delete
-
-    /**
-     * Selects the attribute
-     *
-     * @param attribute - the attribute
-     * @return current page object
-     */
-    private FilterCriteriaPage selectAttribute(String attribute) {
-        new Select(rowOneAttributeDropdown).selectByVisibleText(attribute);
-        this.attribute = attribute;
-        return this;
-    }
-
-    // TODO: 12/06/2020 need to delete
-
-    /**
-     * Insert multiple attributes
-     *
-     * @param attributes - attribute array
-     * @return current page object
-     */
-    private FilterCriteriaPage multiSelectAttributes(String[] attributes) {
-        setAttributes(attributes);
-        return this;
-    }
-
-    // TODO: 12/06/2020 need to delete
-
-    /**
-     * Selects the condition
-     *
-     * @param condition - the condition
-     * @return current page object
-     */
-    private FilterCriteriaPage selectCondition(String condition) {
-        new Select(rowOneConditionDropdown).selectByVisibleText(condition);
-        return this;
-    }
-
-    // TODO: 12/06/2020 need to delete
-
-    /**
-     * Set value in more than one row
-     *
-     * @param values - values to set
-     * @return current page object
-     */
-    private FilterCriteriaPage setValues(String[] values, Boolean[] dropdownFlags) {
-        for (int i = 0; i < values.length; i++) {
-            if (!dropdownFlags[i]) {
-                WebElement elementToUse = i == 0 ? valueInputOne : valueInputTwo;
-                valueSelectionActionTextEntry(elementToUse, values[i]);
-            } else {
-                valueInputDropdownOne.click();
-                costMaturityOptions.get(values[i]).click();
-                valueInputDropdownOne.click();
-            }
-        }
-        return this;
-    }
-
-    // TODO: 12/06/2020 need to delete
-
-    /**
-     * Multi select for value
-     *
-     * @param values -  values to set
-     */
-    private void multiSelectValue(String[] values, Boolean[] dropdownFlags) {
-        setValues(values, dropdownFlags);
-    }
-
     /**
      * Selects the apply button
      *
@@ -457,44 +328,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     public FilterCriteriaPage clearAllCheckBoxes() {
         listOfCheckboxes.stream().filter(checkbox -> checkbox.getAttribute("checked") != null).forEach(WebElement::click);
         return this;
-    }
-
-    // TODO: 12/06/2020 need to delete
-
-    /**
-     * Sets attribute for multi filter
-     *
-     * @param attributes - array of attributes to set
-     * @return current page object
-     */
-    private FilterCriteriaPage setAttributes(String[] attributes) {
-        for (int i = 0; i < attributes.length; i++) {
-            WebElement elementToUse = i == 0 ? rowOneAttributeDropdown : rowTwoAttributeDropdown;
-            pageUtils.selectDropdownOption(elementToUse, attributes[i]);
-        }
-        return this;
-    }
-
-    // TODO: 12/06/2020 need to delete
-
-    /**
-     * Inputs value into input field
-     *
-     * @param inputToUse   - WebElement to enter text into
-     * @param valueToEnter - the text to enter in the input
-     */
-    private void valueSelectionActionTextEntry(WebElement inputToUse, String valueToEnter) {
-        pageUtils.waitForElementAndClick(inputToUse);
-        inputToUse.clear();
-        inputToUse.sendKeys(valueToEnter);
-    }
-
-    // TODO: 12/06/2020 ask why initialising is done here
-    private void initialiseCostMaturityMap() {
-        costMaturityOptions.put("Initial", costMaturityInitialOption);
-        costMaturityOptions.put("Low", costMaturityLowOption);
-        costMaturityOptions.put("Medium", costMaturityMediumOption);
-        costMaturityOptions.put("High", costMaturityHighOption);
     }
 
     /**
