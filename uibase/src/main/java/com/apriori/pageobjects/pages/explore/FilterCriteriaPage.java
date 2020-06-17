@@ -282,6 +282,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     /**
      * Sets the value as input
      *
+     * @param valueLocator - the webelement locator for the value
      * @param input - the input value
      * @return current page object
      */
@@ -295,6 +296,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     /**
      * Selects the value as a dropdown
      *
+     * @param valueLocator - the webelement locator for the value
      * @param selections - the input value
      * @return current page object
      */
