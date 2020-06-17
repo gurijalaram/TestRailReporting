@@ -65,13 +65,22 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     private WebElement rowThreeConditionDropdown;
 
     @FindBy(xpath = "//input[@data-ap-field='criteria0.value']")
-    private WebElement rowOneInputLocator;
+    private WebElement rowOneInput;
 
     @FindBy(css = "//input[@data-ap-field='criteria1.value']")
-    private WebElement rowTwoInputLocator;
+    private WebElement rowTwoInput;
 
     @FindBy(css = "//input[@data-ap-field='criteria2.value']")
-    private WebElement rowThreeInputLocator;
+    private WebElement rowThreeInput;
+
+    @FindBy(xpath = "//select[@data-ap-field='criteria0.value']/parent::div//button")
+    private WebElement rowOneValueDropdown;
+
+    @FindBy(xpath = "//select[@data-ap-field='criteria1.value']/parent::div//button")
+    private WebElement rowTwoValueDropdown;
+
+    @FindBy(xpath = "//select[@data-ap-field='criteria2.value']/parent::div//button")
+    private WebElement rowThreeValueDropdown;
 
     @FindBy(xpath = "//span[contains(text(), 'Initial')]/..")
     private WebElement costMaturityInitialOption;
@@ -266,16 +275,35 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     /**
      * Choose how data is entered either via input or dropdown based on enum
      *
-     * @param valueLocator - the webelement locator for the value
-     * @param value - enum value
+     * @param values - enum value
      * @return current page object
      */
-    private FilterCriteriaPage setValueType(String value) {
+    private FilterCriteriaPage setValueType(String values) {
         if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
-            setValue(valueLocator, value);
+            setDropdown(values);
         } else {
-            inputValue(valueLocator, value);
+            inputValue(values);
         }
+        return this;
+    }
+
+    /**
+     * Selects the value as a dropdown
+     *
+     * @param values - the input values
+     * @return current page object
+     */
+    private FilterCriteriaPage setDropdown(String values) {
+        WebElement value;
+        String[] valuesToSelect = values.split(",");
+
+        pageUtils.waitForElementAndClick(rowThreeValueDropdown);
+
+        for (String valueToSelect : valuesToSelect) {
+            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
+            pageUtils.waitForElementAndClick(value);
+        }
+        rowThreeValueDropdown.sendKeys(Keys.ESCAPE);
         return this;
     }
 
@@ -290,26 +318,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         pageUtils.waitForElementAndClick(valueLocator);
         valueLocator.clear();
         valueLocator.sendKeys(input);
-        return this;
-    }
-
-    /**
-     * Selects the value as a dropdown
-     *
-     * @param values - the input values
-     * @return current page object
-     */
-    private FilterCriteriaPage setValue(String values) {
-        WebElement value;
-        String[] valuesToSelect = values.split(",");
-
-        pageUtils.waitForElementAndClick(valueLocator);
-
-        for (String valueToSelect : valuesToSelect) {
-            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
-            pageUtils.waitForElementAndClick(value);
-        }
-        valueLocator.sendKeys(Keys.ESCAPE);
         return this;
     }
 
