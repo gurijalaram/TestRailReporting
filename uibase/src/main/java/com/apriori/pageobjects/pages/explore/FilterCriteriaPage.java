@@ -64,14 +64,14 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "select[data-ap-field='criteria2.operation']")
     private WebElement rowThreeConditionDropdown;
 
-    @FindBy(xpath = "//*[@data-ap-field='criteria0.value']/parent::div")
-    private WebElement rowOneValueLocator;
+    @FindBy(xpath = "//input[@data-ap-field='criteria0.value']")
+    private WebElement rowOneInputLocator;
 
-    @FindBy(css = "//*[@data-ap-field='criteria1.value']/parent::div")
-    private WebElement rowTwoValueLocator;
+    @FindBy(css = "//input[@data-ap-field='criteria1.value']")
+    private WebElement rowTwoInputLocator;
 
-    @FindBy(css = "//*[@data-ap-field='criteria2.value']/parent::div")
-    private WebElement rowThreeValueLocator;
+    @FindBy(css = "//input[@data-ap-field='criteria2.value']")
+    private WebElement rowThreeInputLocator;
 
     @FindBy(xpath = "//span[contains(text(), 'Initial')]/..")
     private WebElement costMaturityInitialOption;
@@ -270,7 +270,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param value - enum value
      * @return current page object
      */
-    private FilterCriteriaPage setValueType(WebElement valueLocator, String value) {
+    private FilterCriteriaPage setValueType(String value) {
         if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
             setValue(valueLocator, value);
         } else {
