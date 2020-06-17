@@ -685,7 +685,7 @@ public class ToleranceTests extends TestBase {
             .openTolerancesTab()
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:4");
 
-        assertThat(tolerancePage.isEditButtonDisabled(), is("true"));
+        assertThat(tolerancePage.isEditButtonEnabled(), is(false));
     }
 
     @Test

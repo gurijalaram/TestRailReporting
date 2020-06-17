@@ -644,15 +644,6 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Gets the attribute of the button
-     * @return string
-     */
-    public String getFractionPaintedAttribute() {
-        pageUtils.waitForElementToAppear(fractionPaintedInput);
-        return fractionPaintedInput.getAttribute("disabled");
-    }
-
-    /**
      * Select thread button
      *
      * @return current page object

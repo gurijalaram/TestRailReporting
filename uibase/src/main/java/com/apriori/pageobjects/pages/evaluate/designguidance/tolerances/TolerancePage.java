@@ -120,8 +120,8 @@ public class TolerancePage extends EvaluatePanelToolbar {
      *
      * @return string
      */
-    public String isEditButtonDisabled() {
-        return pageUtils.waitForElementToAppear(editToleranceButton).getAttribute("disabled");
+    public boolean isEditButtonEnabled() {
+        return editToleranceButton.isEnabled();
     }
 
     /**

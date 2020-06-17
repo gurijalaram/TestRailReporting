@@ -70,7 +70,7 @@ public class StockPage extends EvaluatePanelToolbar {
      *
      * @return string
      */
-    public String isEditButtonDisabled() {
-        return pageUtils.waitForElementToAppear(editButton).getAttribute("disabled");
+    public boolean isEditButtonEnabled() {
+        return editButton.isEnabled();
     }
 }

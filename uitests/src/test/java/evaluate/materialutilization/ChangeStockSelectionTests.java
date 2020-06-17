@@ -95,6 +95,6 @@ public class ChangeStockSelectionTests extends TestBase {
             .openMaterialUtilization()
             .goToStockTab();
 
-        assertThat(stockPage.isEditButtonDisabled(), is("true"));
+        assertThat(stockPage.isEditButtonEnabled(), is(false));
     }
 }

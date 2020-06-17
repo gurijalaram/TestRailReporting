@@ -481,7 +481,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario(scenarioName, "SheetMetal");
 
-        assertThat(evaluatePage.isSecondaryProcessButtonDisabled(), is("true"));
+        assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
