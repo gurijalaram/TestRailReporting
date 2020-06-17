@@ -55,6 +55,9 @@
         },
         "useCadToleranceThreshold": {
           "type": "boolean"
+        },
+        "materialName": {
+          "type": "string"
         }
         }
       }
