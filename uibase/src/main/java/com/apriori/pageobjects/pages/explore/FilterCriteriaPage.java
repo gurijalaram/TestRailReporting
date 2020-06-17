@@ -70,6 +70,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "input[data-ap-field='criteria1.value']")
     private WebElement valueInputTwo;
 
+    @FindBy(css = "input[data-ap-field='criteria2.value']")
+    private WebElement valueInputThree;
+
     @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
     private WebElement valueInputDropdown;
 
