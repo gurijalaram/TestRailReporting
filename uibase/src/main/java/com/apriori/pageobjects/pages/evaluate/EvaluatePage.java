@@ -742,24 +742,6 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Gets table values by specified row index
-     *
-     * @param row
-     * @return ArrayList of BigDecimals
-     */
-    public ArrayList<BigDecimal> getTableValsByRow(String row) {
-        Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
-
-        String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td";
-        ArrayList<Element> elements;
-
-        baseCssSelector = String.format(baseCssSelector, row);
-        elements = evaluateComponentView.select(baseCssSelector);
-
-        return elements.stream().filter(element -> !element.text().isEmpty() && element.text().contains(".")).map(element -> new BigDecimal(element.text())).collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    /**
      * Switches to other tab
      */
     public void switchBackToTabOne() {

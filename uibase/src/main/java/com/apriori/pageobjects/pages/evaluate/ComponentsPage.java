@@ -3,6 +3,9 @@ package com.apriori.pageobjects.pages.evaluate;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +14,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -144,5 +151,30 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     public ComponentTableColumnsPage openColumnsTable() {
         pageUtils.waitForElementToAppear(columnSelectorButton).click();
         return new ComponentTableColumnsPage(driver);
+    }
+
+    /**
+     * Gets table values by specified row index
+     *
+     * @param row
+     * @return ArrayList of BigDecimals
+     */
+    public ArrayList<BigDecimal> getTableValsByRow(String row) {
+        Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
+
+        String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td";
+        ArrayList<Element> elements;
+
+        baseCssSelector = String.format(baseCssSelector, row);
+        elements = evaluateComponentView.select(baseCssSelector);
+
+        return elements.stream().filter(element -> !element.text().isEmpty() && element.text().contains(".")).map(element -> new BigDecimal(element.text())).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    /**
+     * Switches to other tab
+     */
+    public void switchBackToTabOne() {
+        pageUtils.switchBackToInitialTab();
     }
 }
