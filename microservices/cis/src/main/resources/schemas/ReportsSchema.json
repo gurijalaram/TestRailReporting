@@ -18,7 +18,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "CisReportSchema.json"
+                "$ref": "ReportSchema.json"
               }
             }
           }

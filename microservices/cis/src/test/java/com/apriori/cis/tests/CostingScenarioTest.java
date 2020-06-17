@@ -1,15 +1,15 @@
 package com.apriori.cis.tests;
 
+import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.utils.TestUtil;
 
+import com.apriori.cis.utils.CisUtils;
 import com.apriori.cis.controller.BatchPartResources;
 import com.apriori.cis.controller.BatchResources;
 import com.apriori.cis.controller.PartResources;
-import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
-
-import com.apriori.cis.utils.CisUtils;
+import com.apriori.cis.entity.request.NewPartRequest;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
@@ -23,9 +23,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public class CisCostingScenario extends TestUtil {
+public class CostingScenarioTest extends TestUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(CisCostingScenario.class);
+    private static final Logger logger = LoggerFactory.getLogger(CostingScenarioTest.class);
 
     @Test
     @TestRail(testCaseId = {"4278", "4284", "4280", "4177"})
@@ -47,8 +47,9 @@ public class CisCostingScenario extends TestUtil {
 
         // create batch part
         NewPartRequest newPartRequest =
-                (NewPartRequest)JsonManager.serializeJsonFromFile(
-                        getClass().getClassLoader().getResource("CreatePartData.json").getPath(), NewPartRequest.class);
+                (NewPartRequest)JsonManager.deserializeJsonFromFile(
+                Thread.currentThread().getContextClassLoader().getResource("CreatePartData.json").getPath(), NewPartRequest.class);
+
         Part batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
 
         String partIdentity = "";
@@ -97,6 +98,14 @@ public class CisCostingScenario extends TestUtil {
         Assert.assertEquals(true, isBatchComplete);
 
         PartResources.getPartCosting(partIdentity);
+
+        PropertyStore propertyStore = new PropertyStore();
+        propertyStore.setBatchIdentity(batchIdentity);
+        propertyStore.setPartIdentity(partIdentity);
+
+        JsonManager.serializeJsonToFile(
+            Thread.currentThread().getContextClassLoader().getResource("property-store.json").getPath(), propertyStore);
+
     }
 
     private Boolean pollState(Object obj, Class klass) {

@@ -9,7 +9,7 @@
       "required": [
         "roundToNearest"
       ],
-      "$ref": "./CisReportSchema.json",
+      "$ref": "ReportSchema.json",
       "properties": {
         "roundToNearest": {
           "type": "string"
