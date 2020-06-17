@@ -73,8 +73,14 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "input[data-ap-field='criteria2.value']")
     private WebElement valueInputThree;
 
-    @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
-    private WebElement valueInputDropdown;
+    @FindBy(css = "//select[@data-ap-field='criteria0.value']/..//button")
+    private WebElement valueInputDropdownOne;
+
+    @FindBy(css = "//select[@data-ap-field='criteria1.value']/..//button")
+    private WebElement valueInputDropdownTwo;
+
+    @FindBy(css = "//select[@data-ap-field='criteria2.value']/..//button")
+    private WebElement valueInputDropdownThree;
 
     @FindBy(xpath = "//span[contains(text(), 'Initial')]/..")
     private WebElement costMaturityInitialOption;
@@ -304,13 +310,13 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         WebElement value;
         String[] valuesToSelect = selections.split(",");
 
-        pageUtils.waitForElementAndClick(valueInputDropdown);
+        pageUtils.waitForElementAndClick(valueInputDropdownOne);
 
         for (String valueToSelect : valuesToSelect) {
             value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
             pageUtils.waitForElementAndClick(value);
         }
-        valueInputDropdown.sendKeys(Keys.ESCAPE);
+        valueInputDropdownOne.sendKeys(Keys.ESCAPE);
         return this;
     }
 
@@ -368,9 +374,9 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
                 WebElement elementToUse = i == 0 ? valueInputOne : valueInputTwo;
                 valueSelectionActionTextEntry(elementToUse, values[i]);
             } else {
-                valueInputDropdown.click();
+                valueInputDropdownOne.click();
                 costMaturityOptions.get(values[i]).click();
-                valueInputDropdown.click();
+                valueInputDropdownOne.click();
             }
         }
         return this;
