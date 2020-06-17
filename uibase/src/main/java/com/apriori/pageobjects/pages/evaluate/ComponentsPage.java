@@ -58,6 +58,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     public ComponentsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -70,7 +71,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(componentsTableRow);
+        //pageUtils.waitForElementToAppear(componentsTableRow);
     }
 
     /**
@@ -131,10 +132,11 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * @param scenarioName     - scenario name
      * @param subcomponentName - subcomponent name
      */
-    public void highlightSubcomponent(String scenarioName, String subcomponentName) {
+    public ComponentsPage highlightSubcomponent(String scenarioName, String subcomponentName) {
         By subcomponent = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + subcomponentName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr");
         pageUtils.scrollToElement(subcomponent, componentScroller, Constants.ARROW_DOWN);
         pageUtils.waitForElementAndClick(subcomponent);
+        return this;
     }
 
     /**
@@ -187,7 +189,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * @return string
      */
     public String getComponentCell(String component, String column) {
-        String rowLocator = "//div[@data-ap-comp='assemblyComponentsGridArea']//td[.='" + component + "']/ancestor::tr[@class]";
+        String rowLocator = "//div[@data-ap-comp='assemblyComponentsGridArea']//div[.='" + component + "']/ancestor::tr[@class]";
         return columnUtils.columnDetails("assemblyComponentsGridArea", column, rowLocator);
     }
 }

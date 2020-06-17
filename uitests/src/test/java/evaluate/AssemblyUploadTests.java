@@ -279,7 +279,7 @@ public class AssemblyUploadTests extends TestBase {
             .openComponentsTable()
             .selectComponentsView("Tree View")
             .expandAssembly(scenarioName, "ASSY02")
-            .selectSubcomponent(scenarioName, "PART0002");
+            .highlightSubcomponent(scenarioName, "PART0002");
 
         assertThat(componentsPage.getComponentCell("PART0002", "Qty"), Matchers.is(Matchers.equalTo("2")));
     }
