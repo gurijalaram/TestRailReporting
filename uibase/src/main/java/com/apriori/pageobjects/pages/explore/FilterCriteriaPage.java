@@ -64,23 +64,14 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(css = "select[data-ap-field='criteria2.operation']")
     private WebElement rowThreeConditionDropdown;
 
-    @FindBy(css = "input[data-ap-field='criteria0.value']")
-    private WebElement valueInputOne;
+    @FindBy(xpath = "//*[@data-ap-field='criteria0.value']/parent::div")
+    private WebElement rowOneValueLocator;
 
-    @FindBy(css = "input[data-ap-field='criteria1.value']")
-    private WebElement valueInputTwo;
+    @FindBy(css = "//*[@data-ap-field='criteria1.value']/parent::div")
+    private WebElement rowTwoValueLocator;
 
-    @FindBy(css = "input[data-ap-field='criteria2.value']")
-    private WebElement valueInputThree;
-
-    @FindBy(css = "//select[@data-ap-field='criteria0.value']/..//button")
-    private WebElement valueInputDropdownOne;
-
-    @FindBy(css = "//select[@data-ap-field='criteria1.value']/..//button")
-    private WebElement valueInputDropdownTwo;
-
-    @FindBy(css = "//select[@data-ap-field='criteria2.value']/..//button")
-    private WebElement valueInputDropdownThree;
+    @FindBy(css = "//*[@data-ap-field='criteria2.value']/parent::div")
+    private WebElement rowThreeValueLocator;
 
     @FindBy(xpath = "//span[contains(text(), 'Initial')]/..")
     private WebElement costMaturityInitialOption;
@@ -235,7 +226,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowOne(String attribute, String condition, String value) {
-        setRow(rowOneAttributeDropdown, rowOneConditionDropdown, attribute, condition, value);
+        setRow(rowOneAttributeDropdown, rowOneConditionDropdown, rowOneValueLocator, attribute, condition, value);
         return this;
     }
 
@@ -248,7 +239,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowTwo(String attribute, String condition, String value) {
-        setRow(rowTwoAttributeDropdown, rowTwoConditionDropdown, attribute, condition, value);
+        setRow(rowTwoAttributeDropdown, rowTwoConditionDropdown, rowTwoValueLocator, attribute, condition, value);
         return this;
     }
 
@@ -261,28 +252,29 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowThree(String attribute, String condition, String value) {
-        setRow(rowThreeAttributeDropdown, rowThreeConditionDropdown, attribute, condition, value);
+        setRow(rowThreeAttributeDropdown, rowThreeConditionDropdown, rowThreeValueLocator, attribute, condition, value);
         return this;
     }
 
-    private void setRow(WebElement attributeLocator, WebElement conditionLocator, String attribute, String condition, String value) {
+    private void setRow(WebElement attributeLocator, WebElement conditionLocator, WebElement valueLocator, String attribute, String condition, String value) {
         this.attribute = attribute;
         new Select(attributeLocator).selectByVisibleText(attribute);
         new Select(conditionLocator).selectByVisibleText(condition);
-        setValueType(value);
+        setValueType(valueLocator, value);
     }
 
     /**
      * Choose how data is entered either via input or dropdown based on enum
      *
+     * @param valueLocator - the webelement locator for the value
      * @param value - enum value
      * @return current page object
      */
-    private FilterCriteriaPage setValueType(String value) {
+    private FilterCriteriaPage setValueType(WebElement valueLocator, String value) {
         if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
-            setValue(value);
+            setValue(valueLocator, value);
         } else {
-            inputValue(value);
+            inputValue(valueLocator, value);
         }
         return this;
     }
@@ -293,10 +285,10 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param input - the input value
      * @return current page object
      */
-    private FilterCriteriaPage inputValue(String input) {
-        pageUtils.waitForElementAndClick(valueInputOne);
-        valueInputOne.clear();
-        valueInputOne.sendKeys(input);
+    private FilterCriteriaPage inputValue(WebElement valueLocator, String input) {
+        pageUtils.waitForElementAndClick(valueLocator);
+        valueLocator.clear();
+        valueLocator.sendKeys(input);
         return this;
     }
 
@@ -306,17 +298,17 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param selections - the input value
      * @return current page object
      */
-    private FilterCriteriaPage setValue(String selections) {
+    private FilterCriteriaPage setValue(WebElement valueLocator, String selections) {
         WebElement value;
         String[] valuesToSelect = selections.split(",");
 
-        pageUtils.waitForElementAndClick(valueInputDropdownOne);
+        pageUtils.waitForElementAndClick(valueLocator);
 
         for (String valueToSelect : valuesToSelect) {
             value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
             pageUtils.waitForElementAndClick(value);
         }
-        valueInputDropdownOne.sendKeys(Keys.ESCAPE);
+        valueLocator.sendKeys(Keys.ESCAPE);
         return this;
     }
 
