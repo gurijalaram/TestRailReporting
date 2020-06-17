@@ -53,7 +53,9 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .filter()
-            .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
@@ -63,7 +65,9 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .filter()
-            .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "casting"), is(equalTo(0)));
@@ -87,14 +91,18 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .filter()
-            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class)
             .openScenario(testScenarioName, "casting")
             .delete()
             .deleteScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .filter()
-            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "casting"), is(equalTo(0)));
