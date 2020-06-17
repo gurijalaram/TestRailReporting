@@ -139,7 +139,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
             .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)
-            .setTypeOfValue(value);
+            .setValueType(value);
         return this;
     }
 
@@ -159,7 +159,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
             .setScenarioType(type)
             .selectAttribute(attribute)
             .selectCondition(condition)
-            .setTypeOfValue(value);
+            .setValueType(value);
         return this;
     }
 
@@ -263,7 +263,55 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         this.attribute = attribute;
         new Select(attributeLocator).selectByVisibleText(attribute);
         new Select(conditionLocator).selectByVisibleText(condition);
-        setTypeOfValue(value);
+        setValueType(value);
+    }
+
+    /**
+     * Choose how data is entered either via input or dropdown based on enum
+     *
+     * @param value - enum value
+     * @return current page object
+     */
+    private FilterCriteriaPage setValueType(String value) {
+        if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
+            setValue(value);
+        } else {
+            inputValue(value);
+        }
+        return this;
+    }
+
+    /**
+     * Sets the value as input
+     *
+     * @param input - the input value
+     * @return current page object
+     */
+    private FilterCriteriaPage inputValue(String input) {
+        pageUtils.waitForElementAndClick(valueInputOne);
+        valueInputOne.clear();
+        valueInputOne.sendKeys(input);
+        return this;
+    }
+
+    /**
+     * Selects the value as a dropdown
+     *
+     * @param selections - the input value
+     * @return current page object
+     */
+    private FilterCriteriaPage setValue(String selections) {
+        WebElement value;
+        String[] valuesToSelect = selections.split(",");
+
+        pageUtils.waitForElementAndClick(valueInputDropdown);
+
+        for (String valueToSelect : valuesToSelect) {
+            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
+            pageUtils.waitForElementAndClick(value);
+        }
+        valueInputDropdown.sendKeys(Keys.ESCAPE);
+        return this;
     }
 
     // TODO: 12/06/2020 need to delete
@@ -303,39 +351,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      */
     private FilterCriteriaPage selectCondition(String condition) {
         new Select(rowOneConditionDropdown).selectByVisibleText(condition);
-        return this;
-    }
-
-    /**
-     * Sets the value as input
-     *
-     * @param input - the input value
-     * @return current page object
-     */
-    private FilterCriteriaPage inputValue(String input) {
-        pageUtils.waitForElementAndClick(valueInputOne);
-        valueInputOne.clear();
-        valueInputOne.sendKeys(input);
-        return this;
-    }
-
-    /**
-     * Selects the value as a dropdown
-     *
-     * @param selections - the input value
-     * @return current page object
-     */
-    private FilterCriteriaPage setValue(String selections) {
-        WebElement value;
-        String[] valuesToSelect = selections.split(",");
-
-        pageUtils.waitForElementAndClick(valueInputDropdown);
-
-        for (String valueToSelect : valuesToSelect) {
-            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
-            pageUtils.waitForElementAndClick(value);
-        }
-        valueInputDropdown.sendKeys(Keys.ESCAPE);
         return this;
     }
 
@@ -443,21 +458,6 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         pageUtils.waitForElementAndClick(inputToUse);
         inputToUse.clear();
         inputToUse.sendKeys(valueToEnter);
-    }
-
-    /**
-     * Choose how data is entered either via input or dropdown based on enum
-     *
-     * @param value - enum value
-     * @return current page object
-     */
-    private FilterCriteriaPage setTypeOfValue(String value) {
-        if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
-            setValue(value);
-        } else {
-            inputValue(value);
-        }
-        return this;
     }
 
     // TODO: 12/06/2020 ask why initialising is done here
