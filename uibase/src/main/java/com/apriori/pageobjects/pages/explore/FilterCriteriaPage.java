@@ -279,7 +279,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     private FilterCriteriaPage setValueType(String values) {
-        if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
+        if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(attributeValues -> attributeValues.equalsIgnoreCase(attribute))) {
             setDropdown(values);
         } else {
             inputValue(values);
