@@ -66,7 +66,9 @@ public class PublishExistingCostedTests extends TestBase {
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .filter()
-            .filterPublicCriteria("Part", "Part Name", "Contains", partName)
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", partName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.findScenario(testScenarioName, partName).isDisplayed(), is(true));
