@@ -131,7 +131,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * @param scenarioName     - scenario name
      * @param subcomponentName - subcomponent name
      */
-    public void highlightsSubcomponent(String scenarioName, String subcomponentName) {
+    public void highlightSubcomponent(String scenarioName, String subcomponentName) {
         By subcomponent = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + subcomponentName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr");
         pageUtils.scrollToElement(subcomponent, componentScroller, Constants.ARROW_DOWN);
         pageUtils.waitForElementAndClick(subcomponent);
