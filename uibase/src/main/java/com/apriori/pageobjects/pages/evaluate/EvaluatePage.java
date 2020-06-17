@@ -721,7 +721,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public boolean isFinishMass(String mass) {
-        By finishMass = By.xpath(String.format("//td[@title='%s']",mass));
+        By finishMass = By.cssSelector("td[data-ap-field='finishMass']");
         return pageUtils.waitForElementToAppear(driver.findElement(finishMass)).isDisplayed();
     }
 

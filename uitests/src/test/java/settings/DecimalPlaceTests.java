@@ -64,11 +64,11 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.getFinishMass(), is(5.309458));
         assertThat(evaluatePage.getUtilization(), is(81.163688));
-        assertThat(evaluatePage.getCycleTimeCount(), is(110.820000));
+        assertThat(evaluatePage.getCycleTimeCount(), is(129.607902));
         assertThat(evaluatePage.getMaterialCost(), is(16.151375));
-        assertThat(evaluatePage.getPartCost(), is(19.734327));
-        assertThat(evaluatePage.getBurdenedCost(), is(19.734327));
-        assertThat(evaluatePage.getCapitalInvestment(), is(0.000000));
+        assertThat(evaluatePage.getPartCost(), is(20.158792));
+        assertThat(evaluatePage.getBurdenedCost(), is(20.174472));
+        assertThat(evaluatePage.getCapitalInvestment(), is(431.200988));
 
             evaluatePage.openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
@@ -76,11 +76,11 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.isFinishMass("5"), is(true));
         assertThat(evaluatePage.getUtilization(), is(81));
-        assertThat(evaluatePage.getCycleTimeCount(), is(111));
+        assertThat(evaluatePage.getCycleTimeCount(), is(130));
         assertThat(evaluatePage.getMaterialCost(), is(16));
         assertThat(evaluatePage.getPartCost(), is(20));
         assertThat(evaluatePage.getBurdenedCost(), is(20));
-        assertThat(evaluatePage.getCapitalInvestment(), is(0));
+        assertThat(evaluatePage.getCapitalInvestment(), is(431));
 
             evaluatePage.openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
@@ -88,18 +88,18 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.isFinishMass("5.3095"), is(true));
         assertThat(evaluatePage.getUtilization(), is(81.1637));
-        assertThat(evaluatePage.getCycleTimeCount(), is(110.8200));
+        assertThat(evaluatePage.getCycleTimeCount(), is(129.6079));
         assertThat(evaluatePage.getMaterialCost(), is(16.1514));
-        assertThat(evaluatePage.getPartCost(), is(19.7343));
-        assertThat(evaluatePage.getBurdenedCost(), is(19.7343));
-        assertThat(evaluatePage.getCapitalInvestment(), is(0.0000));
+        assertThat(evaluatePage.getPartCost(), is(20.1588));
+        assertThat(evaluatePage.getBurdenedCost(), is(20.1745));
+        assertThat(evaluatePage.getCapitalInvestment(), is(431.2010));
 
         processRoutingPage = evaluatePage.openProcessDetails();
 
-        assertThat(processRoutingPage.getCycleTime(), is(110.8200));
-        assertThat(processRoutingPage.getPiecePartCost(), is(19.7343));
-        assertThat(processRoutingPage.getFullyBurdenedCost(), is(19.7343));
-        assertThat(processRoutingPage.getCapitalInvestments(), is(0.0000));
+        assertThat(processRoutingPage.getCycleTime(), is(129.6079));
+        assertThat(processRoutingPage.getPiecePartCost(), is(20.1588));
+        assertThat(processRoutingPage.getFullyBurdenedCost(), is(20.1745));
+        assertThat(processRoutingPage.getCapitalInvestments(), is(431.2010));
 
         costDetailsPage = evaluatePage.openCostDetails();
 
@@ -107,7 +107,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getIndirectOverhead(), is(0.3180));
         assertThat(costDetailsPage.getSGandA(), is(1.7500));
         assertThat(costDetailsPage.getMargin(), is(0.0000));
-        assertThat(costDetailsPage.getPiecePartCost(), is(19.7343));
+        assertThat(costDetailsPage.getPiecePartCost(), is(20.1588));
 
 
         evaluatePage.openSettings()
@@ -116,18 +116,18 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.isFinishMass("5.3"), is(true));
         assertThat(evaluatePage.getUtilization(), is(81.2));
-        assertThat(evaluatePage.getCycleTimeCount(), is(110.8));
+        assertThat(evaluatePage.getCycleTimeCount(), is(129.6));
         assertThat(evaluatePage.getMaterialCost(), is(16.2));
-        assertThat(evaluatePage.getPartCost(), is(19.7));
-        assertThat(evaluatePage.getBurdenedCost(), is(19.7));
-        assertThat(evaluatePage.getCapitalInvestment(), is(0.0));
+        assertThat(evaluatePage.getPartCost(), is(20.2));
+        assertThat(evaluatePage.getBurdenedCost(), is(20.2));
+        assertThat(evaluatePage.getCapitalInvestment(), is(431.2));
 
         evaluatePage.openProcessDetails();
 
-        assertThat(processRoutingPage.getCycleTime(), is(110.8));
-        assertThat(processRoutingPage.getPiecePartCost(), is(19.7));
-        assertThat(processRoutingPage.getFullyBurdenedCost(), is(19.7));
-        assertThat(processRoutingPage.getCapitalInvestments(), is(0.0));
+        assertThat(processRoutingPage.getCycleTime(), is(129.6));
+        assertThat(processRoutingPage.getPiecePartCost(), is(20.1));
+        assertThat(processRoutingPage.getFullyBurdenedCost(), is(20.1));
+        assertThat(processRoutingPage.getCapitalInvestments(), is(431.2));
 
         evaluatePage.openCostDetails();
 
@@ -135,7 +135,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getIndirectOverhead(), is(0.3));
         assertThat(costDetailsPage.getSGandA(), is(1.7));
         assertThat(costDetailsPage.getMargin(), is(0.0));
-        assertThat(costDetailsPage.getPiecePartCost(), is(19.7));
+        assertThat(costDetailsPage.getPiecePartCost(), is(20.1));
 
             evaluatePage.openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
@@ -143,21 +143,21 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.getFinishMass(), is(5.30946));
         assertThat(evaluatePage.getUtilization(), is(81.16369));
-        assertThat(evaluatePage.getCycleTimeCount(), is(110.82000));
+        assertThat(evaluatePage.getCycleTimeCount(), is(129.60790));
         assertThat(evaluatePage.getMaterialCost(), is(16.15138));
-        assertThat(evaluatePage.getPartCost(), is(19.73433));
-        assertThat(evaluatePage.getBurdenedCost(), is(19.73433));
-        assertThat(evaluatePage.getCapitalInvestment(), is(0.00000));
+        assertThat(evaluatePage.getPartCost(), is(20.15879));
+        assertThat(evaluatePage.getBurdenedCost(), is(20.15879));
+        assertThat(evaluatePage.getCapitalInvestment(), is(431.20099));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getFinishMass(), is(5.30946));
         assertThat(evaluatePage.getUtilization(), is(81.16369));
-        assertThat(evaluatePage.getCycleTimeCount(), is(110.82000));
+        assertThat(evaluatePage.getCycleTimeCount(), is(129.60790));
         assertThat(evaluatePage.getMaterialCost(), is(16.15138));
         assertThat(evaluatePage.getPartCost(), is(19.55601));
         assertThat(evaluatePage.getBurdenedCost(), is(19.55601));
-        assertThat(evaluatePage.getCapitalInvestment(), is(0.00000));
+        assertThat(evaluatePage.getCapitalInvestment(), is(431.20099));
     }
 }
