@@ -2,7 +2,7 @@ package com.apriori.apibase.services.cis.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "CisNewReportSchema.json")
+@Schema(location = "cis/CisNewReportSchema.json")
 public class NewReport extends Report {
     private NewReport response;
     private String roundToNearest;

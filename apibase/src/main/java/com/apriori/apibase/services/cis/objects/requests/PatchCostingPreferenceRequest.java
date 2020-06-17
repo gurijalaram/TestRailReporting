@@ -3,7 +3,7 @@ package com.apriori.apibase.services.cis.objects.requests;
 import com.apriori.apibase.services.cis.objects.CostingPreferences;
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "CisCostingPreferencesSchema.json")
+@Schema(location = "cis/CisCostingPreferencesSchema.json")
 public class PatchCostingPreferenceRequest {
     private CostingPreferences costingPreferences;
     private Double cadToleranceReplacement;

@@ -2,7 +2,7 @@ package com.apriori.apibase.services.cis.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "CisReportExportSchema.json")
+@Schema(location = "cis/CisReportExportSchema.json")
 public class ReportExport { 
     private String reportIdentity;
     private String fileName;

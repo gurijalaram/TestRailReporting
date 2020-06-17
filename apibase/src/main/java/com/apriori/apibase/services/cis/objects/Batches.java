@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "CisCustomerBatchesSchema.json")
+@Schema(location = "cis/CisCustomerBatchesSchema.json")
 public class Batches extends Pagination {
     private Batches response;
     private List<Batch> items;
