@@ -488,7 +488,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .openFirstScenario()
                 .openComponentsTable()
                 .openColumnsTable()
-                .checkColumnSettings(columnsToAdd, columnsToRemove)
+                .checkColumnSettings(columnsToAdd)
                 .selectOkButton();
 
         ArrayList<BigDecimal> cidPartOneValues = componentsPage

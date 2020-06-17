@@ -741,13 +741,6 @@ public class EvaluatePage extends EvaluateHeader {
         return pageUtils.isElementDisplayed(chevron);
     }
 
-    /**
-     * Switches to other tab
-     */
-    public void switchBackToTabOne() {
-        pageUtils.switchBackToInitialTab();
-    }
-
     private void initialiseColumnSelectorMap() {
         columnSelectorMap.put("Cycle Time (s)", "5");
         columnSelectorMap.put("Per Part Cost (USD)", "6");

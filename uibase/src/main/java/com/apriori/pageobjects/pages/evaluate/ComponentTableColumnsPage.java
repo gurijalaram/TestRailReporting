@@ -115,31 +115,19 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
      * Checks if columns are already set properly
      *
      * @param columnsToAdd
-     * @param columnsToRemove
      * @return current page object
      */
-    public ComponentTableColumnsPage checkColumnSettings(List<String> columnsToAdd, List<String> columnsToRemove) {
+    public ComponentTableColumnsPage checkColumnSettings(List<String> columnsToAdd) {
         int availableCount = Integer.parseInt(availableList.getAttribute("childElementCount"));
-        List<String> leftListContents = new ArrayList<>();
-        for (int i = 0; i < availableCount; i++) {
-            leftListContents.add(driver.findElements(By.xpath("//select[@data-ap-comp='leftList']/option")).get(i).getText());
-        }
+        List<String> availableList = new ArrayList<>();
 
-        int includedCount = Integer.parseInt(includedList.getAttribute("childElementCount"));
-        List<String> rightListContents = new ArrayList<>();
-        for (int j = 0; j < includedCount; j++) {
-            rightListContents.add(driver.findElements(By.xpath("//select[@data-ap-comp='rightList']/option")).get(j).getText());
+        for (int i = 0; i < availableCount; i++) {
+            availableList.add(driver.findElements(By.xpath("//select[@data-ap-comp='leftList']/option")).get(i).getText());
         }
 
         for (String columnName : columnsToAdd) {
-            if (leftListContents.contains(columnName) && !rightListContents.contains(columnName)) {
+            if (availableList.contains(columnName)) {
                 addColumn(columnName);
-            }
-        }
-
-        for (String columnName : columnsToRemove) {
-            if (!leftListContents.contains(columnName) && rightListContents.contains(columnName)) {
-                removeColumn(columnName);
             }
         }
 
