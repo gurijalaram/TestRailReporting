@@ -2,10 +2,10 @@ package com.apriori.cis.tests;
 
 import com.apriori.apibase.utils.TestUtil;
 
-import com.apriori.cis.utils.CisUtils;
 import com.apriori.cis.controller.ReportResources;
-import com.apriori.cis.entity.response.Report;
 import com.apriori.cis.entity.request.NewReportRequest;
+import com.apriori.cis.entity.response.Report;
+import com.apriori.cis.utils.CisUtils;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -16,6 +16,7 @@ import io.qameta.allure.Description;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

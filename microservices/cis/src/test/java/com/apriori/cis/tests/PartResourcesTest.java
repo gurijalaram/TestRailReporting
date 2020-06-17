@@ -20,8 +20,6 @@ public class PartResourcesTest extends TestUtil {
     @BeforeClass
     public static void testSetup() {
         propertyStore = (PropertyStore) JsonManager.deserializeJsonFromFile(
-//                Constants.getApitestsResourcePath() +
-//                "/property-store.json", PropertyStore.class);
                 Thread.currentThread().getContextClassLoader().getResource("property-store.json").getPath(), PropertyStore.class);
     }
 
@@ -30,8 +28,6 @@ public class PartResourcesTest extends TestUtil {
     @Description("Create a new part using the CIS API")
     public void createNewPart() {
         Object obj = JsonManager.deserializeJsonFromFile(
-//                Constants.getApitestsBasePath() +
-//                "/apitests/cis/testdata/CreatePartData.json", NewPartRequest.class);
                 Thread.currentThread().getContextClassLoader().getResource("CreatePartData.json").getPath(), NewPartRequest.class);
 
         PartResources.createNewPart(obj);
@@ -49,7 +45,7 @@ public class PartResourcesTest extends TestUtil {
     @TestRail(testCaseId = "4176")
     @Description("API returns a representation of a single part in the CIS DB")
     public void getPart() {
-       PartResources.getPartRepresentation(propertyStore.getPartIdentity());
+        PartResources.getPartRepresentation(propertyStore.getPartIdentity());
     }
 
 }

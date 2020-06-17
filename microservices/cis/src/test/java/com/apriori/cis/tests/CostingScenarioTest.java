@@ -3,13 +3,13 @@ package com.apriori.cis.tests;
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.utils.TestUtil;
 
-import com.apriori.cis.utils.CisUtils;
 import com.apriori.cis.controller.BatchPartResources;
 import com.apriori.cis.controller.BatchResources;
 import com.apriori.cis.controller.PartResources;
+import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
-import com.apriori.cis.entity.request.NewPartRequest;
+import com.apriori.cis.utils.CisUtils;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
@@ -18,6 +18,7 @@ import io.qameta.allure.Description;
 
 import org.junit.Assert;
 import org.junit.Test;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

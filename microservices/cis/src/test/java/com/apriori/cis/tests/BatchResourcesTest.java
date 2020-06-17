@@ -2,9 +2,9 @@ package com.apriori.cis.tests;
 
 import com.apriori.apibase.utils.TestUtil;
 
-import com.apriori.cis.utils.CisUtils;
 import com.apriori.cis.controller.BatchResources;
 import com.apriori.cis.entity.response.Batch;
+import com.apriori.cis.utils.CisUtils;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
