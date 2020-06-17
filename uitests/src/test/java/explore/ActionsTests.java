@@ -288,7 +288,9 @@ public class ActionsTests extends TestBase {
             .publishScenario("New", "Low", "Ciene Frith")
             .selectPublishButton()
             .filter()
-            .filterPublicCriteria("Part", "Assignee", "is", "Ciene Frith")
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Assignee", "is", "Ciene Frith")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), equalTo(1));
@@ -462,14 +464,18 @@ public class ActionsTests extends TestBase {
             .publishScenario("Complete", "Medium", "Moya Parker")
             .selectPublishButton()
             .filter()
-            .filterPublicCriteria("Part", "Status", "is", "Complete")
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Status", "is", "Complete")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "RAPID PROTOTYPING"), equalTo(1));
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .filterPublicCriteria("Part", "Cost Maturity", "is", "Medium")
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Cost Maturity", "is", "Medium")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Rapid Prototyping"), equalTo(1));

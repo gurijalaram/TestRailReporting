@@ -143,7 +143,9 @@ public class AssemblyUploadTests extends TestBase {
             .delete()
             .deleteScenario()
             .filter()
-            .filterPrivateCriteria("Assembly", "Scenario Name", "Contains", scenarioName)
+            .setWorkspace("Private")
+            .setScenarioType("Assembly")
+            .setRowOne("Scenario Name", "Contains", scenarioName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
@@ -174,7 +176,9 @@ public class AssemblyUploadTests extends TestBase {
         explorePage = evaluatePage.delete()
             .deleteScenario()
             .filter()
-            .filterPrivateCriteria("Assembly", "Scenario Name", "Contains", scenarioName)
+            .setWorkspace("Private")
+            .setScenarioType("Assembly")
+            .setRowOne("Scenario Name", "Contains", scenarioName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));

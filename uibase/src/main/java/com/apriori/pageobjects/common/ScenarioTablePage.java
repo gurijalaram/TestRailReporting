@@ -244,7 +244,7 @@ public class ScenarioTablePage extends LoadableComponent<ScenarioTablePage> {
      *
      * @return new page object
      */
-    public FilterCriteriaPage filterCriteria() {
+    public FilterCriteriaPage filter() {
         pageUtils.waitForElementAndClick(filterButton);
         return new FilterCriteriaPage(driver);
     }
