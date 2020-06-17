@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 
@@ -14,6 +15,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -32,7 +34,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -55,6 +56,7 @@ public class ProcessRoutingTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
     private UserCredentials currentUser;
+    private ProcessSetupOptionsPage processSetupOptionsPage;
 
     private File resourceFile;
 
@@ -90,7 +92,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("3 Axis Mill"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("3 Axis Mill"));
     }
 
     @Test
@@ -160,7 +162,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Reaction Injection Molding"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Reaction Injection Molding"));
     }
 
     @Test
@@ -192,7 +194,7 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Injection Molding"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Injection Molding"));
     }
 
     @Test
@@ -267,7 +269,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1659"})
+    @TestRail(testCaseId = {"1659", "765", "766", "767"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
 
@@ -281,7 +283,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getBurdenedCost("1.56"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(1.56, 1)));
 
         new EvaluatePage(driver).openProcessDetails()
             .selectRoutingsButton()
@@ -290,7 +292,23 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        assertThat(evaluatePage.getBurdenedCost("1.96"), is(true));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(1.96, 1)));
+
+        processSetupOptionsPage = evaluatePage.openProcessDetails()
+            .selectProcessChart("Waterjet Cut")
+            .selectOptions()
+            .selectPartOrientationDropdown("Position Bend with Smallest Radius Parallel to Grain")
+            .selectGrainDirectionDropdown("Parallel to Sheet Length")
+            .setMinHoleDiameter("0.5")
+            .closePanel()
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Waterjet Cut")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.getPartOrientation("Position Bend with Smallest Radius Parallel to Grain"), is(true));
+        assertThat(processSetupOptionsPage.getGrainDirection("Parallel to Sheet Length"), is(true));
+        assertThat(processSetupOptionsPage.getMinHoleDiameter(), is("0.500"));
     }
 
     @Test
@@ -344,7 +362,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Printing / Breakoff"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Printing / Breakoff"));
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
@@ -357,7 +375,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Stress Relief / Ultrasonic Cleaning"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Stress Relief / Ultrasonic Cleaning"));
     }
 
     @Test
@@ -365,7 +383,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate a variety of secondary processes can be added for newly selected routings")
     public void secondaryProcessesRoutings() {
 
-        resourceFile =  new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -444,7 +462,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("High Pressure Die Casting"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("High Pressure Die Casting"));
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
@@ -453,7 +471,7 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Gravity Die Casting"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Gravity Die Casting"));
     }
 
     @Test
@@ -521,11 +539,11 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessChart("Band Saw");
 
         assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("16 (45%)"));
-        assertThat(processRoutingPage.isMachineName("DoAll 3613-1 Vert"), is(true));
+        assertThat(processRoutingPage.getMachineName(), is("DoAll 3613-1 Vert"));
 
         processRoutingPage.selectProcessChart("2 Axis Lathe");
         assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 19.47"));
-        assertThat(processRoutingPage.isMachineName("Virtual 2 Axis Lathe - Small"), is(true));
+        assertThat(processRoutingPage.getMachineName(), is("Virtual 2 Axis Lathe - Small"));
     }
 
     @Test
@@ -613,7 +631,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
 
@@ -634,7 +651,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Forging")
     public void routingsForging() {
 
@@ -675,7 +691,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Powder Metal")
     public void routingsPowderMetal() {
 
@@ -736,7 +751,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Sheet Metal")
     public void routingsSheetMetal() {
 
@@ -820,7 +834,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-867")
     @Description("Validate routings Stock Machining")
     public void routingsStockMachining() {
 
@@ -865,7 +878,8 @@ public class ProcessRoutingTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / Reciprocating Surface Grinder"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / " +
+            "Reciprocating Surface Grinder"));
 
         processRoutingPage = evaluatePage.openProcessDetails()
             .selectRoutingsButton()

@@ -25,7 +25,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
@@ -62,8 +61,6 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57941")
-    @Issue("BA-774")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"3846", "1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
@@ -247,5 +244,31 @@ public class DTCCastingTests extends TestBase {
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.PROFILESURFACE.getToleranceName()), "6"), Matchers.is(true));
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.ROUGHNESSRA.getToleranceName()), "3"), Matchers.is(true));
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.STRAIGHTNESS.getToleranceName()), "3"), Matchers.is(true));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"1052", "1060", "1061"})
+    @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
+    public void sandCastingDTCIssues() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("SandCastIssues.SLDPRT");
+        loginPage = new CIDLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        guidancePage = loginPage.login(currentUser)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Hole Issue", "Maximum Hole Depth", "MultiStepHole:1");
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
+
+        guidancePage.selectIssueTypeAndGCD("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
+
+        guidancePage.selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. Part Thickness is more than the maximum limit with this material."));
     }
 }

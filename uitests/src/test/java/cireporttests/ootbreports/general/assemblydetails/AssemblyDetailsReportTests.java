@@ -270,7 +270,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
-
+    
     @Test
     @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = {"1934", "1929"})

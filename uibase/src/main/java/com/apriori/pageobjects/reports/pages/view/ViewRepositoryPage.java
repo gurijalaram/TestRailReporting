@@ -126,16 +126,6 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     }
 
     /**
-     * Waits for Machining DTC reports to appear
-     *
-     * @return current page object
-     */
-    public ViewRepositoryPage waitForMachiningDTCReportsToAppear() {
-        pageUtils.checkElementAttribute(generalReportsList, "childElementCount", "3");
-        return this;
-    }
-
-    /**
      * Get page title text
      *
      * @return String - page title text
@@ -161,7 +151,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      * @return String - text of report name
      */
     public String getReportName(String reportName) {
-        return pageUtils.getReportNameText(reportName);
+        return pageUtils.getReportElement(reportName).getText();
     }
 
 

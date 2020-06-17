@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.settings;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -238,12 +239,14 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
     }
 
     /**
-     * Checks the input value is correct
+     * Get the input value is correct
      *
-     * @return true/false
+     * @return string
      */
-    public boolean getScenarioName(String text) {
-        return pageUtils.checkElementAttribute(scenarioNameInput, "value", text);
+    public String getScenarioName() {
+        By scenarioInput = By.cssSelector("input[data-ap-field='scenarioName']");
+        pageUtils.waitForElementToAppear(scenarioInput);
+        return driver.findElement(scenarioInput).getAttribute("value");
     }
 
     private ProductionDefaultPage clearInput(WebElement locator) {

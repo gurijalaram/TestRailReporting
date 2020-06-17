@@ -110,8 +110,8 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16"), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName()), containsString("0.23"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString("0.16"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -144,7 +144,7 @@ public class ToleranceTests extends TestBase {
             .apply(TolerancePage.class)
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString(""));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -251,12 +251,11 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "PlanarFace:78")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.44"), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString("0.44"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-59432")
     @TestRail(testCaseId = {"3833", "1595"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
@@ -335,7 +334,7 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "2.16"), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CIRCULARITY.getToleranceName()), containsString("2.16"));
     }
 
     @Test
@@ -373,8 +372,8 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString(""));
 
         toleranceEditPage.setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
             .cancel()
@@ -388,12 +387,11 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.RUNOUT.getToleranceName()), containsString(""));
     }
 
     @Test
-    @Issue("AP-57941, AP-59432")
     @TestRail(testCaseId = {"723"})
     @Description("Validate tolerance edits when default values set")
     public void specificDefaultTolerances() {
@@ -429,8 +427,8 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString(""));
 
         toleranceEditPage.setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
             .cancel()
@@ -444,12 +442,11 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.RUNOUT.getToleranceName()), containsString(""));
     }
 
     @Test
-    @Issue("AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1291"})
     @Description("Verify PMI data is not extracted ")
@@ -471,11 +468,10 @@ public class ToleranceTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getGcdTolerancesCount("0"), is(true));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("0"));
     }
 
     @Test
-    @Issue("AP-57941, AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1286"})
     @Description(" All tolerances types can be selected & edited")
@@ -553,7 +549,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1294"})
     @Description("Validate PMI is off when use specific is selected")
@@ -584,7 +579,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59432")
     @TestRail(testCaseId = {"1289", "728"})
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
@@ -611,14 +605,13 @@ public class ToleranceTests extends TestBase {
             .openTolerancesTab()
             .editValues();
 
-        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "11.81102"), is(true));
-        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), "1.2"), is(true));
-        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "0.35039"), is(true));
-        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.0748"), is(true));
+        assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName()), is("11.81102"));
+        assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName()), containsString("1.2"));
+        assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.CIRCULARITY.getToleranceName()), is("0.35039"));
+        assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString("0.0748"));
     }
 
     @Test
-    @Issue("AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1296", "1288"})
     @Description("Validate 'Replace values less than' button")
@@ -649,7 +642,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3843", "1299"})
+    @TestRail(testCaseId = {"3843", "1299", "710"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void tolerancesDiffUsers() {
 
@@ -672,7 +665,7 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(3);
 
-        assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
@@ -686,7 +679,13 @@ public class ToleranceTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
 
-        assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
+
+        tolerancePage = evaluatePage.openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:4");
+
+        assertThat(tolerancePage.isEditButtonEnabled(), is(false));
     }
 
     @Test
@@ -733,5 +732,33 @@ public class ToleranceTests extends TestBase {
             .openTolerancesTab();
 
         assertThat(toleranceSettingsPage.isCADSelected("checked"), is("true"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1298"})
+    @Description("Ensure tolerance policy is for single user.  User 1 preferences should not impact User 2 preferences")
+    public void tolerancesSingleUser() {
+
+        UserCredentials testUser1 = UserUtil.getUser();
+        UserCredentials testUser2 = UserUtil.getUser();
+        currentUser = testUser1;
+
+        loginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = loginPage.login(testUser1)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        new SettingsPage(driver).save(ExplorePage.class);
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+
+        explorePage = new ExplorePage(driver);
+        toleranceSettingsPage = explorePage.openAdminDropdown()
+            .selectLogOut()
+            .login(testUser2)
+            .openSettings()
+            .openTolerancesTab();
+
+        assertThat(toleranceSettingsPage.isAssumeSelected("checked"), is("true"));
     }
 }
