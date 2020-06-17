@@ -49,7 +49,9 @@ public class FilterCriteriaTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "SheetMetal")
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "SheetMetal")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "SheetMetal"), is(equalTo(1)));
@@ -71,7 +73,9 @@ public class FilterCriteriaTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .filterPrivateCriteria("Part", "Process Group", "is", "Casting - Die")
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Process Group", "is", "Casting - Die")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Casting"), is(equalTo(1)));
@@ -91,7 +95,9 @@ public class FilterCriteriaTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "Wall")
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Wall")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "CurvedWall"), is(equalTo(1)));
@@ -111,7 +117,9 @@ public class FilterCriteriaTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .filterPrivateCriteria("Assembly", "Part Name", "Contains", "Piston_assembly")
+            .setWorkspace("Private")
+            .setScenarioType("Assembly")
+            .setRowOne("Part Name", "Contains", "Piston_assembly")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
@@ -138,7 +146,9 @@ public class FilterCriteriaTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .filterPublicCriteria("Assembly", "Status", "is", "Analysis")
+            .setWorkspace("Public")
+            .setScenarioType("Assembly")
+            .setRowOne("Status", "is", "Analysis")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
@@ -160,7 +170,9 @@ public class FilterCriteriaTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Push Pin")
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Push Pin")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), is(equalTo(1)));
@@ -187,7 +199,9 @@ public class FilterCriteriaTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .filterPublicCriteria("Assembly", "Description", "Contains", "Test Description")
+            .setWorkspace("Public")
+            .setScenarioType("Assembly")
+            .setRowOne("Description", "Contains", "Test Description")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
@@ -211,7 +225,9 @@ public class FilterCriteriaTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .setRowOne("Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));
