@@ -64,4 +64,13 @@ public class StockPage extends EvaluatePanelToolbar {
         editButton.click();
         return new SelectStockPage(driver);
     }
+
+    /**
+     * Gets the button as a webelement
+     *
+     * @return string
+     */
+    public boolean isEditButtonEnabled() {
+        return editButton.isEnabled();
+    }
 }

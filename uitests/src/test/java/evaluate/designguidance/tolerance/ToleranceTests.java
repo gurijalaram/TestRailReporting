@@ -642,7 +642,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3843", "1299"})
+    @TestRail(testCaseId = {"3843", "1299", "710"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void tolerancesDiffUsers() {
 
@@ -680,6 +680,12 @@ public class ToleranceTests extends TestBase {
             .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
 
         assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
+
+        tolerancePage = evaluatePage.openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:4");
+
+        assertThat(tolerancePage.isEditButtonEnabled(), is(false));
     }
 
     @Test
