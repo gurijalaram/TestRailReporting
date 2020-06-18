@@ -111,16 +111,16 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement assemblyInput;
 
-    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
-    private WebElement subAssemblyOption;
-
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement inputBox;
 
-    @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
+    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) > div > a")
+    private WebElement subAssemblyOption;
+
+    @FindBy(css = "li[title='SUB-SUB-ASM (Initial) [assembly]'] > div > a")
     private WebElement subSubAsmOption;
 
-    @FindBy(css = "li[title='TOP-LEVEL (Initial)'] > div > a")
+    @FindBy(css = "li[title='TOP-LEVEL (Initial) [assembly]'] > div > a")
     private WebElement topLevelOption;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
@@ -344,7 +344,7 @@ public class GenericReportPage extends ReportsPageHeader {
         // if not top level, add -
         if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
-            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+            //pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
         }
         return PageFactory.initElements(driver, className);
     }

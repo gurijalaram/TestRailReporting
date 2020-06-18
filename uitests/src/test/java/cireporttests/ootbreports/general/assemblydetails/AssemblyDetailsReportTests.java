@@ -30,6 +30,7 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -171,6 +172,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"3067", "1929"})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -183,11 +185,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .scrollDownInputControls()
-            .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -217,6 +217,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"3068", "1929"})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -232,8 +233,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -263,6 +263,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
@@ -278,8 +279,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -309,6 +309,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"3231", "1929"})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
@@ -321,11 +322,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .scrollDownInputControls()
-            .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
@@ -341,6 +340,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"3232", "1929"})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
@@ -356,8 +356,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
@@ -373,6 +372,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"3233", "1929"})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
@@ -388,8 +388,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
