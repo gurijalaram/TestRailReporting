@@ -40,14 +40,13 @@ import java.util.List;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
+    String assemblyType = "";
     private AssemblyDetailsReportPage assemblyDetailsReport;
     private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
     private LibraryPage library;
     private HomePage homePage;
-
-    String assemblyType = "";
 
     public AssemblyDetailsReportTests() {
         super();
@@ -263,7 +262,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             assemblyDetailsReport.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
-    
+
     @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"1934", "1929"})
@@ -413,13 +412,13 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
         genericReportPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToLibraryPage()
-                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .setLatestExportDateToTodayInput()
-                .ensureDatesAreCorrect(false, true);
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .setLatestExportDateToTodayInput()
+            .ensureDatesAreCorrect(false, true);
         //.waitForCorrectExportSetListCount("0");
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
@@ -433,13 +432,13 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
         genericReportPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
-                .navigateToLibraryPage()
-                .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .setLatestExportDateToTodayPlusTwoPicker()
-                .ensureDatesAreCorrect(false, false);
+            .login(UserUtil.getUser())
+            .navigateToLibraryPage()
+            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .setLatestExportDateToTodayPlusTwoPicker()
+            .ensureDatesAreCorrect(false, false);
         //.waitForCorrectExportSetListCount("0");
 
         // If this assertion fails, test fails as the export set is there because bug is not yet fixed
@@ -476,18 +475,18 @@ public class AssemblyDetailsReportTests extends TestBase {
             ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName()
         );
 
-        String[] attributesArray = { "Part Name", "Scenario Name" };
-        String[] valuesArray = { Constants.PISTON_ASSEMBLY_CID_NAME, Constants.DEFAULT_SCENARIO_NAME };
-
         EvaluatePage evaluatePage = new ExplorePage(driver)
-                .filterCriteria()
-                .multiFilterPublicCriteria(Constants.ASSEMBLY_SCENARIO_TYPE, attributesArray, valuesArray)
-                .apply(ExplorePage.class)
-                .openFirstScenario()
-                .openComponentsTable()
-                .openColumnsTable()
-                .checkColumnSettings(columnsToAdd, columnsToRemove)
-                .selectSaveButton();
+            .filter()
+            .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
+            .setWorkspace(Constants.PUBLIC_WORKSPACE)
+            .setRowOne("Part Name", "Contains", Constants.PISTON_ASSEMBLY_CID_NAME)
+            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+            .apply(ExplorePage.class)
+            .openFirstScenario()
+            .openComponentsTable()
+            .openColumnsTable()
+            .checkColumnSettings(columnsToAdd, columnsToRemove)
+            .selectSaveButton();
 
         ArrayList<BigDecimal> cidPartOneValues = evaluatePage
             .getTableValsByRow(

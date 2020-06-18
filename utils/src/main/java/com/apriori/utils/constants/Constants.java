@@ -48,6 +48,8 @@ public class Constants {
     public static final String REPORTING_HELP_URL = "http://help.jaspersoft.com/Default";
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
+    public static final String PUBLIC_WORKSPACE = "Public";
+    public static final String PRIVATE_WORKSPACE = "Private";
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";

@@ -111,8 +111,10 @@ public class EditPublicComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "PowderMetalShaft")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "PowderMetalShaft")
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(testScenarioName, "PowderMetalShaft")
             .apply(ComparePage.class)
@@ -147,20 +149,24 @@ public class EditPublicComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPrivateCriteria("Assembly", "Part Name", "Contains", testAssemblyName)
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Assembly")
+            .setRowOne("Part Name", "Contains", testAssemblyName)
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(scenarioName, testAssemblyName)
             .apply(ComparePage.class);
 
         new ComparePage(driver).addScenario()
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", partName)
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", partName)
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(scenarioName, partName)
             .apply(ComparePage.class);
 
-        new ComparePage(driver).setBasis(partName,scenarioName);
+        new ComparePage(driver).setBasis(partName, scenarioName);
 
         assertThat(new ComparePage(driver).isBasis(partName, scenarioName), is(true));
         assertThat(new ComparePage(driver).isBasisButtonPresent(testAssemblyName, scenarioName), is(true));
