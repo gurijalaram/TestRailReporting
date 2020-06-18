@@ -111,7 +111,7 @@ public class DeleteComparisonTests extends TestBase {
             .filter()
             .setWorkspace("Private")
             .setScenarioType("Part")
-            .setRowOne( "Scenario Name", "Contains", testComparisonName)
+            .setRowOne("Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
