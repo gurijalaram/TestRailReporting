@@ -62,8 +62,10 @@ public class DeleteComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ScenarioTablePage.class);
 
         scenarioTablePage = new ScenarioTablePage(driver);
@@ -80,8 +82,10 @@ public class DeleteComparisonTests extends TestBase {
             .highlightComparison(testComparisonName)
             .delete()
             .deleteExploreComparison()
-            .filterCriteria()
-            .filterPrivateCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Comparison")
+            .setRowOne("Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(new ExplorePage(driver).getNoComponentText(), is(containsString(noComponentMessage)));
@@ -104,8 +108,10 @@ public class DeleteComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.delete()
             .deleteComparison()
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testComparisonName)
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
@@ -138,8 +144,10 @@ public class DeleteComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Machined Box AMERICAS")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Machined Box AMERICAS")
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(testScenarioName, "MACHINED BOX AMERICAS")
             .apply(GenericHeader.class)
@@ -152,8 +160,10 @@ public class DeleteComparisonTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
             .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .setRowOne("Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
@@ -181,8 +191,10 @@ public class DeleteComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "testpart-4")
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(testScenarioName, "testpart-4")
             .apply(GenericHeader.class)
@@ -191,16 +203,20 @@ public class DeleteComparisonTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .setRowOne("Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class)
             .openComparison(testComparisonName);
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.delete()
             .deleteComparison()
-            .filterCriteria()
-            .filterPublicCriteria("Comparison", "Scenario Name", "Contains", testComparisonName)
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .setRowOne("Scenario Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
@@ -225,8 +241,10 @@ public class DeleteComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "testpart-4")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "testpart-4")
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(testScenarioName, "testpart-4")
             .apply(GenericHeader.class)
@@ -246,8 +264,10 @@ public class DeleteComparisonTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
             .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .setRowOne("Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), containsString("You have no components that match the selected filter"));
