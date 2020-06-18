@@ -148,13 +148,12 @@ public class CastingDtcComparisonReportTests extends TestBase {
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
         genericReportPage.openNewTabAndFocus(2);
 
-        String[] attributesArray = { "Part Name", "Scenario Name" };
-        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
-        Boolean[] dropdownFlags = { false, false };
-
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
-                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray, dropdownFlags)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario()
                 .openDesignGuidance();
