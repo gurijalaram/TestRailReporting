@@ -6,8 +6,8 @@ import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
-
 import com.apriori.utils.users.UserUtil;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
