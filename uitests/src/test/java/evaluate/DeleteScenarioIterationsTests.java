@@ -52,8 +52,10 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectLock()
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
@@ -62,8 +64,10 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .delete()
             .deleteScenarioIteration()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "casting"), is(equalTo(0)));
@@ -86,15 +90,19 @@ public class DeleteScenarioIterationsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class)
             .openScenario(testScenarioName, "casting")
             .delete()
             .deleteScenario()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "casting"), is(equalTo(0)));
