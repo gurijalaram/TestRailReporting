@@ -6,6 +6,7 @@ import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -141,15 +142,33 @@ public class LoginPage extends AdminHeader {
     }
 
     /**
-     * Login to CI Report
+     * Login to CI Admin with csv user passed in user (from CSV file)
      *
-     * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
     public HomePage login(UserCredentials userCredentials) {
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new HomePage(driver);
     }
+
+    /**
+     * Login to CI Admin with passed in user (from Jenkins)
+     *
+     * @return new page object
+     */
+    public HomePage login() {
+        UserCredentials userCredentials;
+
+        if (Constants.PROP_USER_NAME != null && Constants.PROP_USER_PASSWORD != null) {
+            userCredentials = new UserCredentials(Constants.PROP_USER_NAME, Constants.PROP_USER_PASSWORD);
+        } else {
+            userCredentials = UserUtil.getUser();
+        }
+
+        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        return new HomePage(driver);
+    }
+
 
     /**
      * Failed login to CI Report

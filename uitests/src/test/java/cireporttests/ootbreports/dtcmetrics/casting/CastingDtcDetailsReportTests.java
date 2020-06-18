@@ -16,7 +16,6 @@ import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -41,7 +40,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcDetailsExportSetInputControls() {
         genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -69,7 +68,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify roll-up dropdown functions correctly for Casting DTC Details report")
     public void testRollupDropDown() {
         castingDtcReportHeader = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -88,7 +87,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify apply button on Casting DTC Details input control panel functions correctly")
     public void testApplyButton() {
         castingDtcReportHeader = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -107,7 +106,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify cancel button on Casting DTC Details input control panel works")
     public void testCancelButton() {
         libraryPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -122,7 +121,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify reset button on Casting DTC Details input control panel works")
     public void testResetButton() {
         genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -140,7 +139,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyDetailsReportAvailableAndCorrectData() {
         genericReportPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
                 .waitForInputControlsLoad()

@@ -30,8 +30,8 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
     public void testLogin() {
-        loginPage = new LoginPage(driver);
-        homePage = loginPage.login(UserUtil.getUser());
+        homePage = new LoginPage(driver)
+            .login();
 
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }
@@ -42,8 +42,8 @@ public class LoginTests extends TestBase {
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
         String loginErrorMessage = "Invalid credentials supplied. Could not login to JasperReports Server.";
-        loginPage = new LoginPage(driver);
-        loginPage.failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
+        loginPage = new LoginPage(driver)
+			.failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(loginErrorMessage)));
 	}
@@ -53,8 +53,8 @@ public class LoginTests extends TestBase {
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
         String passwordResetMsg = "We've just sent you an email to reset your password.";
-        loginPage = new LoginPage(driver);
-        loginPage.clickForgotPassword()
+        loginPage = new LoginPage(driver)
+            .clickForgotPassword()
             .submitEmail("fakeEmail@apriori.com");
 
         assertThat(loginPage.getLoginMessage(), is(equalTo(passwordResetMsg.toUpperCase())));
@@ -66,8 +66,8 @@ public class LoginTests extends TestBase {
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
         String emptyFieldMsg = "Invalid credentials supplied. Could not login to JasperReports Server.";
-        loginPage = new LoginPage(driver);
-        loginPage.failedLogin("", "");
+        loginPage = new LoginPage(driver)
+			.failedLogin("", "");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(emptyFieldMsg)));
     }
@@ -78,8 +78,8 @@ public class LoginTests extends TestBase {
     @Description("Invalid email address, wrong format")
     public void invalidEmail() {
         String invalidEmailMsg = "Invalid credentials supplied. Could not login to JasperReports Server.";
-        loginPage = new LoginPage(driver);
-        loginPage.failedLogin("a@b", "fakePassword");
+        loginPage = new LoginPage(driver)
+			.failedLogin("a@b", "fakePassword");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(invalidEmailMsg)));
     }
