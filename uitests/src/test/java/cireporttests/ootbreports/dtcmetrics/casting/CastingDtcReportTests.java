@@ -191,11 +191,12 @@ public class CastingDtcReportTests extends TestBase {
         String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_REPORT_NAME);
         genericReportPage.openNewTabAndFocus(1);
 
-        String[] attributesArray = { "Part Name", "Scenario Name" };
-        String[] valuesArray = { partName, Constants.DEFAULT_SCENARIO_NAME};
         EvaluatePage evaluatePage = new ExplorePage(driver)
-                .filterCriteria()
-                .multiFilterPublicCriteria(Constants.PART_SCENARIO_TYPE, attributesArray, valuesArray)
+                .filter()
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 
