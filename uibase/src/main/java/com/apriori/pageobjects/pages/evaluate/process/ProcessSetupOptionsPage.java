@@ -180,6 +180,18 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     @FindBy(css = "input[data-ap-field='cadModelMisalignmentSensitivity.modeValues.user.value']")
     private WebElement overrideSensitivityInput;
 
+    @FindBy(css = "select[data-ap-field='ComputedUtilizationPartOrientation.modeValues.PartOrientation.storedListValue']")
+    private WebElement partOrientationDropdown;
+
+    @FindBy(css = "select[data-ap-field='ComputedUtilizationSheetGrainDirection.modeValues.GrainDirection.storedListValue']")
+    private WebElement grainDirectionDropdown;
+
+    @FindBy(css = "input[data-ap-comp='minHoleDiameter.radioButtons.userOverride']")
+    private WebElement holeDiameterOVerrideRadioButton;
+
+    @FindBy(css = "input[data-ap-field='minHoleDiameter.modeValues.userOverride.value']")
+    private WebElement minHoleDiameterInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -921,5 +933,75 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     public ProcessSetupOptionsPage setCadModelSensitivity(String text) {
         setInput(overrideSensitivityInput, text);
         return this;
+    }
+
+    /**
+     * Selects part orientation dropdown
+     *
+     * @param option - the option
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectPartOrientationDropdown(String option) {
+        pageUtils.selectDropdownOption(partOrientationDropdown, option);
+        return this;
+    }
+
+    /**
+     * Gets the selected Part Orientation
+     *
+     * @return
+     */
+    public boolean getPartOrientation(String text) {
+        return pageUtils.checkElementFirstOption(partOrientationDropdown, text);
+    }
+
+    /**
+     * Selects grain direction dropdown
+     *
+     * @param option - the option
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectGrainDirectionDropdown(String option) {
+        pageUtils.selectDropdownOption(grainDirectionDropdown, option);
+        return this;
+    }
+
+    /**
+     * Gets the selected grain direction
+     *
+     * @return
+     */
+    public boolean getGrainDirection(String text) {
+        return pageUtils.checkElementFirstOption(grainDirectionDropdown, text);
+    }
+
+    /**
+     * Selects user override for min hole diameter
+     *
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectHoleDiameterOverride() {
+        pageUtils.waitForElementToAppear(holeDiameterOVerrideRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Sets the min hole diamater
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage setMinHoleDiameter(String value) {
+        setInput(minHoleDiameterInput, value);
+        return this;
+    }
+
+    /**
+     * Gets the min hole diamater
+     *
+     * @return string
+     */
+    public String getMinHoleDiameter() {
+        return getAttribute(minHoleDiameterInput);
     }
 }
