@@ -75,12 +75,12 @@ public class DecimalPlaceTests extends TestBase {
             .save(EvaluatePage.class);
 
         assertThat(evaluatePage.isFinishMass("5"), is(true));
-        assertThat(evaluatePage.getUtilization(), is(81));
-        assertThat(evaluatePage.getCycleTimeCount(), is(130));
-        assertThat(evaluatePage.getMaterialCost(), is(16));
-        assertThat(evaluatePage.getPartCost(), is(20));
-        assertThat(evaluatePage.getBurdenedCost(), is(20));
-        assertThat(evaluatePage.getCapitalInvestment(), is(431));
+        assertThat((int)evaluatePage.getUtilization(), is(81));
+        assertThat((int)evaluatePage.getCycleTimeCount(), is(130));
+        assertThat((int)evaluatePage.getMaterialCost(), is(16));
+        assertThat((int)evaluatePage.getPartCost(), is(20));
+        assertThat((int)evaluatePage.getBurdenedCost(), is(20));
+        assertThat((int)evaluatePage.getCapitalInvestment(), is(431));
 
             evaluatePage.openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())

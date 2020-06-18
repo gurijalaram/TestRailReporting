@@ -496,7 +496,7 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return double
      */
-    public Double getCycleTimeCount() {
+    public double getCycleTimeCount() {
         pageUtils.waitForElementToAppear(cycleTimeCount);
         return Double.parseDouble(cycleTimeCount.getText());
     }
@@ -566,7 +566,7 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return double
      */
-    public Double getCapitalInvestment() {
+    public double getCapitalInvestment() {
         pageUtils.waitForElementToAppear(capitalInvestments);
         return Double.parseDouble(capitalInvestments.getText());
     }
