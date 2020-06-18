@@ -1,6 +1,5 @@
 package testsuites;
 
-import cireporttests.navigation.NavigationTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
@@ -15,7 +14,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        NavigationTests.class
+        MachiningDtcReportTests.class
 })
 
 public class CiaCirTestDevSuite {

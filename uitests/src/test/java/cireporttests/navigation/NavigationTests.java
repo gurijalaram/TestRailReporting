@@ -33,7 +33,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class NavigationTests extends TestBase {
 
@@ -255,7 +254,6 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"2701"})
     @Description("Ensure that the link to the help page works")
     public void testHelpNavigation() {
