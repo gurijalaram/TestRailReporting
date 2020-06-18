@@ -17,7 +17,6 @@ import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -46,7 +45,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("validate report available by navigation")
     public void testReportAvailabilityByMenu() {
         repository = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToViewRepositoryPage()
             .navigateToCastingFolder();
 
@@ -61,7 +60,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcExportSetInputControls() {
         genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
@@ -89,7 +88,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
     public void testRollupDropDown() {
         castingDtcReportHeader = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
@@ -103,12 +102,11 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
         castingDtcReportHeader = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
@@ -128,7 +126,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify cancel button on Casting DTC input control panel works")
     public void testCancelButton() {
         libraryPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
@@ -142,7 +140,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify reset button on Casting DTC input control panel works")
     public void testResetButton() {
         genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
@@ -159,7 +157,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify save button on Casting DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
         genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
@@ -182,7 +180,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
         genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName())
             .waitForInputControlsLoad()
