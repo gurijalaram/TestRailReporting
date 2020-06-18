@@ -179,7 +179,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowOne(String attribute, String condition, String value) {
-        setRow(rowOneAttributeDropdown, rowOneConditionDropdown, "1", attribute, condition, value);
+        setRow(rowOneAttributeDropdown, rowOneConditionDropdown, 1, attribute, condition, value);
         return this;
     }
 
@@ -192,7 +192,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowTwo(String attribute, String condition, String value) {
-        setRow(rowTwoAttributeDropdown, rowTwoConditionDropdown, "2", attribute, condition, value);
+        setRow(rowTwoAttributeDropdown, rowTwoConditionDropdown, 2, attribute, condition, value);
         return this;
     }
 
@@ -205,11 +205,11 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @return current page object
      */
     public FilterCriteriaPage setRowThree(String attribute, String condition, String value) {
-        setRow(rowThreeAttributeDropdown, rowThreeConditionDropdown, "3", attribute, condition, value);
+        setRow(rowThreeAttributeDropdown, rowThreeConditionDropdown, 3, attribute, condition, value);
         return this;
     }
 
-    private void setRow(WebElement attributeLocator, WebElement conditionLocator, String row, String attribute, String condition, String value) {
+    private void setRow(WebElement attributeLocator, WebElement conditionLocator, int row, String attribute, String condition, String value) {
         this.attribute = attribute;
         new Select(attributeLocator).selectByVisibleText(attribute);
         new Select(conditionLocator).selectByVisibleText(condition);
@@ -222,7 +222,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param values - enum value
      * @return current page object
      */
-    private FilterCriteriaPage setValueType(String row, String values) {
+    private FilterCriteriaPage setValueType(int row, String values) {
         if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(attributeValues -> attributeValues.equalsIgnoreCase(attribute))) {
             setDropdown(row, values);
         } else {
@@ -237,19 +237,23 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param values - the input values
      * @return current page object
      */
-    private FilterCriteriaPage setDropdown(String row, String values) {
+    private FilterCriteriaPage setDropdown(int row, String values) {
         WebElement value;
-        WebElement rowLocator = null;
+        WebElement rowLocator;
         String[] valuesToSelect = values.split(",");
 
-        if (row == "1") {
-            rowLocator = rowOneValueDropdown;
-        }
-        if (row == "2") {
-            rowLocator = rowTwoValueDropdown;
-        }
-        if (row == "3") {
-            rowLocator = rowThreeValueDropdown;
+        switch (row) {
+            case 1:
+                rowLocator = rowOneValueDropdown;
+                break;
+            case 2:
+                rowLocator = rowTwoValueDropdown;
+                break;
+            case 3:
+                rowLocator = rowThreeValueDropdown;
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Row '%s' doesn't exist", row));
         }
 
         pageUtils.waitForElementAndClick(rowLocator);
@@ -268,17 +272,21 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param input - the input value
      * @return current page object
      */
-    private FilterCriteriaPage inputValue(String row, String input) {
-        WebElement rowLocator = null;
+    private FilterCriteriaPage inputValue(int row, String input) {
+        WebElement rowLocator;
 
-        if (row == "1") {
-            rowLocator = rowOneInput;
-        }
-        if (row == "2") {
-            rowLocator = rowTwoInput;
-        }
-        if (row == "3") {
-            rowLocator = rowThreeInput;
+        switch (row) {
+            case 1:
+                rowLocator = rowOneInput;
+                break;
+            case 2:
+                rowLocator = rowTwoInput;
+                break;
+            case 3:
+                rowLocator = rowThreeInput;
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Row '%s' doesn't exist", row));
         }
 
         pageUtils.waitForElementAndClick(rowLocator);
@@ -323,6 +331,7 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     /**
      * Clears all listed checkboxes
+     *
      * @return current page object
      */
     public FilterCriteriaPage clearAllCheckBoxes() {
