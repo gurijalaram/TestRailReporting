@@ -29,8 +29,8 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
     public void testLogin() {
-        loginPage = new LoginPage(driver);
-        homePage = loginPage.login();
+        homePage = new LoginPage(driver)
+            .login();
 
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
     }
@@ -40,8 +40,8 @@ public class LoginTests extends TestBase {
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
         String loginErrorMessage = "Wrong email or password.";
-        loginPage = new LoginPage(driver);
-        loginPage.failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
+        loginPage = new LoginPage(driver)
+            .failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPage.getLoginMessage(), is(equalTo(loginErrorMessage.toUpperCase())));
     }
@@ -51,8 +51,8 @@ public class LoginTests extends TestBase {
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
         String passwordResetMsg = "We've just sent you an email to reset your password.";
-        loginPage = new LoginPage(driver);
-        loginPage.clickForgotPassword()
+        loginPage = new LoginPage(driver)
+            .clickForgotPassword()
             .submitEmail("fakeEmail@apriori.com");
 
         assertThat(loginPage.getLoginMessage(), is(equalTo(passwordResetMsg.toUpperCase())));

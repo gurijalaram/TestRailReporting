@@ -144,7 +144,17 @@ public class LoginPage extends ReportsPageHeader {
     }
 
     /**
-     * Login to CI Report
+     * Login to CI Report with passed in user (from CSV file)
+     *
+     * @return new page object
+     */
+    public HomePage login(UserCredentials userCredentials) {
+        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        return new HomePage(driver);
+    }
+
+    /**
+     * Login to CI Report with passed in user (from Jenkins)
      *
      * @return new page object
      */
@@ -157,17 +167,6 @@ public class LoginPage extends ReportsPageHeader {
             userCredentials = UserUtil.getUser();
         }
 
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new HomePage(driver);
-    }
-
-    /**
-     * Login to CI Report
-     *
-     * @param userCredentials - object with users credentials and access level
-     * @return new page object
-     */
-    public HomePage loginToCIAdmin(UserCredentials userCredentials) {
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new HomePage(driver);
     }

@@ -144,7 +144,17 @@ public class LoginPage extends AdminHeader {
     }
 
     /**
-     * Login to CI Admin
+     * Login to CI Admin with csv user passed in user (from CSV file)
+     *
+     * @return new page object
+     */
+    public HomePage login(UserCredentials userCredentials) {
+        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        return new HomePage(driver);
+    }
+
+    /**
+     * Login to CI Admin with passed in user (from Jenkins)
      *
      * @return new page object
      */
@@ -160,6 +170,7 @@ public class LoginPage extends AdminHeader {
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new HomePage(driver);
     }
+
 
     /**
      * Failed login to CI Report
