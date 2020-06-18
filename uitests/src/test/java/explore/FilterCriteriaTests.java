@@ -232,4 +232,30 @@ public class FilterCriteriaTests extends TestBase {
 
         Assert.assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));
     }
+
+    @Test
+    @Description("Test public criteria assembly description")
+    public void testFilterAttributes() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CIDLoginPage(driver);
+        loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, resourceFile)
+            .publishScenario("Analysis", "Initial", "Ciene Frith")
+            .selectLock()
+            .selectPublishButton();
+
+        explorePage = new ExplorePage(driver);
+        explorePage.filter()
+            .setWorkspace("Public, Private")
+            .setScenarioType("Part")
+            .setRowOne("Status", "is", "Analysis")
+            .setRowTwo("Cost Maturity", "is", "Initial")
+            .setRowThree("Assignee", "is", "Ciene Frith")
+            .apply(ExplorePage.class);
+
+        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "PowderMetalShaft"), is(equalTo(1)));
+    }
 }
