@@ -66,10 +66,10 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @FindBy(xpath = "//input[@data-ap-field='criteria0.value']")
     private WebElement rowOneInput;
 
-    @FindBy(css = "//input[@data-ap-field='criteria1.value']")
+    @FindBy(xpath = "//input[@data-ap-field='criteria1.value']")
     private WebElement rowTwoInput;
 
-    @FindBy(css = "//input[@data-ap-field='criteria2.value']")
+    @FindBy(xpath = "//input[@data-ap-field='criteria2.value']")
     private WebElement rowThreeInput;
 
     @FindBy(xpath = "//select[@data-ap-field='criteria0.value']/parent::div//button")
