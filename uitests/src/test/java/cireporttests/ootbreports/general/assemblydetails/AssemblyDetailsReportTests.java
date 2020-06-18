@@ -23,7 +23,6 @@ import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -57,7 +56,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("validate report is available by navigation")
     public void testReportAvailabilityByMenu() {
         repository = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToViewRepositoryPage()
             .navigateToGeneralFolder();
 
@@ -75,7 +74,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
         library = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage();
 
         AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
@@ -89,7 +88,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate report is available by search")
     public void testReportAvailableBySearch() {
         homePage = new LoginPage(driver)
-            .login(UserUtil.getUser());
+            .login();
 
         searchResults = new ViewSearchResultsPage(driver);
 
@@ -110,7 +109,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal usdGrandTotal;
 
         assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -142,7 +141,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal usdGrandTotal;
 
         assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -178,7 +177,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -224,7 +223,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -264,14 +263,13 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -317,7 +315,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -349,7 +347,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -381,7 +379,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
         assemblyDetailsReport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -412,7 +410,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
         genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -432,7 +430,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
         genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
@@ -451,7 +449,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
         genericReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
