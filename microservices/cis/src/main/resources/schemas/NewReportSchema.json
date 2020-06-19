@@ -7,15 +7,12 @@
     "response": {
       "type": "object",
       "required": [
-        "items"
+        "roundToNearest"
       ],
-      "$ref": "PaginationSchema.json",
+      "$ref": "ReportSchema.json",
       "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "FmsFileSchema.json"
-          }
+        "roundToNearest": {
+          "type": "string"
         }
       }
     }
