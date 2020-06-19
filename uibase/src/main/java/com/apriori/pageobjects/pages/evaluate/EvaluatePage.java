@@ -258,7 +258,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public EvaluatePage enterAnnualVolume(String annualVolume) {
-        annVolume.clear();
+        pageUtils.clearInput(annVolume);
         annVolume.sendKeys(annualVolume);
         return this;
     }
@@ -270,7 +270,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public EvaluatePage enterAnnualYears(String years) {
-        annualVolumeYrs.clear();
+        pageUtils.clearInput(annualVolumeYrs);
         annualVolumeYrs.sendKeys(years);
         return this;
     }
@@ -344,6 +344,14 @@ public class EvaluatePage extends EvaluateHeader {
     public SecondaryProcessPage openSecondaryProcess() {
         pageUtils.waitForElementAndClick(secondaryProcessButton);
         return new SecondaryProcessPage(driver);
+    }
+
+    /**
+     * Gets the secondary process attribute
+     * @return string
+     */
+    public boolean isSecondaryProcessButtonEnabled() {
+        return secondaryProcessButton.isEnabled();
     }
 
     /**
@@ -527,6 +535,7 @@ public class EvaluatePage extends EvaluateHeader {
 
     /**
      * Returns fully burdened cost value
+     *
      * @return BigDecimal - Fully Burdened Cost (rounded down - thus ROUND_FLOOR)
      */
     public BigDecimal getBurdenedCostValue() {

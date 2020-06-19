@@ -129,12 +129,21 @@ public class ToleranceSettingsPage extends LoadableComponent<ToleranceSettingsPa
     }
 
     /**
-     * Check no CAD values is selected
+     * Check CAD values is selected
      *
      * @return current page object
      */
     public String isCADSelected(String attribute) {
         return pageUtils.waitForElementToAppear(cadModelCheckbox).getAttribute(attribute);
+    }
+
+    /**
+     * Check CAD values is selected
+     *
+     * @return current page object
+     */
+    public String isAssumeSelected(String attribute) {
+        return pageUtils.waitForElementToAppear(assumeDefaultCheckbox).getAttribute(attribute);
     }
 
 }

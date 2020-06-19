@@ -163,7 +163,6 @@ public class ActionsTests extends TestBase {
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
             .save(EvaluatePage.class)
@@ -192,7 +191,6 @@ public class ActionsTests extends TestBase {
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario()
             .selectInfoNotes()
             .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
             .save(EvaluatePage.class)
@@ -289,8 +287,10 @@ public class ActionsTests extends TestBase {
             .costScenario()
             .publishScenario("New", "Low", "Ciene Frith")
             .selectPublishButton()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Assignee", "is", "Ciene Frith")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Assignee", "is", "Ciene Frith")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), equalTo(1));
@@ -463,15 +463,19 @@ public class ActionsTests extends TestBase {
             .costScenario()
             .publishScenario("Complete", "Medium", "Moya Parker")
             .selectPublishButton()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Status", "is", "Complete")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Status", "is", "Complete")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "RAPID PROTOTYPING"), equalTo(1));
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPublicCriteria("Part", "Cost Maturity", "is", "Medium")
+        explorePage.filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Cost Maturity", "is", "Medium")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Rapid Prototyping"), equalTo(1));

@@ -8,8 +8,6 @@
       "type": "object",
       "required": [
         "cadTolerances",
-        "processGroup",
-        "scenarioName",
         "tolerances",
         "useVpeForAllProcesses"
       ],
@@ -55,6 +53,9 @@
         },
         "useCadToleranceThreshold": {
           "type": "boolean"
+        },
+        "materialName": {
+          "type": "string"
         }
         }
       }

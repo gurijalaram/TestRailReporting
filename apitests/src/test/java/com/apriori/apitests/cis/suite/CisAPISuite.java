@@ -15,12 +15,12 @@ import org.junit.runners.Suite;
 @ProjectRunID("407")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
+        CisCostingScenario.class,
         CisCustomerResources.class,
         CisPartResources.class,
         CisReportResources.class,
         CisBatchResources.class,
-        CisBatchPartResources.class,
-        CisCostingScenario.class
+        CisBatchPartResources.class
 })
 public class CisAPISuite {
 }

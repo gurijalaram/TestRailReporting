@@ -111,4 +111,7 @@ public interface ConstantsInit extends Config {
 
     @Key("apitests.base.path")
     String apitestsBasePath();
+
+    @Key("apitests.resource.path")
+    String apitestsResourcePath();
 }

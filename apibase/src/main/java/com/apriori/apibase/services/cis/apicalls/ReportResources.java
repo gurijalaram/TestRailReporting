@@ -34,14 +34,7 @@ public class ReportResources extends CisBase {
     }
 
     public static <T> ResponseWrapper<T> getReportRepresentation(String identity) {
-        String id = "";
-
-        if (identity != null) {
-            id = identity;
-        } else {
-            id = Constants.getCisReportIdentity();
-        }
-        String url = String.format(getCisUrl(), String.format(endpointReportRepresentation, id));
+        String url = String.format(getCisUrl(), String.format(endpointReportRepresentation, identity));
         return GenericRequestUtil.get(
                 RequestEntity.init(url, Report.class),
                 new RequestAreaApi()

@@ -642,7 +642,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3843", "1299"})
+    @TestRail(testCaseId = {"3843", "1299", "710"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void tolerancesDiffUsers() {
 
@@ -680,6 +680,12 @@ public class ToleranceTests extends TestBase {
             .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
 
         assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
+
+        tolerancePage = evaluatePage.openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:4");
+
+        assertThat(tolerancePage.isEditButtonEnabled(), is(false));
     }
 
     @Test
@@ -726,5 +732,33 @@ public class ToleranceTests extends TestBase {
             .openTolerancesTab();
 
         assertThat(toleranceSettingsPage.isCADSelected("checked"), is("true"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1298"})
+    @Description("Ensure tolerance policy is for single user.  User 1 preferences should not impact User 2 preferences")
+    public void tolerancesSingleUser() {
+
+        UserCredentials testUser1 = UserUtil.getUser();
+        UserCredentials testUser2 = UserUtil.getUser();
+        currentUser = testUser1;
+
+        loginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = loginPage.login(testUser1)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        new SettingsPage(driver).save(ExplorePage.class);
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+
+        explorePage = new ExplorePage(driver);
+        toleranceSettingsPage = explorePage.openAdminDropdown()
+            .selectLogOut()
+            .login(testUser2)
+            .openSettings()
+            .openTolerancesTab();
+
+        assertThat(toleranceSettingsPage.isAssumeSelected("checked"), is("true"));
     }
 }

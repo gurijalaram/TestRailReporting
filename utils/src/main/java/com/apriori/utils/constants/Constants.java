@@ -48,6 +48,8 @@ public class Constants {
     public static final String REPORTING_HELP_URL = "http://help.jaspersoft.com/Default";
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
+    public static final String PUBLIC_WORKSPACE = "Public";
+    public static final String PRIVATE_WORKSPACE = "Private";
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";
@@ -96,6 +98,7 @@ public class Constants {
     private static String cisReportTypeIdentity;
     private static String cisBatchIdentity;
     private static String apitestsBasePath;
+    private static String apitestsResourcePath;
     public static final String defaultServiceHostKey = "serverHost";
     public static final String defaultServicePortKey = "serverPort";
     public static final String defaultServiceNameKey = "serverName";
@@ -303,6 +306,11 @@ public class Constants {
         return cisPartIdentity;
     }
 
+
+    public static void setCisPartIdentity(String identity) {
+        cisPartIdentity = System.setProperty("cisPartIdentity", identity);
+    }
+
     public static String getCisReportIdentity() {
         if (cisReportIdentity == null) {
             cisReportIdentity = System.getProperty("cisReportIdentity", constantsInit.cisReportIdentity());
@@ -311,12 +319,22 @@ public class Constants {
         return cisReportIdentity;
     }
 
+
+    public static void setCisReportIdentity(String identity) {
+        cisReportIdentity = System.setProperty("cisReportIdentity", identity);
+
+    }
+
     public static String getCisReportTypeIdentity() {
         if (cisReportTypeIdentity == null) {
             cisReportTypeIdentity = System.getProperty("cisReportTypeIdentity", constantsInit.cisReportTypeIdentity());
         }
 
         return cisReportTypeIdentity;
+    }
+
+    public static void setCisBatchIdentity(String identity) {
+        cisBatchIdentity = System.getProperty("cisBatchIdentity", identity);
     }
 
     public static String getCisBatchIdentity() {
@@ -333,6 +351,15 @@ public class Constants {
         }
 
         return apitestsBasePath;
+
+    }
+    
+    public static String getApitestsResourcePath() {
+        if (apitestsResourcePath == null) {
+            apitestsResourcePath = System.getProperty("apitestsResourcePath", constantsInit.apitestsResourcePath());
+        }
+
+        return apitestsResourcePath;
 
     }
 }
