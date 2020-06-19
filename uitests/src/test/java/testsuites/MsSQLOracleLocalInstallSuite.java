@@ -18,14 +18,8 @@ import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(MsSQLOracleLocalInstallTest.class)
 @Suite.SuiteClasses({
-    LoginTests.class,
-    NavigationTests.class,
-    ciadmintests.navigation.NavigationTests.class,
     AssemblyDetailsReportTests.class,
-    MachiningDtcReportTests.class,
-    CastingDtcReportTests.class,
-    CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class
+    CastingDtcComparisonReportTests.class
 })
 
 public class MsSQLOracleLocalInstallSuite {

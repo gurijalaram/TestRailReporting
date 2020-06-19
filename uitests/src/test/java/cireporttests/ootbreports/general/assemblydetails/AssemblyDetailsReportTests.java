@@ -54,7 +54,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1915")
     @Description("validate report is available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -72,7 +71,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -87,7 +86,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearch() {
@@ -104,7 +102,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class, CIARStagingSmokeTest.class})
+    @Category({CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "1922")
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -137,7 +135,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3205")
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
@@ -410,7 +407,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1919")
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (uses date input field)")
@@ -431,7 +427,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3244")
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (using date picker)")

@@ -317,10 +317,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * Clicks ok
      * @return Instance of Generic Report Page object
      */
-    public GenericReportPage clickOk() {
+    public CastingDtcReportHeader clickOk() {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return this;
+        return new CastingDtcReportHeader(driver);
     }
 
     /**
@@ -477,7 +477,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
         pageUtils.waitForElementToAppear(currentCurrency);
-        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
+        //pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return PageFactory.initElements(driver, className);
     }
 
@@ -587,6 +587,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
         pageUtils.waitForElementAndClick(rollupSearch);
         rollupSearch.sendKeys(rollupName);
+        By rollupToClick = By.xpath(String.format("//li[@title='%s']", rollupName));
+        driver.findElement(rollupToClick).click();
         return this;
     }
 

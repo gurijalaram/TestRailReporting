@@ -40,7 +40,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -56,7 +56,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1692")
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcExportSetInputControls() {
@@ -84,7 +83,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class})
+    @Category(CustomerSmokeTests.class)
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
     public void testRollupDropDown() {
@@ -103,7 +102,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -124,7 +123,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC input control panel works")
     public void testCancelButton() {
@@ -139,7 +137,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC input control panel works")
     public void testResetButton() {
@@ -156,7 +153,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
