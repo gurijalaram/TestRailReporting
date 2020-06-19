@@ -783,6 +783,19 @@ public class PageUtils {
     }
 
     /**
+     * Checks if env is TE
+     *
+     * @return boolean
+     */
+    public boolean isEnvTE() {
+        boolean isEnvTE = false;
+        if (Constants.environment.equals("cid-te")) {
+            isEnvTE = true;
+        }
+        return isEnvTE;
+    }
+
+    /**
      * Gets header to assert against
      *
      * @return String
