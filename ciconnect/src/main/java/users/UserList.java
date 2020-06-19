@@ -40,6 +40,9 @@ public class UserList extends GenericHeader {
     @FindBy(css = "div.xhdr td:nth-of-type(6)")
     private WebElement timezoneHeader;
 
+    @FindBy(xpath = "//*[@id=\"root_pagemashupcontainer-1_label-8\"]/span")
+    private WebElement usersLabel;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -58,6 +61,12 @@ public class UserList extends GenericHeader {
 
     @Override
     protected void isLoaded() {
-        pageUtils.waitForElementToAppear(usernameHeader);
+        //pageUtils.waitForElementToAppear(usersLabel);
+        //pageUtils.waitForElementToAppear(usernameHeader);
     }
+
+    /**
+     * Get Users text
+     */
+    public String getUsersText(){return usernameHeader.getText();}
 }
