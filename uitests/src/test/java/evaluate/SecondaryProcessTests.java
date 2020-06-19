@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
@@ -21,6 +22,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -450,17 +452,18 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1614", "654"})
+    @TestRail(testCaseId = {"1614", "654", "657"})
     @Description("Multiple Secondary Processes before Costing")
     public void multiSecondaryProcessBeforeCost() {
 
         resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -472,6 +475,13 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation / Carton Forming / Pack & Load"));
+
+        evaluatePage.publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .openScenario(scenarioName, "SheetMetal");
+
+        assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})

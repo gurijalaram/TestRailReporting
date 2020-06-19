@@ -15,6 +15,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.GeometryPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
+import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.RoutingsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
@@ -55,6 +56,7 @@ public class ProcessRoutingTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
     private UserCredentials currentUser;
+    private ProcessSetupOptionsPage processSetupOptionsPage;
 
     private File resourceFile;
 
@@ -267,7 +269,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1659"})
+    @TestRail(testCaseId = {"1659", "765", "766", "767"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
 
@@ -291,6 +293,22 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(1.96, 1)));
+
+        processSetupOptionsPage = evaluatePage.openProcessDetails()
+            .selectProcessChart("Waterjet Cut")
+            .selectOptions()
+            .selectPartOrientationDropdown("Position Bend with Smallest Radius Parallel to Grain")
+            .selectGrainDirectionDropdown("Parallel to Sheet Length")
+            .setMinHoleDiameter("0.5")
+            .closePanel()
+            .costScenario()
+            .openProcessDetails()
+            .selectProcessChart("Waterjet Cut")
+            .selectOptions();
+
+        assertThat(processSetupOptionsPage.getPartOrientation("Position Bend with Smallest Radius Parallel to Grain"), is(true));
+        assertThat(processSetupOptionsPage.getGrainDirection("Parallel to Sheet Length"), is(true));
+        assertThat(processSetupOptionsPage.getMinHoleDiameter(), is("0.500"));
     }
 
     @Test
@@ -365,7 +383,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate a variety of secondary processes can be added for newly selected routings")
     public void secondaryProcessesRoutings() {
 
-        resourceFile =  new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -861,7 +879,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / " +
-                "Reciprocating Surface Grinder"));
+            "Reciprocating Surface Grinder"));
 
         processRoutingPage = evaluatePage.openProcessDetails()
             .selectRoutingsButton()

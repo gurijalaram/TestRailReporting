@@ -48,8 +48,10 @@ public class FilterCriteriaTests extends TestBase {
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "SheetMetal")
+        explorePage.filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "SheetMetal")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "SheetMetal"), is(equalTo(1)));
@@ -70,8 +72,10 @@ public class FilterCriteriaTests extends TestBase {
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPrivateCriteria("Part", "Process Group", "is", "Casting - Die")
+        explorePage.filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Process Group", "is", "Casting - Die")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Casting"), is(equalTo(1)));
@@ -90,8 +94,10 @@ public class FilterCriteriaTests extends TestBase {
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "Wall")
+        explorePage.filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Wall")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "CurvedWall"), is(equalTo(1)));
@@ -110,8 +116,10 @@ public class FilterCriteriaTests extends TestBase {
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPrivateCriteria("Assembly", "Part Name", "Contains", "Piston_assembly")
+        explorePage.filter()
+            .setWorkspace("Private")
+            .setScenarioType("Assembly")
+            .setRowOne("Part Name", "Contains", "Piston_assembly")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
@@ -137,8 +145,10 @@ public class FilterCriteriaTests extends TestBase {
             .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPublicCriteria("Assembly", "Status", "is", "Analysis")
+        explorePage.filter()
+            .setWorkspace("Public")
+            .setScenarioType("Assembly")
+            .setRowOne("Status", "is", "Analysis")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
@@ -159,8 +169,10 @@ public class FilterCriteriaTests extends TestBase {
             .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Push Pin")
+        explorePage.filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Push Pin")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), is(equalTo(1)));
@@ -186,8 +198,10 @@ public class FilterCriteriaTests extends TestBase {
             .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPublicCriteria("Assembly", "Description", "Contains", "Test Description")
+        explorePage.filter()
+            .setWorkspace("Public")
+            .setScenarioType("Assembly")
+            .setRowOne("Description", "Contains", "Test Description")
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
@@ -210,10 +224,38 @@ public class FilterCriteriaTests extends TestBase {
             .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
+        explorePage.filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .setRowOne("Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));
+    }
+
+    @Test
+    @Description("Test public criteria assembly description")
+    public void testFilterAttributes() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CIDLoginPage(driver);
+        loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, resourceFile)
+            .publishScenario("Analysis", "Initial", "Ciene Frith")
+            .selectLock()
+            .selectPublishButton();
+
+        explorePage = new ExplorePage(driver);
+        explorePage.filter()
+            .setWorkspace("Public, Private")
+            .setScenarioType("Part")
+            .setRowOne("Status", "is", "Analysis")
+            .setRowTwo("Cost Maturity", "is", "Initial")
+            .setRowThree("Assignee", "is", "Ciene Frith")
+            .apply(ExplorePage.class);
+
+        Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "PowderMetalShaft"), is(equalTo(1)));
     }
 }
