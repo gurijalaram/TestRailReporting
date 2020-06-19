@@ -73,7 +73,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectRollupByDropDownSearch(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
-            .clickOk();
+            .clickOk(CastingDtcReportHeader.class);
 
         assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName()),
             is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
@@ -140,7 +140,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-                .clickOk()
+                .clickOk(GenericReportPage.class)
                 .clickComparison()
                 .newTabTransfer();
 

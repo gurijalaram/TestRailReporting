@@ -317,10 +317,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * Clicks ok
      * @return Instance of Generic Report Page object
      */
-    public CastingDtcReportHeader clickOk() {
+    public <T> T clickOk(Class<T> className) {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return new CastingDtcReportHeader(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -331,6 +331,22 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(castingDtcBubble);
         pageUtils.waitForElementAndClick(comparisonButton);
         return this;
+    }
+
+    /**
+     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     *
+     * @param assemblyToCheck
+     * @return Generic - instance of specified class
+     */
+    public <T> T waitForCorrectAssembly(String assemblyToCheck, Class<T> className) {
+        pageUtils.waitForElementToAppear(currentAssembly);
+        // if not top level, add -
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
+            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+        }
+        return PageFactory.initElements(driver, className);
     }
 
     /**

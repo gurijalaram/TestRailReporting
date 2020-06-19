@@ -72,7 +72,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
-            .clickOk()
+            .clickOk(CastingDtcReportHeader.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
         assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName()),
@@ -141,7 +141,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-                .clickOk();
+                .clickOk(GenericReportPage.class);
 
         String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_DETAILS_REPORT_NAME);
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
