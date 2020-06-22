@@ -35,17 +35,6 @@ public class GenericWorkflow extends GenericHeader {
         this.get();
     }
 
-    @Override
-    protected void load() {
-    }
-
-    @Override
-    protected void isLoaded() {
-        pageUtils.waitForElementToAppear(workflowLabel);
-        pageUtils.waitForElementToAppear(scheduleHistoryTab);
-        pageUtils.waitForElementToAppear(scheduleTab);
-    }
-
     /**
      * clicks on schedule tab
      * @return
@@ -65,6 +54,7 @@ public class GenericWorkflow extends GenericHeader {
     }
 
     public String getWorkflowText() {
+
         return workflowLabel.getText();
     }
 }

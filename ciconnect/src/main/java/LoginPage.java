@@ -19,7 +19,6 @@ public class LoginPage extends GenericHeader {
 
     public LoginPage(WebDriver driver) {
         super(driver);
-        login(driver);
     }
 
     public GenericWorkflow login(WebDriver driver) {

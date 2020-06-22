@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import users.UserList;
@@ -15,7 +16,7 @@ import workflows.Schedule;
 /**
  * @author kpatel
  */
-public class GenericHeader extends PageHeader {
+public class GenericHeader extends LoadableComponent<GenericHeader> {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericHeader.class);
 
@@ -28,14 +29,28 @@ public class GenericHeader extends PageHeader {
     @FindBy(css = "ul#root_menu-19 > li:nth-of-type(3)")
     private WebElement connectorsMenuBtn;
 
+    @FindBy(css = "div#root_pagemashupcontainer-1_label-18-bounding-box span")
+    private WebElement workflowLabel;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
     public GenericHeader(WebDriver driver) {
-        super(driver);
+        this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        this.get();
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+
     }
 
     /**

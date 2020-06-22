@@ -13,14 +13,16 @@ public class NavBarTests extends TestBase {
     private GenericWorkflow genericWorkflow;
     private UserList userList;
     private GenericHeader genericHeader;
+    private LoginPage loginPage;
 
     public NavBarTests() {super();}
 
     @Test
     public void testNavigateToUsersTab() {
-        userList = new LoginPage(driver).login(driver)
+        loginPage = new LoginPage(driver);
+        userList = loginPage.login(driver)
             .clickUsersMenu();
-        System.out.println(userList.getUsersText());
+        //System.out.println(userList.getUsersText());
         assertThat("Users", equalTo(userList.getUsersText()));
     }
 
