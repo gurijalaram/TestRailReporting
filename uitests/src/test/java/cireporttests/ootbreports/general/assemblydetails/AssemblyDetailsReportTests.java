@@ -234,8 +234,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .scrollDownInputControls()
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+            .clickOk(AssemblyDetailsReportPage.class);
+            //.waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
