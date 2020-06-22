@@ -1,12 +1,12 @@
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.utils.web.driver.TestBase;
 
 import header.GenericHeader;
 import org.junit.Test;
 import users.UserList;
 import workflows.GenericWorkflow;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.CoreMatchers.equalTo;
 
 public class NavBarTests extends TestBase {
 
@@ -22,8 +22,8 @@ public class NavBarTests extends TestBase {
         loginPage = new LoginPage(driver);
         userList = loginPage.login(driver)
             .clickUsersMenu();
-        //System.out.println(userList.getUsersText());
-        assertThat("Users", equalTo(userList.getUsersText()));
+
+        assertThat("Username", equalTo(userList.getUsersText()));
     }
 
 }
