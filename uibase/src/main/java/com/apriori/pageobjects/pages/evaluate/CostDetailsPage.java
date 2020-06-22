@@ -99,7 +99,7 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
      *
      * @return double
      */
-    public Double getTotalVariableCosts() {
+    public double getTotalVariableCosts() {
         pageUtils.waitForElementToAppear(totalVariableCosts);
         return Double.parseDouble(totalVariableCosts.getText());
     }
@@ -109,7 +109,7 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
      *
      * @return double
      */
-    public Double getIndirectOverhead() {
+    public double getIndirectOverhead() {
         pageUtils.waitForElementToAppear(indirectOverhead);
         return Double.parseDouble(indirectOverhead.getText());
     }
@@ -119,7 +119,7 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
      *
      * @return double
      */
-    public Double getSGandA() {
+    public double getSGandA() {
         pageUtils.waitForElementToAppear(sganda);
         return Double.parseDouble(sganda.getText());
     }
@@ -129,7 +129,7 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
      *
      * @return double
      */
-    public Double getMargin() {
+    public double getMargin() {
         pageUtils.waitForElementToAppear(margin);
         return Double.parseDouble(margin.getText());
     }
@@ -139,7 +139,7 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
      *
      * @return double
      */
-    public Double getPiecePartCost() {
+    public double getPiecePartCost() {
         pageUtils.waitForElementToAppear(piecePartCost);
         return Double.parseDouble(piecePartCost.getText());
     }

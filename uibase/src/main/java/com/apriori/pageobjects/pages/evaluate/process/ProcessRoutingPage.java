@@ -218,7 +218,7 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
      *
      * @return double
      */
-    public Double getCycleTime() {
+    public double getCycleTime() {
         pageUtils.waitForElementToAppear(cycleTime);
         return Double.parseDouble(cycleTime.getText());
     }
@@ -228,7 +228,7 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
      *
      * @return double
      */
-    public Double getPiecePartCost() {
+    public double getPiecePartCost() {
         pageUtils.waitForElementToAppear(piecePartCost);
         return Double.parseDouble(piecePartCost.getText());
     }
@@ -238,7 +238,7 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
      *
      * @return double
      */
-    public Double getFullyBurdenedCost() {
+    public double getFullyBurdenedCost() {
         pageUtils.waitForElementToAppear(fullyBurdenedCost);
         return Double.parseDouble(fullyBurdenedCost.getText());
     }
@@ -248,7 +248,7 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
      *
      * @return double
      */
-    public Double getCapitalInvestments() {
+    public double getCapitalInvestments() {
         pageUtils.waitForElementToAppear(capitalInvestment);
         return Double.parseDouble(capitalInvestment.getText());
     }
