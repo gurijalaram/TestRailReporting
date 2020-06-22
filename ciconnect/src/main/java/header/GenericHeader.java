@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import users.UserList;
@@ -16,7 +15,7 @@ import workflows.Schedule;
 /**
  * @author kpatel
  */
-public class GenericHeader extends LoadableComponent<GenericHeader> {
+public class GenericHeader extends PageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericHeader.class);
 
@@ -36,11 +35,11 @@ public class GenericHeader extends LoadableComponent<GenericHeader> {
     private PageUtils pageUtils;
 
     public GenericHeader(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
     }
 
     @Override

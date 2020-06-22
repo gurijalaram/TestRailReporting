@@ -35,6 +35,11 @@ public class GenericWorkflow extends GenericHeader {
         this.get();
     }
 
+    @Override
+    protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(scheduleTab);
+    }
+
     /**
      * clicks on schedule tab
      * @return
