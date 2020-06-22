@@ -15,6 +15,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -82,10 +83,10 @@ public class EvaluatePage extends EvaluateHeader {
     private WebElement secondaryProcessButton;
 
     @FindBy(css = "input[data-ap-field='annualVolume']")
-    private WebElement annVolume;
+    private WebElement annualVolumeInput;
 
     @FindBy(css = "input[data-ap-field='productionLife']")
-    private WebElement annualVolumeYrs;
+    private WebElement productionLifeInput;
 
     @FindBy(css = "a[data-ap-nav-viewport='showMaterialDetails']")
     private WebElement materialsDetails;
@@ -258,20 +259,22 @@ public class EvaluatePage extends EvaluateHeader {
      * @return current page object
      */
     public EvaluatePage enterAnnualVolume(String annualVolume) {
-        pageUtils.clearInput(annVolume);
-        annVolume.sendKeys(annualVolume);
+        annualVolumeInput.sendKeys(Keys.CONTROL + "a");
+        annualVolumeInput.sendKeys(Keys.DELETE);
+        annualVolumeInput.sendKeys(annualVolume);
         return this;
     }
 
     /**
      * Enters the years of annual volume
      *
-     * @param years - the years
+     * @param productionLife - the years
      * @return current page object
      */
-    public EvaluatePage enterAnnualYears(String years) {
-        pageUtils.clearInput(annualVolumeYrs);
-        annualVolumeYrs.sendKeys(years);
+    public EvaluatePage enterAnnualYears(String productionLife) {
+        productionLifeInput.sendKeys(Keys.CONTROL + "a");
+        productionLifeInput.sendKeys(Keys.DELETE);
+        productionLifeInput.sendKeys(productionLife);
         return this;
     }
 
