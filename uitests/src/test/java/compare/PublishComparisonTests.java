@@ -19,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -61,8 +60,10 @@ public class PublishComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Casting")
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(testScenarioName, "Casting")
             .apply(GenericHeader.class)
@@ -113,8 +114,10 @@ public class PublishComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Casting")
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(testScenarioName, "CASTING")
             .apply(GenericHeader.class)
@@ -131,8 +134,10 @@ public class PublishComparisonTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .setRowOne("Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));

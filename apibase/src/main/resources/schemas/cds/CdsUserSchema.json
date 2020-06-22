@@ -16,9 +16,13 @@
         "username",
         "active",
         "sites",
-        "customerIdentity"
+        "customerIdentity",
+        "mfaRequired"
       ],
       "properties": {
+        "mfaRequired": {
+          "type": "boolean"
+        },
         "identity": {
           "type": "string",
           "pattern": "^(.*)$"
