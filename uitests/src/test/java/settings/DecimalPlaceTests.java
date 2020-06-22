@@ -28,13 +28,12 @@ import testsuites.SmokeTestSuite;
 import java.io.File;
 
 public class DecimalPlaceTests extends TestBase {
+    File resourceFile;
     private CIDLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
     private ProcessRoutingPage processRoutingPage;
     private CostDetailsPage costDetailsPage;
-
-    File resourceFile;
 
     @After
     public void resetAllSettings() {
@@ -70,7 +69,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost(), is(20.174472));
         assertThat(evaluatePage.getCapitalInvestment(), is(431.200988));
 
-            evaluatePage.openSettings()
+        evaluatePage.openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
             .save(EvaluatePage.class);
 
@@ -82,7 +81,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost(), is(20));
         assertThat(evaluatePage.getCapitalInvestment(), is(431));
 
-            evaluatePage.openSettings()
+        evaluatePage.openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
             .save(EvaluatePage.class);
 
@@ -137,7 +136,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getMargin(), is(0.0));
         assertThat(costDetailsPage.getPiecePartCost(), is(20.1));
 
-            evaluatePage.openSettings()
+        evaluatePage.openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
             .save(EvaluatePage.class);
 
