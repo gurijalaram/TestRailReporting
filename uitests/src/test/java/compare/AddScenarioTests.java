@@ -57,8 +57,10 @@ public class AddScenarioTests extends TestBase {
         scenarioTablePage = evaluatePage.createNewComparison().enterComparisonName(new GenerateStringUtil().generateComparisonName())
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Part Name", "Contains", "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface")
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface")
             .apply(ScenarioTablePage.class);
 
         assertThat(scenarioTablePage.findScenario(testScenarioName, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface").isDisplayed(), Matchers.is(true));
@@ -84,8 +86,10 @@ public class AddScenarioTests extends TestBase {
             .enterComparisonName(new GenerateStringUtil().generateComparisonName())
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Casting")
             .apply(ScenarioTablePage.class);
 
         assertThat(scenarioTablePage.findScenario(testScenarioName, "Casting").isDisplayed(), Matchers.is(true));
@@ -108,7 +112,7 @@ public class AddScenarioTests extends TestBase {
     @TestRail(testCaseId = {"414"})
     @Description("Test all available characters in a comparison name")
     public void comparisonAllCharacters() {
-      
+
         String testComparisonName = (new GenerateStringUtil().generateComparisonName() + "!£$%^&()_+{}~`1-=[]#';@");
 
         loginPage = new CIDLoginPage(driver);

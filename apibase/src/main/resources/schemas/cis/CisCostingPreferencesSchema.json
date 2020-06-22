@@ -8,8 +8,6 @@
       "type": "object",
       "required": [
         "cadTolerances",
-        "processGroup",
-        "scenarioName",
         "tolerances",
         "useVpeForAllProcesses"
       ],

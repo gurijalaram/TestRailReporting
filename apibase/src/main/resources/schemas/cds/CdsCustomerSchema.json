@@ -14,9 +14,21 @@
         "description",
         "emailRegexPatterns",
         "active",
-        "customerType"
+        "customerType",
+        "useExternalIdentityProvider",
+        "mfaRequired",
+        "oneTimePasswordApplications"
       ],
       "properties": {
+        "mfarequired": {
+          "type": "boolean"
+        },
+        "oneTimePasswordApplications": {
+          "type": "array"
+        },
+        "useExternalIdentityProvider": {
+          "type": "boolean"
+        },
         "identity": {
           "type": "string",
           "pattern": "^(.*)$"
