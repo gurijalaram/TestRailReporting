@@ -493,7 +493,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
         pageUtils.waitForElementToAppear(currentCurrency);
-        //pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
+        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return PageFactory.initElements(driver, className);
     }
 
