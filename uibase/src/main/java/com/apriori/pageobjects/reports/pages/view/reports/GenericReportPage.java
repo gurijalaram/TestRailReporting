@@ -117,10 +117,10 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) > div > a")
     private WebElement subAssemblyOption;
 
-    @FindBy(css = "li[title='SUB-SUB-ASM (Initial) [assembly]'] > div > a")
+    @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
     private WebElement subSubAsmOption;
 
-    @FindBy(css = "li[title='TOP-LEVEL (Initial) [assembly]'] > div > a")
+    @FindBy(css = "li[title='TOP-LEVEL (Initial)'] > div > a")
     private WebElement topLevelOption;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
@@ -332,6 +332,23 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(comparisonButton);
         return this;
     }
+
+    /**
+     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     *
+     * @param assemblyToCheck
+     * @return Generic - instance of specified class
+     */
+    public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
+        pageUtils.waitForElementToAppear(currentAssembly);
+        // if not top level, add -
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
+            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+        }
+        return this;
+    }
+
 
     /**
      * Wait for export set list count to be zero
@@ -587,6 +604,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
         pageUtils.waitForElementAndClick(rollupSearch);
         rollupSearch.sendKeys(rollupName);
+        By rollupToClick = By.xpath(String.format("//li[@title='%s']", rollupName));
+        driver.findElement(rollupToClick).click();
         return this;
     }
 
