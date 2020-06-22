@@ -120,8 +120,10 @@ public class NewScenarioNameTests extends TestBase {
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "MultiUpload")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "MultiUpload")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(scenarioA, "MultiUpload"), equalTo(1));

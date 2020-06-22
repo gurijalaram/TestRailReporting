@@ -9,6 +9,7 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.GeckoDriverService;
@@ -151,6 +152,9 @@ public class DriverFactory {
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
                 result = new ChromeDriver(dc);
                 break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                result = new EdgeDriver(dc);
         }
         return result;
     }

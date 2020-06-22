@@ -21,11 +21,10 @@ import java.io.File;
 
 public class DeletePrivateScenarioTests extends TestBase {
 
+    private final String noComponentMessage = "You have no components that match the selected filter";
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
-
     private File resourceFile;
-    private final String noComponentMessage = "You have no components that match the selected filter";
 
     public DeletePrivateScenarioTests() {
         super();
@@ -46,16 +45,20 @@ public class DeletePrivateScenarioTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.uploadFile(testScenarioName, resourceFile)
             .selectExploreButton()
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class)
             .highlightScenario(testScenarioName, "casting");
 
         explorePage = new ExplorePage(driver);
         explorePage.delete()
             .deleteScenario()
-            .filterCriteria()
-            .filterPrivateCriteria("Part", "Scenario Name", "Contains", testScenarioName)
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", testScenarioName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
