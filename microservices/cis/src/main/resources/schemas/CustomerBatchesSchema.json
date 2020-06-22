@@ -9,15 +9,16 @@
       "required": [
         "items"
       ],
-      "$ref": "PaginationSchema.json",
-      "properties": {
-        "items": {
+      "allOf": [
+        {"$ref": "PaginationSchema.json"},
+        {"items": {
           "type": "array",
+          "additionalItems": true,
           "items": {
-            "$ref": "FmsFileSchema.json"
           }
         }
       }
+        ]
     }
   }
 }
