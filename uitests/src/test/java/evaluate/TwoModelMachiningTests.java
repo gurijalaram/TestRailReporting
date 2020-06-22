@@ -201,8 +201,10 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Scenario Name", "Contains", twoModelScenarioName)
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Scenario Name", "Contains", twoModelScenarioName)
             .apply(ExplorePage.class)
             .openScenario(twoModelScenarioName, twoModelPartName)
             .openSourceScenario();

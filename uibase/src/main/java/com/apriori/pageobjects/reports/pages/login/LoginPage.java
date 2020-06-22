@@ -6,6 +6,7 @@ import com.apriori.pageobjects.reports.pages.homepage.HomePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -143,9 +144,8 @@ public class LoginPage extends ReportsPageHeader {
     }
 
     /**
-     * Login to CI Report
+     * Login to CI Report with passed in user (from CSV file)
      *
-     * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
     public HomePage login(UserCredentials userCredentials) {
@@ -154,12 +154,19 @@ public class LoginPage extends ReportsPageHeader {
     }
 
     /**
-     * Login to CI Report
+     * Login to CI Report with passed in user (from Jenkins)
      *
-     * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
-    public HomePage loginToCIAdmin(UserCredentials userCredentials) {
+    public HomePage login() {
+        UserCredentials userCredentials;
+
+        if (Constants.PROP_USER_NAME != null && Constants.PROP_USER_PASSWORD != null) {
+            userCredentials = new UserCredentials(Constants.PROP_USER_NAME, Constants.PROP_USER_PASSWORD);
+        } else {
+            userCredentials = UserUtil.getUser();
+        }
+
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new HomePage(driver);
     }
