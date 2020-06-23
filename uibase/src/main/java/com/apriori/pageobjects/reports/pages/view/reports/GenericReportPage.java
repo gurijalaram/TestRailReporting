@@ -3,7 +3,6 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
-import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
@@ -111,11 +110,11 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement assemblyInput;
 
-    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial)'] > div > a")
-    private WebElement subAssemblyOption;
-
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement inputBox;
+
+    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) > div > a")
+    private WebElement subAssemblyOption;
 
     @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
     private WebElement subSubAsmOption;
@@ -339,15 +338,16 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param assemblyToCheck
      * @return Generic - instance of specified class
      */
-    public <T> T waitForCorrectAssembly(String assemblyToCheck, Class<T> className) {
+    public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
         pageUtils.waitForElementToAppear(currentAssembly);
         // if not top level, add -
         if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
             pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
         }
-        return PageFactory.initElements(driver, className);
+        return this;
     }
+
 
     /**
      * Wait for export set list count to be zero
@@ -603,6 +603,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
         pageUtils.waitForElementAndClick(rollupSearch);
         rollupSearch.sendKeys(rollupName);
+        By rollupToClick = By.xpath(String.format("//li[@title='%s']", rollupName));
+        driver.findElement(rollupToClick).click();
         return this;
     }
 
