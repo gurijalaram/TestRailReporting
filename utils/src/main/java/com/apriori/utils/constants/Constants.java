@@ -6,40 +6,70 @@ import java.util.logging.Level;
 
 
 public class Constants {
-    public static final String defaultProjectIDValue = "177";
-    public static final String defaultProjectIDKey = "RUN_ID";
+    public static final String DEFAULT_PROJECT_ID_VALUE = "177";
+    public static final String DEFAULT_PROJECT_ID_KEY = "RUN_ID";
 
-    public static final String defaultBuildModeKey = "mode";
-    public static final String defaultBuildModeValue = "QA";
+    public static final String DEFAULT_BUILD_MODE_KEY = "mode";
+    public static final String DEFAULT_BUILD_MODE_VALUE = "QA";
 
-    public static final String defaultBaseUrlKey = "url";
+    public static final String DEFAULT_BASE_URL_KEY = "url";
 
-    public static final String defaultUserName = "admin@apriori.com";
-    public static final String defaultPassword = "admin";
-    public static final String defaultAccessLevel = "admin";
+    public static final String DEFAULT_USER_NAME = "admin@apriori.com";
+    public static final String DEFAULT_PASSWORD = "admin";
+    public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
-    public static final String defaultEnvironmentKey = "env";
-    public static final String defaultEnvironmentValue = "cid-aut";
+    public static final String DEFAULT_ENVIRONMENT_KEY = "env";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-aut";
 
-    public static final String scenarioExportChapterUrlPartOne = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
-    public static final String scenarioExportChapterUrlPartTwo = "CIA_UG";
-    public static final String scenarioExportChapterPageTitle = "2 Scenario and System Data Exports";
-    public static final String reportsUrlSuffix = "jasperserver-pro/";
-    public static final String domainDesignerUrlSuffix = String.format("%sdomaindesigner.html", reportsUrlSuffix);
-    public static final String reportsLastSuffix = "flow.html?_flowId=homeFlow";
-    public static final String reportingHelpUrl = "http://help.jaspersoft.com/Default";
-    public static final String privacyPolicyUrl = "https://www.apriori.com/privacy-policy";
+    public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
+    public static final String DEFAULT_EXPORT_SET_NAME_KEY = "exportSetName";
+    public static final String DEFAULT_ELEMENT_NAME_KEY = "elementName";
+    public static final String DEFAULT_SCENARIO_TYPE_KEY = "scenarioType";
 
-    public static final String cidTeHeaderText = "CI Design (TE)";
-    public static final String cidAutHeaderText = "CI Design (AUTOMATIONENVIRONMENT)";
+    public static final String DEFAULT_USER_NAME_KEY = "username";
+    public static final String DEFAULT_PASSWORD_KEY = "password";
+
+    public static final String SCENARIO_NAME = System.getProperty(DEFAULT_SCENARIO_NAME_KEY);
+    public static final String EXPORT_SET_NAME = System.getProperty(DEFAULT_EXPORT_SET_NAME_KEY);
+    public static final String ELEMENT_NAME = System.getProperty(DEFAULT_ELEMENT_NAME_KEY);
+    public static final String SCENARIO_TYPE = System.getProperty(DEFAULT_SCENARIO_TYPE_KEY);
+
+    public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
+    public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
+
+    public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_ONE = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
+    public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_TWO = "CIA_UG";
+    public static final String CIA_USER_GUIDE_URL_SUBSTRING = "CI_ADMIN_USER_GUIDE";
+    public static final String CIA_USER_GUIDE_TITLE = "Cost Insight Admin:\nUser Guide";
+    public static final String SCENARIO_EXPORT_CHAPTER_PAGE_TITLE = "2 Scenario and System Data Exports";
+    public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
+    public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
+    public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
+    public static final String REPORTING_HELP_URL = "http://help.jaspersoft.com/Default";
+    public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
+    public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
+    public static final String PUBLIC_WORKSPACE = "Public";
+    public static final String PRIVATE_WORKSPACE = "Private";
+
+    public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
+    public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";
+
+    public static final String CASTING_DTC_REPORT_NAME = "DTC Casting";
+    public static final String CASTING_DTC_COMPARISON_REPORT_NAME = "DTC Casting Comparison";
+    public static final String CASTING_DTC_DETAILS_REPORT_NAME = "DTC Casting Details";
 
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
     public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
 
-    public static String RUN_ID = defaultProjectIDValue;
+    public static final String DEFAULT_SCENARIO_NAME = "Initial";
+    public static final String PART_SCENARIO_TYPE = "Part";
+    public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
+    public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
 
-    public static String environment = System.getProperty(defaultEnvironmentKey, defaultEnvironmentValue);
+    public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
+
+    public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
 
     private static String serviceHost;
     private static String servicePort;
@@ -58,6 +88,14 @@ public class Constants {
     private static String atsAuthTargetCloudContext;
     private static String fmsServiceHost;
     private static String fmsFileIdentity;
+    private static String cisCustomerIdentity;
+    private static String cisServiceHost;
+    private static String cisPartIdentity;
+    private static String cisReportIdentity;
+    private static String cisReportTypeIdentity;
+    private static String cisBatchIdentity;
+    private static String apitestsBasePath;
+    private static String apitestsResourcePath;
     public static final String defaultServiceHostKey = "serverHost";
     public static final String defaultServicePortKey = "serverPort";
     public static final String defaultServiceNameKey = "serverName";
@@ -71,7 +109,7 @@ public class Constants {
     private static final ConstantsInit constantsInit;
 
     static {
-        System.setProperty(defaultEnvironmentKey, environment);
+        System.setProperty(DEFAULT_ENVIRONMENT_KEY, environment);
 
         constantsInit = ConfigFactory.create(ConstantsInit.class);
     }
@@ -91,7 +129,7 @@ public class Constants {
 
     public static String getBuildMode() {
         if (buildMode == null) {
-            buildMode = System.getProperty(defaultBuildModeKey, defaultBuildModeValue);
+            buildMode = System.getProperty(DEFAULT_BUILD_MODE_KEY, DEFAULT_BUILD_MODE_VALUE);
         }
 
         return buildMode;
@@ -99,7 +137,7 @@ public class Constants {
 
     public static String getBaseUrl() {
         if (baseUrl == null) {
-            baseUrl = System.getProperty(defaultBaseUrlKey, constantsInit.url());
+            baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY, constantsInit.url());
         }
 
         return baseUrl;
@@ -240,4 +278,84 @@ public class Constants {
         return atsAuthTargetCloudContext;
     }
 
+    public static String getCisCustomerIdentity() {
+        if (cisCustomerIdentity == null) {
+            cisCustomerIdentity = System.getProperty("cisCustomerIdentity", constantsInit.cisCustomerIdentity());
+        }
+
+        return cisCustomerIdentity;
+    }
+
+    public static String getCisServiceHost() {
+        if (cisServiceHost == null) {
+            cisServiceHost = System.getProperty("cisServiceHost", constantsInit.cisServiceHost());
+        }
+
+        return cisServiceHost;
+    }
+
+    public static String getCisPartIdentity() {
+        if (cisPartIdentity == null) {
+            cisPartIdentity = System.getProperty("cisPartIdentity", constantsInit.cisPartIdentity());
+        }
+        
+        return cisPartIdentity;
+    }
+
+
+    public static void setCisPartIdentity(String identity) {
+        cisPartIdentity = System.setProperty("cisPartIdentity", identity);
+    }
+
+    public static String getCisReportIdentity() {
+        if (cisReportIdentity == null) {
+            cisReportIdentity = System.getProperty("cisReportIdentity", constantsInit.cisReportIdentity());
+        }
+
+        return cisReportIdentity;
+    }
+
+
+    public static void setCisReportIdentity(String identity) {
+        cisReportIdentity = System.setProperty("cisReportIdentity", identity);
+
+    }
+
+    public static String getCisReportTypeIdentity() {
+        if (cisReportTypeIdentity == null) {
+            cisReportTypeIdentity = System.getProperty("cisReportTypeIdentity", constantsInit.cisReportTypeIdentity());
+        }
+
+        return cisReportTypeIdentity;
+    }
+
+    public static void setCisBatchIdentity(String identity) {
+        cisBatchIdentity = System.getProperty("cisBatchIdentity", identity);
+    }
+
+    public static String getCisBatchIdentity() {
+        if (cisBatchIdentity == null) {
+            cisBatchIdentity = System.getProperty("cisBatchIdentity", constantsInit.cisBatchIdentity());
+        }
+
+        return cisBatchIdentity;
+    }
+
+    public static String getApitestsBasePath() {
+        if (apitestsBasePath == null) {
+            apitestsBasePath = System.getProperty("apitestsBasePath", constantsInit.apitestsBasePath());
+        }
+
+        return apitestsBasePath;
+
+    }
+    
+    public static String getApitestsResourcePath() {
+        if (apitestsResourcePath == null) {
+            apitestsResourcePath = System.getProperty("apitestsResourcePath", constantsInit.apitestsResourcePath());
+        }
+
+        return apitestsResourcePath;
+
+    }
 }

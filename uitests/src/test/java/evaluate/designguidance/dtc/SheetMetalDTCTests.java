@@ -14,15 +14,14 @@ import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -70,7 +69,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -103,7 +102,7 @@ public class SheetMetalDTCTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         guidancePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -133,7 +132,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -167,13 +166,13 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getWarningsCount("5"), is(true));
-        assertThat(evaluatePage.getGuidanceIssuesCount("9"), is(true));
-        assertThat(evaluatePage.getGcdTolerancesCount("22"), is(true));
+        assertThat(evaluatePage.getWarningsCount(), is("5"));
+        assertThat(evaluatePage.getGuidanceIssuesCount(), is("9"));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("22"));
     }
 
     @Test
@@ -194,7 +193,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         investigationPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -217,7 +216,6 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-57941")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1845", "719"})
     @Description("Verify tolerances which induce an additional operation")
@@ -235,7 +233,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()

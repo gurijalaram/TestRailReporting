@@ -15,8 +15,8 @@ import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ColumnsEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
@@ -51,7 +51,7 @@ public class ActionsTests extends TestBase {
     public void addScenarioNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -76,14 +76,13 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-893")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"554", "555"})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
         resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -122,7 +121,7 @@ public class ActionsTests extends TestBase {
     public void lockUnlockScenario() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -158,13 +157,12 @@ public class ActionsTests extends TestBase {
     public void actionsEvaluatePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
             .save(EvaluatePage.class)
@@ -176,8 +174,8 @@ public class ActionsTests extends TestBase {
 
         assertThat(scenarioNotesPage.isStatusSelected("Complete"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Medium"), is(true));
-        assertThat(scenarioNotesPage.isDescription("Qa Auto Test"), is(true));
-        assertThat(scenarioNotesPage.isScenarioNotes("Uploaded and costed via automation"), is(true));
+        assertThat(scenarioNotesPage.getDescription(), is("Qa Auto Test"));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Uploaded and costed via automation"));
     }
 
     @Test
@@ -187,13 +185,12 @@ public class ActionsTests extends TestBase {
     public void infoNotesPanel() {
 
         resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario()
             .selectInfoNotes()
             .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
             .save(EvaluatePage.class)
@@ -205,8 +202,8 @@ public class ActionsTests extends TestBase {
 
         assertThat(scenarioNotesPage.isStatusSelected("New"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("High"), is(true));
-        assertThat(scenarioNotesPage.isDescription("infoNotesPanel"), is(true));
-        assertThat(scenarioNotesPage.isScenarioNotes("Panel Test"), is(true));
+        assertThat(scenarioNotesPage.getDescription(), is("infoNotesPanel"));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Panel Test"));
     }
 
     @Test
@@ -216,7 +213,7 @@ public class ActionsTests extends TestBase {
     public void actionsAssign() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -238,7 +235,7 @@ public class ActionsTests extends TestBase {
             .openScenario(testScenarioName, "PowderMetalShaft")
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isAssignee("Moya Parker"), is(true));
+        assertThat(scenarioNotesPage.isAssignee(), is("Moya Parker"));
     }
 
     @Test
@@ -248,7 +245,7 @@ public class ActionsTests extends TestBase {
     public void actionsAssignEvaluatePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -281,7 +278,7 @@ public class ActionsTests extends TestBase {
     public void filterAssignee() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -290,8 +287,10 @@ public class ActionsTests extends TestBase {
             .costScenario()
             .publishScenario("New", "Low", "Ciene Frith")
             .selectPublishButton()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Assignee", "is", "Ciene Frith")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Assignee", "is", "Ciene Frith")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), equalTo(1));
@@ -304,7 +303,7 @@ public class ActionsTests extends TestBase {
     public void editNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -332,7 +331,7 @@ public class ActionsTests extends TestBase {
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isScenarioNotes("Testing QA notes Validating the ability to edit notes"), is(true));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes Validating the ability to edit notes"));
     }
 
     @Test
@@ -342,7 +341,7 @@ public class ActionsTests extends TestBase {
     public void cancelEditNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -367,7 +366,7 @@ public class ActionsTests extends TestBase {
             .cancel(EvaluatePage.class)
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isScenarioNotes("Testing QA notes"), is(true));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes"));
     }
 
     @Test
@@ -378,7 +377,7 @@ public class ActionsTests extends TestBase {
     public void deleteNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -406,7 +405,7 @@ public class ActionsTests extends TestBase {
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isScenarioNotes(""), is(true));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is(""));
     }
 
     @Test
@@ -416,7 +415,7 @@ public class ActionsTests extends TestBase {
     public void readUsersNotes() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
 
@@ -445,17 +444,17 @@ public class ActionsTests extends TestBase {
             .openScenario(testScenarioName, "Push Pin")
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isScenarioNotes("Testing QA notes"), is(true));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes"));
     }
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"556"})
+    @TestRail(testCaseId = {"556", "594"})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -464,15 +463,19 @@ public class ActionsTests extends TestBase {
             .costScenario()
             .publishScenario("Complete", "Medium", "Moya Parker")
             .selectPublishButton()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Status", "is", "Complete")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Status", "is", "Complete")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "RAPID PROTOTYPING"), equalTo(1));
 
         explorePage = new ExplorePage(driver);
-        explorePage.filterCriteria()
-            .filterPublicCriteria("Part", "Cost Maturity", "is", "Medium")
+        explorePage.filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Cost Maturity", "is", "Medium")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Rapid Prototyping"), equalTo(1));
@@ -480,12 +483,12 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Issue("BA-932")
-    @TestRail(testCaseId = {"740"})
+    @TestRail(testCaseId = {"740", "595"})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -513,7 +516,7 @@ public class ActionsTests extends TestBase {
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.isDescription(""), is(true));
+        assertThat(scenarioNotesPage.getDescription(), is(""));
     }
 
     @Test
@@ -522,7 +525,7 @@ public class ActionsTests extends TestBase {
     public void cannotUseScript() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())

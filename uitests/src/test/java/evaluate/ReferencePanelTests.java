@@ -9,8 +9,8 @@ import com.apriori.pageobjects.pages.evaluate.ReferenceComparePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
@@ -38,7 +38,7 @@ public class ReferencePanelTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -49,10 +49,10 @@ public class ReferencePanelTests extends TestBase {
             .costScenario(2)
             .openReferenceCompare();
 
-        assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup()), is(true));
-        assertThat(referenceComparePage.isReferenceVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
-        assertThat(referenceComparePage.isReferenceAnnualVolume("5,500"), is(true));
-        assertThat(referenceComparePage.isReferenceProductionLife("5"), is(true));
+        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.POWDER_METAL.getProcessGroup()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
+        assertThat(referenceComparePage.getReferenceAnnualVolume(), is("5,500"));
+        assertThat(referenceComparePage.getReferenceProductionLife(), is("5"));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ReferencePanelTests extends TestBase {
     public void referencePublicIteration() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -84,10 +84,10 @@ public class ReferencePanelTests extends TestBase {
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PUBLIC.name(), scenarioName);
 
-        assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()), is(true));
-        assertThat(referenceComparePage.isReferenceVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
-        assertThat(referenceComparePage.isReferenceMaterial("ABS"), is(true));
-        assertThat(referenceComparePage.isReferenceUtilization("38.08"), is(true));
+        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
+        assertThat(referenceComparePage.getReferenceMaterial(), is("ABS"));
+        assertThat(referenceComparePage.getReferenceUtilization(), is("38.08"));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class ReferencePanelTests extends TestBase {
     public void expandCollapseReferencePanel() {
 
         resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
@@ -117,9 +117,9 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate the compare panel can show the comparison between any named scenario of the same component")
     public void compareMultiScenario() {
 
-        String scenarioName = new Util().getScenarioName();
-        String scenarioName2 = new Util().getScenarioName();
-        String scenarioName3 = new Util().getScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
         String componentName = "Rapid Prototyping";
         resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
 
@@ -157,7 +157,7 @@ public class ReferencePanelTests extends TestBase {
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PRIVATE.name(), scenarioName);
 
-        assertThat(referenceComparePage.isReferenceProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()), is(true));
-        assertThat(referenceComparePage.isReferenceVPE(VPEEnum.APRIORI_USA.getVpe()), is(true));
+        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
     }
 }

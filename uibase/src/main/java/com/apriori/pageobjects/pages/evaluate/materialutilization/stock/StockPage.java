@@ -52,7 +52,7 @@ public class StockPage extends EvaluatePanelToolbar {
      * @return stock details as string
      */
     public boolean checkTableDetails(String stock) {
-        return pageUtils.checkElementContains(stockTable, stock);
+        return pageUtils.textPresentInElement(stockTable, stock);
     }
 
     /**
@@ -63,5 +63,14 @@ public class StockPage extends EvaluatePanelToolbar {
     public SelectStockPage editStock() {
         editButton.click();
         return new SelectStockPage(driver);
+    }
+
+    /**
+     * Gets the button as a webelement
+     *
+     * @return string
+     */
+    public boolean isEditButtonEnabled() {
+        return editButton.isEnabled();
     }
 }

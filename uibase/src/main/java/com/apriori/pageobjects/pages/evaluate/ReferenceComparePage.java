@@ -195,8 +195,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean isReferenceProcessGroup(String text) {
-        return checkAttribute(processGroupBaseline, "innerText", text);
+    public String getReferenceProcessGroup() {
+        By groupBase = By.cssSelector("[data-ap-field='processGroupSelection.baseline']");
+        return getAttribute(groupBase, "innerText");
     }
 
     /**
@@ -204,8 +205,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean isReferenceVPE(String text) {
-        return checkAttribute(vpeBaseline, "innerText", text);
+    public String getReferenceVPE() {
+        By vpeBase = By.cssSelector("[data-ap-field='primaryVpeName.baseline']");
+        return getAttribute(vpeBase, "innerText");
     }
 
     /**
@@ -213,8 +215,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean isReferenceSecondaryProcesses(String text) {
-        return checkAttribute(secondaryProcessesBaseline, "innerText", text);
+    public String getReferenceSecondaryProcesses() {
+        By processBase = By.cssSelector("[data-ap-field='baselineUserOverridesCount']");
+        return getAttribute(processBase, "innerText");
     }
 
     /**
@@ -222,8 +225,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean isReferenceAnnualVolume(String text) {
-        return checkAttribute(annualVolumeBaseline, "innerText", text);
+    public String getReferenceAnnualVolume() {
+        By annualBase = By.cssSelector("[data-ap-field='annualVolume.baseline']");
+        return getAttribute(annualBase, "innerText");
     }
 
     /**
@@ -231,8 +235,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean isReferenceProductionLife(String text) {
-        return checkAttribute(productionLifeBaseline, "innerText", text);
+    public String getReferenceProductionLife() {
+        By productionBase = By.cssSelector("[data-ap-field='productionLife.baseline']");
+        return getAttribute(productionBase, "innerText");
     }
 
     /**
@@ -240,8 +245,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean isReferenceMaterial(String text) {
-        return checkAttribute(materialBaseline, "innerText", text);
+    public String getReferenceMaterial() {
+        By materialBase = By.cssSelector("[data-ap-field='materialNameOverride.baseline']");
+        return getAttribute(materialBase, "innerText");
     }
 
     /**
@@ -249,8 +255,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean isReferenceFinishMass(String text) {
-        return checkAttribute(finishMassBaseline, "innerText", text);
+    public String getReferenceFinishMass() {
+        By finishMass = By.cssSelector("[data-ap-field='finishMass.baseline']");
+        return getAttribute(finishMass, "innerText");
     }
 
     /**
@@ -258,19 +265,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean isReferenceUtilization(String text) {
-        return checkAttribute(utilizationBaseline, "innerText", text);
-    }
-
-    /**
-     * Refactored method to check element attribute
-     *
-     * @param locator - the locator
-     * @param text    - the text
-     * @return true/false
-     */
-    private boolean checkAttribute(WebElement locator, String attribute, String text) {
-        return pageUtils.checkElementAttribute(locator, attribute, text);
+    public String getReferenceUtilization() {
+        By utilizationBase = By.cssSelector("[data-ap-field='utilization.baseline']");
+        return getAttribute(utilizationBase, "innerText");
     }
 
     /**
@@ -278,8 +275,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean materialCostDelta(String text) {
-        return checkAttribute(materialCostIndicator, "innerHTML", text);
+    public String getMaterialCostDelta() {
+        By materialIndicator = By.cssSelector("[data-ap-field='materialCost.indicator']");
+        return getAttribute(materialIndicator, "innerHTML");
     }
 
     /**
@@ -287,8 +285,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean piecePartCostDelta(String text) {
-        return checkAttribute(totalCostIndicator, "innerHTML", text);
+    public String getPiecePartCostDelta() {
+        By partCostIndicator = By.cssSelector("[data-ap-field='totalCost.indicator']");
+        return getAttribute(partCostIndicator, "innerHTML");
     }
 
     /**
@@ -296,8 +295,9 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean fullyBurdenedCostDelta(String text) {
-        return checkAttribute(fullyBurdenedCostIndicator, "innerHTML", text);
+    public String getFullyBurdenedCostDelta() {
+        By fullyBurdenedCost = By.cssSelector("[data-ap-field='fullyBurdenedCost.indicator']");
+        return getAttribute(fullyBurdenedCost, "innerHTML");
     }
 
     /**
@@ -305,7 +305,19 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
      *
      * @return as string
      */
-    public boolean totalCapitalInvestmentsDelta(String text) {
-        return checkAttribute(capitalInvestmentIndicator, "innerHTML", text);
+    public String getTotalCapitalInvestmentsDelta() {
+        By capitalInvestment = By.cssSelector("[data-ap-field='capitalInvestment.indicator']");
+        return getAttribute(capitalInvestment, "innerHTML");
+    }
+
+    /**
+     * Gets element attribute
+     *
+     * @param locator - the locator
+     * @return string
+     */
+    private String getAttribute(By locator, String attribute) {
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute(attribute);
     }
 }

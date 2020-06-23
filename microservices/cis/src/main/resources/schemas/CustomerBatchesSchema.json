@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "allOf": [
+        {"$ref": "PaginationSchema.json"},
+        {"items": {
+          "type": "array",
+          "additionalItems": true,
+          "items": {
+          }
+        }
+      }
+        ]
+    }
+  }
+}

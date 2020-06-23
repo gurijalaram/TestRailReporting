@@ -3,6 +3,7 @@ package evaluate.materialutilization;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
@@ -10,15 +11,14 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPag
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -49,7 +49,7 @@ public class MaterialStockTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -70,9 +70,8 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59839")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970"})
+    @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970", "298"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
 
@@ -80,11 +79,11 @@ public class MaterialStockTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("18.56")));
+        assertThat(evaluatePage.getPartCost(), is(closeTo(18.58, 1)));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
@@ -101,7 +100,7 @@ public class MaterialStockTests extends TestBase {
         evaluatePanelToolbar = new EvaluatePanelToolbar(driver);
         evaluatePage = evaluatePanelToolbar.closePanel()
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(equalTo("19.06")));
+        assertThat(evaluatePage.getPartCost(), is(closeTo(19.06, 1)));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
@@ -122,7 +121,7 @@ public class MaterialStockTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -152,7 +151,7 @@ public class MaterialStockTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()

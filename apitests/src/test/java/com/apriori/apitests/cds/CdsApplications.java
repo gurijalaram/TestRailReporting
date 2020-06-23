@@ -2,6 +2,7 @@ package com.apriori.apitests.cds;
 
 import com.apriori.apibase.services.cds.objects.Application;
 import com.apriori.apibase.services.cds.objects.Applications;
+import com.apriori.apibase.utils.CdsTestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -19,7 +20,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class CdsApplications extends TestUtil {
+public class CdsApplications extends CdsTestUtil {
     private String url;
 
     @Before

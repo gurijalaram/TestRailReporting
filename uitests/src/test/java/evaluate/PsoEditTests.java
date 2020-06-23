@@ -8,8 +8,8 @@ import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -37,7 +37,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(3)
             .openProcessDetails()
@@ -56,9 +56,9 @@ public class PsoEditTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("8"), is(true));
-        assertThat(processSetupOptionsPage.isNominalWallThicknessOverride("0.4"), is(true));
+        assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.4"));
         assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
-        assertThat(processSetupOptionsPage.isMaterialRegrind("0.3"), is(true));
+        assertThat(processSetupOptionsPage.getMaterialRegrind(), is("0.3"));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -85,7 +85,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("High Pressure Die Casting")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is(true));
+        assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is("checked"));
         assertThat(processSetupOptionsPage.getMoldMaterial("AISI P20"), is(true));
         assertThat(processSetupOptionsPage.getSelectedPartTolerance("Low Tolerance +/-0.254 (+/-0.010\")"), is(true));
     }
@@ -99,7 +99,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(3)
             .openProcessDetails()
@@ -113,7 +113,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Vertical Automatic")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is(true));
+        assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is("checked"));
         assertThat(processSetupOptionsPage.getMoldMaterial("Plastic"), is(true));
     }
 
@@ -126,7 +126,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -140,7 +140,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Band Saw")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isBundleCount("3"), is(true));
+        assertThat(processSetupOptionsPage.getBundleCount(), is("3"));
     }
 
     @Test
@@ -152,7 +152,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -166,7 +166,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Compaction Pressing")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isMaterialAllowance("0.611"), is(true));
+        assertThat(processSetupOptionsPage.getMaterialAllowance(), is("0.611"));
     }
 
     @Test
@@ -178,7 +178,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -191,7 +191,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("4 Cavities Drape Forming")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isCoolingTime("150.29"), is(true));
+        assertThat(processSetupOptionsPage.getCoolingTime(), is("150.29"));
     }
 
     @Test
@@ -203,7 +203,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -220,9 +220,9 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Injection Molding")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isOptimizeForMinimumCostSelected("checked"), is(true));
-        assertThat(processSetupOptionsPage.isNominalWallThicknessOverride("0.13"), is(true));
-        assertThat(processSetupOptionsPage.isColorChargeOverride("0.68"), is(true));
+        assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is("checked"));
+        assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.13"));
+        assertThat(processSetupOptionsPage.getColorChargeOverride(), is("0.68"));
 
         processSetupOptionsPage.closePanel()
             .openProcessDetails()
@@ -246,7 +246,7 @@ public class PsoEditTests extends TestBase {
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("4"), is(true));
         assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
-        assertThat(processSetupOptionsPage.isMaterialRegrind("1.00"), is(true));
+        assertThat(processSetupOptionsPage.getMaterialRegrind(), is("1.00"));
     }
 
     @Test
@@ -258,7 +258,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -272,6 +272,6 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Band Saw")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isBundleCount(""), is(true));
+        assertThat(processSetupOptionsPage.getBundleCount(), is(""));
     }
 }

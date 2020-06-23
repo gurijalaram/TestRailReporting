@@ -13,15 +13,14 @@ import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -65,7 +64,7 @@ public class FailuresWarningsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(5)
             .openDesignGuidance()
@@ -80,7 +79,6 @@ public class FailuresWarningsTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-57941")
     @TestRail(testCaseId = {"1592", "3830"})
     @Description("Ensure that 'Failures/ Warnings tab includes: - Issue type & count")
     public void failedCostingCount() {
@@ -96,7 +94,7 @@ public class FailuresWarningsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -108,7 +106,7 @@ public class FailuresWarningsTests extends TestBase {
         guidancePage.closePanel();
 
         evaluatePage = new EvaluatePage(driver);
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-critical-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
     }
 }

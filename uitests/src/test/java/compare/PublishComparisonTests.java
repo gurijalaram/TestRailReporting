@@ -11,16 +11,14 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -42,15 +40,14 @@ public class PublishComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-58576")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"421", "434"})
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
-        String testScenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -63,8 +60,10 @@ public class PublishComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Casting")
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(testScenarioName, "Casting")
             .apply(GenericHeader.class)
@@ -82,7 +81,7 @@ public class PublishComparisonTests extends TestBase {
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
             .closeJobQueue(ComparePage.class);
 
-        assertThat(comparePage.isComparisonLocked("Locked"), CoreMatchers.is(true));
+        assertThat(comparePage.isComparisonLockStatus("lock"), is(true));
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.toggleLock()
@@ -90,20 +89,19 @@ public class PublishComparisonTests extends TestBase {
             .checkJobQueueRow("okay")
             .closeJobQueue(ComparePage.class);
 
-        assertThat(comparePage.isComparisonUnlocked("Unlocked"), CoreMatchers.is(true));
+        assertThat(comparePage.isComparisonLockStatus("unlock"), is(true));
     }
 
 
     @Test
     @Category({SanityTests.class})
-    @Issue("AP-58576")
     @TestRail(testCaseId = {"421"})
     @Description("Test a private comparison can be published from explore page")
     public void testPublishComparisonExplorePage() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
-        String testScenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -116,8 +114,10 @@ public class PublishComparisonTests extends TestBase {
             .enterComparisonName(testComparisonName)
             .save(ComparePage.class)
             .addScenario()
-            .filterCriteria()
-            .filterPublicCriteria("Part", "Part Name", "Contains", "Casting")
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "Casting")
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(testScenarioName, "CASTING")
             .apply(GenericHeader.class)
@@ -134,8 +134,10 @@ public class PublishComparisonTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
             .closeJobQueue(ExplorePage.class)
-            .filterCriteria()
-            .filterPublicCriteria("Comparison", "Part Name", "Contains", testComparisonName)
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .setRowOne("Part Name", "Contains", testComparisonName)
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));

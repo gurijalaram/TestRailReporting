@@ -20,7 +20,7 @@ import java.util.List;
 
 public class EvaluateHeader extends GenericHeader {
 
-    private final static Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
 
     @FindBy(css = "button[data-ap-comp='costButton']")
     private WebElement costButton;
@@ -94,7 +94,7 @@ public class EvaluateHeader extends GenericHeader {
      * @return true/false
      */
     public boolean getCostLabel(String text) {
-        return pageUtils.checkElementContains(costLabel, text);
+        return pageUtils.textPresentInElement(costLabel, text);
     }
 
     /**
@@ -126,7 +126,7 @@ public class EvaluateHeader extends GenericHeader {
      * Method to check cost label contains/doesn't contain text
      */
     private void checkForCostLabel(int timeoutInMinutes) {
-        pageUtils.checkElementContains(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
-        pageUtils.checkElementNotContain(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
+        pageUtils.textPresentInElement(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.textNotPresentInElement(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
     }
 }

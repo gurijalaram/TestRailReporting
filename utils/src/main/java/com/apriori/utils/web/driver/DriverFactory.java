@@ -9,6 +9,7 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.GeckoDriverService;
@@ -73,6 +74,11 @@ public class DriverFactory {
                     } else {
                         driver = getQADriver(server.concat("/wd/hub"), browser, proxy, null, null, locale);
                     }
+                    break;
+                case GRID:
+                    // docker.internal is used for running on docker local, the ip is used for running on docker jenkins
+                    String serverAddress = testType.equals(TestType.UI) ? "172.17.0.1" : "host.docker.internal";
+                    driver = getQADriver(("http://").concat(serverAddress).concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
                     break;
                 case EXPORT:
                     throw new InvalidParameterException("Use QA mode with EXPORT type instead: " + testMode);
@@ -146,6 +152,9 @@ public class DriverFactory {
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
                 result = new ChromeDriver(dc);
                 break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                result = new EdgeDriver(dc);
         }
         return result;
     }

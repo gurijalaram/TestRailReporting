@@ -8,8 +8,8 @@ import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
@@ -45,18 +45,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Aluminum AlSi10Mg"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Aluminum AlSi10Mg"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Duraform ProX GF")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Duraform ProX GF"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Duraform ProX GF"));
     }
 
     @Test
@@ -68,18 +68,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Steel, Hot Worked, AISI 1010"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, AISI 316")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Stainless Steel, Stock, AISI 316"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Stainless Steel, Stock, AISI 316"));
     }
 
     @Test
@@ -91,18 +91,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Aluminum, Cast, ANSI AL380.0"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("ISO JMB 800-1")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("ISO JMB 800-1"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("ISO JMB 800-1"));
     }
 
     @Test
@@ -114,18 +114,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(5);
 
-        assertThat(evaluatePage.isMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Aluminum, Cast, ANSI AL380.0"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Brass, Cast, Yellow 270")
             .apply()
             .costScenario(5);
 
-        assertThat(evaluatePage.isMaterialInfo("Brass, Cast, Yellow 270"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Brass, Cast, Yellow 270"));
     }
 
     @Test
@@ -137,18 +137,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Aluminum, Cast, ANSI AL380.0"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Copper, Cast, UNS C28000")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Copper, Cast, UNS C28000"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Copper, Cast, UNS C28000"));
     }
 
     @Test
@@ -160,18 +160,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Steel, Cold Worked, AISI 1010"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Titanium, Ti-5Al-2.5Sn")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Titanium, Ti-5Al-2.5Sn"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Titanium, Ti-5Al-2.5Sn"));
     }
 
     @Test
@@ -183,18 +183,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("ABS"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("ABS"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("PET 30% Glass")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("PET 30% Glass"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("PET 30% Glass"));
     }
 
     @Test
@@ -206,18 +206,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("F-0005"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("F-0005"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("FLN2-4405")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("FLN2-4405"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("FLN2-4405"));
     }
 
     @Test
@@ -229,18 +229,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Default"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Default"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("870 Black")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("870 Black"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("870 Black"));
     }
 
     @Test
@@ -252,18 +252,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Polyethylene, High Density (HDPE)"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Polyethylene, High Density (HDPE)"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Nylon, Type 46")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Nylon, Type 46"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Nylon, Type 46"));
     }
 
     @Test
@@ -275,18 +275,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Steel, Cold Worked, AISI 1020"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Inconel 625")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Inconel 625"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Inconel 625"));
     }
 
     @Test
@@ -298,18 +298,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Aluminum, Stock, ANSI 2017"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Aluminum, Stock, ANSI 2017"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Copper, Stock, UNS C11000")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Copper, Stock, UNS C11000"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Copper, Stock, UNS C11000"));
     }
 
     @Test
@@ -321,19 +321,19 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Steel, Cold Worked, AISI 1020"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("C60E")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("C60E"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("C60E"));
     }
 
     @Test
@@ -345,18 +345,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Polyethylene, HDPE Extrusion Sheet"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Polyethylene, HDPE Extrusion Sheet"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Acrylic, PMMA")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Acrylic, PMMA"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Acrylic, PMMA"));
     }
 
     @Test
@@ -365,7 +365,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
 
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
@@ -375,7 +375,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Steel, Hot Worked, AISI 1010"));
 
         evaluatePage.openMaterialCompositionTable()
             .selectMaterialComposition("Polyetheretherketone (PEEK)")
@@ -386,7 +386,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario(scenarioName, "bracket_basic");
 
-        assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Polyetheretherketone (PEEK)"));
     }
 
     @Test
@@ -398,7 +398,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openMaterialCompositionTable()
@@ -411,7 +411,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Polyetheretherketone (PEEK)"));
     }
 
     @Test
@@ -423,7 +423,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openMaterialCompositionTable()
@@ -435,7 +435,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Polyetheretherketone (PEEK)"));
     }
 
     @Test
@@ -447,7 +447,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialCompositionTable()
@@ -465,21 +465,18 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
 
-        String scenarioName = new Util().getScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .openMaterialCompositionTable()
-            .method("MCAD <material not found - VPE default used>")
-            .apply()
             .costScenario()
             .selectExploreButton()
             .openScenario(scenarioName, "MACHINED BOX AMERICAS");
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1095"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Steel, Hot Worked, AISI 1095"));
     }
 
     @Test
@@ -491,14 +488,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialCompositionTable()
             .method("MCAD <material not found - VPE default used>")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Steel, Hot Worked, AISI 1010"));
     }
 
     @Test
@@ -510,13 +507,13 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .openMaterialCompositionTable()
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Steel, Cold Worked, AISI 1020"));
     }
 
     @Test
@@ -528,13 +525,13 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, AISI 316")
             .cancel()
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Steel, Cold Worked, AISI 1020"));
     }
 }

@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private final static Logger logger = LoggerFactory.getLogger(PageHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(id = "helpLink")
     private WebElement helpButton;
@@ -277,7 +277,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public HelpPage navigateToHelpPage() {
         pageUtils.waitForElementToAppear(adminTitle);
         HelpPage helpPage = navigateToPage(helpButton, HelpPage.class);
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(1);
         pageUtils.waitForElementToAppear(jasperLogo);
         return helpPage;
     }
@@ -317,7 +317,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new CirUserGuide page object
      */
     public CirUserGuidePage switchTab() {
-        pageUtils.windowHandler();
+        pageUtils.windowHandler(1);
         return new CirUserGuidePage(driver);
     }
 

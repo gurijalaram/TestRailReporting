@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author cfrith
@@ -23,6 +25,7 @@ import java.util.List;
 public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
+    private Map<String, WebElement> costMaturityOptions = new HashMap<>();
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -43,16 +46,52 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     private WebElement comparisonCheckBox;
 
     @FindBy(css = "select[data-ap-field='criteria0.criteriaName']")
-    private WebElement attributeDropdown;
+    private WebElement rowOneAttributeDropdown;
 
     @FindBy(css = "select[data-ap-field='criteria0.operation']")
-    private WebElement conditionDropdown;
+    private WebElement rowOneConditionDropdown;
 
-    @FindBy(css = "input[data-ap-field='criteria0.value']")
-    private WebElement valueInput;
+    @FindBy(css = "select[data-ap-field='criteria1.criteriaName']")
+    private WebElement rowTwoAttributeDropdown;
 
-    @FindBy(css = "button.btn.dropdown-toggle.selectpicker.btn-default")
-    private WebElement valueInputDropdown;
+    @FindBy(css = "select[data-ap-field='criteria1.operation']")
+    private WebElement rowTwoConditionDropdown;
+
+    @FindBy(css = "select[data-ap-field='criteria2.criteriaName']")
+    private WebElement rowThreeAttributeDropdown;
+
+    @FindBy(css = "select[data-ap-field='criteria2.operation']")
+    private WebElement rowThreeConditionDropdown;
+
+    @FindBy(xpath = "//input[@data-ap-field='criteria0.value']")
+    private WebElement rowOneInput;
+
+    @FindBy(xpath = "//input[@data-ap-field='criteria1.value']")
+    private WebElement rowTwoInput;
+
+    @FindBy(xpath = "//input[@data-ap-field='criteria2.value']")
+    private WebElement rowThreeInput;
+
+    @FindBy(xpath = "//select[@data-ap-field='criteria0.value']/parent::div//button")
+    private WebElement rowOneValueDropdown;
+
+    @FindBy(xpath = "//select[@data-ap-field='criteria1.value']/parent::div//button")
+    private WebElement rowTwoValueDropdown;
+
+    @FindBy(xpath = "//select[@data-ap-field='criteria2.value']/parent::div//button")
+    private WebElement rowThreeValueDropdown;
+
+    @FindBy(xpath = "//span[contains(text(), 'Initial')]/..")
+    private WebElement costMaturityInitialOption;
+
+    @FindBy(xpath = "//span[contains(text(), 'Low')]/..")
+    private WebElement costMaturityLowOption;
+
+    @FindBy(xpath = "//span[contains(text(), 'Medium')]/..")
+    private WebElement costMaturityMediumOption;
+
+    @FindBy(xpath = "//span[contains(text(), 'High')]/..")
+    private WebElement costMaturityHighOption;
 
     @FindBy(xpath = "//div[@data-ap-comp='scenarioSearchCriteria'] //button[contains(text(),'Apply')]")
     private WebElement applyButton;
@@ -85,120 +124,145 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(modalDialog);
-        pageUtils.waitForElementToAppear(attributeDropdown);
+        pageUtils.waitForElementToAppear(rowOneAttributeDropdown);
     }
 
     /**
-     * Filter criteria for private selection
+     * Sets the workspace
      *
-     * @param type      - type of selection whether private or public
-     * @param attribute - the attribute
-     * @param condition - specified condition
-     * @param value     - the value
+     * @param criteriaWorkspace - the workspace
      * @return current page object
      */
-    public FilterCriteriaPage filterPrivateCriteria(String type, String attribute, String condition, String value) {
-        clear(FilterCriteriaPage.class)
-            .setPrivateWorkSpace()
-            .setScenarioType(type)
-            .selectAttribute(attribute)
-            .selectCondition(condition)
-            .setTypeOfValue(value);
-        return this;
-    }
+    public FilterCriteriaPage setWorkspace(String criteriaWorkspace) {
+        String[] workspaces = criteriaWorkspace.split(",");
 
-    /**
-     * Filter criteria for public selection
-     *
-     * @param type      - type of selection whether private or public
-     * @param attribute - the attribute
-     * @param condition - specified condition
-     * @param value     - the value
-     * @return current page object
-     */
-    public FilterCriteriaPage filterPublicCriteria(String type, String attribute, String condition, String value) {
-        clear(FilterCriteriaPage.class)
-            .setPublicWorkspace()
-            .setScenarioType(type)
-            .selectAttribute(attribute)
-            .selectCondition(condition)
-            .setTypeOfValue(value);
-        return this;
-    }
-
-    /**
-     * Clears all listed checkboxes
-     *
-     * @return current page object
-     */
-    private FilterCriteriaPage clearAllCheckBoxes() {
-        listOfCheckboxes.stream().filter(checkbox -> checkbox.getAttribute("checked") != null).forEach(WebElement::click);
+        Arrays.stream(workspaces).forEach(workspace -> {
+            if (workspace.trim().equalsIgnoreCase("Private")) {
+                pageUtils.waitForElementAndClick(privateCheckBox);
+            }
+            if (workspace.trim().equalsIgnoreCase("Public")) {
+                pageUtils.waitForElementAndClick(publicCheckBox);
+            }
+        });
         return this;
     }
 
     /**
      * Sets the scenario type
      *
-     * @param type - scenario type
+     * @param scenarioType - scenario type
      * @return current page object
      */
-    protected FilterCriteriaPage setScenarioType(String type) {
-        switch (type) {
-            case "Part":
+    public FilterCriteriaPage setScenarioType(String scenarioType) {
+        String[] scenarios = scenarioType.split(",");
+
+        Arrays.stream(scenarios).forEach(scenario -> {
+            if (scenario.trim().equalsIgnoreCase("Part")) {
                 pageUtils.waitForElementAndClick(partCheckBox);
-                break;
-            case "Assembly":
+            }
+            if (scenario.trim().equalsIgnoreCase("Assembly")) {
                 pageUtils.waitForElementAndClick(assemblyCheckBox);
-                break;
-            case "Comparison":
+            }
+            if (scenario.trim().equalsIgnoreCase("Comparison")) {
                 pageUtils.waitForElementAndClick(comparisonCheckBox);
-                break;
-            default:
-                throw new IllegalArgumentException("The type: " + type + " is not found");
+            }
+        });
+        return this;
+    }
+
+    /**
+     * Sets fields for the first row
+     *
+     * @param attribute - the attribute
+     * @param condition - the condition
+     * @param value     - the value
+     * @return current page object
+     */
+    public FilterCriteriaPage setRowOne(String attribute, String condition, String value) {
+        setRow(rowOneAttributeDropdown, rowOneConditionDropdown, 1, attribute, condition, value);
+        return this;
+    }
+
+    /**
+     * Sets fields for the second row
+     *
+     * @param attribute - the attribute
+     * @param condition - the condition
+     * @param value     - the value
+     * @return current page object
+     */
+    public FilterCriteriaPage setRowTwo(String attribute, String condition, String value) {
+        setRow(rowTwoAttributeDropdown, rowTwoConditionDropdown, 2, attribute, condition, value);
+        return this;
+    }
+
+    /**
+     * Sets fields for the third row
+     *
+     * @param attribute - the attribute
+     * @param condition - the condition
+     * @param value     - the value
+     * @return current page object
+     */
+    public FilterCriteriaPage setRowThree(String attribute, String condition, String value) {
+        setRow(rowThreeAttributeDropdown, rowThreeConditionDropdown, 3, attribute, condition, value);
+        return this;
+    }
+
+    private void setRow(WebElement attributeLocator, WebElement conditionLocator, int row, String attribute, String condition, String value) {
+        this.attribute = attribute;
+        new Select(attributeLocator).selectByVisibleText(attribute);
+        new Select(conditionLocator).selectByVisibleText(condition);
+        setValueType(row, value);
+    }
+
+    /**
+     * Choose how data is entered either via input or dropdown based on enum
+     *
+     * @param values - enum value
+     * @return current page object
+     */
+    private FilterCriteriaPage setValueType(int row, String values) {
+        if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(attributeValues -> attributeValues.equalsIgnoreCase(attribute))) {
+            setDropdown(row, values);
+        } else {
+            inputValue(row, values);
         }
         return this;
     }
 
     /**
-     * Selects the checkbox
+     * Selects the value as a dropdown
      *
+     * @param values - the input values
      * @return current page object
      */
-    private FilterCriteriaPage setPrivateWorkSpace() {
-        privateCheckBox.click();
-        return this;
-    }
+    private FilterCriteriaPage setDropdown(int row, String values) {
+        WebElement value;
+        WebElement rowLocator;
+        String[] valuesToSelect = values.split(",");
 
-    /**
-     * Selects the checkbox
-     *
-     * @return current page object
-     */
-    private FilterCriteriaPage setPublicWorkspace() {
-        publicCheckBox.click();
-        return this;
-    }
+        switch (row) {
+            case 1:
+                rowLocator = rowOneValueDropdown;
+                break;
+            case 2:
+                rowLocator = rowTwoValueDropdown;
+                break;
+            case 3:
+                rowLocator = rowThreeValueDropdown;
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Row '%s' doesn't exist", row));
+        }
 
-    /**
-     * Selects the attribute
-     *
-     * @param attribute - the attribute
-     * @return current page object
-     */
-    private FilterCriteriaPage selectAttribute(String attribute) {
-        new Select(attributeDropdown).selectByVisibleText(attribute);
-        this.attribute = attribute;
-        return this;
-    }
+        pageUtils.waitForElementAndClick(rowLocator);
 
-    /**
-     * Selects the condition
-     *
-     * @param condition - the condition
-     * @return current page object
-     */
-    private FilterCriteriaPage selectCondition(String condition) {
-        new Select(conditionDropdown).selectByVisibleText(condition);
+        for (String valueToSelect : valuesToSelect) {
+            value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", valueToSelect.trim())));
+            pageUtils.waitForElementAndClick(value);
+        }
+        rowLocator.sendKeys(Keys.ESCAPE);
         return this;
     }
 
@@ -208,24 +272,26 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
      * @param input - the input value
      * @return current page object
      */
-    private FilterCriteriaPage inputValue(String input) {
-        valueInput.click();
-        pageUtils.clearInput(valueInput);
-        valueInput.sendKeys(input);
-        return this;
-    }
+    private FilterCriteriaPage inputValue(int row, String input) {
+        WebElement rowLocator;
 
-    /**
-     * Selects the value as a dropdown
-     *
-     * @param input - the input value
-     * @return current page object
-     */
-    private FilterCriteriaPage selectValue(String input) {
-        valueInputDropdown.click();
-        WebElement value = driver.findElement(By.xpath(String.format("//div[contains(@class,'show-tick open')]//span[contains(text(),'%s')]", input)));
-        value.click();
-        valueInputDropdown.sendKeys(Keys.ESCAPE);
+        switch (row) {
+            case 1:
+                rowLocator = rowOneInput;
+                break;
+            case 2:
+                rowLocator = rowTwoInput;
+                break;
+            case 3:
+                rowLocator = rowThreeInput;
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Row '%s' doesn't exist", row));
+        }
+
+        pageUtils.waitForElementAndClick(rowLocator);
+        rowLocator.clear();
+        rowLocator.sendKeys(input);
         return this;
     }
 
@@ -256,13 +322,21 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
     /**
      * Selects the clear button
      *
-     * @param className - the class the method should return
-     * @param <T>       - the generic declaration type
      * @return generic page object
      */
-    public <T> T clear(Class<T> className) {
+    public FilterCriteriaPage clear() {
         pageUtils.waitForElementAndClick(clearButton);
-        return PageFactory.initElements(driver, className);
+        return this;
+    }
+
+    /**
+     * Clears all listed checkboxes
+     *
+     * @return current page object
+     */
+    public FilterCriteriaPage clearAllCheckBoxes() {
+        listOfCheckboxes.stream().filter(checkbox -> checkbox.getAttribute("checked") != null).forEach(WebElement::click);
+        return this;
     }
 
     /**
@@ -287,20 +361,5 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
             return attributeValue;
         }
-    }
-
-    /**
-     * Choose how data is entered either via input or dropdown based on enum
-     *
-     * @param value - enum value
-     * @return current page object
-     */
-    private FilterCriteriaPage setTypeOfValue(String value) {
-        if (Arrays.stream(Attribute.values()).map(Attribute::getAttributeValue).anyMatch(values -> values.equalsIgnoreCase(attribute))) {
-            selectValue(value);
-        } else {
-            inputValue(value);
-        }
-        return this;
     }
 }

@@ -87,4 +87,28 @@ public interface ConstantsInit extends Config {
 
     @Key("fms.file.identity")
     String fmsFileIdentity();
+
+    @Key("cis.customer.identity")
+    String cisCustomerIdentity();
+
+    @Key("cis.service.host")
+    String cisServiceHost();
+
+    @Key("cis.part.identity")
+    String cisPartIdentity();
+
+    @Key("cis.report.identity")
+    String cisReportIdentity();
+
+    @Key("cis.reportType.identity")
+    String cisReportTypeIdentity();
+
+    @Key("cis.batch.identity")
+    String cisBatchIdentity();
+
+    @Key("apitests.base.path")
+    String apitestsBasePath();
+
+    @Key("apitests.resource.path")
+    String apitestsResourcePath();
 }

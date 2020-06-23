@@ -4,14 +4,43 @@
 
 rootProject.name = 'build'
 include(':uitests')
+include(':apitests')
+
+//Utils
 include(':utils')
 include(':apibase')
-include(':apitests')
 include(':uibase')
-include(':database')
-project(':database').projectDir = file('../db')
+
+//Microservices
+include(':ats')
+include(':cds')
+include(':cis')
+include(':edc')
+include(':fms')
+
+//Web
+include ':cid'
+include ':cia'
+include ':cir'
+
+
 project(':uitests').projectDir = file('../uitests')
 project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 project(':apitests').projectDir = file('../apitests')
 project(':uibase').projectDir = file('../uibase')
+
+project(':ats').projectDir = file('../microservices/ats')
+project(':cds').projectDir = file('../microservices/cds')
+project(':cis').projectDir = file('../microservices/cis')
+project(':edc').projectDir = file('../microservices/edc')
+project(':fms').projectDir = file('../microservices/fms')
+
+project(':cid').projectDir = file('../web/cid')
+project(':cia').projectDir = file('../web/cia')
+project(':cir').projectDir = file('../web/cir')
+
+if (System.getProperty("all") != null) {
+    include(':database')
+    project(':database').projectDir = file('../db')
+}

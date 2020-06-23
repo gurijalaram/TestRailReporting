@@ -7,20 +7,23 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ToleranceEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -37,6 +40,7 @@ public class DTCMachiningTests extends TestBase {
     private SettingsPage settingsPage;
     private InvestigationPage investigationPage;
     private UserCredentials currentUser;
+    private TolerancePage tolerancePage;
 
     private File resourceFile;
 
@@ -60,7 +64,7 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -79,7 +83,7 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -99,7 +103,7 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -119,7 +123,7 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -139,7 +143,7 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -159,7 +163,7 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -186,7 +190,7 @@ public class DTCMachiningTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -214,7 +218,7 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -241,7 +245,7 @@ public class DTCMachiningTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         investigationPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -257,5 +261,33 @@ public class DTCMachiningTests extends TestBase {
         assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("46")));
         assertThat(investigationPage.getInvestigationCell("SetupAxis:2", "GCD Count"), is(equalTo("56")));
         assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("34")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1808", "1809"})
+    @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
+    public void toleranceInducingTest() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = loginPage.login(currentUser)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        settingsPage = new SettingsPage(driver);
+        tolerancePage = settingsPage.save(ExplorePage.class)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "CurvedWall:99");
+        assertThat(tolerancePage.getGCDCell("CurvedWall:99", "Operation"), Matchers.is(Matchers.equalTo("Contouring / Bulk Milling Surface / General Grinding")));
+
+        tolerancePage.selectToleranceTypeAndGCD(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "SimpleHole:13");
+        assertThat(tolerancePage.getGCDCell("SimpleHole:13", "Operation"), Matchers.is(Matchers.equalTo("Waterjet Cutting")));
     }
 }

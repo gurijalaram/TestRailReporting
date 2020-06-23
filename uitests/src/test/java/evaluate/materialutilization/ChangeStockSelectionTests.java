@@ -4,19 +4,20 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.SelectStockPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.stock.StockPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -39,7 +40,6 @@ public class ChangeStockSelectionTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-59839")
     @TestRail(testCaseId = {"960", "1617", "1618", "1619", "873"})
     @Description("Test making changes to the Material Stock in Sheet Metal, the change is respected and the scenario can be re-cost")
     public void changeStockSelectionTestSheetMetal() {
@@ -48,7 +48,7 @@ public class ChangeStockSelectionTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -68,15 +68,16 @@ public class ChangeStockSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"983"})
+    @TestRail(testCaseId = {"983", "977"})
     @Description("Test inappropriate stock cannot be selected")
     public void inappropriateStockSelectionTest() {
 
         resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         selectStockPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -84,5 +85,16 @@ public class ChangeStockSelectionTests extends TestBase {
             .editStock();
 
         assertThat(selectStockPage.getStockStatus("3.80  mm x 1219 mm x 3048 mm"), is(containsString("muted")));
+
+        stockPage = selectStockPage.cancel()
+            .closePanel()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .openScenario(scenarioName, "bracket_basic")
+            .openMaterialUtilization()
+            .goToStockTab();
+
+        assertThat(stockPage.isEditButtonEnabled(), is(false));
     }
 }

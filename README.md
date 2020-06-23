@@ -5,9 +5,16 @@
 3. Import all of the modules into an IDE of your choice
 4. You are ready to run the tests if you have chrome installed, install it in case you don't
 
+## List of special modules that are not included into a common build
+ - **database** module location "../db"
+
 ## Building the project (you will need this for the very first time):
 1. Open Terminal to root `build` directory
 2. Right click `build.gradle` and `Import Gradle project`
+
+## Building all modules (include special modules):
+1. Open Terminal to root `build` directory
+2. Run `gradle clean build -x test -Dall`
 
 ## Run Gradle tests with JVM args
 1. Open Terminal to root `build` directory
@@ -128,9 +135,9 @@ _Validation:_
 1. go to `build` directory, run `gradle check -x test`
 
 ## Add TestRail configuration to _Test Suite_
-Annotate suite class that needs ProjectRunID using following format: `@ProjectRunID("999")`
+Annotate tests.suite class that needs ProjectRunID using following format: `@ProjectRunID("999")`
 
-Annotate suite class that needs RunWith using following format (_class_ should be added from com.apriori.utils.runers, it is required) : `@RunWith(CategorySuiteRunner.class)`
+Annotate tests.suite class that needs RunWith using following format (_class_ should be added from com.apriori.utils.runers, it is required) : `@RunWith(CategorySuiteRunner.class)`
 
 ## Add TestRail testCaseIDs to test methods
 Annotate method that needs testRailID using following format. Tags is optional so if you don't add, its ok

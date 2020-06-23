@@ -12,15 +12,14 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.GenericHeader;
 import com.apriori.pageobjects.toolbars.PageHeader;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.AdhocTests;
@@ -51,9 +50,9 @@ public class SaveAsComparisonTests extends TestBase {
     public void testSaveAsPrivateComparison() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String scenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
-        String testSaveAsComparisonName = new Util().getComparisonName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+        String testSaveAsComparisonName = new GenerateStringUtil().generateComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         loginPage = new CIDLoginPage(driver);
@@ -87,8 +86,8 @@ public class SaveAsComparisonTests extends TestBase {
     @Description("Test a public comparison can be have Save As performed on it")
     public void testSaveAsPublicComparison() {
 
-        String testComparisonName = new Util().getComparisonName();
-        String testSaveAsComparisonName = new Util().getComparisonName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+        String testSaveAsComparisonName = new GenerateStringUtil().generateComparisonName();
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         new CIDLoginPage(driver).login(UserUtil.getUser())
@@ -117,14 +116,13 @@ public class SaveAsComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-919")
     @TestRail(testCaseId = {"413"})
     @Description("Attempt to create a new comparison with a name that already exists")
     public void comparisonNameExists() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
-        String scenarioName = new Util().getScenarioName();
-        String testComparisonName = new Util().getComparisonName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())

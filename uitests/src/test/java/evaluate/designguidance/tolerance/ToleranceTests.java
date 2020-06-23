@@ -16,11 +16,12 @@ import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.pages.settings.SettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.pages.settings.ToleranceValueSettingsPage;
+import com.apriori.pageobjects.toolbars.PageHeader;
 import com.apriori.utils.APIValue;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ToleranceEnum;
 import com.apriori.utils.enums.UnitsEnum;
@@ -70,12 +71,12 @@ public class ToleranceTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-59432")
+    @Issue("BA-1029")
     @TestRail(testCaseId = {"3842", "707", "1607", "1285"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -88,12 +89,12 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
+        evaluatePage = explorePage.uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-critical-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-critical-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
 
         toleranceEditPage = new EvaluatePage(driver).openDesignGuidance()
             .openTolerancesTab()
@@ -109,8 +110,8 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16"), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName()), containsString("0.23"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString("0.16"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -119,7 +120,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -132,7 +133,7 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         explorePage = new ExplorePage(driver);
-        toleranceEditPage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
+        toleranceEditPage = explorePage.uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -143,17 +144,17 @@ public class ToleranceTests extends TestBase {
             .apply(TolerancePage.class)
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString(""));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-59432")
+    @Issue("BA-1029")
     @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -166,7 +167,7 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         explorePage = new ExplorePage(driver);
-        warningPage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
+        warningPage = explorePage.uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -181,12 +182,12 @@ public class ToleranceTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-59432")
+    @Issue("BA-1029")
     @TestRail(testCaseId = {"717", "1608"})
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -199,7 +200,7 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         explorePage = new ExplorePage(driver);
-        warningPage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
+        warningPage = explorePage.uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -218,7 +219,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.CATPART");
+        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -230,7 +231,7 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
-        toleranceEditPage = new ExplorePage(driver).uploadFile(new Util().getScenarioName(), resourceFile)
+        toleranceEditPage = new ExplorePage(driver).uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
@@ -250,12 +251,11 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "PlanarFace:78")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.44"), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString("0.44"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-59432")
     @TestRail(testCaseId = {"3833", "1595"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
@@ -273,12 +273,12 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
+        evaluatePage = explorePage.uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-low-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
         evaluatePage = new EvaluatePage(driver);
         tolerancePage = evaluatePage.openDesignGuidance()
@@ -315,7 +315,7 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         explorePage = new ExplorePage(driver);
-        toleranceEditPage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
+        toleranceEditPage = explorePage.uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -334,7 +334,7 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "2.16"), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CIRCULARITY.getToleranceName()), containsString("2.16"));
     }
 
     @Test
@@ -356,7 +356,7 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         explorePage = new ExplorePage(driver);
-        toleranceEditPage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
+        toleranceEditPage = explorePage.uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -372,8 +372,8 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString(""));
 
         toleranceEditPage.setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
             .cancel()
@@ -387,12 +387,11 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.RUNOUT.getToleranceName()), containsString(""));
     }
 
     @Test
-    @Issue("AP-57941, AP-59432")
     @TestRail(testCaseId = {"723"})
     @Description("Validate tolerance edits when default values set")
     public void specificDefaultTolerances() {
@@ -412,7 +411,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         toleranceEditPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -428,8 +427,8 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString(""));
 
         toleranceEditPage.setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "87")
             .cancel()
@@ -443,12 +442,11 @@ public class ToleranceTests extends TestBase {
             .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
             .selectEditButton();
 
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01"), is(true));
-        assertThat(toleranceEditPage.isTolerance(ToleranceEnum.RUNOUT.getToleranceName(), ""), is(true));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.RUNOUT.getToleranceName()), containsString(""));
     }
 
     @Test
-    @Issue("AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1291"})
     @Description("Verify PMI data is not extracted ")
@@ -465,16 +463,15 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getGcdTolerancesCount("0"), is(true));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("0"));
     }
 
     @Test
-    @Issue("AP-57941, AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1286"})
     @Description(" All tolerances types can be selected & edited")
@@ -508,7 +505,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -552,7 +549,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1294"})
     @Description("Validate PMI is off when use specific is selected")
@@ -571,7 +567,7 @@ public class ToleranceTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -583,8 +579,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-59432")
-    @TestRail(testCaseId = {"1289"})
+    @TestRail(testCaseId = {"1289", "728"})
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
 
@@ -610,14 +605,13 @@ public class ToleranceTests extends TestBase {
             .openTolerancesTab()
             .editValues();
 
-        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "11.81102"), is(true));
-        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), "1.2"), is(true));
-        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "0.35039"), is(true));
-        assertThat(toleranceValueSettingsPage.isTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.0748"), is(true));
+        assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName()), is("11.81102"));
+        assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName()), containsString("1.2"));
+        assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.CIRCULARITY.getToleranceName()), is("0.35039"));
+        assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString("0.0748"));
     }
 
     @Test
-    @Issue("AP-59432")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1296", "1288"})
     @Description("Validate 'Replace values less than' button")
@@ -637,7 +631,7 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         explorePage = new ExplorePage(driver);
-        tolerancePage = explorePage.uploadFile(new Util().getScenarioName(), resourceFile)
+        tolerancePage = explorePage.uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -648,11 +642,11 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3843", "1299"})
+    @TestRail(testCaseId = {"3843", "1299", "710"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void tolerancesDiffUsers() {
 
-        String testScenarioName = new Util().getScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
         currentUser = testUser1;
@@ -671,9 +665,9 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario(3);
 
-        assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
-        assertThat(evaluatePage.getDFMRiskIcon(), containsString("dtc-high-risk-icon"));
-        assertThat(evaluatePage.getDfmRisk(), is("High"));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
+        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         new EvaluatePage(driver).publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -685,7 +679,13 @@ public class ToleranceTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
 
-        assertThat(evaluatePage.getGcdTolerancesCount("11"), is(true));
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
+
+        tolerancePage = evaluatePage.openDesignGuidance()
+            .openTolerancesTab()
+            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:4");
+
+        assertThat(tolerancePage.isEditButtonEnabled(), is(false));
     }
 
     @Test
@@ -704,5 +704,61 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
 
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1300"})
+    @Description("Ensure tolerance preferences are maintained for the user")
+    public void tolerancesMaintained() {
+
+        UserCredentials testUser1 = UserUtil.getUser();
+        currentUser = testUser1;
+        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+
+        new CIDLoginPage(driver).login(testUser1)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        new SettingsPage(driver).save(ExplorePage.class);
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+
+        new PageHeader(driver).openAdminDropdown()
+            .selectLogOut();
+
+        cidLoginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = cidLoginPage.login(testUser1)
+            .openSettings()
+            .openTolerancesTab();
+
+        assertThat(toleranceSettingsPage.isCADSelected("checked"), is("true"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1298"})
+    @Description("Ensure tolerance policy is for single user.  User 1 preferences should not impact User 2 preferences")
+    public void tolerancesSingleUser() {
+
+        UserCredentials testUser1 = UserUtil.getUser();
+        UserCredentials testUser2 = UserUtil.getUser();
+        currentUser = testUser1;
+
+        loginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = loginPage.login(testUser1)
+            .openSettings()
+            .openTolerancesTab()
+            .selectUseCADModel();
+
+        new SettingsPage(driver).save(ExplorePage.class);
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+
+        explorePage = new ExplorePage(driver);
+        toleranceSettingsPage = explorePage.openAdminDropdown()
+            .selectLogOut()
+            .login(testUser2)
+            .openSettings()
+            .openTolerancesTab();
+
+        assertThat(toleranceSettingsPage.isAssumeSelected("checked"), is("true"));
     }
 }

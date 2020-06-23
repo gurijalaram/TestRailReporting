@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.process;
 import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -173,6 +174,24 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     @FindBy(css = "div.form-section")
     private WebElement psoFormSection;
 
+    @FindBy(css = "input[data-ap-comp='cadModelMisalignmentSensitivity.radioButtons.user']")
+    private WebElement overrideSensitivityRadioButton;
+
+    @FindBy(css = "input[data-ap-field='cadModelMisalignmentSensitivity.modeValues.user.value']")
+    private WebElement overrideSensitivityInput;
+
+    @FindBy(css = "select[data-ap-field='ComputedUtilizationPartOrientation.modeValues.PartOrientation.storedListValue']")
+    private WebElement partOrientationDropdown;
+
+    @FindBy(css = "select[data-ap-field='ComputedUtilizationSheetGrainDirection.modeValues.GrainDirection.storedListValue']")
+    private WebElement grainDirectionDropdown;
+
+    @FindBy(css = "input[data-ap-comp='minHoleDiameter.radioButtons.userOverride']")
+    private WebElement holeDiameterOVerrideRadioButton;
+
+    @FindBy(css = "input[data-ap-field='minHoleDiameter.modeValues.userOverride.value']")
+    private WebElement minHoleDiameterInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -236,12 +255,14 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Check Optimize for minimum cost is selected
+     * Gets Optimize for minimum cost is selected
      *
      * @return current page object
      */
-    public boolean isOptimizeForMinimumCostSelected(String text) {
-        return pageUtils.checkElementAttribute(optimizeRadioButton, "outerHTML", text);
+    public String getOptimizeForMinimumCostSelected() {
+        By radioButton = By.cssSelector("input[data-ap-comp='numberOfCavities.radioButtons.optimize']");
+        pageUtils.waitForElementToAppear(radioButton);
+        return driver.findElement(radioButton).getAttribute("outerHTML");
     }
 
     /**
@@ -296,13 +317,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks number of cavities
+     * Gets number of cavities
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isNumberOfCavities(String text) {
-        return checkAttribute(numberCavitiesInput, text);
+    public String getNumberOfCavities() {
+        return getAttribute(numberCavitiesInput);
     }
 
     /**
@@ -338,13 +358,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the user override value for nominalWallThickness
+     * Gets the user override value for nominalWallThickness
      *
-     * @param text - the value
      * @return true/false
      */
-    public boolean isNominalWallThicknessOverride(String text) {
-        return checkAttribute(overrideInput, text);
+    public String getNominalWallThicknessOverride() {
+        return getAttribute(overrideInput);
     }
 
     /**
@@ -369,13 +388,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the user override value for bundle count
+     * Gets the user override value for bundle count
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isBundleCount(String text) {
-        return checkAttribute(overrideBundleInput, text);
+    public String getBundleCount() {
+        return getAttribute(overrideBundleInput);
     }
 
     /**
@@ -390,13 +408,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the user override value for Material Allowance
+     * Gets the user override value for Material Allowance
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isMaterialAllowance(String text) {
-        return checkAttribute(materialAllowanceInput, text);
+    public String getMaterialAllowance() {
+        return getAttribute(materialAllowanceInput);
     }
 
     /**
@@ -460,13 +477,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the defined value for color charge
+     * Gets the defined value for color charge
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isColorChargeOverride(String text) {
-        return checkAttribute(definedInput, text);
+    public String getColorChargeOverride() {
+        return getAttribute(definedInput);
     }
 
     /**
@@ -501,13 +517,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks material regrind user defined value
+     * Gets material regrind user defined value
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isMaterialRegrind(String text) {
-        return checkAttribute(materialRegrindInput, text);
+    public String getMaterialRegrind() {
+        return getAttribute(materialRegrindInput);
     }
 
     /**
@@ -522,13 +537,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks cooling tme user defined value
+     * Gets cooling tme user defined value
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isCoolingTime(String text) {
-        return checkAttribute(coolingTimeInput, text);
+    public String getCoolingTime() {
+        return getAttribute(coolingTimeInput);
     }
 
     private void setInput(WebElement locator, String value) {
@@ -536,8 +550,9 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
         locator.sendKeys(value);
     }
 
-    private boolean checkAttribute(WebElement locator, String text) {
-        return pageUtils.checkElementAttribute(locator, "value", text);
+    private String getAttribute(WebElement locator) {
+        pageUtils.waitForElementToAppear(locator);
+        return locator.getAttribute("value");
     }
 
     /**
@@ -592,13 +607,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks part thickness value
+     * Get part thickness value
      *
-     * @param text - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isPartThickness(String text) {
-        return checkAttribute(partThicknessInput, text);
+    public String getPartThickness() {
+        return getAttribute(partThicknessInput);
     }
 
     /**
@@ -633,13 +647,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks the fraction painted
+     * Gets the fraction painted
      *
-     * @param text - the text
      * @return true/false
      */
-    public boolean isFractionPainted(String text) {
-        return checkAttribute(fractionPaintedInput, text);
+    public String getFractionPainted() {
+        return getAttribute(fractionPaintedInput);
     }
 
     /**
@@ -694,13 +707,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
 
 
     /**
-     * Checks mask feature input
+     * Gets mask feature input
      *
-     * @param text - the text
      * @return current page object
      */
-    public boolean isTheNumberOfMaskedFeatures(String text) {
-        return checkAttribute(maskFeaturesInput, text);
+    public String getTheNumberOfMaskedFeatures() {
+        return getAttribute(maskFeaturesInput);
     }
 
     /**
@@ -744,13 +756,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks specify painted batch size
+     * Gets specify painted batch size
      *
-     * @param text - the text
-     * @return true/false
+     * @return string
      */
-    public boolean isSpecifyPainted(String text) {
-        return checkAttribute(specifyPaintedInput, text);
+    public String getSpecifyPainted() {
+        return getAttribute(specifyPaintedInput);
     }
 
     /**
@@ -785,13 +796,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks specified input
+     * Gets specified input
      *
-     * @param text - the text
-     * @return true false
+     * @return string
      */
-    public boolean isSpecified(String text) {
-        return checkAttribute(userSpecifiedInput, text);
+    public String getSpecified(String text) {
+        return getAttribute(userSpecifiedInput);
     }
 
     /**
@@ -827,12 +837,11 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
 
     /**
      * Checks case override
-     *
-     * @param text - the text
-     * @return true false
+     * @return title
      */
-    public boolean isCaseOverride(String text) {
-        return checkAttribute(caseOverrideInput, text);
+    public String getCaseOverride() {
+        pageUtils.waitForElementToAppear(caseOverrideInput);
+        return caseOverrideInput.getAttribute("title");
     }
 
     /**
@@ -867,13 +876,12 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks masked features
+     * Gets masked features
      *
-     * @param text - the text
-     * @return true false
+     * @return string
      */
-    public boolean isMaskedFeatures(String text) {
-        return checkAttribute(maskModeInput, text);
+    public String getMaskedFeatures() {
+        return getAttribute(maskModeInput);
     }
 
     /**
@@ -888,12 +896,112 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Checks components per load
+     * Gets components per load
+     *
+     * @return string
+     */
+    public String getComponentsPerLoad() {
+        return getAttribute(componentsPerLoadInput);
+    }
+
+    /**
+     * Selects override sensitivity
+     *
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectOverrideSensitivityButton() {
+        pageUtils.waitForElementToAppear(overrideSensitivityRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Gets CAD Model Sensitivity Override
+     *
+     * @return String
+     */
+    public String getCadModelSensitivity() {
+        pageUtils.waitForElementToAppear(overrideSensitivityInput);
+        return overrideSensitivityInput.getAttribute("title");
+    }
+
+    /**
+     * Set cad model sensitivity
      *
      * @param text - the text
-     * @return true false
+     * @return current page object
      */
-    public boolean isComponentsPerLoad(String text) {
-        return checkAttribute(componentsPerLoadInput, text);
+    public ProcessSetupOptionsPage setCadModelSensitivity(String text) {
+        setInput(overrideSensitivityInput, text);
+        return this;
+    }
+
+    /**
+     * Selects part orientation dropdown
+     *
+     * @param option - the option
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectPartOrientationDropdown(String option) {
+        pageUtils.selectDropdownOption(partOrientationDropdown, option);
+        return this;
+    }
+
+    /**
+     * Gets the selected Part Orientation
+     *
+     * @return
+     */
+    public boolean getPartOrientation(String text) {
+        return pageUtils.checkElementFirstOption(partOrientationDropdown, text);
+    }
+
+    /**
+     * Selects grain direction dropdown
+     *
+     * @param option - the option
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectGrainDirectionDropdown(String option) {
+        pageUtils.selectDropdownOption(grainDirectionDropdown, option);
+        return this;
+    }
+
+    /**
+     * Gets the selected grain direction
+     *
+     * @return
+     */
+    public boolean getGrainDirection(String text) {
+        return pageUtils.checkElementFirstOption(grainDirectionDropdown, text);
+    }
+
+    /**
+     * Selects user override for min hole diameter
+     *
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage selectHoleDiameterOverride() {
+        pageUtils.waitForElementToAppear(holeDiameterOVerrideRadioButton).click();
+        return this;
+    }
+
+    /**
+     * Sets the min hole diamater
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public ProcessSetupOptionsPage setMinHoleDiameter(String value) {
+        setInput(minHoleDiameterInput, value);
+        return this;
+    }
+
+    /**
+     * Gets the min hole diamater
+     *
+     * @return string
+     */
+    public String getMinHoleDiameter() {
+        return getAttribute(minHoleDiameterInput);
     }
 }

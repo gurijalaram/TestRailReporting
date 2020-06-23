@@ -22,11 +22,43 @@ public class User {
     private List<Site> sites;
     private String customerIdentity;
     private User response;
+    private String updatedBy;
+    private Boolean mfaRequired;
 
-    
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
+
+    public Boolean getMfaRequired() {
+        return mfaRequired;
+    }
+
+    public User setMfaRequired(Boolean mfaRequired) {
+        this.mfaRequired = mfaRequired;
+        return this;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public User setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+        return this;
+    }
+
+    public String getUpdatedBy() {
+        return this.updatedBy;
+    }
+
+    public User setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+        return this;
+    }
 
     public User getResponse() {
         return this.response;

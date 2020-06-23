@@ -11,8 +11,8 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningP
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.pageobjects.toolbars.EvaluateHeader;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -52,7 +52,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         costDetailsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -74,7 +74,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -84,10 +84,10 @@ public class CostAllCadTests extends TestBase {
             .costScenario()
             .openReferenceCompare();
 
-        assertThat(referenceComparePage.materialCostDelta("up"), is(true));
-        assertThat(referenceComparePage.piecePartCostDelta("down"), is(true));
-        assertThat(referenceComparePage.fullyBurdenedCostDelta("down"), is(true));
-        assertThat(referenceComparePage.totalCapitalInvestmentsDelta("up"), is(true));
+        assertThat(referenceComparePage.getMaterialCostDelta(), containsString("up"));
+        assertThat(referenceComparePage.getPiecePartCostDelta(), containsString("down"));
+        assertThat(referenceComparePage.getFullyBurdenedCostDelta(), containsString("down"));
+        assertThat(referenceComparePage.getTotalCapitalInvestmentsDelta(), containsString("up"));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -117,7 +117,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -134,7 +134,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -151,7 +151,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -168,7 +168,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -185,7 +185,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -202,7 +202,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -219,7 +219,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -236,7 +236,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -252,14 +252,14 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluateHeader = loginPage.login(UserUtil.getUser())
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .checkForImage(0.1);
 
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), (is(true)));
     }
 
     @Test
-    @TestRail(testCaseId = {"2317"})
+    @TestRail(testCaseId = {"2316", "2317"})
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {
 
@@ -268,6 +268,20 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
             .failedUploadFile("<script>alert(document.cookie)</script>", resourceFile);
+
+        assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"580"})
+    @Description("Failure to create a new scenario that has a blank scenario name or is named using unsupported characters")
+    public void failedBlankScenarioName() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+
+        loginPage = new CIDLoginPage(driver);
+        warningPage = loginPage.login(UserUtil.getUser())
+            .failedUploadFile("", resourceFile);
 
         assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
     }

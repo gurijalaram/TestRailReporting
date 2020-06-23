@@ -12,20 +12,19 @@ import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
-import com.apriori.pageobjects.reports.pages.view.reports.MachiningDTCReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 import java.math.BigDecimal;
 
 public class MachiningDtcReportTests extends TestBase {
 
-    private MachiningDTCReportPage machiningDTCReportPage;
     private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
@@ -40,18 +39,17 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "2024")
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
         repository = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToViewRepositoryPage()
-            .navigateToMachiningDTCFolder()
-            .waitForMachiningDTCReportsToAppear();
-
-        assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
+            .navigateToMachiningDTCFolder();
 
         assertThat(reportName, is(equalTo(repository.getReportName(reportName))));
+        assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
     }
 
     @Test
@@ -59,7 +57,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
         library = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToLibraryPage();
 
         assertThat(reportName, is(equalTo(library.getReportName(reportName))));
@@ -70,7 +68,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
         homePage = new LoginPage(driver)
-            .login(UserUtil.getUser());
+            .login();
 
         searchResults = new ViewSearchResultsPage(driver);
         homePage.searchForReport(reportName);
@@ -79,33 +77,34 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3026")
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
-        machiningDTCReportPage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+        genericReportPage = new LoginPage(driver)
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
             .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickApplyAndOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDTCReportPage.class);
+            .clickOk()
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        usdGrandTotal = machiningDTCReportPage.getValueFromCentralCircleInChart();
+        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip(false);
 
-        machiningDTCReportPage.clickInputControlsButton()
+        genericReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickApplyAndOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), MachiningDTCReportPage.class);
+            .clickOk()
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
 
-        gbpGrandTotal = machiningDTCReportPage.getValueFromCentralCircleInChart();
+        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip(false);
 
-        assertThat(machiningDTCReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
     }
 
@@ -114,7 +113,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
         genericReportPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName)
                 .waitForInputControlsLoad();
@@ -130,11 +129,12 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3566")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
         genericReportPage = new LoginPage(driver)
-                .login(UserUtil.getUser())
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName)
                 .waitForInputControlsLoad();

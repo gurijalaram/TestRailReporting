@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.evaluate.process.secondaryprocess.SecondaryProcessPage;
@@ -16,17 +17,17 @@ import com.apriori.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.apriori.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.Util;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Test;
@@ -73,7 +74,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .openSecondaryProcess()
@@ -84,18 +85,17 @@ public class SecondaryProcessTests extends TestBase {
         secondaryProcessPage = new SecondaryProcessPage(driver);
         evaluatePage = secondaryProcessPage.apply()
             .costScenario();
-        assertThat(evaluatePage.isProcessRoutingDetails("Hydrostatic Leak Testing"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Hydrostatic Leak Testing"));
 
         evaluatePage = new EvaluatePage(driver);
         processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Hydrostatic Leak Testing")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isPartThickness("0.21"), is(true));
+        assertThat(processSetupOptionsPage.getPartThickness(), is("0.21"));
     }
 
     @Test
-    @Issue("AP-59839")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"658", "659", "661"})
     @Description("Test secondary process xray")
@@ -107,21 +107,20 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("ABS, 10% Glass")
-            .apply()
-            .costScenario();
-        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+            .apply();
+        assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
 
         new EvaluatePage(driver).openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Xray Inspection"), is(true));
-        assertThat(evaluatePage.isSecondaryProcesses("1 Selected"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Xray Inspection"));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("1 Selected"));
     }
 
     @Test
@@ -135,7 +134,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
@@ -144,9 +143,9 @@ public class SecondaryProcessTests extends TestBase {
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carburize")
             .apply()
             .costScenario();
-        assertThat(evaluatePage.isProcessRoutingDetails("Carburize"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Carburize"));
 
-        evaluatePage.openProcessDetails()
+        processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Carburize")
             .selectOptions()
             .setCaseOverrideInput("0.46")
@@ -157,8 +156,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Carburize")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isCaseOverride("0.46"), is(true));
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getCaseOverride(), is("0.46"));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -172,7 +171,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
@@ -187,7 +186,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("2"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("2"));
     }
 
     @Test
@@ -201,7 +200,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
@@ -215,13 +214,13 @@ public class SecondaryProcessTests extends TestBase {
         secondaryProcessPage = new SecondaryProcessPage(driver);
         evaluatePage = secondaryProcessPage.apply()
             .costScenario();
-        assertThat(evaluatePage.isProcessRoutingDetails("Standard Anneal"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Standard Anneal"));
 
         evaluatePage = new EvaluatePage(driver);
         processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Standard Anneal")
             .selectOptions();
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -235,7 +234,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
@@ -250,7 +249,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("3"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("3"));
     }
 
     @Test
@@ -263,7 +262,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")
@@ -273,7 +272,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Stress Relief"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Stress Relief"));
     }
 
     @Test
@@ -286,7 +285,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -296,7 +295,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Anodize"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Anodize"));
     }
 
     @Test
@@ -309,7 +308,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -319,12 +318,11 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Certification"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Certification"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-59839")
     @TestRail(testCaseId = {"1616"})
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
@@ -335,7 +333,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -345,7 +343,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Powder Coat Cart"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Coat Cart"));
 
         processRoutingPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Powder Coat Cart");
@@ -364,7 +362,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -384,10 +382,10 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Powder Coat Cart")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isFractionPainted("0.3"), is(true));
+        assertThat(processSetupOptionsPage.getFractionPainted(), is("0.3"));
         assertThat(processSetupOptionsPage.isNoMaskingSelected("checked"), is("true"));
-        assertThat(processSetupOptionsPage.isSpecifyPainted("414"), is(true));
-        assertThat(processSetupOptionsPage.isSpecified("2"), is(true));
+        assertThat(processSetupOptionsPage.getSpecifyPainted(), is("414"));
+        assertThat(processSetupOptionsPage.getSpecified("2"), is(true));
     }
 
     @Test
@@ -401,7 +399,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Paint", "Wet Coat Line")
@@ -423,10 +421,10 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Wet Coat Line")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.isFractionPainted("0.4"), is(true));
-        assertThat(processSetupOptionsPage.isTheNumberOfMaskedFeatures("1"), is(true));
-        assertThat(processSetupOptionsPage.isSpecifyPainted("254"), is(true));
-        assertThat(processSetupOptionsPage.isComponentsPerLoad("1"), is(true));
+        assertThat(processSetupOptionsPage.getFractionPainted(), is("0.4"));
+        assertThat(processSetupOptionsPage.getTheNumberOfMaskedFeatures(), is("1"));
+        assertThat(processSetupOptionsPage.getSpecifyPainted(), is("254"));
+        assertThat(processSetupOptionsPage.getComponentsPerLoad(), is("1"));
     }
 
     @Test
@@ -439,7 +437,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -449,23 +447,23 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Passivation"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Passivation"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-59839")
-    @TestRail(testCaseId = {"1614", "654"})
+    @TestRail(testCaseId = {"1614", "654", "657"})
     @Description("Multiple Secondary Processes before Costing")
     public void multiSecondaryProcessBeforeCost() {
 
         resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Stainless Steel, Stock, 440B")
@@ -476,7 +474,14 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Passivation / Carton Forming / Pack & Load"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation / Carton Forming / Pack & Load"));
+
+        evaluatePage.publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .openScenario(scenarioName, "SheetMetal");
+
+        assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -491,7 +496,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -503,7 +508,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isProcessRoutingDetails("Anodize / Carton Forming / Pack & Load"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize / Carton Forming / Pack & Load"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -524,7 +529,7 @@ public class SecondaryProcessTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         secondaryProcessPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -544,7 +549,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -560,7 +565,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -574,7 +579,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -590,7 +595,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("2"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("2"));
     }
 
     @Test
@@ -604,7 +609,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 1050A")
@@ -620,7 +625,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -634,7 +639,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -647,7 +652,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("3"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("3"));
     }
 
     @Test
@@ -661,7 +666,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -674,7 +679,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -688,7 +693,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -701,7 +706,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("3"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("3"));
     }
 
     @Test
@@ -715,7 +720,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -728,7 +733,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("4"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("4"));
     }
 
     @Test
@@ -743,7 +748,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -756,7 +761,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("2"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("2"));
     }
 
     @Test
@@ -770,7 +775,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processSetupOptionsPage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSecondaryProcess()
@@ -783,7 +788,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper");
 
-        assertThat(processSetupOptionsPage.isMaskedFeatures("1"), is(true));
+        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
     }
 
     @Test
@@ -798,14 +803,14 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .cancel()
             .costScenario();
 
-        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
     }
 
     @Test
@@ -820,7 +825,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment", "Passivation")
@@ -832,7 +837,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"671", "672"})
+    @TestRail(testCaseId = {"671", "672", "677"})
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {
 
@@ -842,7 +847,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new Util().getScenarioName(), resourceFile)
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment", "Passivation")
@@ -851,7 +856,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
 
         evaluatePage.openProcessDetails()
             .selectSecondaryProcessButton()
@@ -861,6 +866,6 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.isSecondaryProcesses("0 Selected"), is(true));
+        assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
     }
 }
