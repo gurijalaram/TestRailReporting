@@ -94,7 +94,7 @@ public class CastingDtcReportTests extends TestBase {
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
-            .clickOk(CastingDtcReportHeader.class)
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
         assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC.getReportName()),
@@ -187,7 +187,7 @@ public class CastingDtcReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk(GenericReportPage.class);
+            .clickOk();
 
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
         String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_REPORT_NAME);

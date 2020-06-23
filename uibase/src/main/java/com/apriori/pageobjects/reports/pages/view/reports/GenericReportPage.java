@@ -316,10 +316,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * Clicks ok
      * @return Instance of Generic Report Page object
      */
-    public <T> T clickOk(Class<T> className) {
+    public GenericReportPage clickOk() {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return PageFactory.initElements(driver, className);
+        return this;
     }
 
     /**

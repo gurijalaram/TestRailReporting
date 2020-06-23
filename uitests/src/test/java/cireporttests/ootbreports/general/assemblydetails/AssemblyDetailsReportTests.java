@@ -118,14 +118,14 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
 
         assemblyDetailsReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
@@ -151,12 +151,12 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
@@ -164,7 +164,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
@@ -463,7 +463,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
-            .clickOk(GenericReportPage.class)
+            .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .openNewTabAndFocus(1);
 
