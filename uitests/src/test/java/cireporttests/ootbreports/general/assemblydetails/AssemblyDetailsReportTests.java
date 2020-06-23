@@ -187,10 +187,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .scrollDownInputControls()
-            .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName(), AssemblyDetailsReportPage.class)
+            .clickOk()
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
@@ -236,8 +235,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .scrollDownInputControls()
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName(), AssemblyDetailsReportPage.class)
+            .clickOk()
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
@@ -283,8 +282,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .scrollDownInputControls()
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName(), AssemblyDetailsReportPage.class)
+            .clickOk()
+            .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
@@ -328,10 +327,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .scrollDownInputControls()
-            .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName(), AssemblyDetailsReportPage.class)
+            .clickOk()
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(assemblyType, "Cycle Time");
@@ -363,8 +361,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .scrollDownInputControls()
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName(), AssemblyDetailsReportPage.class)
+            .clickOk()
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(assemblyType, "Cycle Time");
@@ -396,8 +394,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .scrollDownInputControls()
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk(AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName(), AssemblyDetailsReportPage.class)
+            .clickOk()
+            .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
+            .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(assemblyType, "Cycle Time");
