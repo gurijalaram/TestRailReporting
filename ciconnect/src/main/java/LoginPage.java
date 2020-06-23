@@ -1,14 +1,14 @@
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
-import header.GenericHeader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import workflows.GenericWorkflow;
 
-public class LoginPage extends GenericHeader {
+public class LoginPage extends LoadableComponent<LoginPage> {
 
     private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     private static String loginPageURL = Constants.cicURL;
@@ -18,7 +18,6 @@ public class LoginPage extends GenericHeader {
     protected String url;
 
     public LoginPage(WebDriver driver) {
-        super(driver);
     }
 
     public GenericWorkflow login(WebDriver driver) {

@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * @author kpatel
  */
-public class History extends GenericWorkflow {
+public class History extends LoadableComponent<History> {
 
     private final Logger logger = LoggerFactory.getLogger(History.class);
 
@@ -40,7 +41,6 @@ public class History extends GenericWorkflow {
     private PageUtils pageUtils;
 
     public History(WebDriver driver) {
-        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

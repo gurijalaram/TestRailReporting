@@ -2,20 +2,22 @@ package connectors;
 
 import com.apriori.utils.PageUtils;
 
-import header.GenericHeader;
+import header.PageHeader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import workflows.Schedule;
 
 import java.util.List;
 
 /**
  * @author kpatel
  */
-public class ConnectorList extends GenericHeader {
+public class ConnectorList extends LoadableComponent<ConnectorList> {
 
     private final Logger logger = LoggerFactory.getLogger(ConnectorList.class);
 
@@ -46,13 +48,19 @@ public class ConnectorList extends GenericHeader {
     @FindBy(css = "div#root_pagemashupcontainer-1_button-31 > button")
     private WebElement refreshConnectorStatusBtn;
 
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_label-8'] > span")
+    private WebElement connectorsLabel;
+
     private WebDriver driver;
     private PageUtils pageUtils;
+    private PageHeader pageHeader;
+
+
 
     public ConnectorList(WebDriver driver) {
-        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.pageHeader = new PageHeader(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -66,4 +74,15 @@ public class ConnectorList extends GenericHeader {
     protected void isLoaded() {
         pageUtils.waitForElementToAppear(newConnectorBtn);
     }
+
+    public Schedule clickWorkflowMenu(){
+        return pageHeader.clickWorkflowMenu();
+    }
+
+    /**
+     * Get connectors page label text
+     * @return String
+     */
+    public String getConnectorText() {return connectorsLabel.getText();}
+
 }

@@ -2,11 +2,12 @@ package users;
 
 import com.apriori.utils.PageUtils;
 
-import header.GenericHeader;
+import header.PageHeader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * @author kpatel
  */
-public class UserList extends GenericHeader {
+public class UserList extends LoadableComponent<UserList> {
 
     private final Logger logger = LoggerFactory.getLogger(UserList.class);
 
@@ -45,11 +46,12 @@ public class UserList extends GenericHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private PageHeader pageHeader;
 
     public UserList(WebDriver driver) {
-        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.pageHeader = new PageHeader(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -61,12 +63,12 @@ public class UserList extends GenericHeader {
 
     @Override
     protected void isLoaded() {
-        //pageUtils.waitForElementToAppear(usersLabel);
-        //pageUtils.waitForElementToAppear(usernameHeader);
+        pageUtils.waitForElementToAppear(usersLabel);
+        pageUtils.waitForElementToAppear(usernameHeader);
     }
 
     /**
      * Get Users text
      */
-    public String getUsersText(){return usernameHeader.getText();}
+    public String getUsersText(){return usersLabel.getText();}
 }
