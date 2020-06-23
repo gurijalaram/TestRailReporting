@@ -41,7 +41,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "div#root_pagemashupcontainer-1_label-18-bounding-box span")
     private WebElement workflowLabel;
 
-    @FindBy(css = "div[id='CIC_UserDropDown_MU-BMController-1_label-30'] > span")
+    @FindBy(css = "div[id^='CIC_UserDropDown_MU-BMController-'][id$='_label-30'] > span")
     private WebElement currentUser;
 
     private WebDriver driver;
