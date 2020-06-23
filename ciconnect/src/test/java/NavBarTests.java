@@ -56,8 +56,9 @@ public class NavBarTests extends TestBase {
             .expandUserInfoDropdown();
 
         assertThat("Kunal Patel", equalTo(pageHeader.getCurrentUser()));
+        assertThat("kpatel@apriori.com", equalTo(pageHeader.getLoginID()));
+        assertThat("aPriori Internal", equalTo(pageHeader.getCurrentCompany()));
     }
-
 }
 
 

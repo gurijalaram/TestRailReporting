@@ -83,4 +83,5 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
         pageHeader.expandUserInfoDropdown();
         return new PageHeader(driver);
     }
+
 }

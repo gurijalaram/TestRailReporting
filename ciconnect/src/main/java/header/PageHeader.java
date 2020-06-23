@@ -44,6 +44,12 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "div[id^='CIC_UserDropDown_MU-BMController-'][id$='_label-30'] > span")
     private WebElement currentUser;
 
+    @FindBy(css = "div[id^='CIC_UserDropDown_MU-BMController-'][id$='_label-31'] > span")
+    private WebElement currentLoginID;
+
+    @FindBy(css = "div[id^='CIC_UserDropDown_MU-BMController-'][id$='_label-32'] > span")
+    private WebElement currentCompany;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -99,6 +105,22 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public String getCurrentUser() {
         pageUtils.waitForElementToAppear(currentUser);
         return currentUser.getText();
+    }
+
+    /**
+     *Get current user Login ID
+     * @return String
+     */
+    public String getLoginID() {
+        return pageUtils.waitForElementToAppear(currentLoginID).getText();
+    }
+
+    /**
+     *Get current user
+     * @return String
+     */
+    public String getCurrentCompany() {
+        return pageUtils.waitForElementToAppear(currentCompany).getText();
     }
 
     public PageHeader expandUserInfoDropdown() {
