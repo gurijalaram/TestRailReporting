@@ -496,7 +496,7 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return double
      */
-    public Double getCycleTimeCount() {
+    public double getCycleTimeCount() {
         pageUtils.waitForElementToAppear(cycleTimeCount);
         return Double.parseDouble(cycleTimeCount.getText());
     }
@@ -566,7 +566,7 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return double
      */
-    public Double getCapitalInvestment() {
+    public double getCapitalInvestment() {
         pageUtils.waitForElementToAppear(capitalInvestments);
         return Double.parseDouble(capitalInvestments.getText());
     }
@@ -721,8 +721,9 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public boolean isFinishMass(String mass) {
-        By finishMass = By.cssSelector("td[data-ap-field='finishMass']");
-        return pageUtils.waitForElementToAppear(driver.findElement(finishMass)).isDisplayed();
+        By finishMass = By.cssSelector(String.format("td[data-ap-field='finishMass'][title='%s']", mass));
+        pageUtils.waitForElementToAppear(finishMass);
+        return driver.findElement(finishMass).isDisplayed();
     }
 
     /**
@@ -734,6 +735,16 @@ public class EvaluatePage extends EvaluateHeader {
         By utilization = By.cssSelector("td[data-ap-field='utilization']");
         pageUtils.waitForElementToAppear(utilization);
         return Double.parseDouble(driver.findElement(utilization).getAttribute("innerText"));
+    }
+
+    /**
+     * Checks the value of Utilization
+     *
+     * @return double
+     */
+    public boolean isUtilization(String utilization) {
+        By utilizationValue = By.cssSelector(String.format("td[data-ap-field='utilization'][title='%s']", utilization));
+        return pageUtils.waitForElementToAppear(utilizationValue).isDisplayed();
     }
 
     /**
