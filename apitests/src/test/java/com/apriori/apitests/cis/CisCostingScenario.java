@@ -1,5 +1,7 @@
 package com.apriori.apitests.cis;
 
+import static org.junit.Assert.fail;
+
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.cis.CisUtils;
 import com.apriori.apibase.services.cis.apicalls.BatchPartResources;
@@ -24,6 +26,7 @@ import java.util.Arrays;
 public class CisCostingScenario extends TestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CisCostingScenario.class);
+    private static Boolean exitTest = false;
 
     @Test
     @TestRail(testCaseId = {"4278", "4284", "4280", "4177"})
@@ -73,6 +76,13 @@ public class CisCostingScenario extends TestUtil {
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
             isPartComplete = pollState(partDetails, Part.class);
 
+            if (exitTest) {
+                String errors = CisUtils.getErrors(batchPart, Part.class);
+                logger.error(errors);
+                fail("Part was in state 'ERRORED'");
+                return;
+            }
+
             if (isPartComplete) {
                 break;
             }
@@ -86,6 +96,12 @@ public class CisCostingScenario extends TestUtil {
         while (count <= defaultTimeout) {
             batchDetails = BatchResources.getBatchRepresentation(batchIdentity).getResponseEntity();
             isBatchComplete = pollState(batchDetails, Batch.class);
+
+
+            if (exitTest) {
+                fail("Batch was in state 'ERRORED'");
+                return;
+            }
 
             if (isBatchComplete) {
                 break;
@@ -108,6 +124,10 @@ public class CisCostingScenario extends TestUtil {
         String state = "";
         try {
             state = CisUtils.getState(obj, klass);
+            if (state.equals("ERRORED")) {
+                exitTest = true;
+                return exitTest;
+            }
         } catch (Exception e) {
             logger.error(e.getMessage());
             logger.error(Arrays.toString(e.getStackTrace()));
