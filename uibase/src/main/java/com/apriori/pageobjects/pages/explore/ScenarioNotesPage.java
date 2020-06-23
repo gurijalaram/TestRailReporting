@@ -230,6 +230,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return current page object
      */
     public ScenarioNotesPage editNotes(String notes) {
+        scenarioNotesInput.clear();
         scenarioNotesInput.sendKeys(notes);
         return this;
     }
