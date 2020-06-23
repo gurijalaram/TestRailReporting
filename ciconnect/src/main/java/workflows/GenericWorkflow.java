@@ -49,11 +49,11 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
         pageUtils.waitForElementToAppear(workflowLabel);
     }
 
-    public UserList clickUserMenu(){
+    public UserList clickUsersMenu(){
         return pageHeader.clickUsersMenu();
     }
 
-    public ConnectorList clickConnectorMenu(){
+    public ConnectorList clickConnectorsMenu(){
         return pageHeader.clickConnectorsMenu();
     }
 
@@ -77,5 +77,10 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
 
     public String getWorkflowText() {
         return workflowLabel.getText();
+    }
+
+    public PageHeader expandUserInfoDropdown() {
+        pageHeader.expandUserInfoDropdown();
+        return new PageHeader(driver);
     }
 }

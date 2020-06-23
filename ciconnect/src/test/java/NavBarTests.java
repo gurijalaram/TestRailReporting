@@ -23,30 +23,39 @@ public class NavBarTests extends TestBase {
 
     @Test
     public void testNavigateToUsersTab() {
-        loginPage = new LoginPage(driver);
-        userList = loginPage.login(driver)
-            .clickUserMenu();
+        userList = new LoginPage(driver)
+            .login(driver)
+            .clickUsersMenu();
 
         assertThat("Users", equalTo(userList.getUsersText()));
     }
 
     @Test
     public void testNavigateToConnectorsTab() {
-        loginPage = new LoginPage(driver);
-        connectorList = loginPage.login(driver)
-            .clickConnectorMenu();
+        connectorList = new LoginPage(driver)
+            .login(driver)
+            .clickConnectorsMenu();
 
         assertThat("Connectors", equalTo(connectorList.getConnectorText()));
     }
 
     @Test
     public void testNavigateToWorkflowsTab() {
-        loginPage = new LoginPage(driver);
-        schedule = loginPage.login(driver)
-            .clickConnectorMenu()
+        schedule = new LoginPage(driver)
+            .login(driver)
+            .clickConnectorsMenu()
             .clickWorkflowMenu();
 
         assertThat("New", equalTo(schedule.getNewWorkflowBtnText()));
+    }
+
+    @Test
+    public void testUserDropDownInfo() {
+        pageHeader = new LoginPage(driver)
+            .login(driver)
+            .expandUserInfoDropdown();
+
+        assertThat("Kunal Patel", equalTo(pageHeader.getCurrentUser()));
     }
 
 }

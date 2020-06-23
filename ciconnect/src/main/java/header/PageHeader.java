@@ -41,6 +41,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "div#root_pagemashupcontainer-1_label-18-bounding-box span")
     private WebElement workflowLabel;
 
+    @FindBy(css = "div[id='CIC_UserDropDown_MU-BMController-1_label-30'] > span")
+    private WebElement currentUser;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -87,5 +90,19 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public ConnectorList clickConnectorsMenu() {
         connectorsMenuBtn.click();
         return new ConnectorList(driver);
+    }
+
+    /**
+     *Get current user
+     * @return String
+     */
+    public String getCurrentUser() {
+        pageUtils.waitForElementToAppear(currentUser);
+        return currentUser.getText();
+    }
+
+    public PageHeader expandUserInfoDropdown() {
+        userInfoDropdown.click();
+        return new PageHeader(driver);
     }
 }
