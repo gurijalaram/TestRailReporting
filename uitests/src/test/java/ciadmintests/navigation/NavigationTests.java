@@ -39,7 +39,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category({CustomerSmokeTests.class, CIARStagingSmokeTest.class})
+    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -52,6 +52,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "2981")
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
@@ -64,6 +65,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "2982")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
@@ -79,7 +81,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "2983")
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
@@ -93,6 +95,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "2984")
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
@@ -108,6 +111,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "2985")
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
@@ -123,7 +127,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category({CustomerSmokeTests.class, CIARStagingSmokeTest.class})
+    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {

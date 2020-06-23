@@ -1,9 +1,9 @@
 package testsuites;
 
+import ciadmintests.navigation.NavigationTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import cireporttests.login.LoginTests;
-import cireporttests.navigation.NavigationTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
@@ -18,8 +18,14 @@ import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(MsSQLOracleLocalInstallTest.class)
 @Suite.SuiteClasses({
+    NavigationTests.class,
+    cireporttests.navigation.NavigationTests.class,
+    LoginTests.class,
     AssemblyDetailsReportTests.class,
-    CastingDtcComparisonReportTests.class
+    CastingDtcComparisonReportTests.class,
+    CastingDtcDetailsReportTests.class,
+    CastingDtcReportTests.class,
+    MachiningDtcReportTests.class
 })
 
 public class MsSQLOracleLocalInstallSuite {

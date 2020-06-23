@@ -57,6 +57,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "2987")
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {
@@ -72,6 +73,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "2986")
     @Description("Ensure that the CI Reports Logout Link works")
     public void testCIReportsLogoutNavigation() {
@@ -87,6 +89,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2967"})
     @Description("Ensure that the link to Home works (doesn't navigate elsewhere - negative test)")
     public void testHomeNavigation() {
@@ -98,7 +101,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = {"2968"})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
@@ -110,6 +113,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2969"})
     @Description("Ensure that the link to View Search Results works")
     public void testViewSearchResultsNavigation() {
@@ -121,6 +125,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2970"})
     @Description("Ensure that the link to View Repository works")
     public void testViewRepositoryNavigation() {
@@ -132,6 +137,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2971"})
     @Description("Ensure that the link to View Schedules works")
     public void testViewSchedulesNavigation() {
@@ -143,6 +149,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2972"})
     @Description("Ensure that the link to View Messages works")
     public void testViewMessagesNavigation() {
@@ -154,6 +161,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2973"})
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
@@ -165,6 +173,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2974"})
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
@@ -176,6 +185,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2975"})
     @Description("Ensure that the link to Create Ad Hoc View works")
     public void testCreateAdHocViewNavigation() {
@@ -189,6 +199,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2976"})
     @Description("Ensure that the link to Create Report works")
     public void testCreateReportNavigation() {
@@ -201,6 +212,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2977"})
     @Description("Ensure that the link to Create Dashboard works")
     public void testCreateDashboardNavigation() {
@@ -212,6 +224,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2978"})
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
@@ -227,6 +240,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2979"})
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {
