@@ -15,7 +15,6 @@ import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -26,6 +25,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ExportSetsTests extends TestBase {
 
+    private com.apriori.pageobjects.reports.pages.homepage.HomePage reportsHomePage;
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
@@ -43,15 +43,13 @@ public class ExportSetsTests extends TestBase {
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
-        newExportSet = new LoginPage(driver)
-            .login(UserUtil.getUser())
-            .navigateToManageScenarioExport()
-            .clickNew()
-            .inputSetName("Set 1")
-            .selectComponentType("Dynamic Roll-up");
+        scenarioExport = new LoginPage(driver)
+            .login()
+            .navigateToManageScenarioExport();
 
         assertThat(scenarioExport.isHeaderDisplayed(), is(equalTo(true)));
         assertThat(scenarioExport.isHeaderEnabled(), is(equalTo(true)));
+        assertThat(scenarioExport.getHeaderText(), is(equalTo(Constants.MANAGE_SCENARIO_TITLE)));
     }
 
     @Test
@@ -59,11 +57,12 @@ public class ExportSetsTests extends TestBase {
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
         systemDataExport = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToManageSystemDataExport();
 
         assertThat(systemDataExport.isHeaderDisplayed(), is(equalTo(true)));
         assertThat(systemDataExport.isHeaderEnabled(), is(equalTo(true)));
+        assertThat(systemDataExport.getHeaderText(), is(equalTo(Constants.MANAGE_SYSTEM_DATA_EXPORT_TITLE)));
     }
 
     @Test
@@ -72,7 +71,7 @@ public class ExportSetsTests extends TestBase {
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToHelpReportsGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -88,11 +87,11 @@ public class ExportSetsTests extends TestBase {
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
         ciaUserGuide = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToHelpAdminGuide();
 
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo("Cost Insight Admin:User Guide")));
-        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString("CI_ADMIN_USER_GUIDE")));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
+        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
         assertThat(ciaUserGuide.getTabCount(), is(2));
     }
 
@@ -101,14 +100,14 @@ public class ExportSetsTests extends TestBase {
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
         ciaUserGuide = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToScenarioExportChapterPage();
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         assertThat(ciaUserGuide.getTabCount(), is(2));
-        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartOne)));
-        assertThat(currentUrl, is(containsString(Constants.scenarioExportChapterUrlPartTwo)));
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.scenarioExportChapterPageTitle)));
+        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
+        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
     }
 
     @Test
@@ -116,7 +115,7 @@ public class ExportSetsTests extends TestBase {
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
         logout = new LoginPage(driver)
-            .login(UserUtil.getUser())
+            .login()
             .navigateToAdminLogout();
 
         String headerToCheck = logout.getHeaderToCheck();
@@ -131,16 +130,19 @@ public class ExportSetsTests extends TestBase {
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
-        homePage = new LoginPage(driver)
-            .login(UserUtil.getUser())
+        reportsHomePage = new LoginPage(driver)
+            .login()
             .navigateToReports();
 
         String urlToCheck = homePage.getUrlToCheck();
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.reportsUrlSuffix + Constants.reportsLastSuffix));
-        assertThat(homePage.getTabCount(), is(equalTo(2)));
-        assertThat(homePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(homePage.isReportsLogoutEnabled(), is(true));
+        assertThat(reportsHomePage.getTabCount(), is(equalTo(2)));
+        assertThat(reportsHomePage.isReportsLogoutDisplayed(), is(true));
+        assertThat(reportsHomePage.isReportsLogoutEnabled(), is(true));
+
+        assertThat(reportsHomePage.getCurrentUrl(), containsString(urlToCheck));
+        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.REPORTS_URL_SUFFIX));
+        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.REPORTS_LOGIN_LOCAL_SUFFIX));
     }
 }

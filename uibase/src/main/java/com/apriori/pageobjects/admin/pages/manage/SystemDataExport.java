@@ -60,4 +60,13 @@ public class SystemDataExport extends AdminHeader {
         pageUtils.waitForElementToAppear(manageSystemDataExportTitle);
         return pageUtils.isElementEnabled(manageSystemDataExportTitle);
     }
+
+    /**
+     *
+     * @return
+     */
+    public String getHeaderText() {
+        pageUtils.waitForElementToAppear(manageSystemDataExportTitle);
+        return manageSystemDataExportTitle.getText();
+    }
 }

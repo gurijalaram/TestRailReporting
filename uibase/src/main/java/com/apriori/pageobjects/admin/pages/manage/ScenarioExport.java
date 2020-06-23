@@ -46,14 +46,31 @@ public class ScenarioExport extends AdminHeader {
         pageUtils.waitForElementToAppear(exportTable);
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isHeaderDisplayed() {
         pageUtils.waitForElementToAppear(manageScenarioExportTitle);
         return pageUtils.isElementDisplayed(manageScenarioExportTitle);
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isHeaderEnabled() {
         pageUtils.waitForElementToAppear(manageScenarioExportTitle);
         return pageUtils.isElementEnabled(manageScenarioExportTitle);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getHeaderText() {
+        pageUtils.waitForElementToAppear(manageScenarioExportTitle);
+        return manageScenarioExportTitle.getText();
     }
 
     /**
