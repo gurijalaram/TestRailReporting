@@ -47,7 +47,6 @@ public class MachiningDtcReportTests extends TestBase {
             .login()
             .navigateToViewRepositoryPage()
             .navigateToMachiningDTCFolder();
-            //.waitForMachiningDTCReportsToAppear();
 
         assertThat(reportName, is(equalTo(repository.getReportName(reportName))));
         assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
