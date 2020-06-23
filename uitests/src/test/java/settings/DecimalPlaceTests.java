@@ -62,13 +62,13 @@ public class DecimalPlaceTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getFinishMass(), is(5.309458));
-        assertThat(evaluatePage.getUtilization(), is(81.163688));
-        assertThat(evaluatePage.getCycleTimeCount(), is(129.607902));
-        assertThat(evaluatePage.getMaterialCost(), is(16.151375));
-        assertThat(evaluatePage.getPartCost(), is(20.158792));
-        assertThat(evaluatePage.getBurdenedCost(), is(20.174472));
-        assertThat(evaluatePage.getCapitalInvestment(), is(431.200988));
+        assertThat(evaluatePage.getFinishMass(), closeTo(5.309458,1));
+        assertThat(evaluatePage.getUtilization(), closeTo(81.163688,1));
+        assertThat(evaluatePage.getCycleTimeCount(), closeTo(129.607902,1));
+        assertThat(evaluatePage.getMaterialCost(), closeTo(16.151375,1));
+        assertThat(evaluatePage.getPartCost(), closeTo(20.158792,1));
+        assertThat(evaluatePage.getBurdenedCost(), closeTo(20.174472,1));
+        assertThat(evaluatePage.getCapitalInvestment(), closeTo(431.200988,50));
 
         evaluatePage.openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
@@ -88,18 +88,18 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.isFinishMass("5.3095"), is(true));
         assertThat(evaluatePage.isUtilization("81.1637"), is(true));
-        assertThat(evaluatePage.getCycleTimeCount(), is(129.6079));
-        assertThat(evaluatePage.getMaterialCost(), is(16.1514));
-        assertThat(evaluatePage.getPartCost(), is(20.1588));
-        assertThat(evaluatePage.getBurdenedCost(), is(20.1745));
-        assertThat(evaluatePage.getCapitalInvestment(), is(431.2010));
+        assertThat(evaluatePage.getCycleTimeCount(), closeTo(129.6079,1));
+        assertThat(evaluatePage.getMaterialCost(), closeTo(16.1514,1));
+        assertThat(evaluatePage.getPartCost(), closeTo(20.1588,1));
+        assertThat(evaluatePage.getBurdenedCost(), closeTo(20.1745,1));
+        assertThat(evaluatePage.getCapitalInvestment(), closeTo(431.2010,1));
 
         processRoutingPage = evaluatePage.openProcessDetails();
 
-        assertThat(processRoutingPage.getCycleTime(), is(129.6079));
-        assertThat(processRoutingPage.getPiecePartCost(), is(20.1588));
-        assertThat(processRoutingPage.getFullyBurdenedCost(), is(20.1745));
-        assertThat(processRoutingPage.getCapitalInvestments(), is(431.2010));
+        assertThat(processRoutingPage.getCycleTime(), closeTo(129.6079,1));
+        assertThat(processRoutingPage.getPiecePartCost(), closeTo(20.1588,1));
+        assertThat(processRoutingPage.getFullyBurdenedCost(), closeTo(20.1745,1));
+        assertThat(processRoutingPage.getCapitalInvestments(), closeTo(431.2010,1));
 
         costDetailsPage = evaluatePage.openCostDetails();
 
@@ -107,7 +107,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getIndirectOverhead(), closeTo(0.3180, 1));
         assertThat(costDetailsPage.getSGandA(), closeTo(1.7500, 1));
         assertThat(costDetailsPage.getMargin(), closeTo(0.0000, 1));
-        assertThat(costDetailsPage.getPiecePartCost(), is(20.1588));
+        assertThat(costDetailsPage.getPiecePartCost(), closeTo(20.1588, 1));
 
 
         evaluatePage.openSettings()
@@ -116,15 +116,15 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.isFinishMass("5.3"), is(true));
         assertThat(evaluatePage.isUtilization("81.2"), is(true));
-        assertThat(evaluatePage.getCycleTimeCount(), is(129.6));
-        assertThat(evaluatePage.getMaterialCost(), is(16.2));
-        assertThat(evaluatePage.getPartCost(), is(20.2));
-        assertThat(evaluatePage.getBurdenedCost(), is(20.2));
-        assertThat(evaluatePage.getCapitalInvestment(), is(431.2));
+        assertThat(evaluatePage.getCycleTimeCount(), closeTo(129.6, 1));
+        assertThat(evaluatePage.getMaterialCost(), closeTo(16.2, 1));
+        assertThat(evaluatePage.getPartCost(), closeTo(20.2,1));
+        assertThat(evaluatePage.getBurdenedCost(), closeTo(20.2, 1));
+        assertThat(evaluatePage.getCapitalInvestment(), closeTo(431.2, 50));
 
         evaluatePage.openProcessDetails();
 
-        assertThat(processRoutingPage.getCycleTime(), is(129.6));
+        assertThat(processRoutingPage.getCycleTime(), closeTo(129.6,1));
         assertThat(processRoutingPage.getPiecePartCost(), closeTo(20.1, 1));
         assertThat(processRoutingPage.getFullyBurdenedCost(), closeTo(20.1, 1));
         assertThat(processRoutingPage.getCapitalInvestments(), closeTo(431.2, 1));
@@ -156,8 +156,8 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.isUtilization("81.16369"), is(true));
         assertThat(evaluatePage.getCycleTimeCount(), closeTo(129.60790, 1));
         assertThat(evaluatePage.getMaterialCost(), closeTo(16.15138, 1));
-        assertThat(evaluatePage.getPartCost(), closeTo(19.55601, 1));
-        assertThat(evaluatePage.getBurdenedCost(), closeTo(19.55601, 1));
-        assertThat(evaluatePage.getCapitalInvestment(), closeTo(431.20099, 55));
+        assertThat(evaluatePage.getPartCost(), closeTo(19.93822, 1));
+        assertThat(evaluatePage.getBurdenedCost(), closeTo(19.95206, 1));
+        assertThat(evaluatePage.getCapitalInvestment(), closeTo(380.73596, 50));
     }
 }
