@@ -185,11 +185,10 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .scrollDownInputControls()
-            .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -234,8 +233,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -280,8 +279,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         /*
             The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
@@ -323,11 +322,10 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .scrollDownInputControls()
-            .setAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
@@ -358,8 +356,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
@@ -390,8 +388,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
-            .waitForCorrectAssembly(assemblyType, AssemblyDetailsReportPage.class);
+            .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReport.getSubTotalAdditionValue(assemblyType, "Cycle Time");
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
