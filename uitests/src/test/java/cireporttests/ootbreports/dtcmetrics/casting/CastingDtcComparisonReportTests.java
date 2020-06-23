@@ -46,7 +46,6 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .waitForInputControlsLoad()
             .exportSetSelectAll();
 
-
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount())));
 
         genericReportPage.deselectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName());

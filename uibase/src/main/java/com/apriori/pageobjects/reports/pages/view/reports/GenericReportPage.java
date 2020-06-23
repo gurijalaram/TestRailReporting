@@ -556,8 +556,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage deselectExportSet(String exportSet) {
         int expected = getSelectedExportSetCount() - 1;
-        exportSetSearchInput.sendKeys(exportSet);
-        pageUtils.waitForElementAndClick(exportSetToSelect);
+        selectExportSet(exportSet);
+
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
         return this;
     }

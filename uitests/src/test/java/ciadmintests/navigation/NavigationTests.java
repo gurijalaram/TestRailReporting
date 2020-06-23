@@ -131,7 +131,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
-        homePage = new LoginPage(driver)
+        reportsHomePage = new LoginPage(driver)
             .login()
             .navigateToReports();
 

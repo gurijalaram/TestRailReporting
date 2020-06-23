@@ -49,7 +49,6 @@ public class LoginTests extends TestBase {
 	}
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = {"2697"})
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
