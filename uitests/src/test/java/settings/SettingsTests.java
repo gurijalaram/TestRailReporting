@@ -392,7 +392,7 @@ public class SettingsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         settingsPage = explorePage.openSettings();
-        assertThat(settingsPage.getSelectedUnits(UnitsEnum.ENGLISH.getUnit()), is(true));
+        assertThat(settingsPage.isSelectedUnits(UnitsEnum.ENGLISH.getUnit()), is(true));
 
         productionDefaultPage = new SettingsPage(driver).openProdDefaultTab();
         assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));

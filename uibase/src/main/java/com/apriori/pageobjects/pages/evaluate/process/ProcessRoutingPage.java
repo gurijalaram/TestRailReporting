@@ -71,6 +71,18 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
+    @FindBy(css = "[data-ap-field='cycleTime']")
+    private WebElement cycleTime;
+
+    @FindBy(css = "[data-ap-field='totalCost']")
+    private WebElement piecePartCost;
+
+    @FindBy(css = "[data-ap-field='fullyBurdenedCost']")
+    private WebElement fullyBurdenedCost;
+
+    @FindBy(css = "[data-ap-field='capitalInvestment']")
+    private WebElement capitalInvestment;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -199,5 +211,45 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
      */
     public boolean isRoutingOutOfDateDisplayed() {
         return pageUtils.checkElementVisibleByBoolean(outOfDateMsg);
+    }
+
+    /**
+     * Gets cycle time count
+     *
+     * @return double
+     */
+    public double getCycleTime() {
+        pageUtils.waitForElementToAppear(cycleTime);
+        return Double.parseDouble(cycleTime.getText());
+    }
+
+    /**
+     * Gets Piece Part Cost
+     *
+     * @return double
+     */
+    public double getPiecePartCost() {
+        pageUtils.waitForElementToAppear(piecePartCost);
+        return Double.parseDouble(piecePartCost.getText());
+    }
+
+    /**
+     * Gets Fully Burdened Cost
+     *
+     * @return double
+     */
+    public double getFullyBurdenedCost() {
+        pageUtils.waitForElementToAppear(fullyBurdenedCost);
+        return Double.parseDouble(fullyBurdenedCost.getText());
+    }
+
+    /**
+     * Gets Total Capital Investments
+     *
+     * @return double
+     */
+    public double getCapitalInvestments() {
+        pageUtils.waitForElementToAppear(capitalInvestment);
+        return Double.parseDouble(capitalInvestment.getText());
     }
 }
