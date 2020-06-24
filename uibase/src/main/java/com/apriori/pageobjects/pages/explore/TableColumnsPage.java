@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;

@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 
 import org.jsoup.Jsoup;
@@ -181,6 +182,16 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
         Select leftListDropdown = new Select(availableList);
         leftListDropdown.deselectAll();
         return this;
+    }
+
+    /**
+     * Selects the ok button
+     *
+     * @return new page object
+     */
+    public ComponentsPage selectSaveButton() {
+        pageUtils.waitForElementAndClick(okButton);
+        return new ComponentsPage(driver);
     }
 
     /**
