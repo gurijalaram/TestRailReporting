@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.pageobjects.common.ScenarioTablePage;
+import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
@@ -17,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -45,12 +49,21 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     @FindBy(css = "button[data-ap-scope='assemblyComponentsTableViewSelection']")
     private WebElement columnSelectorButton;
 
+    @FindBy(css = ".panel .glyphicon-remove")
+    private WebElement closePanelButton;
+
+    @FindBy(css = ".v-grid-header")
+    private WebElement columnHeaders;
+
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ScenarioTablePage scenarioTablePage;
+    private ColumnUtils columnUtils;
 
     public ComponentsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.columnUtils = new ColumnUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -124,10 +137,11 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * @param scenarioName     - scenario name
      * @param subcomponentName - subcomponent name
      */
-    public void selectSubcomponent(String scenarioName, String subcomponentName) {
-        By subcomponent = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + subcomponentName.toUpperCase() + "," + scenarioName + "')]/ancestor::td");
+    public ComponentsPage highlightSubcomponent(String scenarioName, String subcomponentName) {
+        By subcomponent = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + subcomponentName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr");
         pageUtils.scrollToElement(subcomponent, componentScroller, Constants.ARROW_DOWN);
         pageUtils.waitForElementAndClick(subcomponent);
+        return this;
     }
 
     /**
@@ -154,9 +168,40 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     }
 
     /**
+     * Gets all column headers in the table
+     *
+     * @return column headers as string
+     */
+    public List<String> getColumnHeaderNames() {
+        return Arrays.stream(columnHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Closes the panel
+     *
+     * @return Evaluate Page
+     */
+    public EvaluatePage closePanel() {
+        pageUtils.waitForElementAndClick(closePanelButton);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Gets the cell details
+     *
+     * @param component    - the assembly component
+     * @param column - the column
+     * @return string
+     */
+    public String getComponentCell(String component, String column) {
+        String rowLocator = "//div[@data-ap-comp='assemblyComponentsGridArea']//div[.='" + component + "']/ancestor::tr[@class]";
+        return columnUtils.columnDetails("assemblyComponentsGridArea", column, rowLocator);
+    }
+
+    /**
      * Gets table values by specified row index
      *
-     * @param row
+     * @param row - the row
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getTableValsByRow(String row) {

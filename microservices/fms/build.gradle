@@ -25,7 +25,8 @@ sourceSets {
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
-    implementation project(':ats')
+
+    implementation project(':microservices:ats')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

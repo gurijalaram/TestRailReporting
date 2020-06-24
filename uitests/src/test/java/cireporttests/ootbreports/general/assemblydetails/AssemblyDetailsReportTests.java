@@ -473,7 +473,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName()
         );
 
-        EvaluatePage evaluatePage = new ExplorePage(driver)
+        ComponentsPage componentsPage = new ExplorePage(driver)
             .filter()
             .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
             .setWorkspace(Constants.PUBLIC_WORKSPACE)

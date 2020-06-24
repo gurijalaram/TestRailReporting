@@ -24,6 +24,21 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
     @FindBy(css = ".details-viewport-part .glyphicon-question-sign")
     private WebElement helpButton;
 
+    @FindBy(css = "[data-ap-field='pieceCost']")
+    private WebElement totalVariableCosts;
+
+    @FindBy(css = "[data-ap-field='periodOverhead']")
+    private WebElement indirectOverhead;
+
+    @FindBy(css = "[data-ap-field='sgaCost']")
+    private WebElement sganda;
+
+    @FindBy(css = "[data-ap-field='margin']")
+    private WebElement margin;
+
+    @FindBy(css = "[data-ap-field='totalCost']")
+    private WebElement piecePartCost;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -77,5 +92,55 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
         By costInfo = By.xpath("//td[.='" + contributor + "']/following-sibling::td");
         //TODO add in ability to scroll when BA-890 is fixed pageUtils.scrollToElement(costInfo, verticalScroller);
         return driver.findElement(costInfo).getText();
+    }
+
+    /**
+     * Gets Total Variable Costs
+     *
+     * @return double
+     */
+    public double getTotalVariableCosts() {
+        pageUtils.waitForElementToAppear(totalVariableCosts);
+        return Double.parseDouble(totalVariableCosts.getText());
+    }
+
+    /**
+     * Gets Indirect Overhead
+     *
+     * @return double
+     */
+    public double getIndirectOverhead() {
+        pageUtils.waitForElementToAppear(indirectOverhead);
+        return Double.parseDouble(indirectOverhead.getText());
+    }
+
+    /**
+     * Gets SG&A
+     *
+     * @return double
+     */
+    public double getSGandA() {
+        pageUtils.waitForElementToAppear(sganda);
+        return Double.parseDouble(sganda.getText());
+    }
+
+    /**
+     * Gets Margin
+     *
+     * @return double
+     */
+    public double getMargin() {
+        pageUtils.waitForElementToAppear(margin);
+        return Double.parseDouble(margin.getText());
+    }
+
+    /**
+     * Gets Piece Part Cost
+     *
+     * @return double
+     */
+    public double getPiecePartCost() {
+        pageUtils.waitForElementToAppear(piecePartCost);
+        return Double.parseDouble(piecePartCost.getText());
     }
 }
