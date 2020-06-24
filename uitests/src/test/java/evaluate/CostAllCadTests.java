@@ -252,8 +252,7 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluateHeader = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
-            .checkForImage(0.1);
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile);
 
         assertThat(new EvaluatePage(driver).getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), (is(true)));
     }

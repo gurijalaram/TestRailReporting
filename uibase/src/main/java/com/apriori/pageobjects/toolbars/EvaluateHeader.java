@@ -70,21 +70,6 @@ public class EvaluateHeader extends GenericHeader {
         pageUtils.waitForElementAndClick(costButton);
         new CostingJobPage(driver).selectCostButton();
         checkForCostLabel(timeoutInMinutes);
-        checkForImage();
-        return new EvaluatePage(driver);
-    }
-
-    /**
-     * Cost the scenario
-     *
-     * @return current page object
-     */
-    public EvaluatePage costScenario(int timeoutInMinutes, int imageTimeoutInMinutes) {
-        pageUtils.waitForElementToAppear(costLabel);
-        pageUtils.waitForElementAndClick(costButton);
-        new CostingJobPage(driver).selectCostButton();
-        checkForCostLabel(timeoutInMinutes);
-        checkForImage(imageTimeoutInMinutes);
         return new EvaluatePage(driver);
     }
 
@@ -95,24 +80,6 @@ public class EvaluateHeader extends GenericHeader {
      */
     public boolean getCostLabel(String text) {
         return pageUtils.textPresentInElement(costLabel, text);
-    }
-
-    /**
-     * Method to check for the loading image displayed/not displayed
-     */
-    public EvaluateHeader checkForImage() {
-        checkForImage(0.5);
-        return this;
-    }
-
-    /**
-     * Method to check for the loading image displayed/not displayed
-     */
-    public EvaluateHeader checkForImage(double timeoutInMinutes) {
-        pageUtils.isElementDisplayed(loadingImage);
-        pageUtils.waitForElementNotDisplayed(loadingImage, timeoutInMinutes);
-        driver.navigate().refresh();
-        return this;
     }
 
     /**

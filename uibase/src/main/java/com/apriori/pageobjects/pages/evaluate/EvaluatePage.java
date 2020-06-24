@@ -11,9 +11,6 @@ import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.toolbars.EvaluateHeader;
 import com.apriori.utils.PageUtils;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -24,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -233,6 +229,7 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementAppear(leftPanel);
         pageUtils.waitForElementAppear(viewerCanvas);
         pageUtils.waitForElementAppear(controlToolbars);
+        pageUtils.waitForElementAndClick(renderButton);
     }
 
     /**
@@ -340,7 +337,6 @@ public class EvaluatePage extends EvaluateHeader {
      * Waits for the render to be selected
      */
     private void waitRenderSelected() {
-        pageUtils.waitForElementAndClick(renderButton);
         pageUtils.waitForElementToAppear(By.cssSelector("button[data-ap-comp='solidViewerToolbarButton'][class='selected']"));
     }
 
