@@ -154,15 +154,19 @@ public class ExportSetsTests extends TestBase {
     @Description("Export specific scenario and view results")
     public void testScenarioExportAndViewResults() {
         newExportSet = new LoginPage(driver)
-                .login()
-                .navigateToManageScenarioExport()
-                .clickNew()
-                .inputSetName()
-                .selectComponentType(ComponentTypeEnum.DYNAMIC_ROLLUP.getComponentType())
-                .inputNamePartNumber(ExportSetEnum.CASTING_DTC.getExportSetName())
-                .inputScenarioName(Constants.DEFAULT_SCENARIO_NAME)
-                .setDateTimeToNow()
-                .clickCreateExportButton();
-    }
+            .login()
+            .navigateToManageScenarioExport()
+            .clickNew()
+            .inputSetName()
+            .selectComponentType(ComponentTypeEnum.ROLLUP.getComponentType())
+            .inputNamePartNumber("ALL CASTING")
+            .inputScenarioName(Constants.DEFAULT_SCENARIO_NAME)
+            .setDateTimeToNow()
+            .clickCreateExportButton()
+            .goToHistoryTab()
+            .clickRefreshButton();
 
+        assertThat(newExportSet.getFirstExportSetNameFromTable(), is(equalTo(newExportSet.getExpectedExportSetName())));
+        assertThat(newExportSet.getFirstExportSetStatusFromTable(), is(containsString("Started")));
+    }
 }

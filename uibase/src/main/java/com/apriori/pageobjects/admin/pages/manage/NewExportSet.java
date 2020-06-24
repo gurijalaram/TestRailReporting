@@ -60,8 +60,21 @@ public class NewExportSet extends AdminHeader {
     @FindBy(xpath = "//button[contains(text(), 'Create')]")
     private WebElement createExportButton;
 
+    @FindBy(xpath = "//a[@href='#tab_exporthistories']")
+    private WebElement historyTabButton;
+
+    @FindBy(xpath = "//a[@id='ToolTables_exporthistorieslist_0']")
+    private WebElement refreshHistoryButton;
+
+    @FindBy(xpath = "//table[@id='exporthistorieslist']/tbody/tr[1]/td[1]")
+    private WebElement firstExportSetNameInTable;
+
+    @FindBy(xpath = "//table[@id='exporthistorieslist']/tbody/tr[1]/td[5]/span")
+    private WebElement firstExportStatusInTable;
+
     private WebDriver driver;
     private PageUtils pageUtils;
+    private int exportSetName;
     private HashMap<String, WebElement> componentTypeMap;
 
     public NewExportSet(WebDriver driver) {
@@ -95,9 +108,8 @@ public class NewExportSet extends AdminHeader {
      * @return current page object
      */
     public NewExportSet inputSetName() {
-        // random name generator
-        int val = randomNameGenerator();
-        setInput(setNameInput, String.valueOf(val));
+        exportSetName = randomNameGenerator();
+        setInput(setNameInput, String.valueOf(exportSetName));
         return this;
     }
 
@@ -165,8 +177,52 @@ public class NewExportSet extends AdminHeader {
     }
 
     /**
-     *
-     * @return
+     * Goes to History tab
+     * @return NewExportSet instance
+     */
+    public NewExportSet goToHistoryTab() {
+        pageUtils.waitForElementAndClick(historyTabButton);
+        return this;
+    }
+
+    /**
+     * Clicks refresh button
+     * @return NewExportSet instance
+     */
+    public NewExportSet clickRefreshButton() {
+        pageUtils.waitForElementAndClick(refreshHistoryButton);
+        refreshHistoryButton.click();
+        pageUtils.waitFor(2000);
+        return this;
+    }
+
+    /**
+     * Get expected export set name
+     * @return String
+     */
+    public String getExpectedExportSetName() {
+        return String.valueOf(exportSetName);
+    }
+
+    /**
+     * Get first Export Set name in table
+     * @return String
+     */
+    public String getFirstExportSetNameFromTable() {
+        return firstExportSetNameInTable.getText();
+    }
+
+    /**
+     * Get first Export Set status in table
+     * @return Strings
+     */
+    public String getFirstExportSetStatusFromTable() {
+        return firstExportStatusInTable.getText();
+    }
+
+    /**
+     * Generates a random name
+     * @return int - random name
      */
     private int randomNameGenerator() {
         Random random = new Random();
