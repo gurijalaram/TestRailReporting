@@ -268,8 +268,8 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2655", "2647", "2643"})
-    @Description("Uploaded STEP assembly and components can be recosted")
+    @TestRail(testCaseId = {"1404", "1434", "1435"})
+    @Description("Validate quantity column is correct")
     public void treeViewTests() {
 
         resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
@@ -286,5 +286,26 @@ public class AssemblyUploadTests extends TestBase {
             .highlightSubcomponent(scenarioName, "PART0002");
 
         assertThat(componentsPage.getComponentCell("PART0002", "Qty"), Matchers.is(Matchers.equalTo("2")));
+
+        evaluatePage = componentsPage.openSubcomponent(scenarioName, "PART0002")
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getPartCost(), is(closeTo(1.92, 1)));
+
+        componentsPage = evaluatePage.selectExploreButton()
+            .openAssembly(scenarioName, "Assembly2")
+            .openComponentsTable()
+            .selectComponentsView("Tree View")
+            .openColumnsTable()
+            .addColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
+            .selectSaveButton()
+            .expandAssembly(scenarioName, "ASSY02");
+
+        assertThat(componentsPage.getComponentCell("PART0002", "Piece Part Cost (USD)"), Matchers.is(Matchers.equalTo("2.36")));
+
+        componentsPage.openColumnsTable()
+            .removeColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
+            .selectSaveButton();
     }
 }
