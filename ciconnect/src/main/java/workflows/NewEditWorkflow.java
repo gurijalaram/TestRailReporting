@@ -19,6 +19,20 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
     @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-92'] > button > span:nth-of-type(3)")
     private WebElement nextBtn;
 
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_textbox-148'] > table > tbody > tr > td > input")
+    private WebElement inputName;
+
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_textarea-152'] > div > textarea")
+    private WebElement inputDescription;
+
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_DrowpdownWidget-154'] > div > div")
+    private WebElement connectorDropdown;
+
+    @FindBy(css = "div[class='ss-content ss-45040 ss-open'] > div > input")
+    private WebElement connectorDropdownSearch;
+
+
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -36,6 +50,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
     @Override
     protected void isLoaded(){
+        pageUtils.waitForElementToAppear(nextBtn);
     }
 
     /**
@@ -46,5 +61,4 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
         nextBtn.click();
         return this;
     }
-
 }
