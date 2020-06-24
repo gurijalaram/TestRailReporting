@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.homepage.HomePage;
@@ -486,7 +487,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName()
         );
 
-        EvaluatePage evaluatePage = new ExplorePage(driver)
+        ComponentsPage componentsPage = new ExplorePage(driver)
             .filter()
             .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
             .setWorkspace(Constants.PUBLIC_WORKSPACE)
@@ -499,24 +500,24 @@ public class AssemblyDetailsReportTests extends TestBase {
             .checkColumnSettings(columnsToAdd, columnsToRemove)
             .selectSaveButton();
 
-        ArrayList<BigDecimal> cidPartOneValues = evaluatePage
+        ArrayList<BigDecimal> cidPartOneValues = componentsPage
             .getTableValsByRow(
                 ColumnIndexEnum.CID_PART_ONE.getColumnIndex()
             );
-        ArrayList<BigDecimal> cidPartTwoValues = evaluatePage
+        ArrayList<BigDecimal> cidPartTwoValues = componentsPage
             .getTableValsByRow(
                 ColumnIndexEnum.CID_PART_TWO.getColumnIndex()
             );
-        ArrayList<BigDecimal> cidPartThreeValues = evaluatePage
+        ArrayList<BigDecimal> cidPartThreeValues = componentsPage
             .getTableValsByRow(
                 ColumnIndexEnum.CID_PART_THREE.getColumnIndex()
             );
-        ArrayList<BigDecimal> cidPartFourValues = evaluatePage
+        ArrayList<BigDecimal> cidPartFourValues = componentsPage
             .getTableValsByRow(
                 ColumnIndexEnum.CID_PART_FOUR.getColumnIndex()
             );
 
-        evaluatePage.switchBackToTabOne();
+        componentsPage.switchBackToTabOne();
         ArrayList<BigDecimal> reportsPartOneValues = genericReportPage
             .getValuesByRow(
                 ColumnIndexEnum.CIR_PART_ONE.getColumnIndex()

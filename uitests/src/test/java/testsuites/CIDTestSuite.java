@@ -47,6 +47,7 @@ import login.LoginTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import settings.DecimalPlaceTests;
 import settings.SettingsTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -96,6 +97,7 @@ import testsuites.suiteinterface.SmokeTests;
     MaterialPMITests.class,
     RevertScenarioTests.class,
     TwoModelMachiningTests.class,
+    DecimalPlaceTests.class,
 })
 public class CIDTestSuite {
 }
