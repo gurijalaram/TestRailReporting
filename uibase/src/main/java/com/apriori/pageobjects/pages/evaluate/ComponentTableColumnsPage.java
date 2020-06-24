@@ -220,9 +220,9 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
      *
      * @return new page object
      */
-    public EvaluatePage selectSaveButton() {
+    public ComponentsPage selectSaveButton() {
         pageUtils.waitForElementAndClick(okButton);
-        return new EvaluatePage(driver);
+        return new ComponentsPage(driver);
     }
 
     /**
