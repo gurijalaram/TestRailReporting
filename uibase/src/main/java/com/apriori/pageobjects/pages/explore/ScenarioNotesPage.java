@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.explore;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -230,7 +231,8 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return current page object
      */
     public ScenarioNotesPage editNotes(String notes) {
-        scenarioNotesInput.clear();
+        scenarioNotesInput.sendKeys(Keys.CONTROL + "a");
+        scenarioNotesInput.sendKeys(Keys.CLEAR);
         scenarioNotesInput.sendKeys(notes);
         return this;
     }
