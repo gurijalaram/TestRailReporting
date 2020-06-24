@@ -324,14 +324,14 @@ public class ActionsTests extends TestBase {
             .closeJobQueue(ExplorePage.class)
             .openScenario(testScenarioName, "BasicScenario_Forging")
             .selectInfoNotes()
-            .editNotes(" Validating the ability to edit notes")
+            .editNotes("Testing QA notes validating the ability to edit notes")
             .save(EvaluatePage.class)
             .openJobQueue()
             .checkJobQueueRow("okay")
             .closeJobQueue(EvaluatePage.class)
             .selectInfoNotes();
 
-        assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes Validating the ability to edit notes"));
+        assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes validating the ability to edit notes"));
     }
 
     @Test
