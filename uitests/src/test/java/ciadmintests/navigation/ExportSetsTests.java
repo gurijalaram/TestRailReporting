@@ -13,8 +13,10 @@ import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
+import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.ComponentTypeEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -134,8 +136,8 @@ public class ExportSetsTests extends TestBase {
             .login()
             .navigateToReports();
 
-        String urlToCheck = homePage.getUrlToCheck();
-        homePage.waitForReportsLogoutDisplayedToAppear();
+        String urlToCheck = reportsHomePage.getUrlToCheck();
+        reportsHomePage.waitForReportsLogoutDisplayedToAppear();
 
         assertThat(reportsHomePage.getTabCount(), is(equalTo(2)));
         assertThat(reportsHomePage.isReportsLogoutDisplayed(), is(true));
@@ -145,4 +147,22 @@ public class ExportSetsTests extends TestBase {
         assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.REPORTS_URL_SUFFIX));
         assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.REPORTS_LOGIN_LOCAL_SUFFIX));
     }
+
+    @Test
+    @Category(CustomerSmokeTests.class)
+    @TestRail(testCaseId = "80686")
+    @Description("Export specific scenario and view results")
+    public void testScenarioExportAndViewResults() {
+        newExportSet = new LoginPage(driver)
+                .login()
+                .navigateToManageScenarioExport()
+                .clickNew()
+                .inputSetName()
+                .selectComponentType(ComponentTypeEnum.DYNAMIC_ROLLUP.getComponentType())
+                .inputNamePartNumber(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .inputScenarioName(Constants.DEFAULT_SCENARIO_NAME)
+                .setDateTimeToNow()
+                .clickCreateExportButton();
+    }
+
 }

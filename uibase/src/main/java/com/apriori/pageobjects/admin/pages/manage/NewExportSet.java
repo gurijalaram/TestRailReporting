@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 public class NewExportSet extends AdminHeader {
 
@@ -20,7 +22,7 @@ public class NewExportSet extends AdminHeader {
     private WebElement newExportSetTitle;
 
     @FindBy(css = "[id='DTE_Field_name']")
-    private WebElement setName;
+    private WebElement setNameInput;
 
     @FindBy(css = "select[title='Scenario']")
     private WebElement exportScopeDropdown;
@@ -43,6 +45,21 @@ public class NewExportSet extends AdminHeader {
     @FindBy(css = "select[id='DTE_Field_scenarioKey.typeName']")
     private WebElement componentTypes;
 
+    @FindBy(xpath = "//div[@id='DTE_Field_schedule.onceDateTime']/span")
+    private WebElement dateSetButton;
+
+    @FindBy(xpath = "//label[@for='DTE_Field_schedule.onceDateTime']")
+    private WebElement dateSetTitleLabel;
+
+    @FindBy(xpath = "//input[@id='DTE_Field_scenarioKey-masterName']")
+    private WebElement namePartNumberInput;
+
+    @FindBy(xpath = "//input[@id='DTE_Field_scenarioKey-stateName']")
+    private WebElement scenarioNameInput;
+
+    @FindBy(xpath = "//button[contains(text(), 'Create')]")
+    private WebElement createExportButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private HashMap<String, WebElement> componentTypeMap;
@@ -63,23 +80,24 @@ public class NewExportSet extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(setName);
+        pageUtils.waitForElementToAppear(setNameInput);
     }
 
-    private void setInput(WebElement locator, String value) {
-        pageUtils.waitForElementToAppear(locator).clear();
-        locator.sendKeys(value);
+    private void setInput(WebElement element, String value) {
+        pageUtils.waitForElementToAppear(element);
+        element.clear();
+        element.click();
+        element.sendKeys(value);
     }
 
     /**
      * Inputs Set Name
-     *
-     * @param text - the text
      * @return current page object
      */
-    public NewExportSet inputSetName(String text) {
-        pageUtils.waitForElementAppear(setName);
-        setInput(setName, text);
+    public NewExportSet inputSetName() {
+        // random name generator
+        int val = randomNameGenerator();
+        setInput(setNameInput, String.valueOf(val));
         return this;
     }
 
@@ -105,6 +123,54 @@ public class NewExportSet extends AdminHeader {
         pageUtils.waitForElementAndClick(componentTypeDropdown);
         pageUtils.waitForElementAndClick(elementToUse);
         return this;
+    }
+
+    /**
+     * Inputs Name Part Number
+     * @param partNameNumber
+     * @return Instance of NewExportSet
+     */
+    public NewExportSet inputNamePartNumber(String partNameNumber) {
+        setInput(namePartNumberInput, partNameNumber);
+        return this;
+    }
+
+    /**
+     * Inputs Scenario Name
+     * @param scenarioName
+     * @return Instance of NewExportSet
+     */
+    public NewExportSet inputScenarioName(String scenarioName) {
+        setInput(scenarioNameInput, scenarioName);
+        return this;
+    }
+
+    /**
+     * Sets date time field to now using button
+     * @return Instance of NewExportSet
+     */
+    public NewExportSet setDateTimeToNow() {
+        pageUtils.waitForElementAndClick(dateSetButton);
+        pageUtils.waitForElementAndClick(dateSetTitleLabel);
+        return this;
+    }
+
+    /**
+     * Clicks create export button
+     * @return Instance of NewExportSet
+     */
+    public NewExportSet clickCreateExportButton() {
+        pageUtils.waitForElementAndClick(createExportButton);
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private int randomNameGenerator() {
+        Random random = new Random();
+        return random.nextInt();
     }
 
     /**
