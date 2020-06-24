@@ -50,20 +50,3 @@ if (System.getProperty("all") != null) {
 
 
 
-//if (System.getProperty("microservices") != null) {
-//    include(':microservices:ats')
-//    include(':microservices:cds')
-//    include(':microservices:cis')
-//    include(':microservices:edc')
-//    include(':microservices:fms')
-
-//    project(':microservices:ats').projectDir = file('../microservices/ats')
-//    project(':microservices:cds').projectDir = file('../microservices/cds')
-//    project(':microservices:cis').projectDir = file('../microservices/cis')
-//    project(':microservices:edc').projectDir = file('../microservices/edc')
-//    project(':microservices:fms').projectDir = file('../microservices/fms')
-//}
-
-
-
-
