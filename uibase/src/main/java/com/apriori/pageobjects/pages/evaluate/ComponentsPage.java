@@ -71,7 +71,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        //pageUtils.waitForElementToAppear(componentsTableRow);
+        pageUtils.waitForElementToAppear(componentsTableRow);
     }
 
     /**
