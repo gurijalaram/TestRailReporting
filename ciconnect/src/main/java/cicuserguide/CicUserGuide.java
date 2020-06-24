@@ -1,0 +1,62 @@
+package cicuserguide;
+
+import com.apriori.utils.PageUtils;
+
+import header.PageHeader;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class CicUserGuide extends LoadableComponent<CicUserGuide> {
+
+    private final Logger logger = LoggerFactory.getLogger(CicUserGuide.class);
+
+    @FindBy(css = "div[id='wwpID0ELHA']")
+    private WebElement userGuideTitle;
+
+    private WebDriver driver;
+    private PageUtils pageUtils;
+    private PageHeader pageHeader;
+
+    public CicUserGuide(WebDriver driver){
+        this.driver = driver;
+        this.pageUtils = new PageUtils(driver);
+        this.pageHeader = new PageHeader(driver);
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        PageFactory.initElements(driver, this);
+        this.get();
+    }
+
+    protected void load(){
+    }
+
+    protected void isLoaded() throws Error {
+        //pageUtils.waitForElementToAppear(userGuideTitle);
+    }
+
+    public CicUserGuide switchTab() {
+        pageUtils.windowHandler(1);
+        return new CicUserGuide(driver);
+    }
+
+    public CicUserGuide switchToIFrameUserGuide(String iframeId) throws Exception{
+        pageHeader.switchToIFrameUserGuide(iframeId);
+        return new CicUserGuide(driver);
+    }
+
+    public String getUserGuideTitle() {
+        return userGuideTitle.getText();
+    }
+
+    public String getURL() {
+        return pageUtils.getTabTwoUrl();
+    }
+
+
+
+
+}

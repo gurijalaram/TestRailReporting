@@ -78,12 +78,19 @@ public class Schedule extends LoadableComponent<Schedule> {
 
     @Override
     protected void isLoaded() {
+        pageUtils.waitForElementToAppear(newWorkflowBtn);
         pageUtils.waitForElementToAppear(scheduleTab);
     }
 
     public String getNewWorkflowBtnText(){
         return newWorkflowBtn.getText();
     }
+
+    public NewEditWorkflow clickNewWorkflowBtn() {
+        newWorkflowBtn.click();
+        return new NewEditWorkflow(driver);
+    }
+
 
 
 

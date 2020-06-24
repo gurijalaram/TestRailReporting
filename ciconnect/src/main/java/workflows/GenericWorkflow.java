@@ -2,6 +2,7 @@ package workflows;
 
 import com.apriori.utils.PageUtils;
 
+import cicuserguide.CicUserGuide;
 import connectors.ConnectorList;
 import header.PageHeader;
 import org.openqa.selenium.WebDriver;
@@ -82,6 +83,11 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
     public PageHeader expandUserInfoDropdown() {
         pageHeader.expandUserInfoDropdown();
         return new PageHeader(driver);
+    }
+
+    public CicUserGuide navigateToCicUserGuide() {
+        pageHeader.navigateToCicUserGuide();
+        return new CicUserGuide(driver);
     }
 
 }

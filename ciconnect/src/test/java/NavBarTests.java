@@ -1,8 +1,10 @@
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.web.driver.TestBase;
 
+import cicuserguide.CicUserGuide;
 import connectors.ConnectorList;
 import header.PageHeader;
 import org.junit.Test;
@@ -18,6 +20,7 @@ public class NavBarTests extends TestBase {
     private ConnectorList connectorList;
     private Schedule schedule;
     private PageHeader pageHeader;
+    private CicUserGuide cicUserGuide;
 
     public NavBarTests() {super();}
 
@@ -59,6 +62,20 @@ public class NavBarTests extends TestBase {
         assertThat("kpatel@apriori.com", equalTo(pageHeader.getLoginID()));
         assertThat("aPriori Internal", equalTo(pageHeader.getCurrentCompany()));
     }
+
+    @Test
+    public void testCicUserGuideNavigation() throws Exception {
+        cicUserGuide = new LoginPage(driver)
+            .login(driver)
+            .navigateToCicUserGuide()
+            .switchTab()
+            .switchToIFrameUserGuide("page_iframe");
+
+        //assertThat("aPriori Cost Insight Connect", equalTo(cicUserGuide.getUserGuideTitle()));
+        assertThat(cicUserGuide.getURL(),startsWith("https://www.apriori.com/Collateral/Documents/English-US/online_help/CIConnect"));
+
+    }
+
 }
 
 

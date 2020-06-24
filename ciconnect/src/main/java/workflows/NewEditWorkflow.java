@@ -2,11 +2,13 @@ package workflows;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,8 +59,21 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      * Click Next btn
      *
      */
-    public NewEditWorkflow clickNextbtn(){
+    public NewEditWorkflow clickNextBtn(){
         nextBtn.click();
+        return this;
+    }
+
+    public NewEditWorkflow inputWorkflowName(String workflowName){
+        inputName.sendKeys(workflowName);
+        return new NewEditWorkflow(driver);
+    }
+
+    public NewEditWorkflow selectConnector(String connectorName) {
+        pageUtils.waitForElementAndClick(connectorDropdownSearch);
+        connectorDropdownSearch.sendKeys(connectorName);
+        By connectorToClick = By.xpath(String.format("//div[contains(text(), '%s')]", connectorName));
+        driver.findElement(connectorToClick).click();
         return this;
     }
 }

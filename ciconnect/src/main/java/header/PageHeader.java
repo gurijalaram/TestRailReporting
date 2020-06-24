@@ -2,6 +2,7 @@ package header;
 
 import com.apriori.utils.PageUtils;
 
+import cicuserguide.CicUserGuide;
 import connectors.ConnectorList;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -49,6 +50,17 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @FindBy(css = "div[id^='CIC_UserDropDown_MU-BMController-'][id$='_label-32'] > span")
     private WebElement currentCompany;
+
+    @FindBy(css = "div[id^='CIC_HelpDropDown_MU-BMController-'][id$='_link-41'] > a > span > span > span")
+    private WebElement onlineHelpLink;
+
+    @FindBy(css = "body")
+    private WebElement pageBody;
+
+    @FindBy(id = "toolbar_logo_link")
+    private WebElement pageTitle;
+
+
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -127,4 +139,30 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         userInfoDropdown.click();
         return new PageHeader(driver);
     }
+
+    public CicUserGuide navigateToCicUserGuide() {
+        helpBtn.click();
+        onlineHelpLink.click();
+        return new CicUserGuide(driver);
+    }
+
+    /**
+     * Switches to iframe within a page by its "id" value
+     *
+     * @param iframeId - iframe id attribute
+     * @return new CirUserGuide page object
+     */
+    public CicUserGuide switchToIFrameUserGuide(String iframeId) throws Exception {
+        pageUtils.waitForElementToAppear(pageTitle);
+
+        if (pageBody.getAttribute("className").startsWith("error404")) {
+            throw new Exception("Link broken. Wrong page was opened - iframe wasn't found as a result");
+        } else {
+            driver.switchTo().frame(iframeId);
+        }
+
+        return new CicUserGuide(driver);
+    }
+
+
 }
