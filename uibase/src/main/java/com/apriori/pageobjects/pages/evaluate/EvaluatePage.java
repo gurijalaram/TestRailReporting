@@ -91,6 +91,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "a[data-ap-nav-viewport='showMaterialDetails']")
     private WebElement materialsDetails;
 
+    @FindBy(css = "input[data-ap-field='materialNameOverride']")
+    private WebElement materialsInfo;
+
     @FindBy(css = "button[data-ap-comp='materialSelectionButton']")
     private WebElement materialsButton;
 
@@ -108,6 +111,12 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "td[data-ap-field='failuresWarningsCount']")
     private WebElement warningsCount;
+
+    @FindBy(css = "td[data-ap-field='dtcMessagesCount']")
+    private WebElement guidanceIssuesCount;
+
+    @FindBy(css = "td[data-ap-field='gcdWithTolerancesCount']")
+    private WebElement gcdTolerancesCount;
 
     @FindBy(css = "td[data-ap-field='cycleTime']")
     private WebElement cycleTimeCount;
@@ -139,6 +148,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = ".locked-status-icon")
     private WebElement lockedStatusIcon;
 
+    @FindBy(css = ".cad-connection-status-icon")
+    private WebElement cadConnectedIcon;
+
     @FindBy(css = "a[data-ap-nav-viewport='showAssemblyComponentsDetails']")
     private WebElement componentsDetails;
 
@@ -156,6 +168,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "td[data-ap-field='finishMass']")
     private WebElement finishMass;
+
+    @FindBy(css = "td[data-ap-field='utilization']")
+    private WebElement utilization;
 
     @FindBy(css = "td[data-ap-field='targetFinishMass']")
     private WebElement targetMass;
@@ -482,10 +497,11 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets cycle time count
      *
-     * @return string
+     * @return double
      */
-    public String getCycleTimeCount() {
-        return pageUtils.waitForElementToAppear(cycleTimeCount).getText();
+    public double getCycleTimeCount() {
+        pageUtils.waitForElementToAppear(cycleTimeCount);
+        return Double.parseDouble(cycleTimeCount.getText());
     }
 
     /**
@@ -551,10 +567,11 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the capital investment
      *
-     * @return string
+     * @return double
      */
-    public String getCapitalInvestment() {
-        return pageUtils.waitForElementToAppear(capitalInvestments).getText();
+    public double getCapitalInvestment() {
+        pageUtils.waitForElementToAppear(capitalInvestments);
+        return Double.parseDouble(capitalInvestments.getText());
     }
 
     /**
@@ -702,6 +719,38 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
+     * Gets the value of finish mass
+     *
+     * @return string
+     */
+    public boolean isFinishMass(String mass) {
+        By finishMass = By.cssSelector(String.format("td[data-ap-field='finishMass'][title='%s']", mass));
+        pageUtils.waitForElementToAppear(finishMass);
+        return driver.findElement(finishMass).isDisplayed();
+    }
+
+    /**
+     * Checks the value of Utilization
+     *
+     * @return double
+     */
+    public double getUtilization() {
+        By utilization = By.cssSelector("td[data-ap-field='utilization']");
+        pageUtils.waitForElementToAppear(utilization);
+        return Double.parseDouble(driver.findElement(utilization).getAttribute("innerText"));
+    }
+
+    /**
+     * Checks the value of Utilization
+     *
+     * @return double
+     */
+    public boolean isUtilization(String utilization) {
+        By utilizationValue = By.cssSelector(String.format("td[data-ap-field='utilization'][title='%s']", utilization));
+        return pageUtils.waitForElementToAppear(utilizationValue).isDisplayed();
+    }
+
+    /**
      * Gets the value of target mass
      *
      * @return string
@@ -747,7 +796,7 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets table values by specified row index
      *
-     * @param row
+     * @param row - the row
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getTableValsByRow(String row) {
