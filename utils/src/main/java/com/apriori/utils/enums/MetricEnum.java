@@ -1,17 +1,17 @@
 package com.apriori.utils.enums;
 
-public enum SystemEnum {
+public enum MetricEnum {
 
-    ENGLISH("ENGLISH"),
+    ENGLISH("English"),
     METRIC("Metric");
 
     private final String unit;
 
-    SystemEnum(String unit) {
+    MetricEnum(String unit) {
         this.unit = unit;
     }
 
-    public String getUnit() {
+    public String getMetricUnit() {
         return this.unit;
     }
 }

@@ -22,8 +22,8 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.MetricEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.SystemEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
@@ -379,7 +379,7 @@ public class SettingsTests extends TestBase {
 
         productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
-            .changeDisplayUnits(SystemEnum.ENGLISH.getUnit())
+            .selectSystem(MetricEnum.ENGLISH.getMetricUnit())
             .openProdDefaultTab()
             .enterScenarioName("Save all tabs test")
             .enterAnnualVolume("295")
@@ -392,7 +392,7 @@ public class SettingsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         settingsPage = explorePage.openSettings();
-        assertThat(settingsPage.isSelectedUnits(SystemEnum.ENGLISH.getUnit()), is(true));
+        assertThat(settingsPage.isSelectedMetricSystem(MetricEnum.ENGLISH.getMetricUnit()), is(true));
 
         productionDefaultPage = new SettingsPage(driver).openProdDefaultTab();
         assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));

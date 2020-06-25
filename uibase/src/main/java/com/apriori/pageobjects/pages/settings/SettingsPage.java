@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.settings;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -103,8 +104,19 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
      * @param units - the units
      * @return current page object
      */
-    public SettingsPage changeDisplayUnits(String units) {
+    public SettingsPage selectUnits(String units) {
         pageUtils.selectDropdownOption(unitsDropdown, units);
+        return this;
+    }
+
+    /**
+     * Changes system selection
+     * @param system - the metric system
+     * @return current page object
+     */
+    public SettingsPage selectSystem(String system) {
+        By systemSelection = By.xpath(String.format("//input[@data-ap-comp='%s']", system));
+        pageUtils.waitForElementAndClick(systemSelection);
         return this;
     }
 
@@ -159,7 +171,8 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
      *
      * @return true/false
      */
-    public boolean isSelectedUnits(String unit) {
-        return pageUtils.checkElementFirstOption(unitsDropdown, unit);
+    public boolean isSelectedMetricSystem(String system) {
+        By systemSelection = By.xpath(String.format("//input[@data-ap-comp='%s']", system));
+        return pageUtils.waitForElementToAppear(systemSelection).isSelected();
     }
 }
