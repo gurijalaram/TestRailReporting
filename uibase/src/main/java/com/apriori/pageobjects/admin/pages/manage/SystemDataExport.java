@@ -20,6 +20,36 @@ public class SystemDataExport extends AdminHeader {
     @FindBy(css = "h1")
     private WebElement manageSystemDataExportTitle;
 
+    @FindBy(id = "ToolTables_exportscheduleslist_0")
+    private WebElement editSystemDataExportButton;
+
+    @FindBy(xpath = "//input[@value='ONCE']")
+    private WebElement editSystemDataExportOnceButton;
+
+    @FindBy(xpath = "//div[@id='DTE_Field_schedule.onceDateTime']/span")
+    private WebElement setCurrentDateButton;
+
+    @FindBy(xpath = "//label[@for='DTE_Field_schedule.onceDateTime']")
+    private WebElement dateTimeTitle;
+
+    @FindBy(xpath = "//div[@class='DTE_Form_Buttons']/button")
+    private WebElement updateButton;
+
+    @FindBy(xpath = "//a[@href='#tab_exporthistories']")
+    private WebElement viewHistoryTab;
+
+    @FindBy(xpath = "//a[@id='ToolTables_exporthistorieslist_0']/span")
+    private WebElement refreshButton;
+
+    @FindBy(xpath = "//table[@id='exporthistorieslist']/tbody")
+    private WebElement exportHistoryTableBody;
+
+    @FindBy(xpath = "//table[@id='exporthistorieslist']/tbody/tr[1]/td[1]")
+    private WebElement exportHistoryFirstUserCellInTable;
+
+    @FindBy(xpath = "//table[@id='exporthistorieslist']/tbody/tr[1]/td[4]/span")
+    private WebElement exportHistoryFirstStatusCellInTable;
+
     public SystemDataExport(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -60,11 +90,90 @@ public class SystemDataExport extends AdminHeader {
     }
 
     /**
-     *
-     * @return
+     * Get header text
+     * @return String
      */
     public String getHeaderText() {
         pageUtils.waitForElementToAppear(manageSystemDataExportTitle);
         return manageSystemDataExportTitle.getText();
+    }
+
+    /**
+     * Click edit System Data Export
+     * @return Instance of System Data Export
+     */
+    public SystemDataExport clickEditSystemDataExport() {
+        pageUtils.waitForElementAndClick(editSystemDataExportButton);
+        return this;
+    }
+
+    /**
+     * Click once button
+     * @return Instance of System Data Export
+     */
+    public SystemDataExport clickOnce() {
+        pageUtils.waitForElementAndClick(editSystemDataExportOnceButton);
+        return this;
+    }
+
+    /**
+     * Sets current date
+     * @return Instance of System Data Export
+     */
+    public SystemDataExport clickSetDateCurrent() {
+        pageUtils.waitForElementAndClick(setCurrentDateButton);
+        dateTimeTitle.click();
+        return this;
+    }
+
+    /**
+     * Click update button
+     * @return Instance of System Data Export
+     */
+    public SystemDataExport clickUpdate() {
+        pageUtils.waitForElementAndClick(updateButton);
+        return this;
+    }
+
+    /**
+     * Click view history tab
+     * @return Instance of System Data Export
+     */
+    public SystemDataExport clickViewHistory() {
+        pageUtils.waitForElementAndClick(viewHistoryTab);
+        return this;
+    }
+
+    /**
+     * Click refresh button
+     * @return Instance of System Data Export
+     */
+    public SystemDataExport clickRefreshButton() {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return this;
+    }
+
+    /**
+     * Get count of rows in table
+     * @return Integer
+     */
+    public Integer getTableRowCount() {
+        return Integer.parseInt(exportHistoryTableBody.getAttribute("childElementCount"));
+    }
+
+    /**
+     * Get first user in table
+     * @return String
+     */
+    public String getFirstUserInTable() {
+        return exportHistoryFirstUserCellInTable.getText();
+    }
+
+    /**
+     * Get first user in table
+     * @return String
+     */
+    public String getFirstStatusInTable() {
+        return exportHistoryFirstStatusCellInTable.getText();
     }
 }

@@ -3,6 +3,7 @@ package ciadmintests.navigation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.admin.pages.homepage.HomePage;
@@ -12,6 +13,7 @@ import com.apriori.pageobjects.admin.pages.manage.NewExportSet;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
+import com.apriori.pageobjects.reports.header.PageHeader;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -26,7 +28,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ExportSetTests extends TestBase {
 
-    private HomePage reportsHomePage;
+    private com.apriori.pageobjects.reports.pages.homepage.HomePage reportsHomePage;
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
@@ -74,7 +76,7 @@ public class ExportSetTests extends TestBase {
         cirUserGuide = new LoginPage(driver)
                 .login()
                 .navigateToHelpReportsGuide()
-                .switchTab()
+                .switchTab(PageHeader.class)
                 .switchToIFrameUserGuide("page_iframe");
 
         assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
@@ -135,13 +137,17 @@ public class ExportSetTests extends TestBase {
                 .login()
                 .navigateToReports();
 
+        reportsHomePage = new com.apriori.pageobjects.reports.pages.login.LoginPage(driver)
+                .switchTab(com.apriori.pageobjects.reports.pages.login.LoginPage.class)
+                .login();
+
         String urlToCheck = reportsHomePage.getUrlToCheck();
         reportsHomePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.REPORTS_URL_SUFFIX + Constants.REPORTS_LAST_SUFFIX));
-        assertThat(homePage.getTabCount(), is(equalTo(2)));
-        assertThat(homePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(homePage.isReportsLogoutEnabled(), is(true));
+        assertThat(reportsHomePage.getCurrentUrl(), equalTo(urlToCheck + Constants.REPORTS_URL_SUFFIX + Constants.REPORTS_LAST_SUFFIX));
+        assertThat(reportsHomePage.getTabCount(), is(equalTo(2)));
+        assertThat(reportsHomePage.isReportsLogoutDisplayed(), is(true));
+        assertThat(reportsHomePage.isReportsLogoutEnabled(), is(true));
     }
 
     @Test
@@ -164,5 +170,30 @@ public class ExportSetTests extends TestBase {
 
         assertThat(newExportSet.getFirstExportSetNameFromTable(), is(equalTo(newExportSet.getExpectedExportSetName())));
         assertThat(newExportSet.getFirstExportSetStatusFromTable(), is(containsString("Started")));
+    }
+
+    @Test
+    @Category(CustomerSmokeTests.class)
+    @TestRail(testCaseId = "80687")
+    @Description("Export system data and ensure it worked")
+    public void testSystemDataExportAndVerify() {
+        systemDataExport = new LoginPage(driver)
+                .login()
+                .navigateToManageSystemDataExport()
+                .clickEditSystemDataExport()
+                .clickOnce()
+                .clickSetDateCurrent()
+                .clickUpdate()
+                .clickViewHistory()
+                .clickRefreshButton();
+
+        /*Integer tableRowCount = systemDataExport.getTableRowCount();
+        systemDataExport.clickRefreshButton();
+        Integer actualTableRowCount = systemDataExport.getTableRowCount();
+
+        assertThat(actualTableRowCount, is(not(tableRowCount)));
+        assertThat(actualTableRowCount, is(equalTo(tableRowCount + 1)));*/
+        assertThat(systemDataExport.getFirstUserInTable(), is(containsString("qa-automation-01")));
+        assertThat(systemDataExport.getFirstStatusInTable(), is(containsString(" Success")));
     }
 }

@@ -20,7 +20,7 @@ public class NewExportSet extends AdminHeader {
     @FindBy(css = "[class='DTE_Header_Content']")
     private WebElement newExportSetTitle;
 
-    @FindBy(css = "[id='DTE_Field_name']")
+    @FindBy(id = "DTE_Field_name")
     private WebElement setNameInput;
 
     @FindBy(css = "select[title='Scenario']")
@@ -41,7 +41,7 @@ public class NewExportSet extends AdminHeader {
     @FindBy(xpath = "//a[contains(@data-normalized-text, 'Dynamic Roll-up')]")
     private WebElement dynamicRollUpOption;
 
-    @FindBy(css = "select[id='DTE_Field_scenarioKey.typeName']")
+    @FindBy(id = "DTE_Field_scenarioKey.typeName")
     private WebElement componentTypes;
 
     @FindBy(xpath = "//div[@id='DTE_Field_schedule.onceDateTime']/span")
@@ -50,10 +50,10 @@ public class NewExportSet extends AdminHeader {
     @FindBy(xpath = "//label[@for='DTE_Field_schedule.onceDateTime']")
     private WebElement dateSetTitleLabel;
 
-    @FindBy(xpath = "//input[@id='DTE_Field_scenarioKey-masterName']")
+    @FindBy(id = "DTE_Field_scenarioKey-masterName")
     private WebElement namePartNumberInput;
 
-    @FindBy(xpath = "//input[@id='DTE_Field_scenarioKey-stateName']")
+    @FindBy(id = "DTE_Field_scenarioKey-stateName")
     private WebElement scenarioNameInput;
 
     @FindBy(xpath = "//button[contains(text(), 'Create')]")
@@ -62,7 +62,7 @@ public class NewExportSet extends AdminHeader {
     @FindBy(xpath = "//a[@href='#tab_exporthistories']")
     private WebElement historyTabButton;
 
-    @FindBy(xpath = "//a[@id='ToolTables_exporthistorieslist_0']")
+    @FindBy(xpath = "//a[@id='ToolTables_exporthistorieslist_0']/span")
     private WebElement refreshHistoryButton;
 
     @FindBy(xpath = "//table[@id='exporthistorieslist']/tbody/tr[1]/td[1]")
@@ -190,8 +190,6 @@ public class NewExportSet extends AdminHeader {
      */
     public NewExportSet clickRefreshButton() {
         pageUtils.waitForElementAndClick(refreshHistoryButton);
-        refreshHistoryButton.click();
-        pageUtils.waitFor(2000);
         return this;
     }
 
