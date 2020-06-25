@@ -115,6 +115,8 @@ public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
+        clear()
+            .clearAllCheckBoxes();
     }
 
     @Override

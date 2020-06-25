@@ -16,6 +16,11 @@
 1. Open Terminal to root `build` directory
 2. Run `gradle clean build -x test -Dall`
 
+## Building all microservices 
+1. Open Terminal to root `build` directory
+2. Run `gradle --continue :microservices:ats:build :microservices:cds:build :microservices:cis:build :microservices:edc:build :microservices:fms:build`
+
+
 ## Run Gradle tests with JVM args
 1. Open Terminal to root `build` directory
 2. Run `gradle clean :uitests:test --tests "{parentFolder.suiteName}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite"`

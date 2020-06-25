@@ -34,7 +34,7 @@ public class ColumnUtils {
         String[] columns = driver.findElement(By.xpath("//div[@data-ap-comp='" + table + "']//thead")).getAttribute("innerText").split("\n");
         String[] cells = driver.findElement(By.xpath(rowLocator)).getAttribute("innerText").split("\n");
 
-        String[] filteredCells = Arrays.stream(cells).filter(cell -> !cell.equals("\t\t")).toArray(String[]::new);
+        String[] filteredCells = Arrays.stream(cells).filter(cell -> !cell.equals("\t") && !cell.equals("\t\t")).toArray(String[]::new);
 
         IntStream.range(0, columns.length).filter(headerIndex -> IntStream.range(0, filteredCells.length).anyMatch(rowIndex -> headerIndex == rowIndex)).forEach(headerIndex -> map.put(columns[headerIndex], filteredCells[headerIndex]));
         return map.get(column);

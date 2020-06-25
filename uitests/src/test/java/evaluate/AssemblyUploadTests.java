@@ -4,7 +4,9 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.hasItems;
 
+import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.VPESelectionPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -13,6 +15,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.AssemblyProcessGroupEnum;
+import com.apriori.utils.enums.ColumnsEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -22,6 +25,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -35,6 +39,7 @@ public class AssemblyUploadTests extends TestBase {
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private VPESelectionPage vpeSelectionPage;
+    private ComponentsPage componentsPage;
 
     private File resourceFile;
     private String scenarioName;
@@ -171,8 +176,8 @@ public class AssemblyUploadTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSelectedVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
-        assertThat(evaluatePage.getAnnualVolume(), is("3126"));
-        assertThat(evaluatePage.getProductionLife(), is("9"));
+        assertThat(evaluatePage.getAnnualVolume(), is("3,126"));
+        assertThat(evaluatePage.getProductionLife(), is("9.00"));
 
         explorePage = evaluatePage.delete()
             .deleteScenario()
@@ -215,5 +220,92 @@ public class AssemblyUploadTests extends TestBase {
             .closePanel();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Powder Coat Cart"));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"1341", "1342", "1402", "1405", "1410"})
+    @Description("Validate error message and cost status appears, when assembly cost is out of date")
+    public void smallAssembly() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Hinge assembly.STEP");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, resourceFile)
+            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+            .openScenario(scenarioName, "SMALL RING")
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .openScenario(scenarioName, "BIG RING")
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .openScenario(scenarioName, "PIN")
+            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .openAssembly(scenarioName, "Hinge assembly");
+
+        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_OUT_OF_DATE.getCostingText()), Matchers.is(true));
+
+        componentsPage = evaluatePage.clickCostStatus(ComponentsPage.class)
+            .selectComponentsView("Tree View")
+            .openColumnsTable()
+            .addColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
+            .selectSaveButton();
+
+        assertThat(componentsPage.getColumnHeaderNames(), hasItems(ColumnsEnum.PIECE_PART_COST.getColumns(), ColumnsEnum.PROCESS_GROUP.getColumns()));
+
+        componentsPage.openColumnsTable()
+            .removeColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
+            .selectSaveButton();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1404", "1434", "1435"})
+    @Description("Validate quantity column is correct")
+    public void treeViewTests() {
+
+        resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CIDLoginPage(driver);
+        componentsPage = loginPage.login(UserUtil.getUser())
+            .uploadFile(scenarioName, resourceFile)
+            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .costScenario()
+            .openComponentsTable()
+            .selectComponentsView("Tree View")
+            .expandAssembly(scenarioName, "ASSY02")
+            .highlightSubcomponent(scenarioName, "PART0002");
+
+        assertThat(componentsPage.getComponentCell("PART0002", "Qty"), Matchers.is(Matchers.equalTo("2")));
+
+        evaluatePage = componentsPage.openSubcomponent(scenarioName, "PART0002")
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getPartCost(), is(closeTo(1.92, 1)));
+
+        componentsPage = evaluatePage.selectExploreButton()
+            .openAssembly(scenarioName, "Assembly2")
+            .openComponentsTable()
+            .selectComponentsView("Tree View")
+            .openColumnsTable()
+            .addColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
+            .selectSaveButton()
+            .expandAssembly(scenarioName, "ASSY02");
+
+        assertThat(componentsPage.getComponentCell("PART0002", "Piece Part Cost (USD)"), Matchers.is(Matchers.equalTo("2.36")));
+
+        componentsPage.openColumnsTable()
+            .removeColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
+            .selectSaveButton();
     }
 }

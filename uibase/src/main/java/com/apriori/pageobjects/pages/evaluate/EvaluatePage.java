@@ -11,9 +11,6 @@ import com.apriori.pageobjects.pages.explore.ScenarioNotesPage;
 import com.apriori.pageobjects.toolbars.EvaluateHeader;
 import com.apriori.utils.PageUtils;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -24,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -501,7 +497,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getCycleTimeCount() {
         pageUtils.waitForElementToAppear(cycleTimeCount);
-        return Double.parseDouble(cycleTimeCount.getText());
+        return Double.parseDouble(cycleTimeCount.getAttribute("title"));
     }
 
     /**
@@ -511,7 +507,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getMaterialCost() {
         pageUtils.waitForElementToAppear(materialCost);
-        return Double.parseDouble(materialCost.getText());
+        return Double.parseDouble(materialCost.getAttribute("title"));
     }
 
     /**
@@ -520,7 +516,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public String getComponentsCost() {
-        return pageUtils.waitForElementToAppear(componentsCost).getText();
+        return pageUtils.waitForElementToAppear(componentsCost).getAttribute("title");
     }
 
     /**
@@ -529,7 +525,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public String getAssemblyProcessCost() {
-        return pageUtils.waitForElementToAppear(assemblyProcessCost).getText();
+        return pageUtils.waitForElementToAppear(assemblyProcessCost).getAttribute("title");
     }
 
     /**
@@ -539,7 +535,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getPartCost() {
         pageUtils.waitForElementToAppear(partCost);
-        return Double.parseDouble(partCost.getText());
+        return Double.parseDouble(partCost.getAttribute("title"));
     }
 
     /**
@@ -549,7 +545,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getBurdenedCost() {
         pageUtils.waitForElementToAppear(burdenedCost);
-        return Double.parseDouble(burdenedCost.getText());
+        return Double.parseDouble(burdenedCost.getAttribute("title"));
     }
 
     /**
@@ -571,7 +567,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getCapitalInvestment() {
         pageUtils.waitForElementToAppear(capitalInvestments);
-        return Double.parseDouble(capitalInvestments.getText());
+        return Double.parseDouble(capitalInvestments.getAttribute("title"));
     }
 
     /**
@@ -791,31 +787,6 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public boolean isReferencePanelExpanded() {
         return pageUtils.isElementDisplayed(chevron);
-    }
-
-    /**
-     * Gets table values by specified row index
-     *
-     * @param row - the row
-     * @return ArrayList of BigDecimals
-     */
-    public ArrayList<BigDecimal> getTableValsByRow(String row) {
-        Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
-
-        String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td";
-        ArrayList<Element> elements;
-
-        baseCssSelector = String.format(baseCssSelector, row);
-        elements = evaluateComponentView.select(baseCssSelector);
-
-        return elements.stream().filter(element -> !element.text().isEmpty() && element.text().contains(".")).map(element -> new BigDecimal(element.text())).collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    /**
-     * Switches to other tab
-     */
-    public void switchBackToTabOne() {
-        pageUtils.switchBackToInitialTab();
     }
 
     private void initialiseColumnSelectorMap() {
