@@ -258,9 +258,9 @@ public class DTCMachiningTests extends TestBase {
         assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "GCD Count"), is(equalTo("25")));
 
         investigationPage.selectInvestigationTopic("Machining Setups");
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("46")));
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:2", "GCD Count"), is(equalTo("56")));
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("34")));
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("2")));
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:12", "GCD Count"), is(equalTo("100")));
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:13", "GCD Count"), is(equalTo("34")));
     }
 
     @Test
