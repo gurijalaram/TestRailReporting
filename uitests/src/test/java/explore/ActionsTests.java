@@ -45,7 +45,6 @@ public class ActionsTests extends TestBase {
     private File resourceFile;
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-
     @Test
     @Issue("AP-61858")
     @TestRail(testCaseId = {"545", "731", "738", "1610", "742"})
