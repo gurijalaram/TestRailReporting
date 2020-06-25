@@ -23,8 +23,8 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.SystemEnum;
 import com.apriori.utils.enums.ToleranceEnum;
-import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserCredentials;
@@ -599,7 +599,7 @@ public class ToleranceTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         toleranceValueSettingsPage = settingsPage.save(ExplorePage.class)
             .openSettings()
-            .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
+            .changeDisplayUnits(SystemEnum.ENGLISH.getUnit())
             .save(ExplorePage.class)
             .openSettings()
             .openTolerancesTab()
