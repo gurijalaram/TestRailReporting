@@ -67,7 +67,7 @@ public class AssemblyUploadTests extends TestBase {
         assertThat(evaluatePage.getTotalComponents(), is("4"));
         assertThat(evaluatePage.getUniqueComponents(), is("4"));
         assertThat(evaluatePage.getWarningsCount(), is("4"));
-        assertThat(evaluatePage.getCycleTimeCount(), is("0.00"));
+        assertThat(evaluatePage.getCycleTimeCount(), is("0.0"));
     }
 
     @Test

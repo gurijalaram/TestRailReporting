@@ -232,7 +232,7 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      */
     public ScenarioNotesPage editNotes(String notes) {
         scenarioNotesInput.sendKeys(Keys.CONTROL + "a");
-        scenarioNotesInput.sendKeys(Keys.CLEAR);
+        scenarioNotesInput.sendKeys(Keys.DELETE);
         scenarioNotesInput.sendKeys(notes);
         return this;
     }
