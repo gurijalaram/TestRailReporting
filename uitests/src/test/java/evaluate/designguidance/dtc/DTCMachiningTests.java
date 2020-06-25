@@ -201,7 +201,7 @@ public class DTCMachiningTests extends TestBase {
 
         guidancePage = new GuidancePage(driver);
         guidancePage.selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "Curved Walls", "CurvedWall:21");
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Rounding: Feature is not accessible by an active Setup. "));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Side Milling: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry. "));
         assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("2")));
 
         guidancePage.selectIssueTypeAndGCD("Slow Machining Operations, Contoured Surface", "Curved Surfaces", "CurvedSurface:2");
@@ -254,8 +254,8 @@ public class DTCMachiningTests extends TestBase {
 
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("4")));
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("12")));
-        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "Tool Count"), is(equalTo("1")));
-        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "GCD Count"), is(equalTo("20")));
+        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "Tool Count"), is(equalTo("2")));
+        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "GCD Count"), is(equalTo("25")));
 
         investigationPage.selectInvestigationTopic("Machining Setups");
         assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("46")));
