@@ -13,7 +13,6 @@ import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
-import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ComponentTypeEnum;
@@ -25,9 +24,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
-public class ExportSetsTests extends TestBase {
+public class ExportSetTests extends TestBase {
 
-    private com.apriori.pageobjects.reports.pages.homepage.HomePage reportsHomePage;
+    private HomePage reportsHomePage;
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
@@ -36,7 +35,7 @@ public class ExportSetsTests extends TestBase {
     private Logout logout;
     private NewExportSet newExportSet;
 
-    public ExportSetsTests() {
+    public ExportSetTests() {
         super();
     }
 
@@ -139,13 +138,10 @@ public class ExportSetsTests extends TestBase {
         String urlToCheck = reportsHomePage.getUrlToCheck();
         reportsHomePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(reportsHomePage.getTabCount(), is(equalTo(2)));
-        assertThat(reportsHomePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(reportsHomePage.isReportsLogoutEnabled(), is(true));
-
-        assertThat(reportsHomePage.getCurrentUrl(), containsString(urlToCheck));
-        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.REPORTS_URL_SUFFIX));
-        assertThat(reportsHomePage.getCurrentUrl(), containsString(Constants.REPORTS_LOGIN_LOCAL_SUFFIX));
+        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.REPORTS_URL_SUFFIX + Constants.REPORTS_LAST_SUFFIX));
+        assertThat(homePage.getTabCount(), is(equalTo(2)));
+        assertThat(homePage.isReportsLogoutDisplayed(), is(true));
+        assertThat(homePage.isReportsLogoutEnabled(), is(true));
     }
 
     @Test
