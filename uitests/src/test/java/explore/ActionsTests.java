@@ -45,7 +45,9 @@ public class ActionsTests extends TestBase {
     private File resourceFile;
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
+
     @Test
+    @Issue("AP-61858")
     @TestRail(testCaseId = {"545", "731", "738", "1610", "742"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
@@ -66,7 +68,10 @@ public class ActionsTests extends TestBase {
         explorePage = new ExplorePage(driver);
         explorePage.selectScenarioInfoNotes()
             .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
-            .save(ExplorePage.class);
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
         scenarioNotesPage = explorePage.selectScenarioInfoNotes();
@@ -115,6 +120,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Issue("AP-61858")
     @Test
     @TestRail(testCaseId = {"1610", "592", "593"})
     @Description("User can lock and unlock a scenario")
