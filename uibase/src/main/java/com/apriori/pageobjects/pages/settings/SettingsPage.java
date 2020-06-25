@@ -28,6 +28,15 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     @FindBy(css = "select[data-ap-field='unitVariantSettings']")
     private WebElement unitsDropdown;
 
+    @FindBy(css = "select[data-ap-field='lenghtUnit']")
+    private WebElement lengthDropdown;
+
+    @FindBy(css = "select[data-ap-field='massUnit']")
+    private WebElement massDropdown;
+
+    @FindBy(css = "select[data-ap-field='timeUnit']")
+    private WebElement timeDropdown;
+
     @FindBy(css = "select[data-ap-field='currency']")
     private WebElement currencyDropdown;
 
@@ -117,6 +126,36 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     public SettingsPage selectSystem(String system) {
         By systemSelection = By.xpath(String.format("//input[@data-ap-comp='%s']", system));
         pageUtils.waitForElementAndClick(systemSelection);
+        return this;
+    }
+
+    /**
+     * Selects the length
+     * @param length - the length
+     * @return current page object
+     */
+    public SettingsPage selectLength(String length) {
+        pageUtils.selectDropdownOption(lengthDropdown, length);
+        return this;
+    }
+
+    /**
+     * Selects the mass
+     * @param mass - the mass
+     * @return current page object
+     */
+    public SettingsPage selectMass(String mass) {
+        pageUtils.selectDropdownOption(massDropdown, mass);
+        return this;
+    }
+
+    /**
+     * Selects the time
+     * @param time - the time
+     * @return current page object
+     */
+    public SettingsPage selectTime(String time) {
+        pageUtils.selectDropdownOption(timeDropdown, time);
         return this;
     }
 
