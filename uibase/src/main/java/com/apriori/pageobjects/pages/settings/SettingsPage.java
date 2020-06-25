@@ -24,7 +24,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     @FindBy(css = "a[href='#tolerancePolicyTab']")
     private WebElement tolerancesButton;
 
-    @FindBy(css = "select[data-ap-field='unitSystem']")
+    @FindBy(css = "select[data-ap-field='unitVariantSettings']")
     private WebElement unitsDropdown;
 
     @FindBy(css = "select[data-ap-field='currency']")
