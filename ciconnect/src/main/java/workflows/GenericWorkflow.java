@@ -4,6 +4,7 @@ import com.apriori.utils.PageUtils;
 
 import cicuserguide.CicUserGuide;
 import connectors.ConnectorList;
+import header.CostingServiceSettings;
 import header.PageHeader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -88,6 +89,16 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
     public CicUserGuide navigateToCicUserGuide() {
         pageHeader.navigateToCicUserGuide();
         return new CicUserGuide(driver);
+    }
+
+    public CicUserGuide navigateToAboutAPriori(){
+        pageHeader.navigateToAboutAPriori();
+        return new CicUserGuide(driver);
+    }
+
+    public CostingServiceSettings openCostingServiceSettings() {
+        pageHeader.openCostingServiceSettings();
+        return new CostingServiceSettings(driver);
     }
 
 }

@@ -60,6 +60,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(id = "toolbar_logo_link")
     private WebElement pageTitle;
 
+    @FindBy(css = "div[id^='CIC_HelpDropDown_MU-BMController-'][id$='_link-40'] > a > span > span > span")
+    private WebElement aboutAPrioriLink;
+
 
 
     private WebDriver driver;
@@ -162,6 +165,17 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         }
 
         return new CicUserGuide(driver);
+    }
+
+    public CicUserGuide navigateToAboutAPriori() {
+        helpBtn.click();
+        aboutAPrioriLink.click();
+        return new CicUserGuide(driver);
+    }
+
+    public CostingServiceSettings openCostingServiceSettings() {
+        settingsBtn.click();
+        return new CostingServiceSettings(driver);
     }
 
 

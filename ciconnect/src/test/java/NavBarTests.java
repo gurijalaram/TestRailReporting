@@ -6,6 +6,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import cicuserguide.CicUserGuide;
 import connectors.ConnectorList;
+import header.CostingServiceSettings;
 import header.PageHeader;
 import org.junit.Test;
 import users.UserList;
@@ -21,6 +22,7 @@ public class NavBarTests extends TestBase {
     private Schedule schedule;
     private PageHeader pageHeader;
     private CicUserGuide cicUserGuide;
+    private CostingServiceSettings costingServiceSettings;
 
     public NavBarTests() {super();}
 
@@ -73,8 +75,28 @@ public class NavBarTests extends TestBase {
 
         //assertThat("aPriori Cost Insight Connect", equalTo(cicUserGuide.getUserGuideTitle()));
         assertThat(cicUserGuide.getURL(),startsWith("https://www.apriori.com/Collateral/Documents/English-US/online_help/CIConnect"));
+    }
+
+    @Test
+    public void testAboutAPrioriLinkNavigation() throws Exception {
+        cicUserGuide = new LoginPage(driver)
+            .login(driver)
+            .navigateToAboutAPriori()
+            .switchTab();
+
+        assertThat(cicUserGuide.getURL(),startsWith("https://www.apriori.com/about-us/"));
+    }
+
+    @Test
+    public void testNavigateToCostingServiceSettings() {
+        costingServiceSettings = new LoginPage(driver)
+            .login(driver)
+            .openCostingServiceSettings();
+
+        assertThat(costingServiceSettings.getCostingServiceSettingsText(), equalTo("Costing Service Settings"));
 
     }
+
 
 }
 

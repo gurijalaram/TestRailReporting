@@ -20,7 +20,8 @@ public class WorkflowTests extends TestBase {
             .clickScheduleTab()
             .clickNewWorkflowBtn()
             .inputWorkflowName("Auto WF 1")
-            .selectConnector("WC - ConnectorAgent RC3");
+            .selectConnector("WC - ConnectorAgent RC3")
+            .clickNextBtn();
     }
 
 }

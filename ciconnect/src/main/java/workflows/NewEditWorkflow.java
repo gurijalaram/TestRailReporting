@@ -30,9 +30,8 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
     @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_DrowpdownWidget-154'] > div > div")
     private WebElement connectorDropdown;
 
-    @FindBy(css = "div[class='ss-content ss-45040 ss-open'] > div > input")
+    @FindBy(css = "div[class^='ss-content ss-'][class$=' ss-open'] > div > input[type='search']")
     private WebElement connectorDropdownSearch;
-
 
 
     private WebDriver driver;
@@ -70,6 +69,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
     }
 
     public NewEditWorkflow selectConnector(String connectorName) {
+        connectorDropdown.click();
         pageUtils.waitForElementAndClick(connectorDropdownSearch);
         connectorDropdownSearch.sendKeys(connectorName);
         By connectorToClick = By.xpath(String.format("//div[contains(text(), '%s')]", connectorName));
