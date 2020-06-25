@@ -13,15 +13,6 @@ public class WorkflowTests extends TestBase {
 
     public WorkflowTests() {super();}
 
-    @Test
-    public void testSimpleEndtoEnd(){
-        newEditWorkflow = new LoginPage(driver)
-            .login(driver)
-            .clickScheduleTab()
-            .clickNewWorkflowBtn()
-            .inputWorkflowName("Auto WF 1")
-            .selectConnector("WC - ConnectorAgent RC3")
-            .clickNextBtn();
-    }
+
 
 }

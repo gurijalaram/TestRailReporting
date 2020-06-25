@@ -18,8 +18,11 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
     private final Logger logger = LoggerFactory.getLogger(Schedule.class);
 
-    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-92'] > button > span:nth-of-type(3)")
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-92'] > button") //> span:nth-of-type(3)
     private WebElement nextBtn;
+
+    @FindBy(xpath = "//div[@id='root_pagemashupcontainer-1_navigation-83-popup_button-92']/button[@disabled='']")
+    private WebElement disabledNextBtn;
 
     @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_textbox-148'] > table > tbody > tr > td > input")
     private WebElement inputName;
@@ -32,6 +35,8 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
     @FindBy(css = "div[class^='ss-content ss-'][class$=' ss-open'] > div > input[type='search']")
     private WebElement connectorDropdownSearch;
+
+    @FindBy(css = "div[id=''")
 
 
     private WebDriver driver;
@@ -59,6 +64,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      *
      */
     public NewEditWorkflow clickNextBtn(){
+        pageUtils.waitForElementNotDisplayed(disabledNextBtn, 0.1);
         nextBtn.click();
         return this;
     }
@@ -75,5 +81,12 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
         By connectorToClick = By.xpath(String.format("//div[contains(text(), '%s')]", connectorName));
         driver.findElement(connectorToClick).click();
         return this;
+    }
+
+    public NewEditWorkflow selectQueryCIConnectField(Integer ruleNumber, String fieldName){
+        pageUtils.waitForElementToAppear(By.xpath(String.format("//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString())));
+        Select queryField = new Select(driver.findElement(By.xpath(String.format("//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString()))));
+        queryField.selectByVisibleText(fieldName);
+        return new NewEditWorkflow(driver);
     }
 }
