@@ -22,7 +22,7 @@ public class CicUserGuide extends LoadableComponent<CicUserGuide> {
     private PageUtils pageUtils;
     private PageHeader pageHeader;
 
-    public CicUserGuide(WebDriver driver){
+    public CicUserGuide(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.pageHeader = new PageHeader(driver);
@@ -31,32 +31,52 @@ public class CicUserGuide extends LoadableComponent<CicUserGuide> {
         this.get();
     }
 
-    protected void load(){
+    protected void load() {
     }
 
     protected void isLoaded() throws Error {
-        //pageUtils.waitForElementToAppear(userGuideTitle);
+
     }
 
+    /**
+     * Switch to second tab
+     *
+     * @return CicUserGuide Page
+     */
     public CicUserGuide switchTab() {
         pageUtils.windowHandler(1);
         return new CicUserGuide(driver);
     }
 
-    public CicUserGuide switchToIFrameUserGuide(String iframeId) throws Exception{
+    /**
+     * Switch iFrame
+     *
+     * @param iframeId
+     * @return CicUserGuide Page
+     * @throws Exception
+     */
+    public CicUserGuide switchToIFrameUserGuide(String iframeId) throws Exception {
         pageHeader.switchToIFrameUserGuide(iframeId);
         return new CicUserGuide(driver);
     }
 
+    /**
+     * Get user guide title text
+     *
+     * @return String, title text
+     */
     public String getUserGuideTitle() {
         return userGuideTitle.getText();
     }
 
+    /**
+     * Get tab two URL
+     *
+     * @return String
+     */
     public String getURL() {
         return pageUtils.getTabTwoUrl();
     }
-
-
 
 
 }

@@ -1,4 +1,4 @@
-package Login;
+package login;
 
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;

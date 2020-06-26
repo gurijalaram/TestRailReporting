@@ -11,8 +11,9 @@ public class WorkflowTests extends TestBase {
     private Schedule schedule;
     private NewEditWorkflow newEditWorkflow;
 
-    public WorkflowTests() {super();}
-
+    public WorkflowTests() {
+        super();
+    }
 
 
 }

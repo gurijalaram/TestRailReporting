@@ -56,7 +56,6 @@ public class ConnectorList extends LoadableComponent<ConnectorList> {
     private PageHeader pageHeader;
 
 
-
     public ConnectorList(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -75,14 +74,17 @@ public class ConnectorList extends LoadableComponent<ConnectorList> {
         pageUtils.waitForElementToAppear(newConnectorBtn);
     }
 
-    public Schedule clickWorkflowMenu(){
+    public Schedule clickWorkflowMenu() {
         return pageHeader.clickWorkflowMenu();
     }
 
     /**
      * Get connectors page label text
+     *
      * @return String
      */
-    public String getConnectorText() {return connectorsLabel.getText();}
+    public String getConnectorText() {
+        return connectorsLabel.getText();
+    }
 
 }

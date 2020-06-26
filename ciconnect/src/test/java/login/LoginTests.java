@@ -1,12 +1,12 @@
-package Login;
+package login;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.web.driver.TestBase;
 
 import org.junit.Test;
 import workflows.GenericWorkflow;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class LoginTests extends TestBase {
 

@@ -82,7 +82,7 @@ public class Schedule extends LoadableComponent<Schedule> {
         pageUtils.waitForElementToAppear(scheduleTab);
     }
 
-    public String getNewWorkflowBtnText(){
+    public String getNewWorkflowBtnText() {
         return newWorkflowBtn.getText();
     }
 
@@ -90,8 +90,6 @@ public class Schedule extends LoadableComponent<Schedule> {
         newWorkflowBtn.click();
         return new NewEditWorkflow(driver);
     }
-
-
 
 
 }

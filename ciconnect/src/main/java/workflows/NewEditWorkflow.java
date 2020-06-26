@@ -42,7 +42,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public NewEditWorkflow (WebDriver driver){
+    public NewEditWorkflow(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -51,25 +51,24 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
     }
 
     @Override
-    protected void load(){
+    protected void load() {
     }
 
     @Override
-    protected void isLoaded(){
+    protected void isLoaded() {
         pageUtils.waitForElementToAppear(nextBtn);
     }
 
     /**
      * Click Next btn
-     *
      */
-    public NewEditWorkflow clickNextBtn(){
+    public NewEditWorkflow clickNextBtn() {
         pageUtils.waitForElementNotDisplayed(disabledNextBtn, 0.1);
         nextBtn.click();
         return this;
     }
 
-    public NewEditWorkflow inputWorkflowName(String workflowName){
+    public NewEditWorkflow inputWorkflowName(String workflowName) {
         inputName.sendKeys(workflowName);
         return new NewEditWorkflow(driver);
     }
@@ -83,7 +82,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
         return this;
     }
 
-    public NewEditWorkflow selectQueryCIConnectField(Integer ruleNumber, String fieldName){
+    public NewEditWorkflow selectQueryCIConnectField(Integer ruleNumber, String fieldName) {
         pageUtils.waitForElementToAppear(By.xpath(String.format("//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString())));
         Select queryField = new Select(driver.findElement(By.xpath(String.format("//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString()))));
         queryField.selectByVisibleText(fieldName);

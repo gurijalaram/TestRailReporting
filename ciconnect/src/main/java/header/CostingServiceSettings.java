@@ -20,7 +20,7 @@ public class CostingServiceSettings extends LoadableComponent<CostingServiceSett
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public CostingServiceSettings (WebDriver driver) {
+    public CostingServiceSettings(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -38,7 +38,7 @@ public class CostingServiceSettings extends LoadableComponent<CostingServiceSett
         pageUtils.waitForElementToAppear(costingServiceSettingsText);
     }
 
-    public String getCostingServiceSettingsText(){
+    public String getCostingServiceSettingsText() {
         return costingServiceSettingsText.getText();
     }
 

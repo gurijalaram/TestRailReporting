@@ -8,6 +8,7 @@ import cicuserguide.CicUserGuide;
 import connectors.ConnectorList;
 import header.CostingServiceSettings;
 import header.PageHeader;
+import login.LoginPage;
 import org.junit.Test;
 import users.UserList;
 import workflows.GenericWorkflow;
@@ -24,7 +25,9 @@ public class NavBarTests extends TestBase {
     private CicUserGuide cicUserGuide;
     private CostingServiceSettings costingServiceSettings;
 
-    public NavBarTests() {super();}
+    public NavBarTests() {
+        super();
+    }
 
     @Test
     public void testNavigateToUsersTab() {
@@ -74,7 +77,7 @@ public class NavBarTests extends TestBase {
             .switchToIFrameUserGuide("page_iframe");
 
         //assertThat("aPriori Cost Insight Connect", equalTo(cicUserGuide.getUserGuideTitle()));
-        assertThat(cicUserGuide.getURL(),startsWith("https://www.apriori.com/Collateral/Documents/English-US/online_help/CIConnect"));
+        assertThat(cicUserGuide.getURL(), startsWith("https://www.apriori.com/Collateral/Documents/English-US/online_help/CIConnect"));
     }
 
     @Test
@@ -84,7 +87,7 @@ public class NavBarTests extends TestBase {
             .navigateToAboutAPriori()
             .switchTab();
 
-        assertThat(cicUserGuide.getURL(),startsWith("https://www.apriori.com/about-us/"));
+        assertThat(cicUserGuide.getURL(), startsWith("https://www.apriori.com/about-us/"));
     }
 
     @Test

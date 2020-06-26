@@ -51,16 +51,17 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
         pageUtils.waitForElementToAppear(workflowLabel);
     }
 
-    public UserList clickUsersMenu(){
+    public UserList clickUsersMenu() {
         return pageHeader.clickUsersMenu();
     }
 
-    public ConnectorList clickConnectorsMenu(){
+    public ConnectorList clickConnectorsMenu() {
         return pageHeader.clickConnectorsMenu();
     }
 
     /**
      * clicks on schedule tab
+     *
      * @return new Schedule page
      */
     public Schedule clickScheduleTab() {
@@ -70,6 +71,7 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
 
     /**
      * clicks on view history tab
+     *
      * @return new History page
      */
     public History clickScheduleHistoryTab() {
@@ -91,7 +93,7 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
         return new CicUserGuide(driver);
     }
 
-    public CicUserGuide navigateToAboutAPriori(){
+    public CicUserGuide navigateToAboutAPriori() {
         pageHeader.navigateToAboutAPriori();
         return new CicUserGuide(driver);
     }
