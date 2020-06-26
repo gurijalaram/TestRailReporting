@@ -20,6 +20,27 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[contains(@class, 'sourceDialogNew ')]")
     private WebElement adHocViewDiaolog;
 
+    @FindBy(xpath = "//ul[@class='list collapsible']//p[contains(text(), 'aPriori Ad Hoc Data 19.3.0.0_RC3')]/..")
+    private WebElement adHocViewDataSourceButton;
+
+    @FindBy(xpath = "//span[contains(text(), 'Choose Data...')]/..")
+    private WebElement chooseDataButton;
+
+    @FindBy(css = "h2")
+    private WebElement chooseDataHeading;
+
+    @FindBy(xpath = "//ul[@id='sourceFieldsTree']//p[contains(text(), 'All Latest Scenarios')]/..")
+    private WebElement firstSourceOptionLeft;
+
+    @FindBy(id = "toRight")
+    private WebElement toRightButton;
+
+    @FindBy(xpath = "//ul[@id='destinationFieldsTree']//p[contains(text(), 'All Latest Scenarios')]/..")
+    private WebElement firstSourceOptionRight;
+
+    @FindBy(id = "goToDesigner")
+    private WebElement goToDesignerButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -39,6 +60,33 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
     @Override
     protected void isLoaded() throws Error {
 
+    }
+
+    /**
+     * Click data source in ad hoc view
+     * @return Instance of CreateAdHocViewPage
+     */
+    public CreateAdHocViewPage clickDataSource() {
+        pageUtils.waitForElementAndClick(adHocViewDataSourceButton);
+        pageUtils.waitForElementAndClick(chooseDataButton);
+        pageUtils.waitForElementToAppear(chooseDataHeading);
+        pageUtils.waitForElementToAppear(firstSourceOptionLeft);
+        return this;
+    }
+
+    /**
+     * Moves all data sources to right
+     * @return Instance of CreateAdHocViewPage
+     */
+    public CreateAdHocViewPage moveAllToRight() {
+        pageUtils.waitForElementAndClick(toRightButton);
+        pageUtils.waitForElementToAppear(firstSourceOptionRight);
+        return this;
+    }
+
+    public CreateAdHocViewDesignerPage goToDesigner() {
+        pageUtils.waitForElementAndClick(goToDesignerButton);
+        return new CreateAdHocViewDesignerPage(driver);
     }
 
     /**

@@ -14,6 +14,8 @@ import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.pageobjects.reports.header.PageHeader;
+import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewDesignerPage;
+import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -29,13 +31,14 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 public class ExportSetTests extends TestBase {
 
     private com.apriori.pageobjects.reports.pages.homepage.HomePage reportsHomePage;
+    private CreateAdHocViewDesignerPage createAdHocViewDesignerPage;
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
     private CiaUserGuide ciaUserGuide;
+    private NewExportSet newExportSet;
     private HomePage homePage;
     private Logout logout;
-    private NewExportSet newExportSet;
 
     public ExportSetTests() {
         super();
@@ -47,8 +50,8 @@ public class ExportSetTests extends TestBase {
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
         scenarioExport = new LoginPage(driver)
-                .login()
-                .navigateToManageScenarioExport();
+            .login()
+            .navigateToManageScenarioExport();
 
         assertThat(scenarioExport.isHeaderDisplayed(), is(equalTo(true)));
         assertThat(scenarioExport.isHeaderEnabled(), is(equalTo(true)));
@@ -60,8 +63,8 @@ public class ExportSetTests extends TestBase {
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
         systemDataExport = new LoginPage(driver)
-                .login()
-                .navigateToManageSystemDataExport();
+            .login()
+            .navigateToManageSystemDataExport();
 
         assertThat(systemDataExport.isHeaderDisplayed(), is(equalTo(true)));
         assertThat(systemDataExport.isHeaderEnabled(), is(equalTo(true)));
@@ -74,10 +77,10 @@ public class ExportSetTests extends TestBase {
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
         cirUserGuide = new LoginPage(driver)
-                .login()
-                .navigateToHelpReportsGuide()
-                .switchTab(PageHeader.class)
-                .switchToIFrameUserGuide("page_iframe");
+            .login()
+            .navigateToHelpReportsGuide()
+            .switchTab(PageHeader.class)
+            .switchToIFrameUserGuide("page_iframe");
 
         assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
@@ -90,8 +93,8 @@ public class ExportSetTests extends TestBase {
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
         ciaUserGuide = new LoginPage(driver)
-                .login()
-                .navigateToHelpAdminGuide();
+            .login()
+            .navigateToHelpAdminGuide();
 
         assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
         assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
@@ -103,8 +106,8 @@ public class ExportSetTests extends TestBase {
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
         ciaUserGuide = new LoginPage(driver)
-                .login()
-                .navigateToScenarioExportChapterPage();
+            .login()
+            .navigateToScenarioExportChapterPage();
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         assertThat(ciaUserGuide.getTabCount(), is(2));
@@ -118,8 +121,8 @@ public class ExportSetTests extends TestBase {
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
         logout = new LoginPage(driver)
-                .login()
-                .navigateToAdminLogout();
+            .login()
+            .navigateToAdminLogout();
 
         String headerToCheck = logout.getHeaderToCheck();
 
@@ -134,12 +137,12 @@ public class ExportSetTests extends TestBase {
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
         reportsHomePage = new LoginPage(driver)
-                .login()
-                .navigateToReports();
+            .login()
+            .navigateToReports();
 
         reportsHomePage = new com.apriori.pageobjects.reports.pages.login.LoginPage(driver)
-                .switchTab(com.apriori.pageobjects.reports.pages.login.LoginPage.class)
-                .login();
+            .switchTab(com.apriori.pageobjects.reports.pages.login.LoginPage.class)
+            .login();
 
         String urlToCheck = reportsHomePage.getUrlToCheck();
         reportsHomePage.waitForReportsLogoutDisplayedToAppear();
@@ -156,17 +159,17 @@ public class ExportSetTests extends TestBase {
     @Description("Export specific scenario and view results")
     public void testScenarioExportAndViewResults() {
         newExportSet = new LoginPage(driver)
-                .login()
-                .navigateToManageScenarioExport()
-                .clickNew()
-                .inputSetName()
-                .selectComponentType(ComponentTypeEnum.ROLLUP.getComponentType())
-                .inputNamePartNumber("ALL CASTING")
-                .inputScenarioName(Constants.DEFAULT_SCENARIO_NAME)
-                .setDateTimeToNow()
-                .clickCreateExportButton()
-                .goToHistoryTab()
-                .clickRefreshButton();
+            .login()
+            .navigateToManageScenarioExport()
+            .clickNew()
+            .inputSetName()
+            .selectComponentType(ComponentTypeEnum.ROLLUP.getComponentType())
+            .inputNamePartNumber("ALL CASTING")
+            .inputScenarioName(Constants.DEFAULT_SCENARIO_NAME)
+            .setDateTimeToNow()
+            .clickCreateExportButton()
+            .goToHistoryTab()
+            .clickRefreshButton();
 
         assertThat(newExportSet.getFirstExportSetNameFromTable(), is(equalTo(newExportSet.getExpectedExportSetName())));
         assertThat(newExportSet.getFirstExportSetStatusFromTable(), is(containsString("Started")));
@@ -178,14 +181,14 @@ public class ExportSetTests extends TestBase {
     @Description("Export system data and ensure it worked")
     public void testSystemDataExportAndVerify() {
         systemDataExport = new LoginPage(driver)
-                .login()
-                .navigateToManageSystemDataExport()
-                .clickEditSystemDataExport()
-                .clickOnce()
-                .clickSetDateCurrent()
-                .clickUpdate()
-                .clickViewHistory()
-                .clickRefreshButton();
+            .login()
+            .navigateToManageSystemDataExport()
+            .clickEditSystemDataExport()
+            .clickOnce()
+            .clickSetDateCurrent()
+            .clickUpdate()
+            .clickViewHistory()
+            .clickRefreshButton();
 
         /*Integer tableRowCount = systemDataExport.getTableRowCount();
         systemDataExport.clickRefreshButton();
@@ -195,5 +198,22 @@ public class ExportSetTests extends TestBase {
         assertThat(actualTableRowCount, is(equalTo(tableRowCount + 1)));*/
         assertThat(systemDataExport.getFirstUserInTable(), is(containsString("qa-automation-01")));
         assertThat(systemDataExport.getFirstStatusInTable(), is(containsString(" Success")));
+    }
+
+    @Test
+    @Category(CustomerSmokeTests.class)
+    @TestRail(testCaseId = "80691")
+    @Description("Testing Creation of Ad Hoc Report and ensure it worked")
+    public void testCreateAdHocReport() {
+        createAdHocViewDesignerPage = new com.apriori.pageobjects.reports.pages.login.LoginPage(driver)
+            .login()
+            .navigateToCreateAdHocViewPage()
+            .clickDataSource()
+            .moveAllToRight()
+            .goToDesigner()
+            .searchFields("part number")
+            .selectPartNumberFieldOptionForColumns()
+            .searchMeasuresFields("scenario fully burdened cost")
+            .selectScenarioFbcFieldOptionForRows();
     }
 }
