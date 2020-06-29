@@ -26,7 +26,7 @@ public enum ColumnsEnum {
     STATUS("Status"),
     PROCESS_GROUP("Process Group"),
     VPE("VPE"),
-    LOCKED_WORKSPACE("Locked / Workspace"),
+    STATE("State"),
     LAST_SAVED("Last Saved");
 
     private final String columns;

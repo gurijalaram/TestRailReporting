@@ -112,7 +112,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.93, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.05, Total Capital Investments (USD): 11,753.83"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.95, Piece Part Cost (USD): 0.62, Fully Burdened Cost (USD): 1.04, Total Capital Investments (USD): 11,753.83"));
     }
 
     @Test
@@ -542,7 +542,7 @@ public class ProcessRoutingTests extends TestBase {
         assertThat(processRoutingPage.getMachineName(), is("DoAll 3613-1 Vert"));
 
         processRoutingPage.selectProcessChart("2 Axis Lathe");
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 19.47"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 19.72"));
         assertThat(processRoutingPage.getMachineName(), is("Virtual 2 Axis Lathe - Small"));
     }
 
