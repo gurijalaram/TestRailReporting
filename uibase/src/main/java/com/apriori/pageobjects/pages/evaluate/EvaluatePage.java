@@ -493,7 +493,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getCycleTimeCount() {
         pageUtils.waitForElementToAppear(cycleTimeCount);
-        return Double.parseDouble(cycleTimeCount.getText());
+        return Double.parseDouble(cycleTimeCount.getAttribute("title"));
     }
 
     /**
@@ -503,7 +503,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getMaterialCost() {
         pageUtils.waitForElementToAppear(materialCost);
-        return Double.parseDouble(materialCost.getText());
+        return Double.parseDouble(materialCost.getAttribute("title"));
     }
 
     /**
@@ -512,7 +512,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public String getComponentsCost() {
-        return pageUtils.waitForElementToAppear(componentsCost).getText();
+        return pageUtils.waitForElementToAppear(componentsCost).getAttribute("title");
     }
 
     /**
@@ -521,7 +521,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public String getAssemblyProcessCost() {
-        return pageUtils.waitForElementToAppear(assemblyProcessCost).getText();
+        return pageUtils.waitForElementToAppear(assemblyProcessCost).getAttribute("title");
     }
 
     /**
@@ -531,7 +531,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getPartCost() {
         pageUtils.waitForElementToAppear(partCost);
-        return Double.parseDouble(partCost.getText());
+        return Double.parseDouble(partCost.getAttribute("title"));
     }
 
     /**
@@ -541,7 +541,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getBurdenedCost() {
         pageUtils.waitForElementToAppear(burdenedCost);
-        return Double.parseDouble(burdenedCost.getText());
+        return Double.parseDouble(burdenedCost.getAttribute("title"));
     }
 
     /**
@@ -563,7 +563,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getCapitalInvestment() {
         pageUtils.waitForElementToAppear(capitalInvestments);
-        return Double.parseDouble(capitalInvestments.getText());
+        return Double.parseDouble(capitalInvestments.getAttribute("title"));
     }
 
     /**

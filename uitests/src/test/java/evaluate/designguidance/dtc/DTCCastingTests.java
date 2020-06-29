@@ -174,7 +174,7 @@ public class DTCCastingTests extends TestBase {
         guidancePage.selectIssueTypeAndGCD("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
         assertThat(guidancePage.getGuidanceMessage(), containsString("High Pressure Die Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
 
-        guidancePage.selectIssueTypeAndGCD("Hole Issue", "Minimum Hole Diameter", "SimpleHole:12");
+        guidancePage.selectIssueTypeAndGCD("Hole Issue", "Minimum Hole Diameter", "SimpleHole:13");
         assertThat(guidancePage.getGuidanceMessage(), containsString("High Pressure Die Casting is not feasible. Hole Diameter is less than the minimum limit with this material."));
     }
 
