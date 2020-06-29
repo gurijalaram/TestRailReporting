@@ -232,6 +232,8 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementAppear(leftPanel);
         pageUtils.waitForElementAppear(viewerCanvas);
         pageUtils.waitForElementAppear(controlToolbars);
+        pageUtils.waitForElementAndClick(renderButton);
+        pageUtils.waitForElementToAppear(renderSelectedButton);
     }
 
     /**
@@ -330,17 +332,8 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public DesignGuidancePage openDesignGuidance() {
-        waitRenderSelected();
         pageUtils.waitForElementAndClick(guidanceDetails);
         return new DesignGuidancePage(driver);
-    }
-
-    /**
-     * Waits for the render to be selected
-     */
-    public void waitRenderSelected() {
-        pageUtils.waitForElementAndClick(renderButton);
-        pageUtils.waitForElementToAppear(renderSelectedButton);
     }
 
     /**
