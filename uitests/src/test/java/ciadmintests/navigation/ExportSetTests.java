@@ -79,7 +79,7 @@ public class ExportSetTests extends TestBase {
         cirUserGuide = new LoginPage(driver)
             .login()
             .navigateToHelpReportsGuide()
-            .switchTab(PageHeader.class)
+            .switchTab()
             .switchToIFrameUserGuide("page_iframe");
 
         assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
@@ -136,21 +136,17 @@ public class ExportSetTests extends TestBase {
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
-        reportsHomePage = new LoginPage(driver)
-            .login()
-            .navigateToReports();
+        homePage = new LoginPage(driver)
+                .login()
+                .navigateToReports();
 
-        reportsHomePage = new com.apriori.pageobjects.reports.pages.login.LoginPage(driver)
-            .switchTab(com.apriori.pageobjects.reports.pages.login.LoginPage.class)
-            .login();
+        String urlToCheck = homePage.getUrlToCheck();
+        homePage.waitForReportsLogoutDisplayedToAppear();
 
-        String urlToCheck = reportsHomePage.getUrlToCheck();
-        reportsHomePage.waitForReportsLogoutDisplayedToAppear();
-
-        assertThat(reportsHomePage.getCurrentUrl(), equalTo(urlToCheck + Constants.REPORTS_URL_SUFFIX + Constants.REPORTS_LAST_SUFFIX));
-        assertThat(reportsHomePage.getTabCount(), is(equalTo(2)));
-        assertThat(reportsHomePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(reportsHomePage.isReportsLogoutEnabled(), is(true));
+        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.REPORTS_URL_SUFFIX + Constants.REPORTS_LAST_SUFFIX));
+        assertThat(homePage.getTabCount(), is(equalTo(2)));
+        assertThat(homePage.isReportsLogoutDisplayed(), is(true));
+        assertThat(homePage.isReportsLogoutEnabled(), is(true));
     }
 
     @Test
