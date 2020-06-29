@@ -189,13 +189,7 @@ public class ExportSetTests extends TestBase {
             .clickUpdate()
             .clickViewHistory()
             .clickRefreshButton();
-
-        /*Integer tableRowCount = systemDataExport.getTableRowCount();
-        systemDataExport.clickRefreshButton();
-        Integer actualTableRowCount = systemDataExport.getTableRowCount();
-
-        assertThat(actualTableRowCount, is(not(tableRowCount)));
-        assertThat(actualTableRowCount, is(equalTo(tableRowCount + 1)));*/
+        
         assertThat(systemDataExport.getFirstUserInTable(), is(containsString("qa-automation-01")));
         assertThat(systemDataExport.getFirstStatusInTable(), is(containsString(" Success")));
     }
@@ -212,8 +206,14 @@ public class ExportSetTests extends TestBase {
             .moveAllToRight()
             .goToDesigner()
             .searchFields("part number")
-            .selectPartNumberFieldOptionForColumns()
+            .selectPartNumberFieldOptionForRows()
             .searchMeasuresFields("scenario fully burdened cost")
-            .selectScenarioFbcFieldOptionForRows();
+            .selectScenarioFbcFieldOptionForColumns()
+            .addFilterPartNumber()
+            .selectPartNumber()
+            .clickApply();
+
+        assertThat(createAdHocViewDesignerPage.getTableText(true), is(equalTo("0200613")));
+        assertThat(createAdHocViewDesignerPage.getTableText(false), is(equalTo("3.22")));
     }
 }

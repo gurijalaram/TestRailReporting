@@ -84,6 +84,10 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
         return this;
     }
 
+    /**
+     * Go to Designer
+     * @return Instance of CreateAdHocViewPage
+     */
     public CreateAdHocViewDesignerPage goToDesigner() {
         pageUtils.waitForElementAndClick(goToDesignerButton);
         return new CreateAdHocViewDesignerPage(driver);

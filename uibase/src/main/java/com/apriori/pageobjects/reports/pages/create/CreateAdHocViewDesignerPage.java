@@ -2,6 +2,7 @@ package com.apriori.pageobjects.reports.pages.create;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -57,10 +58,37 @@ public class CreateAdHocViewDesignerPage extends ReportsPageHeader {
     private WebElement addToRowsRightClickOption;
 
     @FindBy(xpath = "//ul[@class='levels']//span[contains(text(), 'Scenario Part Number')]/..")
-    private WebElement scenarioPartNumberInColumns;
+    private WebElement scenarioPartNumberInRows;
 
     @FindBy(xpath = "//ul[@class='members']//span[contains(text(), 'Scenario Fully Burdened Cost')]/..")
-    private WebElement scenarioFbcInRows;
+    private WebElement scenarioFbcInColumns;
+
+    @FindBy(xpath = "//div[@id='filters']/button")
+    private WebElement openFiltersButton;
+
+    @FindBy(xpath = "//span[@id='filterPanelMutton']/preceding-sibling::div")
+    private WebElement filtersTabTitle;
+
+    @FindBy(xpath = "//p[contains(text(), 'Create Filter')]/..")
+    private WebElement createFilterRightClickOption;
+
+    @FindBy(xpath = "//div[@id='filter-container']//a")
+    private WebElement filterCriteriaDropdown;
+
+    @FindBy(xpath = "//div[@id='filter-container']//input")
+    private WebElement filterCriteriaSearchInput;
+
+    @FindBy(xpath = "//fieldset[@id='applyFilter']/button")
+    private WebElement applyFilterButton;
+
+    @FindBy(xpath = "//li[@title='0200613']/div/a")
+    private WebElement dropdownFilterOptionOne;
+
+    @FindBy(xpath = "//tr[@id='detailRow_0']/td[1]")
+    private WebElement firstRowCellOne;
+
+    @FindBy(xpath = "//tr[@id='detailRow_0']/td[2]")
+    private WebElement firstRowCellTwo;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -103,12 +131,12 @@ public class CreateAdHocViewDesignerPage extends ReportsPageHeader {
      * Select Part Number field option for columns
      * @return Instance of CreateAdHocViewDesignerPage
      */
-    public CreateAdHocViewDesignerPage selectPartNumberFieldOptionForColumns() {
+    public CreateAdHocViewDesignerPage selectPartNumberFieldOptionForRows() {
         Actions actions = new Actions(driver);
         actions.contextClick(scenarioPartNumberElement)
                 .perform();
-        pageUtils.waitForElementAndClick(addToColumnsRightClickOption);
-        pageUtils.waitForElementToAppear(scenarioPartNumberInColumns);
+        pageUtils.waitForElementAndClick(addToRowsRightClickOption);
+        pageUtils.waitForElementToAppear(scenarioPartNumberInRows);
         return this;
     }
 
@@ -131,12 +159,64 @@ public class CreateAdHocViewDesignerPage extends ReportsPageHeader {
      * Select Scenario FBC measures option for columns
      * @return Instance of CreateAdHocViewDesignerPage
      */
-    public CreateAdHocViewDesignerPage selectScenarioFbcFieldOptionForRows() {
+    public CreateAdHocViewDesignerPage selectScenarioFbcFieldOptionForColumns() {
         Actions actions = new Actions(driver);
         actions.contextClick(scenarioFullyBurdenedCostElement)
                 .perform();
-        pageUtils.waitForElementAndClick(addToRowsRightClickOption);
-        pageUtils.waitForElementToAppear(scenarioFbcInRows);
+        pageUtils.waitForElementAndClick(addToColumnsRightClickOption);
+        pageUtils.waitForElementToAppear(scenarioFbcInColumns);
         return this;
+    }
+
+    /**
+     * Opens filter pane
+     * @return Instance of CreateAdHocViewDesignerPage
+     */
+    public CreateAdHocViewDesignerPage openFilterPane() {
+        pageUtils.waitForElementAndClick(openFiltersButton);
+        pageUtils.waitForElementAndClick(filtersTabTitle);
+        return this;
+    }
+
+    /**
+     * Add Part Number filter
+     * @return Instance of CreateAdHocViewDesignerPage
+     */
+    public CreateAdHocViewDesignerPage addFilterPartNumber() {
+        Actions actions = new Actions(driver);
+        actions.contextClick(scenarioPartNumberElement)
+                .perform();
+        pageUtils.waitForElementAndClick(createFilterRightClickOption);
+        pageUtils.waitForElementToAppear(filtersTabTitle);
+        return this;
+    }
+
+    /**
+     * Select part number in filter dropdown
+     * @return Instance of CreateAdHocViewDesignerPage
+     */
+    public CreateAdHocViewDesignerPage selectPartNumber() {
+        pageUtils.waitForElementAndClick(filterCriteriaDropdown);
+        pageUtils.waitForElementAndClick(filterCriteriaSearchInput);;
+        pageUtils.waitForElementAndClick(dropdownFilterOptionOne);
+        return this;
+    }
+
+    /**
+     * Clicks Apply button
+     * @return Instance of CreateAdHocViewDesignerPage
+     */
+    public CreateAdHocViewDesignerPage clickApply() {
+        pageUtils.waitForElementAndClick(applyFilterButton);
+        return this;
+    }
+
+    /**
+     * Gets value from table
+     * @return Instance of CreateAdHocViewDesignerPage
+     */
+    public String getTableText(boolean getCellOne) {
+        WebElement elementToUse = getCellOne ? firstRowCellOne : firstRowCellTwo;
+        return elementToUse.getText();
     }
 }
