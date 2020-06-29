@@ -76,8 +76,8 @@ public class PreviewPanelTests extends TestBase {
         previewPanelPage = explorePage.openPreviewPanel();
 
         assertThat(previewPanelPage.isImageDisplayed(), is(true));
-        assertThat(previewPanelPage.getPiecePartCost(), is("0.99"));
-        assertThat(previewPanelPage.getFullyBurdenedCost(), is("1.70"));
+        assertThat(previewPanelPage.getPiecePartCost(), is("1.07"));
+        assertThat(previewPanelPage.getFullyBurdenedCost(), is("1.79"));
         assertThat(previewPanelPage.getTotalCapitalInvestment(), is("19,665.07"));
     }
 }

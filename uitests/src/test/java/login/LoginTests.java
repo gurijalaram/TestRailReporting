@@ -89,7 +89,9 @@ public class LoginTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
 
-        assertThat(loginPage.getMarketingText(), containsString("For the past 7 years, aPriori has hosted the International Cost Insight Conference"));
+        assertThat(loginPage.getMarketingText(), containsString("COST INSIGHT GENERATE:\n" +
+            "SOLUTION FOR A NEW NORMAL\n" +
+            "Proactively notify your team of manufacturability issues and enable them to optimize their designs faster."));
         assertThat(loginPage.isLogoDisplayed(), is(true));
     }
 

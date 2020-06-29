@@ -375,7 +375,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Stress Relief / Ultrasonic Cleaning"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stress Relief / Ultrasonic Cleaning"));
     }
 
     @Test
@@ -471,7 +471,7 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Gravity Die Casting"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Gravity Die Casting"));
     }
 
     @Test
@@ -667,7 +667,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder("2AL+3AM Routing", "4 Axis Mill Routing", "3 Axis Lathe Routing", "2AL+4AM Routing", "Drill Press Routing", "5 Axis Mill Routing", "3 Axis Mill Routing", "MillTurn Routing", "2AL+5AM Routing"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("2AL+3AM Routing", "4 Axis Mill Routing", "Closed Die Forging", "3 Axis Lathe Routing", "2AL+4AM Routing", "Drill Press Routing", "5 Axis Mill Routing", "3 Axis Mill Routing", "MillTurn Routing", "2AL+5AM Routing"));
     }
 
     @Test
@@ -878,7 +878,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / " +
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Melting / High Pressure Die Casting / Trim / 5 Axis Mill / Drill Press / Cylindrical Grinder / " +
             "Reciprocating Surface Grinder"));
 
         processRoutingPage = evaluatePage.openProcessDetails()
@@ -889,6 +889,6 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getRoutingLabels(), hasItems("3 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder"));
+        assertThat(processRoutingPage.getRoutingLabels(), containsInAnyOrder("3 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder"));
     }
 }

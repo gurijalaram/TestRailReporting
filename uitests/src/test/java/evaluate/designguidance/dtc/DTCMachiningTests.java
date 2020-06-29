@@ -201,7 +201,7 @@ public class DTCMachiningTests extends TestBase {
 
         guidancePage = new GuidancePage(driver);
         guidancePage.selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "Curved Walls", "CurvedWall:21");
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Side Milling: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry. "));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Side Milling: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry."));
         assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("2")));
 
         guidancePage.selectIssueTypeAndGCD("Slow Machining Operations, Contoured Surface", "Curved Surfaces", "CurvedSurface:2");
