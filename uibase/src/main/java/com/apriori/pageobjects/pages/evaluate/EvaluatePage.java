@@ -207,6 +207,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(xpath = "//div[contains(text(),'Render')]")
     private WebElement renderButton;
 
+    @FindBy(css = "button[data-ap-comp='solidViewerToolbarButton'][class='selected']")
+    private WebElement renderSelectedButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -229,7 +232,6 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementAppear(leftPanel);
         pageUtils.waitForElementAppear(viewerCanvas);
         pageUtils.waitForElementAppear(controlToolbars);
-        pageUtils.waitForElementAndClick(renderButton);
     }
 
     /**
@@ -336,8 +338,9 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Waits for the render to be selected
      */
-    private void waitRenderSelected() {
-        pageUtils.waitForElementToAppear(By.cssSelector("button[data-ap-comp='solidViewerToolbarButton'][class='selected']"));
+    public void waitRenderSelected() {
+        pageUtils.waitForElementAndClick(renderButton);
+        pageUtils.waitForElementToAppear(renderSelectedButton);
     }
 
     /**
