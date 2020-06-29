@@ -2,7 +2,6 @@ package com.apriori.pageobjects.reports.pages.create;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;

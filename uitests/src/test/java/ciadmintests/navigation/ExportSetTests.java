@@ -3,7 +3,6 @@ package ciadmintests.navigation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.admin.pages.homepage.HomePage;
@@ -13,9 +12,7 @@ import com.apriori.pageobjects.admin.pages.manage.NewExportSet;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
-import com.apriori.pageobjects.reports.header.PageHeader;
 import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewDesignerPage;
-import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
