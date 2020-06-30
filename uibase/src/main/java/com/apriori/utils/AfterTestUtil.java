@@ -3,10 +3,10 @@ package com.apriori.utils;
 import com.apriori.apibase.services.response.objects.DisplayPreferencesEntity;
 import com.apriori.apibase.services.response.objects.ProductionDefaultEntity;
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
+import com.apriori.apibase.services.response.objects.UnitVariantSettingInfoSchema;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
-import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 
 import io.qameta.allure.Issue;
@@ -77,8 +77,15 @@ public class AfterTestUtil {
             .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
             .setAutoLogin(false)
-            .setBody(new DisplayPreferencesEntity().setSystemUnits(true)
-                .setCurrencyCode(CurrencyEnum.USD.getCurrency()))
+            .setBody(new DisplayPreferencesEntity().setUnitVariantSettingsInfo(new UnitVariantSettingInfoSchema().setType("simple")
+                .setName("CUSTOM")
+                .setMetric(false)
+                .setLength("ft")
+                .setMass("lb")
+                .setTime("s")
+                .setDecimalPlaces(2)
+                .setSystem(true)
+                .setCustom(false)))
             .commitChanges()
             .connect()
             .post();
@@ -91,14 +98,14 @@ public class AfterTestUtil {
      */
     private void resetDecimalPlaces(String username) {
         new HTTPRequest()
-                .unauthorized()
-                .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
-                .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=cost.table.decimal.places")
-                .setAutoLogin(false)
-                .setCustomBody("2")
-                .commitChanges()
-                .connect()
-                .post();
+            .unauthorized()
+            .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
+            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/preferences/preference?key=cost.table.decimal.places")
+            .setAutoLogin(false)
+            .setCustomBody("2")
+            .commitChanges()
+            .connect()
+            .post();
     }
 
     /**

@@ -1,28 +1,52 @@
 {
-  "definitions": {},
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
   "type": "object",
-  "title": "The Root Schema",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "examples": [
+    {
+      "currencyCode": "USD",
+      "currencyExchangeRate": 1.0,
+      "unitVariantSettingsInfo": {
+        "@type": "simple",
+        "name": "CGS",
+        "metric": true,
+        "length": "cm",
+        "mass": "g",
+        "time": "s",
+        "decimalPlaces": 2,
+        "system": true,
+        "custom": false
+      }
+    }
+  ],
   "required": [
     "currencyCode",
-    "currencyExchangeRate"
+    "currencyExchangeRate",
+    "unitVariantSettingsInfo"
   ],
+  "additionalProperties": true,
   "properties": {
     "currencyCode": {
+      "$id": "#/properties/currencyCode",
       "type": "string",
-      "title": "The Currencycode Schema",
+      "title": "The currencyCode schema",
+      "description": "An explanation about the purpose of this instance.",
       "default": "",
       "examples": [
         "USD"
-      ],
-      "pattern": "^(.*)$"
+      ]
     },
     "currencyExchangeRate": {
+      "$id": "#/properties/currencyExchangeRate",
       "type": "number",
-      "title": "The Currencyexchangerate Schema",
-      "default": 0,
+      "title": "The currencyExchangeRate schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0.0,
       "examples": [
-        1
+        1.0
       ]
     },
     "unitVariantSettingsInfo": {
@@ -31,6 +55,30 @@
       "title": "The unitVariantSettingsInfo schema",
       "description": "An explanation about the purpose of this instance.",
       "default": {},
+      "examples": [
+        {
+          "@type": "simple",
+          "name": "CGS",
+          "metric": true,
+          "length": "cm",
+          "mass": "g",
+          "time": "s",
+          "decimalPlaces": 2,
+          "system": true,
+          "custom": false
+        }
+      ],
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ],
       "additionalProperties": true,
       "properties": {
         "@type": {
@@ -50,7 +98,7 @@
           "description": "An explanation about the purpose of this instance.",
           "default": "",
           "examples": [
-            "CUSTOM"
+            "CGS"
           ]
         },
         "metric": {
@@ -70,7 +118,7 @@
           "description": "An explanation about the purpose of this instance.",
           "default": "",
           "examples": [
-            "mm"
+            "cm"
           ]
         },
         "mass": {
@@ -80,7 +128,7 @@
           "description": "An explanation about the purpose of this instance.",
           "default": "",
           "examples": [
-            "kg"
+            "g"
           ]
         },
         "time": {
@@ -90,7 +138,7 @@
           "description": "An explanation about the purpose of this instance.",
           "default": "",
           "examples": [
-            "ms"
+            "s"
           ]
         },
         "decimalPlaces": {
@@ -110,7 +158,7 @@
           "description": "An explanation about the purpose of this instance.",
           "default": false,
           "examples": [
-            false
+            true
           ]
         },
         "custom": {
@@ -120,7 +168,7 @@
           "description": "An explanation about the purpose of this instance.",
           "default": false,
           "examples": [
-            true
+            false
           ]
         }
       }
