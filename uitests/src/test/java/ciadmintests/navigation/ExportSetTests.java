@@ -23,6 +23,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ExportSetTests extends TestBase {
@@ -42,7 +43,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -56,6 +57,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "2981")
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
@@ -69,6 +71,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "2982")
     @Issue("AP-58758")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
@@ -85,6 +88,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "2983")
     @Issue("AP-58758")
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
@@ -99,6 +103,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "2984")
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
@@ -114,6 +119,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "2985")
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
@@ -129,7 +135,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
@@ -147,7 +153,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "80686")
     @Description("Export specific scenario and view results")
     public void testScenarioExportAndViewResults() {
@@ -169,7 +175,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "80687")
     @Description("Export system data and ensure it worked")
     public void testSystemDataExportAndVerify() {
@@ -188,7 +194,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "80691")
     @Description("Testing Creation of Ad Hoc Report and ensure it worked")
     public void testCreateAdHocReport() {
