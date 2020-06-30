@@ -35,6 +35,18 @@ public class CisUtils extends ApiUtils {
         return value;
     }
 
+    public static String getErrors(Object obj, Class klass) {
+        String value = null;
+        try {
+            value = getPropertyValue(obj, klass, "getErrors");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.error(Arrays.toString(e.getStackTrace()));
+        }
+
+        return value;
+    }
+
     public static String getReportIdentity(Object obj, Class klass) {
         String value = null;
         try {
