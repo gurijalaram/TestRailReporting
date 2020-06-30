@@ -5,15 +5,15 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.admin.pages.homepage.HomePage;
-import com.apriori.pageobjects.admin.pages.login.LoginPage;
+import com.apriori.pageobjects.admin.pages.homepage.AdminHomePage;
+import com.apriori.pageobjects.admin.pages.login.AdminLoginPage;
 import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.NewExportSet;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
+import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
-import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ComponentTypeEnum;
@@ -27,12 +27,12 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ExportSetsTests extends TestBase {
 
-    private com.apriori.pageobjects.reports.pages.homepage.HomePage reportsHomePage;
+    private ReportsHomePage reportsHomePage;
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
     private CiaUserGuide ciaUserGuide;
-    private HomePage homePage;
+    private AdminHomePage adminHomePage;
     private Logout logout;
     private NewExportSet newExportSet;
 
@@ -45,7 +45,7 @@ public class ExportSetsTests extends TestBase {
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
-        scenarioExport = new LoginPage(driver)
+        scenarioExport = new AdminLoginPage(driver)
             .login()
             .navigateToManageScenarioExport();
 
@@ -58,7 +58,7 @@ public class ExportSetsTests extends TestBase {
     @TestRail(testCaseId = "2981")
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
-        systemDataExport = new LoginPage(driver)
+        systemDataExport = new AdminLoginPage(driver)
             .login()
             .navigateToManageSystemDataExport();
 
@@ -72,7 +72,7 @@ public class ExportSetsTests extends TestBase {
     @Issue("AP-58758")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
-        cirUserGuide = new LoginPage(driver)
+        cirUserGuide = new AdminLoginPage(driver)
             .login()
             .navigateToHelpReportsGuide()
             .switchTab()
@@ -88,7 +88,7 @@ public class ExportSetsTests extends TestBase {
     @Issue("AP-58758")
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
-        ciaUserGuide = new LoginPage(driver)
+        ciaUserGuide = new AdminLoginPage(driver)
             .login()
             .navigateToHelpAdminGuide();
 
@@ -101,7 +101,7 @@ public class ExportSetsTests extends TestBase {
     @TestRail(testCaseId = "2984")
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
-        ciaUserGuide = new LoginPage(driver)
+        ciaUserGuide = new AdminLoginPage(driver)
             .login()
             .navigateToScenarioExportChapterPage();
 
@@ -116,7 +116,7 @@ public class ExportSetsTests extends TestBase {
     @TestRail(testCaseId = "2985")
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
-        logout = new LoginPage(driver)
+        logout = new AdminLoginPage(driver)
             .login()
             .navigateToAdminLogout();
 
@@ -132,7 +132,7 @@ public class ExportSetsTests extends TestBase {
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
-        reportsHomePage = new LoginPage(driver)
+        adminHomePage = new AdminLoginPage(driver)
             .login()
             .navigateToReports();
 
@@ -153,7 +153,7 @@ public class ExportSetsTests extends TestBase {
     @TestRail(testCaseId = "80686")
     @Description("Export specific scenario and view results")
     public void testScenarioExportAndViewResults() {
-        newExportSet = new LoginPage(driver)
+        newExportSet = new AdminLoginPage(driver)
             .login()
             .navigateToManageScenarioExport()
             .clickNew()

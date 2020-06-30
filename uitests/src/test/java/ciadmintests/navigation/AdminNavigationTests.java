@@ -12,7 +12,7 @@ import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
-import com.apriori.pageobjects.reports.pages.homepage.HomePage;
+import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -27,7 +27,7 @@ import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 public class AdminNavigationTests extends TestBase {
 
-    private com.apriori.pageobjects.reports.pages.homepage.HomePage reportsHomePage;
+    private ReportsHomePage reportsHomePage;
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
