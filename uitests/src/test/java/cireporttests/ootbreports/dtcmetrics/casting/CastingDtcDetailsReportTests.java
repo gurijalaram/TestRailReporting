@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
-import com.apriori.pageobjects.reports.pages.login.LoginPage;
+import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
@@ -37,7 +37,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1692")
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcDetailsExportSetInputControls() {
-        genericReportPage = new LoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
@@ -64,7 +64,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC Details report")
     public void testRollupDropDown() {
-        castingDtcReportHeader = new LoginPage(driver)
+        castingDtcReportHeader = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
@@ -82,7 +82,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC Details input control panel functions correctly")
     public void testApplyButton() {
-        castingDtcReportHeader = new LoginPage(driver)
+        castingDtcReportHeader = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
@@ -100,7 +100,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Details input control panel works")
     public void testCancelButton() {
-        libraryPage = new LoginPage(driver)
+        libraryPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
@@ -114,7 +114,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC Details input control panel works")
     public void testResetButton() {
-        genericReportPage = new LoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
@@ -132,7 +132,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyDetailsReportAvailableAndCorrectData() {
-        genericReportPage = new LoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
