@@ -561,8 +561,8 @@ public class PageUtils {
      * @param locator - the locator of the element
      * @return
      */
-    public void waitForElementNotDisplayed(WebElement locator, double timeoutInMinutes) {
-        new WebDriverWait(driver, (long) (BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
+    public void waitForElementNotDisplayed(WebElement locator, int timeoutInMinutes) {
+        new WebDriverWait(driver, (BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(not((ExpectedCondition<Boolean>) element -> (locator).isDisplayed()));
     }
