@@ -250,6 +250,9 @@
         },
         "width": {
           "type": "number"
+        },
+        "userDefinedAttributes": {
+          "type": "object"
         }
       },
       "required": [

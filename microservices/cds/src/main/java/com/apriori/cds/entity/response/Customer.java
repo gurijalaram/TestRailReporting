@@ -9,11 +9,15 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Schema(location = "cds/CdsCustomerSchema.json")
 public class Customer extends CustomerBase {
     private Customer response;
+    private Boolean useExternalIdentityProvider;
+    private Boolean mfaRequired;
+    private List<String> oneTimePasswordApplications;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
@@ -22,6 +26,42 @@ public class Customer extends CustomerBase {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
+
+    public Boolean getMfaRequired() {
+        return mfaRequired;
+    }
+
+    public Customer setMfaRequired(Boolean mfaRequired) {
+        this.mfaRequired = mfaRequired;
+        return this;
+    }
+
+    public List<String> getOneTimePasswordApplications() {
+        return oneTimePasswordApplications;
+    }
+
+    public Customer setOneTimePasswordApplications(List<String> oneTimePasswordApplications) {
+        this.oneTimePasswordApplications = oneTimePasswordApplications;
+        return this;
+    }
+
+    public Boolean getUseExternalIdentityProvider() {
+        return useExternalIdentityProvider;
+    }
+
+    public Customer setUseExternalIdentityProvider(Boolean useExternalIdentityProvider) {
+        this.useExternalIdentityProvider = useExternalIdentityProvider;
+        return this;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public Customer setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
 
     public LocalDateTime getUpdatedAt() {
         return this.updatedAt;

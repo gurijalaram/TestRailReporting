@@ -7,11 +7,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.ComponentTableColumnsPage;
 import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.reports.pages.homepage.HomePage;
+import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
-import com.apriori.pageobjects.reports.pages.login.LoginPage;
+import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
@@ -47,7 +46,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
     private LibraryPage library;
-    private HomePage homePage;
+    private ReportsHomePage homePage;
 
     public AssemblyDetailsReportTests() {
         super();
@@ -57,7 +56,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1915")
     @Description("validate report is available by navigation")
     public void testReportAvailabilityByMenu() {
-        repository = new LoginPage(driver)
+        repository = new ReportsLoginPage(driver)
             .login()
             .navigateToViewRepositoryPage()
             .navigateToGeneralFolder();
@@ -75,7 +74,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
-        library = new LoginPage(driver)
+        library = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage();
 
@@ -89,7 +88,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearch() {
-        homePage = new LoginPage(driver)
+        homePage = new ReportsLoginPage(driver)
             .login();
 
         searchResults = new ViewSearchResultsPage(driver);
@@ -110,7 +109,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
-        assemblyDetailsReport = new LoginPage(driver)
+        assemblyDetailsReport = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -142,7 +141,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
-        assemblyDetailsReport = new LoginPage(driver)
+        assemblyDetailsReport = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -173,12 +172,14 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-58059")
+    @Issue("AP-53537")
     @TestRail(testCaseId = {"3067", "1929"})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        assemblyDetailsReport = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -189,12 +190,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .clickOk()
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
-
-        /*
-            The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
-            Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
-            Bug for this issue: https://jira.apriori.com/browse/AP-58059
-         */
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
@@ -218,12 +213,14 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-58059")
+    @Issue("AP-53537")
     @TestRail(testCaseId = {"3068", "1929"})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        assemblyDetailsReport = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -236,12 +233,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
-        /*
-            The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
-            Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
-            Bug for this issue: https://jira.apriori.com/browse/AP-58059
-         */
-
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
             assemblyDetailsReport.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
@@ -264,12 +255,14 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-58059")
+    @Issue("AP-53537")
     @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        assemblyDetailsReport = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -281,12 +274,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .clickOk()
             .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
-
-        /*
-            The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
-            Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
-            Bug for this issue: https://jira.apriori.com/browse/AP-58059
-         */
 
         assertThat(assemblyDetailsReport.areValuesAlmostEqual(
             assemblyDetailsReport.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
@@ -315,7 +302,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testSubTotalCalculationsSubAssembly() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        assemblyDetailsReport = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -346,7 +333,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testSubTotalCalculationsSubSubAsm() {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        assemblyDetailsReport = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -378,7 +365,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testSubTotalCalculationsTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
-        assemblyDetailsReport = new LoginPage(driver)
+        assemblyDetailsReport = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -409,7 +396,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
-        genericReportPage = new LoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -417,10 +404,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .setLatestExportDateToTodayInput()
             .ensureDatesAreCorrect(false, true);
-        //.waitForCorrectExportSetListCount("0");
 
-        // If this assertion fails, test fails as the export set is there because bug is not yet fixed
-        // TODO: Bring last method above back in once bug fixed
+        // TODO: Re-add waitForCorrectExportSetListCount("0") if is ever bug fixed
         assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 
@@ -429,7 +414,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
-        genericReportPage = new LoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
@@ -437,10 +422,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .setLatestExportDateToTodayPlusTwoPicker()
             .ensureDatesAreCorrect(false, false);
-        //.waitForCorrectExportSetListCount("0");
 
-        // If this assertion fails, test fails as the export set is there because bug is not yet fixed
-        // TODO: Bring last method above back in once bug fixed
+        // TODO: Re-add waitForCorrectExportSetListCount("0") if is ever bug fixed
         assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 
@@ -448,7 +431,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1930")
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
-        genericReportPage = new LoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())

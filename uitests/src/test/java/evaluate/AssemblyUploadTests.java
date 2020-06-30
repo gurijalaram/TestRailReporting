@@ -67,7 +67,7 @@ public class AssemblyUploadTests extends TestBase {
         assertThat(evaluatePage.getTotalComponents(), is("4"));
         assertThat(evaluatePage.getUniqueComponents(), is("4"));
         assertThat(evaluatePage.getWarningsCount(), is("4"));
-        assertThat(evaluatePage.getCycleTimeCount(), is("0.00"));
+        assertThat(evaluatePage.getCycleTimeCount(), is(0.0));
     }
 
     @Test
@@ -176,8 +176,8 @@ public class AssemblyUploadTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSelectedVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
-        assertThat(evaluatePage.getAnnualVolume(), is("3126"));
-        assertThat(evaluatePage.getProductionLife(), is("9"));
+        assertThat(evaluatePage.getAnnualVolume(), is("3,126"));
+        assertThat(evaluatePage.getProductionLife(), is("9.00"));
 
         explorePage = evaluatePage.delete()
             .deleteScenario()
@@ -219,7 +219,7 @@ public class AssemblyUploadTests extends TestBase {
         evaluatePage = new VPESelectionPage(driver).close()
             .closePanel();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Powder Coat Cart"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Coat Cart"));
     }
 
     @Test
