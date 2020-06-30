@@ -92,7 +92,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("3 Axis Mill"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
     }
 
     @Test
@@ -462,7 +462,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("High Pressure Die Casting"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("High Pressure Die Casting"));
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
@@ -667,7 +667,7 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder("2AL+3AM Routing", "4 Axis Mill Routing", "Closed Die Forging", "3 Axis Lathe Routing", "2AL+4AM Routing", "Drill Press Routing", "5 Axis Mill Routing", "3 Axis Mill Routing", "MillTurn Routing", "2AL+5AM Routing"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Ring Rolled Forging", "Closed Die Forging"));
     }
 
     @Test
