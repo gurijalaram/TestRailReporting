@@ -4,7 +4,7 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import cireporttests.login.LoginTests;
-import cireporttests.navigation.NavigationTests;
+import cireporttests.navigation.ReportsNavigationTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     LoginTests.class,
-    NavigationTests.class,
+    ReportsNavigationTests.class,
     AssemblyDetailsReportTests.class,
     MachiningDtcReportTests.class,
     CastingDtcReportTests.class,
