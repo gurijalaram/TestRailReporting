@@ -42,7 +42,7 @@ public class TableHeadersTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser())
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace());
 
-        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.NAME_SCENARIO.getColumns(), ColumnsEnum.LOCKED_WORKSPACE.getColumns(),
+        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.NAME_SCENARIO.getColumns(), ColumnsEnum.STATE.getColumns(),
             ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns(), ColumnsEnum.LAST_SAVED.getColumns()));
     }
 
@@ -54,7 +54,7 @@ public class TableHeadersTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser())
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace());
 
-        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.NAME_SCENARIO.getColumns(), ColumnsEnum.LOCKED_WORKSPACE.getColumns(),
+        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.NAME_SCENARIO.getColumns(), ColumnsEnum.STATE.getColumns(),
             ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns(), ColumnsEnum.LAST_SAVED.getColumns()));
     }
 
