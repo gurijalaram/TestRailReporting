@@ -2,6 +2,8 @@ package com.apriori.cis.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
+import java.util.List;
+
 @Schema(location = "PartCostingSchema.json")
 public class PartCosting {
     private Integer dtcMessagesCount;
@@ -87,6 +89,16 @@ public class PartCosting {
     private Double stockPropertyOutsideDia;
     private Double stockPropertyWallThickness;
     private String virtualMaterialStockName;
+    private Object userDefinedAttributes;
+
+    public Object getUserDefinedAttributes() {
+        return userDefinedAttributes;
+    }
+
+    public PartCosting setUserDefinedAttributes(Object userDefinedAttributes) {
+        this.userDefinedAttributes = userDefinedAttributes;
+        return this;
+    }
 
     public String getVirtualMaterialStockName() {
         return virtualMaterialStockName;

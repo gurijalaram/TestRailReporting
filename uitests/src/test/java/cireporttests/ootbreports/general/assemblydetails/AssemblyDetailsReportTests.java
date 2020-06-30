@@ -177,6 +177,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(MsSQLOracleLocalInstallTest.class)
+    @Issue("AP-58059")
+    @Issue("AP-53537")
     @TestRail(testCaseId = {"3067", "1929"})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -194,15 +196,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
-        /*
-            The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
-            Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
-            Bug for this issue: https://jira.apriori.com/browse/AP-58059
-         */
-
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
-            assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
+                assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
+                assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
@@ -223,6 +219,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(MsSQLOracleLocalInstallTest.class)
+    @Issue("AP-58059")
+    @Issue("AP-53537")
     @TestRail(testCaseId = {"3068", "1929"})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -240,12 +238,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .clickOk()
             .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
-
-        /*
-            The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
-            Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
-            Bug for this issue: https://jira.apriori.com/browse/AP-58059
-         */
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
@@ -270,6 +262,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
+    @Issue("AP-58059")
+    @Issue("AP-53537")
     @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
@@ -287,12 +281,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .clickOk()
             .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
-
-        /*
-            The reason for the range check in areValuesAlmostEqual is that there is a rounding bug.
-            Initial rounding bug (similar issue, in a different report): https://jira.apriori.com/browse/AP-53537
-            Bug for this issue: https://jira.apriori.com/browse/AP-58059
-         */
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
@@ -398,7 +386,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
             .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
-            .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(assemblyType, "Cycle Time");
@@ -428,10 +415,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .setLatestExportDateToTodayInput()
             .ensureDatesAreCorrect(false, true);
-        //.waitForCorrectExportSetListCount("0");
 
-        // If this assertion fails, test fails as the export set is there because bug is not yet fixed
-        // TODO: Bring last method above back in once bug fixed
+        // TODO: Re-add waitForCorrectExportSetListCount("0") if is ever bug fixed
         assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 
@@ -449,10 +434,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .setLatestExportDateToTodayPlusTwoPicker()
             .ensureDatesAreCorrect(false, false);
-        //.waitForCorrectExportSetListCount("0");
 
-        // If this assertion fails, test fails as the export set is there because bug is not yet fixed
-        // TODO: Bring last method above back in once bug fixed
+        // TODO: Re-add waitForCorrectExportSetListCount("0") if is ever bug fixed
         assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
     }
 

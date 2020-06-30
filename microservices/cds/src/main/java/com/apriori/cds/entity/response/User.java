@@ -23,6 +23,7 @@ public class User {
     private String customerIdentity;
     private User response;
     private String updatedBy;
+    private Boolean mfaRequired;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
@@ -31,6 +32,15 @@ public class User {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
+
+    public Boolean getMfaRequired() {
+        return mfaRequired;
+    }
+
+    public User setMfaRequired(Boolean mfaRequired) {
+        this.mfaRequired = mfaRequired;
+        return this;
+    }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
