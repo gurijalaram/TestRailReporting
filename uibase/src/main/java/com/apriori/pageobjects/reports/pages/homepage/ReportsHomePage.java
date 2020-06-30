@@ -11,9 +11,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HomePage extends ReportsPageHeader {
+public class ReportsHomePage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
+    private final Logger logger = LoggerFactory.getLogger(ReportsHomePage.class);
 
     @FindBy(css = "input[name='j_username']")
     private WebElement email;
@@ -25,7 +25,7 @@ public class HomePage extends ReportsPageHeader {
     private HelpPage helpPage;
     private WebDriver driver;
 
-    public HomePage(WebDriver driver) {
+    public ReportsHomePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);

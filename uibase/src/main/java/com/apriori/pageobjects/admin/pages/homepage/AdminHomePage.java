@@ -10,9 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HomePage extends PageHeader {
+public class AdminHomePage extends PageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(HomePage.class);
+    private final Logger logger = LoggerFactory.getLogger(AdminHomePage.class);
 
     @FindBy(id = "manage.scenario-export-manager")
     private WebElement manageScenarioExportMenuOption;
@@ -53,7 +53,7 @@ public class HomePage extends PageHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public HomePage(WebDriver driver) {
+    public AdminHomePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);

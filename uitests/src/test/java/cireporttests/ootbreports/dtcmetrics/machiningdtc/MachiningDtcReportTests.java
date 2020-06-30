@@ -5,9 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.reports.pages.homepage.HomePage;
+import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
-import com.apriori.pageobjects.reports.pages.login.LoginPage;
+import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
@@ -30,7 +30,7 @@ public class MachiningDtcReportTests extends TestBase {
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
     private LibraryPage library;
-    private HomePage homePage;
+    private ReportsHomePage homePage;
 
     private String reportName = "Machining DTC";
     private int reportCount = 3;
@@ -44,7 +44,7 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "2024")
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
-        repository = new LoginPage(driver)
+        repository = new ReportsLoginPage(driver)
             .login()
             .navigateToViewRepositoryPage()
             .navigateToMachiningDTCFolder();
@@ -58,7 +58,7 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3415")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        library = new LoginPage(driver)
+        library = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage();
 
@@ -70,7 +70,7 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3416")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        homePage = new LoginPage(driver)
+        homePage = new ReportsLoginPage(driver)
             .login();
 
         searchResults = new ViewSearchResultsPage(driver);
@@ -87,7 +87,7 @@ public class MachiningDtcReportTests extends TestBase {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
-        genericReportPage = new LoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName)
@@ -116,7 +116,7 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3565")
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
-        genericReportPage = new LoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName)
@@ -137,7 +137,7 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3566")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
-        genericReportPage = new LoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName)

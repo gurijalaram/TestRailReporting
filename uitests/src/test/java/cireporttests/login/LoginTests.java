@@ -4,8 +4,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.reports.pages.homepage.HomePage;
-import com.apriori.pageobjects.reports.pages.login.LoginPage;
+import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
+import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -18,8 +18,8 @@ import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class LoginTests extends TestBase {
 
-    private LoginPage loginPage;
-    private HomePage homePage;
+    private ReportsLoginPage loginPage;
+    private ReportsHomePage homePage;
 
     public LoginTests() {
         super();
@@ -30,7 +30,7 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
     public void testLogin() {
-        homePage = new LoginPage(driver)
+        homePage = new ReportsLoginPage(driver)
             .login();
 
         assertThat(homePage.isCreateButtonDisplayed(), is(true));
@@ -42,7 +42,7 @@ public class LoginTests extends TestBase {
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
         String loginErrorMessage = "Invalid credentials supplied. Could not login to JasperReports Server.";
-        loginPage = new LoginPage(driver)
+        loginPage = new ReportsLoginPage(driver)
 			.failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(loginErrorMessage)));
@@ -53,7 +53,7 @@ public class LoginTests extends TestBase {
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
         String passwordResetMsg = "We've just sent you an email to reset your password.";
-        loginPage = new LoginPage(driver)
+        loginPage = new ReportsLoginPage(driver)
             .clickForgotPassword()
             .submitEmail("fakeEmail@apriori.com");
 
@@ -66,7 +66,7 @@ public class LoginTests extends TestBase {
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
         String emptyFieldMsg = "Invalid credentials supplied. Could not login to JasperReports Server.";
-        loginPage = new LoginPage(driver)
+        loginPage = new ReportsLoginPage(driver)
 			.failedLogin("", "");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(emptyFieldMsg)));
@@ -78,7 +78,7 @@ public class LoginTests extends TestBase {
     @Description("Invalid email address, wrong format")
     public void invalidEmail() {
         String invalidEmailMsg = "Invalid credentials supplied. Could not login to JasperReports Server.";
-        loginPage = new LoginPage(driver)
+        loginPage = new ReportsLoginPage(driver)
 			.failedLogin("a@b", "fakePassword");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(invalidEmailMsg)));

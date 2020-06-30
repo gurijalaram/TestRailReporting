@@ -6,7 +6,7 @@ import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDataSourcePage;
 import com.apriori.pageobjects.reports.pages.create.CreateDomainPage;
 import com.apriori.pageobjects.reports.pages.create.CreateReportPage;
-import com.apriori.pageobjects.reports.pages.homepage.HomePage;
+import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.logout.LogoutPage;
 import com.apriori.pageobjects.reports.pages.manage.ManageRolesPage;
@@ -143,8 +143,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return Home Page page object
      */
-    public HomePage navigateToHomePage() {
-        return navigateToPage(homeMenuOption, HomePage.class);
+    public ReportsHomePage navigateToHomePage() {
+        return navigateToPage(homeMenuOption, ReportsHomePage.class);
     }
 
     /**
@@ -374,11 +374,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @param textToType
      * @return current page object
      */
-    public HomePage searchForReport(String textToType) {
+    public ReportsHomePage searchForReport(String textToType) {
         pageUtils.waitForElementToBeClickable(searchInput);
         searchInput.sendKeys(textToType);
         pageUtils.waitForElementAndClick(searchButton);
         pageUtils.isPageLoaded(homePageTitle);
-        return new HomePage(driver);
+        return new ReportsHomePage(driver);
     }
 }
