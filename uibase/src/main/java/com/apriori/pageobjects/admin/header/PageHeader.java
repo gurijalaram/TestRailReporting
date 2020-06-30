@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.admin.header;
 
-import com.apriori.pageobjects.admin.pages.homepage.HomePage;
+import com.apriori.pageobjects.admin.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
@@ -99,8 +99,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return Reports Page Object Model
      */
-    public HomePage navigateToReports() {
-        return navigateToPage(reportButton, HomePage.class);
+    public AdminHomePage navigateToReports() {
+        return navigateToPage(reportButton, AdminHomePage.class);
     }
 
     /**
