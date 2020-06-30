@@ -2,8 +2,6 @@ package com.apriori.pageobjects.admin.header;
 
 import com.apriori.pageobjects.admin.pages.homepage.HomePage;
 import com.apriori.pageobjects.admin.pages.logout.Logout;
-import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
-import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
 import com.apriori.utils.PageUtils;
@@ -19,15 +17,6 @@ import org.slf4j.LoggerFactory;
 public class PageHeader extends LoadableComponent<PageHeader> {
 
     private static final Logger logger = LoggerFactory.getLogger(PageHeader.class);
-
-    @FindBy(css = "input[name='j_username']")
-    private WebElement email;
-
-    @FindBy(xpath = "//div[contains(text(), 'Welcome to')]")
-    private WebElement adminHomePageWelcomeText;
-
-    @FindBy(xpath = "//div[contains(text(), 'Cost Insight | Admin')]")
-    private WebElement adminHomePageMainText;
 
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;
@@ -52,9 +41,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @FindBy(id = "help.cost-insight_adm")
     private WebElement adminGuideButton;
-
-    @FindBy(id = "main_logOut_link")
-    private WebElement reportsLogoutOption;
 
     @FindBy(id = "help.scenario-expt")
     private WebElement scenarioExportButton;
@@ -85,8 +71,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.isElementDisplayed(adminHomePageWelcomeText);
-        pageUtils.isElementEnabled(adminHomePageWelcomeText);
+
     }
 
     /**

@@ -1,6 +1,5 @@
 package testsuites;
 
-import ciadmintests.navigation.ExportSetTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import org.junit.experimental.categories.Categories;

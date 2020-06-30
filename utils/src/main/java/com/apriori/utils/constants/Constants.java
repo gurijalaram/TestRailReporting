@@ -50,8 +50,6 @@ public class Constants {
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
-    public static final String MANAGE_SCENARIO_TITLE = " Manage Scenario Export";
-    public static final String MANAGE_SYSTEM_DATA_EXPORT_TITLE = " Manage System Data Export";
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";
