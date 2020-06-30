@@ -142,7 +142,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getUtilizationPercentage(), is(closeTo(96.98, 1)));
-        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(12.88, 1)));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(15.36, 1)));
         assertThat(evaluatePage.getFinishMass(), is(closeTo(2.33, 1)));
 
         evaluatePage.selectExploreButton()
@@ -155,7 +155,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is(closeTo(82.71, 1)));
-        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(16.69, 1)));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(18.86, 1)));
         assertThat(evaluatePage.getTwoModelFinishMass(), is(closeTo(1.93, 1)));
 
         evaluatePage.selectExploreButton()
@@ -168,7 +168,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getTwoModelUtilizationPercentage(), is(closeTo(83.78, 1)));
-        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(19.99, 1)));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(22.61, 1)));
         assertThat(evaluatePage.getTwoModelFinishMass(), is(closeTo(1.62, 1)));
     }
 

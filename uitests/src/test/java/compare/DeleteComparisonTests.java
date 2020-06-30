@@ -119,6 +119,7 @@ public class DeleteComparisonTests extends TestBase {
 
     @Test
     @Issue("AP-60336")
+    @Issue("AP-61539")
     @Category({SmokeTests.class})
     @TestRail(testCaseId = {"3838", "430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
@@ -171,6 +172,7 @@ public class DeleteComparisonTests extends TestBase {
 
     @Test
     @Issue("AP-60336")
+    @Issue("AP-61539")
     @Category({SmokeTests.class})
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
