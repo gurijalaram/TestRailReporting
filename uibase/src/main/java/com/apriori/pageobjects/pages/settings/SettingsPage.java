@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.settings;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,8 +25,17 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     @FindBy(css = "a[href='#tolerancePolicyTab']")
     private WebElement tolerancesButton;
 
-    @FindBy(css = "select[data-ap-field='unitSystem']")
+    @FindBy(css = "select[data-ap-field='unitVariantSettings']")
     private WebElement unitsDropdown;
+
+    @FindBy(css = "select[data-ap-field='lenghtUnit']")
+    private WebElement lengthDropdown;
+
+    @FindBy(css = "select[data-ap-field='massUnit']")
+    private WebElement massDropdown;
+
+    @FindBy(css = "select[data-ap-field='timeUnit']")
+    private WebElement timeDropdown;
 
     @FindBy(css = "select[data-ap-field='currency']")
     private WebElement currencyDropdown;
@@ -103,8 +113,49 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
      * @param units - the units
      * @return current page object
      */
-    public SettingsPage changeDisplayUnits(String units) {
+    public SettingsPage selectUnits(String units) {
         pageUtils.selectDropdownOption(unitsDropdown, units);
+        return this;
+    }
+
+    /**
+     * Changes system selection
+     * @param system - the metric system
+     * @return current page object
+     */
+    public SettingsPage selectSystem(String system) {
+        By systemSelection = By.xpath(String.format("//input[@data-ap-comp='%s']", system));
+        pageUtils.waitForElementAndClick(systemSelection);
+        return this;
+    }
+
+    /**
+     * Selects the length
+     * @param length - the length
+     * @return current page object
+     */
+    public SettingsPage selectLength(String length) {
+        pageUtils.selectDropdownOption(lengthDropdown, length);
+        return this;
+    }
+
+    /**
+     * Selects the mass
+     * @param mass - the mass
+     * @return current page object
+     */
+    public SettingsPage selectMass(String mass) {
+        pageUtils.selectDropdownOption(massDropdown, mass);
+        return this;
+    }
+
+    /**
+     * Selects the time
+     * @param time - the time
+     * @return current page object
+     */
+    public SettingsPage selectTime(String time) {
+        pageUtils.selectDropdownOption(timeDropdown, time);
         return this;
     }
 
@@ -159,7 +210,8 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
      *
      * @return true/false
      */
-    public boolean isSelectedUnits(String unit) {
-        return pageUtils.checkElementFirstOption(unitsDropdown, unit);
+    public boolean isSelectedMetricSystem(String system) {
+        By systemSelection = By.xpath(String.format("//input[@data-ap-comp='%s']", system));
+        return pageUtils.waitForElementToAppear(systemSelection).isSelected();
     }
 }

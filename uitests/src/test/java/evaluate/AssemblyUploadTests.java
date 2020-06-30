@@ -67,7 +67,7 @@ public class AssemblyUploadTests extends TestBase {
         assertThat(evaluatePage.getTotalComponents(), is("4"));
         assertThat(evaluatePage.getUniqueComponents(), is("4"));
         assertThat(evaluatePage.getWarningsCount(), is("4"));
-        assertThat(evaluatePage.getCycleTimeCount(), is("0.0"));
+        assertThat(evaluatePage.getCycleTimeCount(), is(0.0));
     }
 
     @Test
@@ -219,7 +219,7 @@ public class AssemblyUploadTests extends TestBase {
         evaluatePage = new VPESelectionPage(driver).close()
             .closePanel();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Powder Coat Cart"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Coat Cart"));
     }
 
     @Test

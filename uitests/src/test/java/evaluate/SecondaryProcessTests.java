@@ -143,7 +143,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carburize")
             .apply()
             .costScenario();
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Carburize"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Carburize"));
 
         processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Carburize")
@@ -214,7 +214,7 @@ public class SecondaryProcessTests extends TestBase {
         secondaryProcessPage = new SecondaryProcessPage(driver);
         evaluatePage = secondaryProcessPage.apply()
             .costScenario();
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Standard Anneal"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Standard Anneal"));
 
         evaluatePage = new EvaluatePage(driver);
         processSetupOptionsPage = evaluatePage.openProcessDetails()
@@ -272,7 +272,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Stress Relief"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stress Relief"));
     }
 
     @Test
@@ -295,7 +295,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Anodize"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize"));
     }
 
     @Test
@@ -318,7 +318,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Certification"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Certification"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -370,7 +370,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcess()
             .selectHighlightSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
             .selectFractionButton()
-            .setFractionPainted("0.3")
+            .setFractionPainted("0.30")
             .selectNoMaskingButton()
             .setSpecifyPainted("414")
             .setSpecifiedInput("2");
@@ -382,7 +382,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Powder Coat Cart")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.getFractionPainted(), is("0.3"));
+        assertThat(processSetupOptionsPage.getFractionPainted(), is("0.30"));
         assertThat(processSetupOptionsPage.isNoMaskingSelected("checked"), is("true"));
         assertThat(processSetupOptionsPage.getSpecifyPainted(), is("414"));
         assertThat(processSetupOptionsPage.getSpecified("2"), is(true));
@@ -421,7 +421,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessChart("Wet Coat Line")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.getFractionPainted(), is("0.4"));
+        assertThat(processSetupOptionsPage.getFractionPainted(), is("0.40"));
         assertThat(processSetupOptionsPage.getTheNumberOfMaskedFeatures(), is("1"));
         assertThat(processSetupOptionsPage.getSpecifyPainted(), is("254"));
         assertThat(processSetupOptionsPage.getComponentsPerLoad(), is("1"));
@@ -447,7 +447,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Passivation"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})

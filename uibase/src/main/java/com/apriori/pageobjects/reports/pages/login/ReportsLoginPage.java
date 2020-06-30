@@ -1,8 +1,8 @@
-package com.apriori.pageobjects.admin.pages.login;
+package com.apriori.pageobjects.reports.pages.login;
 
-import com.apriori.pageobjects.admin.header.AdminHeader;
-import com.apriori.pageobjects.admin.pages.homepage.HomePage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
+import com.apriori.pageobjects.reports.header.ReportsPageHeader;
+import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
@@ -15,10 +15,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoginPage extends AdminHeader {
+public class ReportsLoginPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
-    private static String loginPageURL = Constants.ciaURL;
+    private final Logger logger = LoggerFactory.getLogger(ReportsLoginPage.class);
+    private static String loginPageURL = Constants.cirURL;
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
@@ -47,17 +47,17 @@ public class LoginPage extends AdminHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public LoginPage(WebDriver driver) {
+    public ReportsLoginPage(WebDriver driver) {
         super(driver);
         init(driver, "", true);
     }
 
-    public LoginPage(WebDriver driver, String url) {
+    public ReportsLoginPage(WebDriver driver, String url) {
         super(driver);
         init(driver, url, true);
     }
 
-    public LoginPage(WebDriver driver, boolean loadNewPage) {
+    public ReportsLoginPage(WebDriver driver, boolean loadNewPage) {
         super(driver);
         init(driver, "", loadNewPage);
     }
@@ -138,27 +138,27 @@ public class LoginPage extends AdminHeader {
      * @return new page object
      */
     @Deprecated
-    public HomePage login(String email, String password) {
+    public ReportsHomePage login(String email, String password) {
         executeLogin(email, password);
-        return new HomePage(driver);
+        return new ReportsHomePage(driver);
     }
 
     /**
-     * Login to CI Admin with csv user passed in user (from CSV file)
+     * Login to CI Report with passed in user (from CSV file)
      *
      * @return new page object
      */
-    public HomePage login(UserCredentials userCredentials) {
+    public ReportsHomePage login(UserCredentials userCredentials) {
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new HomePage(driver);
+        return new ReportsHomePage(driver);
     }
 
     /**
-     * Login to CI Admin with passed in user (from Jenkins)
+     * Login to CI Report with passed in user (from Jenkins)
      *
      * @return new page object
      */
-    public HomePage login() {
+    public ReportsHomePage login() {
         UserCredentials userCredentials;
 
         if (Constants.PROP_USER_NAME != null && Constants.PROP_USER_PASSWORD != null) {
@@ -168,9 +168,8 @@ public class LoginPage extends AdminHeader {
         }
 
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new HomePage(driver);
+        return new ReportsHomePage(driver);
     }
-
 
     /**
      * Failed login to CI Report
@@ -179,9 +178,9 @@ public class LoginPage extends AdminHeader {
      * @param password - user password
      * @return current page object
      */
-    public LoginPage failedLogin(String email, String password) {
+    public ReportsLoginPage failedLogin(String email, String password) {
         executeLogin(email, password);
-        return new LoginPage(driver, false);
+        return new ReportsLoginPage(driver, false);
     }
 
     /**
@@ -197,10 +196,10 @@ public class LoginPage extends AdminHeader {
     /**
      * Click forgot password link
      */
-    public LoginPage clickForgotPassword() {
+    public ReportsLoginPage clickForgotPassword() {
         pageUtils.waitForElementToAppear(forgotPassword);
         forgotPassword.click();
-        return new LoginPage(driver, false);
+        return new ReportsLoginPage(driver, false);
     }
 
     /**
@@ -208,10 +207,10 @@ public class LoginPage extends AdminHeader {
      *
      * @param email - user email
      */
-    public LoginPage submitEmail(String email) {
+    public ReportsLoginPage submitEmail(String email) {
         enterEmail(email);
         submitLogin();
-        return new LoginPage(driver, false);
+        return new ReportsLoginPage(driver, false);
     }
 
     /**
@@ -229,7 +228,7 @@ public class LoginPage extends AdminHeader {
      *
      * @return current page object
      */
-    public LoginPage waitForPrivacyPolicyLinkVisibility() {
+    public ReportsLoginPage waitForPrivacyPolicyLinkVisibility() {
         pageUtils.waitForElementToAppear(privacyPolicyButton);
         return this;
     }
