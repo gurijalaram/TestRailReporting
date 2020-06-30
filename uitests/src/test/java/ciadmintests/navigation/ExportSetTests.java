@@ -153,7 +153,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
-    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
+    @Category(CustomerSmokeTests.class)
     @TestRail(testCaseId = "80686")
     @Description("Export specific scenario and view results")
     public void testScenarioExportAndViewResults() {
@@ -194,7 +194,7 @@ public class ExportSetTests extends TestBase {
     }
 
     @Test
-    @Category({CiaCirTestDevTest.class, CustomerSmokeTests.class})
+    @Category(CustomerSmokeTests.class)
     @TestRail(testCaseId = "80691")
     @Description("Testing Creation of Ad Hoc Report and ensure it worked")
     public void testCreateAdHocReport() {
