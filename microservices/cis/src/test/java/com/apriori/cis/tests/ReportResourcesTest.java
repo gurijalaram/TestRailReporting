@@ -1,5 +1,7 @@
 package com.apriori.cis.tests;
 
+import static org.junit.Assert.fail;
+
 import com.apriori.apibase.utils.TestUtil;
 
 import com.apriori.cis.controller.ReportResources;
@@ -89,6 +91,11 @@ public class ReportResourcesTest extends TestUtil {
         while (count <= 15) {
             report = (Report)ReportResources.getReportRepresentation(reportIdentity).getResponseEntity();
             reportState = report.getResponse().getState();
+
+            if (reportState.equals("ERRORED")) {
+                fail("Report is state 'ERRORED'");
+                return;
+            }
 
             if (reportState.toUpperCase().equals("COMPLETED")) {
                 break;

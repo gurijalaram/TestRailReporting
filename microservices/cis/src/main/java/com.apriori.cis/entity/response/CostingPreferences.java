@@ -22,6 +22,16 @@ public class CostingPreferences extends Pagination {
     private String batchMode;
     private Double minCadToleranceThreshold;
     private Boolean useCadToleranceThreshold;
+    private String materialName;
+
+    public String getMaterialName() {
+        return materialName;
+    }
+
+    public CostingPreferences setMaterialName(String materialName) {
+        this.materialName = materialName;
+        return this;
+    }
 
     public Boolean getUseCadToleranceThreshold() {
         return useCadToleranceThreshold;
