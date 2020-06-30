@@ -183,7 +183,7 @@ public class ExportSetTests extends TestBase {
             .clickViewHistory()
             .clickRefreshButton();
         
-        assertThat(systemDataExport.getFirstUserInTable(), is(containsString("qa-automation-01")));
+        assertThat(systemDataExport.getFirstUserInTable(), is(containsString("qa-automation")));
         assertThat(systemDataExport.getFirstStatusInTable(), is(containsString(" Success")));
     }
 
@@ -203,10 +203,8 @@ public class ExportSetTests extends TestBase {
             .searchMeasuresFields("scenario fully burdened cost")
             .selectScenarioFbcFieldOptionForColumns()
             .addFilterPartNumber()
-            .selectPartNumber()
             .clickApply();
 
-        assertThat(createAdHocViewDesignerPage.getTableText(true), is(equalTo("0200613")));
-        assertThat(createAdHocViewDesignerPage.getTableText(false), is(equalTo("3.22")));
+        assertThat(createAdHocViewDesignerPage.getTableText(true), is(equalTo("0000000011")));
     }
 }

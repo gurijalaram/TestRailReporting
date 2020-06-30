@@ -120,6 +120,7 @@ public class CreateAdHocViewDesignerPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(fieldsSearchInput);
         fieldsSearchInput.clear();
         pageUtils.waitForElementAndClick(fieldsSearchInput);
+        fieldsSearchInput.click();
         fieldsSearchInput.sendKeys(searchQuery);
         pageUtils.waitForElementAndClick(fieldsSearchButton);
         pageUtils.waitForElementToAppear(scenarioPartNumberElement);
@@ -148,6 +149,7 @@ public class CreateAdHocViewDesignerPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(measuresSearchInput);
         measuresSearchInput.clear();
         pageUtils.waitForElementAndClick(measuresSearchInput);
+        measuresSearchInput.click();
         measuresSearchInput.sendKeys(searchQuery);
         pageUtils.waitForElementAndClick(measuresSearchButton);
         pageUtils.waitForElementToAppear(scenarioFullyBurdenedCostElement);

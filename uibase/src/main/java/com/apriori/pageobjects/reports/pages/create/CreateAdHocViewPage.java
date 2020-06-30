@@ -20,7 +20,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[contains(@class, 'sourceDialogNew ')]")
     private WebElement adHocViewDiaolog;
 
-    @FindBy(xpath = "//ul[@class='list collapsible']//p[contains(text(), 'aPriori Ad Hoc Data 19.3.0.0_RC3')]/..")
+    @FindBy(xpath = "//ul[@class='list collapsible']//p[contains(text(), 'aPriori Ad Hoc Data 20.1.0.0_SNAPSHOT')]/..")
     private WebElement adHocViewDataSourceButton;
 
     @FindBy(xpath = "//span[contains(text(), 'Choose Data...')]/..")
