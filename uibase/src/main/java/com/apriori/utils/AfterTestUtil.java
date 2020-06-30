@@ -7,6 +7,10 @@ import com.apriori.apibase.services.response.objects.UnitVariantSettingInfoSchem
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
+import com.apriori.utils.enums.LengthEnum;
+import com.apriori.utils.enums.MassEnum;
+import com.apriori.utils.enums.TimeEnum;
+import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 
 import io.qameta.allure.Issue;
@@ -78,11 +82,11 @@ public class AfterTestUtil {
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
             .setAutoLogin(false)
             .setBody(new DisplayPreferencesEntity().setUnitVariantSettingsInfo(new UnitVariantSettingInfoSchema().setType("simple")
-                .setName("CUSTOM")
-                .setMetric(false)
-                .setLength("ft")
-                .setMass("lb")
-                .setTime("s")
+                .setName(UnitsEnum.MMKS.getUnits())
+                .setMetric(true)
+                .setLength(LengthEnum.MILLIMETER.getLength())
+                .setMass(MassEnum.KILOGRAM.getMass())
+                .setTime(TimeEnum.SECOND.getTime())
                 .setDecimalPlaces(2)
                 .setSystem(true)
                 .setCustom(false)))
