@@ -8,6 +8,7 @@ import static org.hamcrest.core.StringStartsWith.startsWith;
 
 import com.apriori.pageobjects.pages.login.HelpPage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
+import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDataSourcePage;
 import com.apriori.pageobjects.reports.pages.create.CreateDomainPage;

@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.reports.header;
 
 import com.apriori.pageobjects.pages.login.HelpPage;
+import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDataSourcePage;
 import com.apriori.pageobjects.reports.pages.create.CreateDomainPage;

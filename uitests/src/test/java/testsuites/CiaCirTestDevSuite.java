@@ -1,5 +1,6 @@
 package testsuites;
 
+import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import org.junit.experimental.categories.Categories;
@@ -10,7 +11,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        ExportSetTests.class
+        AssemblyDetailsReportTests.class
 })
 
 public class CiaCirTestDevSuite {
