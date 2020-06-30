@@ -263,11 +263,11 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     /**
      * Gets reference Utilization
      *
-     * @return as string
+     * @return double
      */
-    public String getReferenceUtilization() {
+    public double getReferenceUtilization() {
         By utilizationBase = By.cssSelector("[data-ap-field='utilization.baseline']");
-        return getAttribute(utilizationBase, "innerText");
+        return Double.parseDouble(getAttribute(utilizationBase, "innerText"));
     }
 
     /**

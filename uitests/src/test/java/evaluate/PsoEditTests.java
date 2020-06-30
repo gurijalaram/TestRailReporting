@@ -56,9 +56,9 @@ public class PsoEditTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("8"), is(true));
-        assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.4"));
+        assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.40"));
         assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
-        assertThat(processSetupOptionsPage.getMaterialRegrind(), is("0.3"));
+        assertThat(processSetupOptionsPage.getMaterialRegrind(), is("0.30"));
     }
 
     @Test
