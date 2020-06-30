@@ -295,7 +295,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Anodize"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize"));
     }
 
     @Test
