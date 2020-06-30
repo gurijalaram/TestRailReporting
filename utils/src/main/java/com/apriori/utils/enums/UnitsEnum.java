@@ -2,16 +2,29 @@ package com.apriori.utils.enums;
 
 public enum UnitsEnum {
 
-    ENGLISH("ENGLISH"),
-    SYSTEM("SYSTEM");
+    CGM("CGM"),
+    CGS("CGS"),
+    FPM("FPM"),
+    FPS("FPS"),
+    IOM("IOM"),
+    IOS("IOS"),
+    IPM("IPM"),
+    IPS("IPS"),
+    MGM("MGM"),
+    MGS("MGS"),
+    MKM("MKM"),
+    MMGM("MMGM"),
+    MMGS("MMGS"),
+    MMKS("MMKS"),
+    CUSTOM("CUSTOM");
 
-    private final String unit;
+    private final String units;
 
-    UnitsEnum(String unit) {
-        this.unit = unit;
+    UnitsEnum(String units) {
+        this.units = units;
     }
 
-    public String getUnit() {
-        return this.unit;
+    public String getUnits() {
+        return this.units;
     }
 }

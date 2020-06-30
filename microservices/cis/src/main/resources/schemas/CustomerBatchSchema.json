@@ -2,7 +2,15 @@
   "type": "object",
   "properties": {
     "response": {
-
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "customerIdentity",
+        "installationIdentity",
+        "state",
+        "externalId"
+      ],
       "properties": {
         "identity": {
           "type": "string"

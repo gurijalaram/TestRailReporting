@@ -16,6 +16,8 @@ import com.apriori.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.LengthEnum;
+import com.apriori.utils.enums.MetricEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -391,7 +393,9 @@ public class ThreadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
-            .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
+            .selectUnits(UnitsEnum.CUSTOM.getUnits())
+            .selectSystem(MetricEnum.ENGLISH.getMetricUnit())
+            .selectLength(LengthEnum.INCHES.getLength())
             .save(EvaluatePage.class)
             .openDesignGuidance()
             .openInvestigationTab()
@@ -415,7 +419,8 @@ public class ThreadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openSettings()
-            .changeDisplayUnits(UnitsEnum.SYSTEM.getUnit())
+            .selectSystem(MetricEnum.METRIC.getMetricUnit())
+            .selectLength(LengthEnum.MILLIMETER.getLength())
             .save(EvaluatePage.class)
             .openDesignGuidance()
             .openInvestigationTab()

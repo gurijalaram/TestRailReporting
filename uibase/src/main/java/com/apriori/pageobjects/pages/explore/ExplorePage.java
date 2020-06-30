@@ -214,9 +214,7 @@ public class ExplorePage extends ExploreHeader {
      * @return new page object
      */
     public FilterCriteriaPage filter() {
-        return scenarioTablePage.filter()
-            .clear()
-            .clearAllCheckBoxes();
+        return scenarioTablePage.filter();
     }
 
     /**

@@ -287,11 +287,11 @@ public class DTCPlasticMouldingTests extends TestBase {
             .selectInvestigationTopic("Slides and Lifters");
 
         assertThat(investigationPage.getInvestigationCell("SlideBundle", "GCD Count"), is(equalTo("1")));
-        assertThat(investigationPage.getInvestigationCell("LifterBundle", "GCD Count"), is(equalTo("8")));
+        assertThat(investigationPage.getInvestigationCell("LifterBundle", "GCD Count"), is(equalTo("7")));
 
         investigationPage.selectInvestigationTopic("Special Mold Tooling");
 
-        assertThat(investigationPage.getInvestigationCell("Threading Mechanisms", "GCD Count"), is(equalTo("8")));
+        assertThat(investigationPage.getInvestigationCell("Threading Mechanisms", "GCD Count"), is(equalTo("9")));
         assertThat(investigationPage.getInvestigationCell("Ribs", "GCD Count"), is(equalTo("1")));
     }
 }

@@ -1,5 +1,7 @@
 package com.apriori.cis.tests;
 
+import static org.junit.Assert.fail;
+
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.utils.TestUtil;
 
@@ -10,7 +12,6 @@ import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
 import com.apriori.cis.utils.CisUtils;
-
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
@@ -27,6 +28,7 @@ import java.util.Arrays;
 public class CostingScenarioTest extends TestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CostingScenarioTest.class);
+    private static Boolean exitTest = false;
 
     @Test
     @TestRail(testCaseId = {"4278", "4284", "4280", "4177"})
@@ -77,6 +79,13 @@ public class CostingScenarioTest extends TestUtil {
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
             isPartComplete = pollState(partDetails, Part.class);
 
+            if (exitTest) {
+                String errors = CisUtils.getErrors(batchPart, Part.class);
+                logger.error(errors);
+                fail("Part was in state 'ERRORED'");
+                return;
+            }
+
             if (isPartComplete) {
                 break;
             }
@@ -90,6 +99,12 @@ public class CostingScenarioTest extends TestUtil {
         while (count <= defaultTimeout) {
             batchDetails = BatchResources.getBatchRepresentation(batchIdentity).getResponseEntity();
             isBatchComplete = pollState(batchDetails, Batch.class);
+
+
+            if (exitTest) {
+                fail("Batch was in state 'ERRORED'");
+                return;
+            }
 
             if (isBatchComplete) {
                 break;
@@ -113,6 +128,10 @@ public class CostingScenarioTest extends TestUtil {
         String state = "";
         try {
             state = CisUtils.getState(obj, klass);
+            if (state.equals("ERRORED")) {
+                exitTest = true;
+                return exitTest;
+            }
         } catch (Exception e) {
             logger.error(e.getMessage());
             logger.error(Arrays.toString(e.getStackTrace()));

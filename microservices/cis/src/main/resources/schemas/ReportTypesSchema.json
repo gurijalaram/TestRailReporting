@@ -11,7 +11,7 @@
       ],
       "allOf": [
         {
-          "$ref": "schemas/PaginationSchema.json"
+          "$ref": "PaginationSchema.json"
         },
         {
           "properties": {
