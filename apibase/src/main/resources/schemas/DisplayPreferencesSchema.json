@@ -5,8 +5,7 @@
   "title": "The Root Schema",
   "required": [
     "currencyCode",
-    "currencyExchangeRate",
-    "isSystemUnits"
+    "currencyExchangeRate"
   ],
   "properties": {
     "currencyCode": {
@@ -26,13 +25,105 @@
         1
       ]
     },
-    "isSystemUnits": {
-      "type": "boolean",
-      "title": "The Issystemunits Schema",
-      "default": false,
-      "examples": [
-        false
-      ]
+    "unitVariantSettingsInfo": {
+      "$id": "#/properties/unitVariantSettingsInfo",
+      "type": "object",
+      "title": "The unitVariantSettingsInfo schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "additionalProperties": true,
+      "properties": {
+        "@type": {
+          "$id": "#/properties/unitVariantSettingsInfo/properties/@type",
+          "type": "string",
+          "title": "The @type schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "simple"
+          ]
+        },
+        "name": {
+          "$id": "#/properties/unitVariantSettingsInfo/properties/name",
+          "type": "string",
+          "title": "The name schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "CUSTOM"
+          ]
+        },
+        "metric": {
+          "$id": "#/properties/unitVariantSettingsInfo/properties/metric",
+          "type": "boolean",
+          "title": "The metric schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "length": {
+          "$id": "#/properties/unitVariantSettingsInfo/properties/length",
+          "type": "string",
+          "title": "The length schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "mm"
+          ]
+        },
+        "mass": {
+          "$id": "#/properties/unitVariantSettingsInfo/properties/mass",
+          "type": "string",
+          "title": "The mass schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "kg"
+          ]
+        },
+        "time": {
+          "$id": "#/properties/unitVariantSettingsInfo/properties/time",
+          "type": "string",
+          "title": "The time schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "ms"
+          ]
+        },
+        "decimalPlaces": {
+          "$id": "#/properties/unitVariantSettingsInfo/properties/decimalPlaces",
+          "type": "integer",
+          "title": "The decimalPlaces schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": 0,
+          "examples": [
+            2
+          ]
+        },
+        "system": {
+          "$id": "#/properties/unitVariantSettingsInfo/properties/system",
+          "type": "boolean",
+          "title": "The system schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "custom": {
+          "$id": "#/properties/unitVariantSettingsInfo/properties/custom",
+          "type": "boolean",
+          "title": "The custom schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": false,
+          "examples": [
+            true
+          ]
+        }
+      }
     }
   }
 }
