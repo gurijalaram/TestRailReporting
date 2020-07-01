@@ -4,6 +4,7 @@ import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -64,10 +65,11 @@ public class LibraryPage extends ReportsPageHeader {
      * @param reportName
      * @return new page object
      */
-    public AssemblyDetailsReportPage navigateToReport(String reportName) {
+    public <T> T navigateToReport(String reportName, Class<T> className) {
         WebElement reportLinkElement = pageUtils.getReportElement(reportName);
         pageUtils.waitForElementToAppear(reportLinkElement);
         reportLinkElement.click();
-        return new AssemblyDetailsReportPage(driver);
+        waitForInputControlsLoad();
+        return PageFactory.initElements(driver, className);
     }
 }
