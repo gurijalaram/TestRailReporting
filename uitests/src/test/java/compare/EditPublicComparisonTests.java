@@ -92,6 +92,7 @@ public class EditPublicComparisonTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-61539")
     @TestRail(testCaseId = {"458"})
     @Description("Delete private scenarios included in comparison from private workspace")
     public void testRemoveFromComparison() {
@@ -125,6 +126,7 @@ public class EditPublicComparisonTests extends TestBase {
 
     @Test
     @Issue("BA-999")
+    @Issue("AP-61539")
     @TestRail(testCaseId = {"2279"})
     @Description("Test you can change the basis of your comparison")
     public void testChangeComparisonBasis() {

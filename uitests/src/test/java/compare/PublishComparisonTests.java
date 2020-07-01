@@ -96,6 +96,7 @@ public class PublishComparisonTests extends TestBase {
 
 
     @Test
+    @Issue("AP-61539")
     @Category({SanityTests.class})
     @TestRail(testCaseId = {"421"})
     @Description("Test a private comparison can be published from explore page")
