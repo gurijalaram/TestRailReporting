@@ -63,6 +63,7 @@ public class EvaluateHeader extends GenericHeader {
     /**
      * Cost the scenario
      *
+     * @param timeoutInMinutes - timeout in minutes
      * @return current page object
      */
     public EvaluatePage costScenario(int timeoutInMinutes) {
@@ -77,6 +78,8 @@ public class EvaluateHeader extends GenericHeader {
     /**
      * Cost the scenario
      *
+     * @param timeoutInMinutes      - timeout in minutes
+     * @param imageTimeoutInMinutes - timeout to wait for image to load
      * @return current page object
      */
     public EvaluatePage costScenario(int timeoutInMinutes, int imageTimeoutInMinutes) {
@@ -86,6 +89,18 @@ public class EvaluateHeader extends GenericHeader {
         checkForCostLabel(timeoutInMinutes);
         checkForImage(imageTimeoutInMinutes);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Cost the scenario
+     *
+     * @param className - the class name
+     * @return generic page object
+     */
+    public <T> T costScenario(Class<T> className) {
+        pageUtils.waitForElementToAppear(costLabel);
+        pageUtils.waitForElementAndClick(costButton);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -132,6 +147,7 @@ public class EvaluateHeader extends GenericHeader {
 
     /**
      * Clicks the cost status
+     *
      * @param className - the class the method should return
      * @param <T>       - the generic declaration type
      * @return generic page object
