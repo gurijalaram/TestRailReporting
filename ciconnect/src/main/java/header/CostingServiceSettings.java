@@ -38,9 +38,11 @@ public class CostingServiceSettings extends LoadableComponent<CostingServiceSett
         pageUtils.waitForElementToAppear(costingServiceSettingsText);
     }
 
+    /**
+     * Get Costing Service Settings modal title text
+     * @return String
+     */
     public String getCostingServiceSettingsText() {
         return costingServiceSettingsText.getText();
     }
-
-
 }

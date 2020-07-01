@@ -79,25 +79,50 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
         return new History(driver);
     }
 
+    /**
+     * Get Workflow text
+     *
+     * @return String
+     */
     public String getWorkflowText() {
         return workflowLabel.getText();
     }
 
+    /**
+     * Expand user info drop down
+     *
+     * @return PageHeader page object
+     */
     public PageHeader expandUserInfoDropdown() {
         pageHeader.expandUserInfoDropdown();
         return new PageHeader(driver);
     }
 
+    /**
+     * Navigate to CIC userguide
+     *
+     * @return CicUserGuide page object
+     */
     public CicUserGuide navigateToCicUserGuide() {
         pageHeader.navigateToCicUserGuide();
         return new CicUserGuide(driver);
     }
 
+    /**
+     * Navigate to about aPriori page
+     *
+     * @return CicUserGuide page object
+     */
     public CicUserGuide navigateToAboutAPriori() {
         pageHeader.navigateToAboutAPriori();
         return new CicUserGuide(driver);
     }
 
+    /**
+     * Open Costing Service Settings modal
+     *
+     * @return new page object
+     */
     public CostingServiceSettings openCostingServiceSettings() {
         pageHeader.openCostingServiceSettings();
         return new CostingServiceSettings(driver);

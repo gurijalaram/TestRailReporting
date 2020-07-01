@@ -73,6 +73,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        this.get();
     }
 
     @Override
@@ -88,6 +89,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * click Workflows tab
+     *
      * @return new generic schedule page object from workflow tab
      */
     public Schedule clickWorkflowMenu() {
@@ -97,6 +99,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * click Users Tab
+     *
      * @return new user list page object from Users tab
      */
     public UserList clickUsersMenu() {
@@ -106,6 +109,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * click Connectors tab
+     *
      * @return new connectors list page object from Connectors Tab
      */
     public ConnectorList clickConnectorsMenu() {
@@ -114,7 +118,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     }
 
     /**
-     *Get current user
+     * Get current user
+     *
      * @return String
      */
     public String getCurrentUser() {
@@ -123,7 +128,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     }
 
     /**
-     *Get current user Login ID
+     * Get current user Login ID
+     *
      * @return String
      */
     public String getLoginID() {
@@ -131,18 +137,29 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     }
 
     /**
-     *Get current user
+     * Get current user
+     *
      * @return String
      */
     public String getCurrentCompany() {
         return pageUtils.waitForElementToAppear(currentCompany).getText();
     }
 
+    /**
+     * Expand user info drop down
+     *
+     * @return PageHeader
+     */
     public PageHeader expandUserInfoDropdown() {
         userInfoDropdown.click();
         return new PageHeader(driver);
     }
 
+    /**
+     * Open CIC user guide
+     *
+     * @return CicUserGuide
+     */
     public CicUserGuide navigateToCicUserGuide() {
         helpBtn.click();
         onlineHelpLink.click();
@@ -167,16 +184,24 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         return new CicUserGuide(driver);
     }
 
+    /**
+     * Navigate to about apriori page
+     *
+     * @return
+     */
     public CicUserGuide navigateToAboutAPriori() {
         helpBtn.click();
         aboutAPrioriLink.click();
         return new CicUserGuide(driver);
     }
 
+    /**
+     * Open costing service settings modal
+     *
+     * @return CostingServiceSettitng page object
+     */
     public CostingServiceSettings openCostingServiceSettings() {
         settingsBtn.click();
         return new CostingServiceSettings(driver);
     }
-
-
 }

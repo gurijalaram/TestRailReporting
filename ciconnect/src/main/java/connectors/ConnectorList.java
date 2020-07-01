@@ -55,7 +55,6 @@ public class ConnectorList extends LoadableComponent<ConnectorList> {
     private PageUtils pageUtils;
     private PageHeader pageHeader;
 
-
     public ConnectorList(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -74,6 +73,11 @@ public class ConnectorList extends LoadableComponent<ConnectorList> {
         pageUtils.waitForElementToAppear(newConnectorBtn);
     }
 
+    /**
+     * click Workflows tab
+     *
+     * @return new generic schedule page object from workflow tab
+     */
     public Schedule clickWorkflowMenu() {
         return pageHeader.clickWorkflowMenu();
     }
@@ -84,7 +88,7 @@ public class ConnectorList extends LoadableComponent<ConnectorList> {
      * @return String
      */
     public String getConnectorText() {
+        pageUtils.waitForElementToAppear(connectorsLabel);
         return connectorsLabel.getText();
     }
-
 }

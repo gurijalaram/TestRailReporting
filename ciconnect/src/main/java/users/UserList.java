@@ -69,6 +69,8 @@ public class UserList extends LoadableComponent<UserList> {
 
     /**
      * Get Users text
+     *
+     * @return String
      */
     public String getUsersText() {
         return usersLabel.getText();

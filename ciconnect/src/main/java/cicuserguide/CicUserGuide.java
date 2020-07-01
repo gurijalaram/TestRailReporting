@@ -77,6 +77,4 @@ public class CicUserGuide extends LoadableComponent<CicUserGuide> {
     public String getURL() {
         return pageUtils.getTabTwoUrl();
     }
-
-
 }

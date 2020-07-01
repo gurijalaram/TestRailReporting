@@ -86,6 +86,11 @@ public class Schedule extends LoadableComponent<Schedule> {
         return newWorkflowBtn.getText();
     }
 
+    /**
+     * Click New Workflow button
+     *
+     * @return NewEditWorkflow page object
+     */
     public NewEditWorkflow clickNewWorkflowBtn() {
         newWorkflowBtn.click();
         return new NewEditWorkflow(driver);
