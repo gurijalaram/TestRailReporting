@@ -55,12 +55,12 @@ public class TwoModelMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), twoModelFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), twoModelFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(testScenarioName, "casting_BEFORE_machining")
@@ -99,7 +99,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(sourceScenarioName, resourceFile)
+            .uploadFileAndOk(sourceScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -108,7 +108,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), twoModelFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), twoModelFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(sourceScenarioName, sourcePartName)
@@ -137,7 +137,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(sourceScenarioName, resourceFile)
+            .uploadFileAndOk(sourceScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario();
 
@@ -147,7 +147,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(twoModel1ScenarioName, twoModelFile)
+            .uploadFileAndOk(twoModel1ScenarioName, twoModelFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(sourceScenarioName, sourcePartName)
@@ -160,7 +160,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(twoModel2ScenarioName, twoModelFile2)
+            .uploadFileAndOk(twoModel2ScenarioName, twoModelFile2, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(twoModel1ScenarioName, twoModel1PartName)
@@ -188,12 +188,12 @@ public class TwoModelMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(sourceScenarioName, resourceFile)
+            .uploadFileAndOk(sourceScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(twoModelScenarioName, twoModelFile)
+            .uploadFileAndOk(twoModelScenarioName, twoModelFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(sourceScenarioName, sourcePartName)
@@ -229,7 +229,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(sourceScenarioName, resourceFile)
+            .uploadFileAndOk(sourceScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -238,12 +238,12 @@ public class TwoModelMachiningTests extends TestBase {
 
         evaluatePage.selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(source2ScenarioName, twoModelFile)
+            .uploadFileAndOk(source2ScenarioName, twoModelFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(twoModelScenarioName, twoModelFile2)
+            .uploadFileAndOk(twoModelScenarioName, twoModelFile2, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(sourceScenarioName, sourcePartName)
@@ -278,12 +278,12 @@ public class TwoModelMachiningTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .selectExploreButton()
             .refreshCurrentPage()
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), twoModelFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), twoModelFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
             .highlightScenario(testScenarioName, "PowderMetalShaft")
