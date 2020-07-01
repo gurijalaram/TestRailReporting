@@ -3,7 +3,7 @@ package com.apriori.utils;
 import com.apriori.apibase.services.response.objects.DisplayPreferencesEntity;
 import com.apriori.apibase.services.response.objects.ProductionDefaultEntity;
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
-import com.apriori.apibase.services.response.objects.UnitVariantSettingInfoSchema;
+import com.apriori.apibase.services.response.objects.UnitSystemSettingSchema;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
@@ -81,7 +81,7 @@ public class AfterTestUtil {
             .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
             .setAutoLogin(false)
-            .setBody(new DisplayPreferencesEntity().setUnitVariantSettingsInfo(new UnitVariantSettingInfoSchema().setType("simple")
+            .setBody(new DisplayPreferencesEntity().setUnitVariantSettingsInfo(new UnitSystemSettingSchema().setType("simple")
                 .setName(UnitsEnum.MMKS.getUnits())
                 .setMetric(true)
                 .setLength(LengthEnum.MILLIMETER.getLength())

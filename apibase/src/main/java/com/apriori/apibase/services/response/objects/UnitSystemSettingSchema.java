@@ -2,7 +2,7 @@ package com.apriori.apibase.services.response.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UnitVariantSettingInfoSchema {
+public class UnitSystemSettingSchema {
 
     @JsonProperty("@type")
     private String type;
@@ -35,7 +35,7 @@ public class UnitVariantSettingInfoSchema {
         return type;
     }
 
-    public UnitVariantSettingInfoSchema setType(String type) {
+    public UnitSystemSettingSchema setType(String type) {
         this.type = type;
         return this;
     }
@@ -44,7 +44,7 @@ public class UnitVariantSettingInfoSchema {
         return name;
     }
 
-    public UnitVariantSettingInfoSchema setName(String name) {
+    public UnitSystemSettingSchema setName(String name) {
         this.name = name;
         return this;
     }
@@ -53,7 +53,7 @@ public class UnitVariantSettingInfoSchema {
         return metric;
     }
 
-    public UnitVariantSettingInfoSchema setMetric(Boolean metric) {
+    public UnitSystemSettingSchema setMetric(Boolean metric) {
         this.metric = metric;
         return this;
     }
@@ -62,7 +62,7 @@ public class UnitVariantSettingInfoSchema {
         return length;
     }
 
-    public UnitVariantSettingInfoSchema setLength(String length) {
+    public UnitSystemSettingSchema setLength(String length) {
         this.length = length;
         return this;
     }
@@ -71,7 +71,7 @@ public class UnitVariantSettingInfoSchema {
         return mass;
     }
 
-    public UnitVariantSettingInfoSchema setMass(String mass) {
+    public UnitSystemSettingSchema setMass(String mass) {
         this.mass = mass;
         return this;
     }
@@ -80,7 +80,7 @@ public class UnitVariantSettingInfoSchema {
         return time;
     }
 
-    public UnitVariantSettingInfoSchema setTime(String time) {
+    public UnitSystemSettingSchema setTime(String time) {
         this.time = time;
         return this;
     }
@@ -89,7 +89,7 @@ public class UnitVariantSettingInfoSchema {
         return decimalPlaces;
     }
 
-    public UnitVariantSettingInfoSchema setDecimalPlaces(Integer decimalPlaces) {
+    public UnitSystemSettingSchema setDecimalPlaces(Integer decimalPlaces) {
         this.decimalPlaces = decimalPlaces;
         return this;
     }
@@ -98,7 +98,7 @@ public class UnitVariantSettingInfoSchema {
         return system;
     }
 
-    public UnitVariantSettingInfoSchema setSystem(Boolean system) {
+    public UnitSystemSettingSchema setSystem(Boolean system) {
         this.system = system;
         return this;
     }
@@ -107,7 +107,7 @@ public class UnitVariantSettingInfoSchema {
         return custom;
     }
 
-    public UnitVariantSettingInfoSchema setCustom(Boolean custom) {
+    public UnitSystemSettingSchema setCustom(Boolean custom) {
         this.custom = custom;
         return this;
     }
