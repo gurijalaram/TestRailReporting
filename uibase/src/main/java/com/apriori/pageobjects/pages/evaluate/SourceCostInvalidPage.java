@@ -10,9 +10,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AssemblyCostingJobPage extends LoadableComponent<AssemblyCostingJobPage> {
+public class SourceCostInvalidPage extends LoadableComponent<SourceCostInvalidPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(AssemblyCostingJobPage.class);
+    private final Logger logger = LoggerFactory.getLogger(SourceCostInvalidPage.class);
 
     @FindBy(css = "div[data-ap-comp='additionalOrderInputs'] .modal-content")
     private WebElement modalDialog;
@@ -29,7 +29,7 @@ public class AssemblyCostingJobPage extends LoadableComponent<AssemblyCostingJob
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public AssemblyCostingJobPage(WebDriver driver) {
+    public SourceCostInvalidPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -68,7 +68,7 @@ public class AssemblyCostingJobPage extends LoadableComponent<AssemblyCostingJob
      * Selects the fix source button
      * @return current page object
      */
-    public AssemblyCostingJobPage selectFixSource() {
+    public SourceCostInvalidPage selectFixSource() {
         pageUtils.waitForElementAndClick(fixSourceButton);
         return this;
     }
