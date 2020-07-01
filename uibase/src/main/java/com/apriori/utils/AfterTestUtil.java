@@ -82,7 +82,7 @@ public class AfterTestUtil {
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
             .setAutoLogin(false)
             .setBody(new DisplayPreferencesEntity().setUnitVariantSettingsInfo(new UnitSystemSettingSchema().setType("simple")
-                .setName(UnitsEnum.MMKS.getUnits())
+                .setName(UnitsEnum.CUSTOM.getUnits())
                 .setMetric(true)
                 .setLength(LengthEnum.MILLIMETER.getLength())
                 .setMass(MassEnum.KILOGRAM.getMass())
