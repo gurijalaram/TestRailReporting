@@ -22,8 +22,8 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.MetricEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
@@ -41,6 +41,7 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class SettingsTests extends TestBase {
+    File resourceFile;
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private SettingsPage settingsPage;
@@ -50,8 +51,6 @@ public class SettingsTests extends TestBase {
     private SelectionSettingsPage selectionSettingsPage;
     private WarningPage warningPage;
     private UserCredentials currentUser;
-
-    File resourceFile;
 
     @After
     public void resetAllSettings() {
@@ -113,7 +112,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -142,7 +141,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -169,7 +168,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -199,7 +198,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         moreInputsPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openMoreInputs();
@@ -379,7 +378,7 @@ public class SettingsTests extends TestBase {
 
         productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
-            .changeDisplayUnits(UnitsEnum.ENGLISH.getUnit())
+            .selectSystem(MetricEnum.ENGLISH.getMetricUnit())
             .openProdDefaultTab()
             .enterScenarioName("Save all tabs test")
             .enterAnnualVolume("295")
@@ -392,7 +391,7 @@ public class SettingsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         settingsPage = explorePage.openSettings();
-        assertThat(settingsPage.isSelectedUnits(UnitsEnum.ENGLISH.getUnit()), is(true));
+        assertThat(settingsPage.isSelectedMetricSystem(MetricEnum.ENGLISH.getMetricUnit()), is(true));
 
         productionDefaultPage = new SettingsPage(driver).openProdDefaultTab();
         assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));

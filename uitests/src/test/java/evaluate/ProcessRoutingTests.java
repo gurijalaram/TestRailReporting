@@ -81,7 +81,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -92,7 +92,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("3 Axis Mill"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
     }
 
     @Test
@@ -106,13 +106,13 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.93, Piece Part Cost (USD): 0.63, Fully Burdened Cost (USD): 1.05, Total Capital Investments (USD): 11,753.83"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.95, Piece Part Cost (USD): 0.62, Fully Burdened Cost (USD): 1.04, Total Capital Investments (USD): 11,753.83"));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -147,7 +147,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -177,7 +177,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -209,7 +209,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -242,7 +242,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -279,7 +279,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
@@ -322,7 +322,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         materialCompositionPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -348,7 +348,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -375,7 +375,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Stress Relief / Ultrasonic Cleaning"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stress Relief / Ultrasonic Cleaning"));
     }
 
     @Test
@@ -389,7 +389,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -425,7 +425,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -447,7 +447,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -462,7 +462,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("High Pressure Die Casting"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("High Pressure Die Casting"));
 
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
@@ -471,7 +471,7 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Gravity Die Casting"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Gravity Die Casting"));
     }
 
     @Test
@@ -486,7 +486,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         geometryPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -531,7 +531,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -542,7 +542,7 @@ public class ProcessRoutingTests extends TestBase {
         assertThat(processRoutingPage.getMachineName(), is("DoAll 3613-1 Vert"));
 
         processRoutingPage.selectProcessChart("2 Axis Lathe");
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 19.47"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 19.72"));
         assertThat(processRoutingPage.getMachineName(), is("Virtual 2 Axis Lathe - Small"));
     }
 
@@ -558,7 +558,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         processRoutingPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -580,7 +580,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -600,7 +600,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -620,7 +620,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -640,7 +640,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -660,14 +660,14 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getRoutings(), containsInAnyOrder("2AL+3AM Routing", "4 Axis Mill Routing", "3 Axis Lathe Routing", "2AL+4AM Routing", "Drill Press Routing", "5 Axis Mill Routing", "3 Axis Mill Routing", "MillTurn Routing", "2AL+5AM Routing"));
+        assertThat(routingsPage.getRoutings(), containsInAnyOrder("Ring Rolled Forging", "Closed Die Forging"));
     }
 
     @Test
@@ -680,7 +680,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -700,7 +700,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -720,7 +720,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -740,7 +740,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -760,7 +760,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -782,7 +782,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -803,7 +803,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -823,7 +823,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -843,7 +843,7 @@ public class ProcessRoutingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         routingsPage = loginPage.login(currentUser)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -873,12 +873,12 @@ public class ProcessRoutingTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Melting / High Pressure Die Casting / Trim / 3 Axis Mill / Drill Press / Cylindrical Grinder / " +
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Melting / High Pressure Die Casting / Trim / 5 Axis Mill / Drill Press / Cylindrical Grinder / " +
             "Reciprocating Surface Grinder"));
 
         processRoutingPage = evaluatePage.openProcessDetails()
@@ -889,6 +889,6 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getRoutingLabels(), hasItems("3 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder"));
+        assertThat(processRoutingPage.getRoutingLabels(), containsInAnyOrder("3 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder"));
     }
 }

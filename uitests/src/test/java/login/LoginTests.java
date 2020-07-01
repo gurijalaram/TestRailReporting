@@ -28,14 +28,13 @@ import java.io.File;
 
 public class LoginTests extends TestBase {
 
+    private static String loginPageErrorMessage = "Wrong email or password.";
+    File resourceFile;
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private ForgottenPasswordPage forgottenPasswordPage;
     private PrivacyPolicyPage privacyPolicyPage;
     private EvaluatePage evaluatePage;
-
-    File resourceFile;
-    private static String loginPageErrorMessage = "Wrong email or password.";
 
     public LoginTests() {
         super();
@@ -89,7 +88,9 @@ public class LoginTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
 
-        assertThat(loginPage.getMarketingText(), containsString("For the past 7 years, aPriori has hosted the International Cost Insight Conference"));
+        assertThat(loginPage.getMarketingText(), containsString("COST INSIGHT GENERATE:\n" +
+            "SOLUTION FOR A NEW NORMAL\n" +
+            "Proactively notify your team of manufacturability issues and enable them to optimize their designs faster."));
         assertThat(loginPage.isLogoDisplayed(), is(true));
     }
 
@@ -131,7 +132,7 @@ public class LoginTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

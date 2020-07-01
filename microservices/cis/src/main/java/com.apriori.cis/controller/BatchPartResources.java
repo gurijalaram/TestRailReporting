@@ -23,8 +23,8 @@ public class BatchPartResources extends CisBase {
 
     public static <T> ResponseWrapper<T> getBatchParts() {
         return GenericRequestUtil.get(
-                RequestEntity.init(endpointBatchPart, Parts.class),
-                new RequestAreaApi()
+            RequestEntity.init(endpointBatchPart, Parts.class),
+            new RequestAreaApi()
         );
     }
 
@@ -81,6 +81,6 @@ public class BatchPartResources extends CisBase {
                         .use("MaterialName", npr.getMaterialName()));
 
 
-        return (Part) GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
+        return (Part)GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
     }
 }

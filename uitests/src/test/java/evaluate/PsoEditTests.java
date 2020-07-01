@@ -37,7 +37,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(3)
             .openProcessDetails()
@@ -56,9 +56,9 @@ public class PsoEditTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("8"), is(true));
-        assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.4"));
+        assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.40"));
         assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
-        assertThat(processSetupOptionsPage.getMaterialRegrind(), is("0.3"));
+        assertThat(processSetupOptionsPage.getMaterialRegrind(), is("0.30"));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -99,7 +99,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(3)
             .openProcessDetails()
@@ -126,7 +126,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -152,7 +152,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -178,7 +178,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -203,7 +203,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -258,7 +258,7 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openProcessDetails()

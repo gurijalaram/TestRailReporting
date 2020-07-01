@@ -49,7 +49,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario(5)
             .openDesignGuidance()
@@ -87,7 +87,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -112,7 +112,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -130,7 +130,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -150,7 +150,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -189,7 +189,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -243,7 +243,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -279,7 +279,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -287,11 +287,11 @@ public class DTCPlasticMouldingTests extends TestBase {
             .selectInvestigationTopic("Slides and Lifters");
 
         assertThat(investigationPage.getInvestigationCell("SlideBundle", "GCD Count"), is(equalTo("1")));
-        assertThat(investigationPage.getInvestigationCell("LifterBundle", "GCD Count"), is(equalTo("8")));
+        assertThat(investigationPage.getInvestigationCell("LifterBundle", "GCD Count"), is(equalTo("7")));
 
         investigationPage.selectInvestigationTopic("Special Mold Tooling");
 
-        assertThat(investigationPage.getInvestigationCell("Threading Mechanisms", "GCD Count"), is(equalTo("8")));
+        assertThat(investigationPage.getInvestigationCell("Threading Mechanisms", "GCD Count"), is(equalTo("9")));
         assertThat(investigationPage.getInvestigationCell("Ribs", "GCD Count"), is(equalTo("1")));
     }
 }

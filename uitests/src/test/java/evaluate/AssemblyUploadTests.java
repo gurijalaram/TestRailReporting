@@ -35,15 +35,14 @@ import java.io.File;
 
 public class AssemblyUploadTests extends TestBase {
 
+    private final String noComponentMessage = "You have no components that match the selected filter";
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private VPESelectionPage vpeSelectionPage;
     private ComponentsPage componentsPage;
-
     private File resourceFile;
     private String scenarioName;
-    private final String noComponentMessage = "You have no components that match the selected filter";
 
     public AssemblyUploadTests() {
         super();
@@ -59,7 +58,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
 
@@ -67,7 +66,7 @@ public class AssemblyUploadTests extends TestBase {
         assertThat(evaluatePage.getTotalComponents(), is("4"));
         assertThat(evaluatePage.getUniqueComponents(), is("4"));
         assertThat(evaluatePage.getWarningsCount(), is("4"));
-        assertThat(evaluatePage.getCycleTimeCount(), is("0.0"));
+        assertThat(evaluatePage.getCycleTimeCount(), is(0.0));
     }
 
     @Test
@@ -82,7 +81,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
             .selectExploreButton()
@@ -144,7 +143,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .delete()
             .deleteScenario()
             .filter()
@@ -168,7 +167,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .enterAnnualVolume("3126")
@@ -201,7 +200,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         vpeSelectionPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
@@ -219,7 +218,7 @@ public class AssemblyUploadTests extends TestBase {
         evaluatePage = new VPESelectionPage(driver).close()
             .closePanel();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Powder Coat Cart"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Coat Cart"));
     }
 
     @Test
@@ -233,7 +232,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
             .selectExploreButton()
@@ -277,7 +276,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         componentsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
             .openComponentsTable()

@@ -13,9 +13,9 @@ import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDataSourcePage;
 import com.apriori.pageobjects.reports.pages.create.CreateDomainPage;
 import com.apriori.pageobjects.reports.pages.create.CreateReportPage;
-import com.apriori.pageobjects.reports.pages.homepage.HomePage;
+import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
-import com.apriori.pageobjects.reports.pages.login.LoginPage;
+import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.logout.LogoutPage;
 import com.apriori.pageobjects.reports.pages.manage.ManageRolesPage;
 import com.apriori.pageobjects.reports.pages.manage.ManageUsersPage;
@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 
-public class NavigationTests extends TestBase {
+public class ReportsNavigationTests extends TestBase {
 
     private PrivacyPolicyPage privacyPolicyPage;
     private ViewSearchResultsPage searchResults;
@@ -49,11 +49,11 @@ public class NavigationTests extends TestBase {
     private ManageRolesPage roles;
     private ManageUsersPage users;
     private LibraryPage library;
-    private HomePage homePage;
+    private ReportsHomePage homePage;
     private HelpPage helpPage;
     private LogoutPage logout;
 
-    public NavigationTests() {
+    public ReportsNavigationTests() {
         super();
     }
 
@@ -61,7 +61,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = "2987")
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {
-        cirUserGuide = new LoginPage(driver)
+        cirUserGuide = new ReportsLoginPage(driver)
             .login()
             .navigateToReportUserGuide()
             .switchTab()
@@ -76,7 +76,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = "2986")
     @Description("Ensure that the CI Reports Logout Link works")
     public void testCIReportsLogoutNavigation() {
-        logout = new LoginPage(driver)
+        logout = new ReportsLoginPage(driver)
             .login()
             .navigateToReportLogout();
 
@@ -91,7 +91,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2967"})
     @Description("Ensure that the link to Home works (doesn't navigate elsewhere - negative test)")
     public void testHomeNavigation() {
-        homePage = new LoginPage(driver)
+        homePage = new ReportsLoginPage(driver)
             .login()
             .navigateToHomePage();
 
@@ -103,7 +103,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2968"})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
-        library = new LoginPage(driver)
+        library = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage();
 
@@ -114,7 +114,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2969"})
     @Description("Ensure that the link to View Search Results works")
     public void testViewSearchResultsNavigation() {
-        searchResults = new LoginPage(driver)
+        searchResults = new ReportsLoginPage(driver)
             .login()
             .navigateToViewSearchResultsPage();
 
@@ -125,7 +125,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2970"})
     @Description("Ensure that the link to View Repository works")
     public void testViewRepositoryNavigation() {
-        repository = new LoginPage(driver)
+        repository = new ReportsLoginPage(driver)
             .login()
             .navigateToViewRepositoryPage();
 
@@ -136,7 +136,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2971"})
     @Description("Ensure that the link to View Schedules works")
     public void testViewSchedulesNavigation() {
-        schedules = new LoginPage(driver)
+        schedules = new ReportsLoginPage(driver)
             .login()
             .navigateToViewSchedulesPage();
 
@@ -147,7 +147,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2972"})
     @Description("Ensure that the link to View Messages works")
     public void testViewMessagesNavigation() {
-        messages = new LoginPage(driver)
+        messages = new ReportsLoginPage(driver)
             .login()
             .navigateToViewMessagesPage();
 
@@ -158,7 +158,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2973"})
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
-        users = new LoginPage(driver)
+        users = new ReportsLoginPage(driver)
             .login()
             .navigateToManageUsersPage();
 
@@ -169,7 +169,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2974"})
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
-        roles = new LoginPage(driver)
+        roles = new ReportsLoginPage(driver)
             .login()
             .navigateToManageRolesPage();
 
@@ -180,7 +180,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2975"})
     @Description("Ensure that the link to Create Ad Hoc View works")
     public void testCreateAdHocViewNavigation() {
-        adHocView = new LoginPage(driver)
+        adHocView = new ReportsLoginPage(driver)
             .login()
             .navigateToCreateAdHocViewPage();
 
@@ -193,7 +193,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2976"})
     @Description("Ensure that the link to Create Report works")
     public void testCreateReportNavigation() {
-        report = new LoginPage(driver)
+        report = new ReportsLoginPage(driver)
             .login()
             .navigateToCreateReportPage();
 
@@ -205,7 +205,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2977"})
     @Description("Ensure that the link to Create Dashboard works")
     public void testCreateDashboardNavigation() {
-        dashboard = new LoginPage(driver)
+        dashboard = new ReportsLoginPage(driver)
             .login()
             .navigateToCreateDashboardPage();
 
@@ -216,7 +216,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2978"})
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
-        domain = new LoginPage(driver)
+        domain = new ReportsLoginPage(driver)
             .login()
             .navigateToCreateDomainPage();
 
@@ -231,7 +231,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2979"})
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {
-        dataSource = new LoginPage(driver)
+        dataSource = new ReportsLoginPage(driver)
             .login()
             .navigateToCreateDataSourcePage();
 
@@ -242,7 +242,7 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"2700"})
     @Description("Ensure that the link to the privacy policy works")
     public void testPrivacyPolicyNavigation() {
-        privacyPolicyPage = new LoginPage(driver)
+        privacyPolicyPage = new ReportsLoginPage(driver)
             .waitForPrivacyPolicyLinkVisibility()
             .goToPrivacyPolicy();
 
@@ -256,7 +256,7 @@ public class NavigationTests extends TestBase {
     @Description("Ensure that the link to the help page works")
     public void testHelpNavigation() {
         String iframeId = "topic";
-        helpPage = new LoginPage(driver)
+        helpPage = new ReportsLoginPage(driver)
             .login()
             .navigateToHelpPage()
             .switchToIFrameHelpPage(iframeId)

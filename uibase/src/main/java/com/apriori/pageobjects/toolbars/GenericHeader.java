@@ -4,7 +4,6 @@ import com.apriori.pageobjects.pages.compare.SaveAsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.RevertPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.AssignPage;
 import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.explore.DeletePage;
@@ -104,31 +103,33 @@ public class GenericHeader extends PageHeader {
     }
 
     /**
-     * Collective method to upload a file
+     * Collective method to upload a file then select OK
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
+     * @param className     - the class name
      * @return new page object
      */
-    public EvaluatePage uploadFile(String scenarioName, File filePath) {
+    public <T> T uploadFileAndOk(String scenarioName, File filePath, Class<T> className) {
         pageUtils.waitForElementAndClick(newFileDropdown);
         pageUtils.waitForElementAndClick(componentButton);
         return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath)
-            .selectOkButton(EvaluatePage.class);
+            .selectOkButton(className);
     }
 
     /**
-     * Fails to upload a file and navigates to warning page
+     * Collective method to upload a file then select Cancel
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
+     * @param className     - the class name
      * @return new page object
      */
-    public WarningPage failedUploadFile(String scenarioName, File filePath) {
+    public <T> T uploadFileAndCancel(String scenarioName, File filePath, Class<T> className) {
         pageUtils.waitForElementAndClick(newFileDropdown);
         pageUtils.waitForElementAndClick(componentButton);
         return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath)
-            .selectOkButton(WarningPage.class);
+            .selectCancelButton(className);
     }
 
     /**

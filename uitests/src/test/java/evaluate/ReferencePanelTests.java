@@ -2,6 +2,7 @@ package evaluate;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
@@ -34,11 +35,11 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate the compare panel updates the comparison details to the previous iteration of the scenario")
     public void referenceUpdates() {
 
-        resourceFile =  new FileResourceUtil().getResourceFile("powderMetal.stp");
+        resourceFile = new FileResourceUtil().getResourceFile("powderMetal.stp");
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -52,7 +53,7 @@ public class ReferencePanelTests extends TestBase {
         assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.POWDER_METAL.getProcessGroup()));
         assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
         assertThat(referenceComparePage.getReferenceAnnualVolume(), is("5,500"));
-        assertThat(referenceComparePage.getReferenceProductionLife(), is("5"));
+        assertThat(referenceComparePage.getReferenceProductionLife(), is("5.00"));
     }
 
     @Test
@@ -65,7 +66,7 @@ public class ReferencePanelTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -87,7 +88,7 @@ public class ReferencePanelTests extends TestBase {
         assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()));
         assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
         assertThat(referenceComparePage.getReferenceMaterial(), is("ABS"));
-        assertThat(referenceComparePage.getReferenceUtilization(), is("38.08"));
+        assertThat(referenceComparePage.getReferenceUtilization(), is(closeTo(38.09, 1)));
     }
 
     @Test
@@ -100,7 +101,7 @@ public class ReferencePanelTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -125,7 +126,7 @@ public class ReferencePanelTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
