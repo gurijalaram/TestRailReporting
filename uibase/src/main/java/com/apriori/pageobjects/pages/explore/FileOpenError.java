@@ -48,7 +48,7 @@ public class FileOpenError extends LoadableComponent<FileOpenError> {
      *
      * @return webelement as string
      */
-    public String getWarningText() {
+    public String getErrorText() {
         return pageUtils.waitForElementToAppear(warningText).getText();
     }
 
