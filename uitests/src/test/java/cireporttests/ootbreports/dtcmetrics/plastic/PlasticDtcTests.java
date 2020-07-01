@@ -4,6 +4,7 @@ import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.PlasticDtcReportsEnum;
 import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -25,10 +26,10 @@ public class PlasticDtcTests extends TestBase {
         repository = new ReportsLoginPage(driver)
             .login()
             .navigateToViewRepositoryPage()
-            .navigateToCastingFolder();
+            .navigateToPlasticFolder();
 
-        CastingReportsEnum[] reportNames = CastingReportsEnum.values();
-        for (CastingReportsEnum report : reportNames) {
+        PlasticDtcReportsEnum[] reportNames = PlasticDtcReportsEnum.values();
+        for (PlasticDtcReportsEnum report : reportNames) {
             assertThat(repository.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
         }
     }

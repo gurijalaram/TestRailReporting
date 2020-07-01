@@ -65,11 +65,14 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     @FindBy(xpath = "//a[contains(text(), 'Scenario Comparison')]")
     private WebElement scenarioComparisonReport;
 
-    @FindBy(css = "li[id='node21']")
-    private WebElement castingFolder;
+    @FindBy(css = "//p[contains(text(), 'Casting')]/..")
+    private WebElement castingDtcFolder;
 
-    @FindBy(xpath = "//ul[@id='node1sub']/li[1]/ul/li[2]/ul/li[5]/ul/li[2]/ul/li[2]/p/b")
-    private WebElement machiningDTCFolder;
+    @FindBy(xpath = "//p[contains(text(), 'Machining')]/..")
+    private WebElement machiningDtcFolder;
+
+    @FindBy(xpath = "//p[contains(text(), 'Plastic')]/..")
+    private WebElement plasticDtcFolder;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -121,7 +124,21 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
         navigateToFolder("DTC Metrics");
-        navigateToFolder("Casting");
+        navigateToFolder("Casting DTC");
+        return this;
+    }
+
+    /**
+     * Navigate to Plastic folder
+     *
+     * @return current page object
+     */
+    public ViewRepositoryPage navigateToPlasticFolder() {
+        navigateToFolder("Organization");
+        navigateToFolder("aPriori");
+        navigateToFolder("Reports");
+        navigateToFolder("DTC Metrics");
+        navigateToFolder("Plastic DTC");
         return this;
     }
 
@@ -187,8 +204,9 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         folderElementMap.put("General", generalFolder);
         folderElementMap.put("Solutions", solutionsFolder);
         folderElementMap.put("Upgrade Process", upgradeProcessFolder);
-        folderElementMap.put("Casting", castingFolder);
-        folderElementMap.put("Machining DTC", machiningDTCFolder);
+        folderElementMap.put("Casting DTC", castingDtcFolder);
+        folderElementMap.put("Machining DTC", machiningDtcFolder);
+        folderElementMap.put("Plastic DTC", plasticDtcFolder);
 
         folderElementMap.put("Organization", organizationFolder);
         folderElementMap.put("aPriori", aprioriSubFolder);
