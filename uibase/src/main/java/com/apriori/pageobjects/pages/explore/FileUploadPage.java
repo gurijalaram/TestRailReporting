@@ -122,10 +122,10 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     /**
      * Select the cancel button
      *
-     * @return current page object
+     * @return generic page object
      */
-    private ExplorePage selectCancelButton() {
+    public <T> T selectCancelButton(Class<T> className) {
         pageUtils.waitForElementAndClick(cancelButton);
-        return new ExplorePage(driver);
+        return PageFactory.initElements(driver,className);
     }
 }

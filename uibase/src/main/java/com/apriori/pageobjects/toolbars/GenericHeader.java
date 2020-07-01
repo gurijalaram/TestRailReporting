@@ -103,7 +103,7 @@ public class GenericHeader extends PageHeader {
     }
 
     /**
-     * Collective method to upload a file
+     * Collective method to upload a file then select OK
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
@@ -115,6 +115,21 @@ public class GenericHeader extends PageHeader {
         pageUtils.waitForElementAndClick(componentButton);
         return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath)
             .selectOkButton(className);
+    }
+
+    /**
+     * Collective method to upload a file then select Cancel
+     *
+     * @param scenarioName - the name of the scenario
+     * @param filePath     - location of the file
+     * @param className     - the class name
+     * @return new page object
+     */
+    public <T> T uploadFileAndCancel(String scenarioName, File filePath, Class<T> className) {
+        pageUtils.waitForElementAndClick(newFileDropdown);
+        pageUtils.waitForElementAndClick(componentButton);
+        return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath)
+            .selectCancelButton(className);
     }
 
     /**
