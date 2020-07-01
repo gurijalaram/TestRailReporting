@@ -102,7 +102,7 @@ public class EditPublicComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -137,7 +137,7 @@ public class EditPublicComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
             .selectExploreButton()

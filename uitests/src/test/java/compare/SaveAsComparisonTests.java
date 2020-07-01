@@ -57,7 +57,7 @@ public class SaveAsComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
             .createNewComparison()
@@ -126,7 +126,7 @@ public class SaveAsComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
             .createNewComparison()

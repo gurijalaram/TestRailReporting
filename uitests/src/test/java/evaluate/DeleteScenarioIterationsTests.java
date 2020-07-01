@@ -47,7 +47,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectLock()
             .selectPublishButton()
@@ -86,7 +86,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())

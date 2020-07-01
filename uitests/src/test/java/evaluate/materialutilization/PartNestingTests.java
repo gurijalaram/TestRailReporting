@@ -44,7 +44,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -63,7 +63,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -86,7 +86,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -110,7 +110,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -134,7 +134,7 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .openMaterialUtilization();

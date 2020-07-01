@@ -53,7 +53,7 @@ public class PublishComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -107,7 +107,7 @@ public class PublishComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

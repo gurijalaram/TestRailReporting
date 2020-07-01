@@ -43,7 +43,7 @@ public class DeletePublicScenarioTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())

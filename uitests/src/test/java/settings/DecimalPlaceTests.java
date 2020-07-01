@@ -58,7 +58,7 @@ public class DecimalPlaceTests extends TestBase {
             .openSettings()
             .changeDecimalPlaces(DecimalPlaceEnum.SIX.getDecimalPlaces())
             .save(ExplorePage.class)
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 

@@ -45,7 +45,7 @@ public class PublishNewCostedTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -66,7 +66,7 @@ public class PublishNewCostedTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario("Analysis", "Low", "Abe Chaves")

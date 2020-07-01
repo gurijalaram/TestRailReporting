@@ -47,7 +47,7 @@ public class AddScenarioTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario();
 
@@ -77,7 +77,7 @@ public class AddScenarioTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
 
         scenarioTablePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

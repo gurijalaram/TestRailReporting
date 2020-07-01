@@ -42,7 +42,7 @@ public class PreviewPanelTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .selectExploreButton()
@@ -65,7 +65,7 @@ public class PreviewPanelTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .selectExploreButton()

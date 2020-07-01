@@ -59,7 +59,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
 
@@ -82,7 +82,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
             .selectExploreButton()
@@ -144,7 +144,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .delete()
             .deleteScenario()
             .filter()
@@ -168,7 +168,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .enterAnnualVolume("3126")
@@ -201,7 +201,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         vpeSelectionPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
@@ -233,7 +233,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
             .selectExploreButton()
@@ -277,7 +277,7 @@ public class AssemblyUploadTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         componentsPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario()
             .openComponentsTable()

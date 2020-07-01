@@ -133,7 +133,7 @@ public class LoginTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

@@ -53,7 +53,7 @@ public class PublishExistingCostedTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -88,7 +88,7 @@ public class PublishExistingCostedTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -132,14 +132,14 @@ public class PublishExistingCostedTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .refreshCurrentPage()
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
+            .uploadFileAndOk(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishWarningPage.class)
@@ -164,7 +164,7 @@ public class PublishExistingCostedTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -172,7 +172,7 @@ public class PublishExistingCostedTests extends TestBase {
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .refreshCurrentPage()
-            .uploadFile(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
+            .uploadFileAndOk(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"))
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishWarningPage.class)

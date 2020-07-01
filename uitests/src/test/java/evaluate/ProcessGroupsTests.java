@@ -48,7 +48,7 @@ public class ProcessGroupsTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
@@ -65,7 +65,7 @@ public class ProcessGroupsTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
@@ -85,7 +85,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -112,7 +112,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -139,7 +139,7 @@ public class ProcessGroupsTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -166,7 +166,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -193,7 +193,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -220,7 +220,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -247,7 +247,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -274,7 +274,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -301,7 +301,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -328,7 +328,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -355,7 +355,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -382,7 +382,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -409,7 +409,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -436,7 +436,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -463,7 +463,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -490,7 +490,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -517,7 +517,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -544,7 +544,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
@@ -571,7 +571,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFile(testScenarioName, resourceFile)
+        evaluatePage = explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
@@ -592,7 +592,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())

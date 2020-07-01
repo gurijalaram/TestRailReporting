@@ -4,7 +4,6 @@ import com.apriori.pageobjects.pages.compare.SaveAsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.RevertPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.apriori.pageobjects.pages.explore.AssignPage;
 import com.apriori.pageobjects.pages.explore.ComparisonPage;
 import com.apriori.pageobjects.pages.explore.DeletePage;
@@ -110,7 +109,7 @@ public class GenericHeader extends PageHeader {
      * @param filePath     - location of the file
      * @return new page object
      */
-    public EvaluatePage uploadFile(String scenarioName, File filePath) {
+    public EvaluatePage uploadFileAndOk(String scenarioName, File filePath) {
         pageUtils.waitForElementAndClick(newFileDropdown);
         pageUtils.waitForElementAndClick(componentButton);
         return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath)
@@ -124,11 +123,11 @@ public class GenericHeader extends PageHeader {
      * @param filePath     - location of the file
      * @return new page object
      */
-    public WarningPage failedUploadFile(String scenarioName, File filePath) {
+    public <T> T uploadFileAndOk(String scenarioName, File filePath, Class<T> className) {
         pageUtils.waitForElementAndClick(newFileDropdown);
         pageUtils.waitForElementAndClick(componentButton);
         return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath)
-            .selectOkButton(WarningPage.class);
+            .selectOkButton(className);
     }
 
     /**

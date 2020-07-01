@@ -50,7 +50,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openMoreInputs()
@@ -68,7 +68,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -86,7 +86,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -104,7 +104,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openProcessDetails()
@@ -122,7 +122,7 @@ public class HelpTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openCostDetails()

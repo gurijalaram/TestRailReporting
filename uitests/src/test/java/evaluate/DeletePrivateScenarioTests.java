@@ -43,7 +43,7 @@ public class DeletePrivateScenarioTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        explorePage.uploadFile(testScenarioName, resourceFile)
+        explorePage.uploadFileAndOk(testScenarioName, resourceFile)
             .selectExploreButton()
             .filter()
             .setWorkspace("Private")
