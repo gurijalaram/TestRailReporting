@@ -255,8 +255,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public String getExportSetName(String exportSet) {
-        By exportSetElement = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
-        return driver.findElement(exportSetElement).getText();
+        return driver.findElement(
+                By.xpath(String.format("//li[@title='%s']/div/a", exportSet)))
+                .getText();
     }
 
     /**
@@ -264,9 +265,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String array of values
      */
     public String[] getExportSetEnumValues() {
-        return new String[]{ ExportSetEnum.TOP_LEVEL.getExportSetName(), ExportSetEnum.PISTON_ASSEMBLY.getExportSetName(),
-                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), ExportSetEnum.CASTING_DTC.getExportSetName(),
-                ExportSetEnum.ROLL_UP_A.getExportSetName()};
+        return new String[] {
+                ExportSetEnum.TOP_LEVEL.getExportSetName(),
+                ExportSetEnum.PISTON_ASSEMBLY.getExportSetName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        };
     }
 
     /**
