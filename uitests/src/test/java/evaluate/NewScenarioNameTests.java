@@ -49,7 +49,7 @@ public class NewScenarioNameTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .createNewScenario()
             .enterScenarioName(testScenarioName)
             .save();
@@ -71,7 +71,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage.login(UserUtil.getUser());
 
         explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFileAndOk(testScenarioName, resourceFile);
+        evaluatePage = explorePage.uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class);
 
         assertThat(evaluatePage.getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), CoreMatchers.is(true));
 
@@ -103,19 +103,19 @@ public class NewScenarioNameTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser());
         explorePage = new ExplorePage(driver);
-        explorePage = explorePage.uploadFileAndOk(scenarioA, resourceFile)
+        explorePage = explorePage.uploadFileAndOk(scenarioA, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .refreshCurrentPage()
-            .uploadFileAndOk(scenarioB, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .uploadFileAndOk(scenarioB, new FileResourceUtil().getResourceFile("MultiUpload.stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .refreshCurrentPage()
-            .uploadFileAndOk(scenarioC, new FileResourceUtil().getResourceFile("MultiUpload.stp"))
+            .uploadFileAndOk(scenarioC, new FileResourceUtil().getResourceFile("MultiUpload.stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

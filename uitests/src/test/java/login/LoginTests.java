@@ -28,14 +28,13 @@ import java.io.File;
 
 public class LoginTests extends TestBase {
 
+    private static String loginPageErrorMessage = "Wrong email or password.";
+    File resourceFile;
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private ForgottenPasswordPage forgottenPasswordPage;
     private PrivacyPolicyPage privacyPolicyPage;
     private EvaluatePage evaluatePage;
-
-    File resourceFile;
-    private static String loginPageErrorMessage = "Wrong email or password.";
 
     public LoginTests() {
         super();
@@ -133,7 +132,7 @@ public class LoginTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile)
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

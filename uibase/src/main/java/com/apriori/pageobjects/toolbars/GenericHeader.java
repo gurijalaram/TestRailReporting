@@ -107,20 +107,7 @@ public class GenericHeader extends PageHeader {
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
-     * @return new page object
-     */
-    public EvaluatePage uploadFileAndOk(String scenarioName, File filePath) {
-        pageUtils.waitForElementAndClick(newFileDropdown);
-        pageUtils.waitForElementAndClick(componentButton);
-        return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath)
-            .selectOkButton(EvaluatePage.class);
-    }
-
-    /**
-     * Fails to upload a file and navigates to warning page
-     *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
+     * @param className     - the class name
      * @return new page object
      */
     public <T> T uploadFileAndOk(String scenarioName, File filePath, Class<T> className) {

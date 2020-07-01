@@ -54,7 +54,7 @@ public class DeleteComparisonTests extends TestBase {
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         new CIDLoginPage(driver).login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .selectExploreButton()
@@ -132,7 +132,7 @@ public class DeleteComparisonTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
 
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
@@ -185,7 +185,7 @@ public class DeleteComparisonTests extends TestBase {
         loginPage = new CIDLoginPage(driver);
 
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -235,7 +235,7 @@ public class DeleteComparisonTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
