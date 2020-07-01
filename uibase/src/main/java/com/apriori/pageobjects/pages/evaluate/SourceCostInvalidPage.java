@@ -68,8 +68,9 @@ public class SourceCostInvalidPage extends LoadableComponent<SourceCostInvalidPa
      * Selects the fix source button
      * @return current page object
      */
-    public SourceCostInvalidPage selectFixSource() {
+    public EvaluatePage selectFixSource() {
         pageUtils.waitForElementAndClick(fixSourceButton);
-        return this;
+        pageUtils.windowHandler(1);
+        return new EvaluatePage(driver);
     }
 }

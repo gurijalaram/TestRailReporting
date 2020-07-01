@@ -290,7 +290,7 @@ public class TwoModelMachiningTests extends TestBase {
             .apply(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
 
         guidancePage = evaluatePage.openDesignGuidance()
             .openGuidanceTab()

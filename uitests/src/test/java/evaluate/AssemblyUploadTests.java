@@ -63,7 +63,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
         assertThat(evaluatePage.getTotalComponents(), is("4"));
         assertThat(evaluatePage.getUniqueComponents(), is("4"));
         assertThat(evaluatePage.getWarningsCount(), is("4"));
@@ -252,7 +252,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectExploreButton()
             .openAssembly(scenarioName, "Hinge assembly");
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_OUT_OF_DATE.getCostingText()), Matchers.is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_OUT_OF_DATE.getCostingText()), Matchers.is(true));
 
         componentsPage = evaluatePage.clickCostStatus(ComponentsPage.class)
             .selectComponentsView("Tree View")

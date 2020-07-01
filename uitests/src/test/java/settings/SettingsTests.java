@@ -120,7 +120,7 @@ public class SettingsTests extends TestBase {
             .openJobQueue()
             .openScenarioLink(testScenarioName, "bracket_basic", "publish");
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
     }
 
     @Test

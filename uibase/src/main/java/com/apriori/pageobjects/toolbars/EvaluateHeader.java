@@ -108,7 +108,7 @@ public class EvaluateHeader extends GenericHeader {
      *
      * @return true/false
      */
-    public boolean getCostLabel(String text) {
+    public boolean isCostLabel(String text) {
         return pageUtils.textPresentInElement(costLabel, text);
     }
 

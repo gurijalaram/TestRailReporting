@@ -73,7 +73,7 @@ public class NewScenarioNameTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFile(testScenarioName, resourceFile);
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), CoreMatchers.is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), CoreMatchers.is(true));
 
         evaluatePage.costScenario()
             .publishScenario(PublishPage.class)
