@@ -81,7 +81,7 @@ public class AfterTestUtil {
             .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
             .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/display-units")
             .setAutoLogin(false)
-            .setBody(new DisplayPreferencesEntity().setUnitVariantSettingsInfo(new UnitSystemSettingSchema().setType("simple")
+            .setBody(new DisplayPreferencesEntity().setUnitSystemSetting(new UnitSystemSettingSchema().setType("simple")
                 .setName(UnitsEnum.CUSTOM.getUnits())
                 .setMetric(true)
                 .setLength(LengthEnum.MILLIMETER.getLength())

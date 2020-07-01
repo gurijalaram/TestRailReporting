@@ -34,11 +34,11 @@ public class DisplayPreferencesEntity {
         return this;
     }
 
-    public UnitSystemSettingSchema getUnitVariantSettingsInfo() {
+    public UnitSystemSettingSchema getUnitSystemSetting() {
         return unitVariantSettingsInfo;
     }
 
-    public DisplayPreferencesEntity setUnitVariantSettingsInfo(UnitSystemSettingSchema unitVariantSettingsInfo) {
+    public DisplayPreferencesEntity setUnitSystemSetting(UnitSystemSettingSchema unitVariantSettingsInfo) {
         this.unitVariantSettingsInfo = unitVariantSettingsInfo;
         return this;
     }
