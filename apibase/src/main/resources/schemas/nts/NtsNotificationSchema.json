@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "required": [
+    "applicationIdentity",
+    "customerIdentity",
+    "deploymentIdentity",
+    "installationIdentity",
+    "isUrgent",
+    "type",
+    "title",
+    "content",
+    "displayAt",
+    "hideAt"
+  ],
+  "properties": {
+    "applicationIdentity": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "deploymentIdentity": {
+      "type": "string"
+    },
+    "installationIdentity": {
+      "type": "string"
+    },
+    "isUrgent": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "displayAt": {
+      "type": "string"
+    },
+    "hideAt": {
+      "type": "string"
+    }
+  }
+}

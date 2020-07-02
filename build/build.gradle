@@ -161,5 +161,8 @@ subprojects {
         implementation 'com.puppycrawl.tools:checkstyle:8.24'
         implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8'
         implementation 'commons-validator:commons-validator:1.6'
+        implementation  'com.sun.mail:javax.mail:1.6.2'
+        implementation  'javax.activation:activation:1.1.1'
+
     }
 }
