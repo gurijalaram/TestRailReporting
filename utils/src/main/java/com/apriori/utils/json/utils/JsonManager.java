@@ -21,6 +21,18 @@ public class JsonManager {
         return obj;
     }
 
+    public static Object deserializeJsonFromString(String json, Class klass) {
+
+        Object obj = null;
+        try {
+            obj = mapper.readValue(json, klass);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return obj;
+    }
+
     public static void serializeJsonToFile(String fileName, Object object) {
         try {
             mapper.writeValue(
