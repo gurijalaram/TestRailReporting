@@ -3,8 +3,8 @@ package com.apriori.pageobjects.reports.pages.view;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.utils.PageUtils;
-
 import com.apriori.utils.enums.PlasticDtcReportsEnum;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

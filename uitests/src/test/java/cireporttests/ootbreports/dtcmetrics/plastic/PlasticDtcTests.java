@@ -1,25 +1,28 @@
 package cireporttests.ootbreports.dtcmetrics.plastic;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
+
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.PlasticDtcReportsEnum;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
 public class PlasticDtcTests extends TestBase {
 
     private PlasticDtcReportPage plasticDtcReportPage;
     private ViewRepositoryPage repository;
 
-    public PlasticDtcTests() { super(); }
+    public PlasticDtcTests() {
+        super();
+    }
 
     @Test
     @Category(CiaCirTestDevTest.class)
