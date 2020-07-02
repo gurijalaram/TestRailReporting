@@ -16,6 +16,4 @@ public class WorkflowTests extends TestBase {
     public WorkflowTests() {
         super();
     }
-
-
 }

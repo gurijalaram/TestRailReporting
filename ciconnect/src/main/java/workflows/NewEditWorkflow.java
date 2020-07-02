@@ -36,9 +36,6 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
     @FindBy(css = "div[class^='ss-content ss-'][class$=' ss-open'] > div > input[type='search']")
     private WebElement connectorDropdownSearch;
 
-    @FindBy(css = "div[id=''")
-
-
     private WebDriver driver;
     private PageUtils pageUtils;
 

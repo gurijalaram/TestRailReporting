@@ -63,8 +63,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "div[id^='CIC_HelpDropDown_MU-BMController-'][id$='_link-40'] > a > span > span > span")
     private WebElement aboutAPrioriLink;
 
-
-
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -151,7 +149,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return PageHeader
      */
     public PageHeader expandUserInfoDropdown() {
-        userInfoDropdown.click();
+        pageUtils.waitForElementAndClick(userInfoDropdown);
         return new PageHeader(driver);
     }
 
@@ -161,8 +159,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return CicUserGuide
      */
     public CicUserGuide navigateToCicUserGuide() {
-        helpBtn.click();
-        onlineHelpLink.click();
+        pageUtils.waitForElementAndClick(helpBtn);
+        pageUtils.waitForElementAndClick(onlineHelpLink);
         return new CicUserGuide(driver);
     }
 
@@ -187,11 +185,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     /**
      * Navigate to about apriori page
      *
-     * @return
+     * @return CicUserGuide page object
      */
     public CicUserGuide navigateToAboutAPriori() {
-        helpBtn.click();
-        aboutAPrioriLink.click();
+        pageUtils.waitForElementAndClick(helpBtn);
+        pageUtils.waitForElementAndClick(aboutAPrioriLink);
         return new CicUserGuide(driver);
     }
 
@@ -201,7 +199,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return CostingServiceSettitng page object
      */
     public CostingServiceSettings openCostingServiceSettings() {
-        settingsBtn.click();
+        pageUtils.waitForElementAndClick(settingsBtn);
         return new CostingServiceSettings(driver);
     }
 }

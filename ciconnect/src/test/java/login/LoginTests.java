@@ -19,6 +19,6 @@ public class LoginTests extends TestBase {
     @Test
     public void testLogin() {
         genericWorkflow = new LoginPage(driver).login(driver);
-        assertThat("Workflows", equalTo(genericWorkflow.getWorkflowText()));
+        assertThat(genericWorkflow.getWorkflowText(), equalTo("Workflows"));
     }
 }

@@ -37,7 +37,7 @@ public class NavBarTests extends TestBase {
             .login(driver)
             .clickUsersMenu();
 
-        assertThat("Users", equalTo(userList.getUsersText()));
+        assertThat(userList.getUsersText(), equalTo("Users"));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class NavBarTests extends TestBase {
             .login(driver)
             .clickConnectorsMenu();
 
-        assertThat("Connectors", equalTo(connectorList.getConnectorText()));
+        assertThat(connectorList.getConnectorText(), equalTo("Connectors"));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class NavBarTests extends TestBase {
             .clickConnectorsMenu()
             .clickWorkflowMenu();
 
-        assertThat("New", equalTo(schedule.getNewWorkflowBtnText()));
+        assertThat(schedule.getNewWorkflowBtnText(), equalTo("New"));
     }
 
     @Test
@@ -65,9 +65,9 @@ public class NavBarTests extends TestBase {
             .login(driver)
             .expandUserInfoDropdown();
 
-        assertThat("Kunal Patel", equalTo(pageHeader.getCurrentUser()));
-        assertThat("kpatel@apriori.com", equalTo(pageHeader.getLoginID()));
-        assertThat("aPriori Internal", equalTo(pageHeader.getCurrentCompany()));
+        assertThat(pageHeader.getCurrentUser(), equalTo("Kunal Patel"));
+        assertThat(pageHeader.getLoginID(), equalTo("kpatel@apriori.com"));
+        assertThat(pageHeader.getCurrentCompany(), equalTo("aPriori Internal"));
     }
 
     @Test
@@ -78,12 +78,11 @@ public class NavBarTests extends TestBase {
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
 
-        //assertThat("aPriori Cost Insight Connect", equalTo(cicUserGuide.getUserGuideTitle()));
         assertThat(cicUserGuide.getURL(), startsWith("https://www.apriori.com/Collateral/Documents/English-US/online_help/CIConnect"));
     }
 
     @Test
-    public void testAboutAPrioriLinkNavigation() throws Exception {
+    public void testAboutAPrioriLinkNavigation() {
         cicUserGuide = new LoginPage(driver)
             .login(driver)
             .navigateToAboutAPriori()
@@ -99,10 +98,7 @@ public class NavBarTests extends TestBase {
             .openCostingServiceSettings();
 
         assertThat(costingServiceSettings.getCostingServiceSettingsText(), equalTo("Costing Service Settings"));
-
     }
-
-
 }
 
 
