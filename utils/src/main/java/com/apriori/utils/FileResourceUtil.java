@@ -46,16 +46,6 @@ public class FileResourceUtil {
     }
 
     /**
-     * Gets resource file
-     *
-     * @param fileName - the file name
-     * @return file object
-     */
-    public File getResourceFile(String fileName) {
-        return getResourceAsFile(fileName);
-    }
-
-    /**
      * Gets resource file from specified path
      *
      * Subfolders should be separated by a comma eg. cad-files, files
