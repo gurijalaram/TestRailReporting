@@ -437,8 +437,10 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
+            .setAssembly(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName())
             .openNewTabAndFocus(1);
 
         List<String> columnsToRemove = Arrays.asList(

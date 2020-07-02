@@ -113,14 +113,17 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement inputBox;
 
-    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) > div > a")
+    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) [assembly]'] > div > a")
     private WebElement subAssemblyOption;
 
-    @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
+    @FindBy(css = "li[title='SUB-SUB-ASM (Initial) [assembly]'] > div > a")
     private WebElement subSubAsmOption;
 
-    @FindBy(css = "li[title='TOP-LEVEL (Initial)'] > div > a")
+    @FindBy(css = "li[title='TOP-LEVEL (Initial) [assembly]'] > div > a")
     private WebElement topLevelOption;
+
+    @FindBy(css = "li[title='PISTON_ASSEMBLY (Initial) [assembly]'] > div > a")
+    private WebElement pistonAssemblyOption;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
     private WebElement currentCurrencyElement;
@@ -888,6 +891,7 @@ public class GenericReportPage extends ReportsPageHeader {
         assemblyMap.put(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName(), subAssemblyOption);
         assemblyMap.put(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName(), subSubAsmOption);
         assemblyMap.put(AssemblySetEnum.TOP_LEVEL.getAssemblySetName(), topLevelOption);
+        assemblyMap.put(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName(), pistonAssemblyOption);
     }
 
     /**
