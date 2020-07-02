@@ -1,10 +1,8 @@
 package com.apriori.pageobjects.reports.pages.library;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
-import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
