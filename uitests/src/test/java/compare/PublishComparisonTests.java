@@ -48,7 +48,7 @@ public class PublishComparisonTests extends TestBase {
     @Description("Test a private comparison can be published from comparison page")
     public void testPublishComparisonComparePage() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
@@ -102,7 +102,7 @@ public class PublishComparisonTests extends TestBase {
     @Description("Test a private comparison can be published from explore page")
     public void testPublishComparisonExplorePage() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 

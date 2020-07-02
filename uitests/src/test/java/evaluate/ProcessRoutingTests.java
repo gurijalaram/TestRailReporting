@@ -75,7 +75,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate the user can Change the process routing in CI Design")
     public void testAlternateRoutingSelection() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -100,7 +100,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("View detailed information about costed process")
     public void testViewProcessDetails() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulding.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -120,7 +120,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("View individual process steps")
     public void testViewProcessSteps() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -141,7 +141,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate the user can Change the process routing")
     public void changeRouting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -171,7 +171,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testRoutingCheckBox() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("plasticLid.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -203,7 +203,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate the information updates in the routing modal box")
     public void testlastRouting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("CastedPart.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("CastedPart.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -236,7 +236,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("CastedPart.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("CastedPart.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -273,7 +273,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("HoleProximityTest.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("HoleProximityTest.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -316,7 +316,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate materials selected are appropriate for selected routing.")
     public void routingMaterials() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("plasticLid.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -342,7 +342,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate behaviour when selecting a PG that auto triggers a secondary process")
     public void routingSecondaryPG() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("AdditiveManuf.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("AdditiveManuf.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -383,7 +383,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate a variety of secondary processes can be added for newly selected routings")
     public void secondaryProcessesRoutings() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -419,7 +419,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
     public void routingPGs() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("plasticLid.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -441,7 +441,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate behaviour when Adding/Editing threads that may require additional machining.")
     public void threadsRouting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("plasticLid.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -480,7 +480,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate the properties dialogue box updates with a newly selected and costed routing.")
     public void propertiesRouting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -525,7 +525,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
     public void cycleTime() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -552,7 +552,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routing out of date message appears")
     public void routingOutOfDate() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_002_006-8611543_prt.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -574,7 +574,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Additive")
     public void routingsAdditive() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_002_006-8611543_prt.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -594,7 +594,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Bar and Tube")
     public void routingsBarTube() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP");
+        resourceFile = FileResourceUtil.getResourceAsFile("ap_blow_molding_excerise_EL0000.STEP");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -614,7 +614,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Die Cast")
     public void routingsDieCasting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SandCast.x_t");
+        resourceFile = FileResourceUtil.getResourceAsFile("SandCast.x_t");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -634,7 +634,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SandCast.x_t");
+        resourceFile = FileResourceUtil.getResourceAsFile("SandCast.x_t");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -654,7 +654,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Forging")
     public void routingsForging() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP");
+        resourceFile = FileResourceUtil.getResourceAsFile("ap_blow_molding_excerise_EL0000.STEP");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -674,7 +674,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Plastic Moulding")
     public void routingsPlasticMoulding() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("ap_blow_molding_excerise_EL0000.STEP");
+        resourceFile = FileResourceUtil.getResourceAsFile("ap_blow_molding_excerise_EL0000.STEP");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -694,7 +694,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Powder Metal")
     public void routingsPowderMetal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -714,7 +714,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Rapid Prototyping")
     public void routingsRapidPrototyping() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Rapid Prototyping.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -734,7 +734,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Roto & Blow Moulding")
     public void routingsRotoBlowMould() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Rapid Prototyping.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -754,7 +754,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Sheet Metal")
     public void routingsSheetMetal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("700-33770-01_A0.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("700-33770-01_A0.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -776,7 +776,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Hydroforming.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Hydroforming.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -797,7 +797,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Sheet Metal - Stretchforming")
     public void routingsStretchforming() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Hydroforming.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Hydroforming.stp");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -817,7 +817,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Sheet Plastic")
     public void routingsSheetPlastic() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("sheet_plastic.STEP");
+        resourceFile = FileResourceUtil.getResourceAsFile("sheet_plastic.STEP");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -837,7 +837,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate routings Stock Machining")
     public void routingsStockMachining() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("225_gasket-1-solid1.prt.1");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -860,7 +860,7 @@ public class ProcessRoutingTests extends TestBase {
     @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
     public void routingTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
