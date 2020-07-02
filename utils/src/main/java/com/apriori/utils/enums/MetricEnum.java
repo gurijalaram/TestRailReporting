@@ -2,8 +2,8 @@ package com.apriori.utils.enums;
 
 public enum MetricEnum {
 
-    ENGLISH("English"),
-    METRIC("Metric");
+    ENGLISH("english"),
+    METRIC("metric");
 
     private final String unit;
 
