@@ -44,7 +44,7 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
@@ -66,7 +66,7 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .selectExploreButton();
@@ -90,7 +90,7 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
@@ -112,7 +112,7 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
@@ -134,7 +134,7 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Analysis", "High", "Test Description", "Test Notes")
             .save(EvaluatePage.class)
@@ -164,7 +164,7 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario(PublishPage.class)
             .selectPublishButton();
 
@@ -187,7 +187,7 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Complete", "High", "Test Description", "Test Notes")
             .save(EvaluatePage.class)
@@ -242,7 +242,7 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario("Analysis", "Initial", "Ciene Frith")
             .selectLock()
             .selectPublishButton();
