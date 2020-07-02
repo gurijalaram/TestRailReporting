@@ -114,4 +114,22 @@ public interface ConstantsInit extends Config {
 
     @Key("apitests.resource.path")
     String apitestsResourcePath();
+
+    @Key("nts.auth.targetCloudContext")
+    String ntsTargetCloudContext();
+
+    @Key("nts.service.host")
+    String ntsServiceHost();
+
+    @Key("nts.email.recipientAddress")
+    String ntsEmailRecipientAddress();
+
+    @Key("nts.email.subject")
+    String ntsEmailSubject();
+
+    @Key("nts.email.content")
+    String ntsEmailContent();
+
+    @Key("nts.email.attachment")
+    String ntsEmailAttachment();
 }
