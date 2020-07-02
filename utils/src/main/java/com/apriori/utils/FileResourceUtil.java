@@ -48,7 +48,7 @@ public class FileResourceUtil {
     /**
      * Gets resource file from specified path
      *
-     * Subfolders should be separated by a comma eg. cad-files, files
+     * Subfolders should be separated by a comma eg. a folder structure of [cad-file > multipartfiles > files] would be represented as "cad-files, multipartfiles, files"
      *
      * @param fileName - the file name
      * @return file object
