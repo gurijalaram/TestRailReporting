@@ -1,5 +1,6 @@
 package com.apriori.utils.constants;
 
+import org.aeonbits.owner.Config;
 import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
@@ -99,6 +100,13 @@ public class Constants {
     private static String cisBatchIdentity;
     private static String apitestsBasePath;
     private static String apitestsResourcePath;
+    private static String ntsTargetCloudContext;
+    private static String ntsServiceHost;
+    private static String ntsEmailRecipientAddress;
+    private static String ntsEmailSubject;
+    private static String ntsEmailContent;
+    private static String ntsEmailAttachment;
+
     public static final String defaultServiceHostKey = "serverHost";
     public static final String defaultServicePortKey = "serverPort";
     public static final String defaultServiceNameKey = "serverName";
@@ -361,4 +369,57 @@ public class Constants {
         return apitestsResourcePath;
 
     }
+
+    public static String getNtsTargetCloudContext() {
+        if (ntsTargetCloudContext == null) {
+            ntsTargetCloudContext = System.getProperty("ntsTargetCloudContext", constantsInit.ntsTargetCloudContext());
+        }
+
+        return ntsTargetCloudContext;
+
+    }
+
+    public static String getNtsServiceHost() {
+        if (ntsServiceHost == null) {
+            ntsServiceHost = System.getProperty("ntsServiceHost", constantsInit.ntsServiceHost());
+        }
+
+        return ntsServiceHost;
+
+    }
+
+    public static String getNtsEmailRecipientAddress() {
+        if (ntsEmailRecipientAddress == null) {
+            ntsEmailRecipientAddress = System.getProperty("ntsEmailRecipientAddress",
+                    constantsInit.ntsEmailRecipientAddress());
+        }
+
+        return ntsEmailRecipientAddress;
+
+    }
+    
+    public static String getNtsEmailSubject() {
+        if (ntsEmailSubject == null) {
+            ntsEmailSubject = System.getProperty("ntsEmailSubject", constantsInit.ntsEmailSubject());
+        }
+        
+        return ntsEmailSubject;
+    }
+
+    public static String getNtsEmailContent() {
+        if (ntsEmailContent == null) {
+            ntsEmailContent = System.getProperty("ntsEmailContent", constantsInit.ntsEmailContent());
+        }
+
+        return ntsEmailContent;
+    }
+
+    public static String getNtsEmailAttachment() {
+        if (ntsEmailAttachment == null) {
+            ntsEmailAttachment = System.getProperty("ntsEmailAttachment", constantsInit.ntsEmailAttachment());
+        }
+
+        return ntsEmailAttachment;
+    }
+    
 }

@@ -41,6 +41,7 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class SettingsTests extends TestBase {
+    File resourceFile;
     private CIDLoginPage loginPage;
     private ExplorePage explorePage;
     private SettingsPage settingsPage;
@@ -50,8 +51,6 @@ public class SettingsTests extends TestBase {
     private SelectionSettingsPage selectionSettingsPage;
     private WarningPage warningPage;
     private UserCredentials currentUser;
-
-    File resourceFile;
 
     @After
     public void resetAllSettings() {
@@ -113,7 +112,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -142,7 +141,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -169,7 +168,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
@@ -199,7 +198,7 @@ public class SettingsTests extends TestBase {
 
         settingsPage = new SettingsPage(driver);
         moreInputsPage = settingsPage.save(ExplorePage.class)
-            .uploadFile(testScenarioName, resourceFile)
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openMoreInputs();
