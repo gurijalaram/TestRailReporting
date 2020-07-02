@@ -12,8 +12,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
 public class PlasticDtcTests extends TestBase {
 
@@ -32,7 +31,9 @@ public class PlasticDtcTests extends TestBase {
             .navigateToViewRepositoryPage()
             .navigateToPlasticFolder();
 
-        assertThat(repository.ensureEqualityOfExpectedActualReportNames(), is(equalTo(true)));
+        String[] expectedReportNames = repository.getReportNamesValues();
+
+        assertThat(expectedReportNames, arrayContainingInAnyOrder(repository.getActualReportNames()));
     }
 
     @Test
@@ -45,6 +46,8 @@ public class PlasticDtcTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class);
 
-        assertThat(plasticDtcReportPage.ensureEqualityOfExpectedActualExportSetValues(), is(equalTo(true)));
+        String[] expectedExportSetValues = plasticDtcReportPage.getExportSetEnumValues();
+
+        assertThat(expectedExportSetValues, arrayContainingInAnyOrder(plasticDtcReportPage.getActualExportSetValues()));
     }
 }

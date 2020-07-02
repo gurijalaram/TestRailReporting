@@ -28,7 +28,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -251,20 +250,20 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Ensure export set values are correct
-     * @return boolean
+     * Get Export Set name
+     * @return current page object
      */
-    public boolean ensureEqualityOfExpectedActualExportSetValues() {
-        String[] expectedExportSetVals = getExportSetEnumValues();
-        String[] actualExportSetValues = new String[expectedExportSetVals.length];
+    public String[] getActualExportSetValues() {
+        String[] exportSetVals = getExportSetEnumValues();
+        String[] actualExportSetValues = new String[exportSetVals.length];
 
-        for (int i = 0; i < expectedExportSetVals.length; i++) {
+        for (int i = 0; i < exportSetVals.length; i++) {
             actualExportSetValues[i] =
                     driver.findElement(
-                            By.xpath(String.format("//li[@title='%s']/div/a", expectedExportSetVals[i])))
+                            By.xpath(String.format("//li[@title='%s']/div/a", exportSetVals[i])))
                             .getText();
         }
-        return Arrays.equals(expectedExportSetVals, actualExportSetValues);
+        return actualExportSetValues;
     }
 
     /**
