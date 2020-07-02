@@ -3,6 +3,16 @@ package com.apriori.apibase.services;
 public class PropertyStore {
     private String partIdentity;
     private String batchIdentity;
+    private String emailIdentity;
+
+    public String getEmailIdentity() {
+        return emailIdentity;
+    }
+
+    public PropertyStore setEmailIdentity(String emailIdentity) {
+        this.emailIdentity = emailIdentity;
+        return this;
+    }
 
     public String getPartIdentity() {
         return partIdentity;

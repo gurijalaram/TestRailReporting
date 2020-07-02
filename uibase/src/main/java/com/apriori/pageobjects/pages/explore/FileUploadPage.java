@@ -1,9 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -98,18 +96,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     }
 
     /**
-     * Gets details of file for upload
-     *
-     * @param filename - the file name
-     * @return new page object
-     */
-    public EvaluatePage uploadCadFile(File filename) {
-        driver.findElement(By.cssSelector("input[type='file']")).sendKeys(filename.getAbsolutePath().replace("%20", " "));
-        driver.findElement(By.cssSelector("input[type='file']")).sendKeys(filename.getAbsolutePath().replace("%20", " "));
-        return new EvaluatePage(driver);
-    }
-
-    /**
      * Selects the ok button
      *
      * @return generic page object
@@ -122,10 +108,10 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     /**
      * Select the cancel button
      *
-     * @return current page object
+     * @return generic page object
      */
-    private ExplorePage selectCancelButton() {
+    public <T> T selectCancelButton(Class<T> className) {
         pageUtils.waitForElementAndClick(cancelButton);
-        return new ExplorePage(driver);
+        return PageFactory.initElements(driver,className);
     }
 }
