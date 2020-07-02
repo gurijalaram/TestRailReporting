@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -185,10 +186,10 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets all actual report names from UI
-     * @return String array
+     * Ensures report names in UI are correct
+     * @return boolean
      */
-    public String[] getActualReportNames() {
+    public boolean ensureEqualityOfExpectedActualReportNames() {
         String[] expectedReportNames = getReportNamesValues();
         String[] actualReportNames = new String[expectedReportNames.length];
 
@@ -196,7 +197,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
             actualReportNames[i] = getReportName(expectedReportNames[i]);
         }
 
-        return  actualReportNames;
+        return Arrays.equals(expectedReportNames, actualReportNames);
     }
 
 
