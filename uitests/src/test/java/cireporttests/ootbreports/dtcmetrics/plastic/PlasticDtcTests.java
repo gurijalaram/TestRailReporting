@@ -2,7 +2,6 @@ package cireporttests.ootbreports.dtcmetrics.plastic;
 
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
-import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.PlasticDtcReportsEnum;
@@ -12,9 +11,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
 public class PlasticDtcTests extends TestBase {
 
@@ -33,10 +31,9 @@ public class PlasticDtcTests extends TestBase {
             .navigateToViewRepositoryPage()
             .navigateToPlasticFolder();
 
-        PlasticDtcReportsEnum[] reportNames = PlasticDtcReportsEnum.values();
-        for (PlasticDtcReportsEnum report : reportNames) {
-            assertThat(repository.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
-        }
+        String[] expectedReportNames = repository.getReportNamesValues();
+
+        assertThat(expectedReportNames, arrayContainingInAnyOrder(repository.getActualReportNames()));
     }
 
     @Test
@@ -49,9 +46,8 @@ public class PlasticDtcTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class);
 
-        String[] exportSetEnums = plasticDtcReportPage.getExportSetEnumValues();
-        for (String exportSet : exportSetEnums) {
-            assertThat(plasticDtcReportPage.getExportSetName(exportSet), is(equalTo(exportSet)));
-        }
+        String[] expectedExportSetValues = plasticDtcReportPage.getExportSetEnumValues();
+
+        assertThat(expectedExportSetValues, arrayContainingInAnyOrder(plasticDtcReportPage.getActualExportSetValues()));
     }
 }

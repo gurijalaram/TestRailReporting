@@ -4,6 +4,7 @@ import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.utils.PageUtils;
 
+import com.apriori.utils.enums.PlasticDtcReportsEnum;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -169,6 +170,33 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      */
     public String getReportName(String reportName) {
         return pageUtils.getReportElement(reportName).getText();
+    }
+
+    /**
+     * Gets expected report names values
+     * @return String array
+     */
+    public String[] getReportNamesValues() {
+        return new String[] {
+                PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(),
+                PlasticDtcReportsEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                PlasticDtcReportsEnum.PLASTIC_DTC_DETAILS.getReportName()
+        };
+    }
+
+    /**
+     * Gets all actual report names from UI
+     * @return String array
+     */
+    public String[] getActualReportNames() {
+        String[] expectedReportNames = getReportNamesValues();
+        String[] actualReportNames = new String[expectedReportNames.length];
+
+        for (int i = 0; i < expectedReportNames.length; i++) {
+            actualReportNames[i] = getReportName(expectedReportNames[i]);
+        }
+
+        return  actualReportNames;
     }
 
 
