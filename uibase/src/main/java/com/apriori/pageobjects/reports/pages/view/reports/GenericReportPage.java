@@ -254,13 +254,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public String[] getActualExportSetValues() {
-        String[] exportSetVals = getExportSetEnumValues();
-        String[] actualExportSetValues = new String[exportSetVals.length];
+        String[] actualExportSetValues = new String[getExportSetEnumValues().length];
 
-        for (int i = 0; i < exportSetVals.length; i++) {
+        for (int i = 0; i < getExportSetEnumValues().length; i++) {
             actualExportSetValues[i] =
                     driver.findElement(
-                            By.xpath(String.format("//li[@title='%s']/div/a", exportSetVals[i])))
+                            By.xpath(String.format("//li[@title='%s']/div/a", getExportSetEnumValues()[i])))
                             .getText();
         }
         return actualExportSetValues;

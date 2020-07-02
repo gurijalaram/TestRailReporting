@@ -189,11 +189,11 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      * @return String array
      */
     public String[] getActualReportNames() {
-        String[] expectedReportNames = getReportNamesValues();
-        String[] actualReportNames = new String[expectedReportNames.length];
+        //String[] expectedReportNames = getReportNamesValues();
+        String[] actualReportNames = new String[getReportNamesValues().length];
 
-        for (int i = 0; i < expectedReportNames.length; i++) {
-            actualReportNames[i] = getReportName(expectedReportNames[i]);
+        for (int i = 0; i < getReportNamesValues().length; i++) {
+            actualReportNames[i] = getReportName(getReportNamesValues()[i]);
         }
 
         return  actualReportNames;
