@@ -3,6 +3,7 @@ package com.apriori.pageobjects.reports.pages.view.reports;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
+import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
@@ -249,6 +250,36 @@ public class GenericReportPage extends ReportsPageHeader {
         WebElement exportSetToPick = driver.findElement(exportSetToSelect);
         exportSetToPick.click();
         return this;
+    }
+
+    /**
+     * Get Export Set name
+     * @return current page object
+     */
+    public String[] getActualExportSetValues() {
+        String[] actualExportSetValues = new String[getExportSetEnumValues().length];
+
+        for (int i = 0; i < getExportSetEnumValues().length; i++) {
+            actualExportSetValues[i] =
+                    driver.findElement(
+                            By.xpath(String.format("//li[@title='%s']/div/a", getExportSetEnumValues()[i])))
+                            .getText();
+        }
+        return actualExportSetValues;
+    }
+
+    /**
+     * Gets Export Set Enum values
+     * @return String array of values
+     */
+    public String[] getExportSetEnumValues() {
+        return new String[] {
+                ExportSetEnum.TOP_LEVEL.getExportSetName(),
+                ExportSetEnum.PISTON_ASSEMBLY.getExportSetName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        };
     }
 
     /**

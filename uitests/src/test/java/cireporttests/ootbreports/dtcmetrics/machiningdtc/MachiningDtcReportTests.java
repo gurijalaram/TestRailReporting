@@ -87,7 +87,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName)
+            .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
             .scrollDownInputControls()
@@ -115,7 +115,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(reportName)
+                .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad();
 
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
@@ -136,7 +136,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(reportName)
+                .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad();
 
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
