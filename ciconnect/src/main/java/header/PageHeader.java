@@ -91,7 +91,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new generic schedule page object from workflow tab
      */
     public Schedule clickWorkflowMenu() {
-        workflowsMenuBtn.click();
+        pageUtils.waitForElementAndClick(workflowsMenuBtn);
         return new Schedule(driver);
     }
 
@@ -101,7 +101,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new user list page object from Users tab
      */
     public UserList clickUsersMenu() {
-        usersMenuBtn.click();
+        pageUtils.waitForElementAndClick(usersMenuBtn);
         return new UserList(driver);
     }
 
@@ -111,7 +111,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return new connectors list page object from Connectors Tab
      */
     public ConnectorList clickConnectorsMenu() {
-        connectorsMenuBtn.click();
+        pageUtils.waitForElementAndClick(connectorsMenuBtn);
         return new ConnectorList(driver);
     }
 
