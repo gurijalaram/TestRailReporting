@@ -922,7 +922,6 @@ public class GenericReportPage extends ReportsPageHeader {
         assemblyMap.put(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName(), subAssemblyOption);
         assemblyMap.put(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName(), subSubAsmOption);
         assemblyMap.put(AssemblySetEnum.TOP_LEVEL.getAssemblySetName(), topLevelOption);
-        assemblyMap.put(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName(), pistonAssemblyOption);
     }
 
     /**

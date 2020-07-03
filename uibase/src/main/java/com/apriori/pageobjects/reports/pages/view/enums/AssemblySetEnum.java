@@ -3,8 +3,7 @@ package com.apriori.pageobjects.reports.pages.view.enums;
 public enum AssemblySetEnum {
     SUB_ASSEMBLY("SUB-ASSEMBLY (Initial)"),
     SUB_SUB_ASM("SUB-SUB-ASM (Initial)"),
-    TOP_LEVEL("TOP-LEVEL (Initial)"),
-    PISTON_ASSEMBLY("PISTON_ASSEMBLY (Initial) [assembly]");
+    TOP_LEVEL("TOP-LEVEL (Initial)");
 
     private String assemblySetName;
 
