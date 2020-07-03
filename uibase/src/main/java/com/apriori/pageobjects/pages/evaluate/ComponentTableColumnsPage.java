@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 
 import org.jsoup.Jsoup;
@@ -136,23 +135,6 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
     }
 
     /**
-     * Adds multiple columns
-     *
-     * @param columnsToAdd - list of columns to add
-     * @return current page object
-     */
-    public ComponentTableColumnsPage addMultipleColumns(List<String> columnsToAdd) {
-        pageUtils.waitForElementToAppear(availableList);
-        Select rightListDropdown = new Select(availableList);
-
-        for (String column : columnsToAdd) {
-            rightListDropdown.selectByValue(column);
-            selectRightArrow();
-        }
-        return this;
-    }
-
-    /**
      * Removes a column
      *
      * @param column - the enum column name
@@ -162,25 +144,6 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
         pageUtils.waitForElementToAppear(includedList);
         new Select(includedList).selectByValue(column);
         selectLeftArrow();
-        return this;
-    }
-
-    /**
-     * Removes multiple columns
-     *
-     * @param columnsToRemove - list of columns to remove
-     * @return current page object
-     */
-    public ComponentTableColumnsPage removeMultipleColumns(List<String> columnsToRemove) {
-        pageUtils.waitForElementToAppear(includedList);
-        Select rightListDropdown = new Select(includedList);
-        rightListDropdown.deselectAll();
-        for (String column : columnsToRemove) {
-            rightListDropdown.selectByValue(column);
-            selectLeftArrow();
-        }
-        Select leftListDropdown = new Select(availableList);
-        leftListDropdown.deselectAll();
         return this;
     }
 
@@ -212,16 +175,6 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
     private ComponentTableColumnsPage selectLeftArrow() {
         pageUtils.waitForElementAndClick(removeColumnButton);
         return this;
-    }
-
-    /**
-     * Selects the ok button
-     *
-     * @return new page object
-     */
-    public ComponentsPage selectOkButton() {
-        pageUtils.waitForElementAndClick(okButton);
-        return new ComponentsPage(driver);
     }
 
     /**

@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.ComponentTableColumnsPage;
 import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
@@ -437,19 +436,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName())
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
-            .setAssembly(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .waitForCorrectAssembly(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName())
             .openNewTabAndFocus(1);
-
-        List<String> columnsToRemove = Arrays.asList(
-            ComponentInfoColumnEnum.QUANTITY.getColumnName(),
-            ComponentInfoColumnEnum.PROCESS_GROUP.getColumnName(),
-            ComponentInfoColumnEnum.VPE.getColumnName(),
-            ComponentInfoColumnEnum.LAST_SAVED.getColumnName(),
-            ComponentInfoColumnEnum.LAST_COSTED.getColumnName()
-        );
 
         List<String> columnsToAdd = Arrays.asList(
             ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
