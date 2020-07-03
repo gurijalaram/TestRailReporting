@@ -123,9 +123,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "li[title='TOP-LEVEL (Initial) [assembly]'] > div > a")
     private WebElement topLevelOption;
 
-    @FindBy(css = "li[title='PISTON_ASSEMBLY (Initial) [assembly]'] > div > a")
-    private WebElement pistonAssemblyOption;
-
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
     private WebElement currentCurrencyElement;
 
