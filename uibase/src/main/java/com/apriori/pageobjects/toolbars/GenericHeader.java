@@ -127,7 +127,7 @@ public class GenericHeader extends PageHeader {
     }
 
     /**
-     * Select the file dropdown and enters file details
+     * Selects the file dropdown and enters file details
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
