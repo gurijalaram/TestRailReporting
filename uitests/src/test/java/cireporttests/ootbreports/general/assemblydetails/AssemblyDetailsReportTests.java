@@ -30,7 +30,6 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -172,7 +171,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @Issue("AP-58059")
     @Issue("AP-53537")
     @TestRail(testCaseId = {"3067", "1929"})
@@ -214,7 +212,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @Issue("AP-58059")
     @Issue("AP-53537")
     @TestRail(testCaseId = {"3068", "1929"})
@@ -257,7 +254,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @Issue("AP-58059")
     @Issue("AP-53537")
     @TestRail(testCaseId = {"1934", "1929"})
@@ -300,7 +296,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"3231", "1929"})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
@@ -332,7 +327,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"3232", "1929"})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
@@ -365,7 +359,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = {"3233", "1929"})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
