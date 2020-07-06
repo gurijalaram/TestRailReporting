@@ -73,6 +73,9 @@ public class Constants {
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
+    public static String CIC_USERNAME = "kpatel@apriori.com";
+    public static String CIC_PASSWORD = "NewPassword1234";
+
     public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
 
     private static String serviceHost;
@@ -133,6 +136,7 @@ public class Constants {
     public static final String cidURL = getBaseUrl() + constantsInit.cidURL();
     public static final String cirURL = getBaseUrl() + constantsInit.cirURL();
     public static final String ciaURL = getBaseUrl() + constantsInit.ciaURL();
+    public static final String cicURL = constantsInit.cicURL();
     public static final String usersFile = constantsInit.usersCsvFileName();
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 
