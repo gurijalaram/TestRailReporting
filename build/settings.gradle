@@ -11,6 +11,7 @@ include(':apitests')
 include(':utils')
 include(':apibase')
 include(':uibase')
+include(':ciconnect')
 
 
 project(':uitests').projectDir = file('../uitests')
@@ -18,6 +19,7 @@ project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 project(':apitests').projectDir = file('../apitests')
 project(':uibase').projectDir = file('../uibase')
+project(':ciconnect').projectDir = file('../ciconnect')
 
 
 //Microservices
