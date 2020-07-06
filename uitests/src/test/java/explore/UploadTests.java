@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileOpenError;
+import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -21,7 +22,7 @@ import java.io.File;
 
 public class UploadTests extends TestBase {
     private CIDLoginPage loginPage;
-    private FileOpenError fileOpenError;
+    private FileUploadPage fileUploadPage;
     private ExplorePage explorePage;
 
     private File resourceFile;
@@ -35,10 +36,10 @@ public class UploadTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        fileOpenError = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, FileOpenError.class);
+        loginPage.login(UserUtil.getUser())
+            .uploadFile(testScenarioName, resourceFile);
 
-        assertThat(fileOpenError.getErrorText(), containsString("The selected file type is not supported"));
+        assertThat(new FileOpenError(driver).getErrorText(), containsString("The selected file type is not supported"));
     }
 
     @Test
