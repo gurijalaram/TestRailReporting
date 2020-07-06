@@ -35,7 +35,7 @@ public class UploadTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        fileOpenError = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(testScenarioName, resourceFile, FileOpenError.class);
 
         assertThat(fileOpenError.getErrorText(), containsString("The selected file type is not supported"));
@@ -46,13 +46,13 @@ public class UploadTests extends TestBase {
     @Description("Nothing uploaded or translated if user select a file but then cancels the new component dialog")
     public void cancelUpload() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("InvalidFileType.txt");
+        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndCancel(testScenarioName, resourceFile, ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "InvalidFileType"), is(equalTo(0)));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(0)));
     }
 }
