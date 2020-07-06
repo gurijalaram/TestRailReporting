@@ -141,7 +141,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "reset")
     private WebElement resetButton;
 
-    @FindBy(id = "cancel")
+    @FindBy(xpath = "//div[@id='inputControls']//button[@id='cancel']")
     private WebElement cancelButton;
 
     @FindBy(id = "save")
@@ -212,6 +212,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//div[@id='inputControls']//div[@class='sub header hidden']")
     private WebElement hiddenSavedOptions;
+
+    @FindBy(id = "inputControls")
+    private WebElement inputControlsDiv;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -720,10 +723,11 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return new library page object
      */
-    public LibraryPage clickCancel() {
+    public <T> T clickCancel(Class<T> className) {
         pageUtils.waitForElementAndClick(cancelButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return new LibraryPage(driver);
+        pageUtils.waitForElementNotDisplayed(inputControlsDiv, 1);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -903,6 +907,30 @@ public class GenericReportPage extends ReportsPageHeader {
             }
         }
         return valsToReturn;
+    }
+
+    /**
+     * Gets Input Controls Div Class Name
+     * @return String
+     */
+    public String getInputControlsDivClassName() {
+        return inputControlsDiv.getAttribute("className");
+    }
+
+    /**
+     * Gets input controls div isEnabled value
+     * @return boolean
+     */
+    public boolean inputControlsIsEnabled() {
+        return pageUtils.isElementEnabled(inputControlsDiv);
+    }
+
+    /**
+     *Gets input controls div isDisplayed value
+     * @return boolean
+     */
+    public boolean inputControlsIsDisplayed() {
+        return pageUtils.isElementDisplayed(inputControlsDiv);
     }
 
     /**

@@ -1,5 +1,6 @@
 package cireporttests.ootbreports.dtcmetrics.casting;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,6 +22,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.WebElement;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
@@ -100,14 +102,16 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Comparison input control panel works")
     public void testCancelButton() {
-        libraryPage = new ReportsLoginPage(driver)
+        castingDtcReportHeader = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), LibraryPage.class)
             .waitForInputControlsLoad()
-            .clickCancel();
+            .clickCancel(CastingDtcReportHeader.class);
 
-        assertThat(libraryPage.getLibraryTitleText(), is(equalTo("Library")));
+        assertThat(castingDtcReportHeader.getInputControlsDivClassName(), containsString("hidden"));
+        assertThat(castingDtcReportHeader.inputControlsIsDisplayed(), is(equalTo(false)));
+        assertThat(castingDtcReportHeader.inputControlsIsEnabled(), is(equalTo(true)));
     }
 
     @Test
