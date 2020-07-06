@@ -186,8 +186,8 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "select[class='ui-datepicker-year']")
     private WebElement datePickerYearSelect;
 
-    @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-input-expander jr']")
-    private WebElement rollupDropDown;
+    @FindBy(xpath = "//label[@title='Rollup']/div/div/div/a")
+    private WebElement rollupDropdown;
 
     @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
     private WebElement rollupSearch;
@@ -625,21 +625,13 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public GenericReportPage expandRollupDropDown() {
-        pageUtils.waitForElementAndClick(rollupDropDown);
-        return this;
-    }
-
-    /**
-     * Search for rollup in rollup drop-down search bar
-     *
-     * @return current page object
-     */
-    public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
-        pageUtils.waitForElementAndClick(rollupSearch);
-        rollupSearch.sendKeys(rollupName);
-        By rollupToClick = By.xpath(String.format("//li[@title='%s']", rollupName));
-        driver.findElement(rollupToClick).click();
+    public GenericReportPage selectRollup(String rollupName) {
+        rollupDropdown.click();
+        if (!rollupDropdown.getAttribute("title").equals(rollupName)) {
+            driver.findElement(
+                    By.xpath(String.format("//li[@title='%s']", rollupName)))
+                    .click();
+        }
         return this;
     }
 

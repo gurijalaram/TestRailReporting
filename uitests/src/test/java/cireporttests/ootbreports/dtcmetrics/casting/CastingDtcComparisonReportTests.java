@@ -22,7 +22,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openqa.selenium.WebElement;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
@@ -71,8 +70,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), CastingDtcReportHeader.class)
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
-            .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
+            .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
@@ -89,8 +87,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), CastingDtcReportHeader.class)
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
-            .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
+            .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickApply()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
@@ -123,8 +120,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickReset()
             .waitForExpectedExportCount("0");
 

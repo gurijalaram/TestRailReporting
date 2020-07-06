@@ -70,8 +70,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportHeader.class)
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
-            .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
+            .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
@@ -88,8 +87,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportHeader.class)
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
-            .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
+            .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickApply()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
@@ -122,8 +120,8 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickReset()
             .waitForExpectedExportCount("0");
 
