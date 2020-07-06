@@ -50,7 +50,7 @@ public class UploadTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndCancel(testScenarioName, resourceFile, ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "InvalidFileType"), is(equalTo(0)));

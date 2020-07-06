@@ -29,10 +29,10 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = "input[data-ap-field='scenarioName']")
     private WebElement scenarioNameInput;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-primary")
+    @FindBy(xpath = "//div[@data-ap-comp='fileUpload']//button[.='OK']")
     private WebElement okButton;
 
-    @FindBy(css = "button.gwt-Button.btn.btn-default")
+    @FindBy(xpath = "//div[@data-ap-comp='fileUpload']//button[.='Cancel']")
     private WebElement cancelButton;
 
     private WebDriver driver;
