@@ -1,5 +1,10 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;

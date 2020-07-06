@@ -1,5 +1,7 @@
 package cireporttests.ootbreports.dtcmetrics.plastic;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
@@ -49,4 +51,36 @@ public class PlasticDtcTests extends TestBase {
 
         assertThat(expectedExportSetValues, arrayContainingInAnyOrder(plasticDtcReportPage.getActualExportSetValues()));
     }
+
+    @Test
+    @TestRail(testCaseId = "1345")
+    @Description("Test Plastic DTC Export Set Filter using Input Field")
+    public void testPlasticDtcExportSetFilterInputField() {
+        plasticDtcReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class);
+
+        Integer availableExportSetCount = Integer.parseInt(plasticDtcReportPage.getCountOfExportSets());
+
+        plasticDtcReportPage.setEarliestExportDateToTodayInput()
+                .setLatestExportDateToTwoDaysFutureInput()
+                .ensureDatesAreCorrect(true, false)
+                .waitForCorrectExportSetListCount("0");
+
+        assertThat(Integer.parseInt(plasticDtcReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+
+    }
+
+    @Test
+    @TestRail(testCaseId = "1345")
+    @Description("Test Plastic DTC Export Set Filter using Date Picker")
+    public void testPlasticDtcExportSetFilterDatePicker() {
+        plasticDtcReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class);
+    }
+
+
 }
