@@ -2,6 +2,7 @@ package com.apriori.apibase.services.response.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -122,7 +123,7 @@ public class FileUploadEntity {
         return items;
     }
 
-    public FileUploadEntity setItems(List<FileItemsEntity> items) {
+    public FileUploadEntity setItems(ArrayList<FileItemsEntity> items) {
         this.items = items;
         return this;
     }
