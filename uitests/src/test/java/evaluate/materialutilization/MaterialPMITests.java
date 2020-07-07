@@ -48,7 +48,7 @@ public class MaterialPMITests extends TestBase {
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();

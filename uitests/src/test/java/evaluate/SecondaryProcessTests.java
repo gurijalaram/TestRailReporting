@@ -68,7 +68,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process leak test")
     public void secondaryProcessLeakTest() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulding.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -101,7 +101,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process xray")
     public void secondaryProcessXray() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulding.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -128,7 +128,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Carburize")
     public void secondaryProcessCarburize() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -165,7 +165,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Atmosphere Oil Harden")
     public void secondaryProcessAtmosphereOilHarden() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -194,7 +194,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Standard Anneal")
     public void secondaryProcessStandardAnneal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -228,7 +228,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Vacuum Temper")
     public void secondaryProcessVacuumTemper() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -256,7 +256,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Stress Relief")
     public void secondaryProcessStressRelief() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -279,7 +279,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Anodize")
     public void secondaryProcessAnodize() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -302,7 +302,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Certification")
     public void secondaryProcessCertification() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -327,7 +327,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -356,7 +356,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process powder coat cart PSO")
     public void psoPowderCoatCart() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -393,7 +393,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process wet coat line PSO")
     public void psoWetCoatLine() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -431,7 +431,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Passivation")
     public void secondaryProcessPassivation() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -456,7 +456,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Multiple Secondary Processes before Costing")
     public void multiSecondaryProcessBeforeCost() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -490,7 +490,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -517,7 +517,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("secondary process automatically added by aPriori")
     public void cannotDeselectSP() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -543,7 +543,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Carbonitride")
     public void secondaryProcessCarbonitride() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -573,7 +573,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Vacuum air harden")
     public void secondaryProcessVacuumAirHarden() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -603,7 +603,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Vacuum Air Harden with High Temper")
     public void secondaryProcessVacuumAirHardenHighTemp() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -633,7 +633,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Spring steel")
     public void secondaryProcessSpringSteel() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -660,7 +660,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Stainless steel")
     public void secondaryProcessStainlessSteel() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -687,7 +687,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process High Speed Steel Harden")
     public void secondaryProcessHighSpeedSteel() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -714,7 +714,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Low Temp Vacuum Anneal")
     public void secondaryProcessLowTempVacuumAnneal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -742,7 +742,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process High Temp Vacuum Anneal")
     public void secondaryProcessHighTempVacuumAnneal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -769,7 +769,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Test secondary process Standard Temper")
     public void secondaryProcessStandardTemper() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -797,7 +797,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Selections are cleared when user cancels changes")
     public void selectionsCleared() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PlasticMoulding.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulding.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -819,7 +819,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -841,7 +841,7 @@ public class SecondaryProcessTests extends TestBase {
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();

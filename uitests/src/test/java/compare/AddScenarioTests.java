@@ -44,7 +44,7 @@ public class AddScenarioTests extends TestBase {
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -74,7 +74,7 @@ public class AddScenarioTests extends TestBase {
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
     public void filterAddPublicScenario() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);

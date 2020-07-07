@@ -60,7 +60,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Keyseat Mill")
     public void testDTCKeyseat() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -79,7 +79,7 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1800"})
     @Description("Testing DTC Machining Sharp Corner on a Curved Surface")
     public void testDTCCurvedSurface() {
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -99,7 +99,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Sharp Corner - Planar Face - Contouring")
     public void testDTCSharpCorner() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -119,7 +119,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Side Milling L/D Ratio")
     public void testDTCSideMilling() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -139,7 +139,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Missing Setups")
     public void testDTCMissingSetup() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -159,7 +159,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Verify obstructed surfaces on planar faces")
     public void obstructedSurfacePlanarFace() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -180,7 +180,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Ensure that  'Guidance' includes: - Issue type count - DTC Messaging for each guidance instance")
     public void stockMachiningDTC() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("nist_ftc_06_asme1_sw1500_rd.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("nist_ftc_06_asme1_sw1500_rd.SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -214,7 +214,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Verify Sharp corners on curved walls are highlighted")
     public void sharpCornerCurvedWall() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("1379344_BEFORE_DTC.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("1379344_BEFORE_DTC.stp");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -235,7 +235,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Verify the investigate tab correctly presents features & conditions which impact cost")
     public void stockMachineDTC() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("nist_ftc_06_asme1_sw1500_rd.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("nist_ftc_06_asme1_sw1500_rd.SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -269,7 +269,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
     public void toleranceInducingTest() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);

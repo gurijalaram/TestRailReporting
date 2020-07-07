@@ -50,7 +50,7 @@ public class DeleteComparisonTests extends TestBase {
     @Description("Test a private comparison can be deleted from the explore page")
     public void testDeletePrivateComparisonExplore() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machined Box AMERICAS.SLDPRT");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
@@ -126,7 +126,7 @@ public class DeleteComparisonTests extends TestBase {
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDeleteExplore() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machined Box AMERICAS.SLDPRT");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
@@ -179,7 +179,7 @@ public class DeleteComparisonTests extends TestBase {
     @Description("Delete a public comparison from comparison page")
     public void deletePublicComparisonPage() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("testpart-4.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("testpart-4.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
@@ -230,7 +230,7 @@ public class DeleteComparisonTests extends TestBase {
     @Description("In comparison view, the user can delete the currently open comparison and any matching public or private comparisons")
     public void deletePublicPrivateComparison() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("testpart-4.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("testpart-4.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
