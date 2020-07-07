@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
@@ -25,7 +26,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -62,7 +62,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
         assertThat(evaluatePage.getTotalComponents(), is("4"));
         assertThat(evaluatePage.getUniqueComponents(), is("4"));
         assertThat(evaluatePage.getWarningsCount(), is("4"));
@@ -251,7 +251,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectExploreButton()
             .openAssembly(scenarioName, "Hinge assembly");
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_OUT_OF_DATE.getCostingText()), Matchers.is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_OUT_OF_DATE.getCostingText()), is(true));
 
         componentsPage = evaluatePage.clickCostStatus(ComponentsPage.class)
             .selectComponentsView("Tree View")
@@ -284,7 +284,7 @@ public class AssemblyUploadTests extends TestBase {
             .expandAssembly(scenarioName, "ASSY02")
             .highlightSubcomponent(scenarioName, "PART0002");
 
-        assertThat(componentsPage.getComponentCell("PART0002", "Qty"), Matchers.is(Matchers.equalTo("2")));
+        assertThat(componentsPage.getComponentCell("PART0002", "Qty"), is(equalTo("2")));
 
         evaluatePage = componentsPage.openSubcomponent(scenarioName, "PART0002")
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -301,7 +301,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectSaveButton()
             .expandAssembly(scenarioName, "ASSY02");
 
-        assertThat(componentsPage.getComponentCell("PART0002", "Piece Part Cost (USD)"), Matchers.is(Matchers.equalTo("2.36")));
+        assertThat(componentsPage.getComponentCell("PART0002", "Piece Part Cost (USD)"), is(equalTo("2.36")));
 
         componentsPage.openColumnsTable()
             .removeColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
