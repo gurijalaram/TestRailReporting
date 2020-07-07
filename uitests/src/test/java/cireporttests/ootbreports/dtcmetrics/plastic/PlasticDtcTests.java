@@ -14,6 +14,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class PlasticDtcTests extends TestBase {
 
@@ -53,6 +55,7 @@ public class PlasticDtcTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Input Field")
     public void testPlasticDtcExportSetFilterInputField() {
@@ -73,6 +76,7 @@ public class PlasticDtcTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Date Picker")
     public void testPlasticDtcExportSetFilterDatePicker() {
@@ -80,7 +84,14 @@ public class PlasticDtcTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class);
+
+        Integer availableExportSetCount = Integer.parseInt(plasticDtcReportPage.getCountOfExportSets());
+
+        plasticDtcReportPage.setEarliestExportDateToTodayPicker()
+                .setLatestExportDateToTodayPlusTwoPicker()
+                .ensureDatesAreCorrect(true, false)
+                .waitForCorrectExportSetListCount("0");
+
+        assertThat(Integer.parseInt(plasticDtcReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
     }
-
-
 }
