@@ -3,6 +3,7 @@ package com.apriori.apibase.services.response.objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Collection;
+import java.util.List;
 
 public class FileUploadEntity {
 
@@ -34,7 +35,7 @@ public class FileUploadEntity {
     private Boolean hasPreviousPage;
 
     @JsonProperty
-    private Collection<FileItemsEntity> items;
+    private List<FileItemsEntity> items;
 
     public Boolean getFirstPage() {
         return isFirstPage;
@@ -121,7 +122,7 @@ public class FileUploadEntity {
         return items;
     }
 
-    public FileUploadEntity setItems(Collection<FileItemsEntity> items) {
+    public FileUploadEntity setItems(List<FileItemsEntity> items) {
         this.items = items;
         return this;
     }

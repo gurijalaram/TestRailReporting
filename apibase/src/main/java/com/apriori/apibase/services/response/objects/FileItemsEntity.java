@@ -34,7 +34,7 @@ public class FileItemsEntity {
     @JsonProperty
     private String folder;
 
-    @JsonProperty
+    @JsonProperty("filesize")
     private String fileSize;
 
     @JsonProperty
