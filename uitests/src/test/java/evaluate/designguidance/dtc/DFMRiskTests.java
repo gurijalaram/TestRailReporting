@@ -191,8 +191,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         evaluatePage.updateCadFile(cadResourceFile);
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
@@ -225,8 +225,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         evaluatePage.updateCadFile(cadResourceFile);
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
@@ -259,8 +259,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
 
         evaluatePage.updateCadFile(cadResourceFile);
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
@@ -291,8 +291,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
 
         evaluatePage.updateCadFile(cadResourceFile);
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
@@ -323,8 +323,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         evaluatePage.updateCadFile(cadResourceFile);
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
@@ -353,8 +353,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(744, 1)));
 
         evaluatePage.updateCadFile(cadResourceFile);
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
 
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(372, 1)));
 
