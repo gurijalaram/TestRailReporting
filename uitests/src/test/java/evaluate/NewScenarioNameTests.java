@@ -18,7 +18,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -73,7 +72,7 @@ public class NewScenarioNameTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class);
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), CoreMatchers.is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), is(true));
 
         evaluatePage.costScenario()
             .publishScenario(PublishPage.class)

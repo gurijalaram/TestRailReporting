@@ -121,10 +121,10 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) [assembly]'] > div > a")
     private WebElement subAssemblyOption;
 
-    @FindBy(css = "li[title='SUB-SUB-ASM (Initial) [assembly]'] > div > a")
+    @FindBy(xpath = "//a[contains(text(), 'SUB-SUB-ASM (Initial) [assembly]')]")
     private WebElement subSubAsmOption;
 
-    @FindBy(css = "li[title='TOP-LEVEL (Initial) [assembly]'] > div > a")
+    @FindBy(xpath = "//a[contains(text(), 'TOP-LEVEL (Initial) [assembly]')]")
     private WebElement topLevelOption;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
@@ -190,7 +190,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "select[class='ui-datepicker-year']")
     private WebElement datePickerYearSelect;
 
-    @FindBy(xpath = "//label[@title='Rollup']/div/div/div/a")
+    @FindBy(xpath = "//div[@id='rollup']//a")
     private WebElement rollupDropdown;
 
     @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
