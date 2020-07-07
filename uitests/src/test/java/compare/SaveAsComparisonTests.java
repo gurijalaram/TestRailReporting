@@ -50,7 +50,7 @@ public class SaveAsComparisonTests extends TestBase {
     @Description("Test a private comparison can be have Save As performed on it")
     public void testSaveAsPrivateComparison() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
         String testSaveAsComparisonName = new GenerateStringUtil().generateComparisonName();
@@ -121,7 +121,7 @@ public class SaveAsComparisonTests extends TestBase {
     @Description("Attempt to create a new comparison with a name that already exists")
     public void comparisonNameExists() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 

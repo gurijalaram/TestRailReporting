@@ -40,7 +40,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - High for Stock Machining")
     public void stockMachiningHighDFM() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("gs515625_gt077_high.prt.2");
+        resourceFile = FileResourceUtil.getResourceAsFile("gs515625_gt077_high.prt.2");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -58,7 +58,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - Medium for Stock Machining")
     public void stockMachiningMediumDFM() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("9856874Medium.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("9856874Medium.prt.1");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -76,7 +76,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - Critical for Sheet Metal")
     public void sheetMetalCriticalDFM() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("1271576_CRITICAL.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("1271576_CRITICAL.prt.1");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -95,7 +95,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - High for Sheet Metal")
     public void sheetMetalHighDFM() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("3571050_cad.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("3571050_cad.prt.1");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -113,7 +113,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - High for Sheet Metal")
     public void plasticMouldedMediumDFM() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PlasticMoulded-Special Tooling Sliders Lifters.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulded-Special Tooling Sliders Lifters.CATPart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -132,7 +132,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - Low for Sand Casting")
     public void sandCastLowDFM() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("casting_q5_thinvalve.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("casting_q5_thinvalve.prt");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -151,7 +151,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate when switch PG from a group with dfm risk to a group without that the risk is removed")
     public void noRiskTransferDie() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -177,8 +177,8 @@ public class DFMRiskTests extends TestBase {
     public void dfmReducedStockMachining() {
 
         String file = "1379344.stp";
-        resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        resourceFile = FileResourceUtil.getResourceAsFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -211,8 +211,8 @@ public class DFMRiskTests extends TestBase {
     public void dfmReducedPlasticMoulding() {
 
         String file = "DTCPlasticIssues.SLDPRT";
-        resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        resourceFile = FileResourceUtil.getResourceAsFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -245,8 +245,8 @@ public class DFMRiskTests extends TestBase {
     public void dfmReducedSheetMetal() {
 
         String file = "bracketdfm.SLDPRT";
-        resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        resourceFile = FileResourceUtil.getResourceAsFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -277,8 +277,8 @@ public class DFMRiskTests extends TestBase {
     public void dfmReducedDieCast() {
 
         String file = "manifold.prt.1";
-        resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        resourceFile = FileResourceUtil.getResourceAsFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -309,8 +309,8 @@ public class DFMRiskTests extends TestBase {
     public void dfmReducedSandCast() {
 
         String file = "SandCastBox.SLDPRT";
-        resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        resourceFile = FileResourceUtil.getResourceAsFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -340,8 +340,8 @@ public class DFMRiskTests extends TestBase {
     public void revertCADUpdate() {
 
         String file = "1379344.stp";
-        resourceFile = new FileResourceUtil().getResourceFile(file);
-        cadResourceFile = new FileResourceUtil().getResourceCadFile(file);
+        resourceFile = FileResourceUtil.getResourceAsFile(file);
+        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
