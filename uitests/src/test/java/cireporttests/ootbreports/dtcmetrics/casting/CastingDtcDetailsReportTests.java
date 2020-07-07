@@ -40,7 +40,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .exportSetSelectAll();
 
@@ -67,7 +67,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         castingDtcReportHeader = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportHeader.class)
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
@@ -85,7 +85,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         castingDtcReportHeader = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportHeader.class)
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
@@ -103,7 +103,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         libraryPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), LibraryPage.class)
             .waitForInputControlsLoad()
             .clickCancel();
 
@@ -117,7 +117,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .expandRollupDropDown()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
@@ -135,7 +135,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName())
+                .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())

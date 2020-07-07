@@ -19,6 +19,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -37,6 +38,7 @@ public class AddScenarioTests extends TestBase {
     private File resourceFile;
 
     @Test
+    @Issue("AP-61539")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"3847", "412", "1171"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
@@ -67,6 +69,7 @@ public class AddScenarioTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-61539")
     @TestRail(testCaseId = {"448"})
     @Description("Test filtering and adding a public scenario then searching component table for the scenario")
     public void filterAddPublicScenario() {
