@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -22,9 +21,7 @@ import java.io.File;
 public class PsoEditTests extends TestBase {
 
     private CIDLoginPage loginPage;
-    private EvaluatePage evaluatePage;
     private ProcessSetupOptionsPage processSetupOptionsPage;
-    private ProcessRoutingPage processRoutingPage;
 
     private File resourceFile;
 
