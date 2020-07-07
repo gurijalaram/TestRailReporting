@@ -41,7 +41,7 @@ public class PartNestingTests extends TestBase {
     @Description("Validate Part Nesting Tab can be accessed")
     public void partNestingTabAccessible() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
@@ -60,7 +60,7 @@ public class PartNestingTests extends TestBase {
     @Description("Select Rectangular method of Part Nesting and cost")
     public void partNestingTabRectangularNesting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
@@ -83,7 +83,7 @@ public class PartNestingTests extends TestBase {
     @Description("Select True Part method of Part Nesting and cost")
     public void partNestingTabTruePartNesting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
@@ -107,7 +107,7 @@ public class PartNestingTests extends TestBase {
     @Description("Select Machine Default method of Part Nesting and cost")
     public void partNestingTabMachineDefaultNesting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         partNestingPage = loginPage.login(UserUtil.getUser())
@@ -131,7 +131,7 @@ public class PartNestingTests extends TestBase {
     @Description("Validate Part Nesting Tab can not be accessed for inappropriate Process Groups")
     public void partNestingTabDisabled() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())

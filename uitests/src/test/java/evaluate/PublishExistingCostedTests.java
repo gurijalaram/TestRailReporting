@@ -49,7 +49,7 @@ public class PublishExistingCostedTests extends TestBase {
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "testpart-4";
-        resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
+        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -84,7 +84,7 @@ public class PublishExistingCostedTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioNameB = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -128,7 +128,7 @@ public class PublishExistingCostedTests extends TestBase {
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
-        resourceFile = new FileResourceUtil().getResourceFile(partName + ".stp");
+        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -139,7 +139,7 @@ public class PublishExistingCostedTests extends TestBase {
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .refreshCurrentPage()
-            .uploadFileAndOk(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"), EvaluatePage.class)
+            .uploadFileAndOk(testScenarioName, FileResourceUtil.getResourceAsFile(partName + ".stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishWarningPage.class)
@@ -160,7 +160,7 @@ public class PublishExistingCostedTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testScenarioName2 = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
-        resourceFile = new FileResourceUtil().getResourceFile(partName + ".stp");
+        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -172,7 +172,7 @@ public class PublishExistingCostedTests extends TestBase {
             .selectPublishButton()
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .refreshCurrentPage()
-            .uploadFileAndOk(testScenarioName, new FileResourceUtil().getResourceFile(partName + ".stp"), EvaluatePage.class)
+            .uploadFileAndOk(testScenarioName, FileResourceUtil.getResourceAsFile(partName + ".stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishWarningPage.class)

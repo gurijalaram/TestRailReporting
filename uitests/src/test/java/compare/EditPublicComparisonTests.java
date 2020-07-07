@@ -97,7 +97,7 @@ public class EditPublicComparisonTests extends TestBase {
     @Description("Delete private scenarios included in comparison from private workspace")
     public void testRemoveFromComparison() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
@@ -131,7 +131,7 @@ public class EditPublicComparisonTests extends TestBase {
     @Description("Test you can change the basis of your comparison")
     public void testChangeComparisonBasis() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
         String testAssemblyName = "Assembly2";

@@ -76,7 +76,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -120,7 +120,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -154,7 +154,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -187,7 +187,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -219,7 +219,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -260,7 +260,7 @@ public class ToleranceTests extends TestBase {
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -302,7 +302,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate applied tolerances are maintained after changing the scenario process group")
     public void testMaintainingToleranceChangePG() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -343,7 +343,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate tolerance edits are maintained when user adds a secondary process group")
     public void testMaintainingSecondaryPG() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -396,7 +396,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate tolerance edits when default values set")
     public void specificDefaultTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Case_001_-_Rockwell_2075-0243G.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Case_001_-_Rockwell_2075-0243G.stp");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -452,7 +452,7 @@ public class ToleranceTests extends TestBase {
     @Description("Verify PMI data is not extracted ")
     public void assumeTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -477,7 +477,7 @@ public class ToleranceTests extends TestBase {
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -554,7 +554,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate PMI is off when use specific is selected")
     public void specificTolerancesNoPMI() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -617,7 +617,7 @@ public class ToleranceTests extends TestBase {
     @Description("Validate 'Replace values less than' button")
     public void replaceValuesButton() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -650,7 +650,7 @@ public class ToleranceTests extends TestBase {
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
         currentUser = testUser1;
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
 
         new CIDLoginPage(driver).login(testUser1)
             .openSettings()
@@ -713,7 +713,7 @@ public class ToleranceTests extends TestBase {
 
         UserCredentials testUser1 = UserUtil.getUser();
         currentUser = testUser1;
-        resourceFile = new FileResourceUtil().getResourceFile("PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("PMI_AllTolTypesCatia.CATPart");
 
         new CIDLoginPage(driver).login(testUser1)
             .openSettings()

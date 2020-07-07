@@ -51,7 +51,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("M3CapScrew.CATPart");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -85,7 +85,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("M3CapScrew.CATPart");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -125,7 +125,7 @@ public class ActionsTests extends TestBase {
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -161,7 +161,7 @@ public class ActionsTests extends TestBase {
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("case_002_006-8611543_prt.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_002_006-8611543_prt.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -189,7 +189,7 @@ public class ActionsTests extends TestBase {
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("BasicScenario_Forging.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -217,7 +217,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -249,7 +249,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -282,7 +282,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -307,7 +307,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("BasicScenario_Forging.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -345,7 +345,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("BasicScenario_Forging.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("BasicScenario_Forging.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -381,7 +381,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -419,7 +419,7 @@ public class ActionsTests extends TestBase {
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
@@ -458,7 +458,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Rapid Prototyping.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -492,7 +492,7 @@ public class ActionsTests extends TestBase {
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -529,7 +529,7 @@ public class ActionsTests extends TestBase {
     @Description("Ensure scripts cannot be entered into text input fields")
     public void cannotUseScript() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
