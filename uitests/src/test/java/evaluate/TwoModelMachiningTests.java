@@ -312,8 +312,8 @@ public class TwoModelMachiningTests extends TestBase {
         String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
 
-        resourceFile = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
-        twoModelFile2 = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
+        twoModelFile2 = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         sourceCostInvalidPage = loginPage.login(UserUtil.getUser())
@@ -343,8 +343,8 @@ public class TwoModelMachiningTests extends TestBase {
         String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
 
-        resourceFile = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
-        twoModelFile2 = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
+        twoModelFile2 = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
