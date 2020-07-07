@@ -45,7 +45,7 @@ public class MaterialStockTests extends TestBase {
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Powder Metal.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Powder Metal.stp");
 
         loginPage = new CIDLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
@@ -75,7 +75,7 @@ public class MaterialStockTests extends TestBase {
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic_matPMI.prt.1");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -117,7 +117,7 @@ public class MaterialStockTests extends TestBase {
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Square circle.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Square circle.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
@@ -147,7 +147,7 @@ public class MaterialStockTests extends TestBase {
     @Description("validate the user can collapse and expand material properties")
     public void materialProperties() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
 
         loginPage = new CIDLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())

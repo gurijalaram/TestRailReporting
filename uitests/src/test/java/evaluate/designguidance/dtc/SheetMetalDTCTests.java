@@ -57,7 +57,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheMetDTC.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheMetDTC.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -96,7 +96,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheetMetalTray.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetalTray.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -120,7 +120,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("extremebends.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("extremebends.prt.1");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -154,7 +154,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("extremebends.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("extremebends.prt.1");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -181,7 +181,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheMetDTC.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheMetDTC.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -221,7 +221,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic_matPMI.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic_matPMI.prt.1");
 
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();

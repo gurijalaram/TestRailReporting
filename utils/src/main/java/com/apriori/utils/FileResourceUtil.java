@@ -46,24 +46,14 @@ public class FileResourceUtil {
     }
 
     /**
-     * Gets resource file
-     *
-     * @param fileName - the file name
-     * @return file object
-     */
-    public File getResourceFile(String fileName) {
-        return getResourceAsFile(fileName);
-    }
-
-    /**
      * Gets resource file from specified path
      *
-     * Subfolders should be separated by a comma eg. cad-files, files
+     * Subfolders should be separated by a comma eg. a folder structure of [cad-file > multipartfiles > files] would be represented as "cad-files, multipartfiles, files"
      *
      * @param fileName - the file name
      * @return file object
      */
-    public File getResourceCadFile(String fileName) {
+    public static File getResourceCadFile(String fileName) {
         return getResourceAsFile("cad-files",  fileName);
     }
 
@@ -124,9 +114,8 @@ public class FileResourceUtil {
                 }
             }
             return tempFile;
-        } catch (IOException e) {
-            logger.error(String.format("Resource file: %s was not found", resourceFileName));
-            throw new IllegalArgumentException();
+        } catch (RuntimeException | IOException e) {
+            throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", resourceFileName, e));
         }
     }
 

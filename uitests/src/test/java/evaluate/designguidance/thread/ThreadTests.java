@@ -61,7 +61,7 @@ public class ThreadTests extends TestBase {
     @Description("Test to check edit thread button is disabled")
     public void threadButtonDisabled() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap noDraft.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -82,7 +82,7 @@ public class ThreadTests extends TestBase {
     @Description("C28 Test to check thread length persist")
     public void editThread() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap noDraft.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -106,7 +106,7 @@ public class ThreadTests extends TestBase {
     @Description("Test to verify costed thread")
     public void selectScenario() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -139,7 +139,7 @@ public class ThreadTests extends TestBase {
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -163,7 +163,7 @@ public class ThreadTests extends TestBase {
     @Description("Test to set dropdown value to yes")
     public void setDropdownValueYes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -192,7 +192,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing warning message displayed when thread length is removed")
     public void costedThreadLengthRemoved() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -222,7 +222,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     public void changeThreadValueCancel() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -250,7 +250,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing that adding text values in the thread length shows a warning message")
     public void junkValuesCharTest() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -273,7 +273,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing that adding no value in the thread shows a warning message")
     public void junkValueTest() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -297,7 +297,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     public void zeroValueTest() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -323,7 +323,7 @@ public class ThreadTests extends TestBase {
     public void cannotEditPublicThread() {
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -346,7 +346,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -384,7 +384,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -410,7 +410,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -439,7 +439,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("M3CapScrew.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("M3CapScrew.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -475,7 +475,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("CatiaPMIThreads.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("CatiaPMIThreads.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -497,7 +497,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("100plusThreads.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("100plusThreads.prt");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -519,7 +519,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("CREO-PMI-Threads.prt.1");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);
@@ -540,7 +540,7 @@ public class ThreadTests extends TestBase {
     @Description("Validate thread filter behaves correctly in Investigation tab.")
     public void threadFilter() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("CREO-PMI-Threads.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("CREO-PMI-Threads.prt.1");
         currentUser = UserUtil.getUser();
 
         loginPage = new CIDLoginPage(driver);

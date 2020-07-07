@@ -48,7 +48,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machined Box AMERICAS.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machined Box AMERICAS.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         costDetailsPage = loginPage.login(UserUtil.getUser())
@@ -70,7 +70,7 @@ public class CostAllCadTests extends TestBase {
     @Description("Be able to determine whether a decision has caused a cost increase or decrease")
     public void costIncreaseDecrease() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("powderMetal.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("powderMetal.stp");
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
@@ -96,7 +96,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - par")
     public void testCADFormatPar() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("26136.par");
+        resourceFile = FileResourceUtil.getResourceAsFile("26136.par");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -113,7 +113,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - CATPart")
     public void testCADFormatCATPart() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap DFM.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -130,7 +130,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("turning.prt.4");
+        resourceFile = FileResourceUtil.getResourceAsFile("turning.prt.4");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -147,7 +147,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - Creo")
     public void testCADFormatCreo() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("turning.prt.4");
+        resourceFile = FileResourceUtil.getResourceAsFile("turning.prt.4");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -164,7 +164,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Locker_bottom_panel.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Locker_bottom_panel.prt");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -181,7 +181,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("VERTICAL PLATE.ipt");
+        resourceFile = FileResourceUtil.getResourceAsFile("VERTICAL PLATE.ipt");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -198,7 +198,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -215,7 +215,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParasolid() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic_steel_PMI.x_t");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic_steel_PMI.x_t");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -232,7 +232,7 @@ public class CostAllCadTests extends TestBase {
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SAT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap thinPart.SAT");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -248,7 +248,7 @@ public class CostAllCadTests extends TestBase {
     @Description("Upload large GCD part. Part should be displayed in the viewer within 60 seconds")
     public void translationTest() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("LargePart.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("LargePart.prt.1");
 
         loginPage = new CIDLoginPage(driver);
         evaluateHeader = loginPage.login(UserUtil.getUser())
@@ -263,7 +263,7 @@ public class CostAllCadTests extends TestBase {
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("LargePart.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("LargePart.prt.1");
 
         loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
@@ -277,7 +277,7 @@ public class CostAllCadTests extends TestBase {
     @Description("Failure to create a new scenario that has a blank scenario name or is named using unsupported characters")
     public void failedBlankScenarioName() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
