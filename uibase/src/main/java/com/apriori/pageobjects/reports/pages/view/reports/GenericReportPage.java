@@ -282,23 +282,11 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Generic scroll method
-     *
-     * @return current page object
-     */
-    public GenericReportPage scrollDownInputControls() {
-        pageUtils.waitForElementToAppear(currentCurrencyElement);
-        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
-        return this;
-    }
-
-    /**
      * Sets specified assembly
      *
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
-        pageUtils.waitFor(710);
         currentAssemblyElement.click();
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             assemblyMap.get(assemblyName).click();
@@ -373,6 +361,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Generic - instance of specified class
      */
     public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(currentAssembly);
         // if not top level, add -
         if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
@@ -526,6 +515,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(currentCurrency);
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return PageFactory.initElements(driver, className);
