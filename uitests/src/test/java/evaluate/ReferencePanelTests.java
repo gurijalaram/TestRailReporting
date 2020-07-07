@@ -35,7 +35,7 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate the compare panel updates the comparison details to the previous iteration of the scenario")
     public void referenceUpdates() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("powderMetal.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("powderMetal.stp");
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
@@ -61,7 +61,7 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate  the compare panel can show the comparison between the most recent public iteration")
     public void referencePublicIteration() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -96,7 +96,7 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -122,7 +122,7 @@ public class ReferencePanelTests extends TestBase {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String scenarioName3 = new GenerateStringUtil().generateScenarioName();
         String componentName = "Rapid Prototyping";
-        resourceFile = new FileResourceUtil().getResourceFile("Rapid Prototyping.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Rapid Prototyping.stp");
 
         loginPage = new CIDLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())

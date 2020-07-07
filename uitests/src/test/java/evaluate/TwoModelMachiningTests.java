@@ -53,8 +53,8 @@ public class TwoModelMachiningTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "casting_before_machining";
 
-        resourceFile = new FileResourceUtil().getResourceFile("casting_BEFORE_machining.stp");
-        twoModelFile = new FileResourceUtil().getResourceFile("casting_AFTER_machining.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("casting_BEFORE_machining.stp");
+        twoModelFile = FileResourceUtil.getResourceAsFile("casting_AFTER_machining.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -97,8 +97,8 @@ public class TwoModelMachiningTests extends TestBase {
         String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "VulcainCasting";
 
-        resourceFile = new FileResourceUtil().getResourceFile("VulcainCasting.CATPart");
-        twoModelFile = new FileResourceUtil().getResourceFile("VulcainMachined.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("VulcainCasting.CATPart");
+        twoModelFile = FileResourceUtil.getResourceAsFile("VulcainMachined.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -134,9 +134,9 @@ public class TwoModelMachiningTests extends TestBase {
         String sourcePartName = "2modeltest-cast";
         String twoModel1PartName = "2modeltest-machine1";
 
-        resourceFile = new FileResourceUtil().getResourceFile("2modeltest-cast.SLDPRT");
-        twoModelFile = new FileResourceUtil().getResourceFile("2modeltest-machine1.SLDPRT");
-        twoModelFile2 = new FileResourceUtil().getResourceFile("2modeltest-machine2.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("2modeltest-cast.SLDPRT");
+        twoModelFile = FileResourceUtil.getResourceAsFile("2modeltest-machine1.SLDPRT");
+        twoModelFile2 = FileResourceUtil.getResourceAsFile("2modeltest-machine2.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -186,8 +186,8 @@ public class TwoModelMachiningTests extends TestBase {
         String sourcePartName = "Raw Casting";
         String twoModelPartName = "Machined Casting";
 
-        resourceFile = new FileResourceUtil().getResourceFile("Raw Casting.prt");
-        twoModelFile = new FileResourceUtil().getResourceFile("Machined Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Raw Casting.prt");
+        twoModelFile = FileResourceUtil.getResourceAsFile("Machined Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -226,9 +226,9 @@ public class TwoModelMachiningTests extends TestBase {
         String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
         String source2PartName = "Die Casting Lower Control Arm (Source1)";
 
-        resourceFile = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
-        twoModelFile = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (Source1).SLDPRT");
-        twoModelFile2 = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
+        twoModelFile = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (Source1).SLDPRT");
+        twoModelFile2 = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -276,8 +276,8 @@ public class TwoModelMachiningTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "casting_before_machining";
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
-        twoModelFile = new FileResourceUtil().getResourceFile("casting_AFTER_machining.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        twoModelFile = FileResourceUtil.getResourceAsFile("casting_AFTER_machining.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())

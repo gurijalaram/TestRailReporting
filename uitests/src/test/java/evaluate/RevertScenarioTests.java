@@ -37,7 +37,7 @@ public class RevertScenarioTests extends TestBase {
     @TestRail(testCaseId = {"3848", "585"})
     public void testRevertSavedScenario() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("testpart-4.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("testpart-4.prt");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -63,7 +63,7 @@ public class RevertScenarioTests extends TestBase {
     @TestRail(testCaseId = {"586"})
     public void testRevertUnsavedScenario() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("testpart-4.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("testpart-4.prt");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())

@@ -49,7 +49,7 @@ public class DecimalPlaceTests extends TestBase {
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 

@@ -43,7 +43,7 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -62,7 +62,7 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testNewScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -94,7 +94,7 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
     public void multipleUpload() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("MultiUpload.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
         String scenarioA = new GenerateStringUtil().generateScenarioName();
         String scenarioB = new GenerateStringUtil().generateScenarioName();
         String scenarioC = new GenerateStringUtil().generateScenarioName();
@@ -108,13 +108,13 @@ public class NewScenarioNameTests extends TestBase {
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .refreshCurrentPage()
-            .uploadFileAndOk(scenarioB, new FileResourceUtil().getResourceFile("MultiUpload.stp"), EvaluatePage.class)
+            .uploadFileAndOk(scenarioB, FileResourceUtil.getResourceAsFile("MultiUpload.stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .refreshCurrentPage()
-            .uploadFileAndOk(scenarioC, new FileResourceUtil().getResourceFile("MultiUpload.stp"), EvaluatePage.class)
+            .uploadFileAndOk(scenarioC, FileResourceUtil.getResourceAsFile("MultiUpload.stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

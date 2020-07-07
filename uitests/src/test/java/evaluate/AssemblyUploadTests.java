@@ -54,7 +54,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("Assembly File Upload - STEP")
     public void testAssemblyFormatSTEP() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -76,7 +76,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("Uploaded STEP assembly and components can be recosted")
     public void costAssembly() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -138,7 +138,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("User can delete STEP Assembly Pre-Costing")
     public void testSTEPAssemblyDeletePreCost() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -162,7 +162,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("User can delete STEP Assembly Post-Costing")
     public void testSTEPAssemblyDeletePostCost() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -195,7 +195,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
     public void testSTEPAssemblyPowderCoatCart() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -227,7 +227,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("Validate error message and cost status appears, when assembly cost is out of date")
     public void smallAssembly() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Hinge assembly.STEP");
+        resourceFile = FileResourceUtil.getResourceAsFile("Hinge assembly.STEP");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -271,7 +271,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("Validate quantity column is correct")
     public void treeViewTests() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
