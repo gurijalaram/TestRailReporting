@@ -1,5 +1,6 @@
 package cireporttests.ootbreports.dtcmetrics.plastic;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -7,6 +8,8 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
+import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.PlasticDtcReportsEnum;
@@ -20,6 +23,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 public class PlasticDtcTests extends TestBase {
 
     private PlasticDtcReportPage plasticDtcReportPage;
+    private GenericReportPage genericReportPage;
     private ViewRepositoryPage repository;
 
     public PlasticDtcTests() {
@@ -94,4 +98,32 @@ public class PlasticDtcTests extends TestBase {
 
         assertThat(Integer.parseInt(plasticDtcReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
     }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1346")
+    @Description("Test Plastic DTC Export Set Selection")
+    public void testPlasticDtcExportSetSelection() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .exportSetSelectAll();
+
+        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount())));
+
+        genericReportPage.deselectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName());
+
+        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount() - 1)));
+
+        genericReportPage.invertExportSetSelection();
+
+        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(1)));
+
+        genericReportPage.exportSetDeselectAll();
+
+        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
+    }
+
 }
