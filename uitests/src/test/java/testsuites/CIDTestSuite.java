@@ -43,6 +43,7 @@ import explore.ActionsTests;
 import explore.FilterCriteriaTests;
 import explore.PreviewPanelTests;
 import explore.TableHeadersTests;
+import explore.UploadTests;
 import login.LoginTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
@@ -98,6 +99,7 @@ import testsuites.suiteinterface.SmokeTests;
     RevertScenarioTests.class,
     TwoModelMachiningTests.class,
     DecimalPlaceTests.class,
+    UploadTests.class,
 })
 public class CIDTestSuite {
 }
