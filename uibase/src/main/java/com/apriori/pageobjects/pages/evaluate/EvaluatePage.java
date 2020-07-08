@@ -550,6 +550,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return BigDecimal - Fully Burdened Cost (rounded down - thus ROUND_FLOOR)
      */
     public BigDecimal getBurdenedCostValue() {
+        pageUtils.waitForElementToAppear(burdenedCost);
         return new BigDecimal(
                 burdenedCost.getText()
                         .replace(",", ""))

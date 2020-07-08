@@ -115,51 +115,22 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
      * Checks if columns are already set properly
      *
      * @param columnsToAdd
-     * @param columnsToRemove
      * @return current page object
      */
-    public ComponentTableColumnsPage checkColumnSettings(List<String> columnsToAdd, List<String> columnsToRemove) {
+    public ComponentTableColumnsPage checkColumnSettings(List<String> columnsToAdd) {
         int availableCount = Integer.parseInt(availableList.getAttribute("childElementCount"));
-        List<String> leftListContents = new ArrayList<>();
-        for (int i = 0; i < availableCount; i++) {
-            leftListContents.add(driver.findElements(By.xpath("//select[@data-ap-comp='leftList']/option")).get(i).getText());
-        }
+        List<String> availableList = new ArrayList<>();
 
-        int includedCount = Integer.parseInt(includedList.getAttribute("childElementCount"));
-        List<String> rightListContents = new ArrayList<>();
-        for (int j = 0; j < includedCount; j++) {
-            rightListContents.add(driver.findElements(By.xpath("//select[@data-ap-comp='rightList']/option")).get(j).getText());
+        for (int i = 0; i < availableCount; i++) {
+            availableList.add(driver.findElements(By.xpath("//select[@data-ap-comp='leftList']/option")).get(i).getText());
         }
 
         for (String columnName : columnsToAdd) {
-            if (leftListContents.contains(columnName) && !rightListContents.contains(columnName)) {
+            if (availableList.contains(columnName)) {
                 addColumn(columnName);
             }
         }
 
-        for (String columnName : columnsToRemove) {
-            if (!leftListContents.contains(columnName) && rightListContents.contains(columnName)) {
-                removeColumn(columnName);
-            }
-        }
-
-        return this;
-    }
-
-    /**
-     * Adds multiple columns
-     *
-     * @param columnsToAdd - list of columns to add
-     * @return current page object
-     */
-    public ComponentTableColumnsPage addMultipleColumns(List<String> columnsToAdd) {
-        pageUtils.waitForElementToAppear(availableList);
-        Select rightListDropdown = new Select(availableList);
-
-        for (String column : columnsToAdd) {
-            rightListDropdown.selectByValue(column);
-            selectRightArrow();
-        }
         return this;
     }
 
@@ -177,22 +148,13 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
     }
 
     /**
-     * Removes multiple columns
+     * Selects the ok button
      *
-     * @param columnsToRemove - list of columns to remove
-     * @return current page object
+     * @return new page object
      */
-    public ComponentTableColumnsPage removeMultipleColumns(List<String> columnsToRemove) {
-        pageUtils.waitForElementToAppear(includedList);
-        Select rightListDropdown = new Select(includedList);
-        rightListDropdown.deselectAll();
-        for (String column : columnsToRemove) {
-            rightListDropdown.selectByValue(column);
-            selectLeftArrow();
-        }
-        Select leftListDropdown = new Select(availableList);
-        leftListDropdown.deselectAll();
-        return this;
+    public ComponentsPage selectSaveButton() {
+        pageUtils.waitForElementAndClick(okButton);
+        return new ComponentsPage(driver);
     }
 
     /**
@@ -213,16 +175,6 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
     private ComponentTableColumnsPage selectLeftArrow() {
         pageUtils.waitForElementAndClick(removeColumnButton);
         return this;
-    }
-
-    /**
-     * Selects the ok button
-     *
-     * @return new page object
-     */
-    public ComponentsPage selectSaveButton() {
-        pageUtils.waitForElementAndClick(okButton);
-        return new ComponentsPage(driver);
     }
 
     /**

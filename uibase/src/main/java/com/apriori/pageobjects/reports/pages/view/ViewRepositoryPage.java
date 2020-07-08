@@ -66,7 +66,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     @FindBy(xpath = "//a[contains(text(), 'Scenario Comparison')]")
     private WebElement scenarioComparisonReport;
 
-    @FindBy(css = "//p[contains(text(), 'Casting')]/..")
+    @FindBy(xpath = "//p[contains(text(), 'Casting')]/..")
     private WebElement castingDtcFolder;
 
     @FindBy(xpath = "//p[contains(text(), 'Machining')]/..")
