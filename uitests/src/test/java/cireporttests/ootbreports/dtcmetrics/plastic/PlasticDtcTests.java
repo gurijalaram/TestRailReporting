@@ -6,12 +6,16 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.PlasticDtcReportsEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -20,11 +24,14 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 
+import java.math.BigDecimal;
+
 public class PlasticDtcTests extends TestBase {
 
     private PlasticDtcReportPage plasticDtcReportPage;
     private GenericReportPage genericReportPage;
     private ViewRepositoryPage repository;
+    private EvaluatePage evaluatePage;
 
     public PlasticDtcTests() {
         super();
@@ -92,9 +99,9 @@ public class PlasticDtcTests extends TestBase {
         Integer availableExportSetCount = Integer.parseInt(plasticDtcReportPage.getCountOfExportSets());
 
         plasticDtcReportPage.setEarliestExportDateToTodayPicker()
-                .setLatestExportDateToTodayPlusTwoPicker()
-                .ensureDatesAreCorrect(true, false)
-                .waitForCorrectExportSetListCount("0");
+            .setLatestExportDateToTodayPlusTwoPicker()
+            .ensureDatesAreCorrect(true, false)
+            .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(plasticDtcReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
     }
@@ -105,11 +112,11 @@ public class PlasticDtcTests extends TestBase {
     @Description("Test Plastic DTC Export Set Selection")
     public void testPlasticDtcExportSetSelection() {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .exportSetSelectAll();
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
+            .waitForInputControlsLoad()
+            .exportSetSelectAll();
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount())));
 
@@ -124,6 +131,38 @@ public class PlasticDtcTests extends TestBase {
         genericReportPage.exportSetDeselectAll();
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1376")
+    @Description("Test Plastic DTC Data Integrity")
+    public void testPlasticDtcDataIntegrity() {
+        genericReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+            .clickOk()
+            .hoverPartNameBubblePlasticDtc();
+
+        String partName = genericReportPage.getPartNamePlasticDtc();
+        BigDecimal reportFbcValue = genericReportPage.getFbcPlasticDtc();
+        genericReportPage.openNewTabAndFocus(1);
+
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+            .filter()
+            .setScenarioType(Constants.PART_SCENARIO_TYPE)
+            .setWorkspace(Constants.PUBLIC_WORKSPACE)
+            .setRowOne("Part Name", "Contains", partName)
+            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+            .apply(ExplorePage.class)
+            .openFirstScenario();
+
+        BigDecimal cidFbcValue = evaluatePage.getBurdenedCostValue();
+
+        assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
 
 }

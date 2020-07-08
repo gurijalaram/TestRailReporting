@@ -7,12 +7,15 @@ import static org.hamcrest.CoreMatchers.is;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
+import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 
+import com.apriori.utils.enums.MachiningReportsEnum;
+import com.apriori.utils.enums.PlasticDtcReportsEnum;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -42,12 +45,16 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
+    private Map<String, WebElement> bubbleMap = new HashMap<>();
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name()='path']")
     private WebElement castingDtcBubble;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name()='path'][43]")
     private WebElement machiningDtcBubble;
+
+    @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name()='path'])[8]")
+    private WebElement plasticDtcBubble;
 
     @FindBy(xpath = "//*[text()=\"Fully Burdened Cost : \"]/following-sibling::*[1]")
     private WebElement tooltipFbcElement;
@@ -232,6 +239,7 @@ public class GenericReportPage extends ReportsPageHeader {
         initialiseAssemblyHashMap();
         initialiseCurrencyMap();
         initialisePartNameMap();
+        initialiseBubbleMap();
     }
 
     @Override
@@ -827,8 +835,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Method to return value from Bubble in DTC Casting or Machining DTC Report
      * @return BigDecimal value
      */
-    public BigDecimal getFBCValueFromBubbleTooltip(boolean isCastingDtcReport) {
-        WebElement elementToUse = isCastingDtcReport ? castingDtcBubble : machiningDtcBubble;
+    public BigDecimal getFBCValueFromBubbleTooltip(String reportName) {
+        WebElement elementToUse = bubbleMap.get(reportName);
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
@@ -839,6 +847,34 @@ public class GenericReportPage extends ReportsPageHeader {
                 tooltipFbcElement.getText()
                         .replace(",", "")
         );
+    }
+
+    /**
+     * Hovers over bubble in Plastic DTC Report
+     * @return Instance of GenericReportPage
+     */
+    public GenericReportPage hoverPartNameBubblePlasticDtc() {
+        WebElement elementToUse = plasticDtcBubble;
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);builder.perform();
+        elementToUse.click();
+        return this;
+    }
+
+    /**
+     * Gets Part Name from Plastic DTC Report
+     * @return String
+     */
+    public String getPartNamePlasticDtc() {
+        return driver.findElement(By.xpath("(//*[@style='font-weight:bold'])[1]")).getText();
+    }
+
+    /**
+     * Gets FBC from Plastic DTC Report
+     * @return BigDecimal
+     */
+    public BigDecimal getFbcPlasticDtc() {
+        return new BigDecimal(driver.findElement(By.xpath("(//*[@style='font-weight:bold'])[3]")).getText());
     }
 
     /**
@@ -943,5 +979,14 @@ public class GenericReportPage extends ReportsPageHeader {
         partNameMap.put(Constants.CASTING_DTC_REPORT_NAME, partNameCastingDtcReport);
         partNameMap.put(Constants.CASTING_DTC_COMPARISON_REPORT_NAME, partNameCastingDtcComparisonReport);
         partNameMap.put(Constants.CASTING_DTC_DETAILS_REPORT_NAME, partNameCastingDtcDetailsReport);
+    }
+
+    /**
+     * Initialise bubble map
+     */
+    private void initialiseBubbleMap() {
+        bubbleMap.put(MachiningReportsEnum.MACHINING_DTC.getReportName(), machiningDtcBubble);
+        bubbleMap.put(CastingReportsEnum.CASTING_DTC.getReportName(), castingDtcBubble);
+        bubbleMap.put(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), plasticDtcBubble);
     }
 }
