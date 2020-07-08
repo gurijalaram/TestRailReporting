@@ -127,7 +127,7 @@ public class AssemblyUploadTests extends TestBase {
 
         assertThat(evaluatePage.getTotalComponents(), is("22"));
         assertThat(evaluatePage.getUniqueComponents(), is("10"));
-        assertThat(evaluatePage.getUncostedUnique(), is("0"));
+        assertThat(evaluatePage.isUncostedUnique("0"), is(true));
         assertThat(evaluatePage.getFinishMass(), is(closeTo(0.80, 1)));
         assertThat(evaluatePage.getTargetMass(), is("0.00"));
     }
