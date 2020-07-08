@@ -62,6 +62,9 @@ public class ReportsPageHeader extends PageHeader {
     @FindBy(id = "apply")
     private WebElement applyButton;
 
+    @FindBy(id = "loading")
+    private WebElement loadingPopup;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -79,6 +82,7 @@ public class ReportsPageHeader extends PageHeader {
      * @return current page object
      */
     public GenericReportPage waitForInputControlsLoad() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(applyButton);
         return new GenericReportPage(driver);
     }

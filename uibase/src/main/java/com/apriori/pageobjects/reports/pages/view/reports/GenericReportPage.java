@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
-import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.PageUtils;
@@ -114,13 +113,13 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement inputBox;
 
-    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) > div > a")
+    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) [assembly]'] > div > a")
     private WebElement subAssemblyOption;
 
-    @FindBy(css = "li[title='SUB-SUB-ASM (Initial)'] > div > a")
+    @FindBy(xpath = "//a[contains(text(), 'SUB-SUB-ASM (Initial) [assembly]')]")
     private WebElement subSubAsmOption;
 
-    @FindBy(css = "li[title='TOP-LEVEL (Initial)'] > div > a")
+    @FindBy(xpath = "//a[contains(text(), 'TOP-LEVEL (Initial) [assembly]')]")
     private WebElement topLevelOption;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
@@ -141,7 +140,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "reset")
     private WebElement resetButton;
 
-    @FindBy(id = "cancel")
+    @FindBy(xpath = "//div[@id='inputControls']//button[@id='cancel']")
     private WebElement cancelButton;
 
     @FindBy(id = "save")
@@ -186,8 +185,8 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "select[class='ui-datepicker-year']")
     private WebElement datePickerYearSelect;
 
-    @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-input-expander jr']")
-    private WebElement rollupDropDown;
+    @FindBy(xpath = "//div[@id='rollup']//a")
+    private WebElement rollupDropdown;
 
     @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
     private WebElement rollupSearch;
@@ -212,6 +211,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//div[@id='inputControls']//div[@class='sub header hidden']")
     private WebElement hiddenSavedOptions;
+
+    @FindBy(id = "inputControls")
+    private WebElement inputControlsDiv;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -277,17 +279,6 @@ public class GenericReportPage extends ReportsPageHeader {
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         };
-    }
-
-    /**
-     * Generic scroll method
-     *
-     * @return current page object
-     */
-    public GenericReportPage scrollDownInputControls() {
-        pageUtils.waitForElementToAppear(currentCurrencyElement);
-        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
-        return this;
     }
 
     /**
@@ -370,6 +361,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Generic - instance of specified class
      */
     public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(currentAssembly);
         // if not top level, add -
         if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
@@ -523,6 +515,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(currentCurrency);
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return PageFactory.initElements(driver, className);
@@ -621,21 +614,13 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public GenericReportPage expandRollupDropDown() {
-        pageUtils.waitForElementAndClick(rollupDropDown);
-        return this;
-    }
-
-    /**
-     * Search for rollup in rollup drop-down search bar
-     *
-     * @return current page object
-     */
-    public GenericReportPage selectRollupByDropDownSearch(String rollupName) {
-        pageUtils.waitForElementAndClick(rollupSearch);
-        rollupSearch.sendKeys(rollupName);
-        By rollupToClick = By.xpath(String.format("//li[@title='%s']", rollupName));
-        driver.findElement(rollupToClick).click();
+    public GenericReportPage selectRollup(String rollupName) {
+        rollupDropdown.click();
+        if (!rollupDropdown.getAttribute("title").equals(rollupName)) {
+            driver.findElement(
+                    By.xpath(String.format("//li[@title='%s']", rollupName)))
+                    .click();
+        }
         return this;
     }
 
@@ -719,10 +704,11 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return new library page object
      */
-    public LibraryPage clickCancel() {
+    public <T> T clickCancel(Class<T> className) {
         pageUtils.waitForElementAndClick(cancelButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return new LibraryPage(driver);
+        pageUtils.waitForElementNotDisplayed(inputControlsDiv, 1);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -902,6 +888,30 @@ public class GenericReportPage extends ReportsPageHeader {
             }
         }
         return valsToReturn;
+    }
+
+    /**
+     * Gets Input Controls Div Class Name
+     * @return String
+     */
+    public String getInputControlsDivClassName() {
+        return inputControlsDiv.getAttribute("className");
+    }
+
+    /**
+     * Gets input controls div isEnabled value
+     * @return boolean
+     */
+    public boolean inputControlsIsEnabled() {
+        return pageUtils.isElementEnabled(inputControlsDiv);
+    }
+
+    /**
+     *Gets input controls div isDisplayed value
+     * @return boolean
+     */
+    public boolean inputControlsIsDisplayed() {
+        return pageUtils.isElementDisplayed(inputControlsDiv);
     }
 
     /**

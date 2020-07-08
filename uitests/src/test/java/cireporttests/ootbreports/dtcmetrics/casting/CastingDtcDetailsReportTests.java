@@ -1,5 +1,6 @@
 package cireporttests.ootbreports.dtcmetrics.casting;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -72,8 +73,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportHeader.class)
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
-            .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
+            .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
@@ -91,8 +91,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportHeader.class)
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
-            .selectRollupByDropDownSearch(RollupEnum.CASTING_DTC_ALL.getRollupName())
+            .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickApply()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
 
@@ -105,14 +104,16 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Details input control panel works")
     public void testCancelButton() {
-        libraryPage = new ReportsLoginPage(driver)
+        castingDtcReportHeader = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), LibraryPage.class)
             .waitForInputControlsLoad()
-            .clickCancel();
+            .clickCancel(CastingDtcReportHeader.class);
 
-        assertThat(libraryPage.getLibraryTitleText(), is(equalTo("Library")));
+        assertThat(castingDtcReportHeader.getInputControlsDivClassName(), containsString("hidden"));
+        assertThat(castingDtcReportHeader.inputControlsIsDisplayed(), is(equalTo(false)));
+        assertThat(castingDtcReportHeader.inputControlsIsEnabled(), is(equalTo(true)));
     }
 
     @Test
@@ -125,8 +126,8 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
-            .expandRollupDropDown()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickReset()
             .waitForExpectedExportCount("0");
 

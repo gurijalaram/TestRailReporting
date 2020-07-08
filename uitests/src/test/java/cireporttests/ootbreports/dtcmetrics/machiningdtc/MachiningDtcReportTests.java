@@ -93,7 +93,6 @@ public class MachiningDtcReportTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
-            .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);

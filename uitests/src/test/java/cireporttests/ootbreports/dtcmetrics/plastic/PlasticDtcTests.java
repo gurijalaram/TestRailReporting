@@ -12,8 +12,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class PlasticDtcTests extends TestBase {
 
@@ -25,7 +23,6 @@ public class PlasticDtcTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailability() {
@@ -40,7 +37,6 @@ public class PlasticDtcTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1344")
     @Description("Test Plastic DTC Reports Export Set Availability")
     public void testPlasticDtcReportExportSetAvailability() {
