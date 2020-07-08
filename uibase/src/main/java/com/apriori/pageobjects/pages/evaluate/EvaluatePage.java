@@ -695,9 +695,9 @@ public class EvaluatePage extends EvaluateHeader {
      * @return string
      */
     public boolean isUncostedUnique(String uncostedUnique) {
-        By uncostedComponents = By.cssSelector(String.format("td[data-ap-field='uncostedComponentsCount']", uncostedUnique));
-        pageUtils.waitForElementToAppear(uncostedComponents);
-        return driver.findElement(uncostedComponents).isDisplayed();
+        By uncostedComponent = By.cssSelector(String.format("td[data-ap-field='uncostedComponentsCount'][title='%s']", uncostedUnique));
+        pageUtils.waitForElementToAppear(uncostedComponent);
+        return driver.findElement(uncostedComponent).isDisplayed();
     }
 
     /**
