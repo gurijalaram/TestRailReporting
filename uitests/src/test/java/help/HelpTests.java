@@ -47,7 +47,7 @@ public class HelpTests extends TestBase {
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void moreInputsHelp() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
@@ -65,7 +65,7 @@ public class HelpTests extends TestBase {
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void materialUtilHelp() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
@@ -83,7 +83,7 @@ public class HelpTests extends TestBase {
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void designGuidanceHelp() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
@@ -101,7 +101,7 @@ public class HelpTests extends TestBase {
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void processDetailsHelp() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
@@ -119,7 +119,7 @@ public class HelpTests extends TestBase {
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void costResultsHelp() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
 
         loginPage = new CIDLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())

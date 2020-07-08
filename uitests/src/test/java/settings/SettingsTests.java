@@ -99,7 +99,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Process group")
     public void defaultPG() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -119,7 +119,7 @@ public class SettingsTests extends TestBase {
             .openJobQueue()
             .openScenarioLink(testScenarioName, "bracket_basic", "publish");
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
     }
 
     @Test
@@ -128,7 +128,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default VPE")
     public void defaultVPE() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -154,7 +154,7 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -184,7 +184,7 @@ public class SettingsTests extends TestBase {
 
         String partName = "Push Pin.stp";
         String batchSize = "46";
-        resourceFile = new FileResourceUtil().getResourceFile(partName);
+        resourceFile = FileResourceUtil.getResourceAsFile(partName);
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
