@@ -32,7 +32,7 @@ public class UploadTests extends TestBase {
     @Description("Failed upload of any other types of files")
     public void invalidFile() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("InvalidFileType.txt");
+        resourceFile = FileResourceUtil.getResourceAsFile("InvalidFileType.txt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -47,7 +47,7 @@ public class UploadTests extends TestBase {
     @Description("Nothing uploaded or translated if user select a file but then cancels the new component dialog")
     public void cancelUpload() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
