@@ -45,7 +45,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Min. draft for Injection Moulding & Reaction Injection Moulding (>0.25 Degrees)")
     public void testDTCMouldingDraft() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap noDraft.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
@@ -83,7 +83,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
     public void structuralFoamMouldDraft() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap noDraft.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap noDraft.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
@@ -108,7 +108,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Testing DTC Plastic Moulding Edge Radius Internal")
     public void testMouldingEdgeInternal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge radius.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap edge radius.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
@@ -126,7 +126,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Testing DTC Plastic Moulding Edge Radius External")
     public void testMouldingEdgeExternal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap edge radius.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap edge radius.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
@@ -146,7 +146,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap thinPart.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -185,7 +185,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticMaxWallThickness() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
@@ -239,7 +239,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Testing DTC Moulding Thickness Min")
     public void plasticMinWallThickness() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap thinPart.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap thinPart.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
@@ -275,7 +275,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticSlideLift() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
 
         loginPage = new CIDLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())

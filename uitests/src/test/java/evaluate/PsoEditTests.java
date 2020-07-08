@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -22,9 +21,7 @@ import java.io.File;
 public class PsoEditTests extends TestBase {
 
     private CIDLoginPage loginPage;
-    private EvaluatePage evaluatePage;
     private ProcessSetupOptionsPage processSetupOptionsPage;
-    private ProcessRoutingPage processRoutingPage;
 
     private File resourceFile;
 
@@ -33,7 +30,7 @@ public class PsoEditTests extends TestBase {
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Plastic moulded cap DFM.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap DFM.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
@@ -66,7 +63,7 @@ public class PsoEditTests extends TestBase {
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting-Die.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting-Die.stp");
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
@@ -95,7 +92,7 @@ public class PsoEditTests extends TestBase {
     @Description("Sand Casting edit PSO")
     public void sandCastPSO() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SandCast.x_t");
+        resourceFile = FileResourceUtil.getResourceAsFile("SandCast.x_t");
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
@@ -122,7 +119,7 @@ public class PsoEditTests extends TestBase {
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
@@ -148,7 +145,7 @@ public class PsoEditTests extends TestBase {
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
@@ -174,7 +171,7 @@ public class PsoEditTests extends TestBase {
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
     public void sheetPlasticPSO() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("sheet_plastic.STEP");
+        resourceFile = FileResourceUtil.getResourceAsFile("sheet_plastic.STEP");
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
@@ -199,7 +196,7 @@ public class PsoEditTests extends TestBase {
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("plasticLid.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("plasticLid.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
@@ -254,7 +251,7 @@ public class PsoEditTests extends TestBase {
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
 
         loginPage = new CIDLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())

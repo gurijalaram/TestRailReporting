@@ -39,7 +39,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -61,7 +61,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria attribute")
     public void testPrivateCriteriaAttribute() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -85,7 +85,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria part contains")
     public void testPrivateCriteriaContains() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("CurvedWall.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("CurvedWall.CATPart");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -107,7 +107,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -129,7 +129,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test private criteria assembly status")
     public void testPublicCriteriaAssemblyStatus() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -159,7 +159,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -182,7 +182,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test public criteria assembly description")
     public void testPublicCriteriaAssemblyDesc() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -237,7 +237,7 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Test public criteria assembly description")
     public void testFilterAttributes() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);

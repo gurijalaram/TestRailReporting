@@ -45,7 +45,7 @@ public class ChangeStockSelectionTests extends TestBase {
     @Description("Test making changes to the Material Stock in Sheet Metal, the change is respected and the scenario can be re-cost")
     public void changeStockSelectionTestSheetMetal() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CIDLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
@@ -73,7 +73,7 @@ public class ChangeStockSelectionTests extends TestBase {
     @Description("Test inappropriate stock cannot be selected")
     public void inappropriateStockSelectionTest() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);

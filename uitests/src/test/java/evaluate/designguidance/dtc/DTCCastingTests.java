@@ -66,7 +66,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -113,7 +113,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void geometryTest() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -144,7 +144,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -183,7 +183,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -222,7 +222,7 @@ public class DTCCastingTests extends TestBase {
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -252,7 +252,7 @@ public class DTCCastingTests extends TestBase {
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("SandCastIssues.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("SandCastIssues.SLDPRT");
         loginPage = new CIDLoginPage(driver);
         currentUser = UserUtil.getUser();
 

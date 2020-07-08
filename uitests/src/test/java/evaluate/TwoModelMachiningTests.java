@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
+import com.apriori.pageobjects.pages.evaluate.SourceCostInvalidPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.apriori.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -16,6 +17,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -32,6 +34,7 @@ public class TwoModelMachiningTests extends TestBase {
     private EvaluatePage evaluatePage;
     private ProcessSetupOptionsPage processSetupOptionsPage;
     private GuidancePage guidancePage;
+    private SourceCostInvalidPage sourceCostInvalidPage;
 
     private File resourceFile;
     private File twoModelFile;
@@ -50,8 +53,8 @@ public class TwoModelMachiningTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "casting_before_machining";
 
-        resourceFile = new FileResourceUtil().getResourceFile("casting_BEFORE_machining.stp");
-        twoModelFile = new FileResourceUtil().getResourceFile("casting_AFTER_machining.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("casting_BEFORE_machining.stp");
+        twoModelFile = FileResourceUtil.getResourceAsFile("casting_AFTER_machining.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -94,8 +97,8 @@ public class TwoModelMachiningTests extends TestBase {
         String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "VulcainCasting";
 
-        resourceFile = new FileResourceUtil().getResourceFile("VulcainCasting.CATPart");
-        twoModelFile = new FileResourceUtil().getResourceFile("VulcainMachined.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("VulcainCasting.CATPart");
+        twoModelFile = FileResourceUtil.getResourceAsFile("VulcainMachined.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -131,9 +134,9 @@ public class TwoModelMachiningTests extends TestBase {
         String sourcePartName = "2modeltest-cast";
         String twoModel1PartName = "2modeltest-machine1";
 
-        resourceFile = new FileResourceUtil().getResourceFile("2modeltest-cast.SLDPRT");
-        twoModelFile = new FileResourceUtil().getResourceFile("2modeltest-machine1.SLDPRT");
-        twoModelFile2 = new FileResourceUtil().getResourceFile("2modeltest-machine2.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("2modeltest-cast.SLDPRT");
+        twoModelFile = FileResourceUtil.getResourceAsFile("2modeltest-machine1.SLDPRT");
+        twoModelFile2 = FileResourceUtil.getResourceAsFile("2modeltest-machine2.SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -183,8 +186,8 @@ public class TwoModelMachiningTests extends TestBase {
         String sourcePartName = "Raw Casting";
         String twoModelPartName = "Machined Casting";
 
-        resourceFile = new FileResourceUtil().getResourceFile("Raw Casting.prt");
-        twoModelFile = new FileResourceUtil().getResourceFile("Machined Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Raw Casting.prt");
+        twoModelFile = FileResourceUtil.getResourceAsFile("Machined Casting.prt");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -223,9 +226,9 @@ public class TwoModelMachiningTests extends TestBase {
         String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
         String source2PartName = "Die Casting Lower Control Arm (Source1)";
 
-        resourceFile = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
-        twoModelFile = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (Source1).SLDPRT");
-        twoModelFile2 = new FileResourceUtil().getResourceFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
+        twoModelFile = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (Source1).SLDPRT");
+        twoModelFile2 = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -273,8 +276,8 @@ public class TwoModelMachiningTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "casting_before_machining";
 
-        resourceFile = new FileResourceUtil().getResourceFile("PowderMetalShaft.stp");
-        twoModelFile = new FileResourceUtil().getResourceFile("casting_AFTER_machining.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        twoModelFile = FileResourceUtil.getResourceAsFile("casting_AFTER_machining.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -290,12 +293,83 @@ public class TwoModelMachiningTests extends TestBase {
             .apply(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
 
         guidancePage = evaluatePage.openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Units of the model of the stock differ from the units of the finished model."));
+    }
+
+
+    @Test
+    @Description("Validate the user can fix the source scenario but selecting the continue button to return to the part")
+    @TestRail(testCaseId = {"4339"})
+    public void continueSourceButton() {
+
+        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
+        String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
+
+        resourceFile = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
+        twoModelFile2 = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
+
+        loginPage = new CIDLoginPage(driver);
+        sourceCostInvalidPage = loginPage.login(UserUtil.getUser())
+            .uploadFileAndOk(sourceScenarioName, resourceFile, EvaluatePage.class)
+            .selectExploreButton()
+            .refreshCurrentPage()
+            .uploadFileAndOk(twoModelScenarioName, twoModelFile2, EvaluatePage.class)
+            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectSourcePart()
+            .highlightScenario(sourceScenarioName, sourcePartName)
+            .apply(EvaluatePage.class)
+            .costScenario(SourceCostInvalidPage.class);
+
+        assertThat(sourceCostInvalidPage.getCostInvalidText(), containsString("Costing cannot proceed. The source scenario does not have a cost"));
+
+        evaluatePage = sourceCostInvalidPage.selectContinue();
+
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText()), is(true));
+    }
+
+    @Test
+    @Description("Validate the user can fix the source scenario but selecting the fix source button, fixing part and recosting 2MM")
+    @TestRail(testCaseId = {"4339"})
+    public void fixSourceButton() {
+
+        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
+        String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
+
+        resourceFile = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Cast).SLDPRT");
+        twoModelFile2 = FileResourceUtil.getResourceAsFile("Die Casting Lower Control Arm (As Machined2).SLDPRT");
+
+        loginPage = new CIDLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFileAndOk(sourceScenarioName, resourceFile, EvaluatePage.class)
+            .selectExploreButton()
+            .refreshCurrentPage()
+            .uploadFileAndOk(twoModelScenarioName, twoModelFile2, EvaluatePage.class)
+            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectSourcePart()
+            .highlightScenario(sourceScenarioName, sourcePartName)
+            .apply(EvaluatePage.class)
+            .costScenario(SourceCostInvalidPage.class)
+            .selectFixSource();
+
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), is(true));
+        assertThat(evaluatePage.getPartName(), is("Die Casting Lower Control Arm (As Cast)".toUpperCase()));
+
+        evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .refreshCurrentPage()
+            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+            .openScenario(twoModelScenarioName,"Die Casting Lower Control Arm (As Machined2)")
+            .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 }

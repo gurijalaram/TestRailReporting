@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
@@ -25,7 +26,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -54,7 +54,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("Assembly File Upload - STEP")
     public void testAssemblyFormatSTEP() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -62,7 +62,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
         assertThat(evaluatePage.getTotalComponents(), is("4"));
         assertThat(evaluatePage.getUniqueComponents(), is("4"));
         assertThat(evaluatePage.getWarningsCount(), is("4"));
@@ -76,7 +76,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("Uploaded STEP assembly and components can be recosted")
     public void costAssembly() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -138,7 +138,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("User can delete STEP Assembly Pre-Costing")
     public void testSTEPAssemblyDeletePreCost() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -162,7 +162,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("User can delete STEP Assembly Post-Costing")
     public void testSTEPAssemblyDeletePostCost() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -195,7 +195,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
     public void testSTEPAssemblyPowderCoatCart() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -227,7 +227,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("Validate error message and cost status appears, when assembly cost is out of date")
     public void smallAssembly() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Hinge assembly.STEP");
+        resourceFile = FileResourceUtil.getResourceAsFile("Hinge assembly.STEP");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -251,7 +251,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectExploreButton()
             .openAssembly(scenarioName, "Hinge assembly");
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_OUT_OF_DATE.getCostingText()), Matchers.is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_OUT_OF_DATE.getCostingText()), is(true));
 
         componentsPage = evaluatePage.clickCostStatus(ComponentsPage.class)
             .selectComponentsView("Tree View")
@@ -271,7 +271,7 @@ public class AssemblyUploadTests extends TestBase {
     @Description("Validate quantity column is correct")
     public void treeViewTests() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Assembly2.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -284,7 +284,7 @@ public class AssemblyUploadTests extends TestBase {
             .expandAssembly(scenarioName, "ASSY02")
             .highlightSubcomponent(scenarioName, "PART0002");
 
-        assertThat(componentsPage.getComponentCell("PART0002", "Qty"), Matchers.is(Matchers.equalTo("2")));
+        assertThat(componentsPage.getComponentCell("PART0002", "Qty"), is(equalTo("2")));
 
         evaluatePage = componentsPage.openSubcomponent(scenarioName, "PART0002")
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -301,7 +301,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectSaveButton()
             .expandAssembly(scenarioName, "ASSY02");
 
-        assertThat(componentsPage.getComponentCell("PART0002", "Piece Part Cost (USD)"), Matchers.is(Matchers.equalTo("2.36")));
+        assertThat(componentsPage.getComponentCell("PART0002", "Piece Part Cost (USD)"), is(equalTo("2.36")));
 
         componentsPage.openColumnsTable()
             .removeColumn(ColumnsEnum.PIECE_PART_COST.getColumns())

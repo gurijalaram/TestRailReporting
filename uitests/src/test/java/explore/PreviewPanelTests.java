@@ -39,7 +39,7 @@ public class PreviewPanelTests extends TestBase {
 
         String partName = "Casting";
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = new FileResourceUtil().getResourceFile(partName + ".prt");
+        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".prt");
 
         loginPage = new CIDLoginPage(driver);
         loginPage.login(UserUtil.getUser())
@@ -61,7 +61,7 @@ public class PreviewPanelTests extends TestBase {
     @TestRail(testCaseId = {"1104", "1105"})
     public void previewPanelMetrics() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("225_gasket-1-solid1.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);

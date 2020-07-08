@@ -38,7 +38,7 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Gear Making")
     public void testRecostGearMaking() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Case_011_-_Team_350385.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("Case_011_-_Team_350385.prt.1");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -48,7 +48,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("case_002_00400016-003M10_A.STP");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_002_00400016-003M10_A.STP");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -66,7 +66,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ReCostScenarioTests extends TestBase {
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("14100640.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("14100640.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -84,7 +84,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class ReCostScenarioTests extends TestBase {
     public void testRecostPocketRecognition() {
 
 
-        resourceFile = new FileResourceUtil().getResourceFile("case_010_lam_15-435508-00.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_010_lam_15-435508-00.prt.1");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -103,7 +103,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class ReCostScenarioTests extends TestBase {
     public void testRecostSharedWalls() {
 
 
-        resourceFile = new FileResourceUtil().getResourceFile("case_066_SpaceX_00128711-001_A.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_066_SpaceX_00128711-001_A.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -122,7 +122,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class ReCostScenarioTests extends TestBase {
     public void testRecostSlotExamples() {
 
 
-        resourceFile = new FileResourceUtil().getResourceFile("case_007_SpaceX_00088481-001_C.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_007_SpaceX_00088481-001_C.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -141,6 +141,6 @@ public class ReCostScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
 }

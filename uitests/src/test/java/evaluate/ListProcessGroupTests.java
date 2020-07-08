@@ -32,7 +32,7 @@ public class ListProcessGroupTests extends TestBase {
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -45,7 +45,7 @@ public class ListProcessGroupTests extends TestBase {
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
 
         loginPage = new CIDLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())

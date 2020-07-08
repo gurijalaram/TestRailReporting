@@ -127,7 +127,7 @@ public class LoginTests extends TestBase {
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
     public void cadConnectionRemains() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("225_gasket-1-solid1.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("225_gasket-1-solid1.prt.1");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);

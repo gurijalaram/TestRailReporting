@@ -40,7 +40,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @Description("Test a public scenario can be deleted from the evaluate page")
     public void testDeletePublicScenarioIteration() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
@@ -79,7 +79,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @Description("Test a private scenario can be deleted from the evaluate page")
     public void testDeletePrivateScenarioIteration() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);

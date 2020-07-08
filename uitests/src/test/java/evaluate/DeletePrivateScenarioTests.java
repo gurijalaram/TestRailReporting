@@ -37,7 +37,7 @@ public class DeletePrivateScenarioTests extends TestBase {
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
 
-        resourceFile = new FileResourceUtil().getResourceFile("Casting.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CIDLoginPage(driver);
