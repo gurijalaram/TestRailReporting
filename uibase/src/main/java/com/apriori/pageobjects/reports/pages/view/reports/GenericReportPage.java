@@ -227,6 +227,12 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "inputControls")
     private WebElement inputControlsDiv;
 
+    @FindBy(xpath = "(//*[@style='font-weight:bold'])[1]")
+    private WebElement plasticDtcPartName;
+
+    @FindBy(xpath = "(//*[@style='font-weight:bold'])[3]")
+    private WebElement plasticDtcFbc;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -872,7 +878,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getPartNamePlasticDtc() {
-        return driver.findElement(By.xpath("(//*[@style='font-weight:bold'])[1]")).getText();
+        return plasticDtcPartName.getText();
     }
 
     /**
@@ -880,7 +886,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return BigDecimal
      */
     public BigDecimal getFbcPlasticDtc() {
-        return new BigDecimal(driver.findElement(By.xpath("(//*[@style='font-weight:bold'])[3]")).getText());
+        return new BigDecimal(plasticDtcFbc.getText());
     }
 
     /**
