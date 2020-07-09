@@ -184,6 +184,7 @@ public class AssemblyUploadTests extends TestBase {
             .setWorkspace("Private")
             .setScenarioType("Assembly")
             .setRowOne("Scenario Name", "Contains", scenarioName)
+            .setRowTwo("Part Name", "Contains", "Piston_assembly")
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
