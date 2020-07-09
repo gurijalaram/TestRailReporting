@@ -862,7 +862,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage hoverPartNameBubblePlasticDtc() {
         WebElement elementToUse = plasticDtcBubble;
         pageUtils.waitForElementToAppear(elementToUse);
-        Actions builder = new Actions(driver).moveToElement(elementToUse);builder.perform();
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
+        builder.perform();
         elementToUse.click();
         return this;
     }
