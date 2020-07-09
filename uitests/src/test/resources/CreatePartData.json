@@ -2,7 +2,7 @@
   "filename": "bracket_basic.prt",
   "externalId": "Auto-%s",
   "annualVolume": 500,
-  "batchSize": 100,
+  "batchSize": 1,
   "description": "Part created by automation.",
   "materialName": "Steel, Cold Worked, AISI 1020",
   "pinnedRouting": "Material Stock / Laser Cut",
