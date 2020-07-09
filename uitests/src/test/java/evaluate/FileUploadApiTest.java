@@ -1,10 +1,10 @@
 package evaluate;
 
 import com.apriori.apibase.services.PropertyStore;
-import com.apriori.apibase.services.cis.apicalls.PartResources;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
@@ -27,6 +27,6 @@ public class FileUploadApiTest extends TestUtil {
     public void createFileUpload() {
         Object obj = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        new PartResources().initializeFileUpload(obj, "cfrith@apriori.com");
+        new FileUploadResources().initializeFileUpload(obj, "cfrith@apriori.com");
     }
 }

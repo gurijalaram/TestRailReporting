@@ -2,31 +2,11 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "http://example.com/example.json",
   "type": "object",
-  "title": "The root schema",
-  "description": "The root schema comprises the entire JSON document.",
   "default": {},
-  "examples": [
-    {
-      "command": {
-        "commandType": "LOADCADFILE",
-        "inputs": {
-          "scenarioName": "Initial",
-          "fileKey": "M6I6949C4F9N",
-          "fileName": "HoleProximityTest.SLDPRT"
-        }
-      }
-    }
-  ],
-  "required": [
-    "command"
-  ],
   "additionalProperties": true,
   "properties": {
     "command": {
-      "$id": "#/properties/command",
       "type": "object",
-      "title": "The command schema",
-      "description": "An explanation about the purpose of this instance.",
       "default": {},
       "examples": [
         {
@@ -39,34 +19,18 @@
         }
       ],
       "required": [
-        "commandType",
-        "inputs"
+        "commandType"
       ],
       "additionalProperties": true,
       "properties": {
         "commandType": {
-          "$id": "#/properties/command/properties/commandType",
-          "type": "string",
-          "title": "The commandType schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "LOADCADFILE"
-          ]
+          "type": "string"
         },
         "inputs": {
           "$id": "#/properties/command/properties/inputs",
           "type": "object",
           "title": "The inputs schema",
-          "description": "An explanation about the purpose of this instance.",
           "default": {},
-          "examples": [
-            {
-              "scenarioName": "Initial",
-              "fileKey": "M6I6949C4F9N",
-              "fileName": "HoleProximityTest.SLDPRT"
-            }
-          ],
           "required": [
             "scenarioName",
             "fileKey",
@@ -75,34 +39,13 @@
           "additionalProperties": true,
           "properties": {
             "scenarioName": {
-              "$id": "#/properties/command/properties/inputs/properties/scenarioName",
-              "type": "string",
-              "title": "The scenarioName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Initial"
-              ]
+              "type": "string"
             },
             "fileKey": {
-              "$id": "#/properties/command/properties/inputs/properties/fileKey",
-              "type": "string",
-              "title": "The fileKey schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "M6I6949C4F9N"
-              ]
+              "type": "string"
             },
             "fileName": {
-              "$id": "#/properties/command/properties/inputs/properties/fileName",
-              "type": "string",
-              "title": "The fileName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "HoleProximityTest.SLDPRT"
-              ]
+              "type": "string"
             }
           }
         }
