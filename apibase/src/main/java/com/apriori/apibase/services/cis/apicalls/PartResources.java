@@ -32,72 +32,55 @@ public class PartResources extends CisBase {
     public static <T> ResponseWrapper<T> getParts() {
         String url = String.format(getCisUrl(), endpointParts);
         return GenericRequestUtil.get(
-                RequestEntity.init(url, Parts.class),
-                new RequestAreaApi()
+            RequestEntity.init(url, Parts.class),
+            new RequestAreaApi()
         );
     }
 
     public static <T> ResponseWrapper<T> getPartRepresentation(String identity) {
         String url = String.format(getCisUrl(), String.format(endpointPartsWithIdentity, identity));
         return GenericRequestUtil.get(
-                RequestEntity.init(url, Part.class),
-                new RequestAreaApi()
+            RequestEntity.init(url, Part.class),
+            new RequestAreaApi()
         );
     }
 
     public static <T> ResponseWrapper<T> getPartCosting(String partIdentity) {
         String url = String.format(getCisUrl(), String.format(endpointPartsWithIdentity, partIdentity).concat(
-                "/results"));
+            "/results"));
         return GenericRequestUtil.get(
-                RequestEntity.init(url, PartCosting.class),
-                new RequestAreaApi()
+            RequestEntity.init(url, PartCosting.class),
+            new RequestAreaApi()
         );
     }
 
     public static Part createNewPart(Object obj) {
-        NewPartRequest npr = (NewPartRequest)obj;
+        NewPartRequest npr = (NewPartRequest) obj;
         String url = String.format(getCisUrl(), endpointParts);
 
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "multipart/form-data");
         RequestEntity requestEntity = RequestEntity.init(url, Part.class)
-                .setHeaders(headers)
-                .setMultiPartFiles(new MultiPartFiles()
-                        .use("data", FileResourceUtil.getLocalResourceFile(npr.getFilename()))
-                )
-                .setFormParams(new FormParams()
-                        .use("filename", npr.getFilename())
-                        .use("externalId", String.format(npr.getExternalId(), System.currentTimeMillis()))
-                        .use("AnnualVolume", npr.getAnnualVolume().toString())
-                        .use("BatchSize", npr.getBatchSize().toString())
-                        .use("Description", npr.getDescription())
-                        .use("PinnedRouting", npr.getPinnedRouting())
-                        .use("ProcessGroup", npr.getProcessGroup())
-                        .use("ProductionLife", npr.getProductionLife().toString())
-                        .use("ScenarioName", npr.getScenarioName())
-                        .use("Udas", npr.getUdas())
-                        .use("VpeName", npr.getVpeName())
-                        .use("MaterialName", npr.getMaterialName()));
+            .setHeaders(headers)
+            .setMultiPartFiles(new MultiPartFiles()
+                .use("data", FileResourceUtil.getLocalResourceFile(npr.getFilename()))
+            )
+            .setFormParams(new FormParams()
+                .use("filename", npr.getFilename())
+                .use("externalId", String.format(npr.getExternalId(), System.currentTimeMillis()))
+                .use("AnnualVolume", npr.getAnnualVolume().toString())
+                .use("BatchSize", npr.getBatchSize().toString())
+                .use("Description", npr.getDescription())
+                .use("PinnedRouting", npr.getPinnedRouting())
+                .use("ProcessGroup", npr.getProcessGroup())
+                .use("ProductionLife", npr.getProductionLife().toString())
+                .use("ScenarioName", npr.getScenarioName())
+                .use("Udas", npr.getUdas())
+                .use("VpeName", npr.getVpeName())
+                .use("MaterialName", npr.getMaterialName()));
 
 
         return (Part) GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
-    }
-
-    public FileResponse initializeFileUpload(Object obj, String username) {
-        NewPartRequest npr = (NewPartRequest) obj;
-        String url = Constants.getBaseUrl() + "apriori/cost/session/ws/files";
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "multipart/form-data");
-        headers.put("Authorization", "Bearer " + apiAuthentication.getCachedToken(username));
-        RequestEntity requestEntity = RequestEntity.init(url, FileResponse.class)
-            .setHeaders(headers)
-            .setMultiPartFiles(new MultiPartFiles()
-                .use("data", FileResourceUtil.getResourceAsFile(npr.getFilename())))
-            .setFormParams(new FormParams()
-                .use("filename", npr.getFilename()));
-
-        return (FileResponse) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity();
     }
 
     public static Boolean isPartComplete(String partIdentity) {
@@ -111,5 +94,20 @@ public class PartResources extends CisBase {
         }
 
         return isPartComplete;
+    }
+
+    public FileResponse initializeFileUpload(Object obj, String username) {
+        NewPartRequest npr = (NewPartRequest) obj;
+        String url = Constants.getBaseUrl() + "apriori/cost/session/ws/files";
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "multipart/form-data");
+        headers.put("Authorization", "Bearer " + apiAuthentication.getCachedToken(username));
+        RequestEntity requestEntity = RequestEntity.init(url, FileResponse.class)
+            .setHeaders(headers)
+            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getResourceAsFile(npr.getFilename())))
+            .setFormParams(new FormParams().use("filename", npr.getFilename()));
+
+        return (FileResponse) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity();
     }
 }
