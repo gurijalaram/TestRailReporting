@@ -8,6 +8,7 @@ import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -84,7 +85,7 @@ public class PartResources extends CisBase {
 
     public FileResponse initializeFileUpload(Object obj, String username) {
         NewPartRequest npr = (NewPartRequest) obj;
-        String url = "https://automation.awsdev.apriori.com/apriori/cost/session/ws/files";
+        String url = Constants.getBaseUrl() + "apriori/cost/session/ws/files";
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "multipart/form-data");
