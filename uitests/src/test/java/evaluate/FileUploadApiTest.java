@@ -23,7 +23,7 @@ public class FileUploadApiTest extends TestUtil {
     }
 
     @Test
-    @Description("Create a new part using the CIS API")
+    @Description("Initialize file upload using CID API")
     public void createFileUpload() {
         Object obj = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
