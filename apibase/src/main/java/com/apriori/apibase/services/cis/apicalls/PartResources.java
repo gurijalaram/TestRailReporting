@@ -5,6 +5,8 @@ import com.apriori.apibase.services.cis.objects.Part;
 import com.apriori.apibase.services.cis.objects.PartCosting;
 import com.apriori.apibase.services.cis.objects.Parts;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
+import com.apriori.apibase.services.fms.objects.FileResponse;
+import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -24,6 +26,7 @@ public class PartResources extends CisBase {
 
     private static final String endpointParts = "parts";
     private static final String endpointPartsWithIdentity = "parts/%s";
+    APIAuthentication apiAuthentication = new APIAuthentication();
 
     public static <T> ResponseWrapper<T> getParts() {
         String url = String.format(getCisUrl(), endpointParts);
@@ -77,6 +80,23 @@ public class PartResources extends CisBase {
 
 
         return (Part) GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
+    }
+
+    public FileResponse initializeFileUpload(Object obj, String username) {
+        NewPartRequest npr = (NewPartRequest) obj;
+        String url = "https://automation.awsdev.apriori.com/apriori/cost/session/ws/files";
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "multipart/form-data");
+        headers.put("Authorization", "Bearer " + apiAuthentication.getCachedToken(username));
+        RequestEntity requestEntity = RequestEntity.init(url, FileResponse.class)
+            .setHeaders(headers)
+            .setMultiPartFiles(new MultiPartFiles()
+                .use("data", FileResourceUtil.getResourceAsFile(npr.getFilename())))
+            .setFormParams(new FormParams()
+                .use("filename", npr.getFilename()));
+
+        return (FileResponse) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity();
     }
 
     public static Boolean isPartComplete(String partIdentity) {

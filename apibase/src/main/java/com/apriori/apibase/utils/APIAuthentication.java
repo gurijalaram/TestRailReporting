@@ -29,7 +29,7 @@ public class APIAuthentication {
             }};
     }
 
-    private String getCachedToken(String username) {
+    public String getCachedToken(String username) {
         String password = username.split("@")[0];
 
         if (accessToken == null && timeToLive < 1) {
