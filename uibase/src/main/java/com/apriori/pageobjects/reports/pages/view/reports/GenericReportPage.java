@@ -550,6 +550,12 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage exportSetSelectAll() {
         pageUtils.waitForElementAndClick(exportSetSelectAll);
+
+        List<WebElement> elements = driver.findElements(By.xpath("(//li[@title='---01-dtc-casting']/div/a)[1]/../../../li"));
+        for (WebElement element : elements) {
+            assertThat(element.getAttribute("className"), containsString("jr-isSelected"));
+        }
+
         String exportSetCount = getCountOfExportSets();
         pageUtils.checkElementAttribute(selectedExportSets, "title", exportSetCount);
         return this;

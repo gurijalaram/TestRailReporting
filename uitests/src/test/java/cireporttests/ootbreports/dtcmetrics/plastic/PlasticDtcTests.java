@@ -66,7 +66,6 @@ public class PlasticDtcTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Input Field")
     public void testPlasticDtcExportSetFilterInputField() {
@@ -87,7 +86,6 @@ public class PlasticDtcTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Date Picker")
     public void testPlasticDtcExportSetFilterDatePicker() {
@@ -134,7 +132,6 @@ public class PlasticDtcTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1376")
     @Description("Test Plastic DTC Data Integrity")
     public void testPlasticDtcDataIntegrity() {
