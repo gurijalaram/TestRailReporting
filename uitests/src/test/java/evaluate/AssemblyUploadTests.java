@@ -11,6 +11,8 @@ import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.VPESelectionPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.FileOpenError;
+import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.pageobjects.pages.login.CIDLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -26,6 +28,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -42,7 +45,11 @@ public class AssemblyUploadTests extends TestBase {
     private VPESelectionPage vpeSelectionPage;
     private ComponentsPage componentsPage;
     private File resourceFile;
+    private File resourceFile2;
+    private File resourceFile3;
+    private File resourceFile4;
     private String scenarioName;
+    private FileUploadPage fileUploadPage;
 
     public AssemblyUploadTests() {
         super();
@@ -307,5 +314,41 @@ public class AssemblyUploadTests extends TestBase {
         componentsPage.openColumnsTable()
             .removeColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
             .selectSaveButton();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"2637"})
+    @Description("Ensure CAD based assemblies are prevented")
+    public void testFailCADAssembly() {
+
+        resourceFile = FileResourceUtil.getResourceAsFile("multidiscclutch.asm.6");
+
+        loginPage = new CIDLoginPage(driver);
+        fileUploadPage = loginPage.login(UserUtil.getUser())
+            .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile);
+
+        assertThat(new FileOpenError(driver).getErrorText(), containsString("The selected file type is not supported"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"1404", "1434", "1435"})
+    @Description("Validate quantity column is correct")
+    public void multiAssyUpload() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
+        resourceFile2 = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
+        resourceFile3 = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile4 = FileResourceUtil.getResourceAsFile("CastedPart.CATPart");
+
+        loginPage = new CIDLoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser())
+            .uploadFileAndOk(scenarioName, new File(resourceFile + "\n" + resourceFile2 + "\n" + resourceFile3 + "\n" + resourceFile4), ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("Assembly2", scenarioName, "Translate", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
+
+        assertThat(explorePage.getListOfScenarios(scenarioName, "Assembly2"), is(CoreMatchers.equalTo(1)));
     }
 }

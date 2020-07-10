@@ -761,4 +761,37 @@ public class ToleranceTests extends TestBase {
 
         assertThat(toleranceSettingsPage.isAssumeSelected("checked"), is("true"));
     }
+
+    @Test
+    @TestRail(testCaseId = {"720", "721"})
+    @Description("Validate bend angle tolerance is only available for Bar & Tube process group")
+    public void bendAngle() {
+
+        resourceFile = FileResourceUtil.getResourceAsFile("BasicScenario_BarAndTube.prt");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CIDLoginPage(driver);
+        toleranceSettingsPage = loginPage.login(currentUser)
+            .openSettings()
+            .openTolerancesTab()
+            .editValues()
+            .setTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), "8.5")
+            .save(ToleranceSettingsPage.class);
+
+        settingsPage = new SettingsPage(driver);
+        tolerancePage = settingsPage.save(ExplorePage.class)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .openTolerancesTab();
+
+        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName()), "3"), is(true));
+
+        evaluatePage = tolerancePage.closePanel()
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario();
+
+        assertThat(evaluatePage.getGcdTolerancesCount(), is("0"));
+    }
 }
