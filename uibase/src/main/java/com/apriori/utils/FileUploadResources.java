@@ -2,6 +2,8 @@ package com.apriori.utils;
 
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
+import com.apriori.apibase.services.response.objects.FileCommandEntity;
+import com.apriori.apibase.services.response.objects.FileOrderEntity;
 import com.apriori.apibase.services.response.objects.FileOrdersEntity;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.constants.Constants;
@@ -25,7 +27,6 @@ public class FileUploadResources {
     private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
 
     APIAuthentication apiAuthentication = new APIAuthentication();
-    private String id;
 
     public void initializeFileUpload(Object obj, String username) {
         NewPartRequest npr = (NewPartRequest) obj;
@@ -49,15 +50,17 @@ public class FileUploadResources {
             throw new NullPointerException("can't read json node");
         }
 
-        id = node.findPath("identity").asText();
+        String id = node.findPath("identity").asText();
 
         String fileURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
-        RequestEntity fileRequestEntity = RequestEntity.init(fileURL, FileOrdersEntity.class)
-            .setFormParams(new FormParams().use("commandType", "LOADCADFILE")
-                .use("scenarioName", "CFInitial")
-                .use("fileKey", id)
-                .use("fileName", npr.getFilename()));
+        RequestEntity fileRequestEntity = RequestEntity.init(fileURL, FileCommandEntity.class)
+            .setBody(new FileCommandEntity()
+                .setCommand(new FileOrdersEntity()
+                    .setCommandType("LOADCADFILE")
+                    .setInputs(new FileOrderEntity().setScenarioName("CFInitialAPITest")
+                        .setFileKey(id)
+                        .setFileName(npr.getFilename()))));
 
         GenericRequestUtil.post(fileRequestEntity, new RequestAreaApi()).getResponseEntity();
     }
