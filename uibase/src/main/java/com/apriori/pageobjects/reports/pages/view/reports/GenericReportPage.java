@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
+import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportHeader;
 import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.PageUtils;
@@ -214,6 +215,12 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(id = "inputControls")
     private WebElement inputControlsDiv;
+
+    @FindBy(xpath = "((//div[@id='reportContainer']//tbody/tr)[4]/td)[4]")
+    private WebElement headerDisplayedRollup;
+
+    @FindBy(xpath = "//div[@id='reportContainer']//span[contains(text(), 'Rollup:')]/../..//span[contains(text(), 'ALL')]")
+    private WebElement headerDisplayedCastingDtcDetails;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -912,6 +919,34 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public boolean inputControlsIsDisplayed() {
         return pageUtils.isElementDisplayed(inputControlsDiv);
+    }
+
+    /**
+     * Get roll-up displayed in header
+     *
+     * @return String name of displayed rollup
+     */
+    public String getDisplayedRollup(String reportName) {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return waitForCorrectHeader(reportName);
+    }
+
+    /**
+     * Method to wait on correct header, based on report name
+     *
+     * @param reportName String
+     * @return String of header text
+     */
+    private String waitForCorrectHeader(String reportName) {
+        String textToReturn;
+        if (reportName.equals("Casting DTC Details") || reportName.equals("Casting DTC")) {
+            pageUtils.waitForElementToAppear(headerDisplayedCastingDtcDetails);
+            textToReturn = headerDisplayedCastingDtcDetails.getText();
+        } else {
+            pageUtils.waitForElementToAppear(headerDisplayedRollup);
+            textToReturn = headerDisplayedRollup.getText();
+        }
+        return textToReturn;
     }
 
     /**

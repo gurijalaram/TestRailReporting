@@ -38,10 +38,10 @@ public class CastingDtcReportHeader extends GenericReportPage {
      *
      * @return String name of displayed rollup
      */
-    public String getDisplayedRollup(String reportName) {
+    /*public String getDisplayedRollup(String reportName) {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return waitForCorrectHeader(reportName);
-    }
+    }*/
 
     /**
      * Method to wait on correct header, based on report name
@@ -49,7 +49,7 @@ public class CastingDtcReportHeader extends GenericReportPage {
      * @param reportName
      * @return String of header text
      */
-    private String waitForCorrectHeader(String reportName) {
+    /*private String waitForCorrectHeader(String reportName) {
         String textToReturn;
         if (reportName.equals("Casting DTC Details") || reportName.equals("Casting DTC")) {
             pageUtils.waitForElementToAppear(headerDisplayedCastingDtcDetails);
@@ -59,5 +59,5 @@ public class CastingDtcReportHeader extends GenericReportPage {
             textToReturn = headerDisplayedRollup.getText();
         }
         return textToReturn;
-    }
+    }*/
 }
