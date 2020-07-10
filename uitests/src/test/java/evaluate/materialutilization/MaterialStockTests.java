@@ -137,7 +137,7 @@ public class MaterialStockTests extends TestBase {
             .openMaterialUtilization()
             .goToStockTab();
 
-        assertThat(stockPage.checkTableDetails("SQUARE_BAR"), is(true));
+        assertThat(stockPage.checkTableDetails("3 in OD. 20 ft lengths"), is(true));
         assertThat(stockPage.checkTableDetails("Virtual Stock No"), is(true));
     }
 
