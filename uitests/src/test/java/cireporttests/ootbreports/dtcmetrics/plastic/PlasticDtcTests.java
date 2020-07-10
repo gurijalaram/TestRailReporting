@@ -143,10 +143,10 @@ public class PlasticDtcTests extends TestBase {
             .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
-            .hoverPartNameBubbleDtcReports();
+            .clickOk();
 
         genericReportPage.setReportName(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
         String partName = genericReportPage.getPartNameDtcReports();
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
         genericReportPage.openNewTabAndFocus(1);
