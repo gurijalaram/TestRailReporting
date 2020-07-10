@@ -347,8 +347,9 @@ public class AssemblyUploadTests extends TestBase {
             .openJobQueue()
             .checkJobQueueActionStatus("Assembly2", scenarioName, "Translate", "okay")
             .closeJobQueue(ExplorePage.class)
-            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
+            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace())
+            .sortColumnDescending(ColumnsEnum.LAST_SAVED.getColumns());
 
-        assertThat(explorePage.getListOfScenarios(scenarioName, "Assembly2"), is(CoreMatchers.equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(scenarioName, "ASSEMBLY2"), is(CoreMatchers.equalTo(1)));
     }
 }
