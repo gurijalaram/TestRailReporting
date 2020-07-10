@@ -23,13 +23,11 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
     private GenericReportPage genericReportPage;
     private CastingDtcReportHeader castingDtcReportHeader;
-    private LibraryPage libraryPage;
 
     public CastingDtcComparisonReportTests() {
         super();
