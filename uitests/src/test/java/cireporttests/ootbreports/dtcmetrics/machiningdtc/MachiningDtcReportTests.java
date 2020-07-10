@@ -81,7 +81,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({CIARStagingSmokeTest.class, CiaCirTestDevTest.class})
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3026")
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {

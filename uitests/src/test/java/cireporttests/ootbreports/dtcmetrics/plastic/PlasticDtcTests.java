@@ -106,7 +106,6 @@ public class PlasticDtcTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1346")
     @Description("Test Plastic DTC Export Set Selection")
     public void testPlasticDtcExportSetSelection() {
@@ -133,7 +132,6 @@ public class PlasticDtcTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1376")
     @Description("Test Plastic DTC Data Integrity")
     public void testPlasticDtcDataIntegrity() {
