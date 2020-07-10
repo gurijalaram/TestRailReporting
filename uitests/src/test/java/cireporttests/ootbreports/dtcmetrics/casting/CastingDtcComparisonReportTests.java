@@ -23,6 +23,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
@@ -129,7 +130,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
@@ -144,7 +145,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
                 .clickComparison()
                 .newTabTransfer();
 
-        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_COMPARISON_REPORT_NAME);
+        genericReportPage.setReportName(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName());
+        String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
         genericReportPage.openNewTabAndFocus(2);
 

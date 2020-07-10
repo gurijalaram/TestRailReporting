@@ -10,6 +10,7 @@ import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
+import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
@@ -97,14 +98,18 @@ public class MachiningDtcReportTests extends TestBase {
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        genericReportPage.setReportName(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
 
         genericReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
 
-        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        genericReportPage.setReportName(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
 
         assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));

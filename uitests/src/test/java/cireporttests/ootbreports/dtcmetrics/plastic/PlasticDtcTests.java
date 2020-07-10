@@ -16,6 +16,7 @@ import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.MachiningReportsEnum;
 import com.apriori.utils.enums.PlasticDtcReportsEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -143,10 +144,11 @@ public class PlasticDtcTests extends TestBase {
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk()
-            .hoverPartNameBubblePlasticDtc();
+            .hoverPartNameBubbleDtcReports();
 
-        String partName = genericReportPage.getPartNamePlasticDtc();
-        BigDecimal reportFbcValue = genericReportPage.getFbcPlasticDtc();
+        genericReportPage.setReportName(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
+        String partName = genericReportPage.getPartNameDtcReports();
+        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
         genericReportPage.openNewTabAndFocus(1);
 
         EvaluatePage evaluatePage = new ExplorePage(driver)

@@ -1,5 +1,7 @@
 package testsuites;
 
+import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
+import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
@@ -15,6 +17,8 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @Suite.SuiteClasses({
         PlasticDtcTests.class,
         CastingDtcReportTests.class,
+        CastingDtcComparisonReportTests.class,
+        CastingDtcDetailsReportTests.class,
         MachiningDtcReportTests.class
 })
 

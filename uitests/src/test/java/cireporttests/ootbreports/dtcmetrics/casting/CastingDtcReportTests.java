@@ -190,8 +190,10 @@ public class CastingDtcReportTests extends TestBase {
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk();
 
-        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(CastingReportsEnum.CASTING_DTC.getReportName());
-        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_REPORT_NAME);
+        genericReportPage.setReportName(CastingReportsEnum.CASTING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
+        String partName = genericReportPage.getPartNameDtcReports();
         genericReportPage.openNewTabAndFocus(1);
 
         EvaluatePage evaluatePage = new ExplorePage(driver)

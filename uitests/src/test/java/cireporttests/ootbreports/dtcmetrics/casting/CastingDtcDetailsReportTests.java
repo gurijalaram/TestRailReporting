@@ -23,6 +23,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
@@ -129,7 +130,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyDetailsReportAvailableAndCorrectData() {
@@ -142,7 +143,8 @@ public class CastingDtcDetailsReportTests extends TestBase {
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickOk();
 
-        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_DETAILS_REPORT_NAME);
+        genericReportPage.setReportName(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName());
+        String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
         genericReportPage.openNewTabAndFocus(1);
 
