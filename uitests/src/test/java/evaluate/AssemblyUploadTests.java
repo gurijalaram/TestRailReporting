@@ -331,8 +331,8 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1404", "1434", "1435"})
-    @Description("Validate quantity column is correct")
+    @TestRail(testCaseId = {"2631", "2632"})
+    @Description("Upload multiple STEP assemblies and parts at once")
     public void multiAssyUpload() {
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -350,6 +350,6 @@ public class AssemblyUploadTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace())
             .sortColumnDescending(ColumnsEnum.LAST_SAVED.getColumns());
 
-        assertThat(explorePage.getListOfScenarios(scenarioName, "ASSEMBLY2"), is(CoreMatchers.equalTo(1)));
+        assertThat(explorePage.getListOfAssemblies(scenarioName, "ASSEMBLY2"), is(CoreMatchers.equalTo(1)));
     }
 }
