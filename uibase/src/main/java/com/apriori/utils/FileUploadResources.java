@@ -32,14 +32,14 @@ public class FileUploadResources {
     private static String identity;
     private static String orderId;
 
-    public void createFileUpload(HashMap<String, String> token, Object obj) {
-        initializeFileUpload(token, obj);
-        createFileUploadWorkOrder(token, obj);
+    public void createFileUpload(HashMap<String, String> token, Object fileObject) {
+        initializeFileUpload(token, fileObject);
+        createFileUploadWorkOrder(token, fileObject);
         submitFileUploadWorkOrder(token);
     }
 
-    private void initializeFileUpload(HashMap<String, String> token, Object obj) {
-        NewPartRequest npr = (NewPartRequest) obj;
+    private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
+        NewPartRequest npr = (NewPartRequest) fileObject;
         String url = Constants.getBaseUrl() + "apriori/cost/session/ws/files";
 
         Map<String, String> headers = new HashMap<>();
@@ -56,8 +56,8 @@ public class FileUploadResources {
         identity = jsonNode(fileBody, "identity");
     }
 
-    private void createFileUploadWorkOrder(HashMap<String, String> token, Object obj) {
-        NewPartRequest npr = (NewPartRequest) obj;
+    private void createFileUploadWorkOrder(HashMap<String, String> token, Object fileObject) {
+        NewPartRequest npr = (NewPartRequest) fileObject;
         String fileURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
         Map<String, String> headers = new HashMap<>();
