@@ -38,7 +38,7 @@ public class FileUploadResources {
         submitFileUploadWorkOrder(token);
     }
 
-    public void initializeFileUpload(HashMap<String, String> token, Object obj) {
+    private void initializeFileUpload(HashMap<String, String> token, Object obj) {
         NewPartRequest npr = (NewPartRequest) obj;
         String url = Constants.getBaseUrl() + "apriori/cost/session/ws/files";
 
@@ -56,19 +56,7 @@ public class FileUploadResources {
         identity = jsonNode(fileBody, "identity");
     }
 
-    private String jsonNode(String jsonProperties, String path) {
-        JsonNode node;
-        try {
-            node = new ObjectMapper().readTree(jsonProperties);
-        } catch (JsonProcessingException e) {
-            logger.debug(e.getMessage());
-            throw new NullPointerException("can't read json node");
-        }
-
-        return node.findPath(path).asText();
-    }
-
-    public void createFileUploadWorkOrder(HashMap<String, String> token, Object obj) {
+    private void createFileUploadWorkOrder(HashMap<String, String> token, Object obj) {
         NewPartRequest npr = (NewPartRequest) obj;
         String fileURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
@@ -90,7 +78,7 @@ public class FileUploadResources {
         orderId = jsonNode(fileBody, "id");
     }
 
-    public void submitFileUploadWorkOrder(HashMap<String, String> token) {
+    private void submitFileUploadWorkOrder(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
 
         Map<String, String> headers = new HashMap<>();
@@ -103,5 +91,17 @@ public class FileUploadResources {
                 .setAction("SUBMIT"));
 
         GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
+    }
+
+    private String jsonNode(String jsonProperties, String path) {
+        JsonNode node;
+        try {
+            node = new ObjectMapper().readTree(jsonProperties);
+        } catch (JsonProcessingException e) {
+            logger.debug(e.getMessage());
+            throw new NullPointerException("can't read json node");
+        }
+
+        return node.findPath(path).asText();
     }
 }
