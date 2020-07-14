@@ -2,6 +2,7 @@ package evaluate;
 
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
+import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
@@ -11,10 +12,15 @@ import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 
 public class FileUploadApiTest extends TestUtil {
 
     private static PropertyStore propertyStore;
+
+    private final String username = "cfrith@apriori.com";
+    private final HashMap<String, String> token = new APIAuthentication().initAuthorizationHeaderNoContent(username);
 
     @BeforeClass
     public static void testSetup() {
@@ -25,8 +31,8 @@ public class FileUploadApiTest extends TestUtil {
     @Test
     @Description("Initialize file upload using CID API")
     public void createFileUpload() {
-        Object obj = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
+        Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        new FileUploadResources().initializeFileUpload(obj, "cfrith@apriori.com");
+        new FileUploadResources().createFileUpload(token, fileObject);
     }
 }

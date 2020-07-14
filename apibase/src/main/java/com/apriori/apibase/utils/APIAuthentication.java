@@ -29,7 +29,20 @@ public class APIAuthentication {
             }};
     }
 
-    public String getCachedToken(String username) {
+    /**
+     * Fetch Authorization header for user
+     *
+     * @return Authorization Header
+     */
+    public HashMap<String, String> initAuthorizationHeaderNoContent(String username) {
+        return new HashMap<String, String>() {{
+                put("Authorization", "Bearer " + getCachedToken(username));
+                put("apriori.tenantgroup", "default");
+                put("apriori.tenant", "default");
+            }};
+    }
+
+    private String getCachedToken(String username) {
         String password = username.split("@")[0];
 
         if (accessToken == null && timeToLive < 1) {

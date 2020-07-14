@@ -34,7 +34,7 @@ public class WorkOrder {
         return workOrderScenarioIteration;
     }
 
-    public WorkOrderEntity setWorkOrderScenarioIteration(WorkOrderScenarioIteration workOrderScenarioIteration) {
+    public WorkOrder setWorkOrderScenarioIteration(WorkOrderScenarioIteration workOrderScenarioIteration) {
         this.workOrderScenarioIteration = workOrderScenarioIteration;
         return this;
     }
@@ -43,7 +43,7 @@ public class WorkOrder {
         return version;
     }
 
-    public WorkOrderEntity setVersion(String version) {
+    public WorkOrder setVersion(String version) {
         this.version = version;
         return this;
     }
@@ -52,7 +52,7 @@ public class WorkOrder {
         return id;
     }
 
-    public WorkOrderEntity setId(String id) {
+    public WorkOrder setId(String id) {
         this.id = id;
         return this;
     }
@@ -61,7 +61,7 @@ public class WorkOrder {
         return status;
     }
 
-    public WorkOrderEntity setStatus(String status) {
+    public WorkOrder setStatus(String status) {
         this.status = status;
         return this;
     }
@@ -70,7 +70,7 @@ public class WorkOrder {
         return searchKey;
     }
 
-    public WorkOrderEntity setSearchKey(String searchKey) {
+    public WorkOrder setSearchKey(String searchKey) {
         this.searchKey = searchKey;
         return this;
     }
@@ -79,7 +79,7 @@ public class WorkOrder {
         return command;
     }
 
-    public WorkOrderEntity setCommand(WorkOrderCommand command) {
+    public WorkOrder setCommand(WorkOrderCommand command) {
         this.command = command;
         return this;
     }
@@ -88,7 +88,7 @@ public class WorkOrder {
         return dateSubmitted;
     }
 
-    public WorkOrderEntity setDateSubmitted(String dateSubmitted) {
+    public WorkOrder setDateSubmitted(String dateSubmitted) {
         this.dateSubmitted = dateSubmitted;
         return this;
     }
