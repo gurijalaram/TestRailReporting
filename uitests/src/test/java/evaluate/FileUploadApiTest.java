@@ -19,8 +19,7 @@ public class FileUploadApiTest extends TestUtil {
 
     private static PropertyStore propertyStore;
 
-    private final String username = "cfrith@apriori.com";
-    private final HashMap<String, String> token = new APIAuthentication().initAuthorizationHeaderNoContent(username);
+    private final HashMap<String, String> token = new APIAuthentication().initAuthorizationHeaderNoContent("cfrith@apriori.com");
 
     @BeforeClass
     public static void testSetup() {
