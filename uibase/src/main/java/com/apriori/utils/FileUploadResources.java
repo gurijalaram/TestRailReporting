@@ -34,8 +34,8 @@ public class FileUploadResources {
 
     public void createFileUpload(HashMap<String, String> token, Object obj) {
         initializeFileUpload(token, obj);
-        createFileUploadWorker(token, obj);
-        submitFileUploadWorkorder(token);
+        createFileUploadWorkOrder(token, obj);
+        submitFileUploadWorkOrder(token);
     }
 
     public void initializeFileUpload(HashMap<String, String> token, Object obj) {
@@ -68,7 +68,7 @@ public class FileUploadResources {
         return node.findPath(path).asText();
     }
 
-    public void createFileUploadWorker(HashMap<String, String> token, Object obj) {
+    public void createFileUploadWorkOrder(HashMap<String, String> token, Object obj) {
         NewPartRequest npr = (NewPartRequest) obj;
         String fileURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
@@ -90,7 +90,7 @@ public class FileUploadResources {
         orderId = jsonNode(fileBody, "id");
     }
 
-    public void submitFileUploadWorkorder(HashMap<String, String> token) {
+    public void submitFileUploadWorkOrder(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
 
         Map<String, String> headers = new HashMap<>();
