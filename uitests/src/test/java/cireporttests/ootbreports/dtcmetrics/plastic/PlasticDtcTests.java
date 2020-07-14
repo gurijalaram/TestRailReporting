@@ -105,17 +105,20 @@ public class PlasticDtcTests extends TestBase {
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
 
-        //usdAnnualSpend = plasticDtcReportPage.getFBCValueFromBubbleTooltip();
+        plasticDtcReportPage.setReportName(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
+        plasticDtcReportPage.hoverPartNameBubbleDtcReports();
+        usdAnnualSpend = plasticDtcReportPage.getAnnualSpendFromBubbleTooltip();
 
         plasticDtcReportPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), PlasticDtcReportPage.class);
 
-        //gbpAnnualSpend = plasticDtcReportPage.getValueFromTable(assemblyType, "Grand Total", "Capital Investments");
+        plasticDtcReportPage.hoverPartNameBubbleDtcReports();
+        gbpAnnualSpend = plasticDtcReportPage.getAnnualSpendFromBubbleTooltip();
 
         assertThat(plasticDtcReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
-        //assertThat(gbpAnnualSpend, is(not(usdAnnualSpend)));
+        assertThat(gbpAnnualSpend, is(not(usdAnnualSpend)));
     }
 
     @TestRail(testCaseId = "1345")

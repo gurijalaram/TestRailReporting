@@ -236,6 +236,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[3]")
     private WebElement fbcPlasticDtcReport;
 
+    @FindBy(xpath = "(//*[@style='font-weight:bold'])[5]")
+    private WebElement annualSpendPlasticDtcReport;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -853,6 +856,15 @@ public class GenericReportPage extends ReportsPageHeader {
                 elementToUse.getText()
                         .replace(",", "")
         );
+    }
+
+    /**
+     * Get Annual Spend value from Plastic Dtc Report Bubble
+     * @return BigDecimal value
+     */
+    public BigDecimal getAnnualSpendFromBubbleTooltip() {
+        pageUtils.waitForElementToAppear(annualSpendPlasticDtcReport);
+        return new BigDecimal(annualSpendPlasticDtcReport.getText().replace(",", ""));
     }
 
     /**
