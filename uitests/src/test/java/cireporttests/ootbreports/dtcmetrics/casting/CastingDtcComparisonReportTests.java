@@ -28,7 +28,6 @@ public class CastingDtcComparisonReportTests extends TestBase {
 
     private GenericReportPage genericReportPage;
     private CastingDtcReportHeader castingDtcReportHeader;
-    private LibraryPage libraryPage;
 
     public CastingDtcComparisonReportTests() {
         super();
@@ -144,7 +143,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
                 .clickComparison()
                 .newTabTransfer();
 
-        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_COMPARISON_REPORT_NAME);
+        genericReportPage.setReportName(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName());
+        String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
         genericReportPage.openNewTabAndFocus(2);
 

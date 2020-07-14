@@ -14,6 +14,7 @@ import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.MachiningReportsEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -31,7 +32,6 @@ public class MachiningDtcReportTests extends TestBase {
     private LibraryPage library;
     private ReportsHomePage homePage;
 
-    private String reportName = "Machining DTC";
     private int reportCount = 3;
 
     public MachiningDtcReportTests() {
@@ -48,7 +48,8 @@ public class MachiningDtcReportTests extends TestBase {
             .navigateToViewRepositoryPage()
             .navigateToMachiningDTCFolder();
 
-        assertThat(reportName, is(equalTo(repository.getReportName(reportName))));
+        assertThat(MachiningReportsEnum.MACHINING_DTC.getReportName(),
+                is(equalTo(repository.getReportName(MachiningReportsEnum.MACHINING_DTC.getReportName()))));
         assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
     }
 
@@ -60,7 +61,7 @@ public class MachiningDtcReportTests extends TestBase {
             .login()
             .navigateToLibraryPage();
 
-        assertThat(reportName, is(equalTo(library.getReportName(reportName))));
+        assertThat(MachiningReportsEnum.MACHINING_DTC.getReportName(), is(equalTo(library.getReportName(MachiningReportsEnum.MACHINING_DTC.getReportName()))));
     }
 
     @Test
@@ -71,9 +72,10 @@ public class MachiningDtcReportTests extends TestBase {
             .login();
 
         searchResults = new ViewSearchResultsPage(driver);
-        homePage.searchForReport(reportName);
+        homePage.searchForReport(MachiningReportsEnum.MACHINING_DTC.getReportName());
 
-        assertThat(searchResults.getReportName(reportName), is(equalTo(reportName)));
+        assertThat(searchResults.getReportName(MachiningReportsEnum.MACHINING_DTC.getReportName()),
+                is(equalTo(MachiningReportsEnum.MACHINING_DTC.getReportName())));
     }
 
     @Test
@@ -87,21 +89,25 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(MachiningReportsEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip(false);
+        genericReportPage.setReportName(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
 
         genericReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
 
-        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip(false);
+        genericReportPage.setReportName(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
 
         assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
@@ -114,7 +120,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(reportName, GenericReportPage.class)
+                .navigateToReport(MachiningReportsEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad();
 
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
@@ -135,7 +141,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(reportName, GenericReportPage.class)
+                .navigateToReport(MachiningReportsEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad();
 
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
