@@ -104,10 +104,9 @@ public class FileUploadResources {
 
         do {
             jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status");
-        } while (
-            (!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("SUCCESS")) &&
-                (!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("FAILED")) &&
-                ((System.currentTimeMillis() / 1000) - startTime) < 30);
+        } while ((!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("SUCCESS")) &&
+            (!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("FAILED")) &&
+            ((System.currentTimeMillis() / 1000) - startTime) < 30);
     }
 
     private String jsonNode(String jsonProperties, String path) {
