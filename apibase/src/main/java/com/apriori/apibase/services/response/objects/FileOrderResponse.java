@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Schema(location = "FileOrderResponseSchema.json")
-public class FileOrderResponseEntity {
+public class FileOrderResponse {
 
     @JsonProperty
     private String id;
@@ -17,7 +17,7 @@ public class FileOrderResponseEntity {
         return id;
     }
 
-    public FileOrderResponseEntity setId(String id) {
+    public FileOrderResponse setId(String id) {
         this.id = id;
         return this;
     }
@@ -26,7 +26,7 @@ public class FileOrderResponseEntity {
         return resourceCreated;
     }
 
-    public FileOrderResponseEntity setResourceCreated(Boolean resourceCreated) {
+    public FileOrderResponse setResourceCreated(Boolean resourceCreated) {
         this.resourceCreated = resourceCreated;
         return this;
     }

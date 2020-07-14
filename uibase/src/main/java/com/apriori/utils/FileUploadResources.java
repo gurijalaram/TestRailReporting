@@ -4,10 +4,11 @@ import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.response.objects.FileCommandEntity;
 import com.apriori.apibase.services.response.objects.FileOrderEntity;
-import com.apriori.apibase.services.response.objects.FileOrderResponseEntity;
+import com.apriori.apibase.services.response.objects.FileOrderResponse;
 import com.apriori.apibase.services.response.objects.FileOrdersEntity;
 import com.apriori.apibase.services.response.objects.FileWorkOrderEntity;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
+import com.apriori.apibase.services.response.objects.WorkOrder;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -36,6 +37,7 @@ public class FileUploadResources {
         initializeFileUpload(token, fileObject);
         createFileUploadWorkOrder(token, fileObject);
         submitFileUploadWorkOrder(token);
+        checkFileStatus(token);
     }
 
     private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
@@ -63,7 +65,7 @@ public class FileUploadResources {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/vnd.apriori.v1+json");
 
-        RequestEntity fileRequestEntity = RequestEntity.init(fileURL, FileOrderResponseEntity.class)
+        RequestEntity fileRequestEntity = RequestEntity.init(fileURL, FileOrderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
             .setBody(new FileCommandEntity()
