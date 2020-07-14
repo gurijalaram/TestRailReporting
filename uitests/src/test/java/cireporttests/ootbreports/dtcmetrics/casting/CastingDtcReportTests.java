@@ -83,7 +83,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({CustomerSmokeTests.class, CiaCirTestDevTest.class})
+    @Category(CustomerSmokeTests.class)
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
     public void testRollupDropDown() {

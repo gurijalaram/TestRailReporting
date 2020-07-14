@@ -1,5 +1,6 @@
 package cireporttests.ootbreports.dtcmetrics.plastic;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -8,11 +9,14 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
+import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
+import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportHeader;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
@@ -25,6 +29,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
@@ -121,6 +126,7 @@ public class PlasticDtcTests extends TestBase {
         assertThat(gbpAnnualSpend, is(not(usdAnnualSpend)));
     }
 
+    @Test
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Input Field")
     public void testPlasticDtcExportSetFilterInputField() {
@@ -215,5 +221,81 @@ public class PlasticDtcTests extends TestBase {
         BigDecimal cidFbcValue = evaluatePage.getBurdenedCostValue();
 
         assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1693")
+    @Description("Verify apply button on Casting DTC input control panel functions correctly")
+    public void testApplyButton() {
+        plasticDtcReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName(), PlasticDtcReportPage.class)
+            .waitForInputControlsLoad()
+            .selectRollup(RollupEnum.ROLL_UP_A.getRollupName())
+            .clickApply()
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
+
+        assertThat(plasticDtcReportPage.getDisplayedRollup(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName()),
+                is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1693")
+    @Description("Verify cancel button on Casting DTC input control panel works")
+    public void testCancelButton() {
+        plasticDtcReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
+            .waitForInputControlsLoad()
+            .clickCancel(PlasticDtcReportPage.class);
+
+        assertThat(plasticDtcReportPage.getInputControlsDivClassName(), containsString("hidden"));
+        assertThat(plasticDtcReportPage.inputControlsIsDisplayed(), is(equalTo(false)));
+        assertThat(plasticDtcReportPage.inputControlsIsEnabled(), is(equalTo(true)));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1693")
+    @Description("Verify reset button on Casting DTC input control panel works")
+    public void testResetButton() {
+        genericReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .clickReset()
+            .waitForExpectedExportCount("0");
+
+        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1693")
+    @Description("Verify save button on Casting DTC input control panel functions correctly")
+    public void testSaveAndRemoveButtons() {
+        genericReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .clickSave()
+            .enterSaveName("Saved Config")
+            .clickSaveAsButton()
+            .clickReset()
+            .selectSavedOptionByName("Saved Config");
+
+        assertThat(genericReportPage.isExportSetSelected(ExportSetEnum.ROLL_UP_A.getExportSetName()), is(true));
+
+        genericReportPage.clickRemove();
+
+        assertThat(genericReportPage.isOptionInDropDown("Saved Config", 1), is(false));
     }
 }
