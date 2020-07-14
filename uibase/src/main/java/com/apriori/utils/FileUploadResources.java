@@ -6,9 +6,9 @@ import com.apriori.apibase.services.response.objects.FileCommandEntity;
 import com.apriori.apibase.services.response.objects.FileOrderEntity;
 import com.apriori.apibase.services.response.objects.FileOrderResponse;
 import com.apriori.apibase.services.response.objects.FileOrdersEntity;
+import com.apriori.apibase.services.response.objects.FileUploadWorkOrder;
 import com.apriori.apibase.services.response.objects.FileWorkOrderEntity;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
-import com.apriori.apibase.services.response.objects.WorkOrder;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -29,23 +29,25 @@ import java.util.Map;
 public class FileUploadResources {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
-
     private static String identity;
     private static String orderId;
+    Map<String, String> headers = new HashMap<>();
+
+    private String contentType = "Content-Type";
+    private String jsonContent = "application/json";
 
     public void createFileUpload(HashMap<String, String> token, Object fileObject) {
         initializeFileUpload(token, fileObject);
         createFileUploadWorkOrder(token, fileObject);
         submitFileUploadWorkOrder(token);
-        checkFileStatus(token);
+        checkFileWorkOrderStatus(token);
     }
 
     private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
         NewPartRequest npr = (NewPartRequest) fileObject;
         String url = Constants.getBaseUrl() + "apriori/cost/session/ws/files";
 
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "multipart/form-data");
+        headers.put(contentType, "multipart/form-data");
 
         RequestEntity requestEntity = RequestEntity.init(url, FileResponse.class)
             .setHeaders(headers)
@@ -53,17 +55,14 @@ public class FileUploadResources {
             .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getResourceAsFile(npr.getFilename())))
             .setFormParams(new FormParams().use("filename", npr.getFilename()));
 
-        String fileBody = GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody();
-
-        identity = jsonNode(fileBody, "identity");
+        identity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "identity");
     }
 
     private void createFileUploadWorkOrder(HashMap<String, String> token, Object fileObject) {
         NewPartRequest npr = (NewPartRequest) fileObject;
         String fileURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/vnd.apriori.v1+json");
+        headers.put(contentType, jsonContent);
 
         RequestEntity fileRequestEntity = RequestEntity.init(fileURL, FileOrderResponse.class)
             .setHeaders(headers)
@@ -75,16 +74,13 @@ public class FileUploadResources {
                         .setFileKey(identity)
                         .setFileName(npr.getFilename()))));
 
-        String fileBody = GenericRequestUtil.post(fileRequestEntity, new RequestAreaApi()).getBody();
-
-        orderId = jsonNode(fileBody, "id");
+        orderId = jsonNode(GenericRequestUtil.post(fileRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
 
     private void submitFileUploadWorkOrder(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
 
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
+        headers.put(contentType, jsonContent);
 
         RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
             .setHeaders(headers)
@@ -95,6 +91,25 @@ public class FileUploadResources {
         GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
     }
 
+    private void checkFileWorkOrderStatus(HashMap<String, String> token) {
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + orderId;
+
+        headers.put(contentType, jsonContent);
+
+        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, FileUploadWorkOrder.class)
+            .setHeaders(headers)
+            .setHeaders(token);
+
+        long startTime = System.currentTimeMillis() / 1000;
+
+        do {
+            jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status");
+        } while (
+            (!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("SUCCESS")) &&
+                (!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("FAILED")) &&
+                ((System.currentTimeMillis() / 1000) - startTime) < 30);
+    }
+
     private String jsonNode(String jsonProperties, String path) {
         JsonNode node;
         try {
@@ -103,7 +118,6 @@ public class FileUploadResources {
             logger.debug(e.getMessage());
             throw new NullPointerException("can't read json node");
         }
-
         return node.findPath(path).asText();
     }
 }
