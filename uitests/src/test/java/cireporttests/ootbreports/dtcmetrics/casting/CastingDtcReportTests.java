@@ -33,7 +33,6 @@ public class CastingDtcReportTests extends TestBase {
     private ViewRepositoryPage repository;
     private GenericReportPage genericReportPage;
     private CastingDtcReportHeader castingDtcReportHeader;
-    private LibraryPage libraryPage;
 
     public CastingDtcReportTests() {
         super();
@@ -188,8 +187,10 @@ public class CastingDtcReportTests extends TestBase {
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk();
 
-        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip(true);
-        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_REPORT_NAME);
+        genericReportPage.setReportName(CastingReportsEnum.CASTING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
+        String partName = genericReportPage.getPartNameDtcReports();
         genericReportPage.openNewTabAndFocus(1);
 
         EvaluatePage evaluatePage = new ExplorePage(driver)

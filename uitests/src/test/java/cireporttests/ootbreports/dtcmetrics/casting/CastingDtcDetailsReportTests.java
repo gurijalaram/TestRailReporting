@@ -28,7 +28,6 @@ public class CastingDtcDetailsReportTests extends TestBase {
 
     private GenericReportPage genericReportPage;
     private CastingDtcReportHeader castingDtcReportHeader;
-    private LibraryPage libraryPage;
 
     public CastingDtcDetailsReportTests() {
         super();
@@ -142,7 +141,8 @@ public class CastingDtcDetailsReportTests extends TestBase {
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickOk();
 
-        String partName = genericReportPage.getPartNameDtcCastingReports(Constants.CASTING_DTC_DETAILS_REPORT_NAME);
+        genericReportPage.setReportName(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName());
+        String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
         genericReportPage.openNewTabAndFocus(1);
 
