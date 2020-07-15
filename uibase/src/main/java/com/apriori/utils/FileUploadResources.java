@@ -126,7 +126,7 @@ public class FileUploadResources {
     }
 
     private void costScenario(HashMap<String, String> token) {
-        String orderURL = Constants.getBaseUrl() + "workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/product-info";
+        String orderURL = Constants.getBaseUrl() + "workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/production-info";
 
         headers.put(contentType, applicationJson);
 
