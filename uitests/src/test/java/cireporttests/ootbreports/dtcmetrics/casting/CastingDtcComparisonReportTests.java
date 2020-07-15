@@ -64,16 +64,16 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC Comparison report")
     public void testRollupDropDown() {
-        castingDtcReportHeader = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), CastingDtcReportHeader.class)
             .waitForInputControlsLoad()
             .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName()),
+        assertThat(genericReportPage.getDisplayedRollup(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName()),
             is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
     }
 
