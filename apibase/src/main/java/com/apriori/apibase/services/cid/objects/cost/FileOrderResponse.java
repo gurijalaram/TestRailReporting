@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.response.objects;
+package com.apriori.apibase.services.cid.objects.cost;
 
 import com.apriori.utils.http.enums.Schema;
 

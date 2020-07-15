@@ -1,4 +1,6 @@
-package com.apriori.apibase.services.response.objects;
+package com.apriori.apibase.services.cid.objects.upload;
+
+import com.apriori.apibase.services.response.objects.FileItemsEntity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

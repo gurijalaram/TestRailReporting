@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.response.objects;
+package com.apriori.apibase.services.cid.objects.upload;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -12,23 +12,36 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "scenarioIterationKey"
+    "scenarioKey",
+    "iteration"
 })
-public class FileUploadOutputs {
+public class FileUploadScenarioIterationKey {
 
-    @JsonProperty("scenarioIterationKey")
-    private FileUploadScenarioIterationKey scenarioIterationKey;
+    @JsonProperty("scenarioKey")
+    private FileUploadScenarioKey scenarioKey;
+    @JsonProperty("iteration")
+    private Integer iteration;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("scenarioIterationKey")
-    public FileUploadScenarioIterationKey getScenarioIterationKey() {
-        return scenarioIterationKey;
+    @JsonProperty("scenarioKey")
+    public FileUploadScenarioKey getScenarioKey() {
+        return scenarioKey;
     }
 
-    @JsonProperty("scenarioIterationKey")
-    public void setScenarioIterationKey(FileUploadScenarioIterationKey scenarioIterationKey) {
-        this.scenarioIterationKey = scenarioIterationKey;
+    @JsonProperty("scenarioKey")
+    public void setScenarioKey(FileUploadScenarioKey scenarioKey) {
+        this.scenarioKey = scenarioKey;
+    }
+
+    @JsonProperty("iteration")
+    public Integer getIteration() {
+        return iteration;
+    }
+
+    @JsonProperty("iteration")
+    public void setIteration(Integer iteration) {
+        this.iteration = iteration;
     }
 
     @JsonAnyGetter
