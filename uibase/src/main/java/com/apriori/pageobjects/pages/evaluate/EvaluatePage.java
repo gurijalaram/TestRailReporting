@@ -550,6 +550,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return BigDecimal - Fully Burdened Cost (rounded down - thus ROUND_FLOOR)
      */
     public BigDecimal getBurdenedCostValue() {
+        pageUtils.waitForElementToAppear(burdenedCost);
         return new BigDecimal(
                 burdenedCost.getText()
                         .replace(",", ""))
@@ -693,10 +694,10 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return string
      */
-    public String getUncostedUnique() {
-        By uncostedComponents = By.cssSelector("td[data-ap-field='uncostedComponentsCount']");
-        pageUtils.waitForElementToAppear(uncostedComponents);
-        return driver.findElement(uncostedComponents).getAttribute("innerText");
+    public boolean isUncostedUnique(String uncostedUnique) {
+        By uncostedComponent = By.cssSelector(String.format("td[data-ap-field='uncostedComponentsCount'][title='%s']", uncostedUnique));
+        pageUtils.waitForElementToAppear(uncostedComponent);
+        return driver.findElement(uncostedComponent).isDisplayed();
     }
 
     /**

@@ -114,7 +114,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
@@ -146,7 +145,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
@@ -184,7 +182,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
@@ -225,7 +222,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .scrollDownInputControls()
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
@@ -267,7 +263,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .scrollDownInputControls()
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
@@ -307,7 +302,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .scrollDownInputControls()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
@@ -338,7 +332,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .scrollDownInputControls()
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
@@ -370,7 +363,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .scrollDownInputControls()
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
@@ -440,14 +432,6 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .openNewTabAndFocus(1);
 
-        List<String> columnsToRemove = Arrays.asList(
-            ComponentInfoColumnEnum.QUANTITY.getColumnName(),
-            ComponentInfoColumnEnum.PROCESS_GROUP.getColumnName(),
-            ComponentInfoColumnEnum.VPE.getColumnName(),
-            ComponentInfoColumnEnum.LAST_SAVED.getColumnName(),
-            ComponentInfoColumnEnum.LAST_COSTED.getColumnName()
-        );
-
         List<String> columnsToAdd = Arrays.asList(
             ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
             ComponentInfoColumnEnum.PIECE_PART_COST.getColumnName(),
@@ -465,7 +449,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .openFirstScenario()
             .openComponentsTable()
             .openColumnsTable()
-            .checkColumnSettings(columnsToAdd, columnsToRemove)
+            .checkColumnSettings(columnsToAdd)
             .selectSaveButton();
 
         ArrayList<BigDecimal> cidPartOneValues = componentsPage
