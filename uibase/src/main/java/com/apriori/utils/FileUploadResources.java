@@ -1,5 +1,6 @@
 package com.apriori.utils;
 
+import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.response.objects.FileCommandEntity;
@@ -8,7 +9,6 @@ import com.apriori.apibase.services.response.objects.FileOrderResponse;
 import com.apriori.apibase.services.response.objects.FileOrdersEntity;
 import com.apriori.apibase.services.response.objects.FileUploadWorkOrder;
 import com.apriori.apibase.services.response.objects.FileWorkOrderEntity;
-import com.apriori.apibase.services.response.objects.ScenarioKey;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;

@@ -1,4 +1,7 @@
-package com.apriori.apibase.services.response.objects;
+package com.apriori.apibase.services.cid.objects.cost.productioninfo;
+
+import com.apriori.apibase.services.response.objects.AutoSelectedSecondaryVpes;
+import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -45,8 +48,9 @@ public class VpeBean {
     }
 
     @JsonProperty("scenarioKey")
-    public void setScenarioKey(ScenarioKey_ scenarioKey) {
+    public VpeBean setScenarioKey(ScenarioKey_ scenarioKey) {
         this.scenarioKey = scenarioKey;
+        return this;
     }
 
     @JsonProperty("primaryPgName")
@@ -55,8 +59,9 @@ public class VpeBean {
     }
 
     @JsonProperty("primaryPgName")
-    public void setPrimaryPgName(String primaryPgName) {
+    public VpeBean setPrimaryPgName(String primaryPgName) {
         this.primaryPgName = primaryPgName;
+        return this;
     }
 
     @JsonProperty("primaryVpeName")
@@ -65,8 +70,9 @@ public class VpeBean {
     }
 
     @JsonProperty("primaryVpeName")
-    public void setPrimaryVpeName(String primaryVpeName) {
+    public VpeBean setPrimaryVpeName(String primaryVpeName) {
         this.primaryVpeName = primaryVpeName;
+        return this;
     }
 
     @JsonProperty("autoSelectedSecondaryVpes")
@@ -75,8 +81,9 @@ public class VpeBean {
     }
 
     @JsonProperty("autoSelectedSecondaryVpes")
-    public void setAutoSelectedSecondaryVpes(AutoSelectedSecondaryVpes autoSelectedSecondaryVpes) {
+    public VpeBean setAutoSelectedSecondaryVpes(AutoSelectedSecondaryVpes autoSelectedSecondaryVpes) {
         this.autoSelectedSecondaryVpes = autoSelectedSecondaryVpes;
+        return this;
     }
 
     @JsonProperty("usePrimaryAsDefault")
@@ -85,8 +92,9 @@ public class VpeBean {
     }
 
     @JsonProperty("usePrimaryAsDefault")
-    public void setUsePrimaryAsDefault(Boolean usePrimaryAsDefault) {
+    public VpeBean setUsePrimaryAsDefault(Boolean usePrimaryAsDefault) {
         this.usePrimaryAsDefault = usePrimaryAsDefault;
+        return this;
     }
 
     @JsonProperty("initialized")
@@ -95,8 +103,9 @@ public class VpeBean {
     }
 
     @JsonProperty("initialized")
-    public void setInitialized(Boolean initialized) {
+    public VpeBean setInitialized(Boolean initialized) {
         this.initialized = initialized;
+        return this;
     }
 
     @JsonProperty("materialCatalogKeyData")
@@ -105,8 +114,9 @@ public class VpeBean {
     }
 
     @JsonProperty("materialCatalogKeyData")
-    public void setMaterialCatalogKeyData(MaterialCatalogKeyData materialCatalogKeyData) {
+    public VpeBean setMaterialCatalogKeyData(MaterialCatalogKeyData materialCatalogKeyData) {
         this.materialCatalogKeyData = materialCatalogKeyData;
+        return this;
     }
 
     @JsonAnyGetter

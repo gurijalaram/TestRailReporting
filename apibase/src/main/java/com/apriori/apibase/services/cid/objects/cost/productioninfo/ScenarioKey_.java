@@ -1,6 +1,4 @@
-package com.apriori.apibase.services.response.objects;
-
-import com.apriori.utils.http.enums.Schema;
+package com.apriori.apibase.services.cid.objects.cost.productioninfo;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -19,9 +17,7 @@ import java.util.Map;
     "workspaceId",
     "masterName"
 })
-
-@Schema(location = "FileCostWorkOrderSchema.json")
-public class ScenarioKey {
+public class ScenarioKey_ {
 
     @JsonProperty("typeName")
     private String typeName;
@@ -40,7 +36,7 @@ public class ScenarioKey {
     }
 
     @JsonProperty("typeName")
-    public ScenarioKey setTypeName(String typeName) {
+    public ScenarioKey_ setTypeName(String typeName) {
         this.typeName = typeName;
         return this;
     }
@@ -51,7 +47,7 @@ public class ScenarioKey {
     }
 
     @JsonProperty("stateName")
-    public ScenarioKey setStateName(String stateName) {
+    public ScenarioKey_ setStateName(String stateName) {
         this.stateName = stateName;
         return this;
     }
@@ -62,7 +58,7 @@ public class ScenarioKey {
     }
 
     @JsonProperty("workspaceId")
-    public ScenarioKey setWorkspaceId(Integer workspaceId) {
+    public ScenarioKey_ setWorkspaceId(Integer workspaceId) {
         this.workspaceId = workspaceId;
         return this;
     }
@@ -73,7 +69,7 @@ public class ScenarioKey {
     }
 
     @JsonProperty("masterName")
-    public ScenarioKey setMasterName(String masterName) {
+    public ScenarioKey_ setMasterName(String masterName) {
         this.masterName = masterName;
         return this;
     }

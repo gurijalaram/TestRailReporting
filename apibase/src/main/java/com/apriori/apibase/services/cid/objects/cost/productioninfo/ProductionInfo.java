@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.response.objects;
+package com.apriori.apibase.services.cid.objects.cost.productioninfo;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -41,7 +41,7 @@ import java.util.Map;
     "thicknessVisible",
     "compositesFileName"
 })
-public class Examples {
+public class ProductionInfo {
 
     @JsonProperty("scenarioKey")
     private ScenarioKey scenarioKey;
@@ -106,8 +106,9 @@ public class Examples {
     }
 
     @JsonProperty("scenarioKey")
-    public void setScenarioKey(ScenarioKey scenarioKey) {
+    public ProductionInfo setScenarioKey(ScenarioKey scenarioKey) {
         this.scenarioKey = scenarioKey;
+        return this;
     }
 
     @JsonProperty("compType")
@@ -116,8 +117,9 @@ public class Examples {
     }
 
     @JsonProperty("compType")
-    public void setCompType(String compType) {
+    public ProductionInfo setCompType(String compType) {
         this.compType = compType;
+        return this;
     }
 
     @JsonProperty("initialized")
@@ -126,8 +128,9 @@ public class Examples {
     }
 
     @JsonProperty("initialized")
-    public void setInitialized(Boolean initialized) {
+    public ProductionInfo setInitialized(Boolean initialized) {
         this.initialized = initialized;
+        return this;
     }
 
     @JsonProperty("availablePgNames")
@@ -136,8 +139,9 @@ public class Examples {
     }
 
     @JsonProperty("availablePgNames")
-    public void setAvailablePgNames(List<String> availablePgNames) {
+    public ProductionInfo setAvailablePgNames(List<String> availablePgNames) {
         this.availablePgNames = availablePgNames;
+        return this;
     }
 
     @JsonProperty("processGroupName")
@@ -146,8 +150,9 @@ public class Examples {
     }
 
     @JsonProperty("processGroupName")
-    public void setProcessGroupName(String processGroupName) {
+    public ProductionInfo setProcessGroupName(String processGroupName) {
         this.processGroupName = processGroupName;
+        return this;
     }
 
     @JsonProperty("pgEnabled")
@@ -156,8 +161,9 @@ public class Examples {
     }
 
     @JsonProperty("pgEnabled")
-    public void setPgEnabled(Boolean pgEnabled) {
+    public ProductionInfo setPgEnabled(Boolean pgEnabled) {
         this.pgEnabled = pgEnabled;
+        return this;
     }
 
     @JsonProperty("cadModelLoaded")
@@ -166,8 +172,9 @@ public class Examples {
     }
 
     @JsonProperty("cadModelLoaded")
-    public void setCadModelLoaded(Boolean cadModelLoaded) {
+    public ProductionInfo setCadModelLoaded(Boolean cadModelLoaded) {
         this.cadModelLoaded = cadModelLoaded;
+        return this;
     }
 
     @JsonProperty("vpeBean")
@@ -176,8 +183,9 @@ public class Examples {
     }
 
     @JsonProperty("vpeBean")
-    public void setVpeBean(VpeBean vpeBean) {
+    public ProductionInfo setVpeBean(VpeBean vpeBean) {
         this.vpeBean = vpeBean;
+        return this;
     }
 
     @JsonProperty("supportsMaterials")
@@ -186,8 +194,9 @@ public class Examples {
     }
 
     @JsonProperty("supportsMaterials")
-    public void setSupportsMaterials(Boolean supportsMaterials) {
+    public ProductionInfo setSupportsMaterials(Boolean supportsMaterials) {
         this.supportsMaterials = supportsMaterials;
+        return this;
     }
 
     @JsonProperty("materialBean")
@@ -196,8 +205,9 @@ public class Examples {
     }
 
     @JsonProperty("materialBean")
-    public void setMaterialBean(MaterialBean materialBean) {
+    public ProductionInfo setMaterialBean(MaterialBean materialBean) {
         this.materialBean = materialBean;
+        return this;
     }
 
     @JsonProperty("annualVolume")
@@ -206,8 +216,9 @@ public class Examples {
     }
 
     @JsonProperty("annualVolume")
-    public void setAnnualVolume(Integer annualVolume) {
+    public ProductionInfo setAnnualVolume(Integer annualVolume) {
         this.annualVolume = annualVolume;
+        return this;
     }
 
     @JsonProperty("annualVolumeOverridden")
@@ -216,8 +227,9 @@ public class Examples {
     }
 
     @JsonProperty("annualVolumeOverridden")
-    public void setAnnualVolumeOverridden(Boolean annualVolumeOverridden) {
+    public ProductionInfo setAnnualVolumeOverridden(Boolean annualVolumeOverridden) {
         this.annualVolumeOverridden = annualVolumeOverridden;
+        return this;
     }
 
     @JsonProperty("productionLife")
@@ -226,8 +238,9 @@ public class Examples {
     }
 
     @JsonProperty("productionLife")
-    public void setProductionLife(Integer productionLife) {
+    public ProductionInfo setProductionLife(Integer productionLife) {
         this.productionLife = productionLife;
+        return this;
     }
 
     @JsonProperty("productionLifeOverridden")
@@ -236,8 +249,9 @@ public class Examples {
     }
 
     @JsonProperty("productionLifeOverridden")
-    public void setProductionLifeOverridden(Boolean productionLifeOverridden) {
+    public ProductionInfo setProductionLifeOverridden(Boolean productionLifeOverridden) {
         this.productionLifeOverridden = productionLifeOverridden;
+        return this;
     }
 
     @JsonProperty("computedBatchSize")
@@ -246,8 +260,9 @@ public class Examples {
     }
 
     @JsonProperty("computedBatchSize")
-    public void setComputedBatchSize(Integer computedBatchSize) {
+    public ProductionInfo setComputedBatchSize(Integer computedBatchSize) {
         this.computedBatchSize = computedBatchSize;
+        return this;
     }
 
     @JsonProperty("batchSizeOverridden")
@@ -256,8 +271,9 @@ public class Examples {
     }
 
     @JsonProperty("batchSizeOverridden")
-    public void setBatchSizeOverridden(Boolean batchSizeOverridden) {
+    public ProductionInfo setBatchSizeOverridden(Boolean batchSizeOverridden) {
         this.batchSizeOverridden = batchSizeOverridden;
+        return this;
     }
 
     @JsonProperty("componentsPerProduct")
@@ -266,8 +282,9 @@ public class Examples {
     }
 
     @JsonProperty("componentsPerProduct")
-    public void setComponentsPerProduct(Integer componentsPerProduct) {
+    public ProductionInfo setComponentsPerProduct(Integer componentsPerProduct) {
         this.componentsPerProduct = componentsPerProduct;
+        return this;
     }
 
     @JsonProperty("manuallyCosted")
@@ -276,8 +293,9 @@ public class Examples {
     }
 
     @JsonProperty("manuallyCosted")
-    public void setManuallyCosted(Boolean manuallyCosted) {
+    public ProductionInfo setManuallyCosted(Boolean manuallyCosted) {
         this.manuallyCosted = manuallyCosted;
+        return this;
     }
 
     @JsonProperty("availableCurrencyCodes")
@@ -286,8 +304,9 @@ public class Examples {
     }
 
     @JsonProperty("availableCurrencyCodes")
-    public void setAvailableCurrencyCodes(List<String> availableCurrencyCodes) {
+    public ProductionInfo setAvailableCurrencyCodes(List<String> availableCurrencyCodes) {
         this.availableCurrencyCodes = availableCurrencyCodes;
+        return this;
     }
 
     @JsonProperty("manualCurrencyCode")
@@ -296,8 +315,9 @@ public class Examples {
     }
 
     @JsonProperty("manualCurrencyCode")
-    public void setManualCurrencyCode(String manualCurrencyCode) {
+    public ProductionInfo setManualCurrencyCode(String manualCurrencyCode) {
         this.manualCurrencyCode = manualCurrencyCode;
+        return this;
     }
 
     @JsonProperty("availableCurrencyVersions")
@@ -306,8 +326,9 @@ public class Examples {
     }
 
     @JsonProperty("availableCurrencyVersions")
-    public void setAvailableCurrencyVersions(List<String> availableCurrencyVersions) {
+    public ProductionInfo setAvailableCurrencyVersions(List<String> availableCurrencyVersions) {
         this.availableCurrencyVersions = availableCurrencyVersions;
+        return this;
     }
 
     @JsonProperty("manualCurrencyVersion")
@@ -316,8 +337,9 @@ public class Examples {
     }
 
     @JsonProperty("manualCurrencyVersion")
-    public void setManualCurrencyVersion(String manualCurrencyVersion) {
+    public ProductionInfo setManualCurrencyVersion(String manualCurrencyVersion) {
         this.manualCurrencyVersion = manualCurrencyVersion;
+        return this;
     }
 
     @JsonProperty("hasTargetCost")
@@ -326,8 +348,9 @@ public class Examples {
     }
 
     @JsonProperty("hasTargetCost")
-    public void setHasTargetCost(Boolean hasTargetCost) {
+    public ProductionInfo setHasTargetCost(Boolean hasTargetCost) {
         this.hasTargetCost = hasTargetCost;
+        return this;
     }
 
     @JsonProperty("hasTargetFinishMass")
@@ -336,8 +359,9 @@ public class Examples {
     }
 
     @JsonProperty("hasTargetFinishMass")
-    public void setHasTargetFinishMass(Boolean hasTargetFinishMass) {
+    public ProductionInfo setHasTargetFinishMass(Boolean hasTargetFinishMass) {
         this.hasTargetFinishMass = hasTargetFinishMass;
+        return this;
     }
 
     @JsonProperty("machiningMode")
@@ -346,8 +370,9 @@ public class Examples {
     }
 
     @JsonProperty("machiningMode")
-    public void setMachiningMode(String machiningMode) {
+    public ProductionInfo setMachiningMode(String machiningMode) {
         this.machiningMode = machiningMode;
+        return this;
     }
 
     @JsonProperty("thicknessVisible")
@@ -356,8 +381,9 @@ public class Examples {
     }
 
     @JsonProperty("thicknessVisible")
-    public void setThicknessVisible(Boolean thicknessVisible) {
+    public ProductionInfo setThicknessVisible(Boolean thicknessVisible) {
         this.thicknessVisible = thicknessVisible;
+        return this;
     }
 
     @JsonProperty("compositesFileName")
@@ -366,8 +392,9 @@ public class Examples {
     }
 
     @JsonProperty("compositesFileName")
-    public void setCompositesFileName(String compositesFileName) {
+    public ProductionInfo setCompositesFileName(String compositesFileName) {
         this.compositesFileName = compositesFileName;
+        return this;
     }
 
     @JsonAnyGetter

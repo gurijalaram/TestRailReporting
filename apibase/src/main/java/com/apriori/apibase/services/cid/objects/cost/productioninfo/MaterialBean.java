@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.response.objects;
+package com.apriori.apibase.services.cid.objects.cost.productioninfo;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -42,8 +42,9 @@ public class MaterialBean {
     }
 
     @JsonProperty("initialized")
-    public void setInitialized(Boolean initialized) {
+    public MaterialBean setInitialized(Boolean initialized) {
         this.initialized = initialized;
+        return this;
     }
 
     @JsonProperty("vpeDefaultMaterialName")
@@ -52,8 +53,9 @@ public class MaterialBean {
     }
 
     @JsonProperty("vpeDefaultMaterialName")
-    public void setVpeDefaultMaterialName(String vpeDefaultMaterialName) {
+    public MaterialBean setVpeDefaultMaterialName(String vpeDefaultMaterialName) {
         this.vpeDefaultMaterialName = vpeDefaultMaterialName;
+        return this;
     }
 
     @JsonProperty("materialMode")
@@ -62,8 +64,9 @@ public class MaterialBean {
     }
 
     @JsonProperty("materialMode")
-    public void setMaterialMode(String materialMode) {
+    public MaterialBean setMaterialMode(String materialMode) {
         this.materialMode = materialMode;
+        return this;
     }
 
     @JsonProperty("isUserMaterialNameValid")
@@ -72,8 +75,9 @@ public class MaterialBean {
     }
 
     @JsonProperty("isUserMaterialNameValid")
-    public void setIsUserMaterialNameValid(Boolean isUserMaterialNameValid) {
+    public MaterialBean setIsUserMaterialNameValid(Boolean isUserMaterialNameValid) {
         this.isUserMaterialNameValid = isUserMaterialNameValid;
+        return this;
     }
 
     @JsonProperty("isCadMaterialNameValid")
@@ -82,8 +86,9 @@ public class MaterialBean {
     }
 
     @JsonProperty("isCadMaterialNameValid")
-    public void setIsCadMaterialNameValid(Boolean isCadMaterialNameValid) {
+    public MaterialBean setIsCadMaterialNameValid(Boolean isCadMaterialNameValid) {
         this.isCadMaterialNameValid = isCadMaterialNameValid;
+        return this;
     }
 
     @JsonProperty("userUtilizationOverride")
@@ -92,8 +97,9 @@ public class MaterialBean {
     }
 
     @JsonProperty("userUtilizationOverride")
-    public void setUserUtilizationOverride(Integer userUtilizationOverride) {
+    public MaterialBean setUserUtilizationOverride(Integer userUtilizationOverride) {
         this.userUtilizationOverride = userUtilizationOverride;
+        return this;
     }
 
     @JsonAnyGetter
