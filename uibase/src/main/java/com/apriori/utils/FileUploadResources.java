@@ -8,6 +8,7 @@ import com.apriori.apibase.services.response.objects.FileOrderResponse;
 import com.apriori.apibase.services.response.objects.FileOrdersEntity;
 import com.apriori.apibase.services.response.objects.FileUploadWorkOrder;
 import com.apriori.apibase.services.response.objects.FileWorkOrderEntity;
+import com.apriori.apibase.services.response.objects.ScenarioKey;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -31,6 +32,11 @@ public class FileUploadResources {
     private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
     private static String identity;
     private static String orderId;
+    private static String stateName;
+    private static int workspaceId;
+    private static String typeName;
+    private static String masterName;
+    private static String iteration;
     Map<String, String> headers = new HashMap<>();
 
     private String contentType = "Content-Type";
@@ -41,6 +47,7 @@ public class FileUploadResources {
         createFileUploadWorkOrder(token, fileObject);
         submitFileUploadWorkOrder(token);
         checkFileWorkOrderStatus(token);
+        costScenario(token);
     }
 
     private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
@@ -107,6 +114,30 @@ public class FileUploadResources {
         } while ((!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("SUCCESS")) &&
             (!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("FAILED")) &&
             ((System.currentTimeMillis() / 1000) - startTime) < 30);
+
+        String orderBody = GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody();
+
+        workspaceId = Integer.parseInt(jsonNode(orderBody, "workspaceId"));
+        typeName = jsonNode(orderBody, "typeName");
+        masterName = jsonNode(orderBody, "masterName");
+        stateName = jsonNode(orderBody, "stateName");
+        iteration = jsonNode(orderBody, "iteration");
+    }
+
+    private void costScenario(HashMap<String, String> token) {
+        String orderURL = Constants.getBaseUrl() + "workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/product-info";
+
+        headers.put(contentType, jsonContent);
+
+        RequestEntity costRequestEntity = RequestEntity.init(orderURL, ScenarioKey.class)
+            .setHeaders(headers)
+            .setHeaders(token)
+            .setBody(new ScenarioKey().setTypeName(typeName)
+                .setTypeName(stateName)
+                .setWorkspaceId(workspaceId)
+                .setMasterName(masterName));
+
+        GenericRequestUtil.post(costRequestEntity, new RequestAreaApi()).getBody();
     }
 
     private String jsonNode(String jsonProperties, String path) {
