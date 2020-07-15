@@ -1,5 +1,7 @@
 package com.apriori.apibase.services.cid.objects.cost.productioninfo;
 
+import com.apriori.utils.http.enums.Schema;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,6 +43,8 @@ import java.util.Map;
     "thicknessVisible",
     "compositesFileName"
 })
+
+@Schema(location = "ProductionCostSchema.json")
 public class ProductionInfo {
 
     @JsonProperty("scenarioKey")
@@ -58,7 +62,7 @@ public class ProductionInfo {
     @JsonProperty("cadModelLoaded")
     private Boolean cadModelLoaded;
     @JsonProperty("vpeBean")
-    private VpeBean vpeBean;
+    private ScenarioKey_ vpeBean;
     @JsonProperty("supportsMaterials")
     private Boolean supportsMaterials;
     @JsonProperty("materialBean")
@@ -178,12 +182,12 @@ public class ProductionInfo {
     }
 
     @JsonProperty("vpeBean")
-    public VpeBean getVpeBean() {
+    public ScenarioKey_ getVpeBean() {
         return vpeBean;
     }
 
     @JsonProperty("vpeBean")
-    public ProductionInfo setVpeBean(VpeBean vpeBean) {
+    public ProductionInfo setVpeBean(ScenarioKey_ vpeBean) {
         this.vpeBean = vpeBean;
         return this;
     }

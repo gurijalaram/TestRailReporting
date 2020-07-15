@@ -1,6 +1,8 @@
 package com.apriori.utils;
 
 import com.apriori.apibase.services.cid.objects.cost.FileOrderResponse;
+import com.apriori.apibase.services.cid.objects.cost.productioninfo.MaterialBean;
+import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfo;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey;
 import com.apriori.apibase.services.cid.objects.upload.FileCommandEntity;
 import com.apriori.apibase.services.cid.objects.upload.FileOrderEntity;
@@ -126,17 +128,20 @@ public class FileUploadResources {
     }
 
     private void costScenario(HashMap<String, String> token) {
-        String orderURL = Constants.getBaseUrl() + "workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/production-info";
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/production-info";
 
         headers.put(contentType, applicationJson);
 
-        RequestEntity costRequestEntity = RequestEntity.init(orderURL, ScenarioKey.class)
+        RequestEntity costRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setBody(new ScenarioKey().setTypeName(typeName)
-                .setTypeName(stateName)
-                .setWorkspaceId(workspaceId)
-                .setMasterName(masterName));
+            .setBody(new ProductionInfo().setScenarioKey(
+                new ScenarioKey().setTypeName(typeName)
+                    .setStateName(stateName)
+                    .setWorkspaceId(workspaceId)
+                    .setMasterName(masterName))
+                .setProcessGroupName("Sheet Metal")
+                .setMaterialBean(new MaterialBean().setVpeDefaultMaterialName("Steel, Cold Worked, AISI 1012")));
 
         GenericRequestUtil.post(costRequestEntity, new RequestAreaApi()).getBody();
     }
