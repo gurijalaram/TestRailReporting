@@ -50,7 +50,7 @@ public class FileUploadResources {
         createFileUploadWorkOrder(token, fileObject);
         submitFileUploadWorkOrder(token);
         checkFileWorkOrderStatus(token);
-        costScenario(token);
+        initializeCostScenario(token);
     }
 
     private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
@@ -127,7 +127,7 @@ public class FileUploadResources {
         iteration = jsonNode(orderBody, "iteration");
     }
 
-    private void costScenario(HashMap<String, String> token) {
+    private void initializeCostScenario(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/production-info";
 
         headers.put(contentType, applicationJson);
