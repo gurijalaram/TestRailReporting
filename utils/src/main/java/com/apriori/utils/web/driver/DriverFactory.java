@@ -155,7 +155,7 @@ public class DriverFactory {
                 result = new ChromeDriver(dc);
                 break;
             case "edge":
-                WebDriverManager.edgedriver().setup();
+                WebDriverManager.edgedriver().version("83.0").setup();
                 result = new EdgeDriver(dc);
         }
         return result;
