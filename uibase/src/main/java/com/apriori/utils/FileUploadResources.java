@@ -30,6 +30,7 @@ import java.util.Map;
 public class FileUploadResources {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
+
     private static String identity;
     private static String orderId;
     private static String stateName;
@@ -40,7 +41,7 @@ public class FileUploadResources {
     Map<String, String> headers = new HashMap<>();
 
     private String contentType = "Content-Type";
-    private String jsonContent = "application/json";
+    private String applicationJson = "application/json";
 
     public void createFileUpload(HashMap<String, String> token, Object fileObject) {
         initializeFileUpload(token, fileObject);
@@ -69,7 +70,7 @@ public class FileUploadResources {
         NewPartRequest npr = (NewPartRequest) fileObject;
         String fileURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
-        headers.put(contentType, jsonContent);
+        headers.put(contentType, applicationJson);
 
         RequestEntity fileRequestEntity = RequestEntity.init(fileURL, FileOrderResponse.class)
             .setHeaders(headers)
@@ -87,7 +88,7 @@ public class FileUploadResources {
     private void submitFileUploadWorkOrder(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
 
-        headers.put(contentType, jsonContent);
+        headers.put(contentType, applicationJson);
 
         RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
             .setHeaders(headers)
@@ -101,7 +102,7 @@ public class FileUploadResources {
     private void checkFileWorkOrderStatus(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + orderId;
 
-        headers.put(contentType, jsonContent);
+        headers.put(contentType, applicationJson);
 
         RequestEntity orderRequestEntity = RequestEntity.init(orderURL, FileUploadWorkOrder.class)
             .setHeaders(headers)
@@ -127,7 +128,7 @@ public class FileUploadResources {
     private void costScenario(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/product-info";
 
-        headers.put(contentType, jsonContent);
+        headers.put(contentType, applicationJson);
 
         RequestEntity costRequestEntity = RequestEntity.init(orderURL, ScenarioKey.class)
             .setHeaders(headers)
