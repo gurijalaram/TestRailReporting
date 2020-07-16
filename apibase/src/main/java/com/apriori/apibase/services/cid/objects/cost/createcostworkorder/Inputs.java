@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.response.objects;
+package com.apriori.apibase.services.cid.objects.cost.createcostworkorder;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -12,37 +12,37 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "first",
-    "second"
+    "inputSetId",
+    "scenarioIterationKey"
 })
-public class MaterialCatalogKeyData {
+public class Inputs {
 
-    @JsonProperty("first")
-    private String first;
-    @JsonProperty("second")
-    private String second;
+    @JsonProperty("inputSetId")
+    private Integer inputSetId;
+    @JsonProperty("scenarioIterationKey")
+    private ScenarioIterationKey scenarioIterationKey;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("first")
-    public String getFirst() {
-        return first;
+    @JsonProperty("inputSetId")
+    public Integer getInputSetId() {
+        return inputSetId;
     }
 
-    @JsonProperty("first")
-    public MaterialCatalogKeyData setFirst(String first) {
-        this.first = first;
+    @JsonProperty("inputSetId")
+    public Inputs setInputSetId(Integer inputSetId) {
+        this.inputSetId = inputSetId;
         return this;
     }
 
-    @JsonProperty("second")
-    public String getSecond() {
-        return second;
+    @JsonProperty("scenarioIterationKey")
+    public ScenarioIterationKey getScenarioIterationKey() {
+        return scenarioIterationKey;
     }
 
-    @JsonProperty("second")
-    public MaterialCatalogKeyData setSecond(String second) {
-        this.second = second;
+    @JsonProperty("scenarioIterationKey")
+    public Inputs setScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
+        this.scenarioIterationKey = scenarioIterationKey;
         return this;
     }
 
@@ -55,5 +55,4 @@ public class MaterialCatalogKeyData {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

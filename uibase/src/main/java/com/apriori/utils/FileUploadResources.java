@@ -1,9 +1,15 @@
 package com.apriori.utils;
 
 import com.apriori.apibase.services.cid.objects.cost.FileOrderResponse;
+import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command;
+import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command_;
+import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Inputs;
+import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.ScenarioIterationKey;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.MaterialBean;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfo;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey;
+import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey_;
+import com.apriori.apibase.services.cid.objects.cost.productioninfo.VpeBean;
 import com.apriori.apibase.services.cid.objects.upload.FileCommandEntity;
 import com.apriori.apibase.services.cid.objects.upload.FileOrderEntity;
 import com.apriori.apibase.services.cid.objects.upload.FileOrdersEntity;
@@ -11,6 +17,7 @@ import com.apriori.apibase.services.cid.objects.upload.FileUploadWorkOrder;
 import com.apriori.apibase.services.cid.objects.upload.FileWorkOrderEntity;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
+import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -25,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,11 +43,13 @@ public class FileUploadResources {
 
     private static String identity;
     private static String orderId;
+    private static int costOrderId;
     private static String stateName;
     private static int workspaceId;
     private static String typeName;
     private static String masterName;
-    private static String iteration;
+    private static int iteration;
+    private static String costWorkOrderId;
     Map<String, String> headers = new HashMap<>();
 
     private String contentType = "Content-Type";
@@ -51,6 +61,9 @@ public class FileUploadResources {
         submitFileUploadWorkOrder(token);
         checkFileWorkOrderStatus(token);
         initializeCostScenario(token);
+        createCostWorkOrder(token);
+        submitCostWorkOrder(token);
+        checkCostResult(token);
     }
 
     private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
@@ -116,7 +129,7 @@ public class FileUploadResources {
             jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status");
         } while ((!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("SUCCESS")) &&
             (!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("FAILED")) &&
-            ((System.currentTimeMillis() / 1000) - startTime) < 30);
+            ((System.currentTimeMillis() / 1000) - startTime) < 240);
 
         String orderBody = GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody();
 
@@ -124,7 +137,7 @@ public class FileUploadResources {
         typeName = jsonNode(orderBody, "typeName");
         masterName = jsonNode(orderBody, "masterName");
         stateName = jsonNode(orderBody, "stateName");
-        iteration = jsonNode(orderBody, "iteration");
+        iteration = Integer.parseInt(jsonNode(orderBody, "iteration"));
     }
 
     private void initializeCostScenario(HashMap<String, String> token) {
@@ -135,16 +148,184 @@ public class FileUploadResources {
         RequestEntity costRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setBody(new ProductionInfo().setScenarioKey(
-                new ScenarioKey().setTypeName(typeName)
-                    .setStateName(stateName)
-                    .setWorkspaceId(workspaceId)
-                    .setMasterName(masterName))
-                .setProcessGroupName("Sheet Metal")
-                .setMaterialBean(new MaterialBean().setVpeDefaultMaterialName("Steel, Cold Worked, AISI 1012")));
+            .setBody(
+                new ProductionInfo()
+                    .setScenarioKey(new ScenarioKey().setWorkspaceId(workspaceId)
+                        .setTypeName(typeName)
+                        .setStateName(stateName)
+                        .setMasterName(masterName))
+                    .setCompType("PART")
+                    .setInitialized(false)
+                    .setAvailablePgNames(Arrays.asList("2-Model Machining", "Additive Manufacturing", "Bar & Tube Fab", "Casting", "Casting - Die", "Casting - Sand",
+                        "Forging", "Plastic Molding", "Powder Metal", "Rapid Prototyping", "Roto & Blow Molding", "Sheet Metal",
+                        "Sheet Metal - Hydroforming", "Sheet Metal - Stretch Forming", "Sheet Metal - Transfer Die",
+                        "Sheet Plastic", "Stock Machining", "User Guided"))
 
-        GenericRequestUtil.post(costRequestEntity, new RequestAreaApi()).getBody();
+                    .setProcessGroupName("Casting - Die")
+                    .setPgEnabled(true)
+
+                    .setVpeBean(new VpeBean()
+                        .setScenarioKey(new ScenarioKey_().setWorkspaceId(workspaceId)
+                            .setTypeName(typeName)
+                            .setStateName(stateName)
+                            .setMasterName(masterName))
+
+                        .setPrimaryPgName("Casting - Die")
+                        .setPrimaryVpeName("aPriori USA")
+                        .setAutoSelectedSecondaryVpes(null)
+                        .setUsePrimaryAsDefault(true)
+                        .setInitialized(false)
+
+                        .setMaterialCatalogKeyData(new MaterialCatalogKeyData().setFirst("aPriori USA")
+                            .setSecond("Casting - Die")))
+
+                    .setSupportsMaterials(true)
+                    .setMaterialBean(new MaterialBean().setInitialized(false)
+                        .setVpeDefaultMaterialName("Aluminum, Cast, ANSI AL380.0")
+                        .setMaterialMode("CAD")
+                        .setIsUserMaterialNameValid(false)
+                        .setIsCadMaterialNameValid(false))
+
+                    .setAnnualVolume(4400)
+                    .setAnnualVolumeOverridden(true)
+                    .setProductionLife(4)
+                    .setProductionLifeOverridden(false)
+                    .setBatchSizeOverridden(null)
+                    .setComputedBatchSize(458)
+                    .setBatchSizeOverridden(false)
+                    .setComponentsPerProduct(1)
+                    .setManuallyCosted(false)
+                    .setAvailableCurrencyCodes(Arrays.asList("USD"))
+                    .setManualCurrencyCode("USD")
+                    .setMachiningMode("MAY_BE_MACHINED")
+                    .setHasTargetCost(false)
+                    .setHasTargetFinishMass(null)
+                    .setHasTargetFinishMass(false)
+                    .setCadModelLoaded(true)
+                    .setThicknessVisible(true));
+
+        costOrderId = Integer.parseInt(jsonNode(GenericRequestUtil.post(costRequestEntity, new RequestAreaApi()).getBody(), "id"));
     }
+
+    private void createCostWorkOrder(HashMap<String, String> token) {
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
+            .setHeaders(headers)
+            .setHeaders(token)
+            .setBody(new Command_().setCommand(new Command()
+                .setCommandType("COSTING")
+                .setInputs(new Inputs().setInputSetId(costOrderId)
+                    .setScenarioIterationKey(new ScenarioIterationKey().setIteration(iteration)
+                        .setScenarioKey(new ScenarioKey().setMasterName(masterName)
+                            .setStateName(stateName)
+                            .setTypeName(typeName)
+                            .setWorkspaceId(workspaceId))))));
+
+        costWorkOrderId = jsonNode(GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody(),"id");
+    }
+
+    private void submitCostWorkOrder(HashMap<String, String> token) {
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
+            .setHeaders(headers)
+            .setHeaders(token)
+            .setBody(new FileWorkOrderEntity().setOrderIds(Collections.singletonList(costWorkOrderId))
+                .setAction("SUBMIT"));
+
+        GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
+    }
+
+    private void checkCostResult(HashMap<String, String> token) {
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
+
+        RequestEntity costRequestEntity = RequestEntity.init(orderURL, FileUploadWorkOrder.class)
+            .setHeaders(headers)
+            .setHeaders(token);
+
+        long startTime = System.currentTimeMillis() / 1000;
+
+        String status;
+        do {
+            status = jsonNode(GenericRequestUtil.get(costRequestEntity, new RequestAreaApi()).getBody(), "status");
+        } while ((!status.equals("SUCCESS")) &&
+            (!status.equals("FAILED")) &&
+            ((System.currentTimeMillis() / 1000) - startTime) < 60);
+
+        String orderBody = GenericRequestUtil.get(costRequestEntity, new RequestAreaApi()).getBody();
+    }
+
+//    private void checkCostResult(HashMap<String, String> token) {
+//        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/latest/cost-results?depth=ROOT";
+//
+//        RequestEntity costRequestEntity = RequestEntity.init(orderURL, FileUploadWorkOrder.class)
+//            .setHeaders(headers)
+//            .setHeaders(token);
+//
+//        jsonNode(GenericRequestUtil.get(costRequestEntity, new RequestAreaApi()).getBody(), "status");
+//    }
+//
+//    private void publishWorkOrder(HashMap<String, String> token) {
+//        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
+//
+//        headers.put(contentType, applicationJson);
+//
+//        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, FileUploadWorkOrder.class)
+//            .setHeaders(headers)
+//            .setHeaders(token)
+//            .setBody();
+//    }
+//
+//    private void submitPublishWorkOrder(HashMap<String, String> token) {
+//        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
+//
+//        headers.put(contentType, applicationJson);
+//
+//        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
+//            .setHeaders(headers)
+//            .setHeaders(token)
+//            .setBody(new FileWorkOrderEntity().setOrderIds(Collections.singletonList())
+//                .setAction("SUBMIT"));
+//
+//        GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
+//    }
+//
+//    private void checkPublishWorkOrder(HashMap<String, String> token) {
+//        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus" + publishOrderId;
+//
+//        headers.put(contentType, applicationJson);
+//
+//        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
+//            .setHeaders(headers)
+//            .setHeaders(token)
+//            .setBody(new FileWorkOrderEntity().setOrderIds(Collections.singletonList())
+//                .setAction("SUBMIT"));
+//
+//        long startTime = System.currentTimeMillis() / 1000;
+//
+//        do {
+//            jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status");
+//        } while ((!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("SUCCESS")) &&
+//            (!jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "status").equals("FAILED")) &&
+//            ((System.currentTimeMillis() / 1000) - startTime) < 60);
+//    }
+//
+//    private void checkPublishWorkOrderDB(HashMap<String, String> token) {
+//        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/order"+ publishOrderId;
+//
+//        headers.put(contentType, applicationJson);
+//
+//        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
+//            .setHeaders(headers)
+//            .setHeaders(token);
+//
+//            jsonNode(GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody(), "statusCode");
+//    }
 
     private String jsonNode(String jsonProperties, String path) {
         JsonNode node;

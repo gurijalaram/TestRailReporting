@@ -62,7 +62,7 @@ public class ProductionInfo {
     @JsonProperty("cadModelLoaded")
     private Boolean cadModelLoaded;
     @JsonProperty("vpeBean")
-    private ScenarioKey_ vpeBean;
+    private VpeBean vpeBean;
     @JsonProperty("supportsMaterials")
     private Boolean supportsMaterials;
     @JsonProperty("materialBean")
@@ -182,12 +182,12 @@ public class ProductionInfo {
     }
 
     @JsonProperty("vpeBean")
-    public ScenarioKey_ getVpeBean() {
+    public VpeBean getVpeBean() {
         return vpeBean;
     }
 
     @JsonProperty("vpeBean")
-    public ProductionInfo setVpeBean(ScenarioKey_ vpeBean) {
+    public ProductionInfo setVpeBean(VpeBean vpeBean) {
         this.vpeBean = vpeBean;
         return this;
     }

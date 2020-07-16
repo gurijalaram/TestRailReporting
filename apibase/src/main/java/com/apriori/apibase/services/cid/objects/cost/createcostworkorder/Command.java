@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.response.objects;
+package com.apriori.apibase.services.cid.objects.cost.createcostworkorder;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -12,37 +12,38 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "first",
-    "second"
+    "commandType",
+    "inputs"
 })
-public class MaterialCatalogKeyData {
 
-    @JsonProperty("first")
-    private String first;
-    @JsonProperty("second")
-    private String second;
+public class Command {
+
+    @JsonProperty("commandType")
+    private String commandType;
+    @JsonProperty("inputs")
+    private Inputs inputs;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("first")
-    public String getFirst() {
-        return first;
+    @JsonProperty("commandType")
+    public String getCommandType() {
+        return commandType;
     }
 
-    @JsonProperty("first")
-    public MaterialCatalogKeyData setFirst(String first) {
-        this.first = first;
+    @JsonProperty("commandType")
+    public Command setCommandType(String commandType) {
+        this.commandType = commandType;
         return this;
     }
 
-    @JsonProperty("second")
-    public String getSecond() {
-        return second;
+    @JsonProperty("inputs")
+    public Inputs getInputs() {
+        return inputs;
     }
 
-    @JsonProperty("second")
-    public MaterialCatalogKeyData setSecond(String second) {
-        this.second = second;
+    @JsonProperty("inputs")
+    public Command setInputs(Inputs inputs) {
+        this.inputs = inputs;
         return this;
     }
 
@@ -55,5 +56,4 @@ public class MaterialCatalogKeyData {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }
