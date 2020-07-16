@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.GeckoDriverService;
@@ -156,7 +157,9 @@ public class DriverFactory {
                 break;
             case "edge":
                 WebDriverManager.edgedriver().version("83.0.478.64").setup();
-                result = new EdgeDriver(dc);
+                EdgeOptions edgeOptions = new EdgeOptions();
+                edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+                result = new EdgeDriver(edgeOptions);
         }
         return result;
     }
