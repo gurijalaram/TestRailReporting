@@ -8,13 +8,11 @@ import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
 
 public class EmailUtil {
-    public static Message[] getEmail(String address, String userName, String password) throws MessagingException,
-            IOException {
+    public static Message[] getEmail(String address, String userName, String password) throws MessagingException {
         Folder folder = null;
         Store store = null;
         String subject = null;

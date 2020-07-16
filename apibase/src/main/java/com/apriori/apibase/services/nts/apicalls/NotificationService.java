@@ -30,7 +30,7 @@ public class NotificationService {
     private static RequestEntity defaultEmailRequest(String subject) {
         url = url.concat(Constants.getNtsServiceHost() + "/emails?key=" + Constants.getSecretKey());
 
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "multipart/form-data");
         headers.put("ap-cloud-context", Constants.getNtsTargetCloudContext());
         RequestEntity requestEntity = RequestEntity.init(url, SendEmailResponse.class)
@@ -105,7 +105,7 @@ public class NotificationService {
 
     public static GetEmailResponse getEmails() {
         url = url.concat(Constants.getNtsServiceHost() + "/emails?key=" + Constants.getSecretKey());
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         headers.put("ap-cloud-context", Constants.getNtsTargetCloudContext());
 
         return (GetEmailResponse) GenericRequestUtil.get(
@@ -117,7 +117,7 @@ public class NotificationService {
     public static Email getEmail(String identity) {
         url = url.concat(Constants.getNtsServiceHost() + "/emails/" + identity + "?key=" + Constants.getSecretKey());
 
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         headers.put("ap-cloud-context", Constants.getNtsTargetCloudContext());
 
         return (Email) GenericRequestUtil.get(

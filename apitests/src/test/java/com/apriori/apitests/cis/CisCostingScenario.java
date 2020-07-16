@@ -68,7 +68,7 @@ public class CisCostingScenario extends TestUtil {
         }
 
         // poll for part state/batch state
-        Object partDetails = null;
+        Object partDetails;
         Boolean isPartComplete = false;
         Integer count = 0;
         while (count <= defaultTimeout) {
@@ -90,7 +90,7 @@ public class CisCostingScenario extends TestUtil {
         }
         Assert.assertEquals(true, isPartComplete);
 
-        Object batchDetails = null;
+        Object batchDetails;
         Boolean isBatchComplete = false;
         count = 0;
         while (count <= defaultTimeout) {
