@@ -9,7 +9,7 @@ pipeline {
         string(name: 'MODULE', defaultValue: 'Enter Test Target', description: 'What is the test target?')
         string(name: 'SUITE', defaultValue: 'Enter Testsuite', description: 'What is the testsuite to run?')
         choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa'], description: 'What is the target environment for testing?')
-        choice(name: 'TEST_MODE', choices: ['QA', LOCAL'], description: 'What is target test mode?')
+        choice(name: 'TEST_MODE', choices: ['QA', 'LOCAL'], description: 'What is target test mode?')
     }
 
     agent {
