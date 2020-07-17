@@ -28,7 +28,7 @@ public class EncryptionUtil {
     }
 
     private static String crypto(int cipherMode, String key, File inputFile,
-                               File outputFile) throws Exception {
+                               File outputFile) {
         try {
             Key secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);

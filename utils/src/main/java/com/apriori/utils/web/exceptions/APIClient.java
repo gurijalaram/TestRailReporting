@@ -89,12 +89,11 @@ public class APIClient {
      * If 'get_attachment/:attachment_id', returns a String
      */
     public Object sendGet(String uri, String data)
-        throws MalformedURLException, IOException, APIException {
+        throws IOException, APIException {
         return this.sendRequest("GET", uri, data);
     }
 
-    public Object sendGet(String uri) throws MalformedURLException,
-        IOException, APIException {
+    public Object sendGet(String uri) throws IOException, APIException {
         return this.sendRequest("GET", uri, null);
     }
 
@@ -116,12 +115,12 @@ public class APIClient {
      * same as java.util.Map.
      */
     public Object sendPost(String uri, Object data)
-        throws MalformedURLException, IOException, APIException {
+        throws IOException, APIException {
         return this.sendRequest("POST", uri, data);
     }
 
     private Object sendRequest(String method, String uri, Object data)
-        throws MalformedURLException, IOException, APIException {
+        throws IOException, APIException {
         URL url = new URL(this.myUrl + uri);
         // Create the connection object and set the required HTTP method
         // (GET/POST) and headers (content type and basic auth).
