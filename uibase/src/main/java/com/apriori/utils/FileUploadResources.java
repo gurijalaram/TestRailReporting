@@ -1,6 +1,7 @@
 package com.apriori.utils;
 
 import com.apriori.apibase.services.cid.objects.cost.FileOrderResponse;
+import com.apriori.apibase.services.cid.objects.cost.costworkorderstatus.CostWorkOrdersInfo;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command_;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Inputs;
@@ -63,6 +64,7 @@ public class FileUploadResources {
         initializeCostScenario(token);
         createCostWorkOrder(token);
         submitCostWorkOrder(token);
+        checkCostWorkOrderStatus(token);
         checkCostResult(token);
     }
 
@@ -241,6 +243,23 @@ public class FileUploadResources {
         GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
     }
 
+    private void checkCostWorkOrderStatus(HashMap<String, String> token) {
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
+
+        RequestEntity costRequestEntity = RequestEntity.init(orderURL, CostWorkOrdersInfo.class)
+            .setHeaders(headers)
+            .setHeaders(token);
+
+        long startTime = System.currentTimeMillis() / 1000;
+
+        String status;
+        do {
+            status = jsonNode(GenericRequestUtil.get(costRequestEntity, new RequestAreaApi()).getBody(), "status");
+        } while ((!status.equals("PROCESSING")) &&
+            (!status.equals("FAILED")) &&
+            ((System.currentTimeMillis() / 1000) - startTime) < 60);
+    }
+
     private void checkCostResult(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
 
@@ -260,16 +279,7 @@ public class FileUploadResources {
         String orderBody = GenericRequestUtil.get(costRequestEntity, new RequestAreaApi()).getBody();
     }
 
-//    private void checkCostResult(HashMap<String, String> token) {
-//        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/latest/cost-results?depth=ROOT";
-//
-//        RequestEntity costRequestEntity = RequestEntity.init(orderURL, FileUploadWorkOrder.class)
-//            .setHeaders(headers)
-//            .setHeaders(token);
-//
-//        jsonNode(GenericRequestUtil.get(costRequestEntity, new RequestAreaApi()).getBody(), "status");
-//    }
-//
+
 //    private void publishWorkOrder(HashMap<String, String> token) {
 //        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 //
