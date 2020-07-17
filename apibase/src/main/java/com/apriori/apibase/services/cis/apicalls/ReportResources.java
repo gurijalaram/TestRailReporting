@@ -15,6 +15,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ReportResources extends CisBase {
     private static final String endpointReports = "reports";
@@ -80,8 +81,8 @@ public class ReportResources extends CisBase {
         }
 
         String url = String.format(getCisUrl(), endpointReports);
-        ArrayList<String> partsIdenties = new ArrayList<String>();
-        partsIdenties.add(Constants.getCisPartIdentity());
+        List<String> partsIdentities = new ArrayList<>();
+        partsIdentities.add(Constants.getCisPartIdentity());
         NewReportRequest body = new NewReportRequest();
         body
                 .setExternalId(String.format(nrr.getExternalId(), System.currentTimeMillis()))

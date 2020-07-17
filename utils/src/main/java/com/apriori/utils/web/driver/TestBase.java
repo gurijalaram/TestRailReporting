@@ -3,7 +3,6 @@ package com.apriori.utils.web.driver;
 import com.apriori.utils.TestHelper;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.runner.ConcurrentTestRunner;
-import com.apriori.utils.web.rules.TestRailRule;
 import com.apriori.utils.web.rules.TestRule;
 import com.apriori.utils.web.util.ConsoleLogHandler;
 
@@ -11,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;

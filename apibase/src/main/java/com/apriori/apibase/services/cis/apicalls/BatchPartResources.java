@@ -59,7 +59,7 @@ public class BatchPartResources extends CisBase {
             url = endpointBatchPart;
         }
 
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "multipart/form-data");
         RequestEntity requestEntity = RequestEntity.init(url, Part.class)
                 .setHeaders(headers)

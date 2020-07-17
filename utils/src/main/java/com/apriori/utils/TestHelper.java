@@ -1,11 +1,9 @@
 package com.apriori.utils;
 
 import com.apriori.utils.web.driver.MyTestWatcher;
-import com.apriori.utils.web.driver.TestBase;
 import com.apriori.utils.web.driver.TestMode;
 import com.apriori.utils.web.driver.TestType;
 import com.apriori.utils.web.rules.TestRailRule;
-import com.apriori.utils.web.rules.TestRule;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Rule;

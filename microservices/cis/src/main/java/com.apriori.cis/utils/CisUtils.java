@@ -60,7 +60,7 @@ public class CisUtils extends ApiUtils {
     }
 
     public static Boolean pollState(Object obj, Class klass) {
-        String state = "";
+        String state;
         try {
             state = CisUtils.getState(obj, klass);
 
