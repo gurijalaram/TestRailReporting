@@ -22,15 +22,16 @@ public class NtsEmails {
     }
 
     @Test
-    @TestRail(testCaseId = "3880")
-    @Description("Get a list of emails using the NTS API")
+    @TestRail(testCaseId = "3828")
+    @Description("Send an email using the NTS API")
     public void sendEmail() {
-        String subject = String.format(Constants.getNtsEmailSubject(), System.currentTimeMillis());
+        String subject = String.format("%s_%d", Constants.getNtsEmailSubject(), System.currentTimeMillis());
         NotificationService.sendEmail(subject);
         Boolean emailExists = NotificationService.validateEmail(subject);
         Assert.assertEquals(true, emailExists);
 
     }
+
 
     @Test
     @TestRail(testCaseId = "3880")
