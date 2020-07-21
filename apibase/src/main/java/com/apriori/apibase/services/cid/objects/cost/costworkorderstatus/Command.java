@@ -1,6 +1,5 @@
 package com.apriori.apibase.services.cid.objects.cost.costworkorderstatus;
 
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,37 +12,37 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "scenarioIterationKey",
-    "inputSetId"
+    "commandType",
+    "inputs"
 })
-public class Inputs {
+public class Command {
 
-    @JsonProperty("scenarioIterationKey")
-    private ScenarioIterationKey scenarioIterationKey;
-    @JsonProperty("inputSetId")
-    private Integer inputSetId;
+    @JsonProperty("commandType")
+    private String commandType;
+    @JsonProperty("inputs")
+    private Inputs inputs;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("scenarioIterationKey")
-    public ScenarioIterationKey getScenarioIterationKey() {
-        return scenarioIterationKey;
+    @JsonProperty("commandType")
+    public String getCommandType() {
+        return commandType;
     }
 
-    @JsonProperty("scenarioIterationKey")
-    public Inputs setScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
-        this.scenarioIterationKey = scenarioIterationKey;
+    @JsonProperty("commandType")
+    public Command setCommandType(String commandType) {
+        this.commandType = commandType;
         return this;
     }
 
-    @JsonProperty("inputSetId")
-    public Integer getInputSetId() {
-        return inputSetId;
+    @JsonProperty("inputs")
+    public Inputs getInputs() {
+        return inputs;
     }
 
-    @JsonProperty("inputSetId")
-    public Inputs setInputSetId(Integer inputSetId) {
-        this.inputSetId = inputSetId;
+    @JsonProperty("inputs")
+    public Command setInputs(Inputs inputs) {
+        this.inputs = inputs;
         return this;
     }
 

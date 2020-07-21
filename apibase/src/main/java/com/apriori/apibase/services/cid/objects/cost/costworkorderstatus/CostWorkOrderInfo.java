@@ -21,7 +21,6 @@ import java.util.Map;
     "dateStarted"
 })
 
-
 public class CostWorkOrderInfo {
 
     @JsonProperty("version")
