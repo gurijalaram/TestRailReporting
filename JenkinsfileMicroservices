@@ -1,0 +1,103 @@
+def buildInfo
+def buildInfoFile = "build-info.yml"
+def timeStamp = new Date().format("yyyyMMddHHmmss")
+def javaOpts = ""
+def testSuite
+
+pipeline {
+    parameters {
+        string(name: 'MODULE', defaultValue: 'Enter Test Target', description: 'What is the test target?')
+        string(name: 'SUITE', defaultValue: 'Enter Testsuite', description: 'What is the testsuite to run?')
+        choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa'], description: 'What is the target environment for testing?')
+        choice(name: 'TEST_MODE', choices: ['QA', 'LOCAL'], description: 'What is target test mode?')
+    }
+
+    agent {
+        label "automation"
+    }
+
+    stages {
+        stage("Initialize") {
+            steps {
+                echo "Initializing.."
+                script {
+                    // Read file.
+                    buildInfo = readYaml file: buildInfoFile
+                    sh "rm ${buildInfoFile}"
+
+                    // Write file.
+                    buildInfo.buildNumber = env.BUILD_TAG
+                    buildInfo.buildTimestamp = timeStamp
+                    buildInfo.commitHash = env.GIT_COMMIT
+                    writeYaml file: buildInfoFile, data: buildInfo
+
+                    // Log file.
+                    sh "cat ${buildInfoFile}"
+
+                    // Set run time parameters
+                    javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
+                    javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
+
+                    testSuite = params.SUITE
+
+                    echo "${javaOpts}"
+                }
+            }
+        }
+        stage("Build") {
+            steps {
+                echo "Building.."
+                sh """
+                    docker build \
+                        --build-arg MODULE=${TEST_TYPE} \
+                        --build-arg TEST_MODE=${TEST_MODE} \
+                        --no-cache \
+                        --tag ${buildInfo.name}-build-${timeStamp}:latest \
+                        --label \"build-date=${timeStamp}\" \
+                        .
+                """
+            }
+        }
+        stage("Test") {
+            steps {
+                echo "Running.."
+                sh """
+                    docker run \
+                        -itd \
+                        --name ${buildInfo.name}-build-${timeStamp} \
+                        ${buildInfo.name}-build-${timeStamp}:latest
+                """
+
+                echo "Testing.."
+
+                sh """
+                    sleep 5s
+                    docker exec \
+                        ${buildInfo.name}-build-${timeStamp} \
+                        java \
+                        ${javaOpts} \
+                        -jar automation-tests.jar \
+                        --tests ${testSuite}
+                """
+
+                // Copy out Allure results
+                echo "Publishing Results"
+                sh """
+                    docker cp \
+                    ${buildInfo.name}-build-${timeStamp}:app/target/allure-results \
+                    .
+                """
+                allure includeProperties: false, jdk: "", results: [[path: "allure-results"]]
+            }
+        }
+    }
+    post {
+        always {
+            echo "Cleaning up.."
+            sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
+            sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
+            sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
+            cleanWs()
+        }
+    }
+}
