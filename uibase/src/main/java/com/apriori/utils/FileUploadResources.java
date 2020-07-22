@@ -6,6 +6,7 @@ import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command_;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Inputs;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.ScenarioIterationKey;
+import com.apriori.apibase.services.cid.objects.cost.iterations.EmptyCostIteration;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.MaterialBean;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfo;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey;
@@ -51,11 +52,11 @@ public class FileUploadResources {
     private static String masterName;
     private static int iteration;
     private static String costWorkOrderId;
+    private static int costingIteration;
     Map<String, String> headers = new HashMap<>();
 
     private String contentType = "Content-Type";
     private String applicationJson = "application/json";
-
 
     public void createFileUpload(HashMap<String, String> token, Object fileObject) {
         initializeFileUpload(token, fileObject);
@@ -67,6 +68,7 @@ public class FileUploadResources {
         submitCostWorkOrder(token);
         checkCostWorkOrderStatus(token);
         checkCostResult(token);
+        costingIteration(token);
     }
 
     private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
@@ -281,13 +283,12 @@ public class FileUploadResources {
     private void costingIteration(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations";
 
-        RequestEntity costRequestEntity = RequestEntity.init(orderURL, EmptyCostWorkOrderInfo.class)
+        RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, EmptyCostIteration.class)
             .setHeaders(headers)
             .setHeaders(token);
+
+        costingIteration = Integer.parseInt(jsonNode(GenericRequestUtil.get(iterationRequestEntity, new RequestAreaApi()).getBody(), "iteration"));
     }
-
-
-
 
 //    private void publishWorkOrder(HashMap<String, String> token) {
 //        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";

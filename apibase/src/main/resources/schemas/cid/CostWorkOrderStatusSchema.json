@@ -71,9 +71,7 @@
           "id",
           "status",
           "searchKey",
-          "command",
-          "dateSubmitted",
-          "dateStarted"
+          "command"
         ],
         "additionalProperties": true,
         "properties": {
