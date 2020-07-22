@@ -1,0 +1,338 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "array",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": [],
+  "examples": [
+    [
+      {
+        "version": 3,
+        "id": "807114f8-edf6-4eab-8cce-ee12aca5b154",
+        "status": "PROCESSING",
+        "searchKey": "Part-MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA.Initial(56)",
+        "command": {
+          "commandType": "PUBLISH",
+          "inputs": {
+            "scenarioIterationKey": {
+              "scenarioKey": {
+                "stateName": "Initial",
+                "masterName": "MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA",
+                "typeName": "partState",
+                "workspaceId": 56
+              },
+              "iteration": 6410
+            },
+            "overwrite": true,
+            "lock": false
+          }
+        },
+        "dateSubmitted": "2020-07-22T15:22:07Z",
+        "dateStarted": "2020-07-22T15:22:07Z"
+      }
+    ]
+  ],
+  "additionalItems": true,
+  "items": {
+    "anyOf": [
+      {
+        "$id": "#/items/anyOf/0",
+        "type": "object",
+        "title": "The first anyOf schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": {},
+        "examples": [
+          {
+            "version": 3,
+            "id": "807114f8-edf6-4eab-8cce-ee12aca5b154",
+            "status": "PROCESSING",
+            "searchKey": "Part-MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA.Initial(56)",
+            "command": {
+              "commandType": "PUBLISH",
+              "inputs": {
+                "scenarioIterationKey": {
+                  "scenarioKey": {
+                    "stateName": "Initial",
+                    "masterName": "MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA",
+                    "typeName": "partState",
+                    "workspaceId": 56
+                  },
+                  "iteration": 6410
+                },
+                "overwrite": true,
+                "lock": false
+              }
+            },
+            "dateSubmitted": "2020-07-22T15:22:07Z",
+            "dateStarted": "2020-07-22T15:22:07Z"
+          }
+        ],
+        "required": [
+          "version",
+          "id",
+          "status",
+          "searchKey",
+          "command",
+          "dateSubmitted",
+          "dateStarted"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "version": {
+            "$id": "#/items/anyOf/0/properties/version",
+            "type": "integer",
+            "title": "The version schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+              3
+            ]
+          },
+          "id": {
+            "$id": "#/items/anyOf/0/properties/id",
+            "type": "string",
+            "title": "The id schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "807114f8-edf6-4eab-8cce-ee12aca5b154"
+            ]
+          },
+          "status": {
+            "$id": "#/items/anyOf/0/properties/status",
+            "type": "string",
+            "title": "The status schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "PROCESSING"
+            ]
+          },
+          "searchKey": {
+            "$id": "#/items/anyOf/0/properties/searchKey",
+            "type": "string",
+            "title": "The searchKey schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "Part-MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA.Initial(56)"
+            ]
+          },
+          "command": {
+            "$id": "#/items/anyOf/0/properties/command",
+            "type": "object",
+            "title": "The command schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+              {
+                "commandType": "PUBLISH",
+                "inputs": {
+                  "scenarioIterationKey": {
+                    "scenarioKey": {
+                      "stateName": "Initial",
+                      "masterName": "MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA",
+                      "typeName": "partState",
+                      "workspaceId": 56
+                    },
+                    "iteration": 6410
+                  },
+                  "overwrite": true,
+                  "lock": false
+                }
+              }
+            ],
+            "required": [
+              "commandType",
+              "inputs"
+            ],
+            "additionalProperties": true,
+            "properties": {
+              "commandType": {
+                "$id": "#/items/anyOf/0/properties/command/properties/commandType",
+                "type": "string",
+                "title": "The commandType schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": [
+                  "PUBLISH"
+                ]
+              },
+              "inputs": {
+                "$id": "#/items/anyOf/0/properties/command/properties/inputs",
+                "type": "object",
+                "title": "The inputs schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": {},
+                "examples": [
+                  {
+                    "scenarioIterationKey": {
+                      "scenarioKey": {
+                        "stateName": "Initial",
+                        "masterName": "MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA",
+                        "typeName": "partState",
+                        "workspaceId": 56
+                      },
+                      "iteration": 6410
+                    },
+                    "overwrite": true,
+                    "lock": false
+                  }
+                ],
+                "required": [
+                  "scenarioIterationKey",
+                  "overwrite",
+                  "lock"
+                ],
+                "additionalProperties": true,
+                "properties": {
+                  "scenarioIterationKey": {
+                    "$id": "#/items/anyOf/0/properties/command/properties/inputs/properties/scenarioIterationKey",
+                    "type": "object",
+                    "title": "The scenarioIterationKey schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                      {
+                        "scenarioKey": {
+                          "stateName": "Initial",
+                          "masterName": "MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA",
+                          "typeName": "partState",
+                          "workspaceId": 56
+                        },
+                        "iteration": 6410
+                      }
+                    ],
+                    "required": [
+                      "scenarioKey",
+                      "iteration"
+                    ],
+                    "additionalProperties": true,
+                    "properties": {
+                      "scenarioKey": {
+                        "$id": "#/items/anyOf/0/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey",
+                        "type": "object",
+                        "title": "The scenarioKey schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": {},
+                        "examples": [
+                          {
+                            "stateName": "Initial",
+                            "masterName": "MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA",
+                            "typeName": "partState",
+                            "workspaceId": 56
+                          }
+                        ],
+                        "required": [
+                          "stateName",
+                          "masterName",
+                          "typeName",
+                          "workspaceId"
+                        ],
+                        "additionalProperties": true,
+                        "properties": {
+                          "stateName": {
+                            "$id": "#/items/anyOf/0/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/stateName",
+                            "type": "string",
+                            "title": "The stateName schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                              "Initial"
+                            ]
+                          },
+                          "masterName": {
+                            "$id": "#/items/anyOf/0/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/masterName",
+                            "type": "string",
+                            "title": "The masterName schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                              "MACHINING-DTC_ISSUE_SIDEMILLINGLENGTHDIA"
+                            ]
+                          },
+                          "typeName": {
+                            "$id": "#/items/anyOf/0/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/typeName",
+                            "type": "string",
+                            "title": "The typeName schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                              "partState"
+                            ]
+                          },
+                          "workspaceId": {
+                            "$id": "#/items/anyOf/0/properties/command/properties/inputs/properties/scenarioIterationKey/properties/scenarioKey/properties/workspaceId",
+                            "type": "integer",
+                            "title": "The workspaceId schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                              56
+                            ]
+                          }
+                        }
+                      },
+                      "iteration": {
+                        "$id": "#/items/anyOf/0/properties/command/properties/inputs/properties/scenarioIterationKey/properties/iteration",
+                        "type": "integer",
+                        "title": "The iteration schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": 0,
+                        "examples": [
+                          6410
+                        ]
+                      }
+                    }
+                  },
+                  "overwrite": {
+                    "$id": "#/items/anyOf/0/properties/command/properties/inputs/properties/overwrite",
+                    "type": "boolean",
+                    "title": "The overwrite schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                      true
+                    ]
+                  },
+                  "lock": {
+                    "$id": "#/items/anyOf/0/properties/command/properties/inputs/properties/lock",
+                    "type": "boolean",
+                    "title": "The lock schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                      false
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "dateSubmitted": {
+            "$id": "#/items/anyOf/0/properties/dateSubmitted",
+            "type": "string",
+            "title": "The dateSubmitted schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "2020-07-22T15:22:07Z"
+            ]
+          },
+          "dateStarted": {
+            "$id": "#/items/anyOf/0/properties/dateStarted",
+            "type": "string",
+            "title": "The dateStarted schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "2020-07-22T15:22:07Z"
+            ]
+          }
+        }
+      }
+    ],
+    "$id": "#/items"
+  }
+}
