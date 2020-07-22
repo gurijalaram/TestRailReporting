@@ -16,7 +16,7 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "commandType"
+    "items"
 })
 
 @Schema(location = "cid/CostWorkOrderStatusSchema.json")

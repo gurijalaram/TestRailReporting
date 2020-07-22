@@ -56,6 +56,7 @@ public class FileUploadResources {
     private String contentType = "Content-Type";
     private String applicationJson = "application/json";
 
+
     public void createFileUpload(HashMap<String, String> token, Object fileObject) {
         initializeFileUpload(token, fileObject);
         createFileUploadWorkOrder(token, fileObject);
@@ -275,9 +276,17 @@ public class FileUploadResources {
         } while ((!status.equals("SUCCESS")) &&
             (!status.equals("FAILED")) &&
             ((System.currentTimeMillis() / 1000) - startTime) < 60);
-
-        String orderBody = GenericRequestUtil.get(costRequestEntity, new RequestAreaApi()).getBody();
     }
+
+    private void costingIteration(HashMap<String, String> token) {
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations";
+
+        RequestEntity costRequestEntity = RequestEntity.init(orderURL, EmptyCostWorkOrderInfo.class)
+            .setHeaders(headers)
+            .setHeaders(token);
+    }
+
+
 
 
 //    private void publishWorkOrder(HashMap<String, String> token) {

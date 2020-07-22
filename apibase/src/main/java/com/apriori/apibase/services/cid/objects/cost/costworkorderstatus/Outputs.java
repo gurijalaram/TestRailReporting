@@ -12,51 +12,37 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "commandType",
-    "inputs",
-    "outputs"
+    "scenarioIterationKey",
+    "costStatus"
 })
-public class Command {
+public class Outputs {
 
-    @JsonProperty("commandType")
-    private String commandType;
-    @JsonProperty("inputs")
-    private Inputs inputs;
-    @JsonProperty("outputs")
-    private Outputs outputs;
+    @JsonProperty("scenarioIterationKey")
+    private ScenarioIterationKey scenarioIterationKey;
+    @JsonProperty("costStatus")
+    private String costStatus;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("commandType")
-    public String getCommandType() {
-        return commandType;
+    @JsonProperty("scenarioIterationKey")
+    public ScenarioIterationKey getScenarioIterationKey() {
+        return scenarioIterationKey;
     }
 
-    @JsonProperty("commandType")
-    public Command setCommandType(String commandType) {
-        this.commandType = commandType;
+    @JsonProperty("scenarioIterationKey")
+    public Outputs setScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
+        this.scenarioIterationKey = scenarioIterationKey;
         return this;
     }
 
-    @JsonProperty("inputs")
-    public Inputs getInputs() {
-        return inputs;
+    @JsonProperty("costStatus")
+    public String getCostStatus() {
+        return costStatus;
     }
 
-    @JsonProperty("inputs")
-    public Command setInputs(Inputs inputs) {
-        this.inputs = inputs;
-        return this;
-    }
-
-    @JsonProperty("outputs")
-    public Outputs getOutputs() {
-        return outputs;
-    }
-
-    @JsonProperty("outputs")
-    public Command setOutputs(Outputs outputs) {
-        this.outputs = outputs;
+    @JsonProperty("costStatus")
+    public Outputs setCostStatus(String costStatus) {
+        this.costStatus = costStatus;
         return this;
     }
 
