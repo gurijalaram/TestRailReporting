@@ -12,6 +12,11 @@ import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionIn
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey_;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.VpeBean;
+import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishCommand;
+import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishInputs;
+import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioIterationKey;
+import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioKey;
+import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PushlishWorkOrderInfo;
 import com.apriori.apibase.services.cid.objects.upload.FileCommandEntity;
 import com.apriori.apibase.services.cid.objects.upload.FileOrderEntity;
 import com.apriori.apibase.services.cid.objects.upload.FileOrdersEntity;
@@ -69,6 +74,7 @@ public class FileUploadResources {
         checkCostWorkOrderStatus(token);
         checkCostResult(token);
         costingIteration(token);
+        publishWorkOrder(token);
     }
 
     private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
@@ -229,7 +235,7 @@ public class FileUploadResources {
                             .setTypeName(typeName)
                             .setWorkspaceId(workspaceId))))));
 
-        costWorkOrderId = jsonNode(GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody(),"id");
+        costWorkOrderId = jsonNode(GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
 
     private void submitCostWorkOrder(HashMap<String, String> token) {
@@ -290,16 +296,25 @@ public class FileUploadResources {
         costingIteration = Integer.parseInt(jsonNode(GenericRequestUtil.get(iterationRequestEntity, new RequestAreaApi()).getBody(), "iteration"));
     }
 
-//    private void publishWorkOrder(HashMap<String, String> token) {
-//        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
-//
-//        headers.put(contentType, applicationJson);
-//
-//        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, FileUploadWorkOrder.class)
-//            .setHeaders(headers)
-//            .setHeaders(token)
-//            .setBody();
-//    }
+    private void publishWorkOrder(HashMap<String, String> token) {
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, PushlishWorkOrderInfo.class)
+            .setHeaders(headers)
+            .setHeaders(token)
+            .setBody(new PushlishWorkOrderInfo().setCommand(
+                new PublishCommand().setCommandType("PUBLISH")
+                    .setInputs(new PublishInputs().setOverwrite(false)
+                        .setLock(false)
+                        .setScenarioIterationKey(new PublishScenarioIterationKey().setScenarioKey(
+                            new PublishScenarioKey().setTypeName(typeName)
+                                .setStateName(stateName)
+                                .setWorkspaceId(workspaceId)
+                                .setMasterName(masterName))
+                            .setIteration(costingIteration)))));
+    }
 //
 //    private void submitPublishWorkOrder(HashMap<String, String> token) {
 //        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
