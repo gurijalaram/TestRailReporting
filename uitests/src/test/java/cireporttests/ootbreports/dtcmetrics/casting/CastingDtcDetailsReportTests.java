@@ -59,7 +59,6 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC Details report")
     public void testRollupDropDown() {
@@ -77,7 +76,6 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC Details input control panel functions correctly")
     public void testApplyButton() {
@@ -95,7 +93,6 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Details input control panel works")
     public void testCancelButton() {
