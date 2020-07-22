@@ -1,7 +1,7 @@
 package com.apriori.utils;
 
 import com.apriori.apibase.services.cid.objects.cost.FileOrderResponse;
-import com.apriori.apibase.services.cid.objects.cost.costworkorderstatus.CostWorkOrdersInfo;
+import com.apriori.apibase.services.cid.objects.cost.costworkorderstatus.EmptyCostWorkOrderInfo;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command_;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Inputs;
@@ -246,7 +246,7 @@ public class FileUploadResources {
     private void checkCostWorkOrderStatus(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
 
-        RequestEntity costRequestEntity = RequestEntity.init(orderURL, CostWorkOrdersInfo.class)
+        RequestEntity costRequestEntity = RequestEntity.init(orderURL, EmptyCostWorkOrderInfo.class)
             .setHeaders(headers)
             .setHeaders(token);
 
@@ -263,7 +263,7 @@ public class FileUploadResources {
     private void checkCostResult(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
 
-        RequestEntity costRequestEntity = RequestEntity.init(orderURL, FileUploadWorkOrder.class)
+        RequestEntity costRequestEntity = RequestEntity.init(orderURL, EmptyCostWorkOrderInfo.class)
             .setHeaders(headers)
             .setHeaders(token);
 
