@@ -224,11 +224,8 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "inputControls")
     private WebElement inputControlsDiv;
 
-    @FindBy(xpath = "((//div[@id='reportContainer']//tbody/tr)[4]/td)[4]")
+    @FindBy(xpath = "//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]")
     private WebElement headerDisplayedRollup;
-
-    @FindBy(xpath = "//div[@id='reportContainer']//span[contains(text(), 'Rollup:')]/../..//span[contains(text(), 'ALL')]")
-    private WebElement headerDisplayedCastingDtcDetails;
 
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[1]")
     private WebElement partNamePlasticDtcReport;
@@ -981,27 +978,10 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return String name of displayed rollup
      */
-    public String getDisplayedRollup(String reportName) {
+    public String getDisplayedRollup() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return waitForCorrectHeader(reportName);
-    }
-
-    /**
-     * Method to wait on correct header, based on report name
-     *
-     * @param reportName String
-     * @return String of header text
-     */
-    private String waitForCorrectHeader(String reportName) {
-        String textToReturn;
-        if (reportName.equals("Casting DTC Details") || reportName.equals("Casting DTC")) {
-            pageUtils.waitForElementToAppear(headerDisplayedCastingDtcDetails);
-            textToReturn = headerDisplayedCastingDtcDetails.getText();
-        } else {
-            pageUtils.waitForElementToAppear(headerDisplayedRollup);
-            textToReturn = headerDisplayedRollup.getText();
-        }
-        return textToReturn;
+        pageUtils.waitForElementToAppear(headerDisplayedRollup);
+        return headerDisplayedRollup.getText();
     }
 
     /**

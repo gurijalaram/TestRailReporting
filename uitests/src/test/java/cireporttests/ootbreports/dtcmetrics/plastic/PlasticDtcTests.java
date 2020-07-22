@@ -82,7 +82,7 @@ public class PlasticDtcTests extends TestBase {
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
 
-        assertThat(plasticDtcReportPage.getDisplayedRollup(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName()),
+        assertThat(plasticDtcReportPage.getDisplayedRollup(),
                 is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
     }
 
@@ -230,7 +230,7 @@ public class PlasticDtcTests extends TestBase {
             .clickApply()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
 
-        assertThat(plasticDtcReportPage.getDisplayedRollup(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName()),
+        assertThat(plasticDtcReportPage.getDisplayedRollup(),
                 is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
     }
 
