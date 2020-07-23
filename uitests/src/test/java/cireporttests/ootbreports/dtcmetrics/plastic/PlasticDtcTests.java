@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
+import cireporttests.inputcontrols.InputControlsTests;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
@@ -31,6 +32,7 @@ import java.math.BigDecimal;
 public class PlasticDtcTests extends TestBase {
 
     private PlasticDtcReportPage plasticDtcReportPage;
+    private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private ViewRepositoryPage repository;
     private String assemblyType = "";
@@ -122,39 +124,16 @@ public class PlasticDtcTests extends TestBase {
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Input Field")
     public void testPlasticDtcExportSetFilterInputField() {
-        plasticDtcReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class);
-
-        Integer availableExportSetCount = Integer.parseInt(plasticDtcReportPage.getCountOfExportSets());
-
-        plasticDtcReportPage.setEarliestExportDateToTodayInput()
-                .setLatestExportDateToTwoDaysFutureInput()
-                .ensureDatesAreCorrect(true, false)
-                .waitForCorrectExportSetListCount("0");
-
-        assertThat(Integer.parseInt(plasticDtcReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
-
+        inputControlsTests = new InputControlsTests();
+        inputControlsTests.testExportSetFilterUsingInputField(driver, PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Date Picker")
     public void testPlasticDtcExportSetFilterDatePicker() {
-        plasticDtcReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class);
-
-        Integer availableExportSetCount = Integer.parseInt(plasticDtcReportPage.getCountOfExportSets());
-
-        plasticDtcReportPage.setEarliestExportDateToTodayPicker()
-            .setLatestExportDateToTodayPlusTwoPicker()
-            .ensureDatesAreCorrect(true, false)
-            .waitForCorrectExportSetListCount("0");
-
-        assertThat(Integer.parseInt(plasticDtcReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+        inputControlsTests = new InputControlsTests();
+        inputControlsTests.testExportSetFilterUsingDatePicker(driver, PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
     }
 
     @Test
