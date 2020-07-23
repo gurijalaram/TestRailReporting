@@ -81,8 +81,8 @@ public class FileUploadResources {
         submitCostWorkOrder(token);
         checkCostWorkOrderStatus(token);
         checkCostResult(token);
-        costingIteration(token);
-        publishWorkOrder(token);
+        getCostingIteration(token);
+        initializePublishScenario(token);
         submitPublishWorkOrder(token);
         checkPublishWorkOrderStatus(token);
         checkPublishResult(token);
@@ -245,7 +245,7 @@ public class FileUploadResources {
         checkOrderStatus(checkCostOrder(token), ORDER_SUCCESS);
     }
 
-    private void costingIteration(HashMap<String, String> token) {
+    private void getCostingIteration(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations";
 
         RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, EmptyCostIteration.class)
@@ -255,7 +255,7 @@ public class FileUploadResources {
         costingIteration = Integer.parseInt(jsonNode(GenericRequestUtil.get(iterationRequestEntity, new RequestAreaApi()).getBody(), "iteration"));
     }
 
-    private void publishWorkOrder(HashMap<String, String> token) {
+    private void initializePublishScenario(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
         headers.put(contentType, applicationJson);
@@ -282,7 +282,7 @@ public class FileUploadResources {
     }
 
     private void checkPublishWorkOrderStatus(HashMap<String, String> token) {
-        checkOrderStatus(checkPublishOrder(token, PublishStatusInfo.class));
+        checkPublishingStatusIsProcessing(checkPublishOrder(token, PublishStatusInfo.class));
     }
 
     private void checkPublishResult(HashMap<String, String> token) {
@@ -328,7 +328,7 @@ public class FileUploadResources {
         } while ((!status.equals(processStatus)) && (!status.equals(ORDER_FAILED)) && ((System.currentTimeMillis() / 1000) - startTime) < 60);
     }
 
-    private void checkOrderStatus(RequestEntity requestEntity) {
+    private void checkPublishingStatusIsProcessing(RequestEntity requestEntity) {
         long startTime = System.currentTimeMillis() / 1000;
 
         String status;
