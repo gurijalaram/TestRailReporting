@@ -5,13 +5,6 @@ def javaOpts = ""
 def testSuite
 
 pipeline {
-    parameters {
-        string(name: 'MODULE', defaultValue: 'Enter Test Target', description: 'What is the test target?')
-        string(name: 'SUITE', defaultValue: 'Enter Testsuite', description: 'What is the testsuite to run?')
-        choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa'], description: 'What is the target environment for testing?')
-        choice(name: 'TEST_MODE', choices: ['QA', 'LOCAL'], description: 'What is target test mode?')
-    }
-
     agent {
         label "automation"
     }
@@ -49,7 +42,7 @@ pipeline {
                 echo "Building.."
                 sh """
                     docker build \
-                        --build-arg MODULE=${TEST_TYPE} \
+                        --build-arg MODULE=${MODULE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
