@@ -65,13 +65,18 @@ public class FileUploadResources {
     private final String ORDER_PROCESSING = "PROCESSING";
     private final String ORDER_SUCCESS = "SUCCESS";
     private final String ORDER_FAILED = "FAILED";
+    Map<String, String> headers = new HashMap<>();
+    NewPartRequest newPartRequest = null;
     private String contentType = "Content-Type";
     private String applicationJson = "application/json";
 
-    Map<String, String> headers = new HashMap<>();
-    NewPartRequest newPartRequest = null;
-
-    public void createFileUpload(HashMap<String, String> token, Object fileObject) {
+    /**
+     * Method to upload, cost and publish a scenario
+     *
+     * @param token      - the user token
+     * @param fileObject - the json file as object
+     */
+    public void uploadCostPublishApi(HashMap<String, String> token, Object fileObject) {
         initializeFileUpload(token, fileObject);
         createFileUploadWorkOrder(token, fileObject);
         submitFileUploadWorkOrder(token);
@@ -88,6 +93,11 @@ public class FileUploadResources {
         checkPublishResult(token);
     }
 
+    /**
+     * Initializes file upload
+     * @param token      - the user token
+     * @param fileObject - the json file as object
+     */
     private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
         newPartRequest = (NewPartRequest) fileObject;
         String url = Constants.getBaseUrl() + "apriori/cost/session/ws/files";
@@ -103,6 +113,11 @@ public class FileUploadResources {
         identity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "identity");
     }
 
+    /**
+     * Creates file upload
+     * @param token      - the user token
+     * @param fileObject - the json file as object
+     */
     private void createFileUploadWorkOrder(HashMap<String, String> token, Object fileObject) {
         newPartRequest = (NewPartRequest) fileObject;
         String fileURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
@@ -122,10 +137,18 @@ public class FileUploadResources {
         orderId = jsonNode(GenericRequestUtil.post(fileRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
 
+    /**
+     * Submits file for upload
+     * @param token - the user token
+     */
     private void submitFileUploadWorkOrder(HashMap<String, String> token) {
         submitOrder(token, orderId);
     }
 
+    /**
+     * Checks file status
+     * @param token - the user token
+     */
     private void checkFileWorkOrderStatus(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + orderId;
 
@@ -146,6 +169,10 @@ public class FileUploadResources {
         iteration = Integer.parseInt(jsonNode(orderBody, "iteration"));
     }
 
+    /**
+     * Initialize cost scenario
+     * @param token - the user token
+     */
     private void initializeCostScenario(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/production-info";
 
@@ -213,6 +240,10 @@ public class FileUploadResources {
         costOrderId = Integer.parseInt(jsonNode(GenericRequestUtil.post(costRequestEntity, new RequestAreaApi()).getBody(), "id"));
     }
 
+    /**
+     * Create cost work order
+     * @param token - the user token
+     */
     private void createCostWorkOrder(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
@@ -233,18 +264,34 @@ public class FileUploadResources {
         costWorkOrderId = jsonNode(GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
 
+    /**
+     * Submits scenario for costing
+     * @param token - the user token
+     */
     private void submitCostWorkOrder(HashMap<String, String> token) {
         submitOrder(token, costWorkOrderId);
     }
 
+    /**
+     * Check costing status
+     * @param token - the user token
+     */
     private void checkCostWorkOrderStatus(HashMap<String, String> token) {
         checkOrderStatus(checkCostOrder(token), ORDER_PROCESSING);
     }
 
+    /**
+     * Checks cost result
+     * @param token - the user token
+     */
     private void checkCostResult(HashMap<String, String> token) {
         checkOrderStatus(checkCostOrder(token), ORDER_SUCCESS);
     }
 
+    /**
+     * Gets costing iteration
+     * @param token - the user token
+     */
     private void getCostingIteration(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations";
 
@@ -255,6 +302,10 @@ public class FileUploadResources {
         costingIteration = Integer.parseInt(jsonNode(GenericRequestUtil.get(iterationRequestEntity, new RequestAreaApi()).getBody(), "iteration"));
     }
 
+    /**
+     * Initializes publish scenario
+     * @param token - the user token
+     */
     private void initializePublishScenario(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
@@ -277,18 +328,35 @@ public class FileUploadResources {
         publishWorkOrderId = jsonNode(GenericRequestUtil.post(publishRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
 
+    /**
+     * Submits publish work order
+     * @param token - the user token
+     */
     private void submitPublishWorkOrder(HashMap<String, String> token) {
         submitOrder(token, publishWorkOrderId);
     }
 
+    /**
+     * Checks publish order status
+     * @param token - the user token
+     */
     private void checkPublishWorkOrderStatus(HashMap<String, String> token) {
         checkPublishingStatusIsProcessing(checkPublishOrder(token, PublishStatusInfo.class));
     }
 
+    /**
+     * Checks publish result
+     * @param token - the user token
+     */
     private void checkPublishResult(HashMap<String, String> token) {
         checkOrderStatus(checkPublishOrder(token, PublishWorkOrderInfoResult.class), ORDER_SUCCESS);
     }
 
+    /**
+     * Checks costing status
+     * @param token - the user token
+     * @return request entity
+     */
     private RequestEntity checkCostOrder(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
 
@@ -297,6 +365,12 @@ public class FileUploadResources {
             .setHeaders(token);
     }
 
+    /**
+     * Checks publish order
+     * @param token - the user token
+     * @param klass - the class
+     * @return request entity
+     */
     private RequestEntity checkPublishOrder(HashMap<String, String> token, Class klass) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + publishWorkOrderId;
 
@@ -305,6 +379,11 @@ public class FileUploadResources {
             .setHeaders(token);
     }
 
+    /**
+     * Submits the order for processing
+     * @param token - the user token
+     * @param orderId - the order id
+     */
     private void submitOrder(HashMap<String, String> token, String orderId) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
 
@@ -319,6 +398,11 @@ public class FileUploadResources {
         GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
     }
 
+    /**
+     * Checks the order status
+     * @param requestEntity - the request entity
+     * @param processStatus - the status
+     */
     private void checkOrderStatus(RequestEntity requestEntity, String processStatus) {
         long startTime = System.currentTimeMillis() / 1000;
 
@@ -328,6 +412,10 @@ public class FileUploadResources {
         } while ((!status.equals(processStatus)) && (!status.equals(ORDER_FAILED)) && ((System.currentTimeMillis() / 1000) - startTime) < 60);
     }
 
+    /**
+     * Checks publishing status is processing
+     * @param requestEntity - the request entity
+     */
     private void checkPublishingStatusIsProcessing(RequestEntity requestEntity) {
         long startTime = System.currentTimeMillis() / 1000;
 
@@ -337,13 +425,19 @@ public class FileUploadResources {
         } while ((status.equals(ORDER_PROCESSING)) && (!status.equals(ORDER_FAILED)) && ((System.currentTimeMillis() / 1000) - startTime) < 60);
     }
 
+    /**
+     * Checks the json tree
+     * @param jsonProperties - the json properties
+     * @param path - the path
+     * @return String
+     */
     private String jsonNode(String jsonProperties, String path) {
         JsonNode node;
         try {
             node = new ObjectMapper().readTree(jsonProperties);
         } catch (JsonProcessingException e) {
             logger.debug(e.getMessage());
-            throw new NullPointerException("can't read json node");
+            throw new NullPointerException("Not able to read JsonNode");
         }
         return node.findPath(path).asText();
     }
