@@ -65,6 +65,8 @@ public class FileUploadResources {
 
     private String contentType = "Content-Type";
     private String applicationJson = "application/json";
+    private final String ORDER_PROCESSING = "PROCESSING";
+    private final String ORDER_SUCCESS = "SUCCESS";
 
     public void createFileUpload(HashMap<String, String> token, Object fileObject) {
         initializeFileUpload(token, fileObject);
@@ -118,17 +120,7 @@ public class FileUploadResources {
     }
 
     private void submitFileUploadWorkOrder(HashMap<String, String> token) {
-        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
-
-        headers.put(contentType, applicationJson);
-
-        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
-            .setHeaders(headers)
-            .setHeaders(token)
-            .setBody(new FileWorkOrderEntity().setOrderIds(Collections.singletonList(orderId))
-                .setAction("SUBMIT"));
-
-        GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
+        submitOrder(token, orderId);
     }
 
     private void checkFileWorkOrderStatus(HashMap<String, String> token) {
@@ -245,17 +237,7 @@ public class FileUploadResources {
     }
 
     private void submitCostWorkOrder(HashMap<String, String> token) {
-        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
-
-        headers.put(contentType, applicationJson);
-
-        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
-            .setHeaders(headers)
-            .setHeaders(token)
-            .setBody(new FileWorkOrderEntity().setOrderIds(Collections.singletonList(costWorkOrderId))
-                .setAction("SUBMIT"));
-
-        GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
+        submitOrder(token, costWorkOrderId);
     }
 
     private void checkCostWorkOrderStatus(HashMap<String, String> token) {
@@ -265,14 +247,7 @@ public class FileUploadResources {
             .setHeaders(headers)
             .setHeaders(token);
 
-        long startTime = System.currentTimeMillis() / 1000;
-
-        String status;
-        do {
-            status = jsonNode(GenericRequestUtil.get(costRequestEntity, new RequestAreaApi()).getBody(), "status");
-        } while ((!status.equals("PROCESSING")) &&
-            (!status.equals("FAILED")) &&
-            ((System.currentTimeMillis() / 1000) - startTime) < 60);
+        checkOrderStatus(costRequestEntity, ORDER_PROCESSING);
     }
 
     private void checkCostResult(HashMap<String, String> token) {
@@ -282,14 +257,7 @@ public class FileUploadResources {
             .setHeaders(headers)
             .setHeaders(token);
 
-        long startTime = System.currentTimeMillis() / 1000;
-
-        String status;
-        do {
-            status = jsonNode(GenericRequestUtil.get(costRequestEntity, new RequestAreaApi()).getBody(), "status");
-        } while ((!status.equals("SUCCESS")) &&
-            (!status.equals("FAILED")) &&
-            ((System.currentTimeMillis() / 1000) - startTime) < 60);
+        checkOrderStatus(costRequestEntity, ORDER_SUCCESS);
     }
 
     private void costingIteration(HashMap<String, String> token) {
@@ -325,17 +293,7 @@ public class FileUploadResources {
     }
 
     private void submitPublishWorkOrder(HashMap<String, String> token) {
-        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
-
-        headers.put(contentType, applicationJson);
-
-        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
-            .setHeaders(headers)
-            .setHeaders(token)
-            .setBody(new FileWorkOrderEntity().setOrderIds(Collections.singletonList(publishWorkOrderId))
-                .setAction("SUBMIT"));
-
-        GenericRequestUtil.post(publishRequestEntity, new RequestAreaApi()).getBody();
+        submitOrder(token, publishWorkOrderId);
     }
 
     private void checkPublishWorkOrderStatus(HashMap<String, String> token) {
@@ -360,12 +318,30 @@ public class FileUploadResources {
             .setHeaders(headers)
             .setHeaders(token);
 
+        checkOrderStatus(publishRequestEntity, ORDER_SUCCESS);
+    }
+
+    private void submitOrder(HashMap<String, String> token, String orderId) {
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
+            .setHeaders(headers)
+            .setHeaders(token)
+            .setBody(new FileWorkOrderEntity().setOrderIds(Collections.singletonList(orderId))
+                .setAction("SUBMIT"));
+
+        GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
+    }
+
+    private void checkOrderStatus(RequestEntity requestEntity, String processStatus) {
         long startTime = System.currentTimeMillis() / 1000;
 
         String status;
         do {
-            status = jsonNode(GenericRequestUtil.get(publishRequestEntity, new RequestAreaApi()).getBody(), "status");
-        } while ((!status.equals("SUCCESS")) && (!status.equals("FAILED")) && ((System.currentTimeMillis() / 1000) - startTime) < 60);
+            status = jsonNode(GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getBody(), "status");
+        } while ((!status.equals(processStatus)) && (!status.equals("FAILED")) && ((System.currentTimeMillis() / 1000) - startTime) < 60);
     }
 
     private String jsonNode(String jsonProperties, String path) {
