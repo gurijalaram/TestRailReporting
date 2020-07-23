@@ -52,8 +52,9 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("version")
-    public void setVersion(Integer version) {
+    public PublishWorkOrderInfo setVersion(Integer version) {
         this.version = version;
+        return this;
     }
 
     @JsonProperty("id")
@@ -62,8 +63,9 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("id")
-    public void setId(String id) {
+    public PublishWorkOrderInfo setId(String id) {
         this.id = id;
+        return this;
     }
 
     @JsonProperty("status")
@@ -72,8 +74,9 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("status")
-    public void setStatus(String status) {
+    public PublishWorkOrderInfo setStatus(String status) {
         this.status = status;
+        return this;
     }
 
     @JsonProperty("searchKey")
@@ -82,8 +85,9 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("searchKey")
-    public void setSearchKey(String searchKey) {
+    public PublishWorkOrderInfo setSearchKey(String searchKey) {
         this.searchKey = searchKey;
+        return this;
     }
 
     @JsonProperty("command")
@@ -92,8 +96,9 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("command")
-    public void setCommand(PublishCommand command) {
+    public PublishWorkOrderInfo setCommand(PublishCommand command) {
         this.command = command;
+        return this;
     }
 
     @JsonProperty("dateSubmitted")
@@ -102,8 +107,9 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("dateSubmitted")
-    public void setDateSubmitted(String dateSubmitted) {
+    public PublishWorkOrderInfo setDateSubmitted(String dateSubmitted) {
         this.dateSubmitted = dateSubmitted;
+        return this;
     }
 
     @JsonProperty("dateStarted")
@@ -112,8 +118,9 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("dateStarted")
-    public void setDateStarted(String dateStarted) {
+    public PublishWorkOrderInfo setDateStarted(String dateStarted) {
         this.dateStarted = dateStarted;
+        return this;
     }
 
     @JsonProperty("dateCompleted")
@@ -122,8 +129,9 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("dateCompleted")
-    public void setDateCompleted(String dateCompleted) {
+    public PublishWorkOrderInfo setDateCompleted(String dateCompleted) {
         this.dateCompleted = dateCompleted;
+        return this;
     }
 
     @JsonAnyGetter
@@ -135,5 +143,4 @@ public class PublishWorkOrderInfo {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

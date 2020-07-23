@@ -27,8 +27,9 @@ public class Outputs {
     }
 
     @JsonProperty("scenarioIterationKey")
-    public void setScenarioIterationKey(ScenarioIterationKey_ scenarioIterationKey) {
+    public Outputs setScenarioIterationKey(ScenarioIterationKey_ scenarioIterationKey) {
         this.scenarioIterationKey = scenarioIterationKey;
+        return this;
     }
 
     @JsonAnyGetter
@@ -40,5 +41,4 @@ public class Outputs {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

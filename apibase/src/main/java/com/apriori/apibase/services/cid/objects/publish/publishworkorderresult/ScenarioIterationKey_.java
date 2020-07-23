@@ -32,8 +32,9 @@ public class ScenarioIterationKey_ {
     }
 
     @JsonProperty("scenarioKey")
-    public void setScenarioKey(ScenarioKey_ scenarioKey) {
+    public ScenarioIterationKey_ setScenarioKey(ScenarioKey_ scenarioKey) {
         this.scenarioKey = scenarioKey;
+        return this;
     }
 
     @JsonProperty("iteration")
@@ -42,8 +43,9 @@ public class ScenarioIterationKey_ {
     }
 
     @JsonProperty("iteration")
-    public void setIteration(Integer iteration) {
+    public ScenarioIterationKey_ setIteration(Integer iteration) {
         this.iteration = iteration;
+        return this;
     }
 
     @JsonAnyGetter
@@ -55,5 +57,4 @@ public class ScenarioIterationKey_ {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

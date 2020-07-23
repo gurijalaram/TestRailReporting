@@ -20,6 +20,8 @@ public class Inputs {
 
     @JsonProperty("scenarioIterationKey")
     private ScenarioIterationKey scenarioIterationKey;
+    @JsonProperty("newScenarioName")
+    private String newScenarioName;
     @JsonProperty("overwrite")
     private Boolean overwrite;
     @JsonProperty("lock")
@@ -35,6 +37,17 @@ public class Inputs {
     @JsonProperty("scenarioIterationKey")
     public Inputs setScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
         this.scenarioIterationKey = scenarioIterationKey;
+        return this;
+    }
+
+    @JsonProperty("newScenarioName")
+    public String getNewScenarioName() {
+        return newScenarioName;
+    }
+
+    @JsonProperty("newScenarioName")
+    public Inputs setNewScenarioName(String newScenarioName) {
+        this.newScenarioName = newScenarioName;
         return this;
     }
 
@@ -69,5 +82,4 @@ public class Inputs {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

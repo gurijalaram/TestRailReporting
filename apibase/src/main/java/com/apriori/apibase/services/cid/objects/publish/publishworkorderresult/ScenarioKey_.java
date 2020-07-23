@@ -36,8 +36,9 @@ public class ScenarioKey_ {
     }
 
     @JsonProperty("stateName")
-    public void setStateName(String stateName) {
+    public ScenarioKey_ setStateName(String stateName) {
         this.stateName = stateName;
+        return this;
     }
 
     @JsonProperty("masterName")
@@ -46,8 +47,9 @@ public class ScenarioKey_ {
     }
 
     @JsonProperty("masterName")
-    public void setMasterName(String masterName) {
+    public ScenarioKey_ setMasterName(String masterName) {
         this.masterName = masterName;
+        return this;
     }
 
     @JsonProperty("typeName")
@@ -56,8 +58,9 @@ public class ScenarioKey_ {
     }
 
     @JsonProperty("typeName")
-    public void setTypeName(String typeName) {
+    public ScenarioKey_ setTypeName(String typeName) {
         this.typeName = typeName;
+        return this;
     }
 
     @JsonProperty("workspaceId")
@@ -66,8 +69,9 @@ public class ScenarioKey_ {
     }
 
     @JsonProperty("workspaceId")
-    public void setWorkspaceId(Integer workspaceId) {
+    public ScenarioKey_ setWorkspaceId(Integer workspaceId) {
         this.workspaceId = workspaceId;
+        return this;
     }
 
     @JsonAnyGetter
@@ -79,5 +83,4 @@ public class ScenarioKey_ {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

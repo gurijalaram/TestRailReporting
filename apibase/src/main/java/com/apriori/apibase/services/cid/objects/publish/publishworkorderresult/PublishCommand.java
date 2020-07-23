@@ -35,8 +35,9 @@ public class PublishCommand {
     }
 
     @JsonProperty("commandType")
-    public void setCommandType(String commandType) {
+    public PublishCommand setCommandType(String commandType) {
         this.commandType = commandType;
+        return this;
     }
 
     @JsonProperty("inputs")
@@ -45,8 +46,9 @@ public class PublishCommand {
     }
 
     @JsonProperty("inputs")
-    public void setInputs(Inputs inputs) {
+    public PublishCommand setInputs(Inputs inputs) {
         this.inputs = inputs;
+        return this;
     }
 
     @JsonProperty("outputs")
@@ -55,8 +57,9 @@ public class PublishCommand {
     }
 
     @JsonProperty("outputs")
-    public void setOutputs(Outputs outputs) {
+    public PublishCommand setOutputs(Outputs outputs) {
         this.outputs = outputs;
+        return this;
     }
 
     @JsonAnyGetter
@@ -68,5 +71,4 @@ public class PublishCommand {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }
