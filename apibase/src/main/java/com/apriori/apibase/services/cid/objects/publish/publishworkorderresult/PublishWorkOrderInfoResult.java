@@ -25,7 +25,7 @@ import java.util.Map;
 })
 
 @Schema(location = "cid/PublishWorkOrderResultSchema.json")
-public class PublishWorkOrderInfo {
+public class PublishWorkOrderInfoResult {
 
     @JsonProperty("version")
     private Integer version;
@@ -52,7 +52,7 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("version")
-    public PublishWorkOrderInfo setVersion(Integer version) {
+    public PublishWorkOrderInfoResult setVersion(Integer version) {
         this.version = version;
         return this;
     }
@@ -63,7 +63,7 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("id")
-    public PublishWorkOrderInfo setId(String id) {
+    public PublishWorkOrderInfoResult setId(String id) {
         this.id = id;
         return this;
     }
@@ -74,7 +74,7 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("status")
-    public PublishWorkOrderInfo setStatus(String status) {
+    public PublishWorkOrderInfoResult setStatus(String status) {
         this.status = status;
         return this;
     }
@@ -85,7 +85,7 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("searchKey")
-    public PublishWorkOrderInfo setSearchKey(String searchKey) {
+    public PublishWorkOrderInfoResult setSearchKey(String searchKey) {
         this.searchKey = searchKey;
         return this;
     }
@@ -96,7 +96,7 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("command")
-    public PublishWorkOrderInfo setCommand(PublishCommand command) {
+    public PublishWorkOrderInfoResult setCommand(PublishCommand command) {
         this.command = command;
         return this;
     }
@@ -107,7 +107,7 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("dateSubmitted")
-    public PublishWorkOrderInfo setDateSubmitted(String dateSubmitted) {
+    public PublishWorkOrderInfoResult setDateSubmitted(String dateSubmitted) {
         this.dateSubmitted = dateSubmitted;
         return this;
     }
@@ -118,7 +118,7 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("dateStarted")
-    public PublishWorkOrderInfo setDateStarted(String dateStarted) {
+    public PublishWorkOrderInfoResult setDateStarted(String dateStarted) {
         this.dateStarted = dateStarted;
         return this;
     }
@@ -129,7 +129,7 @@ public class PublishWorkOrderInfo {
     }
 
     @JsonProperty("dateCompleted")
-    public PublishWorkOrderInfo setDateCompleted(String dateCompleted) {
+    public PublishWorkOrderInfoResult setDateCompleted(String dateCompleted) {
         this.dateCompleted = dateCompleted;
         return this;
     }

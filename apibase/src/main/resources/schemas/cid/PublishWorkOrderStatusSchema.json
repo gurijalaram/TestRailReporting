@@ -8,28 +8,27 @@
   "examples": [
     {
       "version": 3,
-      "id": "83551ff6-1f1a-4f95-81d3-5338862b8acc",
+      "id": "3029a479-2a1c-4555-a4a0-2fc4460fb0a8",
       "status": "PROCESSING",
-      "searchKey": "Part-POWDERMETALSHAFT.AutoScenario616-349802649728600(56)",
+      "searchKey": "Part-BRACKET_BASIC.AutoScenario735-440916279664400(56)",
       "command": {
         "commandType": "PUBLISH",
         "inputs": {
           "scenarioIterationKey": {
             "scenarioKey": {
-              "stateName": "AutoScenario616-349802649728600",
-              "masterName": "POWDERMETALSHAFT",
+              "stateName": "AutoScenario735-440916279664400",
+              "masterName": "BRACKET_BASIC",
               "typeName": "partState",
               "workspaceId": 56
             },
-            "iteration": 7245
+            "iteration": 7272
           },
-          "newScenarioName": "initial",
           "overwrite": false,
           "lock": false
         }
       },
-      "dateSubmitted": "2020-07-23T08:00:28Z",
-      "dateStarted": "2020-07-23T08:00:28Z"
+      "dateSubmitted": "2020-07-23T09:09:20Z",
+      "dateStarted": "2020-07-23T09:09:20Z"
     }
   ],
   "required": [
@@ -60,7 +59,7 @@
       "description": "An explanation about the purpose of this instance.",
       "default": "",
       "examples": [
-        "83551ff6-1f1a-4f95-81d3-5338862b8acc"
+        "3029a479-2a1c-4555-a4a0-2fc4460fb0a8"
       ]
     },
     "status": {
@@ -80,7 +79,7 @@
       "description": "An explanation about the purpose of this instance.",
       "default": "",
       "examples": [
-        "Part-POWDERMETALSHAFT.AutoScenario616-349802649728600(56)"
+        "Part-BRACKET_BASIC.AutoScenario735-440916279664400(56)"
       ]
     },
     "command": {
@@ -95,14 +94,13 @@
           "inputs": {
             "scenarioIterationKey": {
               "scenarioKey": {
-                "stateName": "AutoScenario616-349802649728600",
-                "masterName": "POWDERMETALSHAFT",
+                "stateName": "AutoScenario735-440916279664400",
+                "masterName": "BRACKET_BASIC",
                 "typeName": "partState",
                 "workspaceId": 56
               },
-              "iteration": 7245
+              "iteration": 7272
             },
-            "newScenarioName": "initial",
             "overwrite": false,
             "lock": false
           }
@@ -134,21 +132,19 @@
             {
               "scenarioIterationKey": {
                 "scenarioKey": {
-                  "stateName": "AutoScenario616-349802649728600",
-                  "masterName": "POWDERMETALSHAFT",
+                  "stateName": "AutoScenario735-440916279664400",
+                  "masterName": "BRACKET_BASIC",
                   "typeName": "partState",
                   "workspaceId": 56
                 },
-                "iteration": 7245
+                "iteration": 7272
               },
-              "newScenarioName": "initial",
               "overwrite": false,
               "lock": false
             }
           ],
           "required": [
             "scenarioIterationKey",
-            "newScenarioName",
             "overwrite",
             "lock"
           ],
@@ -163,12 +159,12 @@
               "examples": [
                 {
                   "scenarioKey": {
-                    "stateName": "AutoScenario616-349802649728600",
-                    "masterName": "POWDERMETALSHAFT",
+                    "stateName": "AutoScenario735-440916279664400",
+                    "masterName": "BRACKET_BASIC",
                     "typeName": "partState",
                     "workspaceId": 56
                   },
-                  "iteration": 7245
+                  "iteration": 7272
                 }
               ],
               "required": [
@@ -185,8 +181,8 @@
                   "default": {},
                   "examples": [
                     {
-                      "stateName": "AutoScenario616-349802649728600",
-                      "masterName": "POWDERMETALSHAFT",
+                      "stateName": "AutoScenario735-440916279664400",
+                      "masterName": "BRACKET_BASIC",
                       "typeName": "partState",
                       "workspaceId": 56
                     }
@@ -206,7 +202,7 @@
                       "description": "An explanation about the purpose of this instance.",
                       "default": "",
                       "examples": [
-                        "AutoScenario616-349802649728600"
+                        "AutoScenario735-440916279664400"
                       ]
                     },
                     "masterName": {
@@ -216,7 +212,7 @@
                       "description": "An explanation about the purpose of this instance.",
                       "default": "",
                       "examples": [
-                        "POWDERMETALSHAFT"
+                        "BRACKET_BASIC"
                       ]
                     },
                     "typeName": {
@@ -248,20 +244,10 @@
                   "description": "An explanation about the purpose of this instance.",
                   "default": 0,
                   "examples": [
-                    7245
+                    7272
                   ]
                 }
               }
-            },
-            "newScenarioName": {
-              "$id": "#/properties/command/properties/inputs/properties/newScenarioName",
-              "type": "string",
-              "title": "The newScenarioName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "initial"
-              ]
             },
             "overwrite": {
               "$id": "#/properties/command/properties/inputs/properties/overwrite",
@@ -294,7 +280,7 @@
       "description": "An explanation about the purpose of this instance.",
       "default": "",
       "examples": [
-        "2020-07-23T08:00:28Z"
+        "2020-07-23T09:09:20Z"
       ]
     },
     "dateStarted": {
@@ -304,7 +290,7 @@
       "description": "An explanation about the purpose of this instance.",
       "default": "",
       "examples": [
-        "2020-07-23T08:00:28Z"
+        "2020-07-23T09:09:20Z"
       ]
     }
   }

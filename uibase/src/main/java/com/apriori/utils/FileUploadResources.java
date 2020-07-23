@@ -17,6 +17,7 @@ import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.P
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioIterationKey;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioKey;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishWorkOrderInfo;
+import com.apriori.apibase.services.cid.objects.publish.publishworkorderresult.PublishWorkOrderInfoResult;
 import com.apriori.apibase.services.cid.objects.publish.publishworkorderstatus.PublishStatusInfo;
 import com.apriori.apibase.services.cid.objects.upload.FileCommandEntity;
 import com.apriori.apibase.services.cid.objects.upload.FileOrderEntity;
@@ -338,7 +339,7 @@ public class FileUploadResources {
     }
 
     private void checkPublishWorkOrderStatus(HashMap<String, String> token) {
-        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + publishWorkOrderId;
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + publishWorkOrderId;
 
         RequestEntity publishRequestEntity = RequestEntity.init(orderURL, PublishStatusInfo.class)
             .setHeaders(headers)
@@ -349,15 +350,13 @@ public class FileUploadResources {
         String status;
         do {
             status = jsonNode(GenericRequestUtil.get(publishRequestEntity, new RequestAreaApi()).getBody(), "status");
-        } while ((!status.equals("PROCESSING")) &&
-            (!status.equals("FAILED")) &&
-            ((System.currentTimeMillis() / 1000) - startTime) < 60);
+        } while ((status.equals("PROCESSING")) && (!status.equals("FAILED")) && ((System.currentTimeMillis() / 1000) - startTime) < 60);
     }
 
     private void checkPublishResult(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + publishWorkOrderId;
 
-        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, com.apriori.apibase.services.cid.objects.publish.publishworkorderresult.PublishWorkOrderInfo.class)
+        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, PublishWorkOrderInfoResult.class)
             .setHeaders(headers)
             .setHeaders(token);
 
@@ -366,9 +365,7 @@ public class FileUploadResources {
         String status;
         do {
             status = jsonNode(GenericRequestUtil.get(publishRequestEntity, new RequestAreaApi()).getBody(), "status");
-        } while ((!status.equals("SUCCESS")) &&
-            (!status.equals("FAILED")) &&
-            ((System.currentTimeMillis() / 1000) - startTime) < 60);
+        } while ((!status.equals("SUCCESS")) && (!status.equals("FAILED")) && ((System.currentTimeMillis() / 1000) - startTime) < 60);
     }
 
     private String jsonNode(String jsonProperties, String path) {
