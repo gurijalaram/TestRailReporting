@@ -1,7 +1,5 @@
 package com.apriori.apibase.services.cid.objects.request;
 
-import java.sql.Timestamp;
-
 /**
  * Request data example
  * "schedules" : [ {

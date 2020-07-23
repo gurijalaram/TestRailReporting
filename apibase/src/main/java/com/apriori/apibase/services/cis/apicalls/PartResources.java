@@ -56,7 +56,7 @@ public class PartResources extends CisBase {
         NewPartRequest npr = (NewPartRequest) obj;
         String url = String.format(getCisUrl(), endpointParts);
 
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "multipart/form-data");
         RequestEntity requestEntity = RequestEntity.init(url, Part.class)
             .setHeaders(headers)
@@ -82,7 +82,7 @@ public class PartResources extends CisBase {
     }
 
     public static Boolean isPartComplete(String partIdentity) {
-        Object partDetails = null;
+        Object partDetails;
         Boolean isPartComplete = false;
         int count = 0;
         while (count <= 18) {
