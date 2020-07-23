@@ -18,7 +18,7 @@ import java.util.Map;
 })
 
 @Schema(location = "cid/CreatePublishWorkOrderSchema.json")
-public class PushlishWorkOrderInfo {
+public class PublishWorkOrderInfo {
 
     @JsonProperty("command")
     private PublishCommand command;
@@ -31,7 +31,7 @@ public class PushlishWorkOrderInfo {
     }
 
     @JsonProperty("command")
-    public PushlishWorkOrderInfo setCommand(PublishCommand command) {
+    public PublishWorkOrderInfo setCommand(PublishCommand command) {
         this.command = command;
         return this;
     }

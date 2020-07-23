@@ -1,5 +1,7 @@
 package com.apriori.apibase.services.cid.objects.publish.publishworkorderresult;
 
+import com.apriori.utils.http.enums.Schema;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,6 +23,8 @@ import java.util.Map;
     "dateStarted",
     "dateCompleted"
 })
+
+@Schema(location = "cid/PublishWorkOrderResultSchema.json")
 public class PublishWorkOrderInfo {
 
     @JsonProperty("version")

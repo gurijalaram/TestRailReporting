@@ -16,9 +16,8 @@ import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.P
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishInputs;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioIterationKey;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioKey;
-import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PushlishWorkOrderInfo;
-import com.apriori.apibase.services.cid.objects.publish.publishworkorderresult.EmptyPublishWorkOrderInfo;
-import com.apriori.apibase.services.cid.objects.publish.publishworkorderstatus.EmptyPublishWorkOrderStatusInfo;
+import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishWorkOrderInfo;
+import com.apriori.apibase.services.cid.objects.publish.publishworkorderstatus.PublishStatusInfo;
 import com.apriori.apibase.services.cid.objects.upload.FileCommandEntity;
 import com.apriori.apibase.services.cid.objects.upload.FileOrderEntity;
 import com.apriori.apibase.services.cid.objects.upload.FileOrdersEntity;
@@ -310,7 +309,7 @@ public class FileUploadResources {
         RequestEntity publishRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setBody(new PushlishWorkOrderInfo().setCommand(
+            .setBody(new PublishWorkOrderInfo().setCommand(
                 new PublishCommand().setCommandType("PUBLISH")
                     .setInputs(new PublishInputs().setOverwrite(false)
                         .setLock(false)
@@ -341,7 +340,7 @@ public class FileUploadResources {
     private void checkPublishWorkOrderStatus(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + publishWorkOrderId;
 
-        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, EmptyPublishWorkOrderStatusInfo.class)
+        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, PublishStatusInfo.class)
             .setHeaders(headers)
             .setHeaders(token);
 
@@ -356,9 +355,9 @@ public class FileUploadResources {
     }
 
     private void checkPublishResult(HashMap<String, String> token) {
-        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + publishWorkOrderId;
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + publishWorkOrderId;
 
-        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, EmptyPublishWorkOrderInfo.class)
+        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, com.apriori.apibase.services.cid.objects.publish.publishworkorderresult.PublishWorkOrderInfo.class)
             .setHeaders(headers)
             .setHeaders(token);
 
