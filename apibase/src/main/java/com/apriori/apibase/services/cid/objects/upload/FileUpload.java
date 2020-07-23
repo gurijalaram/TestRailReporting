@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class FileUploadEntity {
+public class FileUpload {
 
     @JsonProperty
     private Boolean isFirstPage;
@@ -44,7 +44,7 @@ public class FileUploadEntity {
         return isFirstPage;
     }
 
-    public FileUploadEntity setFirstPage(Boolean firstPage) {
+    public FileUpload setFirstPage(Boolean firstPage) {
         isFirstPage = firstPage;
         return this;
     }
@@ -53,7 +53,7 @@ public class FileUploadEntity {
         return isLastPage;
     }
 
-    public FileUploadEntity setLastPage(Boolean lastPage) {
+    public FileUpload setLastPage(Boolean lastPage) {
         isLastPage = lastPage;
         return this;
     }
@@ -62,7 +62,7 @@ public class FileUploadEntity {
         return pageNumber;
     }
 
-    public FileUploadEntity setPageNumber(Integer pageNumber) {
+    public FileUpload setPageNumber(Integer pageNumber) {
         this.pageNumber = pageNumber;
         return this;
     }
@@ -71,7 +71,7 @@ public class FileUploadEntity {
         return pageSize;
     }
 
-    public FileUploadEntity setPageSize(Integer pageSize) {
+    public FileUpload setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
         return this;
     }
@@ -80,7 +80,7 @@ public class FileUploadEntity {
         return pageItemCount;
     }
 
-    public FileUploadEntity setPageItemCount(Integer pageItemCount) {
+    public FileUpload setPageItemCount(Integer pageItemCount) {
         this.pageItemCount = pageItemCount;
         return this;
     }
@@ -89,7 +89,7 @@ public class FileUploadEntity {
         return totalItemCount;
     }
 
-    public FileUploadEntity setTotalItemCount(Integer totalItemCount) {
+    public FileUpload setTotalItemCount(Integer totalItemCount) {
         this.totalItemCount = totalItemCount;
         return this;
     }
@@ -98,7 +98,7 @@ public class FileUploadEntity {
         return totalPageCount;
     }
 
-    public FileUploadEntity setTotalPageCount(Integer totalPageCount) {
+    public FileUpload setTotalPageCount(Integer totalPageCount) {
         this.totalPageCount = totalPageCount;
         return this;
     }
@@ -107,7 +107,7 @@ public class FileUploadEntity {
         return hasNextPage;
     }
 
-    public FileUploadEntity setHasNextPage(Boolean hasNextPage) {
+    public FileUpload setHasNextPage(Boolean hasNextPage) {
         this.hasNextPage = hasNextPage;
         return this;
     }
@@ -116,7 +116,7 @@ public class FileUploadEntity {
         return hasPreviousPage;
     }
 
-    public FileUploadEntity setHasPreviousPage(Boolean hasPreviousPage) {
+    public FileUpload setHasPreviousPage(Boolean hasPreviousPage) {
         this.hasPreviousPage = hasPreviousPage;
         return this;
     }
@@ -125,7 +125,7 @@ public class FileUploadEntity {
         return items;
     }
 
-    public FileUploadEntity setItems(ArrayList<FileItemsEntity> items) {
+    public FileUpload setItems(ArrayList<FileItemsEntity> items) {
         this.items = items;
         return this;
     }

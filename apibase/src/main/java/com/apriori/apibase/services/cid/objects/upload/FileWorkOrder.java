@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class FileWorkOrderEntity {
+public class FileWorkOrder {
 
     @JsonProperty("action")
     private String action;
@@ -19,7 +19,7 @@ public class FileWorkOrderEntity {
     }
 
     @JsonProperty("action")
-    public FileWorkOrderEntity setAction(String action) {
+    public FileWorkOrder setAction(String action) {
         this.action = action;
         return this;
     }
@@ -30,7 +30,7 @@ public class FileWorkOrderEntity {
     }
 
     @JsonProperty("orderIds")
-    public FileWorkOrderEntity setOrderIds(List<String> orderIds) {
+    public FileWorkOrder setOrderIds(List<String> orderIds) {
         this.orderIds = orderIds;
         return this;
     }

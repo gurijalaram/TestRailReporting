@@ -19,11 +19,11 @@ import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.P
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishWorkOrderInfo;
 import com.apriori.apibase.services.cid.objects.publish.publishworkorderresult.PublishWorkOrderInfoResult;
 import com.apriori.apibase.services.cid.objects.publish.publishworkorderstatus.PublishStatusInfo;
-import com.apriori.apibase.services.cid.objects.upload.FileCommandEntity;
-import com.apriori.apibase.services.cid.objects.upload.FileOrderEntity;
-import com.apriori.apibase.services.cid.objects.upload.FileOrdersEntity;
+import com.apriori.apibase.services.cid.objects.upload.FileCommand;
+import com.apriori.apibase.services.cid.objects.upload.FileOrdersUpload;
+import com.apriori.apibase.services.cid.objects.upload.FileUploadOrder;
 import com.apriori.apibase.services.cid.objects.upload.FileUploadWorkOrder;
-import com.apriori.apibase.services.cid.objects.upload.FileWorkOrderEntity;
+import com.apriori.apibase.services.cid.objects.upload.FileWorkOrder;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
@@ -127,10 +127,10 @@ public class FileUploadResources {
         RequestEntity fileRequestEntity = RequestEntity.init(fileURL, FileOrderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setBody(new FileCommandEntity()
-                .setCommand(new FileOrdersEntity()
+            .setBody(new FileCommand()
+                .setCommand(new FileOrdersUpload()
                     .setCommandType("LOADCADFILE")
-                    .setInputs(new FileOrderEntity().setScenarioName(newPartRequest.getScenarioName())
+                    .setInputs(new FileUploadOrder().setScenarioName(newPartRequest.getScenarioName())
                         .setFileKey(identity)
                         .setFileName(newPartRequest.getFilename()))));
 
@@ -392,7 +392,7 @@ public class FileUploadResources {
         RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setBody(new FileWorkOrderEntity().setOrderIds(Collections.singletonList(orderId))
+            .setBody(new FileWorkOrder().setOrderIds(Collections.singletonList(orderId))
                 .setAction("SUBMIT"));
 
         GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();

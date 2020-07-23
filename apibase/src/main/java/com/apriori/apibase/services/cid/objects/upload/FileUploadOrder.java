@@ -2,7 +2,7 @@ package com.apriori.apibase.services.cid.objects.upload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class FileOrderEntity {
+public class FileUploadOrder {
 
     @JsonProperty
     private String scenarioName;
@@ -17,7 +17,7 @@ public class FileOrderEntity {
         return scenarioName;
     }
 
-    public FileOrderEntity setScenarioName(String scenarioName) {
+    public FileUploadOrder setScenarioName(String scenarioName) {
         this.scenarioName = scenarioName;
         return this;
     }
@@ -26,7 +26,7 @@ public class FileOrderEntity {
         return fileKey;
     }
 
-    public FileOrderEntity setFileKey(String fileKey) {
+    public FileUploadOrder setFileKey(String fileKey) {
         this.fileKey = fileKey;
         return this;
     }
@@ -35,7 +35,7 @@ public class FileOrderEntity {
         return fileName;
     }
 
-    public FileOrderEntity setFileName(String fileName) {
+    public FileUploadOrder setFileName(String fileName) {
         this.fileName = fileName;
         return this;
     }

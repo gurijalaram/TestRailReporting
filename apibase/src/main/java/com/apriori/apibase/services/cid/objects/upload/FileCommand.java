@@ -5,16 +5,16 @@ import com.apriori.utils.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Schema(location = "FileOrderSchema.json")
-public class FileCommandEntity {
+public class FileCommand {
 
     @JsonProperty
-    private FileOrdersEntity command;
+    private FileOrdersUpload command;
 
-    public FileOrdersEntity getCommand() {
+    public FileOrdersUpload getCommand() {
         return command;
     }
 
-    public FileCommandEntity setCommand(FileOrdersEntity command) {
+    public FileCommand setCommand(FileOrdersUpload command) {
         this.command = command;
         return this;
     }

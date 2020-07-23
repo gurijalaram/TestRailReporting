@@ -5,16 +5,16 @@ import com.apriori.utils.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Schema(location = "FileUploadSchema.json")
-public class FileResponseEntity {
+public class FileUploadResponse {
 
     @JsonProperty
-    private FileUploadEntity response;
+    private FileUpload response;
 
-    public FileUploadEntity getResponse() {
+    public FileUpload getResponse() {
         return response;
     }
 
-    public FileResponseEntity setResponse(FileUploadEntity response) {
+    public FileUploadResponse setResponse(FileUpload response) {
         this.response = response;
         return this;
     }
