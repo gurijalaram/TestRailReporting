@@ -422,7 +422,7 @@ public class FileUploadResources {
         String status;
         do {
             status = jsonNode(GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getBody(), "status");
-        } while ((status.equals(ORDER_PROCESSING)) && (!status.equals(ORDER_FAILED)) && ((System.currentTimeMillis() / 1000) - startTime) < 60);
+        } while ((status.equals(ORDER_PROCESSING)) && (!status.equals(ORDER_FAILED)) && ((System.currentTimeMillis() / 1000) - startTime) < 160);
     }
 
     /**

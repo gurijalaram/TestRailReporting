@@ -37,8 +37,7 @@
     "status",
     "searchKey",
     "command",
-    "dateSubmitted",
-    "dateStarted"
+    "dateSubmitted"
   ],
   "additionalProperties": true,
   "properties": {
