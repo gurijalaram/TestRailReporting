@@ -3,12 +3,13 @@ package com.apriori.utils;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderCommand;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderCommandType;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderInputs;
+import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderScenario;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderScenarioIteration;
-import com.apriori.apibase.services.cid.objects.cost.productioninfo.MaterialBean;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfo;
-import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey;
-import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey_;
-import com.apriori.apibase.services.cid.objects.cost.productioninfo.VpeBean;
+import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfoMaterial;
+import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfoScenario;
+import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfoScenarioKey;
+import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfoVpe;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishCommand;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishInputs;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioIterationKey;
@@ -183,7 +184,7 @@ public class FileUploadResources {
             .setHeaders(token)
             .setBody(
                 new ProductionInfo()
-                    .setScenarioKey(new ScenarioKey().setWorkspaceId(workspaceId)
+                    .setScenarioKey(new ProductionInfoScenario().setWorkspaceId(workspaceId)
                         .setTypeName(typeName)
                         .setStateName(stateName)
                         .setMasterName(masterName))
@@ -197,8 +198,8 @@ public class FileUploadResources {
                     .setProcessGroupName("Casting - Die")
                     .setPgEnabled(true)
 
-                    .setVpeBean(new VpeBean()
-                        .setScenarioKey(new ScenarioKey_().setWorkspaceId(workspaceId)
+                    .setVpeBean(new ProductionInfoVpe()
+                        .setScenarioKey(new ProductionInfoScenarioKey().setWorkspaceId(workspaceId)
                             .setTypeName(typeName)
                             .setStateName(stateName)
                             .setMasterName(masterName))
@@ -213,7 +214,7 @@ public class FileUploadResources {
                             .setSecond("Casting - Die")))
 
                     .setSupportsMaterials(true)
-                    .setMaterialBean(new MaterialBean().setInitialized(false)
+                    .setMaterialBean(new ProductionInfoMaterial().setInitialized(false)
                         .setVpeDefaultMaterialName("Aluminum, Cast, ANSI AL380.0")
                         .setMaterialMode("CAD")
                         .setIsUserMaterialNameValid(false)
@@ -256,7 +257,7 @@ public class FileUploadResources {
                 .setCommandType("COSTING")
                 .setInputs(new CostOrderInputs().setInputSetId(costOrderId)
                     .setScenarioIterationKey(new CostOrderScenarioIteration().setIteration(iteration)
-                        .setScenarioKey(new ScenarioKey().setMasterName(masterName)
+                        .setScenarioKey(new CostOrderScenario().setMasterName(masterName)
                             .setStateName(stateName)
                             .setTypeName(typeName)
                             .setWorkspaceId(workspaceId))))));
