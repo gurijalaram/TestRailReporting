@@ -15,7 +15,7 @@ import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.P
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioKey;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishWorkOrderInfo;
 import com.apriori.apibase.services.cid.objects.response.FileOrderResponse;
-import com.apriori.apibase.services.cid.objects.response.cost.costworkorderstatus.EmptyCostWorkOrderInfo;
+import com.apriori.apibase.services.cid.objects.response.cost.costworkorderstatus.ListOfCostOrderStatuses;
 import com.apriori.apibase.services.cid.objects.response.cost.iterations.ListOfCostIterations;
 import com.apriori.apibase.services.cid.objects.response.publish.publishworkorderresult.PublishWorkOrderInfoResult;
 import com.apriori.apibase.services.cid.objects.response.publish.publishworkorderstatus.PublishStatusInfo;
@@ -360,7 +360,7 @@ public class FileUploadResources {
     private RequestEntity checkCostOrder(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
 
-        return RequestEntity.init(orderURL, EmptyCostWorkOrderInfo.class)
+        return RequestEntity.init(orderURL, ListOfCostOrderStatuses.class)
             .setHeaders(headers)
             .setHeaders(token);
     }
