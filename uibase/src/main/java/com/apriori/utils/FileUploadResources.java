@@ -16,7 +16,7 @@ import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.P
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishWorkOrderInfo;
 import com.apriori.apibase.services.cid.objects.response.FileOrderResponse;
 import com.apriori.apibase.services.cid.objects.response.cost.costworkorderstatus.EmptyCostWorkOrderInfo;
-import com.apriori.apibase.services.cid.objects.response.cost.iterations.EmptyCostIteration;
+import com.apriori.apibase.services.cid.objects.response.cost.iterations.ListOfCostIterations;
 import com.apriori.apibase.services.cid.objects.response.publish.publishworkorderresult.PublishWorkOrderInfoResult;
 import com.apriori.apibase.services.cid.objects.response.publish.publishworkorderstatus.PublishStatusInfo;
 import com.apriori.apibase.services.cid.objects.response.upload.FileCommand;
@@ -295,7 +295,7 @@ public class FileUploadResources {
     private void getCostingIteration(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations";
 
-        RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, EmptyCostIteration.class)
+        RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, ListOfCostIterations.class)
             .setHeaders(headers)
             .setHeaders(token);
 
