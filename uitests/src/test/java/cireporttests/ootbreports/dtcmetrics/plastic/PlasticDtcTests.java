@@ -124,16 +124,16 @@ public class PlasticDtcTests extends TestBase {
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Input Field")
     public void testPlasticDtcExportSetFilterInputField() {
-        inputControlsTests = new InputControlsTests();
-        inputControlsTests.testExportSetFilterUsingInputField(driver, PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingInputField(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Date Picker")
     public void testPlasticDtcExportSetFilterDatePicker() {
-        inputControlsTests = new InputControlsTests();
-        inputControlsTests.testExportSetFilterUsingDatePicker(driver, PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
     }
 
     @Test

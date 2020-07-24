@@ -16,7 +16,6 @@ import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.MachiningReportsEnum;
-import com.apriori.utils.enums.PlasticDtcReportsEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -120,8 +119,8 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3565")
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
-        inputControlsTests = new InputControlsTests();
-        inputControlsTests.testExportSetFilterUsingInputField(driver, MachiningReportsEnum.MACHINING_DTC.getReportName());
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingInputField(MachiningReportsEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -129,7 +128,7 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3566")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
-        inputControlsTests = new InputControlsTests();
-        inputControlsTests.testExportSetFilterUsingDatePicker(driver, MachiningReportsEnum.MACHINING_DTC.getReportName());
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(MachiningReportsEnum.MACHINING_DTC.getReportName());
     }
 }

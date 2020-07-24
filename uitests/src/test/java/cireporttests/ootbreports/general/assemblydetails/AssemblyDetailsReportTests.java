@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import cireporttests.inputcontrols.InputControlsTests;
 import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
@@ -40,6 +41,7 @@ import java.util.List;
 public class AssemblyDetailsReportTests extends TestBase {
 
     private AssemblyDetailsReportPage assemblyDetailsReport;
+    private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
@@ -387,17 +389,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .setLatestExportDateToTodayInput()
-            .ensureDatesAreCorrect(false, true);
-
-        // TODO: Re-add waitForCorrectExportSetListCount("0") if is ever bug fixed
-        assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingInputField(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
@@ -405,17 +398,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .setLatestExportDateToTodayPlusTwoPicker()
-            .ensureDatesAreCorrect(false, false);
-
-        // TODO: Re-add waitForCorrectExportSetListCount("0") if is ever bug fixed
-        assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
