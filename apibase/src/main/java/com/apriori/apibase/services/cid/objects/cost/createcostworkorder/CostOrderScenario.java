@@ -17,7 +17,7 @@ import java.util.Map;
     "workspaceId",
     "masterName"
 })
-public class ScenarioKey {
+public class CostOrderScenario {
 
     @JsonProperty("typeName")
     private String typeName;
@@ -36,7 +36,7 @@ public class ScenarioKey {
     }
 
     @JsonProperty("typeName")
-    public ScenarioKey setTypeName(String typeName) {
+    public CostOrderScenario setTypeName(String typeName) {
         this.typeName = typeName;
         return this;
     }
@@ -47,7 +47,7 @@ public class ScenarioKey {
     }
 
     @JsonProperty("stateName")
-    public ScenarioKey setStateName(String stateName) {
+    public CostOrderScenario setStateName(String stateName) {
         this.stateName = stateName;
         return this;
     }
@@ -58,7 +58,7 @@ public class ScenarioKey {
     }
 
     @JsonProperty("workspaceId")
-    public ScenarioKey setWorkspaceId(Integer workspaceId) {
+    public CostOrderScenario setWorkspaceId(Integer workspaceId) {
         this.workspaceId = workspaceId;
         return this;
     }
@@ -69,7 +69,7 @@ public class ScenarioKey {
     }
 
     @JsonProperty("masterName")
-    public ScenarioKey setMasterName(String masterName) {
+    public CostOrderScenario setMasterName(String masterName) {
         this.masterName = masterName;
         return this;
     }

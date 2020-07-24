@@ -1,9 +1,9 @@
 package com.apriori.utils;
 
-import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command;
-import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command_;
-import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Inputs;
-import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.ScenarioIterationKey;
+import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderCommand;
+import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderCommandType;
+import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderInputs;
+import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderScenarioIteration;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.MaterialBean;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfo;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey;
@@ -252,10 +252,10 @@ public class FileUploadResources {
         RequestEntity orderRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setBody(new Command_().setCommand(new Command()
+            .setBody(new CostOrderCommand().setCommand(new CostOrderCommandType()
                 .setCommandType("COSTING")
-                .setInputs(new Inputs().setInputSetId(costOrderId)
-                    .setScenarioIterationKey(new ScenarioIterationKey().setIteration(iteration)
+                .setInputs(new CostOrderInputs().setInputSetId(costOrderId)
+                    .setScenarioIterationKey(new CostOrderScenarioIteration().setIteration(iteration)
                         .setScenarioKey(new ScenarioKey().setMasterName(masterName)
                             .setStateName(stateName)
                             .setTypeName(typeName)
