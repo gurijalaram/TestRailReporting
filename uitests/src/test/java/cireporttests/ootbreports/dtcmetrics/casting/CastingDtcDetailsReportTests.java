@@ -12,7 +12,6 @@ import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
-import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportHeader;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -27,7 +26,6 @@ import testsuites.suiteinterface.CIARStagingSmokeTest;
 public class CastingDtcDetailsReportTests extends TestBase {
 
     private GenericReportPage genericReportPage;
-    private CastingDtcReportHeader castingDtcReportHeader;
 
     public CastingDtcDetailsReportTests() {
         super();
@@ -43,7 +41,6 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .exportSetSelectAll();
-
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount())));
 
@@ -64,16 +61,16 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC Details report")
     public void testRollupDropDown() {
-        castingDtcReportHeader = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportHeader.class)
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName()),
+        assertThat(genericReportPage.getDisplayedRollup(),
             is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
     }
 
@@ -81,16 +78,16 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC Details input control panel functions correctly")
     public void testApplyButton() {
-        castingDtcReportHeader = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportHeader.class)
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickApply()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC.getReportName()),
+        assertThat(genericReportPage.getDisplayedRollup(),
             is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
     }
 
@@ -98,16 +95,16 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Details input control panel works")
     public void testCancelButton() {
-        castingDtcReportHeader = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), LibraryPage.class)
             .waitForInputControlsLoad()
-            .clickCancel(CastingDtcReportHeader.class);
+            .clickCancel(GenericReportPage.class);
 
-        assertThat(castingDtcReportHeader.getInputControlsDivClassName(), containsString("hidden"));
-        assertThat(castingDtcReportHeader.inputControlsIsDisplayed(), is(equalTo(false)));
-        assertThat(castingDtcReportHeader.inputControlsIsEnabled(), is(equalTo(true)));
+        assertThat(genericReportPage.getInputControlsDivClassName(), containsString("hidden"));
+        assertThat(genericReportPage.inputControlsIsDisplayed(), is(equalTo(false)));
+        assertThat(genericReportPage.inputControlsIsEnabled(), is(equalTo(true)));
     }
 
     @Test
