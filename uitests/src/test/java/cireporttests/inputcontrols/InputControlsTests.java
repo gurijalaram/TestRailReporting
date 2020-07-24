@@ -1,14 +1,15 @@
 package cireporttests.inputcontrols;
 
-import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
-import com.apriori.utils.web.driver.TestBase;
-import org.openqa.selenium.WebDriver;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
+import com.apriori.utils.web.driver.TestBase;
+
+import org.openqa.selenium.WebDriver;
 
 public class InputControlsTests extends TestBase {
 

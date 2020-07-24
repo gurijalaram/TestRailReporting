@@ -1,16 +1,16 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
-import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
-import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
-import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
-import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
-import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.MachiningReportsEnum;
-import com.apriori.utils.enums.PlasticDtcReportsEnum;
+import com.apriori.utils.enums.reports.AssemblyReportsEnum;
+import com.apriori.utils.enums.reports.AssemblySetEnum;
+import com.apriori.utils.enums.reports.AssemblyTypeEnum;
+import com.apriori.utils.enums.reports.CastingReportsEnum;
+import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.MachiningReportsEnum;
+import com.apriori.utils.enums.reports.PlasticDtcReportsEnum;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

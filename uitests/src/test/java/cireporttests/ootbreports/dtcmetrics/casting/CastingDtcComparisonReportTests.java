@@ -9,13 +9,13 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
-import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
-import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.CastingReportsEnum;
+import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -41,7 +41,6 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .exportSetSelectAll();
-
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount())));
 
