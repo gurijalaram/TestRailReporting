@@ -1,12 +1,9 @@
 package com.apriori.utils;
 
-import com.apriori.apibase.services.cid.objects.cost.FileOrderResponse;
-import com.apriori.apibase.services.cid.objects.cost.costworkorderstatus.EmptyCostWorkOrderInfo;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Command_;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.Inputs;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.ScenarioIterationKey;
-import com.apriori.apibase.services.cid.objects.cost.iterations.EmptyCostIteration;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.MaterialBean;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ProductionInfo;
 import com.apriori.apibase.services.cid.objects.cost.productioninfo.ScenarioKey;
@@ -17,13 +14,16 @@ import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.P
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioIterationKey;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioKey;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishWorkOrderInfo;
-import com.apriori.apibase.services.cid.objects.publish.publishworkorderresult.PublishWorkOrderInfoResult;
-import com.apriori.apibase.services.cid.objects.publish.publishworkorderstatus.PublishStatusInfo;
-import com.apriori.apibase.services.cid.objects.upload.FileCommand;
-import com.apriori.apibase.services.cid.objects.upload.FileOrdersUpload;
-import com.apriori.apibase.services.cid.objects.upload.FileUploadOrder;
-import com.apriori.apibase.services.cid.objects.upload.FileUploadWorkOrder;
-import com.apriori.apibase.services.cid.objects.upload.FileWorkOrder;
+import com.apriori.apibase.services.cid.objects.response.FileOrderResponse;
+import com.apriori.apibase.services.cid.objects.response.cost.costworkorderstatus.EmptyCostWorkOrderInfo;
+import com.apriori.apibase.services.cid.objects.response.cost.iterations.EmptyCostIteration;
+import com.apriori.apibase.services.cid.objects.response.publish.publishworkorderresult.PublishWorkOrderInfoResult;
+import com.apriori.apibase.services.cid.objects.response.publish.publishworkorderstatus.PublishStatusInfo;
+import com.apriori.apibase.services.cid.objects.response.upload.FileCommand;
+import com.apriori.apibase.services.cid.objects.response.upload.FileOrdersUpload;
+import com.apriori.apibase.services.cid.objects.response.upload.FileUploadOrder;
+import com.apriori.apibase.services.cid.objects.response.upload.FileUploadWorkOrder;
+import com.apriori.apibase.services.cid.objects.response.upload.FileWorkOrder;
 import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
