@@ -386,7 +386,6 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "1919")
-    @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
         inputControlsTests = new InputControlsTests(driver);
@@ -395,7 +394,6 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3244")
-    @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
