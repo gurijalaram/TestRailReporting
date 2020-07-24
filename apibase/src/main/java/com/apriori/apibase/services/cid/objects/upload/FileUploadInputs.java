@@ -1,12 +1,8 @@
 package com.apriori.apibase.services.cid.objects.upload;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -22,35 +18,27 @@ public class FileUploadInputs {
     private String fileKey;
     @JsonProperty("fileName")
     private String fileName;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("scenarioName")
     public String getScenarioName() {
         return scenarioName;
     }
 
-    @JsonProperty("scenarioName")
     public void setScenarioName(String scenarioName) {
         this.scenarioName = scenarioName;
     }
 
-    @JsonProperty("fileKey")
     public String getFileKey() {
         return fileKey;
     }
 
-    @JsonProperty("fileKey")
     public void setFileKey(String fileKey) {
         this.fileKey = fileKey;
     }
 
-    @JsonProperty("fileName")
     public String getFileName() {
         return fileName;
     }
 
-    @JsonProperty("fileName")
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }

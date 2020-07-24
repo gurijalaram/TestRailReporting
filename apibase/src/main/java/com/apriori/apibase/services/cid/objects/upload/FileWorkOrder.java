@@ -24,12 +24,10 @@ public class FileWorkOrder {
         return this;
     }
 
-    @JsonProperty("orderIds")
     public List<String> getOrderIds() {
         return orderIds;
     }
 
-    @JsonProperty("orderIds")
     public FileWorkOrder setOrderIds(List<String> orderIds) {
         this.orderIds = orderIds;
         return this;
