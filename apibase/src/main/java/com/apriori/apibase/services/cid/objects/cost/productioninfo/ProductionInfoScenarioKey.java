@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cid.objects.cost.createcostworkorder;
+package com.apriori.apibase.services.cid.objects.cost.productioninfo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "workspaceId",
     "masterName"
 })
-public class CostOrderScenario {
+public class ProductionInfoScenarioKey {
 
     @JsonProperty("typeName")
     private String typeName;
@@ -26,7 +26,7 @@ public class CostOrderScenario {
         return typeName;
     }
 
-    public CostOrderScenario setTypeName(String typeName) {
+    public ProductionInfoScenarioKey setTypeName(String typeName) {
         this.typeName = typeName;
         return this;
     }
@@ -35,7 +35,7 @@ public class CostOrderScenario {
         return stateName;
     }
 
-    public CostOrderScenario setStateName(String stateName) {
+    public ProductionInfoScenarioKey setStateName(String stateName) {
         this.stateName = stateName;
         return this;
     }
@@ -44,7 +44,7 @@ public class CostOrderScenario {
         return workspaceId;
     }
 
-    public CostOrderScenario setWorkspaceId(Integer workspaceId) {
+    public ProductionInfoScenarioKey setWorkspaceId(Integer workspaceId) {
         this.workspaceId = workspaceId;
         return this;
     }
@@ -53,7 +53,7 @@ public class CostOrderScenario {
         return masterName;
     }
 
-    public CostOrderScenario setMasterName(String masterName) {
+    public ProductionInfoScenarioKey setMasterName(String masterName) {
         this.masterName = masterName;
         return this;
     }
