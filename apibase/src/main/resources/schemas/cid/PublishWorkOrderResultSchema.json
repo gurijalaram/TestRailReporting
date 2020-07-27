@@ -50,8 +50,7 @@
     "searchKey",
     "command",
     "dateSubmitted",
-    "dateStarted",
-    "dateCompleted"
+    "dateStarted"
   ],
   "additionalProperties": true,
   "properties": {
@@ -132,8 +131,7 @@
       ],
       "required": [
         "commandType",
-        "inputs",
-        "outputs"
+        "inputs"
       ],
       "additionalProperties": true,
       "properties": {
