@@ -15,6 +15,7 @@ import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.P
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioIterationKey;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishScenarioKey;
 import com.apriori.apibase.services.cid.objects.publish.createpublishworkorder.PublishWorkOrderInfo;
+import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.services.cid.objects.response.FileOrderResponse;
 import com.apriori.apibase.services.cid.objects.response.cost.costworkorderstatus.ListOfCostOrderStatuses;
 import com.apriori.apibase.services.cid.objects.response.cost.iterations.ListOfCostIterations;
@@ -24,7 +25,6 @@ import com.apriori.apibase.services.cid.objects.response.upload.FileOrdersUpload
 import com.apriori.apibase.services.cid.objects.response.upload.FileUploadOrder;
 import com.apriori.apibase.services.cid.objects.response.upload.FileUploadWorkOrder;
 import com.apriori.apibase.services.cid.objects.response.upload.FileWorkOrder;
-import com.apriori.apibase.services.cis.objects.requests.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
@@ -65,11 +65,10 @@ public class FileUploadResources {
 
     private final String ORDER_SUCCESS = "SUCCESS";
     private final String ORDER_FAILED = "FAILED";
-    private String contentType = "Content-Type";
-    private String applicationJson = "application/json";
-
     Map<String, String> headers = new HashMap<>();
     NewPartRequest newPartRequest = null;
+    private String contentType = "Content-Type";
+    private String applicationJson = "application/json";
 
     /**
      * Method to upload, cost and publish a scenario
@@ -83,7 +82,7 @@ public class FileUploadResources {
         createFileUploadWorkOrder(token, fileObject);
         submitFileUploadWorkOrder(token);
         checkFileWorkOrderStatus(token);
-        initializeCostScenario(token);
+        initializeCostScenario(token, fileObject);
         createCostWorkOrder(token);
         submitCostWorkOrder(token);
         checkCostResult(token);
@@ -176,71 +175,17 @@ public class FileUploadResources {
      *
      * @param token - the user token
      */
-    private void initializeCostScenario(HashMap<String, String> token) {
+    private void initializeCostScenario(HashMap<String, String> token, Object fileObject) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/production-info";
 
+        newPartRequest = (NewPartRequest) fileObject;
         headers.put(contentType, applicationJson);
 
-        // TODO: 24/07/2020 all fields below should be set from a json or such file
-        // TODO: 24/07/2020 pass in/parameterize process group and material
         RequestEntity costRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
             .setBody(
-                new ProductionInfo()
-                    .setScenarioKey(new ProductionInfoScenario().setWorkspaceId(workspaceId)
-                        .setTypeName(typeName)
-                        .setStateName(stateName)
-                        .setMasterName(masterName))
-                    .setCompType("PART")
-                    .setInitialized(false)
-                    .setAvailablePgNames(Arrays.asList("2-Model Machining", "Additive Manufacturing", "Bar & Tube Fab", "Casting", "Casting - Die", "Casting - Sand",
-                        "Forging", "Plastic Molding", "Powder Metal", "Rapid Prototyping", "Roto & Blow Molding", "Sheet Metal",
-                        "Sheet Metal - Hydroforming", "Sheet Metal - Stretch Forming", "Sheet Metal - Transfer Die",
-                        "Sheet Plastic", "Stock Machining", "User Guided"))
-
-                    .setProcessGroupName("Casting - Die")
-                    .setPgEnabled(true)
-
-                    .setVpeBean(new ProductionInfoVpe()
-                        .setScenarioKey(new ProductionInfoScenarioKey().setWorkspaceId(workspaceId)
-                            .setTypeName(typeName)
-                            .setStateName(stateName)
-                            .setMasterName(masterName))
-
-                        .setPrimaryPgName("Casting - Die")
-                        .setPrimaryVpeName("aPriori USA")
-                        .setAutoSelectedSecondaryVpes(null)
-                        .setUsePrimaryAsDefault(true)
-                        .setInitialized(false)
-
-                        .setMaterialCatalogKeyData(new MaterialCatalogKeyData().setFirst("aPriori USA")
-                            .setSecond("Casting - Die")))
-
-                    .setSupportsMaterials(true)
-                    .setMaterialBean(new ProductionInfoMaterial().setInitialized(false)
-                        .setVpeDefaultMaterialName("Aluminum, Cast, ANSI AL380.0")
-                        .setMaterialMode("CAD")
-                        .setIsUserMaterialNameValid(false)
-                        .setIsCadMaterialNameValid(false))
-
-                    .setAnnualVolume(4400)
-                    .setAnnualVolumeOverridden(true)
-                    .setProductionLife(4)
-                    .setProductionLifeOverridden(false)
-                    .setBatchSizeOverridden(null)
-                    .setComputedBatchSize(458)
-                    .setBatchSizeOverridden(false)
-                    .setComponentsPerProduct(1)
-                    .setManuallyCosted(false)
-                    .setAvailableCurrencyCodes(Arrays.asList("USD"))
-                    .setManualCurrencyCode("USD")
-                    .setMachiningMode("MAY_BE_MACHINED")
-                    .setHasTargetCost(false)
-                    .setHasTargetFinishMass(null)
-                    .setHasTargetFinishMass(false)
-                    .setCadModelLoaded(true)
-                    .setThicknessVisible(true));
+                productionInfo(workspaceId, typeName, stateName, masterName, newPartRequest.getProcessGroup()));
 
         inputSetId = Integer.parseInt(jsonNode(GenericRequestUtil.post(costRequestEntity, new RequestAreaApi()).getBody(), "id"));
     }
@@ -390,6 +335,7 @@ public class FileUploadResources {
         try {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
+            logger.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
 
@@ -401,6 +347,7 @@ public class FileUploadResources {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
+                logger.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
 
@@ -427,6 +374,70 @@ public class FileUploadResources {
                 .setAction("SUBMIT"));
 
         GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody();
+    }
+
+    /**
+     * Sets the production info
+     *
+     * @param workspaceId  - the workspace id
+     * @param typeName     - type name
+     * @param stateName    - the state name
+     * @param masterName   - the master name
+     * @param processGroup - the process group
+     * @return production info
+     */
+    private ProductionInfo productionInfo(int workspaceId, String typeName, String stateName, String masterName, String processGroup) {
+        return new ProductionInfo()
+            .setScenarioKey(new ProductionInfoScenario().setWorkspaceId(workspaceId)
+                .setTypeName(typeName)
+                .setStateName(stateName)
+                .setMasterName(masterName))
+            .setCompType("PART")
+            .setInitialized(false)
+            .setAvailablePgNames(Arrays.asList(newPartRequest.getAvailablePg()))
+
+            .setProcessGroupName(processGroup)
+            .setPgEnabled(true)
+
+            .setVpeBean(new ProductionInfoVpe()
+                .setScenarioKey(new ProductionInfoScenarioKey().setWorkspaceId(workspaceId)
+                    .setTypeName(typeName)
+                    .setStateName(stateName)
+                    .setMasterName(masterName))
+
+                .setPrimaryPgName(processGroup)
+                .setPrimaryVpeName(newPartRequest.getVpeName())
+                .setAutoSelectedSecondaryVpes(null)
+                .setUsePrimaryAsDefault(true)
+                .setInitialized(false)
+
+                .setMaterialCatalogKeyData(new MaterialCatalogKeyData().setFirst(newPartRequest.getVpeName())
+                    .setSecond(newPartRequest.getVpeName())))
+
+            .setSupportsMaterials(true)
+            .setMaterialBean(new ProductionInfoMaterial().setInitialized(false)
+                .setVpeDefaultMaterialName(newPartRequest.getMaterialName())
+                .setMaterialMode(newPartRequest.getMaterialMode())
+                .setIsUserMaterialNameValid(false)
+                .setIsCadMaterialNameValid(false))
+
+            .setAnnualVolume(4400)
+            .setAnnualVolumeOverridden(true)
+            .setProductionLife(4)
+            .setProductionLifeOverridden(false)
+            .setBatchSizeOverridden(null)
+            .setComputedBatchSize(458)
+            .setBatchSizeOverridden(false)
+            .setComponentsPerProduct(1)
+            .setManuallyCosted(false)
+            .setAvailableCurrencyCodes(Arrays.asList(newPartRequest.getCurrencyCode()))
+            .setManualCurrencyCode(newPartRequest.getCurrencyCode())
+            .setMachiningMode(newPartRequest.getMachiningMode())
+            .setHasTargetCost(false)
+            .setHasTargetFinishMass(null)
+            .setHasTargetFinishMass(false)
+            .setCadModelLoaded(true)
+            .setThicknessVisible(true);
     }
 
     /**
