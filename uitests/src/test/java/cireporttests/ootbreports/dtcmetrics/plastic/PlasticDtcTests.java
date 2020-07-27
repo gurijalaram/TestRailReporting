@@ -73,17 +73,11 @@ public class PlasticDtcTests extends TestBase {
     @TestRail(testCaseId = "1365")
     @Description("Verify rollup dropdown input control functions correctly")
     public void testRollupDropdownInputControlsFunctionsProperly() {
-        plasticDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class)
-                .waitForInputControlsLoad()
-                .selectRollup(RollupEnum.ROLL_UP_A.getRollupName())
-                .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
-
-        assertThat(plasticDtcReportPage.getDisplayedRollup(),
-                is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testRollupDropdown(
+                PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(),
+                RollupEnum.ROLL_UP_A.getRollupName()
+        );
     }
 
     @Test
@@ -140,26 +134,11 @@ public class PlasticDtcTests extends TestBase {
     @TestRail(testCaseId = "1346")
     @Description("Test Plastic DTC Export Set Selection")
     public void testPlasticDtcExportSetSelection() {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
-            .waitForInputControlsLoad()
-            .exportSetSelectAll();
-
-        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount())));
-
-        genericReportPage.deselectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName());
-
-        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount() - 1)));
-
-        genericReportPage.invertExportSetSelection();
-
-        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(1)));
-
-        genericReportPage.exportSetDeselectAll();
-
-        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetSelection(
+                PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
     }
 
     @Test
@@ -198,71 +177,40 @@ public class PlasticDtcTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
-        plasticDtcReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName(), PlasticDtcReportPage.class)
-            .waitForInputControlsLoad()
-            .selectRollup(RollupEnum.ROLL_UP_A.getRollupName())
-            .clickApply()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
-
-        assertThat(plasticDtcReportPage.getDisplayedRollup(),
-                is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testApplyButton(
+                PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(),
+                RollupEnum.ROLL_UP_A.getRollupName()
+        );
     }
 
     @Test
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC input control panel works")
     public void testCancelButton() {
-        plasticDtcReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
-            .waitForInputControlsLoad()
-            .clickCancel(PlasticDtcReportPage.class);
-
-        assertThat(plasticDtcReportPage.getInputControlsDivClassName(), containsString("hidden"));
-        assertThat(plasticDtcReportPage.inputControlsIsDisplayed(), is(equalTo(false)));
-        assertThat(plasticDtcReportPage.inputControlsIsEnabled(), is(equalTo(true)));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCancelButton(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC input control panel works")
     public void testResetButton() {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .clickReset()
-            .waitForExpectedExportCount("0");
-
-        assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testResetButton(
+                PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
     }
 
     @Test
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), GenericReportPage.class)
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .clickSave()
-            .enterSaveName("Saved Config")
-            .clickSaveAsButton()
-            .clickReset()
-            .selectSavedOptionByName("Saved Config");
-
-        assertThat(genericReportPage.isExportSetSelected(ExportSetEnum.ROLL_UP_A.getExportSetName()), is(true));
-
-        genericReportPage.clickRemove();
-
-        assertThat(genericReportPage.isOptionInDropDown("Saved Config", 1), is(false));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testSaveAndRemoveButtons(
+                PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
     }
 }
