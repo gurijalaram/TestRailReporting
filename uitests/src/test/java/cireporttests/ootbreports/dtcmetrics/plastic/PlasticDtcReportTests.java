@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
-public class PlasticDtcTests extends TestBase {
+public class PlasticDtcReportTests extends TestBase {
 
     private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
@@ -35,7 +35,7 @@ public class PlasticDtcTests extends TestBase {
     private ViewRepositoryPage repository;
     private String assemblyType = "";
 
-    public PlasticDtcTests() {
+    public PlasticDtcReportTests() {
         super();
     }
 
@@ -203,7 +203,7 @@ public class PlasticDtcTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "1693")
-    @Description("Verify save button on Casting DTC input control panel functions correctly")
+    @Description("Verify save button on Plastic DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSaveAndRemoveButtons(

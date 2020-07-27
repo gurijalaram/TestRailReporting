@@ -84,6 +84,17 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "1693")
+    @Description("Verify save button on Casting DTC Comparison input control panel functions correctly")
+    public void testSaveAndRemoveButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testSaveAndRemoveButtons(
+                CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
+
+    @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")

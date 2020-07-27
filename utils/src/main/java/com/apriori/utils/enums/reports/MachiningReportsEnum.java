@@ -1,7 +1,9 @@
 package com.apriori.utils.enums.reports;
 
 public enum MachiningReportsEnum {
-    MACHINING_DTC("Machining DTC");
+    MACHINING_DTC("Machining DTC"),
+    MACHINING_DTC_DETAILS("Machining DTC Details"),
+    MACHINING_DTC_COMPARISON("Machining DTC Comparison");
 
     private String reportName;
 
