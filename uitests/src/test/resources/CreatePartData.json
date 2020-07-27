@@ -1,13 +1,11 @@
 {
-  "filename": "bracket_basic.prt",
   "externalId": "AutoAPITesting-%s",
   "annualVolume": 500,
   "batchSize": 1,
-  "description": "Part created by automation.",
-  "materialName": "Steel, Cold Worked, AISI 1020",
-  "pinnedRouting": "Material Stock / Laser Cut",
-  "processGroup": "Sheet Metal",
   "productionLife": 3.45,
-  "scenarioName": "AutoAPISheetMetalBracketBasicsTest",
-  "vpeName": "aPriori USA"
+  "vpeName": "aPriori USA",
+  "availablePg": "2-Model Machining, Additive Manufacturing, Bar & Tube Fab, Casting, Casting - Die, Casting - Sand,  Forging, Plastic Molding, Powder Metal, Rapid Prototyping, Roto & Blow Molding, Sheet Metal,  Sheet Metal - Hydroforming, Sheet Metal - Stretch Forming, Sheet Metal - Transfer Die,  Sheet Plastic, Stock Machining, User Guided",
+  "currencyCode": "USD",
+  "materialMode": "CAD",
+  "machiningMode": "MAY_BE_MACHINED"
 }

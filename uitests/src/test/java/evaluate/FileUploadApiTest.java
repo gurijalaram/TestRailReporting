@@ -32,6 +32,6 @@ public class FileUploadApiTest extends TestUtil {
     public void createFileUpload() {
         Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        new FileUploadResources().uploadCostPublishApi(token, fileObject);
+        new FileUploadResources().uploadCostPublishApi(token, fileObject,"bracket_basic.prt", "AutoAPISheetMetalBracketBasicsTest", "Casting - Die", "Aluminum, Cast, ANSI AL380.0");
     }
 }

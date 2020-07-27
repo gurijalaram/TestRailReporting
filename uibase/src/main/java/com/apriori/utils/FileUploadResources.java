@@ -65,24 +65,28 @@ public class FileUploadResources {
 
     private final String ORDER_SUCCESS = "SUCCESS";
     private final String ORDER_FAILED = "FAILED";
+    private final String CONTENT_TYPE = "Content-Type";
+    private final String APPLICATION_JSON = "application/json";
     Map<String, String> headers = new HashMap<>();
     NewPartRequest newPartRequest = null;
-    private String contentType = "Content-Type";
-    private String applicationJson = "application/json";
+
 
     /**
      * Method to upload, cost and publish a scenario
      *
-     * @param token      - the user token
-     * @param fileObject - the json file as object
+     * @param token        - the token
+     * @param fileObject   - the file object
+     * @param fileName     - the file name
+     * @param scenarioName - the scenario name
+     * @param processGroup - the process group
+     * @param materialName - the material name
      */
-    public void uploadCostPublishApi(HashMap<String, String> token, Object fileObject) {
-        // TODO: 24/07/2020 set token as part of the headers object
-        initializeFileUpload(token, fileObject);
-        createFileUploadWorkOrder(token, fileObject);
+    public void uploadCostPublishApi(HashMap<String, String> token, Object fileObject, String fileName, String scenarioName, String processGroup, String materialName) {
+        initializeFileUpload(token, fileName);
+        createFileUploadWorkOrder(token, fileName, scenarioName);
         submitFileUploadWorkOrder(token);
         checkFileWorkOrderStatus(token);
-        initializeCostScenario(token, fileObject);
+        initializeCostScenario(token, fileObject, processGroup, materialName);
         createCostWorkOrder(token);
         submitCostWorkOrder(token);
         checkCostResult(token);
@@ -95,20 +99,19 @@ public class FileUploadResources {
     /**
      * Initializes file upload
      *
-     * @param token      - the user token
-     * @param fileObject - the json file as object
+     * @param token    - the user token
+     * @param fileName - the filename
      */
-    private void initializeFileUpload(HashMap<String, String> token, Object fileObject) {
-        newPartRequest = (NewPartRequest) fileObject;
+    private void initializeFileUpload(HashMap<String, String> token, String fileName) {
         String url = Constants.getBaseUrl() + "apriori/cost/session/ws/files";
 
-        headers.put(contentType, "multipart/form-data");
+        headers.put(CONTENT_TYPE, "multipart/form-data");
 
         RequestEntity requestEntity = RequestEntity.init(url, FileResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getResourceAsFile(newPartRequest.getFilename())))
-            .setFormParams(new FormParams().use("filename", newPartRequest.getFilename()));
+            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getResourceAsFile(fileName)))
+            .setFormParams(new FormParams().use("filename", fileName));
 
         identity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "identity");
     }
@@ -116,14 +119,14 @@ public class FileUploadResources {
     /**
      * Creates file upload
      *
-     * @param token      - the user token
-     * @param fileObject - the json file as object
+     * @param token        - the user token
+     * @param fileName     - the file name
+     * @param scenarioName - the scenario name
      */
-    private void createFileUploadWorkOrder(HashMap<String, String> token, Object fileObject) {
-        newPartRequest = (NewPartRequest) fileObject;
+    private void createFileUploadWorkOrder(HashMap<String, String> token, String fileName, String scenarioName) {
         String fileURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
-        headers.put(contentType, applicationJson);
+        headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
         RequestEntity fileRequestEntity = RequestEntity.init(fileURL, FileOrderResponse.class)
             .setHeaders(headers)
@@ -131,9 +134,9 @@ public class FileUploadResources {
             .setBody(new FileCommand()
                 .setCommand(new FileOrdersUpload()
                     .setCommandType("LOADCADFILE")
-                    .setInputs(new FileUploadOrder().setScenarioName(newPartRequest.getScenarioName())
+                    .setInputs(new FileUploadOrder().setScenarioName(scenarioName)
                         .setFileKey(identity)
-                        .setFileName(newPartRequest.getFilename()))));
+                        .setFileName(fileName))));
 
         orderId = jsonNode(GenericRequestUtil.post(fileRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
@@ -155,7 +158,7 @@ public class FileUploadResources {
     private void checkFileWorkOrderStatus(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + orderId;
 
-        headers.put(contentType, applicationJson);
+        headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
         RequestEntity orderRequestEntity = RequestEntity.init(orderURL, FileUploadWorkOrder.class)
             .setHeaders(headers)
@@ -175,17 +178,16 @@ public class FileUploadResources {
      *
      * @param token - the user token
      */
-    private void initializeCostScenario(HashMap<String, String> token, Object fileObject) {
+    private void initializeCostScenario(HashMap<String, String> token, Object fileObject, String processGroup, String materialName) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/production-info";
 
-        newPartRequest = (NewPartRequest) fileObject;
-        headers.put(contentType, applicationJson);
+        headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
         RequestEntity costRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
             .setBody(
-                productionInfo(workspaceId, typeName, stateName, masterName, newPartRequest.getProcessGroup()));
+                productionInfo(fileObject, workspaceId, typeName, stateName, masterName, processGroup, materialName));
 
         inputSetId = Integer.parseInt(jsonNode(GenericRequestUtil.post(costRequestEntity, new RequestAreaApi()).getBody(), "id"));
     }
@@ -198,7 +200,7 @@ public class FileUploadResources {
     private void createCostWorkOrder(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
-        headers.put(contentType, applicationJson);
+        headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
         RequestEntity orderRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
             .setHeaders(headers)
@@ -256,7 +258,7 @@ public class FileUploadResources {
     private void initializePublishScenario(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
 
-        headers.put(contentType, applicationJson);
+        headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
         RequestEntity publishRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
             .setHeaders(headers)
@@ -365,7 +367,7 @@ public class FileUploadResources {
     private void submitOrder(HashMap<String, String> token, String orderId) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
 
-        headers.put(contentType, applicationJson);
+        headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
         RequestEntity orderRequestEntity = RequestEntity.init(orderURL, SubmitWorkOrder.class)
             .setHeaders(headers)
@@ -384,9 +386,12 @@ public class FileUploadResources {
      * @param stateName    - the state name
      * @param masterName   - the master name
      * @param processGroup - the process group
+     * @param materialName - the material name
      * @return production info
      */
-    private ProductionInfo productionInfo(int workspaceId, String typeName, String stateName, String masterName, String processGroup) {
+    private ProductionInfo productionInfo(Object fileObject, int workspaceId, String typeName, String stateName, String masterName, String processGroup, String materialName) {
+        newPartRequest = (NewPartRequest) fileObject;
+
         return new ProductionInfo()
             .setScenarioKey(new ProductionInfoScenario().setWorkspaceId(workspaceId)
                 .setTypeName(typeName)
@@ -416,7 +421,7 @@ public class FileUploadResources {
 
             .setSupportsMaterials(true)
             .setMaterialBean(new ProductionInfoMaterial().setInitialized(false)
-                .setVpeDefaultMaterialName(newPartRequest.getMaterialName())
+                .setVpeDefaultMaterialName(materialName)
                 .setMaterialMode(newPartRequest.getMaterialMode())
                 .setIsUserMaterialNameValid(false)
                 .setIsCadMaterialNameValid(false))
