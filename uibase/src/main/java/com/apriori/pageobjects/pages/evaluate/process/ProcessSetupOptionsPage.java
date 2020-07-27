@@ -800,7 +800,7 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
      *
      * @return string
      */
-    public String getSpecified(String text) {
+    public String getSpecified() {
         return getAttribute(userSpecifiedInput);
     }
 
