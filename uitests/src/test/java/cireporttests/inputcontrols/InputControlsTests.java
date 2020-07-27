@@ -26,7 +26,7 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic export set filter using input field test
-     * @param reportName String report to use
+     * @param reportName - report to use
      */
     public void testExportSetFilterUsingInputField(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
@@ -47,7 +47,7 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic export set filter using date picker test
-     * @param reportName String report to use
+     * @param reportName - report to use
      */
     public void testExportSetFilterUsingDatePicker(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
