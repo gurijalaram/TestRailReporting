@@ -224,11 +224,17 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "inputControls")
     private WebElement inputControlsDiv;
 
+    @FindBy(xpath = "//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]")
+    private WebElement headerDisplayedRollup;
+
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[1]")
     private WebElement partNamePlasticDtcReport;
 
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[3]")
     private WebElement fbcPlasticDtcReport;
+
+    @FindBy(xpath = "(//*[@style='font-weight:bold'])[5]")
+    private WebElement annualSpendPlasticDtcReport;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -850,6 +856,15 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Get Annual Spend value from Plastic Dtc Report Bubble
+     * @return BigDecimal value
+     */
+    public BigDecimal getAnnualSpendFromBubbleTooltip() {
+        pageUtils.waitForElementToAppear(annualSpendPlasticDtcReport);
+        return new BigDecimal(annualSpendPlasticDtcReport.getText().replace(",", ""));
+    }
+
+    /**
      * Sets report name
      * @param reportName String
      */
@@ -956,6 +971,17 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public boolean inputControlsIsDisplayed() {
         return pageUtils.isElementDisplayed(inputControlsDiv);
+    }
+
+    /**
+     * Get roll-up displayed in header
+     *
+     * @return String name of displayed rollup
+     */
+    public String getDisplayedRollup() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitForElementToAppear(headerDisplayedRollup);
+        return headerDisplayedRollup.getText();
     }
 
     /**

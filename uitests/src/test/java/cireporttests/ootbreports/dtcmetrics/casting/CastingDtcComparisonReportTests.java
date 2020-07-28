@@ -12,7 +12,6 @@ import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.enums.CastingReportsEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.enums.RollupEnum;
-import com.apriori.pageobjects.reports.pages.view.reports.CastingDtcReportHeader;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -28,7 +27,6 @@ import testsuites.suiteinterface.CIARStagingSmokeTest;
 public class CastingDtcComparisonReportTests extends TestBase {
 
     private GenericReportPage genericReportPage;
-    private CastingDtcReportHeader castingDtcReportHeader;
 
     public CastingDtcComparisonReportTests() {
         super();
@@ -66,16 +64,16 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC Comparison report")
     public void testRollupDropDown() {
-        castingDtcReportHeader = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), CastingDtcReportHeader.class)
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName()),
+        assertThat(genericReportPage.getDisplayedRollup(),
             is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
     }
 
@@ -84,16 +82,16 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
-        castingDtcReportHeader = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), CastingDtcReportHeader.class)
+            .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectRollup(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())
             .clickApply()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportHeader.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        assertThat(castingDtcReportHeader.getDisplayedRollup(CastingReportsEnum.CASTING_DTC.getReportName()),
+        assertThat(genericReportPage.getDisplayedRollup(),
             is(equalTo(RollupEnum.UC_CASTING_DTC_ALL.getRollupName())));
     }
 
@@ -102,16 +100,16 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Comparison input control panel works")
     public void testCancelButton() {
-        castingDtcReportHeader = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), LibraryPage.class)
             .waitForInputControlsLoad()
-            .clickCancel(CastingDtcReportHeader.class);
+            .clickCancel(GenericReportPage.class);
 
-        assertThat(castingDtcReportHeader.getInputControlsDivClassName(), containsString("hidden"));
-        assertThat(castingDtcReportHeader.inputControlsIsDisplayed(), is(equalTo(false)));
-        assertThat(castingDtcReportHeader.inputControlsIsEnabled(), is(equalTo(true)));
+        assertThat(genericReportPage.getInputControlsDivClassName(), containsString("hidden"));
+        assertThat(genericReportPage.inputControlsIsDisplayed(), is(equalTo(false)));
+        assertThat(genericReportPage.inputControlsIsEnabled(), is(equalTo(true)));
     }
 
     @Test

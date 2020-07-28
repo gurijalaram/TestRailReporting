@@ -24,6 +24,7 @@ public class PsoEditTests extends TestBase {
     private ProcessSetupOptionsPage processSetupOptionsPage;
 
     private File resourceFile;
+    private String optimizeForMinimumCostSelected;
 
     @Test
     @TestRail(testCaseId = {"761", "762", "763", "764"})
@@ -217,7 +218,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Injection Molding")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is("checked"));
+        assertThat(optimizeForMinimumCostSelected, is("checked"));
         assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.13"));
         assertThat(processSetupOptionsPage.getColorChargeOverride(), is("0.68"));
 

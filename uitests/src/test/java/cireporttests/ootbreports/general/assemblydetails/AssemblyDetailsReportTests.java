@@ -41,13 +41,16 @@ import java.util.List;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
+
     String assemblyType = "";
     private AssemblyDetailsReportPage assemblyDetailsReportPage;
+
     private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
-    private LibraryPage library;
+    private String assemblyType = "";
     private ReportsHomePage homePage;
+    private LibraryPage library;
 
     public AssemblyDetailsReportTests() {
         super();
