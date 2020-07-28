@@ -255,7 +255,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         assertThat(evaluatePage.getSourceScenarioName(), is(sourceScenarioName));
         assertThat(evaluatePage.getSourcePartName(), is(sourcePartName.toUpperCase()));
-        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(7.72, 1)));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(18.05, 1)));
 
         evaluatePage.selectSourcePart()
             .highlightScenario(source2ScenarioName, source2PartName)
@@ -264,7 +264,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         assertThat(evaluatePage.getSourceScenarioName(), is(source2ScenarioName));
         assertThat(evaluatePage.getSourcePartName(), is(source2PartName.toUpperCase()));
-        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(8.28, 1)));
+        assertThat(evaluatePage.getBurdenedCost(), is(closeTo(8.74, 1)));
     }
 
     @Test

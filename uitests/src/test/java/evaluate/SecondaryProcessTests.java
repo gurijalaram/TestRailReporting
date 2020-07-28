@@ -384,7 +384,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(processSetupOptionsPage.getFractionPainted(), is("0.30"));
         assertThat(processSetupOptionsPage.isNoMaskingSelected("checked"), is("true"));
         assertThat(processSetupOptionsPage.getSpecifyPainted(), is("414"));
-        assertThat(processSetupOptionsPage.getSpecified(), is("2"));
+        assertThat(processSetupOptionsPage.getSpecified("2"), is(true));
     }
 
     @Test
