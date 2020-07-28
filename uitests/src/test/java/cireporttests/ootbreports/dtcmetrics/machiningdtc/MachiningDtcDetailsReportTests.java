@@ -1,21 +1,22 @@
 package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
-import cireporttests.inputcontrols.InputControlsTests;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MachiningReportsEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
+
+import cireporttests.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class MachiningDtcDetailsReportTests extends TestBase {
 
     private InputControlsTests inputControlsTests;
 
-    public MachiningDtcDetailsReportTests() { super(); }
+    public MachiningDtcDetailsReportTests() {
+        super();
+    }
 
     @Test
     @TestRail(testCaseId = "3020")
