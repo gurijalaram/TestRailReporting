@@ -83,13 +83,13 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(closeTo(18.58, 1)));
+        assertThat(evaluatePage.getPartCost(), is(closeTo(17.4, 1)));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
             .goToStockTab();
         assertThat(stockPage.checkTableDetails("Auto"), is(true));
-        assertThat(stockPage.checkTableDetails("6.91"), is(true));
+        assertThat(stockPage.checkTableDetails("6.45"), is(true));
 
         stockPage = new StockPage(driver);
         stockPage.editStock()
@@ -100,7 +100,7 @@ public class MaterialStockTests extends TestBase {
         evaluatePanelToolbar = new EvaluatePanelToolbar(driver);
         evaluatePage = evaluatePanelToolbar.closePanel()
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(closeTo(19.06, 1)));
+        assertThat(evaluatePage.getPartCost(), is(closeTo(17.87, 1)));
 
         evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
@@ -108,7 +108,7 @@ public class MaterialStockTests extends TestBase {
 
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
         assertThat(stockPage.checkTableDetails("Manual"), is(true));
-        assertThat(stockPage.checkTableDetails("6.91"), is(true));
+        assertThat(stockPage.checkTableDetails("6.45"), is(true));
     }
 
     @Test
