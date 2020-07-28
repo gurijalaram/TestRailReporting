@@ -14,6 +14,7 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CastingReportsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.MachiningReportsEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -115,6 +116,22 @@ public class CastingDtcReportTests extends TestBase {
                 CastingReportsEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1691")
+    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    public void testBothExportDatesUsingDatePicker() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(CastingReportsEnum.CASTING_DTC.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1691")
+    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    public void testBothExportDatesUsingInputField() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingInputField(CastingReportsEnum.CASTING_DTC.getReportName());
     }
 
     @Test

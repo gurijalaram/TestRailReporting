@@ -30,15 +30,15 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetFilterUsingInputField(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login("qa-automation-01", "qa-automation-01")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
 
-        genericReportPage.setExportDateUsingInput(true)
-                .setExportDateUsingInput(false)
-                .ensureDatesAreCorrect(reportName)
+        genericReportPage.setExportDateUsingInput(true, "")
+                .setExportDateUsingInput(false, "")
+                .ensureDatesAreCorrect()
                 .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
@@ -51,7 +51,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetFilterUsingDatePicker(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login("qa-automation-01", "qa-automation-01")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
@@ -59,11 +59,30 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
                 .setExportDateUsingPicker(false)
-                .ensureDatesAreCorrect(reportName)
+                .ensureDatesAreCorrect()
                 .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
+    }
+
+    /**
+     * Generic test for invalid characters in export set filter fields
+     * @param reportName - report to use
+     */
+    public void testExportSetFilterInvalidCharacters(String reportName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .setExportDateUsingInput(true, "?")
+                .setExportDateUsingInput(false, "?")
+                .clickScenarioDropdownTwice();
+
+        assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(true), is(true));
+        assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(false), is(true));
+        assertThat(genericReportPage.getExportSetErrorText(true).isEmpty(), is(false));
+        assertThat(genericReportPage.getExportSetErrorText(false).isEmpty(), is(false));
     }
 
     /**

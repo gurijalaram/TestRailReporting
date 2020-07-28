@@ -79,6 +79,14 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "3567")
+    @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
+    public void testExportSetDateInputInvalidCharacters() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterInvalidCharacters(MachiningReportsEnum.MACHINING_DTC_COMPARISON.getReportName());
+    }
+
+    @Test
     @TestRail(testCaseId = "3566")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {

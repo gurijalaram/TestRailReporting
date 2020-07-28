@@ -96,6 +96,23 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "1691")
+    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    public void testBothExportDatesUsingDatePicker() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1691")
+    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    public void testBothExportDatesUsingInputField() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingInputField(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName());
+    }
+
+
+    @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")

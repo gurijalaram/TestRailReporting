@@ -1,5 +1,11 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
@@ -237,6 +243,21 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[5]")
     private WebElement annualSpendPlasticDtcReport;
 
+    @FindBy(id = "jr-ui-datepicker-div")
+    private WebElement datePickerDiv;
+
+    @FindBy(xpath = "//button[contains(text(), 'Close')]")
+    private WebElement datePickerCloseButton;
+
+    @FindBy(xpath = "//div[@id='useLatestExport']//a")
+    private WebElement useLatestExportDropdown;
+
+    @FindBy(xpath = "//div[@id='earliestExportDate']//div")
+    private WebElement earliestExportSetDateError;
+
+    @FindBy(xpath = "//div[@id='latestExportDate']//div")
+    private WebElement latestExportSetDateError;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -412,15 +433,46 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param isEarliestAndToday - boolean to determine element to use and date to set
      * @return instance of current page object
      */
-    public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday) {
+    public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday, String invalidValue) {
         String dateToUse = getDate(isEarliestAndToday);
         WebElement dateInputToUse = isEarliestAndToday ? earliestExportDateInput : latestExportDateInput;
+        String valueToInput = invalidValue.isEmpty() ? dateToUse : invalidValue;
 
         dateInputToUse.clear();
         dateInputToUse.click();
-        dateInputToUse.sendKeys(dateToUse);
+        dateInputToUse.sendKeys(valueToInput);
 
         return this;
+    }
+
+    /**
+     * Click Use Latest Scenario dropdown twice to remove focus from date
+     * @return Generic Report Page instance
+     */
+    public GenericReportPage clickScenarioDropdownTwice() {
+        pageUtils.waitForElementAndClick(useLatestExportDropdown);
+        useLatestExportDropdown.click();
+        return this;
+    }
+
+    /**
+     * Gets isDisplayed and isEnabled for either export set filter error
+     * @return booolean
+     */
+    public boolean isExportSetFilterErrorDisplayedAndEnabled(boolean isEarliest) {
+        pageUtils.waitForElementToAppear(earliestExportSetDateError);
+        pageUtils.waitForElementToAppear(latestExportSetDateError);
+        return isEarliest ? earliestExportSetDateError.isDisplayed() && earliestExportSetDateError.isEnabled() :
+                latestExportSetDateError.isDisplayed() && latestExportSetDateError.isEnabled();
+    }
+
+    /**
+     * Gets export set error text
+     * @param isEarliest - boolean
+     * @return String
+     */
+    public String getExportSetErrorText(boolean isEarliest) {
+        return isEarliest ? earliestExportSetDateError.getText() : latestExportSetDateError.getText();
     }
 
     /**
@@ -438,6 +490,12 @@ public class GenericReportPage extends ReportsPageHeader {
         setYearValuePicker(String.format("%d", newDt.getYear()));
         pickerTrigger.click();
 
+        if (datePickerDiv.getAttribute("style").contains("display: block;")) {
+            datePickerCloseButton.click();
+            pageUtils.checkElementAttribute(datePickerDiv, "style", "display: none;");
+            //assertThat(datePickerDiv.getAttribute("style").contains("display: none;"), is(true));
+        }
+
         return this;
     }
 
@@ -446,19 +504,9 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public GenericReportPage ensureDatesAreCorrect(String reportName) {
-        boolean isAssemblyDetails = reportName.equals(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName());
-        String date = removeTimeFromDate(getDate(isAssemblyDetails));
-
-        if (isAssemblyDetails) {
-            for (int i = 0; i < 2; i++) {
-                String dateToUse = i == 0 ? date : removeTimeFromDate(getDate(false));
-                WebElement dateElementToUse = i == 0 ? earliestExportDateInput : latestExportDateInput;
-                pageUtils.checkElementAttribute(dateElementToUse, "value", dateToUse);
-            }
-        } else {
-            pageUtils.checkElementAttribute(latestExportDateInput, "value", date);
-        }
+    public GenericReportPage ensureDatesAreCorrect() {
+        pageUtils.checkElementAttribute(earliestExportDateInput, "value", removeTimeFromDate(getDate(true)));
+        pageUtils.checkElementAttribute(latestExportDateInput, "value", removeTimeFromDate(getDate(false)));
 
         return this;
     }
@@ -638,7 +686,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets day value in date picker
      */
     private void setDayValuePicker(int dayValue) {
-        By dayLocator = By.xpath(String.format("//a[contains(text(), '%d')]", dayValue));
+        By dayLocator = By.xpath(String.format("//a[contains(text(), '%d') and @class='ui-state-default']", dayValue));
         driver.findElement(dayLocator).click();
     }
 
