@@ -12,8 +12,13 @@ import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-
+import java.util.List;
 
 public class FileUploadApiTest extends TestUtil {
 
@@ -32,6 +37,19 @@ public class FileUploadApiTest extends TestUtil {
     public void createFileUpload() {
         Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        new FileUploadResources().uploadCostPublishApi(token, fileObject,"bracket_basic.prt", "AutoAPISheetMetalBracketBasicsTest", "Casting - Die", "Aluminum, Cast, ANSI AL380.0");
+        List<List<String>> records = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(FileResourceUtil.getResourceAsFile("test-parts2.csv")))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",(?=([^\\\"]|\\\"[^\\\"]*\\\")*$)");
+                records.add(Arrays.asList(values));
+            }
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+        }
+
+        for (List<String> record : records) {
+            new FileUploadResources().uploadCostPublishApi(token, fileObject, record.get(0), record.get(1), record.get(2), record.get(3).replace("\"", ""));
+        }
     }
 }
