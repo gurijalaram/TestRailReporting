@@ -1,5 +1,9 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
@@ -413,7 +417,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of current page object
      */
     public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday) {
-        String dateToUse = getDate(isEarliestAndToday);
+        String dateToUse = isEarliestAndToday ? getCurrentDate() : getDateTwoDaysAfterCurrent();
         WebElement dateInputToUse = isEarliestAndToday ? earliestExportDateInput : latestExportDateInput;
 
         dateInputToUse.clear();
@@ -446,18 +450,12 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public GenericReportPage ensureDatesAreCorrect(String reportName) {
-        boolean isAssemblyDetails = reportName.equals(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName());
-        String date = removeTimeFromDate(getDate(isAssemblyDetails));
-
-        if (isAssemblyDetails) {
-            for (int i = 0; i < 2; i++) {
-                String dateToUse = i == 0 ? date : removeTimeFromDate(getDate(false));
-                WebElement dateElementToUse = i == 0 ? earliestExportDateInput : latestExportDateInput;
-                pageUtils.checkElementAttribute(dateElementToUse, "value", dateToUse);
-            }
-        } else {
-            pageUtils.checkElementAttribute(latestExportDateInput, "value", date);
+    public GenericReportPage ensureDatesAreCorrect() {
+        for (int i = 0; i < 2; i++) {
+            String dateToUse = i == 0 ? getCurrentDate() : getDateTwoDaysAfterCurrent();
+            WebElement dateElementToUse = i == 0 ? earliestExportDateInput : latestExportDateInput;
+            //pageUtils.checkElementAttribute(dateElementToUse, "value", removeTimeFromDate(dateToUse));
+            assertThat(dateElementToUse.getAttribute("value").contains(removeTimeFromDate(dateToUse)), is(true));
         }
 
         return this;
@@ -612,6 +610,16 @@ public class GenericReportPage extends ReportsPageHeader {
             .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
             : formatter
             .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
+    }
+
+    private String getCurrentDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(LocalDateTime.now(ZoneOffset.UTC).withNano(0));
+    }
+
+    private String getDateTwoDaysAfterCurrent() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
     }
 
     /**

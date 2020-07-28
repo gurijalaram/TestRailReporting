@@ -30,7 +30,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetFilterUsingInputField(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("qa-automation-01", "qa-automation-01")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
@@ -38,7 +38,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true)
                 .setExportDateUsingInput(false)
-                .ensureDatesAreCorrect(reportName)
+                .ensureDatesAreCorrect()
                 .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
@@ -59,7 +59,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
                 .setExportDateUsingPicker(false)
-                .ensureDatesAreCorrect(reportName)
+                .ensureDatesAreCorrect()
                 .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
