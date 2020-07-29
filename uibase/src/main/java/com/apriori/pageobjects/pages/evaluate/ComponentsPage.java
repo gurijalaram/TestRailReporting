@@ -99,6 +99,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      */
     public EvaluatePage openSubcomponent(String scenarioName, String subcomponentName) {
         pageUtils.waitForElementAndClick(findSubcomponent(scenarioName, subcomponentName));
+        driver.navigate().refresh();
         return new EvaluatePage(driver);
     }
 
