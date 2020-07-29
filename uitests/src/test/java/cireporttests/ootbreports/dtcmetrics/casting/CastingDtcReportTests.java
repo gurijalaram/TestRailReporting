@@ -2,6 +2,7 @@ package cireporttests.ootbreports.dtcmetrics.casting;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -14,6 +15,7 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CastingReportsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.MachiningReportsEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -153,5 +155,16 @@ public class CastingDtcReportTests extends TestBase {
             Currency in Reports and CID needs to match for this test also (both default to USD)
          */
         assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1699")
+    @Description("Verify Currency Code input control functions correctly")
+    public void testCurrencyCode() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCurrencyCode(
+                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
     }
 }

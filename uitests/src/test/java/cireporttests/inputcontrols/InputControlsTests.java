@@ -10,9 +10,13 @@ import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.CastingReportsEnum;
+import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
+
+import java.math.BigDecimal;
 
 public class InputControlsTests extends TestBase {
 
@@ -190,5 +194,36 @@ public class InputControlsTests extends TestBase {
         genericReportPage.exportSetDeselectAll();
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
+    }
+
+    public void testCurrencyCode(String reportName, String exportSetName) {
+        BigDecimal gbpGrandTotal;
+        BigDecimal usdGrandTotal;
+
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSetName)
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        genericReportPage.setReportName(reportName);
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
+
+        genericReportPage.clickInputControlsButton()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
+
+        genericReportPage.setReportName(reportName);
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
+
+        assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
     }
 }
