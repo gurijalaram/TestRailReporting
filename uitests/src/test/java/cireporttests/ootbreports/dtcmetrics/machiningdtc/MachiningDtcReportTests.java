@@ -23,7 +23,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
 
@@ -122,7 +121,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3567")
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
@@ -131,7 +129,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3565")
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
@@ -140,7 +137,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({CIARStagingSmokeTest.class, CiaCirTestDevTest.class})
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3566")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
@@ -149,7 +146,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3020")
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
@@ -161,7 +157,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3021")
     @Description("Verify apply button on Machining DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -173,7 +168,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3021")
     @Description("Verify cancel button on Machining DTC input control panel works")
     public void testCancelButton() {
@@ -182,7 +176,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3021")
     @Description("Verify reset button on Machining DTC input control panel works")
     public void testResetButton() {
@@ -194,7 +187,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3021")
     @Description("Verify save button on Machining DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
