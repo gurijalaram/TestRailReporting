@@ -25,9 +25,8 @@ import java.util.Map;
 public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
-    private Map<String, WebElement> costMaturityOptions = new HashMap<>();
 
-    @FindBy(css = "h3.modal-title")
+    @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] h3.modal-title")
     private WebElement modalDialog;
 
     @FindBy(css = "input[data-ap-field='privateWorkspace']")
