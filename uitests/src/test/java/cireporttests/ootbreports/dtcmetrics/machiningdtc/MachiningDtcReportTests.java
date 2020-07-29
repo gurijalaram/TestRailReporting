@@ -10,13 +10,14 @@ import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
-import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.MachiningReportsEnum;
+import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.MachiningReportsEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import cireporttests.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -27,6 +28,7 @@ import java.math.BigDecimal;
 
 public class MachiningDtcReportTests extends TestBase {
 
+    private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
@@ -121,20 +123,8 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3565")
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(MachiningReportsEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad();
-
-        Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
-
-        genericReportPage.setEarliestExportDateToTodayInput()
-                .setLatestExportDateToTwoDaysFutureInput()
-                .ensureDatesAreCorrect(true, false)
-                .waitForCorrectExportSetListCount("0");
-
-        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingInputField(MachiningReportsEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -142,19 +132,7 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3566")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(MachiningReportsEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad();
-
-        Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
-
-        genericReportPage.setEarliestExportDateToTodayPicker()
-                .setLatestExportDateToTodayPlusTwoPicker()
-                .ensureDatesAreCorrect(true, false)
-                .waitForCorrectExportSetListCount("0");
-
-        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(MachiningReportsEnum.MACHINING_DTC.getReportName());
     }
 }
