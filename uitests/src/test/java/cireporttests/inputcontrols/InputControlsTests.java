@@ -196,6 +196,11 @@ public class InputControlsTests extends TestBase {
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
     }
 
+    /**
+     * Generic test for currency code
+     * @param reportName - report to use
+     * @param exportSetName - export set to use
+     */
     public void testCurrencyCode(String reportName, String exportSetName) {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;

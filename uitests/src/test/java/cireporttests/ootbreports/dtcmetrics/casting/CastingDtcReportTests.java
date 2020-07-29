@@ -167,4 +167,26 @@ public class CastingDtcReportTests extends TestBase {
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "1694")
+    @Description("Verify Roll-up input control functions correctly")
+    public void testRollupDropdown() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testRollupDropdown(
+                CastingReportsEnum.CASTING_DTC.getReportName(),
+                RollupEnum.ROLL_UP_A.getRollupName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1703")
+    @Description("Verify Select Parts list controls function correctly")
+    public void testExportSetInputControls() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetSelection(
+                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
 }
