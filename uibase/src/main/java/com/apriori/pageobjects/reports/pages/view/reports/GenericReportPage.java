@@ -433,8 +433,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param isEarliestAndToday - boolean to determine element to use and date to set
      * @return instance of current page object
      */
-    public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday, String invalidValue) {
-        String dateToUse = getDate(isEarliestAndToday);
+    public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday) {
+        String dateToUse = isEarliestAndToday ? getCurrentDate() : getDateTwoDaysAfterCurrent();
         WebElement dateInputToUse = isEarliestAndToday ? earliestExportDateInput : latestExportDateInput;
         String valueToInput = invalidValue.isEmpty() ? dateToUse : invalidValue;
 
@@ -486,7 +486,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(pickerTrigger);
 
         setDayValuePicker(newDt.getDayOfMonth());
-        setMonthValuePicker(newDt.getMonthValue() - 1);
+        setMonthValuePicker(getMonthDropdownIndex(newDt));
         setYearValuePicker(String.format("%d", newDt.getYear()));
         pickerTrigger.click();
 
@@ -505,8 +505,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureDatesAreCorrect() {
-        pageUtils.checkElementAttribute(earliestExportDateInput, "value", removeTimeFromDate(getDate(true)));
-        pageUtils.checkElementAttribute(latestExportDateInput, "value", removeTimeFromDate(getDate(false)));
+        for (int i = 0; i < 2; i++) {
+            String dateToUse = i == 0 ? getCurrentDate() : getDateTwoDaysAfterCurrent();
+            WebElement dateElementToUse = i == 0 ? earliestExportDateInput : latestExportDateInput;
+            assertThat(dateElementToUse.getAttribute("value").contains(removeTimeFromDate(dateToUse)), is(true));
+        }
 
         return this;
     }
@@ -660,6 +663,16 @@ public class GenericReportPage extends ReportsPageHeader {
             .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
             : formatter
             .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
+    }
+
+    private String getCurrentDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(LocalDateTime.now(ZoneOffset.UTC).withNano(0));
+    }
+
+    private String getDateTwoDaysAfterCurrent() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
     }
 
     /**
@@ -981,6 +994,15 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(headerDisplayedRollup);
         return headerDisplayedRollup.getText();
+    }
+
+    /**
+     * Gets dropdown index from date
+     * @param date - date to use
+     * @return int - index value
+     */
+    private int getMonthDropdownIndex(LocalDateTime date) {
+        return date.getMonthValue() - 1;
     }
 
     /**
