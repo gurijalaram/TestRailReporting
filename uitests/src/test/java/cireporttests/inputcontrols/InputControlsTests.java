@@ -30,7 +30,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetFilterUsingInputField(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login("qa-automation-01", "qa-automation-01")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 

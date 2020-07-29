@@ -438,7 +438,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(pickerTrigger);
 
         setDayValuePicker(newDt.getDayOfMonth());
-        setMonthValuePicker(newDt.getMonthValue() - 1);
+        setMonthValuePicker(getMonthDropdownIndex(newDt));
         setYearValuePicker(String.format("%d", newDt.getYear()));
         pickerTrigger.click();
 
@@ -454,7 +454,6 @@ public class GenericReportPage extends ReportsPageHeader {
         for (int i = 0; i < 2; i++) {
             String dateToUse = i == 0 ? getCurrentDate() : getDateTwoDaysAfterCurrent();
             WebElement dateElementToUse = i == 0 ? earliestExportDateInput : latestExportDateInput;
-            //pageUtils.checkElementAttribute(dateElementToUse, "value", removeTimeFromDate(dateToUse));
             assertThat(dateElementToUse.getAttribute("value").contains(removeTimeFromDate(dateToUse)), is(true));
         }
 
@@ -941,6 +940,15 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(headerDisplayedRollup);
         return headerDisplayedRollup.getText();
+    }
+
+    /**
+     * Gets dropdown index from date
+     * @param date - date to use
+     * @return int - index value
+     */
+    private int getMonthDropdownIndex(LocalDateTime date) {
+        return date.getMonthValue() - 1;
     }
 
     /**
