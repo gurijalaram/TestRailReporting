@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.reports.pages.view.enums;
+package com.apriori.utils.enums.reports;
 
 public enum AssemblyReportsEnum {
     ASSEMBLY_COST_A4("Assembly Cost (A4)"),
