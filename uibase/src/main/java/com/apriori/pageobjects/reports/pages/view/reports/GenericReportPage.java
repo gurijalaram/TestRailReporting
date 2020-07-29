@@ -433,7 +433,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param isEarliestAndToday - boolean to determine element to use and date to set
      * @return instance of current page object
      */
-    public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday) {
+    public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday, String invalidValue) {
         String dateToUse = isEarliestAndToday ? getCurrentDate() : getDateTwoDaysAfterCurrent();
         WebElement dateInputToUse = isEarliestAndToday ? earliestExportDateInput : latestExportDateInput;
         String valueToInput = invalidValue.isEmpty() ? dateToUse : invalidValue;
