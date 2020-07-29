@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.reports.pages.view.enums;
+package com.apriori.utils.enums.reports;
 
 public enum CastingReportsEnum {
     CASTING_DTC("Casting DTC"),

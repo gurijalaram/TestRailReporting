@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.reports.pages.view.enums;
+package com.apriori.utils.enums.reports;
 
 public enum ExportSetEnum {
     TOP_LEVEL("---01-top-level"),

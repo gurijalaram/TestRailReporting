@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.reports.pages.view;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
-import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.PlasticDtcReportsEnum;
+import com.apriori.utils.enums.reports.AssemblyReportsEnum;
+import com.apriori.utils.enums.reports.PlasticDtcReportsEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
