@@ -2,7 +2,7 @@ package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.MachiningReportsEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -24,7 +24,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     public void testExportSetListControlFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(
-                MachiningReportsEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
@@ -35,7 +35,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
-                MachiningReportsEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
                 RollupEnum.DTC_MACHINING_DATASET.getRollupName()
         );
     }
@@ -45,7 +45,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify cancel button on Machining DTC Details input control panel works")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCancelButton(MachiningReportsEnum.MACHINING_DTC_DETAILS.getReportName());
+        inputControlsTests.testCancelButton(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
-                MachiningReportsEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
@@ -65,7 +65,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     public void testSaveAndRemoveButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSaveAndRemoveButtons(
-                MachiningReportsEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
@@ -75,7 +75,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(MachiningReportsEnum.MACHINING_DTC_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterInvalidCharacters(MachiningReportsEnum.MACHINING_DTC_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterInvalidCharacters(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingDatePicker(MachiningReportsEnum.MACHINING_DTC_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterUsingDatePicker(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
     }
 
 }

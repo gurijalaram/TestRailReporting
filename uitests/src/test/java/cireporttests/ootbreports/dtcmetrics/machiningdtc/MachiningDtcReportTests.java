@@ -14,7 +14,7 @@ import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.MachiningReportsEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -51,8 +51,8 @@ public class MachiningDtcReportTests extends TestBase {
             .navigateToViewRepositoryPage()
             .navigateToMachiningDTCFolder();
 
-        assertThat(MachiningReportsEnum.MACHINING_DTC.getReportName(),
-                is(equalTo(repository.getReportName(MachiningReportsEnum.MACHINING_DTC.getReportName()))));
+        assertThat(ReportNamesEnum.MACHINING_DTC.getReportName(),
+                is(equalTo(repository.getReportName(ReportNamesEnum.MACHINING_DTC.getReportName()))));
         assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
     }
 
@@ -64,7 +64,10 @@ public class MachiningDtcReportTests extends TestBase {
             .login()
             .navigateToLibraryPage();
 
-        assertThat(MachiningReportsEnum.MACHINING_DTC.getReportName(), is(equalTo(library.getReportName(MachiningReportsEnum.MACHINING_DTC.getReportName()))));
+        assertThat(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                is(equalTo(library.getReportName(ReportNamesEnum.MACHINING_DTC.getReportName())))
+        );
     }
 
     @Test
@@ -75,10 +78,11 @@ public class MachiningDtcReportTests extends TestBase {
             .login();
 
         searchResults = new ViewSearchResultsPage(driver);
-        homePage.searchForReport(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        homePage.searchForReport(ReportNamesEnum.MACHINING_DTC.getReportName());
 
-        assertThat(searchResults.getReportName(MachiningReportsEnum.MACHINING_DTC.getReportName()),
-                is(equalTo(MachiningReportsEnum.MACHINING_DTC.getReportName())));
+        assertThat(searchResults.getReportName(ReportNamesEnum.MACHINING_DTC.getReportName()),
+                is(equalTo(ReportNamesEnum.MACHINING_DTC.getReportName()))
+        );
     }
 
     @Test
@@ -92,14 +96,14 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(MachiningReportsEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+            .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        genericReportPage.setReportName(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();
         usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
 
@@ -108,7 +112,7 @@ public class MachiningDtcReportTests extends TestBase {
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
 
-        genericReportPage.setReportName(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();
         gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
 
@@ -121,7 +125,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterInvalidCharacters(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        inputControlsTests.testExportSetFilterInvalidCharacters(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -129,7 +133,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -138,7 +142,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingDatePicker(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        inputControlsTests.testExportSetFilterUsingDatePicker(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -147,7 +151,7 @@ public class MachiningDtcReportTests extends TestBase {
     public void testExportSetListControlFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(
-                MachiningReportsEnum.MACHINING_DTC.getReportName(),
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
@@ -158,7 +162,7 @@ public class MachiningDtcReportTests extends TestBase {
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
-                MachiningReportsEnum.MACHINING_DTC.getReportName(),
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
                 RollupEnum.DTC_MACHINING_DATASET.getRollupName()
         );
     }
@@ -168,7 +172,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify cancel button on Machining DTC input control panel works")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCancelButton(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        inputControlsTests.testCancelButton(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -177,7 +181,7 @@ public class MachiningDtcReportTests extends TestBase {
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
-                MachiningReportsEnum.MACHINING_DTC.getReportName(),
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
@@ -188,7 +192,7 @@ public class MachiningDtcReportTests extends TestBase {
     public void testSaveAndRemoveButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSaveAndRemoveButtons(
-                MachiningReportsEnum.MACHINING_DTC.getReportName(),
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }

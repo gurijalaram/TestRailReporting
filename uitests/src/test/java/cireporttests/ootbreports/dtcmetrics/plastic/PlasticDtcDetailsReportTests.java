@@ -2,7 +2,7 @@ package cireporttests.ootbreports.dtcmetrics.plastic;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.PlasticDtcReportsEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -24,7 +24,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
-                PlasticDtcReportsEnum.PLASTIC_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
                 RollupEnum.ROLL_UP_A.getRollupName()
         );
     }
@@ -34,7 +34,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify cancel button on Plastic DTC Details input control panel works")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCancelButton(PlasticDtcReportsEnum.PLASTIC_DTC_DETAILS.getReportName());
+        inputControlsTests.testCancelButton(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
-                PlasticDtcReportsEnum.PLASTIC_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
@@ -54,7 +54,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     public void testSaveAndRemoveButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSaveAndRemoveButtons(
-                PlasticDtcReportsEnum.PLASTIC_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }

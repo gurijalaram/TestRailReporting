@@ -11,8 +11,8 @@ import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.CastingReportsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -37,7 +37,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     public void testCastingDtcDetailsExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(
-                CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );
     }
@@ -48,7 +48,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     public void testRollupDropDown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
-                CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
                 RollupEnum.UC_CASTING_DTC_ALL.getRollupName()
         );
     }
@@ -59,7 +59,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
-                CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
                 RollupEnum.UC_CASTING_DTC_ALL.getRollupName()
         );
     }
@@ -69,7 +69,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify cancel button on Casting DTC Details input control panel works")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCancelButton(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName());
+        inputControlsTests.testCancelButton(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
-                CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );
     }
@@ -90,7 +90,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     public void testSaveAndRemoveButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSaveAndRemoveButtons(
-                CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(),
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );
     }
@@ -100,7 +100,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingDatePicker(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterUsingDatePicker(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
 
@@ -120,13 +120,13 @@ public class CastingDtcDetailsReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickOk();
 
-        genericReportPage.setReportName(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName());
+        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
         genericReportPage.openNewTabAndFocus(1);
