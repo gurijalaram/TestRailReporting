@@ -9,6 +9,8 @@ import com.apriori.utils.web.driver.TestBase;
 import cireporttests.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
 
@@ -19,6 +21,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Plastic DTC Comparison input control panel functions correctly")
     public void testApplyButton() {
@@ -30,6 +33,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Plastic DTC Comparison input control panel works")
     public void testCancelButton() {
@@ -38,6 +42,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Plastic DTC Comparison input control panel works")
     public void testResetButton() {
@@ -49,6 +54,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Plastic DTC Comparison input control panel functions correctly")
     public void testSaveAndRemoveButtons() {

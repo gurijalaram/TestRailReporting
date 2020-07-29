@@ -21,6 +21,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
@@ -84,7 +85,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC Details input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -96,6 +97,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
@@ -104,6 +106,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingInputField() {
