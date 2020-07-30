@@ -12,19 +12,20 @@ import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
-import com.apriori.pageobjects.reports.pages.view.enums.AssemblyReportsEnum;
-import com.apriori.pageobjects.reports.pages.view.enums.AssemblySetEnum;
-import com.apriori.pageobjects.reports.pages.view.enums.ExportSetEnum;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
-import com.apriori.utils.enums.AssemblyTypeEnum;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.AssemblyReportsEnum;
+import com.apriori.utils.enums.reports.AssemblySetEnum;
+import com.apriori.utils.enums.reports.AssemblyTypeEnum;
+import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import cireporttests.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -40,6 +41,7 @@ import java.util.List;
 public class AssemblyDetailsReportTests extends TestBase {
 
     private AssemblyDetailsReportPage assemblyDetailsReport;
+    private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
@@ -384,38 +386,18 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "1919")
-    @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .setLatestExportDateToTodayInput()
-            .ensureDatesAreCorrect(false, true);
-
-        // TODO: Re-add waitForCorrectExportSetListCount("0") if is ever bug fixed
-        assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingInputField(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "3244")
-    @Issue("AP-54036")
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .setLatestExportDateToTodayPlusTwoPicker()
-            .ensureDatesAreCorrect(false, false);
-
-        // TODO: Re-add waitForCorrectExportSetListCount("0") if is ever bug fixed
-        assertThat(genericReportPage.getAmountOfTopLevelExportSets(), is(0));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test

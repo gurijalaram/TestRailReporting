@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.reports.pages.view.enums;
+package com.apriori.utils.enums.reports;
 
 public enum AssemblySetEnum {
     SUB_ASSEMBLY("SUB-ASSEMBLY (Initial)"),

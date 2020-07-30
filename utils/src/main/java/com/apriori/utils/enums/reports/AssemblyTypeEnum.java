@@ -1,4 +1,4 @@
-package com.apriori.utils.enums;
+package com.apriori.utils.enums.reports;
 
 public enum AssemblyTypeEnum {
     TOP_LEVEL("Top Level"),
