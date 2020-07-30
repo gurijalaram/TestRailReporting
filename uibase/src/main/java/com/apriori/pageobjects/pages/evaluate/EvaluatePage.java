@@ -653,6 +653,7 @@ public class EvaluatePage extends EvaluateHeader {
      * @return new page object
      */
     public ComponentsPage openComponentsTable() {
+        pageUtils.isElementEnabled(componentsDetails);
         pageUtils.waitForElementAndClick(componentsDetails);
         return new ComponentsPage(driver);
     }
