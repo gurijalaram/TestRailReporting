@@ -259,10 +259,10 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
      *
      * @return current page object
      */
-    public String getOptimizeForMinimumCostSelected() {
+    public boolean getOptimizeForMinimumCostSelected() {
         By radioButton = By.cssSelector("input[data-ap-comp='numberOfCavities.radioButtons.optimize']");
         pageUtils.waitForElementToAppear(radioButton);
-        return driver.findElement(radioButton).getAttribute("outerHTML");
+        return driver.findElement(radioButton).isSelected();
     }
 
     /**
@@ -451,8 +451,8 @@ public class ProcessSetupOptionsPage extends EvaluatePanelToolbar {
      *
      * @return current page object
      */
-    public String isAddColorantSelected(String attribute) {
-        return pageUtils.waitForElementToAppear(addColorantRadioButton).getAttribute(attribute);
+    public boolean isAddColorantSelected() {
+        return pageUtils.waitForElementToAppear(addColorantRadioButton).isSelected();
     }
 
     /**
