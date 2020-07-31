@@ -17,8 +17,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 @RunWith(JUnitParamsRunner.class)
@@ -47,7 +47,7 @@ public class FileUploadApiTest extends TestUtil {
         @Override
         public Object[] map(Reader reader) {
             Object[] map = super.map(reader);
-            List<Object> result = new LinkedList<>();
+            List<Object> result = new ArrayList<>();
             for (Object lineObj : map) {
                 String line = lineObj.toString();
                 String[] index = line.split(",(?=([^\\\"]|\\\"[^\\\"]*\\\")*$)");
