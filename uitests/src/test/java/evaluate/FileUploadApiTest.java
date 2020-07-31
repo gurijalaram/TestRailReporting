@@ -35,7 +35,7 @@ public class FileUploadApiTest extends TestUtil {
     }
 
     @Test
-    @FileParameters(value = "classpath:test-parts2.csv", mapper = CustomMapper.class)
+    @FileParameters(value = "classpath:test-parts2.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")
     @Description("Upload, cost and publish a part using CID API")
     public void createFileUpload(String fileName, String scenarioName, String processGroup, String materialName) {
         Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
