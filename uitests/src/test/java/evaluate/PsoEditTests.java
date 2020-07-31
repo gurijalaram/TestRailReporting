@@ -24,7 +24,6 @@ public class PsoEditTests extends TestBase {
     private ProcessSetupOptionsPage processSetupOptionsPage;
 
     private File resourceFile;
-    private String optimizeForMinimumCostSelected;
 
     @Test
     @TestRail(testCaseId = {"761", "762", "763", "764"})
@@ -55,7 +54,7 @@ public class PsoEditTests extends TestBase {
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("8"), is(true));
         assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.40"));
-        assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.isAddColorantSelected(), is(true));
         assertThat(processSetupOptionsPage.getMaterialRegrind(), is("0.30"));
     }
 
@@ -83,7 +82,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("High Pressure Die Casting")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is("checked"));
+        assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is(true));
         assertThat(processSetupOptionsPage.getMoldMaterial("AISI P20"), is(true));
         assertThat(processSetupOptionsPage.getSelectedPartTolerance("Low Tolerance +/-0.254 (+/-0.010\")"), is(true));
     }
@@ -111,7 +110,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Vertical Automatic")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is("checked"));
+        assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is(true));
         assertThat(processSetupOptionsPage.getMoldMaterial("Plastic"), is(true));
     }
 
@@ -218,7 +217,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessChart("Injection Molding")
             .selectOptions();
 
-        assertThat(optimizeForMinimumCostSelected, is("checked"));
+        assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is(true));
         assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.13"));
         assertThat(processSetupOptionsPage.getColorChargeOverride(), is("0.68"));
 
@@ -243,7 +242,7 @@ public class PsoEditTests extends TestBase {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("4"), is(true));
-        assertThat(processSetupOptionsPage.isAddColorantSelected("checked"), is("true"));
+        assertThat(processSetupOptionsPage.isAddColorantSelected(), is(true));
         assertThat(processSetupOptionsPage.getMaterialRegrind(), is("1.00"));
     }
 
