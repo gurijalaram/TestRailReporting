@@ -30,6 +30,9 @@
         "installationIdentity": {
           "type": "string"
         },
+        "deploymentIdentity": {
+          "type": "string"
+        },
         "state": {
           "type": "string"
         },
