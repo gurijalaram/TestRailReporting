@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.utils.runner.ConcurrentTestRunner;
+import com.apriori.utils.runner.CategorySuiteRunner;
 
 import evaluate.FileUploadApiTest;
 import org.junit.experimental.categories.Categories;
@@ -10,7 +10,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 //TODO: add project ID for TestRail
 //@ProjectRunID("999")
-@RunWith(ConcurrentTestRunner.class)
+@RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(SmokeTests.class)
 @Suite.SuiteClasses ({
 //    AddScenarioTests.class,
