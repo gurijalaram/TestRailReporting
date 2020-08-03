@@ -44,7 +44,7 @@ public class FileUploadApiTest extends TestUtil {
         new FileUploadResources().uploadCostPublishApi(token, fileObject, fileName, scenarioName, processGroup, materialName);
     }
 
-    private static class CustomMapper extends IdentityMapper {
+    public static class CustomMapper extends IdentityMapper {
         @Override
         public Object[] map(Reader reader) {
             Object[] map = super.map(reader);
