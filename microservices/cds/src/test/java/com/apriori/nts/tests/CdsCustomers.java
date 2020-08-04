@@ -1,11 +1,11 @@
-package com.apriori.cds.tests;
+package com.apriori.nts.tests;
 
 import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.Customers;
 import com.apriori.cds.entity.response.Users;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.nts.tests.utils.CdsTestUtil;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;

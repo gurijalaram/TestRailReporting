@@ -28,12 +28,14 @@ include(':microservices:cds')
 include(':microservices:cis')
 include(':microservices:edc')
 include(':microservices:fms')
+include(':microservices:nts')
 
 project(':microservices:ats').projectDir = file('../microservices/ats')
 project(':microservices:cds').projectDir = file('../microservices/cds')
 project(':microservices:cis').projectDir = file('../microservices/cis')
 project(':microservices:edc').projectDir = file('../microservices/edc')
 project(':microservices:fms').projectDir = file('../microservices/fms')
+project(':microservices:nts').projectDir = file('../microservices/nts')
 
 //Web
 include ':web:cia'
@@ -49,6 +51,5 @@ if (System.getProperty("all") != null) {
     include(':database')
     project(':database').projectDir = file('../db')
 }
-
-
+includeFlat 'microservices'
 

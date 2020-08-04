@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.nts.tests.suite.CdsAPISuite;
+import com.apriori.nts.tests.suite.APISuite;
 
 import io.qameta.allure.junit4.AllureJunit4;
 import org.apache.commons.cli.CommandLine;
@@ -22,7 +22,7 @@ import java.util.List;
 
 
 public class TestMain {
-    public static Class defaultTest = CdsAPISuite.class;
+    public static Class defaultTest = APISuite.class;
 
     public static void main(String[] args) {
 
