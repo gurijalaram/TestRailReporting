@@ -14,9 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author cfrith
@@ -25,7 +23,6 @@ import java.util.Map;
 public class FilterCriteriaPage extends LoadableComponent<FilterCriteriaPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FilterCriteriaPage.class);
-    private Map<String, WebElement> costMaturityOptions = new HashMap<>();
 
     @FindBy(css = "[data-ap-comp='scenarioSearchCriteria'] h3.modal-title")
     private WebElement modalDialog;
