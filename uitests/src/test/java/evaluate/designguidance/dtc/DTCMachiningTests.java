@@ -285,10 +285,11 @@ public class DTCMachiningTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "CurvedWall:99");
+            .selectToleranceType(ToleranceEnum.DIAMTOLERANCE.getToleranceName())
+            .selectGcd("CurvedWall:99");
         assertThat(tolerancePage.getGCDCell("CurvedWall:99", "Operation"), Matchers.is(Matchers.equalTo("Contouring / Bulk Milling Surface / General Grinding")));
 
-        tolerancePage.selectToleranceTypeAndGCD(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "SimpleHole:13");
+        tolerancePage.selectGcd("SimpleHole:13");
         assertThat(tolerancePage.getGCDCell("SimpleHole:13", "Operation"), Matchers.is(Matchers.equalTo("Waterjet Cutting")));
     }
 }

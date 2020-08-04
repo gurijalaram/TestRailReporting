@@ -9,7 +9,6 @@
         "createdAt",
         "customerIdentity",
         "deploymentIdentity",
-        "userIdentity",
         "state",
         "filename",
         "filesize",
@@ -48,6 +47,10 @@
           "pattern": "^(.*)$"
         },
         "deploymentIdentity": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "installationIdentity": {
           "type": "string",
           "pattern": "^(.*)$"
         },
