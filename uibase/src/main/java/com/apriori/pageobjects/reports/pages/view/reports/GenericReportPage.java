@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -200,6 +201,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
     private WebElement rollupSearch;
+
+    @FindBy(xpath = "//div[@id='rollup']//a/span[2]")
+    private WebElement rollupSelected;
 
     @FindBy(css = "input[id='savedValuesName']")
     private WebElement saveInput;
@@ -633,6 +637,16 @@ public class GenericReportPage extends ReportsPageHeader {
                     By.xpath(String.format("//li[@title='%s']", rollupName)))
                     .click();
         }
+        return this;
+    }
+
+    /**
+     * Ensure that correct rollup is selected
+     * @return current page object
+     */
+    public GenericReportPage ensureCorrectRollupIsSelected(String rollupName) {
+        pageUtils.checkElementAttribute(rollupSelected, "innerText", rollupName);
+        //assertThat(rollupSelected.getText(), is(equalTo(rollupName)));
         return this;
     }
 

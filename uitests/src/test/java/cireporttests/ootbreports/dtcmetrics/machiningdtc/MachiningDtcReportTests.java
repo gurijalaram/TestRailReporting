@@ -22,8 +22,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 
-import java.math.BigDecimal;
-
 public class MachiningDtcReportTests extends TestBase {
 
     private InputControlsTests inputControlsTests;
@@ -170,5 +168,36 @@ public class MachiningDtcReportTests extends TestBase {
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "2026")
+    @Description("Verify Export Sets are available for selection")
+    public void testExportSetSelectionAndAvailability() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetAvailabilityAndSelection(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                RollupEnum.DTC_MACHINING_DATASET.getRollupName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3022")
+    @Description("Verify Roll-up input control functions correctly")
+    public void testRollupDropDown() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testRollupDropdown(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                RollupEnum.DTC_MACHINING_DATASET.getRollupName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1690")
+    @Description("Verify export sets are available for selection")
+    public void testExportSetAvailability() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetAvailability(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 }

@@ -57,14 +57,8 @@ public class PlasticDtcReportTests extends TestBase {
     @TestRail(testCaseId = "1344")
     @Description("Test Plastic DTC Reports Export Set Availability")
     public void testPlasticDtcReportExportSetAvailability() {
-        plasticDtcReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class);
-
-        String[] expectedExportSetValues = plasticDtcReportPage.getExportSetEnumValues();
-
-        assertThat(expectedExportSetValues, arrayContainingInAnyOrder(plasticDtcReportPage.getActualExportSetValues()));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetAvailability(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName());
     }
 
     @Test

@@ -5,13 +5,17 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import java.math.BigDecimal;
@@ -247,5 +251,36 @@ public class InputControlsTests extends TestBase {
 
         assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+    }
+
+    /**
+     * Generic test for export set selection
+     */
+    public void testExportSetAvailabilityAndSelection(String reportName, String exportSet, String rollupName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSet)
+                .ensureCorrectRollupIsSelected(rollupName)
+                .clickOk();
+
+        assertThat(genericReportPage.getDisplayedRollup(),
+                is(equalTo(rollupName)));
+    }
+
+    /**
+     * Generic test to ensure expected export set tests are present
+     */
+    public void testExportSetAvailability(String reportName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        String[] expectedExportSetValues = genericReportPage.getExportSetEnumValues();
+
+        assertThat(expectedExportSetValues, arrayContainingInAnyOrder(genericReportPage.getActualExportSetValues()));
     }
 }
