@@ -3,7 +3,7 @@ package com.apriori.apibase.services.nts.objects;
 public class Credentials {
     private String username;
     private String password;
-    private String Host;
+    private String host;
 
     public String getUsername() {
         return username;
@@ -24,11 +24,11 @@ public class Credentials {
     }
 
     public String getHost() {
-        return Host;
+        return host;
     }
 
-    public Credentials setHost(String Host) {
-        this.Host = Host;
+    public Credentials setHost(String host) {
+        this.host = host;
         return this;
     }
 }
