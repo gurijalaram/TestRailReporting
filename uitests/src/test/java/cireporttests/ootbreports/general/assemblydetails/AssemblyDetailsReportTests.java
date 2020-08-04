@@ -19,10 +19,10 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.AssemblyReportsEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
@@ -67,9 +67,12 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(repository.getCountOfGeneralReports(), is(equalTo(5)));
 
-        AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
-        for (AssemblyReportsEnum report : reportNames) {
-            assertThat(repository.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
+        ReportNamesEnum[] reportNames = ReportNamesEnum.values();
+        for (int i = 0; i < 5; i++) {
+            assertThat(
+                    repository.getReportName(reportNames[i].getReportName()),
+                    is(equalTo(reportNames[i].getReportName()))
+            );
         }
     }
 
@@ -82,9 +85,12 @@ public class AssemblyDetailsReportTests extends TestBase {
             .login()
             .navigateToLibraryPage();
 
-        AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
-        for (AssemblyReportsEnum report : reportNames) {
-            assertThat(library.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
+        ReportNamesEnum[] reportNames = ReportNamesEnum.values();
+        for (int i = 0; i < 5; i++) {
+            assertThat(
+                    library.getReportName(reportNames[i].getReportName()),
+                    is(equalTo(reportNames[i].getReportName()))
+            );
         }
     }
 
@@ -98,10 +104,13 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         searchResults = new ViewSearchResultsPage(driver);
 
-        AssemblyReportsEnum[] reportNames = AssemblyReportsEnum.values();
-        for (AssemblyReportsEnum report : reportNames) {
-            homePage.searchForReport(report.getReportName());
-            assertThat(searchResults.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
+        ReportNamesEnum[] reportNames = ReportNamesEnum.values();
+        for (int i = 0; i < 5; i++) {
+            homePage.searchForReport(reportNames[i].getReportName());
+            assertThat(
+                    searchResults.getReportName(reportNames[i].getReportName()),
+                    is(equalTo(reportNames[i].getReportName()))
+            );
         }
     }
 
@@ -117,7 +126,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
@@ -149,7 +158,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
@@ -187,7 +196,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
@@ -228,7 +237,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
@@ -270,7 +279,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
@@ -310,7 +319,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
@@ -341,7 +350,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
@@ -373,7 +382,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
@@ -401,7 +410,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
@@ -410,7 +419,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingDatePicker(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterUsingDatePicker(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
@@ -420,7 +429,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
             .clickOk()

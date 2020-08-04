@@ -26,6 +26,7 @@ public class Part {
 
     private String customerIdentity;
     private String deploymentIdentity;
+    private String installationIdentity;
     private String userIdentity;
     private String state;
     private String filename;
@@ -46,6 +47,15 @@ public class Part {
     private String partName;
     private String batchIdentity;
     private String errors;
+
+    public String getInstallationIdentity() {
+        return installationIdentity;
+    }
+
+    public Part setInstallationIdentity(String installationIdentity) {
+        this.installationIdentity = installationIdentity;
+        return this;
+    }
 
     public String getErrors() {
         return errors;

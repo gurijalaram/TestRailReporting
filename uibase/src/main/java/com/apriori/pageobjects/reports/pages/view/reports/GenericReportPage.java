@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -8,13 +7,10 @@ import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.AssemblyReportsEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
-import com.apriori.utils.enums.reports.CastingReportsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.MachiningReportsEnum;
-import com.apriori.utils.enums.reports.PlasticDtcReportsEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -241,6 +237,21 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[5]")
     private WebElement annualSpendPlasticDtcReport;
 
+    @FindBy(id = "jr-ui-datepicker-div")
+    private WebElement datePickerDiv;
+
+    @FindBy(xpath = "//button[contains(text(), 'Close')]")
+    private WebElement datePickerCloseButton;
+
+    @FindBy(xpath = "//div[@id='useLatestExport']//a")
+    private WebElement useLatestExportDropdown;
+
+    @FindBy(xpath = "//div[@id='earliestExportDate']//div")
+    private WebElement earliestExportSetDateError;
+
+    @FindBy(xpath = "//div[@id='latestExportDate']//div")
+    private WebElement latestExportSetDateError;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -416,15 +427,46 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param isEarliestAndToday - boolean to determine element to use and date to set
      * @return instance of current page object
      */
-    public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday) {
+    public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday, String invalidValue) {
         String dateToUse = isEarliestAndToday ? getCurrentDate() : getDateTwoDaysAfterCurrent();
         WebElement dateInputToUse = isEarliestAndToday ? earliestExportDateInput : latestExportDateInput;
+        String valueToInput = invalidValue.isEmpty() ? dateToUse : invalidValue;
 
         dateInputToUse.clear();
         dateInputToUse.click();
-        dateInputToUse.sendKeys(dateToUse);
+        dateInputToUse.sendKeys(valueToInput);
 
         return this;
+    }
+
+    /**
+     * Click Use Latest Scenario dropdown twice to remove focus from date
+     * @return Generic Report Page instance
+     */
+    public GenericReportPage clickScenarioDropdownTwice() {
+        pageUtils.waitForElementAndClick(useLatestExportDropdown);
+        useLatestExportDropdown.click();
+        return this;
+    }
+
+    /**
+     * Gets isDisplayed and isEnabled for either export set filter error
+     * @return booolean
+     */
+    public boolean isExportSetFilterErrorDisplayedAndEnabled(boolean isEarliest) {
+        pageUtils.waitForElementToAppear(earliestExportSetDateError);
+        pageUtils.waitForElementToAppear(latestExportSetDateError);
+        return isEarliest ? earliestExportSetDateError.isDisplayed() && earliestExportSetDateError.isEnabled() :
+                latestExportSetDateError.isDisplayed() && latestExportSetDateError.isEnabled();
+    }
+
+    /**
+     * Gets export set error text
+     * @param isEarliest - boolean
+     * @return String
+     */
+    public String getExportSetErrorText(boolean isEarliest) {
+        return isEarliest ? earliestExportSetDateError.getText() : latestExportSetDateError.getText();
     }
 
     /**
@@ -441,6 +483,12 @@ public class GenericReportPage extends ReportsPageHeader {
         setMonthValuePicker(getMonthDropdownIndex(newDt));
         setYearValuePicker(String.format("%d", newDt.getYear()));
         pickerTrigger.click();
+
+        if (datePickerDiv.getAttribute("style").contains("display: block;")) {
+            datePickerCloseButton.click();
+            pageUtils.checkElementAttribute(datePickerDiv, "style", "display: none;");
+            //assertThat(datePickerDiv.getAttribute("style").contains("display: none;"), is(true));
+        }
 
         return this;
     }
@@ -645,7 +693,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets day value in date picker
      */
     private void setDayValuePicker(int dayValue) {
-        By dayLocator = By.xpath(String.format("//a[contains(text(), '%d')]", dayValue));
+        By dayLocator = By.xpath(String.format("//a[contains(text(), '%d') and @class='ui-state-default']", dayValue));
         driver.findElement(dayLocator).click();
     }
 
@@ -839,7 +887,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
-        if (this.reportName.equals(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName())) {
+        if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName())) {
             elementToUse.click();
         }
         return this;
@@ -972,27 +1020,27 @@ public class GenericReportPage extends ReportsPageHeader {
      * Initialises part name map
      */
     private void initialisePartNameMap() {
-        partNameMap.put(CastingReportsEnum.CASTING_DTC.getReportName(), partNameCastingDtcReport);
-        partNameMap.put(CastingReportsEnum.CASTING_DTC_COMPARISON.getReportName(), partNameCastingDtcComparisonReport);
-        partNameMap.put(CastingReportsEnum.CASTING_DTC_DETAILS.getReportName(), partNameCastingDtcDetailsReport);
-        partNameMap.put(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), partNamePlasticDtcReport);
+        partNameMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), partNameCastingDtcReport);
+        partNameMap.put(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), partNameCastingDtcComparisonReport);
+        partNameMap.put(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), partNameCastingDtcDetailsReport);
+        partNameMap.put(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), partNamePlasticDtcReport);
     }
 
     /**
      * Initialise bubble map
      */
     private void initialiseBubbleMap() {
-        bubbleMap.put(MachiningReportsEnum.MACHINING_DTC.getReportName(), machiningDtcBubble);
-        bubbleMap.put(CastingReportsEnum.CASTING_DTC.getReportName(), castingDtcBubble);
-        bubbleMap.put(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), plasticDtcBubble);
+        bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), machiningDtcBubble);
+        bubbleMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcBubble);
+        bubbleMap.put(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), plasticDtcBubble);
     }
 
     /**
      * Initialise Fbc element map
      */
     private void initialiseFbcElementMap() {
-        fbcElementMap.put(MachiningReportsEnum.MACHINING_DTC.getReportName(), tooltipFbcElement);
-        fbcElementMap.put(CastingReportsEnum.CASTING_DTC.getReportName(), tooltipFbcElement);
-        fbcElementMap.put(PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(), fbcPlasticDtcReport);
+        fbcElementMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), tooltipFbcElement);
+        fbcElementMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), tooltipFbcElement);
+        fbcElementMap.put(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), fbcPlasticDtcReport);
     }
 }

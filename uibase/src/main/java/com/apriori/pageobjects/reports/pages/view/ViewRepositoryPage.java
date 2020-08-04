@@ -2,8 +2,8 @@ package com.apriori.pageobjects.reports.pages.view;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.reports.AssemblyReportsEnum;
-import com.apriori.utils.enums.reports.PlasticDtcReportsEnum;
+
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -178,9 +178,9 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      */
     public String[] getReportNamesValues() {
         return new String[] {
-                PlasticDtcReportsEnum.PLASTIC_DTC_REPORT.getReportName(),
-                PlasticDtcReportsEnum.PLASTIC_DTC_COMPARISON.getReportName(),
-                PlasticDtcReportsEnum.PLASTIC_DTC_DETAILS.getReportName()
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
         };
     }
 
@@ -215,11 +215,11 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      * Initialises Report hash map
      */
     private void initialiseReportMap() {
-        reportElementMap.put(AssemblyReportsEnum.ASSEMBLY_COST_A4.getReportName(), assemblyCostA4Report);
-        reportElementMap.put(AssemblyReportsEnum.ASSEMBLY_COST_LETTER.getReportName(), assemblyCostLetterReport);
-        reportElementMap.put(AssemblyReportsEnum.ASSEMBLY_DETAILS.getReportName(), assemblyDetailsReport);
-        reportElementMap.put(AssemblyReportsEnum.COMPONENT_COST.getReportName(), componentCostReport);
-        reportElementMap.put(AssemblyReportsEnum.SCENARIO_COMPARISON.getReportName(), scenarioComparisonReport);
+        reportElementMap.put(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), assemblyCostA4Report);
+        reportElementMap.put(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(), assemblyCostLetterReport);
+        reportElementMap.put(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), assemblyDetailsReport);
+        reportElementMap.put(ReportNamesEnum.COMPONENT_COST.getReportName(), componentCostReport);
+        reportElementMap.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), scenarioComparisonReport);
     }
 
     /**

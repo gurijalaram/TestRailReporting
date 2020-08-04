@@ -15,6 +15,7 @@ public class Batch {
     private String identity;
     private String createdBy;
     private String workflowName;
+    private String deploymentIdentity;
 
 
     @JsonSerialize(using = ToStringSerializer.class)
@@ -32,6 +33,15 @@ public class Batch {
     private Batch response;
     private String[] parts;
     private String reportIdentity;
+
+    public String getDeploymentIdentity() {
+        return deploymentIdentity;
+    }
+
+    public Batch setDeploymentIdentity(String deploymentIdentity) {
+        this.deploymentIdentity = deploymentIdentity;
+        return this;
+    }
 
     public String getWorkflowName() {
         return workflowName;
