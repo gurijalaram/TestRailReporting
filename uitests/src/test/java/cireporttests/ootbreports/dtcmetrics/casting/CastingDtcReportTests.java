@@ -2,7 +2,6 @@ package cireporttests.ootbreports.dtcmetrics.casting;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -23,6 +22,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -176,34 +176,37 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1699")
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCurrencyCode(
-                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1694")
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropdown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
-                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ReportNamesEnum.CASTING_DTC.getReportName(),
                 RollupEnum.ROLL_UP_A.getRollupName()
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1703")
     @Description("Verify Select Parts list controls function correctly")
     public void testExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(
-                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
