@@ -38,10 +38,10 @@ public class FileUploadApiTest extends TestUtil {
     @Test
     @FileParameters(value = "classpath:test-parts2.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")
     @Description("Upload, cost and publish a part using CID API")
-    public void createFileUpload(String fileName, String scenarioName, String processGroup, String materialName) {
+    public void createFileUpload(String fileName, String scenarioName, String processGroup) {
         Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        new FileUploadResources().uploadCostPublishApi(token, fileObject, fileName, scenarioName, processGroup, materialName);
+        new FileUploadResources().uploadCostPublishApi(token, fileObject, fileName, scenarioName, processGroup);
     }
 
     public static class CustomMapper extends IdentityMapper {
@@ -55,8 +55,7 @@ public class FileUploadApiTest extends TestUtil {
                 String fileName = index[0].replace("\"", "");
                 String scenarioName = index[1].replace("\"", "");
                 String processGroup = index[2].replace("\"", "");
-                String materialName = index[3].replace("\"", "");
-                result.add(new Object[] {fileName, scenarioName, processGroup, materialName});
+                result.add(new Object[] {fileName, scenarioName, processGroup});
             }
             return result.toArray();
         }
