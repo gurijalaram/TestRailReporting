@@ -13,9 +13,9 @@ import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.CastingReportsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.MachiningReportsEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
@@ -51,8 +51,8 @@ public class MachiningDtcReportTests extends TestBase {
             .navigateToViewRepositoryPage()
             .navigateToMachiningDTCFolder();
 
-        assertThat(MachiningReportsEnum.MACHINING_DTC.getReportName(),
-                is(equalTo(repository.getReportName(MachiningReportsEnum.MACHINING_DTC.getReportName()))));
+        assertThat(ReportNamesEnum.MACHINING_DTC.getReportName(),
+                is(equalTo(repository.getReportName(ReportNamesEnum.MACHINING_DTC.getReportName()))));
         assertThat(repository.getCountOfGeneralReports(), is(equalTo(reportCount)));
     }
 
@@ -64,7 +64,10 @@ public class MachiningDtcReportTests extends TestBase {
             .login()
             .navigateToLibraryPage();
 
-        assertThat(MachiningReportsEnum.MACHINING_DTC.getReportName(), is(equalTo(library.getReportName(MachiningReportsEnum.MACHINING_DTC.getReportName()))));
+        assertThat(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                is(equalTo(library.getReportName(ReportNamesEnum.MACHINING_DTC.getReportName())))
+        );
     }
 
     @Test
@@ -75,10 +78,11 @@ public class MachiningDtcReportTests extends TestBase {
             .login();
 
         searchResults = new ViewSearchResultsPage(driver);
-        homePage.searchForReport(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        homePage.searchForReport(ReportNamesEnum.MACHINING_DTC.getReportName());
 
-        assertThat(searchResults.getReportName(MachiningReportsEnum.MACHINING_DTC.getReportName()),
-                is(equalTo(MachiningReportsEnum.MACHINING_DTC.getReportName())));
+        assertThat(searchResults.getReportName(ReportNamesEnum.MACHINING_DTC.getReportName()),
+                is(equalTo(ReportNamesEnum.MACHINING_DTC.getReportName()))
+        );
     }
 
     @Test
@@ -88,9 +92,17 @@ public class MachiningDtcReportTests extends TestBase {
     public void testCurrencyChange() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCurrencyCode(
-                MachiningReportsEnum.MACHINING_DTC.getReportName(),
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3567")
+    @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
+    public void testExportSetDateInputInvalidCharacters() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterInvalidCharacters(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -98,7 +110,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -107,6 +119,58 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingDatePicker(MachiningReportsEnum.MACHINING_DTC.getReportName());
+        inputControlsTests.testExportSetFilterUsingDatePicker(ReportNamesEnum.MACHINING_DTC.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "3020")
+    @Description("Verify Export Set list controls function correctly")
+    public void testExportSetListControlFunctionality() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetSelection(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3021")
+    @Description("Verify apply button on Machining DTC input control panel functions correctly")
+    public void testApplyButton() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testApplyButton(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                RollupEnum.DTC_MACHINING_DATASET.getRollupName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3021")
+    @Description("Verify cancel button on Machining DTC input control panel works")
+    public void testCancelButton() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCancelButton(ReportNamesEnum.MACHINING_DTC.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "3021")
+    @Description("Verify reset button on Machining DTC input control panel works")
+    public void testResetButton() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testResetButton(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3021")
+    @Description("Verify save button on Machining DTC input control panel functions correctly")
+    public void testSaveAndRemoveButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testSaveAndRemoveButtons(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
     }
 }

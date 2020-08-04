@@ -58,14 +58,23 @@ public class TolerancePage extends EvaluatePanelToolbar {
     }
 
     /**
-     * Selects both tolerance and gcd
+     * Selects the tolerance type
      *
      * @param toleranceType - the tolerance type
+     * @return current page object
+     */
+    public TolerancePage selectToleranceType(String toleranceType) {
+        pageUtils.waitForElementAndClick(findToleranceType(toleranceType));
+        return this;
+    }
+
+    /**
+     * Selects the gcd
+     *
      * @param gcdType       - the gcd type
      * @return current page object
      */
-    public TolerancePage selectToleranceTypeAndGCD(String toleranceType, String gcdType) {
-        pageUtils.waitForElementAndClick(findToleranceType(toleranceType));
+    public TolerancePage selectGcd(String gcdType) {
         pageUtils.waitForElementAndClick(findGCD(gcdType));
         return this;
     }
@@ -101,7 +110,7 @@ public class TolerancePage extends EvaluatePanelToolbar {
      * @return true/false
      */
     public boolean isToleranceCount(String toleranceType, String text) {
-        findToleranceType(toleranceType).click();
+        pageUtils.waitForElementAndClick(findToleranceType(toleranceType));
         return pageUtils.checkElementAttribute(findToleranceType(toleranceType), "outerText", text);
     }
 

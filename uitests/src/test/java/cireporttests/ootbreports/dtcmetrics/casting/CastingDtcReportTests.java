@@ -13,9 +13,8 @@ import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.CastingReportsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.MachiningReportsEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -48,9 +47,12 @@ public class CastingDtcReportTests extends TestBase {
             .navigateToViewRepositoryPage()
             .navigateToCastingFolder();
 
-        CastingReportsEnum[] reportNames = CastingReportsEnum.values();
-        for (CastingReportsEnum report : reportNames) {
-            assertThat(repository.getReportName(report.getReportName()), is(equalTo(report.getReportName())));
+        ReportNamesEnum[] reportNames = ReportNamesEnum.values();
+        for (int i = 5; i <= 7; i++) {
+            assertThat(
+                    repository.getReportName(reportNames[i].getReportName()),
+                    is(equalTo(reportNames[i].getReportName()))
+            );
         }
     }
 
@@ -60,7 +62,7 @@ public class CastingDtcReportTests extends TestBase {
     public void testCastingDtcExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(
-                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );
     }
@@ -72,7 +74,7 @@ public class CastingDtcReportTests extends TestBase {
     public void testRollupDropDown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
-                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ReportNamesEnum.CASTING_DTC.getReportName(),
                 RollupEnum.UC_CASTING_DTC_ALL.getRollupName()
         );
     }
@@ -83,7 +85,7 @@ public class CastingDtcReportTests extends TestBase {
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
-                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ReportNamesEnum.CASTING_DTC.getReportName(),
                 RollupEnum.UC_CASTING_DTC_ALL.getRollupName()
         );
     }
@@ -93,7 +95,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify cancel button on Casting DTC input control panel works")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCancelButton(CastingReportsEnum.CASTING_DTC.getReportName());
+        inputControlsTests.testCancelButton(ReportNamesEnum.CASTING_DTC.getReportName());
     }
 
     @Test
@@ -102,7 +104,7 @@ public class CastingDtcReportTests extends TestBase {
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
-                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );
     }
@@ -114,9 +116,25 @@ public class CastingDtcReportTests extends TestBase {
     public void testSaveAndRemoveButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSaveAndRemoveButtons(
-                CastingReportsEnum.CASTING_DTC.getReportName(),
+                ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1691")
+    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    public void testBothExportDatesUsingDatePicker() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(ReportNamesEnum.CASTING_DTC.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1691")
+    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    public void testBothExportDatesUsingInputField() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.CASTING_DTC.getReportName());
     }
 
     @Test
@@ -126,13 +144,13 @@ public class CastingDtcReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(CastingReportsEnum.CASTING_DTC.getReportName(), GenericReportPage.class)
+            .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk();
 
-        genericReportPage.setReportName(CastingReportsEnum.CASTING_DTC.getReportName());
+        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
         String partName = genericReportPage.getPartNameDtcReports();

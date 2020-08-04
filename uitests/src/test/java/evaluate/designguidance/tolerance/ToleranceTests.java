@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.PublishPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.ToleranceEditPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
@@ -50,7 +49,6 @@ public class ToleranceTests extends TestBase {
     private ToleranceSettingsPage toleranceSettingsPage;
     private SettingsPage settingsPage;
     private EvaluatePage evaluatePage;
-    private DesignGuidancePage designGuidancePage;
     private ToleranceValueSettingsPage toleranceValueSettingsPage;
     private UserCredentials currentUser;
     private ExplorePage explorePage;
@@ -98,7 +96,8 @@ public class ToleranceTests extends TestBase {
 
         toleranceEditPage = new EvaluatePage(driver).openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
+            .selectToleranceType(ToleranceEnum.PROFILESURFACE.getToleranceName())
+            .selectGcd("PlanarFace:74")
             .selectEditButton()
             .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23")
             .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16")
@@ -107,7 +106,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.PROFILESURFACE.getToleranceName(), "PlanarFace:74")
+            .selectToleranceType(ToleranceEnum.PROFILESURFACE.getToleranceName())
+            .selectGcd("PlanarFace:74")
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName()), containsString("0.23"));
@@ -138,7 +138,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getToleranceName(), "PlanarFace:35")
+            .selectToleranceType(ToleranceEnum.FLATNESS.getToleranceName())
+            .selectGcd("PlanarFace:35")
             .selectEditButton()
             .removeTolerance(ToleranceEnum.FLATNESS.getToleranceName())
             .apply(TolerancePage.class)
@@ -172,7 +173,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getToleranceName(), "PlanarFace:35")
+            .selectToleranceType(ToleranceEnum.FLATNESS.getToleranceName())
+            .selectGcd("PlanarFace:35")
             .selectEditButton()
             .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "abcd")
             .apply(WarningPage.class);
@@ -205,7 +207,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.FLATNESS.getToleranceName(), "PlanarFace:35")
+            .selectToleranceType(ToleranceEnum.FLATNESS.getToleranceName())
+            .selectGcd("PlanarFace:35")
             .selectEditButton()
             .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0")
             .apply(WarningPage.class);
@@ -237,7 +240,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "PlanarFace:78")
+            .selectToleranceType(ToleranceEnum.STRAIGHTNESS.getToleranceName())
+            .selectGcd("PlanarFace:78")
             .selectEditButton()
             .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.44")
             .apply(TolerancePage.class)
@@ -248,7 +252,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "PlanarFace:78")
+            .selectToleranceType(ToleranceEnum.STRAIGHTNESS.getToleranceName())
+            .selectGcd("PlanarFace:78")
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString("0.44"));
@@ -321,7 +326,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5")
+            .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
+            .selectGcd("CurvedWall:5")
             .selectEditButton()
             .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "2.16")
             .apply(TolerancePage.class)
@@ -331,7 +337,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5")
+            .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
+            .selectGcd("CurvedWall:5")
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CIRCULARITY.getToleranceName()), containsString("2.16"));
@@ -362,14 +369,16 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectToleranceType(ToleranceEnum.CYLINDRICITY.getToleranceName())
+            .selectGcd("CurvedWall:6")
             .selectEditButton()
             .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
             .apply(TolerancePage.class)
             .closePanel()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectToleranceType(ToleranceEnum.CYLINDRICITY.getToleranceName())
+            .selectGcd("CurvedWall:6")
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
@@ -384,7 +393,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectToleranceType(ToleranceEnum.CYLINDRICITY.getToleranceName())
+            .selectGcd("CurvedWall:6")
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
@@ -417,14 +427,16 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
+            .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
+            .selectGcd("CurvedWall:6")
             .selectEditButton()
             .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "4.01")
             .apply(TolerancePage.class)
             .closePanel()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:6")
+            .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
+            .selectGcd("CurvedWall:6")
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
@@ -439,7 +451,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CYLINDRICITY.getToleranceName(), "CurvedWall:6")
+            .selectToleranceType(ToleranceEnum.CYLINDRICITY.getToleranceName())
+            .selectGcd("CurvedWall:6")
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
@@ -511,7 +524,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:1");
+            .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
+            .selectGcd("CurvedWall:1");
 
         assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CIRCULARITY.getToleranceName(), "Count"), is(equalTo("12")));
         assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CONCENTRICITY.getToleranceName(), "Count"), is(equalTo("12")));
@@ -573,7 +587,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "CurvedWall:2");
+            .selectToleranceType(ToleranceEnum.ROUGHNESSRA.getToleranceName())
+            .selectGcd("CurvedWall:2");
 
         assertThat(tolerancePage.getToleranceCell(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "Count"), is(equalTo("30")));
     }
@@ -636,7 +651,8 @@ public class ToleranceTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5");
+            .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
+            .selectGcd("CurvedWall:5");
 
         assertThat(tolerancePage.getGCDCell("CurvedWall:5", "Current"), is(equalTo("0.35000")));
     }
@@ -683,7 +699,8 @@ public class ToleranceTests extends TestBase {
 
         tolerancePage = evaluatePage.openDesignGuidance()
             .openTolerancesTab()
-            .selectToleranceTypeAndGCD(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:4");
+            .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
+            .selectGcd("CurvedWall:4");
 
         assertThat(tolerancePage.isEditButtonEnabled(), is(false));
     }
