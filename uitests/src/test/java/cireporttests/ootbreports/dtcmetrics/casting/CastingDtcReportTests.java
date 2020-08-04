@@ -176,7 +176,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1699")
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
@@ -188,7 +187,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1694")
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropdown() {
@@ -200,7 +198,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1703")
     @Description("Verify Select Parts list controls function correctly")
     public void testExportSetInputControls() {
