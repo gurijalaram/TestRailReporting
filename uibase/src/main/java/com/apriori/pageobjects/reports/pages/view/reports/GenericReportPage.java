@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -55,7 +54,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name()='path'])[8]")
     private WebElement plasticDtcBubble;
 
-    @FindBy(xpath = "//*[text()=\"Fully Burdened Cost : \"]/following-sibling::*[1]")
+    @FindBy(xpath = "//*[text()='Fully Burdened Cost : ']/following-sibling::*[1]")
     private WebElement tooltipFbcElement;
 
     @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
@@ -256,6 +255,18 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='latestExportDate']//div")
     private WebElement latestExportSetDateError;
 
+    @FindBy(xpath = "//div[@id='costMetric']//a")
+    private WebElement costMetricDropdown;
+
+    @FindBy(xpath = "(//*[@class='highcharts-root']//*[local-name() = 'tspan'])[2]")
+    private WebElement costMetricElementOnChartAxis;
+
+    @FindBy(xpath = "//span[contains(text(), 'Cost Metric:')]/../following-sibling::td[2]")
+    private WebElement costMetricElementAboveChart;
+
+    @FindBy(xpath = "(//*[local-name()='tspan'])[6]")
+    private WebElement costMetricValueOnBubble;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -340,7 +351,7 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Checks current currency selection, fixes if necessary
      *
-     * @param currency
+     * @param currency - String
      * @return current page object
      */
     public GenericReportPage checkCurrencySelected(String currency) {
@@ -349,6 +360,46 @@ public class GenericReportPage extends ReportsPageHeader {
             currencyMap.get(currency).click();
         }
         return this;
+    }
+
+    /**
+     * Selects cost metric, if necessary
+     * @param costMetric - String
+     * @return current page object
+     */
+    public GenericReportPage selectCostMetric(String costMetric) {
+        if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
+            costMetricDropdown.click();
+            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", costMetric))).click();
+        }
+        return this;
+    }
+
+    /**
+     * Gets cost metric value from above chart
+     * @return String
+     */
+    public String getCostMetricValueFromAboveChart() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return costMetricElementAboveChart.getAttribute("textContent");
+    }
+
+    /**
+     * Gets cost metric value from chart axis
+     * @return String
+     */
+    public String getCostMetricValueFromChartAxis() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return costMetricElementOnChartAxis.getAttribute("textContent");
+    }
+
+    /**
+     * Gets cost metric value from bubble
+     * @return String
+     */
+    public String getCostMetricValueFromBubble() {
+        pageUtils.waitForElementToAppear(costMetricValueOnBubble);
+        return costMetricValueOnBubble.getAttribute("textContent");
     }
 
     /**

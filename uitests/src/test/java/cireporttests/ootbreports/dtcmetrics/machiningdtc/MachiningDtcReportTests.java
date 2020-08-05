@@ -11,6 +11,7 @@ import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -203,5 +204,25 @@ public class MachiningDtcReportTests extends TestBase {
     public void testExportSetAvailability() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetAvailability(ReportNamesEnum.MACHINING_DTC.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "3023")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlPpc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlMachiningDtc(
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3023")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlFbc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlMachiningDtc(
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
     }
 }

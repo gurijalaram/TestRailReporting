@@ -12,6 +12,7 @@ import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -282,5 +283,46 @@ public class InputControlsTests extends TestBase {
         String[] expectedExportSetValues = genericReportPage.getExportSetEnumValues();
 
         assertThat(expectedExportSetValues, arrayContainingInAnyOrder(genericReportPage.getActualExportSetValues()));
+    }
+
+    /**
+     * Generic test for cost metric input control
+     */
+    public void testCostMetricInputControlMachiningDtc(String costMetric) {
+        genericReportPage = testCostMetricCore(ReportNamesEnum.MACHINING_DTC.getReportName(), costMetric);
+        assertThat(genericReportPage.getCostMetricValueFromChartAxis(), is(equalTo(String.format("%s (USD)", costMetric))));
+
+        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        genericReportPage.getCostMetricValueFromBubble();
+
+        assertThat(genericReportPage.getCostMetricValueFromBubble(), is(equalTo(String.format("%s : ", costMetric))));
+    }
+
+    /**
+     * Generic test for Cost Metric Input Control on Machining DTC Details and Casting
+     * @param costMetric String
+     */
+    public void testCostMetricInputControlOtherMachiningDtcReports(String reportName, String costMetric) {
+        testCostMetricCore(reportName, costMetric);
+    }
+
+    /**
+     * Core part of cost metric test
+     * @param costMetric - String
+     * @return current page object
+     */
+    private GenericReportPage testCostMetricCore(String reportName, String costMetric) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectCostMetric(costMetric)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("\n%s", costMetric))));
+        return genericReportPage;
     }
 }
