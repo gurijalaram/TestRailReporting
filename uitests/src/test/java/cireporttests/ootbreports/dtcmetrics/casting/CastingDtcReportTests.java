@@ -173,4 +173,37 @@ public class CastingDtcReportTests extends TestBase {
          */
         assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
+
+    @Test
+    @TestRail(testCaseId = "1699")
+    @Description("Verify Currency Code input control functions correctly")
+    public void testCurrencyCode() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCurrencyCode(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1694")
+    @Description("Verify Roll-up input control functions correctly")
+    public void testRollupDropdown() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testRollupDropdown(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                RollupEnum.ROLL_UP_A.getRollupName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1703")
+    @Description("Verify Select Parts list controls function correctly")
+    public void testExportSetInputControls() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetSelection(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
 }

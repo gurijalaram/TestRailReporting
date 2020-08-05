@@ -2,7 +2,6 @@ package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
@@ -12,7 +11,6 @@ import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -90,34 +88,11 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3026")
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
-        BigDecimal gbpGrandTotal;
-        BigDecimal usdGrandTotal;
-
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
-
-        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
-        genericReportPage.hoverPartNameBubbleDtcReports();
-        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
-
-        genericReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
-
-        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
-        genericReportPage.hoverPartNameBubbleDtcReports();
-        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
-
-        assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
-        assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCurrencyCode(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
     }
 
     @Test
