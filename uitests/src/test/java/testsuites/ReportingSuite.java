@@ -23,7 +23,6 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     LoginTests.class,
-    AdminNavigationTests.class,
     ReportsNavigationTests.class,
     AssemblyDetailsReportTests.class,
     MachiningDtcReportTests.class,
