@@ -9,7 +9,7 @@ import java.util.List;
 
 @Schema(location = "SubmitWorkOredrResponseSchema.json")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SubmitWorkOredr {
+public class SubmitWorkOrder {
 
     @JsonProperty
     private String id;
@@ -27,7 +27,7 @@ public class SubmitWorkOredr {
         return action;
     }
 
-    public SubmitWorkOredr setAction(String action) {
+    public SubmitWorkOrder setAction(String action) {
         this.action = action;
         return this;
     }
@@ -36,7 +36,7 @@ public class SubmitWorkOredr {
         return orderIds;
     }
 
-    public SubmitWorkOredr setOrderIds(List<String> orderIds) {
+    public SubmitWorkOrder setOrderIds(List<String> orderIds) {
         this.orderIds = orderIds;
         return this;
     }
@@ -45,7 +45,7 @@ public class SubmitWorkOredr {
         return id;
     }
 
-    public SubmitWorkOredr setId(String id) {
+    public SubmitWorkOrder setId(String id) {
         this.id = id;
         return this;
     }
@@ -54,7 +54,7 @@ public class SubmitWorkOredr {
         return resourceCreated;
     }
 
-    public SubmitWorkOredr setResourceCreated(boolean resourceCreated) {
+    public SubmitWorkOrder setResourceCreated(boolean resourceCreated) {
         this.resourceCreated = resourceCreated;
         return this;
     }

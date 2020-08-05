@@ -6,16 +6,16 @@ import com.apriori.utils.http.enums.Schema;
 import java.util.List;
 
 @Schema(location = "fms/FmsFilesSchema.json")
-public class FilesResponse extends Pagination {
+public class FileResponses extends Pagination {
     private List<FileResponse> items;
 
-    private FilesResponse response;
+    private FileResponses response;
 
-    public FilesResponse getResponse() {
+    public FileResponses getResponse() {
         return this.response;
     }
 
-    public FilesResponse setResponse(FilesResponse response) {
+    public FileResponses setResponse(FileResponses response) {
         this.response = response;
         return this;
     }
@@ -24,7 +24,7 @@ public class FilesResponse extends Pagination {
         return this.items;
     }
 
-    public FilesResponse setItems(List<FileResponse> items) {
+    public FileResponses setItems(List<FileResponse> items) {
         this.items = items;
         return this;
     }
