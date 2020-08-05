@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.actions;
 
-import com.apriori.apibase.services.response.objects.SubmitWorkOredr;
+import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.apibase.services.response.objects.WorkOrderCommand;
 import com.apriori.apibase.services.response.objects.WorkOrderInputs;
 import com.apriori.apibase.services.response.objects.WorkOrderScenarioIteration;
@@ -61,14 +61,14 @@ public class ScenarioAction {
 
     private void doDeleteScenario(WorkOrderScenarioIteration workOrderScenarioIteration) {
 
-        SubmitWorkOredr submitWorkOredr = this.doSubmitWorkOrder(workOrderScenarioIteration);
+        SubmitWorkOrder submitWorkOredr = this.doSubmitWorkOrder(workOrderScenarioIteration);
 
         new HTTPRequest().unauthorized()
             .customizeRequest()
             .setHeaders(authorizationHeader)
-            .setReturnType(SubmitWorkOredr.class)
+            .setReturnType(SubmitWorkOrder.class)
             .setEndpoint(baseURL + "ws/workorder/orderstatus")
-            .setBody(new SubmitWorkOredr()
+            .setBody(new SubmitWorkOrder()
                 .setOrderIds(Collections.singletonList(submitWorkOredr.getId()))
                 .setAction("SUBMIT")
             )
@@ -79,7 +79,7 @@ public class ScenarioAction {
 
     }
 
-    private SubmitWorkOredr doSubmitWorkOrder(WorkOrderScenarioIteration workOrderScenarioIteration) {
+    private SubmitWorkOrder doSubmitWorkOrder(WorkOrderScenarioIteration workOrderScenarioIteration) {
         WorkOrderCommand workOrderCommand = new WorkOrderCommand()
             .setCommandType("DELETE")
             .setInputs(new WorkOrderInputs()
@@ -87,10 +87,10 @@ public class ScenarioAction {
                 .setWorkOrderScenarioIteration(workOrderScenarioIteration)
             );
 
-        ResponseWrapper<SubmitWorkOredr> submitWorkOredrResponseWrapper = new HTTPRequest().unauthorized()
+        ResponseWrapper<SubmitWorkOrder> submitWorkOredrResponseWrapper = new HTTPRequest().unauthorized()
             .customizeRequest()
             .setHeaders(authorizationHeader)
-            .setReturnType(SubmitWorkOredr.class)
+            .setReturnType(SubmitWorkOrder.class)
             .setEndpoint(baseURL + "ws/workorder/orders")
             .setBody(workOrderCommand)
             .setStatusCode(201)

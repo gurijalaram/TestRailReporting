@@ -14,7 +14,7 @@ public class DisplayPreferencesEntity {
     private Double currencyExchangeRate;
 
     @JsonProperty
-    private UnitSystemSettingSchema unitVariantSettingsInfo;
+    private UnitSystemSettingEntity unitVariantSettingsInfo;
 
     public String getCurrencyCode() {
         return currencyCode;
@@ -34,11 +34,11 @@ public class DisplayPreferencesEntity {
         return this;
     }
 
-    public UnitSystemSettingSchema getUnitSystemSetting() {
+    public UnitSystemSettingEntity getUnitSystemSetting() {
         return unitVariantSettingsInfo;
     }
 
-    public DisplayPreferencesEntity setUnitSystemSetting(UnitSystemSettingSchema unitVariantSettingsInfo) {
+    public DisplayPreferencesEntity setUnitSystemSetting(UnitSystemSettingEntity unitVariantSettingsInfo) {
         this.unitVariantSettingsInfo = unitVariantSettingsInfo;
         return this;
     }
