@@ -9,7 +9,6 @@ import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
-import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -22,12 +21,10 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcReportTests extends TestBase {
 
     private InputControlsTests inputControlsTests;
-    private GenericReportPage genericReportPage;
     private ViewSearchResultsPage searchResults;
     private ViewRepositoryPage repository;
     private LibraryPage library;
@@ -112,7 +109,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({CIARStagingSmokeTest.class, CiaCirTestDevTest.class})
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3566")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
@@ -204,7 +201,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3023")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -215,7 +211,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3023")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {

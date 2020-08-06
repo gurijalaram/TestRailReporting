@@ -9,14 +9,12 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
-import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
-import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import java.math.BigDecimal;

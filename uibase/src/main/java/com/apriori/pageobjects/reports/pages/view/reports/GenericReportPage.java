@@ -696,7 +696,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage ensureCorrectRollupIsSelected(String rollupName) {
         pageUtils.checkElementAttribute(rollupSelected, "innerText", rollupName);
-        //assertThat(rollupSelected.getText(), is(equalTo(rollupName)));
         return this;
     }
 

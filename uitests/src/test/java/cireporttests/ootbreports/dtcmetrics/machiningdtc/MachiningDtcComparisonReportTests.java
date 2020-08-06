@@ -10,8 +10,6 @@ import com.apriori.utils.web.driver.TestBase;
 import cireporttests.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 
@@ -100,7 +98,6 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3023")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -112,7 +109,6 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3023")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {

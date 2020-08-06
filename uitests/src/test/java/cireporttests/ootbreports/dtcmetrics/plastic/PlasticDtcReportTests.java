@@ -24,8 +24,6 @@ import com.apriori.utils.web.driver.TestBase;
 import cireporttests.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
 
@@ -56,7 +54,6 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1344")
     @Description("Test Plastic DTC Reports Export Set Availability")
     public void testPlasticDtcReportExportSetAvailability() {
