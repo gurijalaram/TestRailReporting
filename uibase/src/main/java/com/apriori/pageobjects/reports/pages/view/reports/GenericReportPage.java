@@ -45,13 +45,13 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> fbcElementMap = new HashMap<>();
     private String reportName = "";
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name()='path']")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name() = 'path']")
     private WebElement castingDtcBubble;
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name()='path'][43]")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name() = 'path'][43]")
     private WebElement machiningDtcBubble;
 
-    @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name()='path'])[8]")
+    @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
     private WebElement plasticDtcBubble;
 
     @FindBy(xpath = "//*[text()='Fully Burdened Cost : ']/following-sibling::*[1]")
@@ -60,10 +60,10 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
     private WebElement partNameCastingDtcReport;
 
-    @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name()='text' and position()=2]")
+    @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name() = 'text' and position()=2]")
     private WebElement partNameCastingDtcComparisonReport;
 
-    @FindBy(xpath = "//*[local-name()='rect' and @y='180.5']")
+    @FindBy(xpath = "//*[local-name() = 'rect' and @y='180.5']")
     private WebElement partOfCastingChartComparisonReport;
 
     @FindBy(xpath = "//*[contains(text(), 'Hole Issues')]/following-sibling::*[1]")
@@ -264,7 +264,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Cost Metric:')]/../following-sibling::td[2]")
     private WebElement costMetricElementAboveChart;
 
-    @FindBy(xpath = "(//*[local-name()='tspan'])[6]")
+    @FindBy(xpath = "(//*[local-name() = 'tspan'])[6]")
     private WebElement costMetricValueOnBubble;
 
     private WebDriver driver;
@@ -542,7 +542,6 @@ public class GenericReportPage extends ReportsPageHeader {
         if (datePickerDiv.getAttribute("style").contains("display: block;")) {
             datePickerCloseButton.click();
             pageUtils.checkElementAttribute(datePickerDiv, "style", "display: none;");
-            //assertThat(datePickerDiv.getAttribute("style").contains("display: none;"), is(true));
         }
 
         return this;
