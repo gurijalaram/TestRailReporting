@@ -541,8 +541,8 @@ public class GenericReportPage extends ReportsPageHeader {
 
         if (datePickerDiv.getAttribute("style").contains("display: block;")) {
             datePickerCloseButton.click();
-            //pageUtils.checkElementAttribute(datePickerDiv, "style", "display: none;");
-            assertThat(datePickerDiv.getAttribute("style").contains("display: none;"), is(true));
+            pageUtils.checkElementAttribute(datePickerDiv, "style", "display: none;");
+            //assertThat(datePickerDiv.getAttribute("style").contains("display: none;"), is(true));
         }
 
         return this;
