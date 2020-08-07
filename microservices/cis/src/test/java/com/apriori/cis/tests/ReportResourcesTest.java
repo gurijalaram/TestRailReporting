@@ -63,7 +63,7 @@ public class ReportResourcesTest extends TestUtil {
     @Description("Create a new report using the CIS API")
     public void createNewReport() {
         Object obj = JsonManager.deserializeJsonFromFile(
-            Thread.currentThread().getContextClassLoader().getResource("CreateReportData.json").getPath(), NewReportRequest.class);
+            Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreateReportData.json").getPath(), NewReportRequest.class);
 
         Report report  = ReportResources.createReport(obj);
 
@@ -82,7 +82,7 @@ public class ReportResourcesTest extends TestUtil {
     public void exportReport() {
         Integer count = 0;
         Object rptObj = JsonManager.deserializeJsonFromFile(
-                Thread.currentThread().getContextClassLoader().getResource("CreateReportData.json").getPath(), NewReportRequest.class);
+                Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreateReportData.json").getPath(), NewReportRequest.class);
 
         Report report = ReportResources.createReport(rptObj, Constants.getCisPartIdentity());
         String reportIdentity = report.getResponse().getIdentity();
