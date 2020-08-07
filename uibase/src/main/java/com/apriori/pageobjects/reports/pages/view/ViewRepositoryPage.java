@@ -1,8 +1,10 @@
 package com.apriori.pageobjects.reports.pages.view;
 
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
+import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
 
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
 import org.openqa.selenium.WebDriver;
@@ -97,8 +99,19 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigateToFolder("Organization");
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
-        navigateToFolder("General");
+        navigateToFolder(Constants.GENERAL_FOLDER);
         return this;
+    }
+
+    public GenericReportPage navigateToReportFolder(String afterReportsFolder, String lastFolder) {
+        navigateToFolder("Organization");
+        navigateToFolder("aPriori");
+        navigateToFolder("Reports");
+        navigateToFolder(afterReportsFolder);
+        if (!afterReportsFolder.equals(Constants.GENERAL_FOLDER)) {
+            navigateToFolder(lastFolder);
+        }
+        return new GenericReportPage(driver);
     }
 
     /**
@@ -106,13 +119,13 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public ViewRepositoryPage navigateToMachiningDTCFolder() {
+    public GenericReportPage navigateToMachiningDTCFolder() {
         navigateToFolder("Organization");
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
-        navigateToFolder("DTC Metrics");
+        navigateToFolder(Constants.DTC_METRICS_FOLDER);
         navigateToFolder("Machining DTC");
-        return this;
+        return new GenericReportPage(driver);
     }
 
     /**
@@ -124,7 +137,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigateToFolder("Organization");
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
-        navigateToFolder("DTC Metrics");
+        navigateToFolder(Constants.DTC_METRICS_FOLDER);
         navigateToFolder("Casting DTC");
         return this;
     }
@@ -138,7 +151,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigateToFolder("Organization");
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
-        navigateToFolder("DTC Metrics");
+        navigateToFolder(Constants.DTC_METRICS_FOLDER);
         navigateToFolder("Plastic DTC");
         return this;
     }
@@ -227,13 +240,19 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      */
     private void initialiseFolderMap() {
         folderElementMap.put("Deployment Leader", deploymentLeaderFolder);
-        folderElementMap.put("DTC Metrics", dtcMetricsFolder);
-        folderElementMap.put("General", generalFolder);
+        folderElementMap.put(Constants.DTC_METRICS_FOLDER, dtcMetricsFolder);
+        folderElementMap.put(Constants.GENERAL_FOLDER, generalFolder);
         folderElementMap.put("Solutions", solutionsFolder);
         folderElementMap.put("Upgrade Process", upgradeProcessFolder);
         folderElementMap.put("Casting DTC", castingDtcFolder);
+        folderElementMap.put("Casting DTC Details", castingDtcFolder);
+        folderElementMap.put("Casting DTC Comparison", castingDtcFolder);
         folderElementMap.put("Machining DTC", machiningDtcFolder);
+        folderElementMap.put("Machining DTC Details", machiningDtcFolder);
+        folderElementMap.put("Machining DTC Comparison", machiningDtcFolder);
         folderElementMap.put("Plastic DTC", plasticDtcFolder);
+        folderElementMap.put("Plastic DTC Details", plasticDtcFolder);
+        folderElementMap.put("Plastic DTC Comparison", plasticDtcFolder);
 
         folderElementMap.put("Organization", organizationFolder);
         folderElementMap.put("aPriori", aprioriSubFolder);

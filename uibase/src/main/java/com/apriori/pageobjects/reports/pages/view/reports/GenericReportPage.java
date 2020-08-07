@@ -252,6 +252,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='latestExportDate']//div")
     private WebElement latestExportSetDateError;
 
+    @FindBy(css = "ul[id='resultsList']")
+    private WebElement generalReportsList;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -679,14 +682,12 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Select Assembly option dropdown using send keys
+     * Get name of a report
      *
-     * @param topIndex
+     * @return String - text of report name
      */
-    private void selectAssemblyOption(int topIndex) {
-        for (int i = 0; i < topIndex; i++) {
-            inputBox.sendKeys(Keys.ARROW_DOWN);
-        }
+    public String getReportName(String reportName) {
+        return pageUtils.getReportElement(reportName).getText();
     }
 
     /**

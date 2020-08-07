@@ -4,8 +4,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import cireporttests.navigation.ReportAvailabilityTests;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
@@ -24,11 +26,39 @@ import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
+    private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
 
     public CastingDtcComparisonReportTests() {
         super();
+    }
+
+    @Test
+    @TestRail(testCaseId = "1676")
+    @Description("validate report available by navigation")
+    public void testReportAvailabilityByNavigation() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1676")
+    @Description("Verify report availability by library")
+    public void testReportAvailabilityByLibrary() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1676")
+    @Description("Verify report availability by search")
+    public void testReportAvailabilityBySearch() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
     }
 
     @Test

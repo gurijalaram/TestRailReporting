@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import cireporttests.navigation.ReportAvailabilityTests;
+import com.apriori.apibase.services.cis.objects.Report;
 import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
@@ -40,6 +42,7 @@ import java.util.List;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
+    private ReportAvailabilityTests reportAvailabilityTests;
     private AssemblyDetailsReportPage assemblyDetailsReport;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
@@ -54,60 +57,147 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
     @Description("validate report is available by navigation")
-    public void testReportAvailabilityByMenu() {
-        repository = new ReportsLoginPage(driver)
-            .login()
-            .navigateToViewRepositoryPage()
-            .navigateToGeneralFolder();
+    public void testReportAvailabilityByMenuAssemblyCostA4() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.GENERAL_FOLDER,
+                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName()
+        );
+    }
 
-        assertThat(repository.getCountOfGeneralReports(), is(equalTo(5)));
+    @Test
+    @Category(CIARStagingSmokeTest.class)
+    @TestRail(testCaseId = "1915")
+    @Description("validate report is available by navigation")
+    public void testReportAvailabilityByMenuAssemblyCostLetter() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.GENERAL_FOLDER,
+                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName()
+        );
+    }
 
-        ReportNamesEnum[] reportNames = ReportNamesEnum.values();
-        for (int i = 0; i < 5; i++) {
-            assertThat(
-                    repository.getReportName(reportNames[i].getReportName()),
-                    is(equalTo(reportNames[i].getReportName()))
-            );
-        }
+    @Test
+    @Category(CIARStagingSmokeTest.class)
+    @TestRail(testCaseId = "1915")
+    @Description("validate report is available by navigation")
+    public void testReportAvailabilityByMenuAssemblyDetails() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.GENERAL_FOLDER,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @Category(CIARStagingSmokeTest.class)
+    @TestRail(testCaseId = "1915")
+    @Description("validate report is available by navigation")
+    public void testReportAvailabilityByMenuComponentCost() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.GENERAL_FOLDER,
+                ReportNamesEnum.COMPONENT_COST.getReportName()
+        );
+    }
+
+    @Test
+    @Category(CIARStagingSmokeTest.class)
+    @TestRail(testCaseId = "1915")
+    @Description("validate report is available by navigation")
+    public void testReportAvailabilityByMenuScenarioComparison() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.GENERAL_FOLDER,
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
+        );
     }
 
     @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibrary() {
-        library = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage();
+    public void testReportAvailabilityByLibraryAssemblyCostA4() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
+    }
 
-        ReportNamesEnum[] reportNames = ReportNamesEnum.values();
-        for (int i = 0; i < 5; i++) {
-            assertThat(
-                    library.getReportName(reportNames[i].getReportName()),
-                    is(equalTo(reportNames[i].getReportName()))
-            );
-        }
+    @Test
+    @Category(CIARStagingSmokeTest.class)
+    @TestRail(testCaseId = "3060")
+    @Description("Validate report is available by library")
+    public void testReportAvailabilityByLibraryAssemblyCostLetter() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
+    }
+
+    @Test
+    @Category(CIARStagingSmokeTest.class)
+    @TestRail(testCaseId = "3060")
+    @Description("Validate report is available by library")
+    public void testReportAvailabilityByLibraryAssemblyDetails() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+    }
+    @Test
+    @Category(CIARStagingSmokeTest.class)
+    @TestRail(testCaseId = "3060")
+    @Description("Validate report is available by library")
+    public void testReportAvailabilityByLibraryComponentCost() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.COMPONENT_COST.getReportName());
+    }
+
+    @Test
+    @Category(CIARStagingSmokeTest.class)
+    @TestRail(testCaseId = "3060")
+    @Description("Validate report is available by library")
+    public void testReportAvailabilityByLibraryScenarioComparison() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
-    public void testReportAvailableBySearch() {
-        homePage = new ReportsLoginPage(driver)
-            .login();
+    public void testReportAvailableBySearchAssemblyCostA4() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
+    }
 
-        searchResults = new ViewSearchResultsPage(driver);
+    @Test
+    @TestRail(testCaseId = "1916")
+    @Description("Validate report is available by search")
+    public void testReportAvailableBySearchAssemblyCostLetter() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
+    }
 
-        ReportNamesEnum[] reportNames = ReportNamesEnum.values();
-        for (int i = 0; i < 5; i++) {
-            homePage.searchForReport(reportNames[i].getReportName());
-            assertThat(
-                    searchResults.getReportName(reportNames[i].getReportName()),
-                    is(equalTo(reportNames[i].getReportName()))
-            );
-        }
+    @Test
+    @TestRail(testCaseId = "1916")
+    @Description("Validate report is available by search")
+    public void testReportAvailableBySearchAssemblyDetails() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1916")
+    @Description("Validate report is available by search")
+    public void testReportAvailableBySearchComponentCost() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.COMPONENT_COST.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1916")
+    @Description("Validate report is available by search")
+    public void testReportAvailableBySearchScenarioComparison() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
     }
 
     @Test

@@ -370,11 +370,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @param textToType
      * @return current page object
      */
-    public ReportsHomePage searchForReport(String textToType) {
+    public ViewSearchResultsPage searchForReport(String textToType) {
         pageUtils.waitForElementAndClick(searchInput);
         searchInput.sendKeys(textToType);
         searchButton.click();
         pageUtils.isPageLoaded(homePageTitle);
-        return new ReportsHomePage(driver);
+        return new ViewSearchResultsPage(driver);
     }
 }
