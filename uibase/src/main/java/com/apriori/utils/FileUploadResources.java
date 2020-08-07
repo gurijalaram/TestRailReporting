@@ -51,7 +51,7 @@ import java.util.concurrent.TimeUnit;
 public class FileUploadResources {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
-    private static final long WAIT_TIME = 120;
+    private static final long WAIT_TIME = 180;
 
     private static String identity;
     private static String orderId;
