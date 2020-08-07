@@ -38,6 +38,7 @@ import com.apriori.utils.http.utils.MultiPartFiles;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.net.UrlEscapers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +51,7 @@ import java.util.concurrent.TimeUnit;
 public class FileUploadResources {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
+    private static final long WAIT_TIME = 180;
 
     private static String identity;
     private static String orderId;
@@ -135,7 +137,7 @@ public class FileUploadResources {
                     .setCommandType("LOADCADFILE")
                     .setInputs(new FileUploadOrder().setScenarioName(scenarioName)
                         .setFileKey(identity)
-                        .setFileName(fileName))));
+                        .setFileName(fileName.replaceAll("\\s", "")))));
 
         orderId = jsonNode(GenericRequestUtil.post(fileRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
@@ -178,7 +180,7 @@ public class FileUploadResources {
      * @param token - the user token
      */
     private void initializeCostScenario(HashMap<String, String> token, Object fileObject, String processGroup) {
-        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations/" + iteration + "/production-info";
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations/" + iteration + "/production-info";
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
@@ -240,7 +242,7 @@ public class FileUploadResources {
      * @param token - the user token
      */
     private void getCostingIteration(HashMap<String, String> token) {
-        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + masterName + "/" + stateName + "/iterations";
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations";
 
         RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, ListOfCostIterations.class)
             .setHeaders(headers)
@@ -352,7 +354,7 @@ public class FileUploadResources {
                 Thread.currentThread().interrupt();
             }
 
-        } while ((!status.equals(ORDER_SUCCESS)) && (!status.equals(ORDER_FAILED)) && ((System.currentTimeMillis() / 1000) - initialTime) < 60);
+        } while ((!status.equals(ORDER_SUCCESS)) && (!status.equals(ORDER_FAILED)) && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
 
         return requestEntityBody;
     }
