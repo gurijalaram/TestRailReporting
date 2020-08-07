@@ -28,7 +28,7 @@ public class PartResourcesTest extends TestUtil {
     @Description("Create a new part using the CIS API")
     public void createNewPart() {
         Object obj = JsonManager.deserializeJsonFromFile(
-                Thread.currentThread().getContextClassLoader().getResource("CreatePartData.json").getPath(), NewPartRequest.class);
+                Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreatePartData.json").getPath(), NewPartRequest.class);
 
         PartResources.createNewPart(obj);
     }

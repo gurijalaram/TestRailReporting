@@ -34,7 +34,7 @@ public class BatchPartResourcesTest extends TestUtil {
 
         NewPartRequest newPartRequest =
                 (NewPartRequest)JsonManager.deserializeJsonFromFile(
-                Thread.currentThread().getContextClassLoader().getResource("CreatePartData.json").getPath(), NewPartRequest.class);
+                Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreatePartData.json").getPath(), NewPartRequest.class);
 
         BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
     }
