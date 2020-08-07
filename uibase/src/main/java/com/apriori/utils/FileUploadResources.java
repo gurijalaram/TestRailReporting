@@ -137,7 +137,7 @@ public class FileUploadResources {
                     .setCommandType("LOADCADFILE")
                     .setInputs(new FileUploadOrder().setScenarioName(scenarioName)
                         .setFileKey(identity)
-                        .setFileName(fileName.concat("qa1").replaceAll("\\s", "")))));
+                        .setFileName(fileName.replaceAll("\\s", "")))));
 
         orderId = jsonNode(GenericRequestUtil.post(fileRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
