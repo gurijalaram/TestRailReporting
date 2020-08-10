@@ -304,7 +304,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectExportSet(String exportSet) {
         By exportSetToSelect = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         WebElement exportSetToPick = driver.findElement(exportSetToSelect);
-        exportSetToPick.click();
+        //exportSetToPick.click();
+        pageUtils.waitForElementAndClick(exportSetToPick);
         return this;
     }
 
@@ -699,12 +700,9 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage ensureCorrectRollupIsSelected(String rollupName) {
         //pageUtils.checkElementAttribute(rollupSelected, "innerText", rollupName);
-        //if (driver.findElement(By.xpath("//li[@title='---01-dtc-machiningdataset']"))
-        //        .getAttribute("className").contains("jr-isSelected")) {
-        boolean status = new WebDriverWait(driver, 20)
-                    .until(ExpectedConditions.attributeContains(rollupSelected, "innerText", rollupName));
-        assertThat(status, is(true));
-        //}
+        pageUtils.waitForElementAndClick(rollupDropdown);
+        By locator = By.xpath(String.format("//li[@title='%s']", rollupName));
+        pageUtils.waitForElementToAppear(driver.findElement(locator));
         return this;
     }
 
