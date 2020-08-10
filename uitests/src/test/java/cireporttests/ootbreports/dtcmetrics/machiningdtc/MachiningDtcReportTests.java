@@ -22,6 +22,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcReportTests extends TestBase {
 
@@ -36,7 +37,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "2024")
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -48,6 +49,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3415")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -56,6 +58,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3416")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
