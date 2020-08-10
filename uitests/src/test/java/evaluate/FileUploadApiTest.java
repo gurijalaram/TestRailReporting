@@ -7,6 +7,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
 import junitparams.FileParameters;
