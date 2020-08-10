@@ -1,11 +1,5 @@
 package testsuites;
 
-import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
-import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
-import cireporttests.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
-import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcComparisonReportTests;
-import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcDetailsReportTests;
-import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
@@ -17,13 +11,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        AssemblyDetailsReportTests.class,
-        MachiningDtcReportTests.class,
-        MachiningDtcDetailsReportTests.class,
-        MachiningDtcComparisonReportTests.class,
-        CastingDtcReportTests.class,
-        CastingDtcDetailsReportTests.class,
-        CastingDtcComparisonReportTests.class
+        AssemblyDetailsReportTests.class
 })
 
 public class CiaCirTestDevSuite {
