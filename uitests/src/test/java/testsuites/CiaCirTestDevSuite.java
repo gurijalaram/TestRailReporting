@@ -1,5 +1,6 @@
 package testsuites;
 
+import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import cireporttests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
@@ -11,7 +12,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        AssemblyDetailsReportTests.class
+        MachiningDtcReportTests.class
 })
 
 public class CiaCirTestDevSuite {
