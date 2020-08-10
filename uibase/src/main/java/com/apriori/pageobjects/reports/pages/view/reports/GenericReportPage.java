@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.reports.pages.view.reports;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -22,7 +23,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -695,7 +698,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureCorrectRollupIsSelected(String rollupName) {
-        pageUtils.checkElementAttribute(rollupSelected, "innerText", rollupName);
+        //pageUtils.checkElementAttribute(rollupSelected, "innerText", rollupName);
+        //if (driver.findElement(By.xpath("//li[@title='---01-dtc-machiningdataset']"))
+        //        .getAttribute("className").contains("jr-isSelected")) {
+        boolean status = new WebDriverWait(driver, 20)
+                    .until(ExpectedConditions.attributeContains(rollupSelected, "innerText", rollupName));
+        assertThat(status, is(true));
+        //}
         return this;
     }
 
