@@ -60,9 +60,7 @@ public class FileUploadResources {
     private static int workspaceId;
     private static String typeName;
     private static String masterName;
-    private static int iteration;
     private static String costWorkOrderId;
-    private static int costingIteration;
     private static String publishWorkOrderId;
 
     private final String ORDER_SUCCESS = "SUCCESS";
@@ -91,7 +89,7 @@ public class FileUploadResources {
         createCostWorkOrder(token);
         submitCostWorkOrder(token);
         checkCostResult(token);
-        getCostingIteration(token);
+        getLatestIteration(token);
         initializePublishScenario(token);
         submitPublishWorkOrder(token);
         checkPublishResult(token);
@@ -171,7 +169,6 @@ public class FileUploadResources {
         typeName = jsonNode(orderBody, "typeName");
         masterName = jsonNode(orderBody, "masterName");
         stateName = jsonNode(orderBody, "stateName");
-        iteration = Integer.parseInt(jsonNode(orderBody, "iteration"));
     }
 
     /**
@@ -180,7 +177,7 @@ public class FileUploadResources {
      * @param token - the user token
      */
     private void initializeCostScenario(HashMap<String, String> token, Object fileObject, String processGroup) {
-        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations/" + iteration + "/production-info";
+        String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations/" + getLatestIteration(token) + "/production-info";
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
@@ -209,7 +206,7 @@ public class FileUploadResources {
             .setBody(new CostOrderCommand().setCommand(new CostOrderCommandType()
                 .setCommandType("COSTING")
                 .setInputs(new CostOrderInputs().setInputSetId(inputSetId)
-                    .setScenarioIterationKey(new CostOrderScenarioIteration().setIteration(iteration)
+                    .setScenarioIterationKey(new CostOrderScenarioIteration().setIteration(getLatestIteration(token))
                         .setScenarioKey(new CostOrderScenario().setMasterName(masterName)
                             .setStateName(stateName)
                             .setTypeName(typeName)
@@ -240,15 +237,16 @@ public class FileUploadResources {
      * Gets costing iteration
      *
      * @param token - the user token
+     * @return
      */
-    private void getCostingIteration(HashMap<String, String> token) {
+    private int getLatestIteration(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations";
 
         RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, ListOfCostIterations.class)
             .setHeaders(headers)
             .setHeaders(token);
 
-        costingIteration = Integer.parseInt(jsonNode(GenericRequestUtil.get(iterationRequestEntity, new RequestAreaApi()).getBody(), "iteration"));
+        return Integer.parseInt(jsonNode(GenericRequestUtil.get(iterationRequestEntity, new RequestAreaApi()).getBody(), "iteration"));
     }
 
     /**
@@ -273,7 +271,7 @@ public class FileUploadResources {
                                 .setStateName(stateName)
                                 .setWorkspaceId(workspaceId)
                                 .setMasterName(masterName))
-                            .setIteration(costingIteration)))));
+                            .setIteration(getLatestIteration(token))))));
 
         publishWorkOrderId = jsonNode(GenericRequestUtil.post(publishRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
