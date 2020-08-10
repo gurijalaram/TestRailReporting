@@ -699,7 +699,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage ensureCorrectRollupIsSelected(String rollupName) {
-        //pageUtils.checkElementAttribute(rollupSelected, "innerText", rollupName);
         pageUtils.waitForElementAndClick(rollupDropdown);
         By locator = By.xpath(String.format("//li[@title='%s']", rollupName));
         pageUtils.waitForElementToAppear(driver.findElement(locator));

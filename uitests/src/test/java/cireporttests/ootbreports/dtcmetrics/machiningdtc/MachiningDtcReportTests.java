@@ -171,7 +171,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2026")
     @Description("Verify Export Sets are available for selection")
     public void testExportSetSelectionAndAvailability() {
