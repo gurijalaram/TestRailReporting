@@ -86,7 +86,7 @@ public class FileUploadResources {
         initializeFileUpload(token, fileName);
         createFileUploadWorkOrder(token, fileName, scenarioName);
         submitFileUploadWorkOrder(token);
-        checkFileWorkOrderStatus(token);
+        checkFileWorkOrderSuccessful(token);
         initializeCostScenario(token, fileObject, processGroup);
         createCostWorkOrder(token);
         submitCostWorkOrder(token);
@@ -156,7 +156,7 @@ public class FileUploadResources {
      *
      * @param token - the user token
      */
-    private void checkFileWorkOrderStatus(HashMap<String, String> token) {
+    private void checkFileWorkOrderSuccessful(HashMap<String, String> token) {
         String orderURL = Constants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + orderId;
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
