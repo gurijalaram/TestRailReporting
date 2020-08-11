@@ -167,12 +167,10 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      * Generic folder navigation method
      *
      * @param folder to navigate to
-     * @return current page object
      */
-    private ViewRepositoryPage navigateToFolder(String folder) {
+    private void navigateToFolder(String folder) {
         pageUtils.waitForElementToAppear(folderElementMap.get(folder))
             .click();
-        return this;
     }
 
     /**
@@ -195,15 +193,15 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         folderElementMap.put(Constants.GENERAL_FOLDER, generalFolder);
         folderElementMap.put("Solutions", solutionsFolder);
         folderElementMap.put("Upgrade Process", upgradeProcessFolder);
-        folderElementMap.put("Casting DTC", castingDtcFolder);
-        folderElementMap.put("Casting DTC Details", castingDtcFolder);
-        folderElementMap.put("Casting DTC Comparison", castingDtcFolder);
-        folderElementMap.put("Machining DTC", machiningDtcFolder);
-        folderElementMap.put("Machining DTC Details", machiningDtcFolder);
-        folderElementMap.put("Machining DTC Comparison", machiningDtcFolder);
-        folderElementMap.put("Plastic DTC", plasticDtcFolder);
-        folderElementMap.put("Plastic DTC Details", plasticDtcFolder);
-        folderElementMap.put("Plastic DTC Comparison", plasticDtcFolder);
+        folderElementMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcFolder);
+        folderElementMap.put(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), castingDtcFolder);
+        folderElementMap.put(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), castingDtcFolder);
+        folderElementMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), machiningDtcFolder);
+        folderElementMap.put(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), machiningDtcFolder);
+        folderElementMap.put(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), machiningDtcFolder);
+        folderElementMap.put(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), plasticDtcFolder);
+        folderElementMap.put(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), plasticDtcFolder);
+        folderElementMap.put(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), plasticDtcFolder);
 
         folderElementMap.put("Organization", organizationFolder);
         folderElementMap.put("aPriori", aprioriSubFolder);
