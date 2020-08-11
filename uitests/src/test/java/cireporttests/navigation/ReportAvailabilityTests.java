@@ -13,7 +13,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
 
-
 public class ReportAvailabilityTests extends TestBase {
 
     private ViewSearchResultsPage viewSearchResultsPage;

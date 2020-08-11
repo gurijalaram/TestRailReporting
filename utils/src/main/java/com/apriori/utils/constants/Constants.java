@@ -4,7 +4,6 @@ import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
 
-
 public class Constants {
     public static final String DEFAULT_PROJECT_ID_VALUE = "177";
     public static final String DEFAULT_PROJECT_ID_KEY = "RUN_ID";
