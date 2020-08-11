@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -32,7 +31,6 @@ public class CastingDtcReportTests extends TestBase {
     private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
-    private ViewRepositoryPage repository;
 
     public CastingDtcReportTests() {
         super();

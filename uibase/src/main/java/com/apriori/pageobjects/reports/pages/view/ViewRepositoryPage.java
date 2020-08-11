@@ -91,18 +91,11 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     }
 
     /**
-     * Navigates to general folder
-     *
-     * @return current page object
+     * Navigates to specified report folder
+     * @param afterReportsFolder - String
+     * @param lastFolder - String
+     * @return Instance of current page object
      */
-    public ViewRepositoryPage navigateToGeneralFolder() {
-        navigateToFolder("Organization");
-        navigateToFolder("aPriori");
-        navigateToFolder("Reports");
-        navigateToFolder(Constants.GENERAL_FOLDER);
-        return this;
-    }
-
     public GenericReportPage navigateToReportFolder(String afterReportsFolder, String lastFolder) {
         navigateToFolder("Organization");
         navigateToFolder("aPriori");
@@ -112,48 +105,6 @@ public class ViewRepositoryPage extends ReportsPageHeader {
             navigateToFolder(lastFolder);
         }
         return new GenericReportPage(driver);
-    }
-
-    /**
-     * Navigate to Machining DTC folder
-     *
-     * @return current page object
-     */
-    public GenericReportPage navigateToMachiningDTCFolder() {
-        navigateToFolder("Organization");
-        navigateToFolder("aPriori");
-        navigateToFolder("Reports");
-        navigateToFolder(Constants.DTC_METRICS_FOLDER);
-        navigateToFolder("Machining DTC");
-        return new GenericReportPage(driver);
-    }
-
-    /**
-     * Navigate to Casting folder
-     *
-     * @return current page object
-     */
-    public ViewRepositoryPage navigateToCastingFolder() {
-        navigateToFolder("Organization");
-        navigateToFolder("aPriori");
-        navigateToFolder("Reports");
-        navigateToFolder(Constants.DTC_METRICS_FOLDER);
-        navigateToFolder("Casting DTC");
-        return this;
-    }
-
-    /**
-     * Navigate to Plastic folder
-     *
-     * @return current page object
-     */
-    public ViewRepositoryPage navigateToPlasticFolder() {
-        navigateToFolder("Organization");
-        navigateToFolder("aPriori");
-        navigateToFolder("Reports");
-        navigateToFolder(Constants.DTC_METRICS_FOLDER);
-        navigateToFolder("Plastic DTC");
-        return this;
     }
 
     /**

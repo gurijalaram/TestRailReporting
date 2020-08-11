@@ -7,11 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
-import com.apriori.pageobjects.reports.pages.library.LibraryPage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
-import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
@@ -45,11 +41,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     private AssemblyDetailsReportPage assemblyDetailsReport;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
-    private ViewSearchResultsPage searchResults;
-    private ViewRepositoryPage repository;
     private String assemblyType = "";
-    private ReportsHomePage homePage;
-    private LibraryPage library;
 
     public AssemblyDetailsReportTests() {
         super();
