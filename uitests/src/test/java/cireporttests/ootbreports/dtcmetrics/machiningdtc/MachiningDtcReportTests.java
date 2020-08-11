@@ -1,14 +1,7 @@
 package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import cireporttests.navigation.ReportAvailabilityTests;
-import com.apriori.apibase.services.cis.objects.Report;
 import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
 import com.apriori.pageobjects.reports.pages.library.LibraryPage;
-import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -18,6 +11,7 @@ import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

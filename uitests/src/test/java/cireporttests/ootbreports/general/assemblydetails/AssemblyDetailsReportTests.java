@@ -5,8 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import cireporttests.navigation.ReportAvailabilityTests;
-import com.apriori.apibase.services.cis.objects.Report;
 import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
@@ -28,6 +26,7 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -142,6 +141,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
+
     @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3060")
