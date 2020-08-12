@@ -187,6 +187,7 @@ public class DeleteComparisonTests extends TestBase {
 
         comparePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()

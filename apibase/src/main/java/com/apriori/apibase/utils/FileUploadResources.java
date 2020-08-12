@@ -1,4 +1,4 @@
-package com.apriori.utils;
+package com.apriori.apibase.utils;
 
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderCommand;
 import com.apriori.apibase.services.cid.objects.cost.createcostworkorder.CostOrderCommandType;
@@ -28,6 +28,7 @@ import com.apriori.apibase.services.cid.objects.response.upload.FileWorkOrder;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;

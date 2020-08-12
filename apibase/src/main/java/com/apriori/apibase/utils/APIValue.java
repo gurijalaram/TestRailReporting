@@ -1,7 +1,6 @@
-package com.apriori.utils;
+package com.apriori.apibase.utils;
 
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
-import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 
