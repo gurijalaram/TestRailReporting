@@ -3,9 +3,9 @@ package evaluate;
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.utils.APIAuthentication;
+import com.apriori.apibase.utils.FileUploadResources;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.users.UserUtil;
 
