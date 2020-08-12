@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -13,7 +12,6 @@ import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
-import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
