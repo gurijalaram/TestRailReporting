@@ -106,7 +106,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
         inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
                 ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
-                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -118,7 +118,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
         inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
                 ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
-                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 }

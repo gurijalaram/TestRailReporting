@@ -206,7 +206,7 @@ public class MachiningDtcReportTests extends TestBase {
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlMachiningDtc(
-                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -216,7 +216,7 @@ public class MachiningDtcReportTests extends TestBase {
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlMachiningDtc(
-                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 }
