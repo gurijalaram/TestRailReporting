@@ -6,13 +6,15 @@ rootProject.name = 'build'
 
 include(':uitests')
 include(':apitests')
+include(':ciconnect')
+include(':cid')
+include(':cir')
+include(':cas')
 
 //Utils
 include(':utils')
 include(':apibase')
 include(':uibase')
-include(':ciconnect')
-
 
 project(':uitests').projectDir = file('../uitests')
 project(':utils').projectDir = file('../utils')
@@ -20,6 +22,9 @@ project(':apibase').projectDir = file('../apibase')
 project(':apitests').projectDir = file('../apitests')
 project(':uibase').projectDir = file('../uibase')
 project(':ciconnect').projectDir = file('../ciconnect')
+project(':cid').projectDir = file('../cid')
+project(':cir').projectDir = file('../cir')
+project(':cas').projectDir = file('../cas')
 
 
 //Microservices
