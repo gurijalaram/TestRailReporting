@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
@@ -18,6 +17,7 @@ import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -28,9 +28,9 @@ import java.math.BigDecimal;
 
 public class CastingDtcReportTests extends TestBase {
 
+    private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
-    private ViewRepositoryPage repository;
 
     public CastingDtcReportTests() {
         super();
@@ -40,19 +40,28 @@ public class CastingDtcReportTests extends TestBase {
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
-    public void testReportAvailabilityByMenu() {
-        repository = new ReportsLoginPage(driver)
-            .login()
-            .navigateToViewRepositoryPage()
-            .navigateToCastingFolder();
+    public void testReportAvailabilityByNavigation() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.CASTING_DTC.getReportName()
+        );
+    }
 
-        ReportNamesEnum[] reportNames = ReportNamesEnum.values();
-        for (int i = 5; i <= 7; i++) {
-            assertThat(
-                    repository.getReportName(reportNames[i].getReportName()),
-                    is(equalTo(reportNames[i].getReportName()))
-            );
-        }
+    @Test
+    @TestRail(testCaseId = "1676")
+    @Description("Verify report availability by library")
+    public void testReportAvailabilityByLibrary() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1676")
+    @Description("Verify report availability by search")
+    public void testReportAvailabilityBySearch() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC.getReportName());
     }
 
     @Test
