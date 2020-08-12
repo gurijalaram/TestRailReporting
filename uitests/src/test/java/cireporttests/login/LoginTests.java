@@ -43,10 +43,10 @@ public class LoginTests extends TestBase {
     public void testFailedLogin() {
         String loginErrorMessage = "Invalid credentials supplied. Could not login to JasperReports Server.";
         loginPage = new ReportsLoginPage(driver)
-			.failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
+                .failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(loginErrorMessage)));
-	}
+    }
 
     @Test
     @TestRail(testCaseId = {"2697"})
@@ -62,12 +62,12 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category(MsSQLOracleLocalInstallTest.class)
-	@TestRail(testCaseId = {"2698"})
+    @TestRail(testCaseId = {"2698"})
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
         String emptyFieldMsg = "Invalid credentials supplied. Could not login to JasperReports Server.";
         loginPage = new ReportsLoginPage(driver)
-			.failedLogin("", "");
+            .failedLogin("", "");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(emptyFieldMsg)));
     }
@@ -79,7 +79,7 @@ public class LoginTests extends TestBase {
     public void invalidEmail() {
         String invalidEmailMsg = "Invalid credentials supplied. Could not login to JasperReports Server.";
         loginPage = new ReportsLoginPage(driver)
-			.failedLogin("a@b", "fakePassword");
+            .failedLogin("a@b", "fakePassword");
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(invalidEmailMsg)));
     }

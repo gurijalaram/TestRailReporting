@@ -82,7 +82,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-	@Category(MsSQLOracleLocalInstallTest.class)
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3565")
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
