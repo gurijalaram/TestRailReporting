@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -14,6 +13,7 @@ import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -217,6 +217,30 @@ public class PlasticDtcReportTests extends TestBase {
         inputControlsTests.testSaveAndRemoveButtons(
                 ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1366")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlPpc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1366")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlFbc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 }

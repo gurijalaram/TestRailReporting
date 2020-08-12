@@ -11,6 +11,7 @@ import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -179,5 +180,29 @@ public class CastingDtcDetailsReportTests extends TestBase {
         String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
 
         assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1695")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlPpc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1695")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlFbc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
     }
 }

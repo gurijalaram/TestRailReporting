@@ -1,9 +1,5 @@
 package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
-import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
-import com.apriori.pageobjects.reports.pages.library.LibraryPage;
-import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
-import com.apriori.pageobjects.reports.pages.view.ViewSearchResultsPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -24,8 +20,6 @@ public class MachiningDtcReportTests extends TestBase {
 
     private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
-
-    private int reportCount = 3;
 
     public MachiningDtcReportTests() {
         super();
