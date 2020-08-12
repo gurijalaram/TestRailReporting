@@ -9,13 +9,12 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
-import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -23,6 +22,7 @@ import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -32,11 +32,10 @@ import java.math.BigDecimal;
 
 public class PlasticDtcReportTests extends TestBase {
 
+    private ReportAvailabilityTests reportAvailabilityTests;
     private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
-    private ViewRepositoryPage repository;
-    private String assemblyType = "";
 
     public PlasticDtcReportTests() {
         super();
@@ -45,15 +44,32 @@ public class PlasticDtcReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
-    public void testPlasticDtcReportAvailability() {
-        repository = new ReportsLoginPage(driver)
-            .login()
-            .navigateToViewRepositoryPage()
-            .navigateToPlasticFolder();
+    public void testPlasticDtcReportAvailabilityByNavigation() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName()
+        );
+    }
 
-        String[] expectedReportNames = repository.getReportNamesValues();
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityByLibrary() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName()
+        );
+    }
 
-        assertThat(expectedReportNames, arrayContainingInAnyOrder(repository.getActualReportNames()));
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityBySearch() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName()
+        );
     }
 
     @Test
@@ -79,7 +95,6 @@ public class PlasticDtcReportTests extends TestBase {
     @TestRail(testCaseId = "1370")
     @Description("Verify currency code functionality works correctly")
     public void testCurrencyCodeFunctionality() {
-        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
         BigDecimal gbpAnnualSpend;
         BigDecimal usdAnnualSpend;
 

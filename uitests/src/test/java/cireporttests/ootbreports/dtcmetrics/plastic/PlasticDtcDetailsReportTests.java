@@ -1,6 +1,7 @@
 package cireporttests.ootbreports.dtcmetrics.plastic;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -8,6 +9,7 @@ import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -15,10 +17,42 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class PlasticDtcDetailsReportTests extends TestBase {
 
+    private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
 
     public PlasticDtcDetailsReportTests() {
         super();
+    }
+
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityByNavigation() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityByLibrary() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityBySearch() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
+        );
     }
 
     @Test

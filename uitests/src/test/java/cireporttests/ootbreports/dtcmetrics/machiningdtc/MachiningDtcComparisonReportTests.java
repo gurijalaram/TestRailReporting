@@ -1,6 +1,7 @@
 package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -8,16 +9,44 @@ import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 
+    private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
 
     public MachiningDtcComparisonReportTests() {
         super();
+    }
+
+    @Test
+    @TestRail(testCaseId = "2024")
+    @Description("Verify report availability by navigation")
+    public void testReportAvailabilityByNavigation() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3415")
+    @Description("Verify report availability by library")
+    public void testReportAvailabilityByLibrary() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "3416")
+    @Description("Verify report availability by search")
+    public void testReportAvailabilityBySearch() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName());
     }
 
     @Test
@@ -106,7 +135,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
         inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
                 ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
-                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -118,7 +147,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
         inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
                 ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
-                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 }
