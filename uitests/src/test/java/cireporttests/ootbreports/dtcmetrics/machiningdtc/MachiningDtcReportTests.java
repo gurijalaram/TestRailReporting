@@ -23,12 +23,6 @@ public class MachiningDtcReportTests extends TestBase {
 
     private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
-    private ViewSearchResultsPage searchResults;
-    private ViewRepositoryPage repository;
-    private LibraryPage library;
-    private ReportsHomePage homePage;
-
-    private int reportCount = 3;
 
     public MachiningDtcReportTests() {
         super();
