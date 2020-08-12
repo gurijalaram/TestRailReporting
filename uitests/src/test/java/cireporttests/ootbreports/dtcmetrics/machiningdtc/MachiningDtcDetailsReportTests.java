@@ -102,6 +102,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
                 ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
@@ -113,6 +114,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
                 ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }

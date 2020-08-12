@@ -287,7 +287,11 @@ public class InputControlsTests extends TestBase {
      * Generic test for cost metric input control
      */
     public void testCostMetricInputControlMachiningDtc(String costMetric) {
-        genericReportPage = testCostMetricCore(ReportNamesEnum.MACHINING_DTC.getReportName(), costMetric);
+        genericReportPage = testCostMetricCore(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                costMetric
+        );
         assertThat(genericReportPage.getCostMetricValueFromChartAxis(), is(equalTo(String.format("%s (USD)", costMetric))));
 
         genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
@@ -302,8 +306,8 @@ public class InputControlsTests extends TestBase {
      * @param reportName - String
      * @param costMetric - String
      */
-    public void testCostMetricInputControlOtherMachiningDtcReports(String reportName, String costMetric) {
-        testCostMetricCore(reportName, costMetric);
+    public void testCostMetricInputControlOtherMachiningDtcReports(String reportName, String exportSet, String costMetric) {
+        testCostMetricCore(reportName, exportSet, costMetric);
     }
 
     /**
@@ -311,12 +315,12 @@ public class InputControlsTests extends TestBase {
      * @param costMetric - String
      * @return current page object
      */
-    private GenericReportPage testCostMetricCore(String reportName, String costMetric) {
+    private GenericReportPage testCostMetricCore(String reportName, String exportSet, String costMetric) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectExportSet(exportSet)
                 .selectCostMetric(costMetric)
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);

@@ -10,6 +10,7 @@ import com.apriori.utils.web.driver.TestBase;
 import cireporttests.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 
@@ -104,6 +105,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
                 ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
@@ -115,6 +117,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
                 ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
