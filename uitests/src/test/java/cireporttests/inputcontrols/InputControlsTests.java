@@ -298,8 +298,9 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test for Cost Metric Input Control on Machining DTC Details and Casting
-     * @param costMetric String
+     * Generic test for Cost Metric Input Control on Machining and Casting DTC
+     * @param reportName - String
+     * @param costMetric - String
      */
     public void testCostMetricInputControlOtherMachiningDtcReports(String reportName, String costMetric) {
         testCostMetricCore(reportName, costMetric);
