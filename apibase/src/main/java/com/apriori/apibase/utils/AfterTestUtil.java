@@ -1,10 +1,9 @@
-package com.apriori.utils;
+package com.apriori.apibase.utils;
 
 import com.apriori.apibase.services.response.objects.DisplayPreferencesEntity;
 import com.apriori.apibase.services.response.objects.ProductionDefaultEntity;
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
 import com.apriori.apibase.services.response.objects.UnitSystemSettingEntity;
-import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.LengthEnum;

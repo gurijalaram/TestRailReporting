@@ -5,11 +5,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
@@ -247,5 +250,82 @@ public class InputControlsTests extends TestBase {
 
         assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+    }
+
+    /**
+     * Generic test for export set selection
+     */
+    public void testExportSetAvailabilityAndSelection(String reportName, String exportSet, String rollupName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSet)
+                .ensureCorrectRollupIsSelected(rollupName)
+                .clickOk();
+
+        assertThat(genericReportPage.getDisplayedRollup(),
+                is(equalTo(rollupName)));
+    }
+
+    /**
+     * Generic test to ensure expected export set tests are present
+     */
+    public void testExportSetAvailability(String reportName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        String[] expectedExportSetValues = genericReportPage.getExportSetEnumValues();
+
+        assertThat(expectedExportSetValues, arrayContainingInAnyOrder(genericReportPage.getActualExportSetValues()));
+    }
+
+    /**
+     * Generic test for cost metric input control
+     */
+    public void testCostMetricInputControlMachiningDtc(String costMetric) {
+        genericReportPage = testCostMetricCore(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                costMetric
+        );
+        assertThat(genericReportPage.getCostMetricValueFromChartAxis(), is(equalTo(String.format("%s (USD)", costMetric))));
+
+        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        genericReportPage.getCostMetricValueFromBubble();
+
+        assertThat(genericReportPage.getCostMetricValueFromBubble(), is(equalTo(String.format("%s : ", costMetric))));
+    }
+
+    /**
+     * Generic test for Cost Metric Input Control on Machining DTC Details, Comparison and Casting DTC
+     * @param reportName - String
+     * @param costMetric - String
+     */
+    public void testCostMetricInputControlOtherMachiningDtcReports(String reportName, String exportSet, String costMetric) {
+        testCostMetricCore(reportName, exportSet, costMetric);
+    }
+
+    /**
+     * Core part of cost metric test
+     * @param costMetric - String
+     * @return current page object
+     */
+    private GenericReportPage testCostMetricCore(String reportName, String exportSet, String costMetric) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet)
+                .selectCostMetric(costMetric)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("\n%s", costMetric))));
+        return genericReportPage;
     }
 }

@@ -347,8 +347,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Navigates to a particular page and returns an instance of the specified page object
-     *
-     * @param <T>
+     * @param parentPageButton - WebElement
+     * @param className - Class to return
+     * @param <T> - Generic type
      * @return Instance of relevant page object class
      */
     private <T> T navigateToPage(WebElement parentPageButton, Class<T> className) {
@@ -358,9 +359,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     /**
      * Another general navigation method
-     *
-     * @param parentPage
-     * @param childPage
+     * @param parentPage - WebElement
+     * @param childPage - WebElement
+     * @param className - Class to return
+     * @param <T> - Generic type
+     * @return Instance of passed in class
      */
     private <T> T navigateToSubPage(WebElement parentPage, WebElement childPage, Class<T> className) {
         pageUtils.waitForElementAndClick(parentPage);
@@ -371,14 +374,14 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     /**
      * Search for Report
      *
-     * @param textToType
+     * @param textToType - String
      * @return current page object
      */
-    public ReportsHomePage searchForReport(String textToType) {
+    public ViewSearchResultsPage searchForReport(String textToType) {
         pageUtils.waitForElementAndClick(searchInput);
         searchInput.sendKeys(textToType);
         pageUtils.waitForElementAndClick(searchButton);
         pageUtils.isPageLoaded(homePageTitle);
-        return new ReportsHomePage(driver);
+        return new ViewSearchResultsPage(driver);
     }
 }

@@ -1,6 +1,5 @@
-package com.apriori.utils;
+package com.apriori.apibase.services.response.objects;
 
-import com.apriori.apibase.services.response.objects.WorkSpaceSearchWrapper;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.WorkOrderScenarioTypeEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
