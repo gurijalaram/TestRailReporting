@@ -1,8 +1,8 @@
 package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -12,7 +12,6 @@ import cireporttests.inputcontrols.InputControlsTests;
 import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 
