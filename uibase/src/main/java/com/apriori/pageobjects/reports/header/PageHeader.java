@@ -135,7 +135,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-		pageUtils.waitForElementToAppear(homePageTitle);
+        pageUtils.waitForElementToAppear(homePageTitle);
     }
 
     /**

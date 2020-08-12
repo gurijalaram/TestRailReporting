@@ -92,7 +92,7 @@ public class AdminHomePage extends PageHeader {
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
     }
-	
+
     /**
      * Gets url to check
      *

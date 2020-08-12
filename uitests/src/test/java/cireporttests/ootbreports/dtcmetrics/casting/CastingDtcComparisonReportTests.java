@@ -21,8 +21,8 @@ import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 

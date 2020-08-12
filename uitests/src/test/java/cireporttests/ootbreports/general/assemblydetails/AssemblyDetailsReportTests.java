@@ -27,10 +27,9 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
-import testsuites.suiteinterface.MySQLTest;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ import java.util.List;
 public class AssemblyDetailsReportTests extends TestBase {
 
     private ReportAvailabilityTests reportAvailabilityTests;
-    private AssemblyDetailsReportPage assemblyDetailsReport;
+    private AssemblyDetailsReportPage assemblyDetailsReportPage;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private String assemblyType = "";
@@ -50,8 +49,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
-    @Category(CIARStagingSmokeTest.class)
+    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "1915")
     @Description("validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyCostA4() {

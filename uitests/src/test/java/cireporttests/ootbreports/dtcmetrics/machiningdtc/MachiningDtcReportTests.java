@@ -17,17 +17,13 @@ import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 public class MachiningDtcReportTests extends TestBase {
 
     private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
-    private ViewSearchResultsPage searchResults;
-    private ViewRepositoryPage repository;
-    private LibraryPage library;
-    private ReportsHomePage homePage;
 
     private int reportCount = 3;
 
