@@ -2,21 +2,51 @@ package cireporttests.ootbreports.dtcmetrics.machiningdtc;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
 public class MachiningDtcDetailsReportTests extends TestBase {
 
+    private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
 
     public MachiningDtcDetailsReportTests() {
         super();
+    }
+
+    @Test
+    @TestRail(testCaseId = "2024")
+    @Description("Verify report availability by navigation")
+    public void testReportAvailabilityByNavigation() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3415")
+    @Description("Verify report availability by library")
+    public void testReportAvailabilityByLibrary() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "3416")
+    @Description("Verify report availability by search")
+    public void testReportAvailabilityBySearch() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
     }
 
     @Test

@@ -4,7 +4,6 @@ import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
 
-
 public class Constants {
     public static final String DEFAULT_PROJECT_ID_VALUE = "177";
     public static final String DEFAULT_PROJECT_ID_KEY = "RUN_ID";
@@ -49,6 +48,8 @@ public class Constants {
     public static final String REPORTING_HELP_URL = "http://help.jaspersoft.com/Default";
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
+    public static final String DTC_METRICS_FOLDER = "DTC Metrics";
+    public static final String GENERAL_FOLDER = "General";
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
 
