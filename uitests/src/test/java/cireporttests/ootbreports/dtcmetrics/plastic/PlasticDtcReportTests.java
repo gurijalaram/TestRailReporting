@@ -4,22 +4,21 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.AssemblyTypeEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import pageobjects.pages.evaluate.EvaluatePage;
@@ -29,11 +28,10 @@ import java.math.BigDecimal;
 
 public class PlasticDtcReportTests extends TestBase {
 
+    private ReportAvailabilityTests reportAvailabilityTests;
     private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
-    private ViewRepositoryPage repository;
-    private String assemblyType = "";
 
     public PlasticDtcReportTests() {
         super();
@@ -42,29 +40,40 @@ public class PlasticDtcReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
-    public void testPlasticDtcReportAvailability() {
-        repository = new ReportsLoginPage(driver)
-            .login()
-            .navigateToViewRepositoryPage()
-            .navigateToPlasticFolder();
+    public void testPlasticDtcReportAvailabilityByNavigation() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName()
+        );
+    }
 
-        String[] expectedReportNames = repository.getReportNamesValues();
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityByLibrary() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName()
+        );
+    }
 
-        assertThat(expectedReportNames, arrayContainingInAnyOrder(repository.getActualReportNames()));
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityBySearch() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName()
+        );
     }
 
     @Test
     @TestRail(testCaseId = "1344")
     @Description("Test Plastic DTC Reports Export Set Availability")
     public void testPlasticDtcReportExportSetAvailability() {
-        plasticDtcReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), PlasticDtcReportPage.class);
-
-        String[] expectedExportSetValues = plasticDtcReportPage.getExportSetEnumValues();
-
-        assertThat(expectedExportSetValues, arrayContainingInAnyOrder(plasticDtcReportPage.getActualExportSetValues()));
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetAvailability(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName());
     }
 
     @Test
@@ -82,7 +91,6 @@ public class PlasticDtcReportTests extends TestBase {
     @TestRail(testCaseId = "1370")
     @Description("Verify currency code functionality works correctly")
     public void testCurrencyCodeFunctionality() {
-        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
         BigDecimal gbpAnnualSpend;
         BigDecimal usdAnnualSpend;
 
@@ -209,6 +217,30 @@ public class PlasticDtcReportTests extends TestBase {
         inputControlsTests.testSaveAndRemoveButtons(
                 ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1366")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlPpc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1366")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlFbc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 }

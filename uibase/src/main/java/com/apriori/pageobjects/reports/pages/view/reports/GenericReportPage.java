@@ -45,25 +45,25 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> fbcElementMap = new HashMap<>();
     private String reportName = "";
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name()='path']")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name() = 'path']")
     private WebElement castingDtcBubble;
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name()='path'][43]")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name() = 'path'][43]")
     private WebElement machiningDtcBubble;
 
-    @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name()='path'])[8]")
+    @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
     private WebElement plasticDtcBubble;
 
-    @FindBy(xpath = "//*[text()=\"Fully Burdened Cost : \"]/following-sibling::*[1]")
+    @FindBy(xpath = "//*[text()='Fully Burdened Cost : ']/following-sibling::*[1]")
     private WebElement tooltipFbcElement;
 
     @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
     private WebElement partNameCastingDtcReport;
 
-    @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name()='text' and position()=2]")
+    @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name() = 'text' and position()=2]")
     private WebElement partNameCastingDtcComparisonReport;
 
-    @FindBy(xpath = "//*[local-name()='rect' and @y='180.5']")
+    @FindBy(xpath = "//*[local-name() = 'rect' and @y='180.5']")
     private WebElement partOfCastingChartComparisonReport;
 
     @FindBy(xpath = "//*[contains(text(), 'Hole Issues')]/following-sibling::*[1]")
@@ -201,6 +201,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
     private WebElement rollupSearch;
 
+    @FindBy(xpath = "//div[@id='rollup']//a/span[2]")
+    private WebElement rollupSelected;
+
     @FindBy(css = "input[id='savedValuesName']")
     private WebElement saveInput;
 
@@ -252,6 +255,20 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='latestExportDate']//div")
     private WebElement latestExportSetDateError;
 
+    @FindBy(xpath = "//div[@id='costMetric']//a")
+    private WebElement costMetricDropdown;
+
+    @FindBy(xpath = "(//*[@class='highcharts-root']//*[local-name() = 'tspan'])[2]")
+    private WebElement costMetricElementOnChartAxis;
+
+    @FindBy(xpath = "//span[contains(text(), 'Cost Metric:')]/../following-sibling::td[2]")
+    private WebElement costMetricElementAboveChart;
+
+    @FindBy(xpath = "(//*[local-name() = 'tspan'])[6]")
+    private WebElement costMetricValueOnBubble;
+    @FindBy(css = "ul[id='resultsList']")
+    private WebElement generalReportsList;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -286,7 +303,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectExportSet(String exportSet) {
         By exportSetToSelect = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         WebElement exportSetToPick = driver.findElement(exportSetToSelect);
-        exportSetToPick.click();
+        //exportSetToPick.click();
+        pageUtils.waitForElementAndClick(exportSetToPick);
         return this;
     }
 
@@ -336,7 +354,7 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Checks current currency selection, fixes if necessary
      *
-     * @param currency
+     * @param currency - String
      * @return current page object
      */
     public GenericReportPage checkCurrencySelected(String currency) {
@@ -345,6 +363,46 @@ public class GenericReportPage extends ReportsPageHeader {
             currencyMap.get(currency).click();
         }
         return this;
+    }
+
+    /**
+     * Selects cost metric, if necessary
+     * @param costMetric - String
+     * @return current page object
+     */
+    public GenericReportPage selectCostMetric(String costMetric) {
+        if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
+            costMetricDropdown.click();
+            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", costMetric))).click();
+        }
+        return this;
+    }
+
+    /**
+     * Gets cost metric value from above chart
+     * @return String
+     */
+    public String getCostMetricValueFromAboveChart() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return costMetricElementAboveChart.getAttribute("textContent");
+    }
+
+    /**
+     * Gets cost metric value from chart axis
+     * @return String
+     */
+    public String getCostMetricValueFromChartAxis() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return costMetricElementOnChartAxis.getAttribute("textContent");
+    }
+
+    /**
+     * Gets cost metric value from bubble
+     * @return String
+     */
+    public String getCostMetricValueFromBubble() {
+        pageUtils.waitForElementToAppear(costMetricValueOnBubble);
+        return costMetricValueOnBubble.getAttribute("textContent");
     }
 
     /**
@@ -487,7 +545,6 @@ public class GenericReportPage extends ReportsPageHeader {
         if (datePickerDiv.getAttribute("style").contains("display: block;")) {
             datePickerCloseButton.click();
             pageUtils.checkElementAttribute(datePickerDiv, "style", "display: none;");
-            //assertThat(datePickerDiv.getAttribute("style").contains("display: none;"), is(true));
         }
 
         return this;
@@ -637,6 +694,17 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Ensure that correct rollup is selected
+     * @return current page object
+     */
+    public GenericReportPage ensureCorrectRollupIsSelected(String rollupName) {
+        pageUtils.waitForElementAndClick(rollupDropdown);
+        By locator = By.xpath(String.format("//li[@title='%s']", rollupName));
+        pageUtils.waitForElementToAppear(driver.findElement(locator));
+        return this;
+    }
+
+    /**
      * Substrings date to remove time
      *
      * @return String
@@ -679,14 +747,12 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Select Assembly option dropdown using send keys
+     * Get name of a report
      *
-     * @param topIndex
+     * @return String - text of report name
      */
-    private void selectAssemblyOption(int topIndex) {
-        for (int i = 0; i < topIndex; i++) {
-            inputBox.sendKeys(Keys.ARROW_DOWN);
-        }
+    public String getReportName(String reportName) {
+        return pageUtils.getReportElement(reportName).getText();
     }
 
     /**

@@ -1,21 +1,56 @@
 package cireporttests.ootbreports.dtcmetrics.plastic;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
 
+    private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
 
     public PlasticDtcComparisonReportTests() {
         super();
+    }
+
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityByNavigation() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityByLibrary() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityByLibrary(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1343")
+    @Description("Test Plastic DTC Reports Availability")
+    public void testPlasticDtcReportAvailabilityBySearch() {
+        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests.testReportAvailabilityBySearch(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName()
+        );
     }
 
     @Test
@@ -59,4 +94,27 @@ public class PlasticDtcComparisonReportTests extends TestBase {
         );
     }
 
+    @Test
+    @TestRail(testCaseId = "1366")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlPpc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1366")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlFbc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
+    }
 }
