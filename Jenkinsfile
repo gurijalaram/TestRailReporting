@@ -20,7 +20,7 @@ pipeline {
     }
 
     agent {
-        label "ragnarok"
+        label "automation"
     }
 
     stages {
