@@ -11,7 +11,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.EvaluatePage;
@@ -40,7 +39,7 @@ public class HelpTests extends TestBase {
             .openHelpMenu()
             .clickOnlineHelp();
 
-        MatcherAssert.assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight Design:User Guide"));
+        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight Design:User Guide"));
     }
 
     @Test
