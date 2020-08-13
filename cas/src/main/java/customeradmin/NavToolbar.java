@@ -30,7 +30,7 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
     @FindBy(xpath = "//button[contains(@class,'dropdown-item')][.='About']")
     private WebElement aboutLink;
 
-    @FindBy(xpath = "//div[contains(@class,'user-dropdown dropdown show')]")
+    @FindBy(css = "div[class='user-dropdown dropdown']")
     private WebElement userDropdown;
 
     @FindBy(xpath = "//button[.='My Profile']")
@@ -71,6 +71,6 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
     public CasLoginPage logout() {
         pageUtils.waitForElementAndClick(userDropdown);
         pageUtils.waitForElementAndClick(logoutLink);
-        return new CasLoginPage(driver);
+        return new CasLoginPage(driver, false);
     }
 }
