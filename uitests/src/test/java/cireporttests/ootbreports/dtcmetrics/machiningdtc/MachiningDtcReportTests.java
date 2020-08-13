@@ -68,6 +68,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3567")
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
@@ -94,6 +95,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3020")
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
@@ -105,6 +107,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3021")
     @Description("Verify apply button on Machining DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -116,6 +119,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3021")
     @Description("Verify cancel button on Machining DTC input control panel works")
     public void testCancelButton() {
@@ -124,6 +128,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3021")
     @Description("Verify reset button on Machining DTC input control panel works")
     public void testResetButton() {
@@ -135,6 +140,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3021")
     @Description("Verify save button on Machining DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -146,6 +152,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "2026")
     @Description("Verify Export Sets are available for selection")
     public void testExportSetSelectionAndAvailability() {
@@ -158,6 +165,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3022")
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropDown() {
@@ -169,6 +177,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1690")
     @Description("Verify export sets are available for selection")
     public void testExportSetAvailability() {
@@ -177,6 +186,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3023")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -187,6 +197,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "3023")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {

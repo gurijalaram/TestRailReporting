@@ -51,7 +51,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyCostA4() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
@@ -61,9 +61,9 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyCostLetter() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
@@ -73,9 +73,9 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyDetails() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
@@ -85,9 +85,9 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuComponentCost() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
@@ -97,9 +97,9 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuScenarioComparison() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
@@ -109,7 +109,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyCostA4() {
@@ -118,7 +118,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyCostLetter() {
@@ -127,7 +127,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
@@ -136,7 +136,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryComponentCost() {
@@ -145,7 +145,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryScenarioComparison() {
@@ -163,6 +163,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyCostLetter() {
@@ -171,6 +172,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyDetails() {
@@ -179,6 +181,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchComponentCost() {
@@ -187,6 +190,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchScenarioComparison() {
@@ -348,7 +352,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @Issue("AP-58059")
     @Issue("AP-53537")
     @TestRail(testCaseId = {"1934", "1929"})
@@ -503,6 +507,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1930")
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {

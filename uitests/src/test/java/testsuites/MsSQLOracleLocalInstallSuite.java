@@ -1,5 +1,10 @@
 package testsuites;
 
+import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcComparisonReportTests;
+import cireporttests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcDetailsReportTests;
+import cireporttests.ootbreports.dtcmetrics.plastic.PlasticDtcComparisonReportTests;
+import cireporttests.ootbreports.dtcmetrics.plastic.PlasticDtcDetailsReportTests;
+import cireporttests.ootbreports.dtcmetrics.plastic.PlasticDtcReportTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import ciadmintests.navigation.AdminNavigationTests;
@@ -23,10 +28,15 @@ import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
     ReportsNavigationTests.class,
     LoginTests.class,
     AssemblyDetailsReportTests.class,
-    CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class,
     CastingDtcReportTests.class,
-    MachiningDtcReportTests.class
+    CastingDtcDetailsReportTests.class,
+    CastingDtcComparisonReportTests.class,
+    MachiningDtcReportTests.class,
+    MachiningDtcDetailsReportTests.class,
+    MachiningDtcComparisonReportTests.class,
+    PlasticDtcReportTests.class,
+    PlasticDtcDetailsReportTests.class,
+    PlasticDtcComparisonReportTests.class
 })
 
 public class MsSQLOracleLocalInstallSuite {

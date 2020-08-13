@@ -23,6 +23,8 @@ import cireporttests.inputcontrols.InputControlsTests;
 import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
 import java.math.BigDecimal;
 
@@ -38,6 +40,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
@@ -49,6 +52,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByLibrary() {
@@ -59,6 +63,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityBySearch() {
@@ -69,6 +74,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1344")
     @Description("Test Plastic DTC Reports Export Set Availability")
     public void testPlasticDtcReportExportSetAvailability() {
@@ -77,6 +83,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1365")
     @Description("Verify rollup dropdown input control functions correctly")
     public void testRollupDropdownInputControlsFunctionsProperly() {
@@ -88,6 +95,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1370")
     @Description("Verify currency code functionality works correctly")
     public void testCurrencyCodeFunctionality() {
@@ -121,6 +129,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Input Field")
     public void testPlasticDtcExportSetFilterInputField() {
@@ -129,6 +138,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Date Picker")
     public void testPlasticDtcExportSetFilterDatePicker() {
@@ -137,6 +147,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1346")
     @Description("Test Plastic DTC Export Set Selection")
     public void testPlasticDtcExportSetSelection() {
@@ -148,6 +159,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1376")
     @Description("Test Plastic DTC Data Integrity")
     public void testPlasticDtcDataIntegrity() {
@@ -180,6 +192,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -191,6 +204,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC input control panel works")
     public void testCancelButton() {
@@ -199,6 +213,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC input control panel works")
     public void testResetButton() {
@@ -210,6 +225,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Plastic DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -221,6 +237,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1366")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -233,6 +250,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1366")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {

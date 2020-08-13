@@ -48,6 +48,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -56,6 +57,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -64,6 +66,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1692")
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcDetailsExportSetInputControls() {
@@ -120,7 +123,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC Details input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -132,6 +135,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
@@ -140,6 +144,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingInputField() {
@@ -149,7 +154,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
 
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
+    @Category({CIARStagingSmokeTest.class, MsSQLOracleLocalInstallTest.class})
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyDetailsReportAvailableAndCorrectData() {
@@ -183,6 +188,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -195,6 +201,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
