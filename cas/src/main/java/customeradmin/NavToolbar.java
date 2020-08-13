@@ -2,6 +2,7 @@ package customeradmin;
 
 import com.apriori.utils.PageUtils;
 
+import login.CasLoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -59,6 +60,17 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(aprioriLogo);
+        pageUtils.waitForElementAppear(customersButton);
+    }
 
+    /**
+     * Logout the user
+     * @return new page object
+     */
+    public CasLoginPage logout() {
+        pageUtils.waitForElementAndClick(userDropdown);
+        pageUtils.waitForElementAndClick(logoutLink);
+        return new CasLoginPage(driver);
     }
 }

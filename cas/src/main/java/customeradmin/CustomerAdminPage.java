@@ -32,6 +32,9 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
     @FindBy(css = "[aria-label='Search']")
     private WebElement custSearch;
 
+    @FindBy(id = "qa-page-size-dropdown")
+    private WebElement pageSizeDropdown;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private NavToolbar navToolbar;
