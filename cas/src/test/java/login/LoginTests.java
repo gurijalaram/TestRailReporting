@@ -1,5 +1,6 @@
 package login;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -7,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import customeradmin.CustomerAdminPage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
@@ -14,9 +16,20 @@ public class LoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
     private CasLoginPage loginPage;
+    private CustomerAdminPage casPage;
 
     public LoginTests() {
         super();
+    }
+
+    @Test
+    @Description("Test successful login")
+    public void testLogin() {
+
+        loginPage = new CasLoginPage(driver);
+        casPage = loginPage.login(UserUtil.getUser());
+
+        assertThat(casPage.isNewCustomerButtonPresent(), is(true));
     }
 
     @Test
@@ -47,5 +60,17 @@ public class LoginTests extends TestBase {
         loginPage = loginPage.failedLoginAs("fakeuser@apriori.com", "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
+    }
+
+    @Test
+    @Description("Validate Login Dialog")
+    public void loginDialog() {
+
+        loginPage = new CasLoginPage(driver);
+
+        assertThat(loginPage.getMarketingText(), containsString("COST INSIGHT GENERATE:\n" +
+            "SOLUTION FOR A NEW NORMAL\n" +
+            "Proactively notify your team of manufacturability issues and enable them to optimize their designs faster."));
+        assertThat(loginPage.isLogoDisplayed(), is(true));
     }
 }
