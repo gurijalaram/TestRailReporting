@@ -5,8 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.ComponentsPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
