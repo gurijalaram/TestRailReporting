@@ -65,7 +65,7 @@ PlasticMoulding.CATPart,AutoAPIStockMachiningPlasticMolding,Plastic Molding
 PMI_AllTolTypesCatia.CATPart,AutoAPIStockMachiningPMI_AllTolTypesCatia,Plastic Molding
 PMI_AllTolTypesCatia.CATPart,AutoAPIStockMachiningPMI_AllTolTypesCatia,Stock Machining
 Powder Metal.stp,AutoAPIPowderMetalstp,Powder Metal
-PowderMetalShaft,AutoAPIPowderMetalshaft,Powder Metal
+PowderMetalShaft.stp,AutoAPIPowderMetalshaft,Powder Metal
 prt0001.prt.1,AutoAPIStockMachiningprt0001,Stock Machining
 Push Pin.stp,AutoAPIAdditiveManufacturingPushPin,Additive Manufacturing
 Push Pin.stp,AutoAPIPlasticMouldingPushPin,Plastic Molding
