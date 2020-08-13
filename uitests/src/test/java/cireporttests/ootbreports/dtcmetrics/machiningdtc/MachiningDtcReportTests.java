@@ -22,8 +22,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 
-import java.math.BigDecimal;
-
 public class MachiningDtcReportTests extends TestBase {
 
     private InputControlsTests inputControlsTests;

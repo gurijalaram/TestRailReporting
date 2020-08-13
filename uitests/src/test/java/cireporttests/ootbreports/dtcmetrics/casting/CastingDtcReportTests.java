@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
@@ -21,6 +19,8 @@ import cireporttests.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.pages.explore.ExplorePage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 

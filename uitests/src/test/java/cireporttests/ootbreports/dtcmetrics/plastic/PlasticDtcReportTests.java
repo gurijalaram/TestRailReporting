@@ -6,8 +6,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
@@ -24,6 +22,8 @@ import com.apriori.utils.web.driver.TestBase;
 import cireporttests.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.pages.explore.ExplorePage;
 
 import java.math.BigDecimal;
 
