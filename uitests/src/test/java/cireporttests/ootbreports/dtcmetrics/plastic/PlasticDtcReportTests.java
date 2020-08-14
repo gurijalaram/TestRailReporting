@@ -243,4 +243,28 @@ public class PlasticDtcReportTests extends TestBase {
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "1368")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlFm() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetric(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                "Finish Mass"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1368")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlRm() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetric(
+                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                "Rough Mass"
+        );
+    }
 }

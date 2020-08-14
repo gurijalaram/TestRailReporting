@@ -266,6 +266,10 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "(//*[local-name() = 'tspan'])[6]")
     private WebElement costMetricValueOnBubble;
+
+    @FindBy(xpath = "//div[@id='massMetric']//a")
+    private WebElement massMetricDropdown;
+
     @FindBy(css = "ul[id='resultsList']")
     private WebElement generalReportsList;
 
@@ -374,6 +378,19 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
             costMetricDropdown.click();
             driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", costMetric))).click();
+        }
+        return this;
+    }
+
+    /**
+     * Selects mass metric, if necessary
+     * @param massMetric - String
+     * @return current page object
+     */
+    public GenericReportPage selectMassMetric(String massMetric) {
+        if (!massMetricDropdown.getAttribute("title").equals(massMetric)) {
+            massMetricDropdown.click();
+            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", massMetric))).click();
         }
         return this;
     }
