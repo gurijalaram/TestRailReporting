@@ -331,16 +331,19 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for mass metric input control
-     * @return instance of GenericReportPage
      */
-    public GenericReportPage testMassMetric(String reportName, String exportSet, String massMetric) {
+    public void testMassMetric(String reportName, String exportSet, String massMetric) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSet)
-                .selectMassMetric(massMetric);
+                .selectMassMetric(massMetric)
+                .clickOk();
 
-        return genericReportPage;
+        assertThat(genericReportPage.getMassMetricValueFromAboveChart(), containsString(massMetric));
+        if (!reportName.contains("Comparison") && !reportName.contains("Details")) {
+            assertThat(genericReportPage.getMassMetricValueFromBubble(reportName), containsString(massMetric));
+        }
     }
 }
