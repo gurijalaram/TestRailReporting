@@ -2,6 +2,7 @@ package customeradmin;
 
 import com.apriori.utils.PageUtils;
 
+import newcustomer.CustomerProfilePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -64,5 +65,10 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      */
     public boolean isNewCustomerButtonPresent() {
         return pageUtils.waitForElementToAppear(newCustomerButton).isDisplayed();
+    }
+
+    public CustomerProfilePage createNewCustomer() {
+        pageUtils.waitForElementAndClick(newCustomerButton);
+        return new CustomerProfilePage(driver);
     }
 }
