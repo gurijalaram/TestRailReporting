@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.reports.pages.login;
 
-import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.pageobjects.reports.pages.homepage.ReportsHomePage;
 import com.apriori.utils.PageUtils;
@@ -14,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.pages.login.PrivacyPolicyPage;
 
 public class ReportsLoginPage extends ReportsPageHeader {
 
