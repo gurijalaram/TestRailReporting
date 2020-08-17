@@ -31,7 +31,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
     private WebElement custTypeDropdown;
 
     @FindBy(css = "[aria-label='Search']")
-    private WebElement custSearch;
+    private WebElement custSearchInput;
 
     @FindBy(id = "qa-page-size-dropdown")
     private WebElement pageSizeDropdown;
@@ -67,8 +67,32 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
         return pageUtils.waitForElementToAppear(newCustomerButton).isDisplayed();
     }
 
+    /**
+     * Create a new customer
+     * @return new page object
+     */
     public CustomerProfilePage createNewCustomer() {
         pageUtils.waitForElementAndClick(newCustomerButton);
         return new CustomerProfilePage(driver);
+    }
+
+    /**
+     * Select customer type
+     * @param customerType - customer type
+     * @return current page object
+     */
+    public CustomerAdminPage selectCustomerType(String customerType) {
+        pageUtils.selectDropdownOption(custTypeDropdown, customerType);
+        return this;
+    }
+
+    /**
+     * Search for customer
+     * @param customer - customer details
+     * @return current page object
+     */
+    public CustomerAdminPage searchForCustomer(String customer) {
+        pageUtils.waitForElementToAppear(custSearchInput).sendKeys(customer);
+        return this;
     }
 }
