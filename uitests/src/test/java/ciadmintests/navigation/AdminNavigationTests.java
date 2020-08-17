@@ -12,7 +12,7 @@ import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
-import com.apriori.pageobjects.reports.pages.userguides.CirUserGuidePage;
+import pageobjects.pages.userguides.CirUserGuidePage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;

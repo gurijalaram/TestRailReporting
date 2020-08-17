@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.admin.pages.help;
 
-import com.apriori.pageobjects.reports.header.PageHeader;
+import pageobjects.header.PageHeader;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
