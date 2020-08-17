@@ -4,6 +4,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
 
+import customeradmin.CustomerAdminPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -96,9 +97,9 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(email);
-        pageUtils.waitForElementToAppear(password);
-        pageUtils.waitForElementToAppear(submitLogin);
+        pageUtils.waitForElementAppear(email);
+        pageUtils.waitForElementAppear(password);
+        pageUtils.waitForElementAppear(submitLogin);
     }
 
     /**
@@ -120,9 +121,9 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
      * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
-    public CasLoginPage login(final UserCredentials userCredentials) {
+    public CustomerAdminPage login(final UserCredentials userCredentials) {
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new CasLoginPage(driver);
+        return new CustomerAdminPage(driver);
     }
 
     /**
@@ -224,15 +225,6 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
      */
     public boolean isLogoDisplayed() {
         return aprioriLogo.isDisplayed();
-    }
-
-    /**
-     * Checks the environment title
-     *
-     * @return true/false
-     */
-    public boolean isEnvironmentDisplayed() {
-        return aprioriTitle.isDisplayed();
     }
 
     /**
