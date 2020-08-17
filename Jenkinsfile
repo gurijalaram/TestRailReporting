@@ -9,8 +9,8 @@ def testSuite
 pipeline {
     parameters {
         string(name: 'TARGET_URL', defaultValue: 'https://automation.awsdev.apriori.com/', description: 'What is the target URL for testing?')
-        choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa'], description: 'What is the target environment for testing?')
-        choice(name: 'TEST_TYPE', choices: ['uitests', 'apitests', 'ciconnect'], description: 'What type of test is running?')
+        choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa', 'cas-int', 'cas-qa', 'cid-int', 'cid-qa'], description: 'What is the target environment for testing?')
+        choice(name: 'TEST_TYPE', choices: ['uitests', 'apitests', 'ciconnect', 'cid', 'cas'], description: 'What type of test is running?')
         choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'CIARStagingSmokeTestSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
