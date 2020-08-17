@@ -18,7 +18,7 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
     @FindBy(css = "[alt='aPriori Logo']")
     private WebElement aprioriLogo;
 
-    @FindBy(css = "[class='not-link active btn btn-link']")
+    @FindBy(xpath = "//button[.='Customers']")
     private WebElement customersButton;
 
     @FindBy(xpath = "//button[contains(@class,'btn-secondary')][.='Help']")
