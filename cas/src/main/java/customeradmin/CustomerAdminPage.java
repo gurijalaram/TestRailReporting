@@ -85,7 +85,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      * @return new page object
      */
     public CustomerProfilePage selectCustomer(String customerName) {
-        By customer = By.xpath(String.format("//a[.='%s'", customerName));
+        By customer = By.xpath(String.format("//a[.='%s']", customerName));
         pageUtils.waitForElementAndClick(customer);
         return new CustomerProfilePage(driver);
     }
