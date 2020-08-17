@@ -6,8 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
-import com.apriori.pageobjects.pages.login.HelpPage;
-import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
+import com.apriori.pageobjects.admin.pages.help.HelpPage;
 import com.apriori.pageobjects.reports.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDashboardPage;
 import com.apriori.pageobjects.reports.pages.create.CreateDataSourcePage;
@@ -31,6 +30,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.pages.login.PrivacyPolicyPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class ReportsNavigationTests extends TestBase {
