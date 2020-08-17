@@ -3,6 +3,7 @@ package customeradmin;
 import com.apriori.utils.PageUtils;
 
 import newcustomer.CustomerProfilePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -61,6 +62,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
 
     /**
      * Checks the customers button is present
+     *
      * @return true/false
      */
     public boolean isNewCustomerButtonPresent() {
@@ -69,6 +71,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
 
     /**
      * Create a new customer
+     *
      * @return new page object
      */
     public CustomerProfilePage createNewCustomer() {
@@ -77,7 +80,19 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
     }
 
     /**
+     * Select a customer
+     * @param customerName - customer name
+     * @return new page object
+     */
+    public CustomerProfilePage selectCustomer(String customerName) {
+        By customer = By.xpath(String.format("//a[.='%s'", customerName));
+        pageUtils.waitForElementAndClick(customer);
+        return new CustomerProfilePage(driver);
+    }
+
+    /**
      * Select customer type
+     *
      * @param customerType - customer type
      * @return current page object
      */
@@ -88,6 +103,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
 
     /**
      * Search for customer
+     *
      * @param customer - customer details
      * @return current page object
      */

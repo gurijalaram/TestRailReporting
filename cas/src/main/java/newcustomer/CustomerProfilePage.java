@@ -31,6 +31,9 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     @FindBy(xpath = "//a[.='Security']")
     private WebElement securityTab;
 
+    @FindBy(xpath = "//div[@class='d-flex align-items-center']//button[.='Edit']")
+    private WebElement editButton;
+
     @FindBy(xpath = "//div[@class='d-flex align-items-center']//button[.='Save']")
     private WebElement saveButton;
 
@@ -76,7 +79,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(profileTab);
-        pageUtils.waitForElementAppear(customerNameInput);
+        pageUtils.waitForElementAppear(usersTab);
     }
 
     /**
@@ -145,12 +148,21 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     }
 
     /**
+     * Edit customer info
+     * @return current page object
+     */
+    public CustomerProfilePage edit() {
+        pageUtils.waitForElementAndClick(editButton);
+        return this;
+    }
+
+    /**
      * Cancels customer info
      * @return new page object
      */
-    public CustomerAdminPage cancel() {
+    public <T> T cancel(Class<T> klass) {
         pageUtils.waitForElementAndClick(cancelButton);
-        return new CustomerAdminPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
