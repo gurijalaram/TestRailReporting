@@ -1,11 +1,12 @@
-package com.apriori.pageobjects.admin.header;
+package pageobjects.header;
 
-import com.apriori.pageobjects.admin.pages.homepage.AdminHomePage;
+import pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import pageobjects.pages.userguides.CirUserGuidePage;
+
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -15,7 +16,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
@@ -107,7 +107,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     /**
      * Navigates to Reports System User Guide
      *
-     * @return Home Page Page Object Model (since help is external to system)
+     * @return CIR user guide instance
      */
     public CirUserGuidePage navigateToHelpReportsGuide() {
         return navigateToSubPage(helpButton, reportGuideButton, CirUserGuidePage.class);
@@ -116,7 +116,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     /**
      * Navigates to Admin System User Guide
      *
-     * @return Home Page Page Object Model (since help is external to system)
+     * @return CIA user guide instance
      */
     public CiaUserGuide navigateToHelpAdminGuide() {
         return navigateToSubPage(helpButton, adminGuideButton, CiaUserGuide.class);

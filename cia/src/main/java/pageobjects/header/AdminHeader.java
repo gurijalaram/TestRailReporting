@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.admin.header;
+package pageobjects.header;
 
 import com.apriori.utils.PageUtils;
 

@@ -23,6 +23,9 @@ public class CirUserGuidePage extends ReportsPageHeader {
     @FindBy(css = ".Documentation_Cover_Page_Title")
     private WebElement reportsUserGuideTitle;
 
+    @FindBy(css = "body > h1")
+    private WebElement heading;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -71,5 +74,32 @@ public class CirUserGuidePage extends ReportsPageHeader {
     public String getReportsUserGuidePageHeading() {
         pageUtils.waitForElementToAppear(reportsUserGuideTitle);
         return reportsUserGuideTitle.getAttribute("textContent");
+    }
+
+    /**
+     * Ensures page is loaded before continuing
+     */
+    public CirUserGuidePage ensurePageIsLoaded() {
+        pageUtils.waitForElementToAppear(heading);
+        pageUtils.waitForElementToBeClickable(heading);
+        return this;
+    }
+
+    /**
+     * Gets page heading
+     *
+     * @return - string
+     */
+    public String getPageHeading() {
+        return heading.getText();
+    }
+
+    /**
+     * Gets window url
+     *
+     * @return - string
+     */
+    public String getChildWindowURL() {
+        return pageUtils.getTabTwoUrl();
     }
 }

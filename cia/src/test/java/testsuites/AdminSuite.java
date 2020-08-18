@@ -3,7 +3,7 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import ciadmintests.navigation.AdminNavigationTests;
+import navigation.AdminNavigationTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

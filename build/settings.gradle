@@ -10,6 +10,7 @@ include(':ciconnect')
 include(':cid')
 include(':cir')
 include(':cas')
+include(':cia')
 
 //Utils
 include(':utils')

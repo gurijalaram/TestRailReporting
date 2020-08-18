@@ -1,6 +1,6 @@
-package com.apriori.pageobjects.admin.pages.homepage;
+package pageobjects.pages.homepage;
 
-import com.apriori.pageobjects.admin.header.PageHeader;
+import pageobjects.header.PageHeader;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;

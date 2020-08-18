@@ -1,6 +1,13 @@
 package pageobjects.header;
 
-import com.apriori.pageobjects.admin.pages.help.HelpPage;
+import com.apriori.utils.PageUtils;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pageobjects.pages.create.CreateAdHocViewPage;
 import pageobjects.pages.create.CreateDashboardPage;
 import pageobjects.pages.create.CreateDataSourcePage;
@@ -16,15 +23,6 @@ import pageobjects.pages.view.ViewMessagesPage;
 import pageobjects.pages.view.ViewRepositoryPage;
 import pageobjects.pages.view.ViewSchedulesPage;
 import pageobjects.pages.view.ViewSearchResultsPage;
-import com.apriori.utils.PageUtils;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
@@ -274,9 +272,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return Help Page page object
      */
-    public HelpPage navigateToHelpPage() {
+    public CirUserGuidePage navigateToHelpPage() {
         pageUtils.waitForElementToAppear(adminTitle);
-        HelpPage helpPage = navigateToPage(helpButton, HelpPage.class);
+        CirUserGuidePage helpPage = navigateToPage(helpButton, CirUserGuidePage.class);
         pageUtils.windowHandler(1);
         pageUtils.waitForElementToAppear(jasperLogo);
         return helpPage;
@@ -288,9 +286,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @param iframeId - iframe id attribute
      * @return new HelpPage object
      */
-    public HelpPage switchToIFrameHelpPage(String iframeId) {
+    public CirUserGuidePage switchToIFrameHelpPage(String iframeId) {
         driver.switchTo().frame(iframeId);
-        return new HelpPage(driver);
+        return new CirUserGuidePage(driver);
     }
 
     /**

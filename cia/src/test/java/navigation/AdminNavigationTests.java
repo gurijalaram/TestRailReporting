@@ -1,4 +1,4 @@
-package ciadmintests.navigation;
+package navigation;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -6,8 +6,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.admin.pages.homepage.AdminHomePage;
-import com.apriori.pageobjects.admin.pages.login.AdminLoginPage;
+import pageobjects.pages.homepage.AdminHomePage;
+import pageobjects.pages.login.AdminLoginPage;
 import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;

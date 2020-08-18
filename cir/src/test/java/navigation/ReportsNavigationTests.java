@@ -1,12 +1,11 @@
 package navigation;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.StringStartsWith.startsWith;
-
-import com.apriori.pageobjects.admin.pages.help.HelpPage;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.web.driver.TestBase;
+import io.qameta.allure.Description;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import pageobjects.pages.create.CreateAdHocViewPage;
 import pageobjects.pages.create.CreateDashboardPage;
 import pageobjects.pages.create.CreateDataSourcePage;
@@ -14,6 +13,7 @@ import pageobjects.pages.create.CreateDomainPage;
 import pageobjects.pages.create.CreateReportPage;
 import pageobjects.pages.homepage.ReportsHomePage;
 import pageobjects.pages.library.LibraryPage;
+import pageobjects.pages.login.PrivacyPolicyPage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.logout.LogoutPage;
 import pageobjects.pages.manage.ManageRolesPage;
@@ -23,15 +23,13 @@ import pageobjects.pages.view.ViewMessagesPage;
 import pageobjects.pages.view.ViewRepositoryPage;
 import pageobjects.pages.view.ViewSchedulesPage;
 import pageobjects.pages.view.ViewSearchResultsPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
-import com.apriori.utils.web.driver.TestBase;
-
-import io.qameta.allure.Description;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import pageobjects.pages.login.PrivacyPolicyPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringStartsWith.startsWith;
 
 public class ReportsNavigationTests extends TestBase {
 
@@ -50,7 +48,6 @@ public class ReportsNavigationTests extends TestBase {
     private ManageUsersPage users;
     private LibraryPage library;
     private ReportsHomePage homePage;
-    private HelpPage helpPage;
     private LogoutPage logout;
 
     public ReportsNavigationTests() {
@@ -256,14 +253,14 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to the help page works")
     public void testHelpNavigation() {
         String iframeId = "topic";
-        helpPage = new ReportsLoginPage(driver)
+        cirUserGuide = new ReportsLoginPage(driver)
             .login()
             .navigateToHelpPage()
             .switchToIFrameHelpPage(iframeId)
             .ensurePageIsLoaded();
 
-        assertThat(helpPage.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
-        assertThat(helpPage.getChildWindowURL(), is(startsWith(Constants.REPORTING_HELP_URL)));
-        assertThat(helpPage.getTabCount(), is(2));
+        assertThat(cirUserGuide.getPageHeading(), is(equalTo("Introduction to JasperReports Server")));
+        assertThat(cirUserGuide.getChildWindowURL(), is(startsWith(Constants.REPORTING_HELP_URL)));
+        assertThat(cirUserGuide.getTabCount(), is(2));
     }
 }

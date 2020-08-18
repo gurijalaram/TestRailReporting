@@ -1,7 +1,7 @@
-package com.apriori.pageobjects.admin.pages.login;
+package pageobjects.pages.login;
 
-import com.apriori.pageobjects.admin.header.AdminHeader;
-import com.apriori.pageobjects.admin.pages.homepage.AdminHomePage;
+import pageobjects.header.AdminHeader;
+import pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
