@@ -4,6 +4,7 @@ import com.apriori.utils.PageUtils;
 
 import customeradmin.CustomerAdminPage;
 import customeradmin.NavToolbar;
+import newcustomer.users.ListPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -84,6 +85,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter customer name
+     *
      * @param customerName - customer name
      * @return current page object
      */
@@ -95,6 +97,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter description
+     *
      * @param description - description
      * @return current page object
      */
@@ -106,6 +109,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter customer type
+     *
      * @param customerType - customer type
      * @return current page object
      */
@@ -116,6 +120,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter sales force info
+     *
      * @param salesforceid - sales force id
      * @return current page object
      */
@@ -127,6 +132,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter cloud info
+     *
      * @param cloudref - cloud ref
      * @return current page object
      */
@@ -138,6 +144,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter email domain info
+     *
      * @param emailDomains - email
      * @return current page object
      */
@@ -148,7 +155,38 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     }
 
     /**
+     * Go to users tab
+     *
+     * @return new page object
+     */
+    public ListPage goToUsersList() {
+        pageUtils.waitForElementAndClick(usersTab);
+        return new ListPage(driver);
+    }
+
+    /**
+     * Go to sites and licenses tab
+     *
+     * @return new page object
+     */
+    public SitesLicensesPage goToSitesLicenses() {
+        pageUtils.waitForElementAndClick(siteLicenseTab);
+        return new SitesLicensesPage(driver);
+    }
+
+    /**
+     * Go to infrastructure tab
+     *
+     * @return new page object
+     */
+    public InfrastructurePage goToInfrastructure() {
+        pageUtils.waitForElementAndClick(infraStructTab);
+        return new InfrastructurePage(driver);
+    }
+
+    /**
      * Edit customer info
+     *
      * @return current page object
      */
     public CustomerProfilePage edit() {
@@ -158,6 +196,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Cancels customer info
+     *
      * @return new page object
      */
     public <T> T cancel(Class<T> klass) {
@@ -167,6 +206,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Saves customer info
+     *
      * @return new page object
      */
     public CustomerAdminPage save() {
