@@ -1,15 +1,15 @@
 package cireporttests.ootbreports.dtcmetrics.plastic;
 
+import cireporttests.inputcontrols.InputControlsTests;
+import cireporttests.navigation.ReportAvailabilityTests;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
-
-import cireporttests.inputcontrols.InputControlsTests;
-import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -126,6 +126,32 @@ public class PlasticDtcComparisonReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
+    @TestRail(testCaseId = "1368")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlFinishMass() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetric(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                MassMetricEnum.FINISH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @Category(MsSQLOracleLocalInstallTest.class)
+    @TestRail(testCaseId = "1368")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlRoughMass() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetric(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 }
