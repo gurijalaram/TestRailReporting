@@ -10,6 +10,7 @@ public class NewPartRequest {
     private Integer batchSize;
     private String description;
     private String materialName;
+    private String compType;
     private String pinnedRouting;
     private String processGroup;
     private Double productionLife;
@@ -81,6 +82,15 @@ public class NewPartRequest {
 
     public NewPartRequest setMaterialName(String materialName) {
         this.materialName = materialName;
+        return this;
+    }
+
+    public String getCompType() {
+        return compType;
+    }
+
+    public NewPartRequest setCompType(String compType) {
+        this.compType = compType;
         return this;
     }
 
