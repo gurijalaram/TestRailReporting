@@ -12,9 +12,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ListPage extends LoadableComponent<ListPage> {
+public class UsersListPage extends LoadableComponent<UsersListPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ListPage.class);
+    private final Logger logger = LoggerFactory.getLogger(UsersListPage.class);
 
     @FindBy(css = "a[name='userImport']")
     private WebElement importTab;
@@ -50,7 +50,7 @@ public class ListPage extends LoadableComponent<ListPage> {
     private PageUtils pageUtils;
     private NavToolbar navToolbar;
 
-    public ListPage(WebDriver driver) {
+    public UsersListPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
@@ -101,7 +101,7 @@ public class ListPage extends LoadableComponent<ListPage> {
      * Deactivate user
      * @return current page object
      */
-    public ListPage deactivateUser() {
+    public UsersListPage deactivateUser() {
         pageUtils.waitForElementAndClick(deactivateButton);
         return this;
     }
@@ -110,7 +110,7 @@ public class ListPage extends LoadableComponent<ListPage> {
      * Export user
      * @return current page object
      */
-    public ListPage exportUser() {
+    public UsersListPage exportUser() {
         pageUtils.waitForElementAndClick(exportButton);
         return this;
     }
@@ -120,7 +120,7 @@ public class ListPage extends LoadableComponent<ListPage> {
      * @param userName - user name
      * @return current page object
      */
-    public ListPage selectUser(String userName) {
+    public UsersListPage selectUser(String userName) {
         By user = By.xpath(String.format("//a[.='%s']/ancestor::tr//input", userName));
         pageUtils.waitForElementAndClick(user);
         return this;
@@ -132,7 +132,7 @@ public class ListPage extends LoadableComponent<ListPage> {
      * @param userName - user details
      * @return current page object
      */
-    public ListPage searchForUser(String userName) {
+    public UsersListPage searchForUser(String userName) {
         pageUtils.waitForElementToAppear(custSearchInput).sendKeys(userName);
         return this;
     }

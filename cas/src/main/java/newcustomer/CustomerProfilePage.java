@@ -4,7 +4,7 @@ import com.apriori.utils.PageUtils;
 
 import customeradmin.CustomerAdminPage;
 import customeradmin.NavToolbar;
-import newcustomer.users.ListPage;
+import newcustomer.users.UsersListPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -178,9 +178,9 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      *
      * @return new page object
      */
-    public ListPage goToUsersList() {
+    public UsersListPage goToUsersList() {
         pageUtils.waitForElementAndClick(usersTab);
-        return new ListPage(driver);
+        return new UsersListPage(driver);
     }
 
     /**
