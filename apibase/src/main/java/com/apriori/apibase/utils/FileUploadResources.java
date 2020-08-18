@@ -399,7 +399,7 @@ public class FileUploadResources {
                 .setTypeName(typeName)
                 .setStateName(stateName)
                 .setMasterName(masterName))
-            .setCompType("PART")
+            .setCompType(newPartRequest.getCompType())
             .setInitialized(false)
             .setAvailablePgNames(Arrays.asList(newPartRequest.getAvailablePg()))
 

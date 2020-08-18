@@ -12,7 +12,7 @@ public enum ReportNamesEnum {
     MACHINING_DTC("Machining DTC"),
     MACHINING_DTC_DETAILS("Machining DTC Details"),
     MACHINING_DTC_COMPARISON("Machining DTC Comparison"),
-    PLASTIC_DTC_REPORT("Plastic DTC"),
+    PLASTIC_DTC("Plastic DTC"),
     PLASTIC_DTC_COMPARISON("Plastic DTC Comparison"),
     PLASTIC_DTC_DETAILS("Plastic DTC Details");
 

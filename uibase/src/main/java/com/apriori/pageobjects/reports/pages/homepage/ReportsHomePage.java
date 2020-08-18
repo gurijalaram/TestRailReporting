@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.reports.pages.homepage;
 
-import com.apriori.pageobjects.pages.login.HelpPage;
+import com.apriori.pageobjects.admin.pages.help.HelpPage;
 import com.apriori.pageobjects.reports.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 

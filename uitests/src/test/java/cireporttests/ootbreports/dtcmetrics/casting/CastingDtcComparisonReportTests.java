@@ -4,8 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.reports.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.reports.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
@@ -13,6 +11,7 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -22,6 +21,8 @@ import cireporttests.navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import pageobjects.pages.explore.ExplorePage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
 
@@ -211,6 +212,30 @@ public class CastingDtcComparisonReportTests extends TestBase {
                 ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1696")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlFinishMass() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetric(
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                MassMetricEnum.FINISH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1696")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlRoughMass() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetric(
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 }
