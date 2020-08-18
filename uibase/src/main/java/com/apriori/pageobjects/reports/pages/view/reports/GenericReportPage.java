@@ -45,6 +45,9 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> fbcElementMap = new HashMap<>();
     private String reportName = "";
 
+    @FindBy(xpath = "//div[@id='reportContainer']/table//tr[@style='height:35px']/td[2]/span")
+    private WebElement reportTitle;
+
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name() = 'path']")
     private WebElement castingDtcBubble;
 
@@ -266,6 +269,16 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "(//*[local-name() = 'tspan'])[6]")
     private WebElement costMetricValueOnBubble;
+
+    @FindBy(xpath = "//div[@id='massMetric']//a")
+    private WebElement massMetricDropdown;
+
+    @FindBy(xpath = "//span[contains(text(), 'Mass Metric:')]/../following-sibling::td[2]")
+    private WebElement massMetricElementAboveChart;
+
+    @FindBy(xpath = "(//*[local-name() = 'tspan'])[4]")
+    private WebElement massMetricValueOnBubble;
+
     @FindBy(css = "ul[id='resultsList']")
     private WebElement generalReportsList;
 
@@ -379,6 +392,19 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Selects mass metric, if necessary
+     * @param massMetric - String
+     * @return current page object
+     */
+    public GenericReportPage selectMassMetric(String massMetric) {
+        if (!massMetricDropdown.getAttribute("title").equals(massMetric)) {
+            massMetricDropdown.click();
+            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", massMetric))).click();
+        }
+        return this;
+    }
+
+    /**
      * Gets cost metric value from above chart
      * @return String
      */
@@ -403,6 +429,26 @@ public class GenericReportPage extends ReportsPageHeader {
     public String getCostMetricValueFromBubble() {
         pageUtils.waitForElementToAppear(costMetricValueOnBubble);
         return costMetricValueOnBubble.getAttribute("textContent");
+    }
+
+    /**
+     * Gets mass metric value from above chart
+     * @return String
+     */
+    public String getMassMetricValueFromAboveChart() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return massMetricElementAboveChart.getAttribute("textContent");
+    }
+
+    /**
+     * Gets mass metric value from bubble
+     * @return String
+     */
+    public String getMassMetricValueFromBubble(String reportName) {
+        setReportName(reportName);
+        hoverPartNameBubbleDtcReports();
+        pageUtils.waitForElementToAppear(massMetricValueOnBubble);
+        return massMetricValueOnBubble.getAttribute("textContent");
     }
 
     /**
@@ -436,8 +482,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of Generic Report Page object
      */
     public GenericReportPage clickOk() {
-        pageUtils.waitForElementAndClick(okButton);
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(okButton).click();
+        actions.perform();
+        pageUtils.waitForElementToAppear(reportTitle);
         return this;
     }
 
@@ -953,7 +1001,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
-        if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName())) {
+        if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             elementToUse.click();
         }
         return this;
@@ -1089,7 +1137,7 @@ public class GenericReportPage extends ReportsPageHeader {
         partNameMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), partNameCastingDtcReport);
         partNameMap.put(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), partNameCastingDtcComparisonReport);
         partNameMap.put(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), partNameCastingDtcDetailsReport);
-        partNameMap.put(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), partNamePlasticDtcReport);
+        partNameMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), partNamePlasticDtcReport);
     }
 
     /**
@@ -1098,7 +1146,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseBubbleMap() {
         bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), machiningDtcBubble);
         bubbleMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcBubble);
-        bubbleMap.put(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), plasticDtcBubble);
+        bubbleMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcBubble);
     }
 
     /**
@@ -1107,6 +1155,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseFbcElementMap() {
         fbcElementMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), tooltipFbcElement);
         fbcElementMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), tooltipFbcElement);
-        fbcElementMap.put(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), fbcPlasticDtcReport);
+        fbcElementMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), fbcPlasticDtcReport);
     }
 }

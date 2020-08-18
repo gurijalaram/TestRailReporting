@@ -50,7 +50,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyCostA4() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
@@ -62,7 +62,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyCostLetter() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
@@ -74,7 +74,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyDetails() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
@@ -86,7 +86,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuComponentCost() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
@@ -98,7 +98,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
-    @Description("validate report is available by navigation")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuScenarioComparison() {
         reportAvailabilityTests = new ReportAvailabilityTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(

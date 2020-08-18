@@ -7,5 +7,6 @@
   "availablePg": "2-Model Machining, Additive Manufacturing, Bar & Tube Fab, Casting, Casting - Die, Casting - Sand,  Forging, Plastic Molding, Powder Metal, Rapid Prototyping, Roto & Blow Molding, Sheet Metal,  Sheet Metal - Hydroforming, Sheet Metal - Stretch Forming, Sheet Metal - Transfer Die,  Sheet Plastic, Stock Machining, User Guided",
   "currencyCode": "USD",
   "materialMode": "CAD",
-  "machiningMode": "MAY_BE_MACHINED"
+  "machiningMode": "MAY_BE_MACHINED",
+  "compType": "PART"
 }

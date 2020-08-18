@@ -328,4 +328,22 @@ public class InputControlsTests extends TestBase {
         assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("\n%s", costMetric))));
         return genericReportPage;
     }
+
+    /**
+     * Generic test for mass metric input control
+     */
+    public void testMassMetric(String reportName, String exportSet, String massMetric) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet)
+                .selectMassMetric(massMetric)
+                .clickOk();
+
+        assertThat(genericReportPage.getMassMetricValueFromAboveChart(), containsString(massMetric));
+        if (!reportName.contains("Comparison") && !reportName.contains("Details")) {
+            assertThat(genericReportPage.getMassMetricValueFromBubble(reportName), containsString(massMetric));
+        }
+    }
 }
