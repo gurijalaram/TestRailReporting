@@ -3,6 +3,7 @@ package newcustomer.users;
 import com.apriori.utils.PageUtils;
 
 import customeradmin.NavToolbar;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +18,9 @@ public class ImportPage extends LoadableComponent<ImportPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ImportPage.class);
 
+    @FindBy(id = "batch-upload")
+    private WebElement uploadCard;
+
     @FindBy(css = "input[type='file']")
     private WebElement fileInput;
 
@@ -25,6 +29,9 @@ public class ImportPage extends LoadableComponent<ImportPage> {
 
     @FindBy(xpath = "//button[.='Refresh']")
     private WebElement refreshButton;
+
+    @FindBy(css = "div[class='pl-2'] [aria-label='Search']")
+    private WebElement userNameSearch;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -46,6 +53,7 @@ public class ImportPage extends LoadableComponent<ImportPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(uploadCard);
         pageUtils.waitForElementAppear(loadButton);
     }
 
@@ -57,6 +65,19 @@ public class ImportPage extends LoadableComponent<ImportPage> {
      */
     public ImportPage importFile(File filePath) {
         fileInput.sendKeys(filePath.getAbsolutePath());
+        By card = By.xpath(String.format("//div[@class='card-header']//span[.='%s']", filePath.getName()));
+        pageUtils.waitForElementToAppear(card);
+        return this;
+    }
+
+    /**
+     * Search for user
+     *
+     * @param userName - user details
+     * @return current page object
+     */
+    public ImportPage searchForUser(String userName) {
+        pageUtils.waitForElementToAppear(userNameSearch).sendKeys(userName);
         return this;
     }
 }

@@ -43,8 +43,8 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
     @FindBy(xpath = "//a[.='Export']")
     private WebElement exportButton;
 
-    @FindBy(css = "[aria-label='Search']")
-    private WebElement custSearchInput;
+    @FindBy(css = "div[class='m-0'] [aria-label='Search']")
+    private WebElement userNameSearch;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -133,7 +133,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return current page object
      */
     public UsersListPage searchForUser(String userName) {
-        pageUtils.waitForElementToAppear(custSearchInput).sendKeys(userName);
+        pageUtils.waitForElementToAppear(userNameSearch).sendKeys(userName);
         return this;
     }
 }
