@@ -26,6 +26,9 @@ public class CirUserGuidePage extends ReportsPageHeader {
     @FindBy(css = "body > h1")
     private WebElement heading;
 
+    @FindBy(css = "body")
+    private WebElement pageBody;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -101,5 +104,33 @@ public class CirUserGuidePage extends ReportsPageHeader {
      */
     public String getChildWindowURL() {
         return pageUtils.getTabTwoUrl();
+    }
+
+    /**
+     * Switches to iframe within a page by its "id" value
+     *
+     * @param iframeId - iframe id attribute
+     * @return new CirUserGuide page object
+     */
+    public CirUserGuidePage switchToIFrameUserGuide(String iframeId) throws Exception {
+        pageUtils.waitForElementToAppear(pageTitle);
+
+        if (pageBody.getAttribute("className").startsWith("error404")) {
+            throw new Exception("Link broken. Wrong page was opened - iframe wasn't found as a result");
+        } else {
+            driver.switchTo().frame(iframeId);
+        }
+
+        return new CirUserGuidePage(driver);
+    }
+
+    /**
+     * Switches tab using window handler
+     *
+     * @return new CirUserGuide page object
+     */
+    public CirUserGuidePage switchTab() {
+        pageUtils.windowHandler(1);
+        return new CirUserGuidePage(driver);
     }
 }

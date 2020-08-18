@@ -2,4 +2,5 @@ dependencies {
     implementation project(':utils')
     implementation project(':apibase')
     implementation project(':cid')
+    implementation project(':cia')
 }

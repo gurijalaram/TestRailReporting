@@ -1,14 +1,9 @@
 package pageobjects.header;
 
-import pageobjects.pages.homepage.AdminHomePage;
-import com.apriori.pageobjects.admin.pages.logout.Logout;
 import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
-import pageobjects.pages.userguides.CirUserGuidePage;
-
 import com.apriori.utils.PageUtils;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +11,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.pages.homepage.AdminHomePage;
+import pageobjects.pages.logout.Logout;
+import pageobjects.pages.userguides.CirUserGuidePage;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 

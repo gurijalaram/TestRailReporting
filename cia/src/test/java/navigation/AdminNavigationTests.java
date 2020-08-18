@@ -1,27 +1,26 @@
 package navigation;
 
+import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
+import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
+import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.web.driver.TestBase;
+import io.qameta.allure.Description;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import pageobjects.pages.homepage.AdminHomePage;
+import pageobjects.pages.login.AdminLoginPage;
+import pageobjects.pages.logout.Logout;
+import pageobjects.pages.userguides.CirUserGuidePage;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CustomerSmokeTests;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import pageobjects.pages.homepage.AdminHomePage;
-import pageobjects.pages.login.AdminLoginPage;
-import com.apriori.pageobjects.admin.pages.logout.Logout;
-import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
-import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
-import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
-import pageobjects.pages.userguides.CirUserGuidePage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
-import com.apriori.utils.web.driver.TestBase;
-
-import io.qameta.allure.Description;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class AdminNavigationTests extends TestBase {
 

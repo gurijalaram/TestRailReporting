@@ -1,6 +1,5 @@
 package pageobjects.pages.homepage;
 
-import com.apriori.pageobjects.admin.pages.help.HelpPage;
 import pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 
@@ -16,7 +15,6 @@ public class ReportsHomePage extends ReportsPageHeader {
     private final Logger logger = LoggerFactory.getLogger(ReportsHomePage.class);
 
     private PageUtils pageUtils;
-    private HelpPage helpPage;
     private WebDriver driver;
 
     public ReportsHomePage(WebDriver driver) {
