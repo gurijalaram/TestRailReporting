@@ -84,12 +84,31 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     }
 
     /**
+     * Form fill customer details
+     *
+     * @param customerName - customer name
+     * @param description  - description
+     * @param customerType - customer type
+     * @param salesforceid - salesforce id
+     * @param emailDomains - email domains
+     * @return current page object
+     */
+    public CustomerProfilePage formFillNewCustomerDetails(String customerName, String description, String customerType, String salesforceid, String emailDomains) {
+        enterCustomerName(customerName)
+            .enterDescription(description)
+            .selectCustomerType(customerType)
+            .enterSalesforceId(salesforceid)
+            .enterEmailDomains(emailDomains);
+        return this;
+    }
+
+    /**
      * Enter customer name
      *
      * @param customerName - customer name
      * @return current page object
      */
-    public CustomerProfilePage enterCustomerName(String customerName) {
+    private CustomerProfilePage enterCustomerName(String customerName) {
         pageUtils.waitForElementToAppear(customerNameInput).clear();
         customerNameInput.sendKeys(customerName);
         return this;
@@ -101,7 +120,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @param description - description
      * @return current page object
      */
-    public CustomerProfilePage enterDescription(String description) {
+    private CustomerProfilePage enterDescription(String description) {
         pageUtils.waitForElementToAppear(descriptionInput).clear();
         descriptionInput.sendKeys(description);
         return this;
@@ -113,7 +132,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @param customerType - customer type
      * @return current page object
      */
-    public CustomerProfilePage selectCustomerType(String customerType) {
+    private CustomerProfilePage selectCustomerType(String customerType) {
         pageUtils.selectDropdownOption(customerTypeDropdown, customerType);
         return this;
     }
@@ -124,7 +143,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @param salesforceid - sales force id
      * @return current page object
      */
-    public CustomerProfilePage enterSalesforceId(String salesforceid) {
+    private CustomerProfilePage enterSalesforceId(String salesforceid) {
         pageUtils.waitForElementToAppear(salesforceInput).clear();
         salesforceInput.sendKeys(salesforceid);
         return this;
@@ -148,7 +167,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @param emailDomains - email
      * @return current page object
      */
-    public CustomerProfilePage enterEmailDomains(String emailDomains) {
+    private CustomerProfilePage enterEmailDomains(String emailDomains) {
         pageUtils.waitForElementToAppear(emailDomInput).clear();
         emailDomInput.sendKeys(emailDomains);
         return this;
