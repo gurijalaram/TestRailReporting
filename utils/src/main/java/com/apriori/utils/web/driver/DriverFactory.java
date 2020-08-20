@@ -133,6 +133,7 @@ public class DriverFactory {
                 dc.setCapability(FirefoxDriver.PROFILE, fp);
                 dc.merge(DesiredCapabilities.firefox());
 
+                logger_DriverFactory.info(new FirefoxDriver().getCapabilities().toString());
                 result = new FirefoxDriver(dc);
                 break;
             case "iexplorer11":
@@ -150,10 +151,12 @@ public class DriverFactory {
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
+                logger_DriverFactory.info(new ChromeDriver().getCapabilities().toString());
                 result = new ChromeDriver(dc);
                 break;
             case "edge":
                 WebDriverManager.edgedriver().setup();
+                logger_DriverFactory.info(new EdgeDriver().getCapabilities().toString());
                 result = new EdgeDriver(dc);
         }
         return result;
@@ -198,6 +201,7 @@ public class DriverFactory {
                 FirefoxProfile fp = new FirefoxProfile();
                 dc.setCapability(FirefoxDriver.PROFILE, fp);
                 dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
+                logger_DriverFactory.info(new FirefoxDriver().getCapabilities().toString());
                 result = new RemoteWebDriver(new URL(server), dc);
                 break;
             case "iexplorer11":
@@ -213,6 +217,7 @@ public class DriverFactory {
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
+                logger_DriverFactory.info(new ChromeDriver().getCapabilities().toString());
                 result = new RemoteWebDriver(new URL(server), dc);
                 break;
             default:
