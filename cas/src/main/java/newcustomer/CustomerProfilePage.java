@@ -103,6 +103,21 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     }
 
     /**
+     * Form fill customer details
+     *
+     * @param customerName - customer name
+     * @param salesforceid - salesforce id
+     * @param emailDomains - email domains
+     * @return current page object
+     */
+    public CustomerProfilePage formFillNewCustomerDetails(String customerName, String salesforceid, String emailDomains) {
+        enterCustomerName(customerName)
+            .enterSalesforceId(salesforceid)
+            .enterEmailDomains(emailDomains);
+        return this;
+    }
+
+    /**
      * Enter customer name
      *
      * @param customerName - customer name

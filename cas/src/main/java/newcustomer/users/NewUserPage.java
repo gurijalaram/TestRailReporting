@@ -101,7 +101,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @param timezone - time zone
      * @return current page object
      */
-    public NewUserPage formFillMandatoryUserDetails(String userName, String email, String givenName, String familyName, String jobTitle, String countryCode, String timezone) {
+    public NewUserPage formFillNewUserDetails(String userName, String email, String givenName, String familyName, String jobTitle, String countryCode, String timezone) {
         inputUserName(userName)
             .inputEmail(email)
             .inputGivenName(givenName)
@@ -129,7 +129,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @param timezone - time zone
      * @return current page object
      */
-    public NewUserPage formFillAllUserDetails(String userName, String email, String givenName, String familyName, String namePrefix, String nameSuffix, String jobTitle, String department,
+    public NewUserPage formFillNewUserDetails(String userName, String email, String givenName, String familyName, String namePrefix, String nameSuffix, String jobTitle, String department,
                                               String townCity, String stateProv, String county, String countryCode, String timezone) {
         inputUserName(userName)
             .inputEmail(email)
