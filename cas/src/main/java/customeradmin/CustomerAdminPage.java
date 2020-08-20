@@ -111,4 +111,12 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
         pageUtils.waitForElementToAppear(custSearchInput).sendKeys(customer);
         return this;
     }
+
+    /**
+     * Get customer count
+     * @return string
+     */
+    public String getCustomerCount() {
+        return pageUtils.waitForElementToAppear(customerCount).getText();
+    }
 }
