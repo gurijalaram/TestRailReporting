@@ -71,6 +71,17 @@ public class ImportPage extends LoadableComponent<ImportPage> {
     }
 
     /**
+     * Select card
+     * @param fileName - file name
+     * @return current page object
+     */
+    public ImportPage selectCard(String fileName) {
+        By card = By.xpath(String.format("//div[@class='card-header']//span[.='%s']", fileName));
+        pageUtils.waitForElementAndClick(card);
+        return this;
+    }
+
+    /**
      * Search for user
      *
      * @param userName - user details
@@ -78,6 +89,24 @@ public class ImportPage extends LoadableComponent<ImportPage> {
      */
     public ImportPage searchForUser(String userName) {
         pageUtils.waitForElementToAppear(userNameSearch).sendKeys(userName);
+        return this;
+    }
+
+    /**
+     * Load license
+     * @return - current page object
+     */
+    public ImportPage loadLicense() {
+        pageUtils.waitForElementAndClick(loadButton);
+        return this;
+    }
+
+    /**
+     * Refresh list
+     * @return - current page object
+     */
+    public ImportPage refreshList() {
+        pageUtils.waitForElementAndClick(refreshButton);
         return this;
     }
 }
