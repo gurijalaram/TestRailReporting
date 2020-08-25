@@ -218,6 +218,7 @@ public class DriverFactory {
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + (result).getCapabilities().toString());
                 break;
             default:
                 throw new InvalidParameterException("Unexpected browser type: " + browser);
