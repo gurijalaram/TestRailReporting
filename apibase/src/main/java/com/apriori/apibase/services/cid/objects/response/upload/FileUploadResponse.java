@@ -4,7 +4,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "FileUploadSchema.json")
+@Schema(location = "FileUploadResponse.json")
 public class FileUploadResponse {
 
     @JsonProperty

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "command"
 })
 
-@Schema(location = "CreateCostWorkOrderSchema.json")
+@Schema(location = "CreateCostWorkOrderResponse.json")
 public class CostOrderCommand {
 
     @JsonProperty("command")
