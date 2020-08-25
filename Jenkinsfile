@@ -20,7 +20,7 @@ pipeline {
     }
 
     agent {
-        label "loki"
+        label "automation"
     }
 
     stages {
