@@ -222,8 +222,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .closePanel();
 
-        evaluatePage = new EvaluatePage(driver);
-        routingsPage = evaluatePage.costScenario()
+        routingsPage = new EvaluatePage(driver).costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
 
@@ -259,7 +258,6 @@ public class ProcessRoutingTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
         assertThat(evaluatePage.isFailedIconPresent(), is(true));
 
-        evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Costing Failed", "Additive Manufacturing/Surface Treatment is infeasible", "Component:1");
@@ -285,7 +283,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(1.56, 1)));
 
-        new EvaluatePage(driver).openProcessDetails()
+        evaluatePage.openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("[CTL]/Waterjet/[Bend]")
             .apply()
@@ -364,7 +362,6 @@ public class ProcessRoutingTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Printing / Breakoff"));
 
-        evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("Powder Bed Fusion / Direct Metal Laser Sintering")
@@ -494,15 +491,15 @@ public class ProcessRoutingTests extends TestBase {
             .openGeometryTab()
             .selectGCDAndGCDProperty("Holes", "Simple Holes", "SimpleHole:1");
 
-        evaluatePage = new EvaluatePage(driver);
-        propertiesDialogPage = evaluatePage.selectAnalysis()
+        propertiesDialogPage = new EvaluatePage(driver).selectAnalysis()
             .selectProperties()
             .expandDropdown("Technique");
         assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Punching"));
-        new EvaluatePage(driver).selectAnalysis()
-            .closeProperties();
 
         evaluatePage = new EvaluatePage(driver);
+        evaluatePage.selectAnalysis()
+            .closeProperties();
+
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("[CTL]/Waterjet/[Bend]")
@@ -513,7 +510,6 @@ public class ProcessRoutingTests extends TestBase {
             .openGeometryTab()
             .selectGCDAndGCDProperty("Holes", "Simple Holes", "SimpleHole:1");
 
-        evaluatePage = new EvaluatePage(driver);
         propertiesDialogPage = evaluatePage.selectAnalysis()
             .selectProperties()
             .expandDropdown("Technique");
