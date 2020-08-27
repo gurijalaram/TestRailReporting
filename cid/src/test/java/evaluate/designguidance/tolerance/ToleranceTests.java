@@ -54,7 +54,6 @@ public class ToleranceTests extends TestBase {
     private ExplorePage explorePage;
 
     private File resourceFile;
-    private CidLoginPage cidLoginPage;
 
     public ToleranceTests() {
         super();
