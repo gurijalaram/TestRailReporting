@@ -496,6 +496,7 @@ public class ProcessRoutingTests extends TestBase {
             .expandDropdown("Technique");
         assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Punching"));
 
+        evaluatePage = new EvaluatePage(driver);
         evaluatePage.selectAnalysis()
             .closeProperties();
 
