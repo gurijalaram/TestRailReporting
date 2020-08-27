@@ -222,7 +222,7 @@ public class ProcessRoutingTests extends TestBase {
             .apply()
             .closePanel();
 
-        routingsPage = evaluatePage.costScenario()
+        routingsPage = new EvaluatePage(driver).costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
 
@@ -491,7 +491,7 @@ public class ProcessRoutingTests extends TestBase {
             .openGeometryTab()
             .selectGCDAndGCDProperty("Holes", "Simple Holes", "SimpleHole:1");
 
-        propertiesDialogPage = evaluatePage.selectAnalysis()
+        propertiesDialogPage = new EvaluatePage(driver).selectAnalysis()
             .selectProperties()
             .expandDropdown("Technique");
         assertThat(propertiesDialogPage.getProperties("Selected"), containsString("Punching"));
@@ -499,7 +499,6 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage.selectAnalysis()
             .closeProperties();
 
-        evaluatePage = new EvaluatePage(driver);
         evaluatePage.openProcessDetails()
             .selectRoutingsButton()
             .selectRouting("[CTL]/Waterjet/[Bend]")
