@@ -30,7 +30,6 @@ import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.CidLoginPage;
 import pageobjects.pages.settings.SettingsPage;
 import pageobjects.pages.settings.ToleranceSettingsPage;
-import pageobjects.toolbars.EvaluatePanelToolbar;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -46,7 +45,6 @@ public class SecondaryProcessTests extends TestBase {
     private ProcessRoutingPage processRoutingPage;
     private ProcessSetupOptionsPage processSetupOptionsPage;
     private UserCredentials currentUser;
-    private EvaluatePanelToolbar evaluatePanelToolbar;
 
     private File resourceFile;
 
@@ -81,12 +79,10 @@ public class SecondaryProcessTests extends TestBase {
             .selectOverrideButton()
             .setPartThickness("0.21");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        evaluatePage = secondaryProcessPage.apply()
+        evaluatePage = new SecondaryProcessPage(driver).apply()
             .costScenario();
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Hydrostatic Leak Testing"));
 
-        evaluatePage = new EvaluatePage(driver);
         processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Hydrostatic Leak Testing")
             .selectOptions();
@@ -113,7 +109,7 @@ public class SecondaryProcessTests extends TestBase {
             .apply();
         assertThat(evaluatePage.getSecondaryProcesses(), is("0 Selected"));
 
-        new EvaluatePage(driver).openSecondaryProcess()
+        evaluatePage.openSecondaryProcess()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .apply()
             .costScenario();
@@ -179,8 +175,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden")
             .setMaskedFeaturesInput("2");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden");
@@ -210,12 +205,10 @@ public class SecondaryProcessTests extends TestBase {
             .selectNumMaskedFeaturesButton()
             .setMaskedFeaturesInput("1");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        evaluatePage = secondaryProcessPage.apply()
+        evaluatePage = new SecondaryProcessPage(driver).apply()
             .costScenario();
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Standard Anneal"));
 
-        evaluatePage = new EvaluatePage(driver);
         processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Standard Anneal")
             .selectOptions();
@@ -374,7 +367,6 @@ public class SecondaryProcessTests extends TestBase {
             .setSpecifyPainted("414")
             .setSpecifiedInput("2");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
         processSetupOptionsPage = secondaryProcessPage.apply()
             .costScenario()
             .openProcessDetails()
@@ -413,8 +405,7 @@ public class SecondaryProcessTests extends TestBase {
             .setSpecifyPainted("254")
             .setComponentsPerLoad("1");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openProcessDetails()
             .selectProcessChart("Wet Coat Line")
@@ -558,7 +549,6 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride")
             .setMaskedFeaturesInput("1");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
         processSetupOptionsPage = secondaryProcessPage.apply()
             .costScenario()
             .openSecondaryProcess()
@@ -588,8 +578,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden")
             .setMaskedFeaturesInput("2");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden");
@@ -618,8 +607,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper")
             .setMaskedFeaturesInput("1");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper");
@@ -645,8 +633,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden")
             .setMaskedFeaturesInput("3");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden");
@@ -672,8 +659,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden")
             .setMaskedFeaturesInput("1");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden");
@@ -699,8 +685,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden")
             .setMaskedFeaturesInput("3");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden");
@@ -726,8 +711,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal")
             .setMaskedFeaturesInput("4");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal");
@@ -754,8 +738,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal")
             .setMaskedFeaturesInput("2");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal");
@@ -781,8 +764,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper")
             .setMaskedFeaturesInput("1");
 
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper");
