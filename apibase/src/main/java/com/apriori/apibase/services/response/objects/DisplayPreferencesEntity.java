@@ -4,7 +4,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "DisplayPreferencesSchema.json")
+@Schema(location = "DisplayPreferencesResponse.json")
 public class DisplayPreferencesEntity {
 
     @JsonProperty
