@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@Schema(location = "SubmitWorkOredrResponseSchema.json")
+@Schema(location = "SubmitWorkOrderResponseSchema.json")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SubmitWorkOrder {
 

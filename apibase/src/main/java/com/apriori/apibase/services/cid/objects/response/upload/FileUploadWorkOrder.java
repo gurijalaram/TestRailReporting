@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "dateCompleted"
 })
 
-@Schema(location = "FileUploadWorkOrderSchema.json")
+@Schema(location = "FileUploadWorkOrderResponse.json")
 public class FileUploadWorkOrder {
 
     @JsonProperty("version")
