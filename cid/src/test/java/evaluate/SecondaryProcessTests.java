@@ -367,7 +367,7 @@ public class SecondaryProcessTests extends TestBase {
             .setSpecifyPainted("414")
             .setSpecifiedInput("2");
 
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openProcessDetails()
             .selectProcessChart("Powder Coat Cart")
@@ -549,7 +549,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride")
             .setMaskedFeaturesInput("1");
 
-        processSetupOptionsPage = secondaryProcessPage.apply()
+        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
             .costScenario()
             .openSecondaryProcess()
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride");
