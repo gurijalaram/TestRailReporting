@@ -142,7 +142,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      */
     public String[] getReportNamesValues() {
         return new String[] {
-                ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(),
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
                 ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
                 ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
         };
@@ -199,7 +199,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         folderElementMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), machiningDtcFolder);
         folderElementMap.put(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), machiningDtcFolder);
         folderElementMap.put(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), machiningDtcFolder);
-        folderElementMap.put(ReportNamesEnum.PLASTIC_DTC_REPORT.getReportName(), plasticDtcFolder);
+        folderElementMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcFolder);
         folderElementMap.put(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), plasticDtcFolder);
         folderElementMap.put(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), plasticDtcFolder);
 

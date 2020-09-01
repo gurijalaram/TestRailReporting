@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "dateCompleted"
 })
 
-@Schema(location = "cid/PublishWorkOrderResultSchema.json")
+@Schema(location = "cid/PublishWorkOrderResultResponse.json")
 public class PublishWorkOrderInfoResult {
 
     @JsonProperty("version")

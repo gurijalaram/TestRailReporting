@@ -4,6 +4,7 @@ import com.apriori.utils.PageUtils;
 
 import customeradmin.CustomerAdminPage;
 import customeradmin.NavToolbar;
+import newcustomer.users.UsersListPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -83,11 +84,46 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     }
 
     /**
+     * Form fill customer details
+     *
+     * @param customerName - customer name
+     * @param description  - description
+     * @param customerType - customer type
+     * @param salesforceid - salesforce id
+     * @param emailDomains - email domains
+     * @return current page object
+     */
+    public CustomerProfilePage formFillNewCustomerDetails(String customerName, String description, String customerType, String salesforceid, String emailDomains) {
+        enterCustomerName(customerName)
+            .enterDescription(description)
+            .selectCustomerType(customerType)
+            .enterSalesforceId(salesforceid)
+            .enterEmailDomains(emailDomains);
+        return this;
+    }
+
+    /**
+     * Form fill customer details
+     *
+     * @param customerName - customer name
+     * @param salesforceid - salesforce id
+     * @param emailDomains - email domains
+     * @return current page object
+     */
+    public CustomerProfilePage formFillNewCustomerDetails(String customerName, String salesforceid, String emailDomains) {
+        enterCustomerName(customerName)
+            .enterSalesforceId(salesforceid)
+            .enterEmailDomains(emailDomains);
+        return this;
+    }
+
+    /**
      * Enter customer name
+     *
      * @param customerName - customer name
      * @return current page object
      */
-    public CustomerProfilePage enterCustomerName(String customerName) {
+    private CustomerProfilePage enterCustomerName(String customerName) {
         pageUtils.waitForElementToAppear(customerNameInput).clear();
         customerNameInput.sendKeys(customerName);
         return this;
@@ -95,10 +131,11 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter description
+     *
      * @param description - description
      * @return current page object
      */
-    public CustomerProfilePage enterDescription(String description) {
+    private CustomerProfilePage enterDescription(String description) {
         pageUtils.waitForElementToAppear(descriptionInput).clear();
         descriptionInput.sendKeys(description);
         return this;
@@ -106,20 +143,22 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter customer type
+     *
      * @param customerType - customer type
      * @return current page object
      */
-    public CustomerProfilePage selectCustomerType(String customerType) {
+    private CustomerProfilePage selectCustomerType(String customerType) {
         pageUtils.selectDropdownOption(customerTypeDropdown, customerType);
         return this;
     }
 
     /**
      * Enter sales force info
+     *
      * @param salesforceid - sales force id
      * @return current page object
      */
-    public CustomerProfilePage enterSalesforceId(String salesforceid) {
+    private CustomerProfilePage enterSalesforceId(String salesforceid) {
         pageUtils.waitForElementToAppear(salesforceInput).clear();
         salesforceInput.sendKeys(salesforceid);
         return this;
@@ -127,6 +166,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter cloud info
+     *
      * @param cloudref - cloud ref
      * @return current page object
      */
@@ -138,17 +178,49 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Enter email domain info
+     *
      * @param emailDomains - email
      * @return current page object
      */
-    public CustomerProfilePage enterEmailDomains(String emailDomains) {
+    private CustomerProfilePage enterEmailDomains(String emailDomains) {
         pageUtils.waitForElementToAppear(emailDomInput).clear();
         emailDomInput.sendKeys(emailDomains);
         return this;
     }
 
     /**
+     * Go to users tab
+     *
+     * @return new page object
+     */
+    public UsersListPage goToUsersList() {
+        pageUtils.waitForElementAndClick(usersTab);
+        return new UsersListPage(driver);
+    }
+
+    /**
+     * Go to sites and licenses tab
+     *
+     * @return new page object
+     */
+    public SitesLicensesPage goToSitesLicenses() {
+        pageUtils.waitForElementAndClick(siteLicenseTab);
+        return new SitesLicensesPage(driver);
+    }
+
+    /**
+     * Go to infrastructure tab
+     *
+     * @return new page object
+     */
+    public InfrastructurePage goToInfrastructure() {
+        pageUtils.waitForElementAndClick(infraStructTab);
+        return new InfrastructurePage(driver);
+    }
+
+    /**
      * Edit customer info
+     *
      * @return current page object
      */
     public CustomerProfilePage edit() {
@@ -158,6 +230,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Cancels customer info
+     *
      * @return new page object
      */
     public <T> T cancel(Class<T> klass) {
@@ -167,6 +240,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
 
     /**
      * Saves customer info
+     *
      * @return new page object
      */
     public CustomerAdminPage save() {

@@ -233,7 +233,7 @@ public class EvaluatePage extends EvaluateHeader {
         pageUtils.waitForElementAppear(viewerCanvas);
         pageUtils.waitForElementAppear(controlToolbars);
         pageUtils.waitForElementAndClick(renderButton);
-        pageUtils.waitForElementToAppear(renderSelectedButton);
+        pageUtils.waitForElementAppear(renderSelectedButton);
     }
 
     /**

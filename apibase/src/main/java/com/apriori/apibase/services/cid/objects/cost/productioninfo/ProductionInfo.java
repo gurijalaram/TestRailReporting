@@ -39,7 +39,7 @@ import java.util.List;
     "compositesFileName"
 })
 
-@Schema(location = "ProductionCostSchema.json")
+@Schema(location = "ProductionCostResponse.json")
 public class ProductionInfo {
 
     @JsonProperty("scenarioKey")

@@ -23,7 +23,7 @@ import java.util.Map;
     "dateStarted"
 })
 
-@Schema(location = "cid/PublishWorkOrderStatusSchema.json")
+@Schema(location = "cid/PublishWorkOrderStatusResponse.json")
 public class PublishStatusInfo {
 
     @JsonProperty("version")

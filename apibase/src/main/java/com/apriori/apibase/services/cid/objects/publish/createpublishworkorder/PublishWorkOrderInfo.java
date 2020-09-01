@@ -17,7 +17,7 @@ import java.util.Map;
     "command"
 })
 
-@Schema(location = "cid/CreatePublishWorkOrderSchema.json")
+@Schema(location = "cid/CreatePublishWorkOrderResponse.json")
 public class PublishWorkOrderInfo {
 
     @JsonProperty("command")
