@@ -201,7 +201,7 @@ public class ProcessRoutingTests extends TestBase {
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1665", "1666"})
     @Description("Validate the information updates in the routing modal box")
-    public void testlastRouting() {
+    public void testLastRouting() {
 
         resourceFile = FileResourceUtil.getResourceAsFile("CastedPart.CATPart");
 
@@ -220,9 +220,8 @@ public class ProcessRoutingTests extends TestBase {
 
         routingsPage.selectRouting("Sand Casting")
             .apply()
-            .closePanel();
-
-        routingsPage = new EvaluatePage(driver).costScenario()
+            .closePanel()
+            .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
 
