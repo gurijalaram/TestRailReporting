@@ -84,7 +84,6 @@ public class DTCCastingTests extends TestBase {
         assertThat(evaluatePage.isDFMRiskIcon("dtc-critical-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
 
-        evaluatePage = new EvaluatePage(driver);
         guidancePage = evaluatePage.openDesignGuidance()
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:18");

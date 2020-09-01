@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "masterName"
 })
 
-@Schema(location = "FileCostWorkOrderSchema.json")
+@Schema(location = "FileCostWorkOrderResponse.json")
 public class ProductionInfoScenario {
 
     @JsonProperty("typeName")

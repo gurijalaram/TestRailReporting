@@ -85,24 +85,20 @@ public class MaterialStockTests extends TestBase {
             .costScenario();
         assertThat(evaluatePage.getPartCost(), is(closeTo(17.4, 1)));
 
-        evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
             .goToStockTab();
         assertThat(stockPage.checkTableDetails("Auto"), is(true));
         assertThat(stockPage.checkTableDetails("6.45"), is(true));
 
-        stockPage = new StockPage(driver);
         stockPage.editStock()
             .selectStock("4.00  mm x 1500 mm x 3000 mm")
             .apply();
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
 
-        evaluatePanelToolbar = new EvaluatePanelToolbar(driver);
-        evaluatePage = evaluatePanelToolbar.closePanel()
+        evaluatePage = stockPage.closePanel()
             .costScenario();
         assertThat(evaluatePage.getPartCost(), is(closeTo(17.87, 1)));
 
-        evaluatePage = new EvaluatePage(driver);
         stockPage = evaluatePage.openMaterialUtilization()
             .goToStockTab();
 

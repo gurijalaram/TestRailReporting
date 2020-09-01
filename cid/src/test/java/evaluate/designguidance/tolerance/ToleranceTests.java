@@ -54,7 +54,6 @@ public class ToleranceTests extends TestBase {
     private ExplorePage explorePage;
 
     private File resourceFile;
-    private CidLoginPage cidLoginPage;
 
     public ToleranceTests() {
         super();
@@ -94,7 +93,7 @@ public class ToleranceTests extends TestBase {
         assertThat(evaluatePage.isDFMRiskIcon("dtc-critical-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
 
-        toleranceEditPage = new EvaluatePage(driver).openDesignGuidance()
+        toleranceEditPage = evaluatePage.openDesignGuidance()
             .openTolerancesTab()
             .selectToleranceType(ToleranceEnum.PROFILESURFACE.getToleranceName())
             .selectGcd("PlanarFace:74")
@@ -285,7 +284,6 @@ public class ToleranceTests extends TestBase {
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
-        evaluatePage = new EvaluatePage(driver);
         tolerancePage = evaluatePage.openDesignGuidance()
             .openTolerancesTab();
 
@@ -685,13 +683,12 @@ public class ToleranceTests extends TestBase {
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
-        new EvaluatePage(driver).publishScenario(PublishPage.class)
+        loginPage = evaluatePage.publishScenario(PublishPage.class)
             .selectPublishButton()
             .openAdminDropdown()
             .selectLogOut();
 
-        cidLoginPage = new CidLoginPage(driver);
-        evaluatePage = cidLoginPage.login(testUser2)
+        evaluatePage = loginPage.login(testUser2)
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
 
@@ -740,11 +737,9 @@ public class ToleranceTests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
-        new PageHeader(driver).openAdminDropdown()
-            .selectLogOut();
-
-        cidLoginPage = new CidLoginPage(driver);
-        toleranceSettingsPage = cidLoginPage.login(testUser1)
+        toleranceSettingsPage = new PageHeader(driver).openAdminDropdown()
+            .selectLogOut()
+            .login(testUser1)
             .openSettings()
             .openTolerancesTab();
 

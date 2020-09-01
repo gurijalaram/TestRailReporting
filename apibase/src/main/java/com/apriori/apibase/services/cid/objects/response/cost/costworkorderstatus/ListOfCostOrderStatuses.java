@@ -19,7 +19,7 @@ import java.util.Map;
     "items"
 })
 
-@Schema(location = "cid/CostWorkOrderStatusSchema.json")
+@Schema(location = "cid/CostWorkOrderStatusResponse.json")
 public class ListOfCostOrderStatuses extends ArrayList<ListOfCostOrderStatuses> {
 
     @JsonProperty("items")

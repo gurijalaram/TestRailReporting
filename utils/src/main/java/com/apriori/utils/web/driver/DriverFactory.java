@@ -135,6 +135,7 @@ public class DriverFactory {
                 dc.merge(DesiredCapabilities.firefox());
 
                 result = new FirefoxDriver(dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
                 break;
             case "iexplorer11":
                 dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
@@ -154,12 +155,14 @@ public class DriverFactory {
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
                 result = new ChromeDriver(dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                 break;
             case "edge":
                 WebDriverManager.edgedriver().version("83.0.478.64").setup();
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
                 result = new EdgeDriver(edgeOptions);
+				logger_DriverFactory.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
         }
         return result;
     }
@@ -204,6 +207,7 @@ public class DriverFactory {
                 dc.setCapability(FirefoxDriver.PROFILE, fp);
                 dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + result.getCapabilities().toString());
                 break;
             case "iexplorer11":
                 dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
@@ -219,6 +223,7 @@ public class DriverFactory {
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + (result).getCapabilities().toString());
                 break;
             default:
                 throw new InvalidParameterException("Unexpected browser type: " + browser);
