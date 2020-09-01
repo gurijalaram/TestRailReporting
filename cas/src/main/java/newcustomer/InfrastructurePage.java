@@ -52,7 +52,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
         String[] listInfrastructure = infrastructures.split(",");
 
         for (String infrastructure : listInfrastructure) {
-            By dropdown = By.xpath(String.format("//li[.='%s']//div[@class='rstm-toggle-icon-symbol']", infrastructures));
+            By dropdown = By.xpath(String.format("//li[.='%s']//div[@class='rstm-toggle-icon-symbol']", infrastructure));
             pageUtils.waitForElementAndClick(dropdown);
         }
         return this;
