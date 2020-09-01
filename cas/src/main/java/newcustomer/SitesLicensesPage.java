@@ -74,7 +74,7 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
     }
 
     /**
-     * Selects the sub-license name
+     * Select the sub-license name
      *
      * @param licenseName - license name
      * @return current page object
@@ -86,7 +86,7 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
     }
 
     /**
-     * Gets list of sub modules
+     * Get list of sub modules
      * @return list
      */
     public List<String> getListOfSubModules() {
