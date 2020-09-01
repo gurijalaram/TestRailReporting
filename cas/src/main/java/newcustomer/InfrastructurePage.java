@@ -60,11 +60,11 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
 
     /**
      * Selects the data
-     * @param name - the name
+     * @param application - the name
      * @return current page object
      */
-    public InfrastructurePage selectData(String name) {
-        By data = By.xpath(String.format("//li[.='%s']", name));
+    public InfrastructurePage selectApplication(String application) {
+        By data = By.xpath(String.format("//li[.='%s']", application));
         pageUtils.waitForElementAndClick(data);
         return this;
     }
