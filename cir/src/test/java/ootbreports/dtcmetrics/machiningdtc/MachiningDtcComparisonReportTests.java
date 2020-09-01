@@ -10,8 +10,8 @@ import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
-import navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
+import navigation.ReportAvailabilityTests;
 import org.junit.Test;
 
 public class MachiningDtcComparisonReportTests extends TestBase {

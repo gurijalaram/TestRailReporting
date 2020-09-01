@@ -7,8 +7,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
-import pageobjects.pages.login.ReportsLoginPage;
-import pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -16,6 +14,8 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
+import pageobjects.pages.login.ReportsLoginPage;
+import pageobjects.pages.view.reports.GenericReportPage;
 
 import java.math.BigDecimal;
 

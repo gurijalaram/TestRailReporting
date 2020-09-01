@@ -5,9 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import pageobjects.pages.login.ReportsLoginPage;
-import pageobjects.pages.view.reports.GenericReportPage;
-import pageobjects.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -19,11 +16,14 @@ import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
-import navigation.ReportAvailabilityTests;
 import io.qameta.allure.Description;
+import navigation.ReportAvailabilityTests;
 import org.junit.Test;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.explore.ExplorePage;
+import pageobjects.pages.login.ReportsLoginPage;
+import pageobjects.pages.view.reports.GenericReportPage;
+import pageobjects.pages.view.reports.PlasticDtcReportPage;
 
 import java.math.BigDecimal;
 

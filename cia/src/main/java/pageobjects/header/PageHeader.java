@@ -1,9 +1,7 @@
 package pageobjects.header;
 
-import com.apriori.pageobjects.admin.pages.manage.ScenarioExport;
-import com.apriori.pageobjects.admin.pages.manage.SystemDataExport;
-import com.apriori.pageobjects.admin.pages.userguides.CiaUserGuide;
 import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,9 +9,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.cirpages.CirUserGuidePage;
 import pageobjects.pages.homepage.AdminHomePage;
 import pageobjects.pages.logout.Logout;
-import pageobjects.pages.userguides.CirUserGuidePage;
+import pageobjects.pages.manage.ScenarioExport;
+import pageobjects.pages.manage.SystemDataExport;
+import pageobjects.pages.userguides.CiaUserGuide;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 

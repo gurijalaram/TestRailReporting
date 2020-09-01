@@ -1,7 +1,5 @@
 package pageobjects.pages.login;
 
-import pageobjects.header.AdminHeader;
-import pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
@@ -13,7 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.pages.login.PrivacyPolicyPage;
+import pageobjects.header.AdminHeader;
+import pageobjects.pages.homepage.AdminHomePage;
 
 public class AdminLoginPage extends AdminHeader {
 

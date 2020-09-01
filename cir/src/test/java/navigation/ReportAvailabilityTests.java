@@ -4,14 +4,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.utils.web.driver.TestBase;
+
+import org.openqa.selenium.WebDriver;
 import pageobjects.pages.homepage.ReportsHomePage;
 import pageobjects.pages.library.LibraryPage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.ViewSearchResultsPage;
 import pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.web.driver.TestBase;
-
-import org.openqa.selenium.WebDriver;
 
 public class ReportAvailabilityTests extends TestBase {
 

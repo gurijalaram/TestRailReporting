@@ -1,9 +1,6 @@
 package pageobjects.pages.view;
 
-import pageobjects.header.ReportsPageHeader;
-import pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
-
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
@@ -13,6 +10,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.header.ReportsPageHeader;
+import pageobjects.pages.view.reports.GenericReportPage;
 
 import java.util.HashMap;
 import java.util.Map;

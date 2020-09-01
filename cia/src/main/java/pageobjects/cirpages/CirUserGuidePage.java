@@ -1,4 +1,4 @@
-package pageobjects.pages.userguides;
+package pageobjects.cirpages;
 
 import com.apriori.utils.PageUtils;
 
@@ -8,9 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.header.ReportsPageHeader;
 
-public class CirUserGuidePage extends ReportsPageHeader {
+public class CirUserGuidePage {
 
     private final Logger logger = LoggerFactory.getLogger(CirUserGuidePage.class);
 
@@ -33,22 +32,10 @@ public class CirUserGuidePage extends ReportsPageHeader {
     private PageUtils pageUtils;
 
     public CirUserGuidePage(WebDriver driver) {
-        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-
     }
 
     /**

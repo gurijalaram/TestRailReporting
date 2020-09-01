@@ -1,6 +1,7 @@
 package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
+
 import login.LoginTests;
 import navigation.ReportsNavigationTests;
 import ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
