@@ -43,7 +43,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
     }
 
     /**
-     * Selects the infrastructure dropdown
+     * Select the infrastructure dropdown
      *
      * @param infrastructures - the infrastructure
      * @return current page object
@@ -59,7 +59,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
     }
 
     /**
-     * Selects the data
+     * Select the application
      * @param application - the name
      * @return current page object
      */
@@ -67,5 +67,15 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
         By data = By.xpath(String.format("//li[.='%s']", application));
         pageUtils.waitForElementAndClick(data);
         return this;
+    }
+
+    /**
+     * Get the data for each field
+     * @param field - the field
+     * @return string
+     */
+    public String getApplicationDetails(String field) {
+        By fieldName = By.xpath(String.format("//div[contains(text(),'%s')]/ancestor::div[@class='py-2 ']", field));
+        return pageUtils.waitForElementToAppear(fieldName).getText();
     }
 }
