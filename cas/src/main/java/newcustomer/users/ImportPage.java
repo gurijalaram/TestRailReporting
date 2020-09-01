@@ -3,7 +3,6 @@ package newcustomer.users;
 import com.apriori.utils.PageUtils;
 
 import customeradmin.NavToolbar;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.FileImport;
 
 import java.io.File;
 
@@ -36,11 +36,13 @@ public class ImportPage extends LoadableComponent<ImportPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private NavToolbar navToolbar;
+    private FileImport fileImport;
 
     public ImportPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
+        this.fileImport = new FileImport(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -64,9 +66,7 @@ public class ImportPage extends LoadableComponent<ImportPage> {
      * @return current page object
      */
     public ImportPage importFile(File filePath) {
-        fileInput.sendKeys(filePath.getAbsolutePath());
-        By card = By.xpath(String.format("//div[@class='card-header']//span[.='%s']", filePath.getName()));
-        pageUtils.waitForElementToAppear(card);
+        fileImport.importFile(filePath);
         return this;
     }
 
@@ -76,8 +76,7 @@ public class ImportPage extends LoadableComponent<ImportPage> {
      * @return current page object
      */
     public ImportPage selectCard(String fileName) {
-        By card = By.xpath(String.format("//div[@class='card-header']//span[.='%s']", fileName));
-        pageUtils.waitForElementAndClick(card);
+        fileImport.selectCard(fileName);
         return this;
     }
 

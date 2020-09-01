@@ -11,7 +11,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.FileImport;
 
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,11 +30,13 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private NavToolbar navToolbar;
+    private FileImport fileImport;
 
     public SitesLicensesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
+        this.fileImport = new FileImport(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -46,6 +50,27 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(licenseHeader);
+    }
+
+    /**
+     * Import File
+     *
+     * @param filePath - the file path
+     * @return current page object
+     */
+    public SitesLicensesPage importFile(File filePath) {
+        fileImport.importFile(filePath);
+        return this;
+    }
+
+    /**
+     * Select card
+     * @param fileName - file name
+     * @return current page object
+     */
+    public SitesLicensesPage selectCard(String fileName) {
+        fileImport.selectCard(fileName);
+        return this;
     }
 
     /**
