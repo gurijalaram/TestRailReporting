@@ -103,9 +103,7 @@ public class FailuresWarningsTests extends TestBase {
         assertThat(guidancePage.getGuidanceCell("Failed GCDs", "Count"), is(equalTo("3")));
         assertThat(guidancePage.getGuidanceCell("Not Supported GCDs", "Count"), is(equalTo("1")));
 
-        guidancePage.closePanel();
-
-        evaluatePage = new EvaluatePage(driver);
+        evaluatePage = guidancePage.closePanel();
         assertThat(evaluatePage.isDFMRiskIcon("dtc-critical-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
     }
