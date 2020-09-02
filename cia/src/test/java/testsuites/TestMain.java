@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TestMain {
-    public static Class defaultTest = ReportingSuite.class;
+    public static Class defaultTest = AdminSuite.class;
 
     public static void main(String[] args) {
 
@@ -76,7 +76,7 @@ public class TestMain {
     private static void run(Class testClass) {
 
         JUnitCore runner = new JUnitCore();
-        runner.addListener(new TestMain.ExecutionListener());
+        runner.addListener(new ExecutionListener());
         runner.addListener(new AllureJunit4());
         Result result = runner.run(testClass);
 
