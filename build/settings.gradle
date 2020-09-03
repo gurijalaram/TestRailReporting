@@ -10,6 +10,7 @@ include(':ciconnect')
 include(':cid')
 include(':cir')
 include(':cas')
+include(':cia')
 
 //Utils
 include(':utils')
@@ -24,6 +25,7 @@ project(':uibase').projectDir = file('../uibase')
 project(':ciconnect').projectDir = file('../ciconnect')
 project(':cid').projectDir = file('../cid')
 project(':cir').projectDir = file('../cir')
+project(':cia').projectDir = file('../cia')
 project(':cas').projectDir = file('../cas')
 
 
