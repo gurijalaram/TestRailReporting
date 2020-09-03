@@ -12,7 +12,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -112,9 +111,11 @@ public class DriverFactory {
 
         switch (browser) {
             case "firefox":
+                logger_DriverFactory.info("Breakpoint 1");
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxProfile fp = new FirefoxProfile();
-                System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, WebDriverManager.firefoxdriver().getBinaryPath());
+                logger_DriverFactory.info("Breakpoint 2");
+                //System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, WebDriverManager.firefoxdriver().getBinaryPath());
                 fp.setPreference("browser.search.geoip.url", "http://127.0.0.1");
                 fp.setPreference("browser.download.folderList", 2);
                 fp.setPreference("browser.download.manager.showWhenStarting", false);
@@ -129,11 +130,14 @@ public class DriverFactory {
                 if (StringUtils.isNotEmpty(locale)) {
                     fp.setPreference("intl.accept_languages", locale);
                 }
+                logger_DriverFactory.info("Breakpoint 3");
 
                 dc.setCapability(FirefoxDriver.PROFILE, fp);
                 dc.merge(DesiredCapabilities.firefox());
+                logger_DriverFactory.info("Breakpoint 4");
 
                 result = new FirefoxDriver(dc);
+                logger_DriverFactory.info("Breakpoint 5");
                 logger_DriverFactory.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
                 break;
             case "iexplorer11":
