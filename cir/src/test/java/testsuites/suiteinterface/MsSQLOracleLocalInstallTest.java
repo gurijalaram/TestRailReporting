@@ -1,2 +1,4 @@
-package testsuites.suiteinterface;public interface MsSQLOracleLocalInstallTest {
+package testsuites.suiteinterface;
+
+public interface MsSQLOracleLocalInstallTest {
 }
