@@ -135,7 +135,7 @@ public class DriverFactory {
 
                 FirefoxOptions fOptions = new FirefoxOptions();
                 if (System.getProperty("os.name").toLowerCase().contains("linux")) {
-                    fOptions.addArguments("--headless");
+//                    fOptions.addArguments("--headless");
                     fOptions.addArguments("--disable-gpu");
                 }
                 dc.setCapability(FirefoxOptions.FIREFOX_OPTIONS, fOptions);
