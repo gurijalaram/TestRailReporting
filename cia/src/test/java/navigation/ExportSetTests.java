@@ -5,14 +5,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import pageobjects.pages.homepage.AdminHomePage;
-import pageobjects.pages.login.AdminLoginPage;
-import pageobjects.pages.logout.Logout;
-import pageobjects.pages.manage.NewExportSet;
-import pageobjects.pages.manage.ScenarioExport;
-import pageobjects.pages.manage.SystemDataExport;
-import pageobjects.pages.userguides.CiaUserGuide;
-import pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ComponentTypeEnum;
@@ -22,6 +14,14 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.cirpages.CirUserGuidePage;
+import pageobjects.pages.homepage.AdminHomePage;
+import pageobjects.pages.login.AdminLoginPage;
+import pageobjects.pages.logout.Logout;
+import pageobjects.pages.manage.NewExportSet;
+import pageobjects.pages.manage.ScenarioExport;
+import pageobjects.pages.manage.SystemDataExport;
+import pageobjects.pages.userguides.CiaUserGuide;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class ExportSetTests extends TestBase {

@@ -162,7 +162,7 @@ public class DriverFactory {
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
                 result = new EdgeDriver(edgeOptions);
-				logger_DriverFactory.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
+                logger_DriverFactory.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
         }
         return result;
     }

@@ -1,6 +1,5 @@
 package ootbreports.dtcmetrics.plastic;
 
-import cireporttests.navigation.ReportAvailabilityTests;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.CostMetricEnum;
