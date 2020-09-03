@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.logging.LogType;
@@ -111,10 +112,8 @@ public class DriverFactory {
 
         switch (browser) {
             case "firefox":
-                logger_DriverFactory.info("Breakpoint 1");
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxProfile fp = new FirefoxProfile();
-                logger_DriverFactory.info("Breakpoint 2");
                 //System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, WebDriverManager.firefoxdriver().getBinaryPath());
                 fp.setPreference("browser.search.geoip.url", "http://127.0.0.1");
                 fp.setPreference("browser.download.folderList", 2);
@@ -130,14 +129,17 @@ public class DriverFactory {
                 if (StringUtils.isNotEmpty(locale)) {
                     fp.setPreference("intl.accept_languages", locale);
                 }
-                logger_DriverFactory.info("Breakpoint 3");
 
                 dc.setCapability(FirefoxDriver.PROFILE, fp);
                 dc.merge(DesiredCapabilities.firefox());
-                logger_DriverFactory.info("Breakpoint 4");
 
+                FirefoxOptions fOptions = new FirefoxOptions();
+                if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+                    fOptions.addArguments("--headless");
+                    fOptions.addArguments("--disable-gpu");
+                }
+                dc.setCapability(FirefoxOptions.FIREFOX_OPTIONS, fOptions);
                 result = new FirefoxDriver(dc);
-                logger_DriverFactory.info("Breakpoint 5");
                 logger_DriverFactory.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
                 break;
             case "iexplorer11":
