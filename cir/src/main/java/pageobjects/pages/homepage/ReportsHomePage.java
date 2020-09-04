@@ -36,16 +36,13 @@ public class ReportsHomePage extends ReportsPageHeader {
 
     }
 
-    @FindBy(css = "button[aria-label='Create Data Sources']")
-    private WebElement createButton;
-
     /**
      * Check if Create button is displayed
      *
      * @return Visibility of button
      */
-    public boolean isCreateButtonDisplayed() {
-        pageUtils.waitForElementToAppear(createButton);
-        return createButton.isDisplayed();
+    public boolean isCreateDashboardsButtonDisplayed() {
+        pageUtils.waitForElementToAppear(createDashboardsButton);
+        return createDashboardsButton.isDisplayed();
     }
 }

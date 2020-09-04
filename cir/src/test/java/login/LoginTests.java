@@ -32,7 +32,7 @@ public class LoginTests extends TestBase {
         homePage = new ReportsLoginPage(driver)
             .login();
 
-        assertThat(homePage.isCreateButtonDisplayed(), is(true));
+        assertThat(homePage.isCreateDashboardsButtonDisplayed(), is(true));
     }
 
     @Test
