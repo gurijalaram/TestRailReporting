@@ -14,7 +14,6 @@ import pageobjects.pages.create.CreateDashboardPage;
 import pageobjects.pages.create.CreateDataSourcePage;
 import pageobjects.pages.create.CreateDomainPage;
 import pageobjects.pages.create.CreateReportPage;
-import pageobjects.pages.homepage.ReportsHomePage;
 import pageobjects.pages.library.LibraryPage;
 import pageobjects.pages.logout.LogoutPage;
 import pageobjects.pages.manage.ManageRolesPage;
@@ -144,8 +143,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return Home Page page object
      */
-    public ReportsHomePage navigateToHomePage() {
-        return navigateToPage(homeMenuOption, ReportsHomePage.class);
+    public ReportsPageHeader navigateToHomePage() {
+        return navigateToPage(homeMenuOption, ReportsPageHeader.class);
     }
 
     /**
