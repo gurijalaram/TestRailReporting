@@ -13,6 +13,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -114,7 +115,9 @@ public class DriverFactory {
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxProfile fp = new FirefoxProfile();
-                //System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, WebDriverManager.firefoxdriver().getBinaryPath());
+                System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, WebDriverManager.firefoxdriver().getBinaryPath());
+                System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"true");
+                System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");
                 fp.setPreference("browser.search.geoip.url", "http://127.0.0.1");
                 fp.setPreference("browser.download.folderList", 2);
                 fp.setPreference("browser.download.manager.showWhenStarting", false);
