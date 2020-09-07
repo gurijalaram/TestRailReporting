@@ -38,11 +38,10 @@ RUN if [ "$MODULE" = "cid" ] && [ "$TEST_MODE" != "GRID" ]; then \
 #=======================
 # Firefox & GeckoDriver
 #=======================
-RUN if [ "$MODULE" = "cid" ] && [ "$TEST_MODE" != "GRID" ]; then \
 ARG firefox_ver=68.12.0esr
 ARG geckodriver_ver=0.22.0
-
-RUN apt-get update \
+RUN if [ "$MODULE" = "cid" ] && [ "$TEST_MODE" != "GRID" ]; then \
+    apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends --no-install-suggests \
             ca-certificates \
@@ -77,8 +76,7 @@ RUN apt-get update \
                   -o APT::AutoRemove::RecommendsImportant=false \
             $toolDeps \
     && rm -rf /var/lib/apt/lists/* \
-           /tmp/*
-
+           /tmp/*; \
     fi
 
 # Prepare build workspace.
