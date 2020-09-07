@@ -127,6 +127,7 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
+            sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
             sh "docker rm -f \$(docker ps --filter name=${browser})"
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
