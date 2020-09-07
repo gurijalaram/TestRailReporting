@@ -98,7 +98,6 @@ pipeline {
                 script {
                     if ("${params.TEST_MODE}" == "GRID") {
                         sh """
-                            //docker ps | grep "hub" || \
                             docker-compose up -d --force-recreate
                         """
                     }
