@@ -31,9 +31,9 @@ RUN if [ "$MODULE" = "cid" ] && [ "$TEST_MODE" = "GRID" ]; then \
 	&& chmod 755 /usr/bin/chromedriver; \
 	fi
 
-#=========
+#=======================
 # Firefox & GeckoDriver
-#=========
+#=======================
 ARG firefox_ver=68.12.0esr
 ARG geckodriver_ver=0.22.0
 
