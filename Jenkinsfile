@@ -129,7 +129,8 @@ pipeline {
         always {
             echo "Cleaning up.."
 //            sh "docker rm -f selenium-hub"
-            sh "docker rm -f \$(docker ps --filter name=${buildInfo.name}-build-${timeStamp})"
+            sh "docker rm -f \$(docker ps --filter name=chrome)"
+            sh "docker rm -f \$(docker ps --filter name=firefox)"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
             cleanWs()
