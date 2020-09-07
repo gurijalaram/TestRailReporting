@@ -20,7 +20,6 @@ import pageobjects.pages.create.CreateDomainPage;
 import pageobjects.pages.create.CreateReportPage;
 import pageobjects.pages.homepage.ReportsHomePage;
 import pageobjects.pages.library.LibraryPage;
-import pageobjects.pages.login.PrivacyPolicyPage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.logout.LogoutPage;
 import pageobjects.pages.manage.ManageRolesPage;
@@ -32,7 +31,6 @@ import pageobjects.pages.view.ViewSchedulesPage;
 import pageobjects.pages.view.ViewSearchResultsPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
-
 
 public class ReportsNavigationTests extends TestBase {
 
