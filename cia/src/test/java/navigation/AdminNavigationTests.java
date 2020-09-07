@@ -134,14 +134,13 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToReports();
 
-        String urlToCheck = homePage.getUrlToCheck();
         homePage.waitForReportsLogoutDisplayedToAppear();
 
         assertThat(homePage.getTabCount(), is(equalTo(2)));
         assertThat(homePage.isReportsWelcomeTextDisplayed(), is(true));
         assertThat(homePage.isReportsWelcomeTextEnabled(), is(true));
 
-        assertThat(homePage.getCurrentUrl(), containsString(urlToCheck));
+        assertThat(homePage.getCurrentUrl(), containsString(Constants.ON_PREM_BASE_URL));
         assertThat(homePage.getCurrentUrl(), containsString(Constants.REPORTS_URL_SUFFIX));
         assertThat(homePage.getCurrentUrl(), containsString(Constants.REPORTS_LOGIN_LOCAL_SUFFIX));
     }
