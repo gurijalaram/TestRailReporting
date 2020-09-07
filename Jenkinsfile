@@ -105,7 +105,7 @@ pipeline {
                 }
 
                 sh """
-                    sleep 5s
+                    sleep 30s
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
@@ -130,6 +130,8 @@ pipeline {
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
+            sh "docker rm -f "$"(docker ps --filter name=${buildInfo.name}-build-${timeStamp})"
+            sh "docker rm -f selenium-hub"
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
             cleanWs()
         }
