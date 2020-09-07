@@ -140,6 +140,7 @@ public class DriverFactory {
                 if (System.getProperty("os.name").toLowerCase().contains("linux")) {
                     fOptions.addArguments("--headless");
                     fOptions.addArguments("--disable-gpu");
+                    System.setProperty("webdriver.firefox.bin", "/opt/firefox/firefox-bin");
                 }
                 dc.setCapability(FirefoxOptions.FIREFOX_OPTIONS, fOptions);
                 result = new FirefoxDriver(dc);
