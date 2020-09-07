@@ -18,10 +18,10 @@ import ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
+import testsuites.suiteinterface.OnPremTest;
 
 @RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory(MsSQLOracleLocalInstallTest.class)
+@Categories.IncludeCategory(OnPremTest.class)
 @Suite.SuiteClasses({
         ReportsNavigationTests.class,
         LoginTests.class,
@@ -37,5 +37,5 @@ import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
         PlasticDtcComparisonReportTests.class
 })
 
-public class MsSQLOracleLocalInstallSuite {
+public class OnPremCirSuite {
 }

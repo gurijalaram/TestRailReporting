@@ -22,7 +22,7 @@ import pageobjects.pages.manage.SystemDataExport;
 import pageobjects.pages.userguides.CiaUserGuide;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
-import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
+import testsuites.suiteinterface.OnPremTest;
 
 public class AdminNavigationTests extends TestBase {
 
@@ -38,7 +38,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class, CIARStagingSmokeTest.class})
+    @Category({OnPremTest.class, CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -51,7 +51,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "2981")
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
@@ -64,7 +64,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "2982")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
@@ -80,7 +80,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CIARStagingSmokeTest.class})
+    @Category({OnPremTest.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = "2983")
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
@@ -94,7 +94,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "2984")
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
@@ -110,7 +110,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "2985")
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
@@ -126,7 +126,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({MsSQLOracleLocalInstallTest.class, CustomerSmokeTests.class, CIARStagingSmokeTest.class})
+    @Category({OnPremTest.class, CustomerSmokeTests.class, CIARStagingSmokeTest.class})
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
@@ -138,8 +138,8 @@ public class AdminNavigationTests extends TestBase {
         homePage.waitForReportsLogoutDisplayedToAppear();
 
         assertThat(homePage.getTabCount(), is(equalTo(2)));
-        assertThat(homePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(homePage.isReportsLogoutEnabled(), is(true));
+        assertThat(homePage.isReportsWelcomeTextDisplayed(), is(true));
+        assertThat(homePage.isReportsWelcomeTextEnabled(), is(true));
 
         assertThat(homePage.getCurrentUrl(), containsString(urlToCheck));
         assertThat(homePage.getCurrentUrl(), containsString(Constants.REPORTS_URL_SUFFIX));

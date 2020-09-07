@@ -138,8 +138,8 @@ public class ExportSetTests extends TestBase {
         adminHomePage.waitForReportsLogoutDisplayedToAppear();
 
         assertThat(adminHomePage.getTabCount(), is(equalTo(2)));
-        assertThat(adminHomePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(adminHomePage.isReportsLogoutEnabled(), is(true));
+        assertThat(adminHomePage.isReportsWelcomeTextDisplayed(), is(true));
+        assertThat(adminHomePage.isReportsWelcomeTextEnabled(), is(true));
 
         assertThat(adminHomePage.getCurrentUrl(), containsString(urlToCheck));
         assertThat(adminHomePage.getCurrentUrl(), containsString(Constants.REPORTS_URL_SUFFIX));

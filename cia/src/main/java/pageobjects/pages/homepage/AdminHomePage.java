@@ -14,38 +14,8 @@ public class AdminHomePage extends PageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(AdminHomePage.class);
 
-    @FindBy(id = "manage.scenario-export-manager")
-    private WebElement manageScenarioExportMenuOption;
-
-    @FindBy(id = "manage.system-data-export-manager")
-    private WebElement manageSystemDataExportMenuOption;
-
-    @FindBy(id = "jasper")
-    private WebElement reportMenuOption;
-
-    @FindBy(id = "help")
-    private WebElement helpMenuOption;
-
-    @FindBy(id = "help.cost-insight_rep")
-    private WebElement helpCIReportGuideMenuOption;
-
-    @FindBy(id = "help.cost-insight_adm")
-    private WebElement helpCIAdminGuideMenuOption;
-
-    @FindBy(id = "help.scenario-expt")
-    private WebElement helpScenarioExportChapterMenuOption;
-
-    @FindBy(id = "user")
-    private WebElement userMenuOption;
-
-    @FindBy(css = "input[name='j_username']")
-    private WebElement email;
-
-    @FindBy(id = "user.log-out")
-    private WebElement logoutMenuOption;
-
-    @FindBy(id = "main_logOut_link")
-    private WebElement reportsLogoutOption;
+    @FindBy(css = "div[class='devices']")
+    private WebElement reportsWelcomeText;
 
     @FindBy(xpath = "//div[contains(text(), 'Welcome to')]")
     private WebElement adminHomePageWelcomeText;
@@ -71,8 +41,6 @@ public class AdminHomePage extends PageHeader {
     protected void isLoaded() throws Error {
         pageUtils.isElementDisplayed(adminHomePageWelcomeText);
         pageUtils.isElementEnabled(adminHomePageWelcomeText);
-        //pageUtils.isElementDisplayed(manageScenarioExportMenuOption);
-        //pageUtils.isElementDisplayed(manageScenarioExportMenuOption);
     }
 
     /**
@@ -107,7 +75,7 @@ public class AdminHomePage extends PageHeader {
      */
     public void waitForReportsLogoutDisplayedToAppear() {
         pageUtils.windowHandler(1);
-        pageUtils.waitForElementToAppear(reportsLogoutOption);
+        pageUtils.waitForElementToAppear(reportsWelcomeText);
     }
 
     /**
@@ -115,8 +83,8 @@ public class AdminHomePage extends PageHeader {
      *
      * @return boolean
      */
-    public boolean isReportsLogoutDisplayed() {
-        return pageUtils.isElementDisplayed(reportsLogoutOption);
+    public boolean isReportsWelcomeTextDisplayed() {
+        return pageUtils.isElementDisplayed(reportsWelcomeText);
     }
 
     /**
@@ -124,7 +92,7 @@ public class AdminHomePage extends PageHeader {
      *
      * @return boolean
      */
-    public boolean isReportsLogoutEnabled() {
-        return pageUtils.isElementEnabled(reportsLogoutOption);
+    public boolean isReportsWelcomeTextEnabled() {
+        return pageUtils.isElementEnabled(reportsWelcomeText);
     }
 }

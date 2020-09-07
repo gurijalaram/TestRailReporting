@@ -14,7 +14,7 @@ import io.qameta.allure.Description;
 import navigation.ReportAvailabilityTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.MsSQLOracleLocalInstallTest;
+import testsuites.suiteinterface.OnPremTest;
 
 public class PlasticDtcDetailsReportTests extends TestBase {
 
@@ -26,7 +26,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
@@ -38,7 +38,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByLibrary() {
@@ -49,7 +49,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityBySearch() {
@@ -60,7 +60,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Plastic DTC Details input control panel functions correctly")
     public void testApplyButton() {
@@ -72,7 +72,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Plastic DTC Details input control panel works")
     public void testCancelButton() {
@@ -81,7 +81,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Plastic DTC Details input control panel works")
     public void testResetButton() {
@@ -93,7 +93,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Plastic DTC Details input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -106,7 +106,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
 
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1366")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -119,7 +119,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1366")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
@@ -132,7 +132,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1368")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
@@ -145,7 +145,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(MsSQLOracleLocalInstallTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1368")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
