@@ -31,48 +31,35 @@ RUN if [ "$MODULE" = "cid" ] && [ "$TEST_MODE" = "GRID" ]; then \
 	&& chmod 755 /usr/bin/chromedriver; \
 	fi
 
-#=======================
-# Firefox & GeckoDriver
-#=======================
-ARG firefox_ver=68.12.0esr
-ARG geckodriver_ver=0.22.0
+#============
+# Firefox
+#============
+ARG FIREFOX_VERSION=esr-latest
+RUN FIREFOX_DOWNLOAD_URL=$(if [ $FIREFOX_VERSION = "latest" ] || [ $FIREFOX_VERSION = "nightly-latest" ] || [ $FIREFOX_VERSION = "devedition-latest" ] || [ $FIREFOX_VERSION = "esr-latest" ]; then echo "https://download.mozilla.org/?product=firefox-$FIREFOX_VERSION-ssl&os=linux64&lang=en-US"; else echo "https://download-installer.cdn.mozilla.net/pub/firefox/releases/$FIREFOX_VERSION/linux-x86_64/en-US/firefox-$FIREFOX_VERSION.tar.bz2"; fi) \
+  && apt-get update -qqy \
+  && apt-get -qqy --no-install-recommends install firefox libavcodec-extra \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
+  && wget --no-verbose -O /tmp/firefox.tar.bz2 $FIREFOX_DOWNLOAD_URL \
+  && apt-get -y purge firefox \
+  && rm -rf /opt/firefox \
+  && tar -C /opt -xjf /tmp/firefox.tar.bz2 \
+  && rm /tmp/firefox.tar.bz2 \
+  && mv /opt/firefox /opt/firefox-$FIREFOX_VERSION \
+  && ln -fs /opt/firefox-$FIREFOX_VERSION/firefox /usr/bin/firefox
 
-RUN apt-get update \
- && apt-get upgrade -y \
- && apt-get install -y --no-install-recommends --no-install-suggests \
-            ca-certificates \
- && update-ca-certificates \
-    \
- # Install tools for building
- && toolDeps=" \
-        curl bzip2 \
-    " \
- && apt-get install -y --no-install-recommends --no-install-suggests \
-            $toolDeps \
-    \
- # Install dependencies for Firefox
- && apt-get install -y --no-install-recommends --no-install-suggests \
-            `apt-cache depends firefox-esr | awk '/Depends:/{print$2}'` \
-    \
- # Download and install Firefox
- && curl -fL -o /tmp/firefox.tar.bz2 \
-         https://ftp.mozilla.org/pub/firefox/releases/${firefox_ver}/linux-x86_64/en-GB/firefox-${firefox_ver}.tar.bz2 \
- && tar -xjf /tmp/firefox.tar.bz2 -C /tmp/ \
- && mv /tmp/firefox /opt/firefox \
-    \
- # Download and install geckodriver
- && curl -fL -o /tmp/geckodriver.tar.gz \
-         https://github.com/mozilla/geckodriver/releases/download/v${geckodriver_ver}/geckodriver-v${geckodriver_ver}-linux64.tar.gz \
- && tar -xzf /tmp/geckodriver.tar.gz -C /tmp/ \
- && chmod +x /tmp/geckodriver \
- && mv /tmp/geckodriver /usr/local/bin/ \
-    \
- # Cleanup unnecessary stuff
- && apt-get purge -y --auto-remove \
-                  -o APT::AutoRemove::RecommendsImportant=false \
-            $toolDeps \
- && rm -rf /var/lib/apt/lists/* \
-           /tmp/*
+#============
+# GeckoDriver
+#============
+ARG GECKODRIVER_VERSION=latest
+RUN GK_VERSION=$(if [ ${GECKODRIVER_VERSION:-latest} = "latest" ]; then echo "0.27.0"; else echo $GECKODRIVER_VERSION; fi) \
+  && echo "Using GeckoDriver version: "$GK_VERSION \
+  && wget --no-verbose -O /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v$GK_VERSION/geckodriver-v$GK_VERSION-linux64.tar.gz \
+  && rm -rf /opt/geckodriver \
+  && tar -C /opt -zxf /tmp/geckodriver.tar.gz \
+  && rm /tmp/geckodriver.tar.gz \
+  && mv /opt/geckodriver /opt/geckodriver-$GK_VERSION \
+  && chmod 755 /opt/geckodriver-$GK_VERSION \
+  && ln -fs /opt/geckodriver-$GK_VERSION /usr/bin/geckodriver
 
 # Prepare build workspace.
 FROM gradle:6.1.1-jdk8 AS sdk
