@@ -11,7 +11,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -116,8 +115,6 @@ public class DriverFactory {
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxProfile fp = new FirefoxProfile();
                 System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, WebDriverManager.firefoxdriver().getBinaryPath());
-                System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"true");
-                System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");
                 fp.setPreference("browser.search.geoip.url", "http://127.0.0.1");
                 fp.setPreference("browser.download.folderList", 2);
                 fp.setPreference("browser.download.manager.showWhenStarting", false);
@@ -136,15 +133,8 @@ public class DriverFactory {
                 dc.setCapability(FirefoxDriver.PROFILE, fp);
                 dc.merge(DesiredCapabilities.firefox());
 
-                FirefoxOptions fOptions = new FirefoxOptions();
-                if (System.getProperty("os.name").toLowerCase().contains("linux")) {
-                    fOptions.addArguments("--headless");
-                    fOptions.addArguments("--disable-gpu");
-                    System.setProperty("webdriver.firefox.bin", "/opt/firefox/firefox-bin");
-                }
-                dc.setCapability(FirefoxOptions.FIREFOX_OPTIONS, fOptions);
+                logger_DriverFactory.info(new FirefoxDriver().getCapabilities().toString());
                 result = new FirefoxDriver(dc);
-                logger_DriverFactory.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
                 break;
             case "iexplorer11":
                 dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
@@ -161,13 +151,13 @@ public class DriverFactory {
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
+                logger_DriverFactory.info(new ChromeDriver().getCapabilities().toString());
                 result = new ChromeDriver(dc);
-                logger_DriverFactory.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                 break;
             case "edge":
                 WebDriverManager.edgedriver().setup();
+                logger_DriverFactory.info(new EdgeDriver().getCapabilities().toString());
                 result = new EdgeDriver(dc);
-                logger_DriverFactory.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
         }
         return result;
     }
@@ -212,7 +202,6 @@ public class DriverFactory {
                 dc.setCapability(FirefoxDriver.PROFILE, fp);
                 dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
-                logger_DriverFactory.info("Full list of Capabilities: " + result.getCapabilities().toString());
                 break;
             case "iexplorer11":
                 dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
@@ -228,7 +217,6 @@ public class DriverFactory {
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
-                logger_DriverFactory.info("Full list of Capabilities: " + (result).getCapabilities().toString());
                 break;
             default:
                 throw new InvalidParameterException("Unexpected browser type: " + browser);
