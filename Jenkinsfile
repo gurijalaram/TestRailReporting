@@ -131,6 +131,8 @@ pipeline {
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
             sh "docker rm -f \$(docker ps --filter name=chrome -q)"
             sh "docker rm -f \$(docker ps --filter name=firefox -q)"
+            sh "docker rmi -f selenium/node-firefox"
+            sh "docker rmi -f selenium/node-chrome"
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
             cleanWs()
         }
