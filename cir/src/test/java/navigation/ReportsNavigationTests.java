@@ -58,7 +58,6 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2987")
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {
