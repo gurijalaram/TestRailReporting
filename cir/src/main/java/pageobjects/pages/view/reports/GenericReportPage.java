@@ -282,6 +282,18 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "ul[id='resultsList']")
     private WebElement generalReportsList;
 
+    @FindBy(xpath = "(//li[@title='Casting - Die'])[1]/div/a")
+    private WebElement dieCastingOption;
+
+    @FindBy(xpath = "(//li[@title='Casting - Sand'])[1]/div/a")
+    private WebElement sandCastingOption;
+
+    @FindBy(xpath = "//span[contains(text(), '* Process Group')]/..//li[@title='Deselect All']/a")
+    private WebElement deselectAllProcessGroupsButton;
+
+    @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[2]/span")
+    private WebElement processGroupCurrentValue;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -316,7 +328,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectExportSet(String exportSet) {
         By exportSetToSelect = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         WebElement exportSetToPick = driver.findElement(exportSetToSelect);
-        //exportSetToPick.click();
         pageUtils.waitForElementAndClick(exportSetToPick);
         return this;
     }
@@ -349,6 +360,26 @@ public class GenericReportPage extends ReportsPageHeader {
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         };
+    }
+
+    /**
+     * Method to set process group
+     * @param chooseDieCasting - boolean
+     * @return instance of current page object
+     */
+    public GenericReportPage setProcessGroup(boolean chooseDieCasting) {
+        pageUtils.waitForElementAndClick(deselectAllProcessGroupsButton);
+        WebElement elementToSelect = chooseDieCasting ? dieCastingOption : sandCastingOption;
+        pageUtils.waitForElementAndClick(elementToSelect);
+        return this;
+    }
+
+    /**
+     * Gets current Process Group value
+     * @return String
+     */
+    public String getProcessGroupValue() {
+        return processGroupCurrentValue.getText();
     }
 
     /**

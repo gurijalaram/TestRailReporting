@@ -265,4 +265,43 @@ public class CastingDtcReportTests extends TestBase {
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "1704")
+    @Description("Verify Process Group input control functions correctly")
+    public void testProcessGroupDieCastingOnly() {
+
+    }
+
+    @Test
+    @TestRail(testCaseId = "1704")
+    @Description("Verify Process Group input control functions correctly")
+    public void testProcessGroupSandCastingOnly() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .setProcessGroup(true)
+                .clickOk();
+
+        assertThat(genericReportPage.getProcessGroupValue(), is(equalTo("Casting - Die")));
+
+        // Make casting - die and casting - sand constants
+        // click into a bubble or two and ensure correct process group is selected
+        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
+        String partName = genericReportPage.getPartNameDtcReports();
+    }
+
+
+    @Test
+    @TestRail(testCaseId = "1704")
+    @Description("Verify Process Group input control functions correctly")
+    public void testProcessGroupSandAndDieCasting() {
+
+    }
+
 }
