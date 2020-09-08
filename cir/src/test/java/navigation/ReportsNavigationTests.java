@@ -31,6 +31,7 @@ import pageobjects.pages.view.ViewRepositoryPage;
 import pageobjects.pages.view.ViewSchedulesPage;
 import pageobjects.pages.view.ViewSearchResultsPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 
 public class ReportsNavigationTests extends TestBase {
@@ -57,6 +58,7 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2987")
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {

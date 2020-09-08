@@ -296,7 +296,6 @@ public class CastingDtcReportTests extends TestBase {
         String partName = genericReportPage.getPartNameDtcReports();
     }
 
-
     @Test
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
