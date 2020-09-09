@@ -45,11 +45,20 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> fbcElementMap = new HashMap<>();
     private String reportName = "";
 
-    @FindBy(xpath = "//div[@id='reportContainer']/table//tr[@style='height:35px']/td[2]/span")
-    private WebElement reportTitle;
+    @FindBy(xpath = "(//div[@id='reportViewFrame']//div[@class='title'])[1]")
+    private WebElement upperTitle;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name() = 'path']")
     private WebElement castingDtcBubble;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[18][local-name() = 'path']")
+    private WebElement castingDtcBubbleTwo;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[54][local-name() = 'path']")
+    private WebElement castingDtcBubbleThree;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[56][local-name() = 'path']")
+    private WebElement castingDtcBubbleFour;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name() = 'path'][43]")
     private WebElement machiningDtcBubble;
@@ -292,7 +301,19 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement deselectAllProcessGroupsButton;
 
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[2]/span")
-    private WebElement processGroupCurrentValue;
+    private WebElement processGroupCurrentValueCastingDtc;
+
+    @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
+    private WebElement processGroupCurrentValueDtcPartSummary;
+
+    @FindBy(xpath = "//label[@title='Component Select']//a")
+    private WebElement componentSelectDropdown;
+
+    @FindBy(xpath = "//label[@title='Component Select']//input")
+    private WebElement componentSelectSearchInput;
+
+    @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
+    private WebElement dtcPartSummaryProcessGroupValue;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -364,13 +385,12 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Method to set process group
-     * @param chooseDieCasting - boolean
+     * @param processGroupOption - String
      * @return instance of current page object
      */
-    public GenericReportPage setProcessGroup(boolean chooseDieCasting) {
-        pageUtils.waitForElementAndClick(deselectAllProcessGroupsButton);
-        WebElement elementToSelect = chooseDieCasting ? dieCastingOption : sandCastingOption;
-        pageUtils.waitForElementAndClick(elementToSelect);
+    public GenericReportPage setProcessGroup(String processGroupOption) {
+        pageUtils.waitForElementAndClick(deselectAllProcessGroupsButton);;
+        driver.findElement(By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption))).click();
         return this;
     }
 
@@ -378,9 +398,20 @@ public class GenericReportPage extends ReportsPageHeader {
      * Gets current Process Group value
      * @return String
      */
-    public String getProcessGroupValue() {
-        return processGroupCurrentValue.getText();
+    public String getProcessGroupValueCastingDtc() {
+        pageUtils.waitForElementToAppear(processGroupCurrentValueCastingDtc);
+        return processGroupCurrentValueCastingDtc.getText();
     }
+
+    /**
+     * Gets current Process Group value
+     * @return String
+     */
+    public String getProcessGroupValueDtcPartSummary() {
+        pageUtils.waitForElementToAppear(processGroupCurrentValueDtcPartSummary);
+        return processGroupCurrentValueDtcPartSummary.getText();
+    }
+
 
     /**
      * Sets specified assembly
@@ -516,7 +547,7 @@ public class GenericReportPage extends ReportsPageHeader {
         Actions actions = new Actions(driver);
         actions.moveToElement(okButton).click();
         actions.perform();
-        pageUtils.waitForElementToAppear(reportTitle);
+        pageUtils.waitForElementToAppear(upperTitle);
         return this;
     }
 
@@ -1024,10 +1055,9 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Hovers over bubble in Plastic DTC Report
-     * @return Instance of GenericReportPage
+     * Hovers over bubble in DTC Reports
      */
-    public GenericReportPage hoverPartNameBubbleDtcReports() {
+    public void hoverPartNameBubbleDtcReports() {
         WebElement elementToUse = bubbleMap.get(this.reportName);
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
@@ -1035,7 +1065,42 @@ public class GenericReportPage extends ReportsPageHeader {
         if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             elementToUse.click();
         }
+    }
+
+    public void clickBub() {
+        pageUtils.waitForElementToAppear(castingDtcBubbleThree);
+        Actions builder = new Actions(driver).moveToElement(castingDtcBubbleThree);
+        builder.perform();
+    }
+
+    public void clickBubTwo() {
+        pageUtils.waitForElementToAppear(castingDtcBubbleFour);
+        Actions builder = new Actions(driver).moveToElement(castingDtcBubbleFour);
+        builder.perform();
+    }
+
+    /**
+     * Select component from dropdown
+     * @param partName String
+     */
+    public GenericReportPage selectComponent(String partName) {
+        pageUtils.waitForElementAndClick(componentSelectDropdown);
+        pageUtils.waitForElementAndClick(componentSelectSearchInput);
+        componentSelectSearchInput.sendKeys(partName);
+        pageUtils.waitForElementAndClick(
+                driver.findElement(
+                        By.xpath(String.format("//a[contains(text(), '%s')]", partName))
+                )
+        );
         return this;
+    }
+
+    /**
+     * Gets Process Group Value from DTC Part Summary Report
+     * @return - String
+     */
+    public String dtcPartSummaryGetProcessGroup() {
+        return dtcPartSummaryProcessGroupValue.getText();
     }
 
     /**
@@ -1169,6 +1234,7 @@ public class GenericReportPage extends ReportsPageHeader {
         partNameMap.put(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), partNameCastingDtcComparisonReport);
         partNameMap.put(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), partNameCastingDtcDetailsReport);
         partNameMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), partNamePlasticDtcReport);
+        partNameMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), partNameCastingDtcReport);
     }
 
     /**
@@ -1178,6 +1244,7 @@ public class GenericReportPage extends ReportsPageHeader {
         bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), machiningDtcBubble);
         bubbleMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcBubble);
         bubbleMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcBubble);
+        bubbleMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), castingDtcBubbleTwo);
     }
 
     /**
