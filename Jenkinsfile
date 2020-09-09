@@ -98,14 +98,13 @@ pipeline {
                 script {
                     if ("${params.TEST_MODE}" == "GRID") {
                         sh """
-                            docker ps | grep "hub" || \
-                             docker-compose up -d
+                            docker-compose up -d --force-recreate
                         """
                     }
                 }
 
                 sh """
-                    sleep 5s
+                    sleep 15s
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
@@ -130,6 +129,10 @@ pipeline {
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
+            sh "docker rm -f \$(docker ps --filter name=chrome -q)"
+            sh "docker rm -f \$(docker ps --filter name=firefox -q)"
+            sh "docker rmi -f selenium/node-firefox"
+            sh "docker rmi -f selenium/node-chrome"
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
             cleanWs()
         }
