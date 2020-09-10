@@ -12,7 +12,9 @@ RUN keytool -import -trustcacerts -noprompt \
     -keystore $JAVA_HOME/lib/security/cacerts \
     -storepass changeit
 
-# Install Chrome
+#=======================
+# Chrome
+#=======================
 RUN if [ "$MODULE" = "cid" ] && [ "$TEST_MODE" != "GRID" ]; then \
    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
 	&& echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
