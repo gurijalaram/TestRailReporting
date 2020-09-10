@@ -1,5 +1,6 @@
 package com.apriori.utils.constants;
 
+import com.apriori.utils.enums.ProcessGroupEnum;
 import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
@@ -52,6 +53,11 @@ public class Constants {
     public static final String GENERAL_FOLDER = "General";
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
+    public static final String CASTING_DIE_SAND_NAME = String.format(
+            "%s, %s",
+            ProcessGroupEnum.CASTING_DIE.getProcessGroup(),
+            ProcessGroupEnum.CASTING_SAND.getProcessGroup()
+    );
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";

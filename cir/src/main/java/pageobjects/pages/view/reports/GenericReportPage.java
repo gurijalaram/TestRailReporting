@@ -315,6 +315,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
     private WebElement dtcPartSummaryProcessGroupValue;
 
+    @FindBy(xpath = "(//span[contains(text(), 'Part Number:')])[1]/ancestor::td[2]/following-sibling::td[1]/span/span")
+    private WebElement element;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -349,7 +352,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectExportSet(String exportSet) {
         By exportSetToSelect = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         WebElement exportSetToPick = driver.findElement(exportSetToSelect);
-        pageUtils.waitForElementAndClick(exportSetToPick);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(exportSetToPick).click().perform();
         return this;
     }
 
@@ -390,7 +394,9 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setProcessGroup(String processGroupOption) {
         pageUtils.waitForElementAndClick(deselectAllProcessGroupsButton);;
-        driver.findElement(By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption))).click();
+        WebElement element = driver.findElement(By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption)));
+        Actions builder = new Actions(driver);
+        builder.moveToElement(element).click().perform();
         return this;
     }
 
@@ -1067,13 +1073,19 @@ public class GenericReportPage extends ReportsPageHeader {
         }
     }
 
-    public void clickBub() {
+    /**
+     * Hovers bubble one for process group test
+     */
+    public void hoverProcessGroupBubbleOne() {
         pageUtils.waitForElementToAppear(castingDtcBubbleThree);
         Actions builder = new Actions(driver).moveToElement(castingDtcBubbleThree);
         builder.perform();
     }
 
-    public void clickBubTwo() {
+    /**
+     * Hovers bubble two for process group test
+     */
+    public void hoverProcessGroupBubbleTwo() {
         pageUtils.waitForElementToAppear(castingDtcBubbleFour);
         Actions builder = new Actions(driver).moveToElement(castingDtcBubbleFour);
         builder.perform();

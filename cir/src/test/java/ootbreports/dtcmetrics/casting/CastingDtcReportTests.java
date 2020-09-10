@@ -26,6 +26,7 @@ import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -269,118 +270,41 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupDieCastingOnly() {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
-                .setProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-                .clickOk();
-
-        assertThat(
-                genericReportPage.getProcessGroupValueCastingDtc(),
-                is(equalTo(ProcessGroupEnum.CASTING_DIE.getProcessGroup()))
-        );
-
-        genericReportPage.setReportName(ReportNamesEnum.DTC_PART_SUMMARY.getReportName());
-        genericReportPage.hoverPartNameBubbleDtcReports();
-        String partName = genericReportPage.getPartNameDtcReports();
-
-        genericReportPage.navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
-                .selectComponent(partName)
-                .clickOk();
-
-        assertThat(
-                genericReportPage.getProcessGroupValueDtcPartSummary(),
-                is(equalTo(ProcessGroupEnum.CASTING_DIE.getProcessGroup()))
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testSingleProcessGroup(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                ProcessGroupEnum.CASTING_DIE.getProcessGroup()
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupSandCastingOnly() {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
-                .setProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-                .clickOk();
-
-        assertThat(
-                genericReportPage.getProcessGroupValueCastingDtc(),
-                is(equalTo(ProcessGroupEnum.CASTING_SAND.getProcessGroup()))
-        );
-
-        genericReportPage.setReportName(ReportNamesEnum.DTC_PART_SUMMARY.getReportName());
-        genericReportPage.hoverPartNameBubbleDtcReports();
-        String partName = genericReportPage.getPartNameDtcReports();
-
-        genericReportPage.navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
-                .selectComponent(partName)
-                .clickOk();
-
-        assertThat(
-                genericReportPage.getProcessGroupValueDtcPartSummary(),
-                is(equalTo(ProcessGroupEnum.CASTING_SAND.getProcessGroup()))
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testSingleProcessGroup(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                ProcessGroupEnum.CASTING_SAND.getProcessGroup()
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupSandAndDieCasting() {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
-                .clickOk();
-
-        String castingDieSandName = String.format(
-                "%s, %s",
-                ProcessGroupEnum.CASTING_DIE.getProcessGroup(),
-                ProcessGroupEnum.CASTING_SAND.getProcessGroup()
-        );
-
-        assertThat(
-                genericReportPage.getProcessGroupValueCastingDtc(),
-                is(equalTo(castingDieSandName))
-        );
-
-        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
-        genericReportPage.clickBub();
-        String partName = genericReportPage.getPartNameDtcReports();
-        genericReportPage.clickBubTwo();
-        String partNameTwo = genericReportPage.getPartNameDtcReports();
-
-        genericReportPage.navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
-                .selectComponent(partName)
-                .clickOk();
-
-        assertThat(
-                genericReportPage.getProcessGroupValueDtcPartSummary(),
-                is(equalTo(ProcessGroupEnum.CASTING_SAND.getProcessGroup()))
-        );
-
-        genericReportPage.navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
-                .selectComponent(partNameTwo)
-                .clickOk();
-
-        assertThat(
-                genericReportPage.getProcessGroupValueDtcPartSummary(),
-                is(equalTo(ProcessGroupEnum.CASTING_DIE.getProcessGroup()))
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testTwoProcessGroups(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                Constants.CASTING_DIE_SAND_NAME
         );
     }
 }
