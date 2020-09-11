@@ -139,6 +139,11 @@ public class DriverFactory {
                 dc.setVersion("11");
                 result = new InternetExplorerDriver(dc);
                 break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                result = new EdgeDriver(dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
+                break;
             default:
             case "chrome":
                 WebDriverManager.chromedriver().setup();
@@ -152,10 +157,6 @@ public class DriverFactory {
                 result = new ChromeDriver(dc);
                 logger_DriverFactory.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                 break;
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                result = new EdgeDriver(dc);
-                logger_DriverFactory.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
         }
         return result;
     }
