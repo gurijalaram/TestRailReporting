@@ -76,8 +76,6 @@ public class DriverFactory {
                     }
                     break;
                 case GRID:
-                    // docker.internal is used for running on docker local, the ip is used for running on docker jenkins
-                    String serverAddress = testType.equals(TestType.UI) ? "172.17.0.1" : "host.docker.internal";
                     driver = getQADriver(("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
                     break;
                 case EXPORT:
@@ -221,7 +219,7 @@ public class DriverFactory {
                 logger_DriverFactory.info("Full list of Capabilities: " + (result).getCapabilities().toString());
                 break;
             case "edge":
-                dc.setCapability("browserName", "edge");
+                dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
                 logger_DriverFactory.info("Full list of Capabilities: " + (result).getCapabilities().toString());
                 break;
