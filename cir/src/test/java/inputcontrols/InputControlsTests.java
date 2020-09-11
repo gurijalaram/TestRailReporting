@@ -372,11 +372,16 @@ public class InputControlsTests extends TestBase {
                 is(equalTo(processGroupName))
         );
 
-        genericReportPage.setReportName(ReportNamesEnum.DTC_PART_SUMMARY.getReportName());
-        genericReportPage.hoverPartNameBubbleDtcReports();
-        String partName = genericReportPage.getPartNameDtcReports();
+        if (reportName.equals(ReportNamesEnum.MACHINING_DTC.getReportName()) &&
+                processGroupName.equals(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())) {
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
+        } else {
+            genericReportPage.setReportName(ReportNamesEnum.DTC_PART_SUMMARY.getReportName());
+            genericReportPage.hoverPartNameBubbleDtcReports();
+            String partName = genericReportPage.getPartNameDtcReports();
 
-        navigateToDtcPartSummaryAndAssert(partName, processGroupName);
+            navigateToDtcPartSummaryAndAssert(partName, processGroupName);
+        }
     }
 
     /**
@@ -385,7 +390,7 @@ public class InputControlsTests extends TestBase {
      * @param exportSet - String
      * @param processGroupName - String
      */
-    public void testTwoProcessGroups(String reportName, String exportSet, String processGroupName) {
+    public void testTwoProcessGroupsCasting(String reportName, String exportSet, String processGroupName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
@@ -407,6 +412,31 @@ public class InputControlsTests extends TestBase {
 
         navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
         navigateToDtcPartSummaryAndAssert(partNameTwo, ProcessGroupEnum.CASTING_DIE.getProcessGroup());
+    }
+
+    /**
+     *
+     */
+    public void testTwoProcessGroupsMachining() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .clickOk();
+
+        assertThat(
+                genericReportPage.getProcessGroupValueCastingDtc(),
+                is(equalTo(Constants.STOCK_MACHINING_TWO_MODEL_NAME))
+        );
+
+        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
+        String partName = genericReportPage.getPartNameDtcReports();
+
+        navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.STOCK_MACHINING.getProcessGroup());
     }
 
     public void navigateToDtcPartSummaryAndAssert(String partName, String processGroupName) {

@@ -58,6 +58,11 @@ public class Constants {
             ProcessGroupEnum.CASTING_DIE.getProcessGroup(),
             ProcessGroupEnum.CASTING_SAND.getProcessGroup()
     );
+    public static final String STOCK_MACHINING_TWO_MODEL_NAME = String.format(
+            "%s, %s",
+            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
+            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
+    );
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";

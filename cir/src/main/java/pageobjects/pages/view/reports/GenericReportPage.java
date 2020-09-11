@@ -16,6 +16,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -315,8 +316,8 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
     private WebElement dtcPartSummaryProcessGroupValue;
 
-    @FindBy(xpath = "(//span[contains(text(), 'Part Number:')])[1]/ancestor::td[2]/following-sibling::td[1]/span/span")
-    private WebElement element;
+    @FindBy(xpath = "(//div[@id='reportContainer']/table/tbody/tr[@style='height:20px'])[1]//span")
+    private WebElement noDataAvailableElement;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -1097,8 +1098,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage selectComponent(String partName) {
         pageUtils.waitForElementAndClick(componentSelectDropdown);
-        pageUtils.waitForElementAndClick(componentSelectSearchInput);
-        componentSelectSearchInput.sendKeys(partName);
         pageUtils.waitForElementAndClick(
                 driver.findElement(
                         By.xpath(String.format("//a[contains(text(), '%s')]", partName))
@@ -1212,6 +1211,10 @@ public class GenericReportPage extends ReportsPageHeader {
         return headerDisplayedRollup.getText();
     }
 
+    public boolean isDataAvailableLabelDisplayedAndEnabled() {
+        return noDataAvailableElement.isDisplayed() && noDataAvailableElement.isEnabled();
+    }
+
     /**
      * Gets dropdown index from date
      * @param date - date to use
@@ -1247,6 +1250,7 @@ public class GenericReportPage extends ReportsPageHeader {
         partNameMap.put(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), partNameCastingDtcDetailsReport);
         partNameMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), partNamePlasticDtcReport);
         partNameMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), partNameCastingDtcReport);
+        partNameMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), partNameCastingDtcReport);
     }
 
     /**
