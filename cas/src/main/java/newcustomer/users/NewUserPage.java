@@ -71,7 +71,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     private WebElement editButton;
 
     @FindBy(xpath = "//button[.='Reset MFA']")
-    private WebElement resetMFAButton;
+    private WebElement resetMfaButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -353,7 +353,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @return new page object
      */
     public NewUserPage resetMfa() {
-        pageUtils.waitForElementAndClick(resetMFAButton);
+        pageUtils.waitForElementAndClick(resetMfaButton);
         return this;
     }
 }
