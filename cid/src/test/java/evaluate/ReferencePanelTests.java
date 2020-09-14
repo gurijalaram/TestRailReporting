@@ -92,7 +92,7 @@ public class ReferencePanelTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"358", "958"})
+    @TestRail(testCaseId = {"358"})
     @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
 
