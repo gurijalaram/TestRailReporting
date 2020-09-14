@@ -349,7 +349,7 @@ public class InputControlsTests extends TestBase {
                 .clickOk();
 
         assertThat(
-                genericReportPage.getProcessGroupValueCastingDtc(),
+                genericReportPage.getProcessGroupValueDtc(reportName),
                 is(equalTo(processGroupName))
         );
 
@@ -426,7 +426,7 @@ public class InputControlsTests extends TestBase {
                 .clickOk();
 
         assertThat(
-                genericReportPage.getProcessGroupValueCastingDtc(),
+                genericReportPage.getProcessGroupValueDtc(reportName),
                 is(equalTo(processGroupName))
         );
     }
@@ -438,7 +438,7 @@ public class InputControlsTests extends TestBase {
                 .clickOk();
 
         assertThat(
-                genericReportPage.getProcessGroupValueDtcPartSummary(),
+                genericReportPage.getProcessGroupValueDtc(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()),
                 is(equalTo(processGroupName))
         );
     }

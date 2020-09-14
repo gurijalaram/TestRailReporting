@@ -404,20 +404,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * Gets current Process Group value
      * @return String
      */
-    public String getProcessGroupValueCastingDtc() {
-        pageUtils.waitForElementToAppear(processGroupCurrentValueCastingDtc);
-        return processGroupCurrentValueCastingDtc.getText();
+    public String getProcessGroupValueDtc(String reportName) {
+        WebElement elementToUse = reportName.equals(ReportNamesEnum.DTC_PART_SUMMARY.getReportName())
+                ? processGroupCurrentValueDtcPartSummary
+                : processGroupCurrentValueCastingDtc;
+        pageUtils.waitForElementToAppear(elementToUse);
+        return elementToUse.getText();
     }
-
-    /**
-     * Gets current Process Group value
-     * @return String
-     */
-    public String getProcessGroupValueDtcPartSummary() {
-        pageUtils.waitForElementToAppear(processGroupCurrentValueDtcPartSummary);
-        return processGroupCurrentValueDtcPartSummary.getText();
-    }
-
 
     /**
      * Sets specified assembly
