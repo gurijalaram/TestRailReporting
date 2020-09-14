@@ -1,6 +1,7 @@
 package com.apriori.utils.constants;
 
 import com.apriori.utils.enums.ProcessGroupEnum;
+
 import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
