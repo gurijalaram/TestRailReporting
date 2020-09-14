@@ -733,7 +733,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String - count of export sets
      */
     public String getCountOfExportSets() {
-        return exportSetList.getAttribute("childElementCount");
+        return availableExportSets.getText().substring(11);
     }
 
     /**
