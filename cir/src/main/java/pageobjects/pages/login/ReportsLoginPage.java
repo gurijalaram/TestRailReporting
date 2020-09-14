@@ -13,7 +13,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.header.ReportsPageHeader;
-import pageobjects.pages.homepage.ReportsHomePage;
 
 import java.util.List;
 
@@ -138,9 +137,9 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return new page object
      */
     @Deprecated
-    public ReportsHomePage login(String email, String password) {
+    public ReportsPageHeader login(String email, String password) {
         executeLogin(email, password);
-        return new ReportsHomePage(driver);
+        return new ReportsPageHeader(driver);
     }
 
     /**
@@ -148,9 +147,9 @@ public class ReportsLoginPage extends ReportsPageHeader {
      *
      * @return new page object
      */
-    public ReportsHomePage login(UserCredentials userCredentials) {
+    public ReportsPageHeader login(UserCredentials userCredentials) {
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new ReportsHomePage(driver);
+        return new ReportsPageHeader(driver);
     }
 
     /**
@@ -158,7 +157,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      *
      * @return new page object
      */
-    public ReportsHomePage login() {
+    public ReportsPageHeader login() {
         UserCredentials userCredentials;
 
         if (Constants.PROP_USER_NAME != null && Constants.PROP_USER_PASSWORD != null) {
@@ -168,7 +167,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
         }
 
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new ReportsHomePage(driver);
+        return new ReportsPageHeader(driver);
     }
 
     /**

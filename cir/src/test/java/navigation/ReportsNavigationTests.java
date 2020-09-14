@@ -13,12 +13,12 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.header.ReportsPageHeader;
 import pageobjects.pages.create.CreateAdHocViewPage;
 import pageobjects.pages.create.CreateDashboardPage;
 import pageobjects.pages.create.CreateDataSourcePage;
 import pageobjects.pages.create.CreateDomainPage;
 import pageobjects.pages.create.CreateReportPage;
-import pageobjects.pages.homepage.ReportsHomePage;
 import pageobjects.pages.library.LibraryPage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.logout.LogoutPage;
@@ -35,6 +35,7 @@ import testsuites.suiteinterface.OnPremTest;
 public class ReportsNavigationTests extends TestBase {
 
     private ViewSearchResultsPage searchResults;
+    private ReportsPageHeader reportsPageHeader;
     private CreateDataSourcePage dataSource;
     private CirUserGuidePage cirUserGuide;
     private ViewRepositoryPage repository;
@@ -47,7 +48,6 @@ public class ReportsNavigationTests extends TestBase {
     private ManageRolesPage roles;
     private ManageUsersPage users;
     private LibraryPage library;
-    private ReportsHomePage homePage;
     private LogoutPage logout;
 
     public ReportsNavigationTests() {
@@ -91,11 +91,11 @@ public class ReportsNavigationTests extends TestBase {
     @TestRail(testCaseId = {"2967"})
     @Description("Ensure that the link to Home works (doesn't navigate elsewhere - negative test)")
     public void testHomeNavigation() {
-        homePage = new ReportsLoginPage(driver)
+        reportsPageHeader = new ReportsLoginPage(driver)
             .login()
             .navigateToHomePage();
 
-        assertThat(homePage.getHomeTitleText(), is(equalTo("Home")));
+        assertThat(reportsPageHeader.getHomeTitleText(), is(equalTo("Home")));
     }
 
     @Test
