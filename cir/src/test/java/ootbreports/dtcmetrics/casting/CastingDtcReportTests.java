@@ -301,10 +301,6 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupSandAndDieCasting() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testTwoProcessGroupsCasting(
-                ReportNamesEnum.CASTING_DTC.getReportName(),
-                ExportSetEnum.CASTING_DTC.getExportSetName(),
-                Constants.CASTING_DIE_SAND_NAME
-        );
+        inputControlsTests.testTwoProcessGroupsCasting();
     }
 }

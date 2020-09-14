@@ -16,7 +16,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -56,10 +55,10 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement castingDtcBubbleTwo;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[54][local-name() = 'path']")
-    private WebElement castingDtcBubbleThree;
+    private WebElement processGroupBubbleOne;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[56][local-name() = 'path']")
-    private WebElement castingDtcBubbleFour;
+    private WebElement processGroupBubbleTwo;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name() = 'path'][43]")
     private WebElement machiningDtcBubble;
@@ -1078,8 +1077,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers bubble one for process group test
      */
     public void hoverProcessGroupBubbleOne() {
-        pageUtils.waitForElementToAppear(castingDtcBubbleThree);
-        Actions builder = new Actions(driver).moveToElement(castingDtcBubbleThree);
+        pageUtils.waitForElementToAppear(processGroupBubbleOne);
+        Actions builder = new Actions(driver).moveToElement(processGroupBubbleOne);
         builder.perform();
     }
 
@@ -1087,8 +1086,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers bubble two for process group test
      */
     public void hoverProcessGroupBubbleTwo() {
-        pageUtils.waitForElementToAppear(castingDtcBubbleFour);
-        Actions builder = new Actions(driver).moveToElement(castingDtcBubbleFour);
+        pageUtils.waitForElementToAppear(processGroupBubbleTwo);
+        Actions builder = new Actions(driver).moveToElement(processGroupBubbleTwo);
         builder.perform();
     }
 
