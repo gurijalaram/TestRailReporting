@@ -31,8 +31,6 @@ import pageobjects.pages.view.ViewRepositoryPage;
 import pageobjects.pages.view.ViewSchedulesPage;
 import pageobjects.pages.view.ViewSearchResultsPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
-
 
 public class ReportsNavigationTests extends TestBase {
 
