@@ -350,10 +350,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
-        By exportSetToSelect = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
-        WebElement exportSetToPick = driver.findElement(exportSetToSelect);
+        //By exportSetToSelect = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        //WebElement exportSetToPick = driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)));
         Actions actions = new Actions(driver);
-        actions.moveToElement(exportSetToPick).click().perform();
+        actions.moveToElement(
+                driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)))
+        ).click().perform();
         return this;
     }
 
