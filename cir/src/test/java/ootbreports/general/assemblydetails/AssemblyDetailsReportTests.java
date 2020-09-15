@@ -607,4 +607,16 @@ public class AssemblyDetailsReportTests extends TestBase {
                 containsString("[assembly]")
         );
     }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1920")
+    @Description("Export set count is correct")
+    public void testExportSetSelectionOptions() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetSelection(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                ExportSetEnum.TOP_LEVEL.getExportSetName()
+        );
+    }
 }
