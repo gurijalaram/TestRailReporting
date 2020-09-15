@@ -1,4 +1,4 @@
-## How to setup automation:
+# How to setup automation:
 
 1. Java 8 is used and required
 2. Clone the apriori-qa repo using `git clone git@github.com:aPrioriTechnologies/apriori-qa.git`
