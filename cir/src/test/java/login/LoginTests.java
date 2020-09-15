@@ -11,14 +11,14 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pageobjects.pages.homepage.ReportsHomePage;
+import pageobjects.header.ReportsPageHeader;
 import pageobjects.pages.login.ReportsLoginPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class LoginTests extends TestBase {
 
+    private ReportsPageHeader reportsPageHeader;
     private ReportsLoginPage loginPage;
-    private ReportsHomePage homePage;
 
     public LoginTests() {
         super();
@@ -29,10 +29,10 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
     public void testLogin() {
-        homePage = new ReportsLoginPage(driver)
+        reportsPageHeader = new ReportsLoginPage(driver)
             .login();
 
-        assertThat(homePage.isCreateButtonDisplayed(), is(true));
+        assertThat(reportsPageHeader.isCreateDashboardsButtonDisplayed(), is(true));
     }
 
     @Test

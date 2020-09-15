@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
-import pageobjects.pages.homepage.ReportsHomePage;
+import pageobjects.header.ReportsPageHeader;
 import pageobjects.pages.library.LibraryPage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.ViewSearchResultsPage;
@@ -17,7 +17,7 @@ public class ReportAvailabilityTests extends TestBase {
 
     private ViewSearchResultsPage viewSearchResultsPage;
     private GenericReportPage genericReportPage;
-    private ReportsHomePage reportsHomePage;
+    private ReportsPageHeader reportsPageHeader;
     private LibraryPage libraryPage;
     private WebDriver driver;
 
@@ -56,10 +56,10 @@ public class ReportAvailabilityTests extends TestBase {
      * @param reportName - String
      */
     public void testReportAvailabilityBySearch(String reportName) {
-        reportsHomePage = new ReportsLoginPage(driver)
+        reportsPageHeader = new ReportsLoginPage(driver)
                 .login();
 
-        viewSearchResultsPage = reportsHomePage.searchForReport(reportName);
+        viewSearchResultsPage = reportsPageHeader.searchForReport(reportName);
 
         assertThat(viewSearchResultsPage.getReportName(reportName),
                 is(equalTo(reportName))

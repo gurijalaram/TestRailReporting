@@ -96,7 +96,7 @@ pipeline {
                 echo "Testing.."
 
                 script {
-                    if ("${params.TEST_MODE}" == "GRID") {
+                    if ("${params.TEST_MODE}" == "LOCAL") {
                         sh """
                             docker-compose up -d --force-recreate
                         """
@@ -129,10 +129,14 @@ pipeline {
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
-            sh "docker rm -f \$(docker ps --filter name=chrome -q)"
-            sh "docker rm -f \$(docker ps --filter name=firefox -q)"
-            sh "docker rmi -f selenium/node-firefox"
-            sh "docker rmi -f selenium/node-chrome"
+            script {
+                if ("${params.TEST_MODE}" == "LOCAL") {
+                    sh "docker rm -f \$(docker ps --filter name=chrome -q)"
+                    sh "docker rm -f \$(docker ps --filter name=firefox -q)"
+                    sh "docker rmi -f selenium/node-firefox"
+                    sh "docker rmi -f selenium/node-chrome"
+                }
+            }
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
             cleanWs()
         }
