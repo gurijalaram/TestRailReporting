@@ -82,7 +82,7 @@ public class CostAllCadTests extends TestBase {
             .selectMaterialComposition("FN-0205")
             .apply()
             .costScenario()
-            .openReferenceCompare();
+            .expandReferencePanel();
 
         assertThat(referenceComparePage.getMaterialCostDelta(), containsString("up"));
         assertThat(referenceComparePage.getPiecePartCostDelta(), containsString("down"));
