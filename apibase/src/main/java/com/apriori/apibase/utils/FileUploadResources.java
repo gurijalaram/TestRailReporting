@@ -30,6 +30,7 @@ import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -83,6 +84,7 @@ public class FileUploadResources {
      * @param processGroup - the process group
      */
     public void uploadCostPublishApi(HashMap<String, String> token, Object fileObject, String fileName, String scenarioName, String processGroup) {
+        checkValidProcessGroup(processGroup);
         initializeFileUpload(token, fileName);
         createFileUploadWorkOrder(token, fileName, scenarioName);
         submitFileUploadWorkOrder(token);
@@ -462,5 +464,23 @@ public class FileUploadResources {
             throw new NullPointerException("Not able to read JsonNode");
         }
         return node.findPath(path).asText();
+    }
+
+    /**
+     * Checks the process group is valid before proceeding.  This check has to be done to ensure the system doesn't crash as per BA-1202
+     * @param processGroup - the process group
+     */
+    private void checkValidProcessGroup(String processGroup) {
+        boolean match = false;
+
+        for (String processGroupEnum : ProcessGroupEnum.getNames()) {
+            if (processGroupEnum.equals(processGroup)) {
+                match = true;
+                break;
+            }
+        }
+        if (!match) {
+            throw new RuntimeException(String.format("Process Group '%s' is not valid", processGroup));
+        }
     }
 }
