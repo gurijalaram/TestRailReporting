@@ -10,7 +10,7 @@ pipeline {
     parameters {
         string(name: 'TARGET_URL', defaultValue: 'https://automation.awsdev.apriori.com/', description: 'What is the target URL for testing?')
         choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa', 'cas-int', 'cas-qa', 'cid-int', 'cid-qa'], description: 'What is the target environment for testing?')
-        choice(name: 'TEST_TYPE', choices: ['uitests', 'apitests', 'ciconnect', 'cid', 'cas', 'cir', 'cia'], description: 'What type of test is running?')
+        choice(name: 'TEST_TYPE', choices: ['cid', 'apitests', 'ciconnect', 'cas', 'cir', 'cia'], description: 'What type of test is running?')
         choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'CIARStagingSmokeTestSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
@@ -96,7 +96,7 @@ pipeline {
                 echo "Testing.."
 
                 script {
-                    if ("${params.TEST_MODE}" == "GRID") {
+                    if ("${params.TEST_MODE}" == "LOCAL") {
                         sh """
                             docker-compose up -d --force-recreate
                         """
@@ -129,10 +129,14 @@ pipeline {
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
-            sh "docker rm -f \$(docker ps --filter name=chrome -q)"
-            sh "docker rm -f \$(docker ps --filter name=firefox -q)"
-            sh "docker rmi -f selenium/node-firefox"
-            sh "docker rmi -f selenium/node-chrome"
+            script {
+                if ("${params.TEST_MODE}" == "LOCAL") {
+                    sh "docker rm -f \$(docker ps --filter name=chrome -q)"
+                    sh "docker rm -f \$(docker ps --filter name=firefox -q)"
+                    sh "docker rmi -f selenium/node-firefox"
+                    sh "docker rmi -f selenium/node-chrome"
+                }
+            }
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
             cleanWs()
         }
