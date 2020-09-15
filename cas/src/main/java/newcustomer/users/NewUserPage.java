@@ -67,6 +67,12 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     @FindBy(xpath = "//button[.='Cancel']")
     private WebElement cancelButton;
 
+    @FindBy(xpath = "//button[.='Edit']")
+    private WebElement editButton;
+
+    @FindBy(xpath = "//button[.='Reset MFA']")
+    private WebElement resetMfaButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private NavToolbar navToolbar;
@@ -329,5 +335,25 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     public CustomerAdminPage save() {
         pageUtils.waitForElementAndClick(saveButton);
         return new CustomerAdminPage(driver);
+    }
+
+    /**
+     * Edit customer info
+     *
+     * @return new page object
+     */
+    public NewUserPage edit() {
+        pageUtils.waitForElementAndClick(editButton);
+        return this;
+    }
+
+    /**
+     * Reset MFA
+     *
+     * @return new page object
+     */
+    public NewUserPage resetMfa() {
+        pageUtils.waitForElementAndClick(resetMfaButton);
+        return this;
     }
 }
