@@ -468,7 +468,7 @@ public class FileUploadResources {
     }
 
     /**
-     * Checks the process group is valid before proceeding.  This check has to be done to ensure the system doesn't crash as per BA-1202
+     * Checks the process group is valid before proceeding.  This check has to be done to ensure the system doesn't crash as per https://jira.apriori.com/browse/BA-1202
      * @param processGroup - the process group
      */
     private void checkValidProcessGroup(String processGroup) {
