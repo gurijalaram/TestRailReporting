@@ -109,10 +109,10 @@ target/
 logs/
 allure-results/
 screenshots/
-/uitests/git
+/cid/git
 /internalapi/build/
 /apibase/build/
-/uitests/build/
+/cid/build/
 /pageobjects/build/
 /utils/build/
 build/

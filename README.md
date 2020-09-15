@@ -23,16 +23,16 @@
 
 ## Run Gradle tests with JVM args
 1. Open Terminal to root `build` directory
-2. Run `gradle clean :uitests:test --tests "{parentFolder.suiteName}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite"`
-3. To pass in JVM args `gradle clean :uitests:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :uitests:test --tests "testsuites.CIDTestSuite" -DthreadCounts=3 -Denv=cid-te`
+2. Run `gradle clean :cid:test --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDTestSuite"`
+3. To pass in JVM args `gradle clean :cid:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :cid:test --tests "testsuites.CIDTestSuite" -DthreadCounts=3 -Denv=cid-te`
 
-## How to run single
+## How to run single suite
 1. Open Terminal to root `build` directory
-2. Run `gradle clean :uitests:test --tests "{fully qualified packagename.nameOfClass.nameOfTest}"` eg `gradle clean :uitests:test --tests "evaluate.designguidance.failures.failedCostingCount"`
+2. Run `gradle clean :cid:test --tests "{fully qualified packagename.nameOfClass.nameOfTest}"` eg `gradle clean :cid:test --tests "evaluate.designguidance.failures.failedCostingCount"`
 
 ## How to run multiple suites
 1. Open Terminal to root `build` directory
-Run `gradle clean :uitests:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :uitests:test --tests "testsuites.CIDTestSuite" --tests "testsuites.SmokeTestSuite"`
+Run `gradle clean :cid:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDTestSuite" --tests "testsuites.SmokeTestSuite"`
 
 ## Build Gradle jar files
 1. Download and install Gradle 6.1.1 (this is the version that was first used on the project)
@@ -41,7 +41,7 @@ Run `gradle clean :uitests:test --tests "{parentFolder.suiteName}" --tests "{par
     - if Gradle is not installed use `gradlew`
     - `clean` deletes existing `build` folder in each module
     - `fatjar` is the task that creates the zip file (nb. this task name is not a constant)
-4. When the jar is complete -> Open Terminal to `..\uitests\build\libs`
+4. When the jar is complete -> Open Terminal to `..\cid\build\libs`
 5. Run `java -jar {nameOfJar}.jar` eg. `java -jar automation-qa-0.0.1-SNAPSHOT.jar`
     - To pass command line arguments: `java {arg} -jar {nameOfJar}.jar` eg. `java -Denv=cid-te -jar automation-qa-0.0.1-SNAPSHOT.jar`
     - To run jar with single test class: `java -jar {namOfJar}` eg. `java -jar automation-qa-0.0.1-SNAPSHOT.jar -test evaluate.ListOfVPETests`
