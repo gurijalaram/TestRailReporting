@@ -365,6 +365,13 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Gets assembly name from set assembly dropdown
+     */
+    public String getAssemblyNameFromSetAssemblyDropdown(String assemblyName) {
+        return assemblyMap.get(assemblyName).getAttribute("textContent");
+    }
+
+    /**
      * Checks current currency selection, fixes if necessary
      *
      * @param currency - String
