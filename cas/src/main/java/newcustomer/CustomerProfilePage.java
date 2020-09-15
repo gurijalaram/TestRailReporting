@@ -229,7 +229,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     }
 
     /**
-     * Cancels customer info
+     * Cancel customer info
      *
      * @return new page object
      */
@@ -239,7 +239,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     }
 
     /**
-     * Saves customer info
+     * Save customer info
      *
      * @return new page object
      */

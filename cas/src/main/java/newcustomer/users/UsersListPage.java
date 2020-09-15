@@ -22,15 +22,6 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
     @FindBy(css = "a[name='userAppsConfiguration']")
     private WebElement appGrantTab;
 
-    @FindBy(css = "")
-    private WebElement deploymentDropdown;
-
-    @FindBy(css = "")
-    private WebElement regionDropdown;
-
-    @FindBy(css = "")
-    private WebElement applicationDropdown;
-
     @FindBy(xpath = "//button[.='Update']")
     private WebElement updateButton;
 
