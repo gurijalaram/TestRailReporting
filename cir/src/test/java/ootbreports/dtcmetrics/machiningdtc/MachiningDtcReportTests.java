@@ -236,6 +236,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3028")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupStockMachiningOnly() {
@@ -248,6 +249,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3028")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupTwoModelMachiningOnly() {
@@ -260,6 +262,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3028")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupSandAndDieCasting() {

@@ -283,6 +283,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupDieCastingOnly() {
@@ -295,6 +296,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupSandCastingOnly() {
@@ -307,6 +309,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupSandAndDieCasting() {
