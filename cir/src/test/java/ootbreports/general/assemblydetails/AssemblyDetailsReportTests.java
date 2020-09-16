@@ -619,4 +619,29 @@ public class AssemblyDetailsReportTests extends TestBase {
                 ExportSetEnum.TOP_LEVEL.getExportSetName()
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "1931")
+    @Description("Validate links to component cost detail report (incl. headers etc.)")
+    public void testLinksToComponentCostReport() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+        
+        String partNumberComponent = genericReportPage.getComponentLinkPartNumber();
+        genericReportPage.clickComponentLinkAssemblyDetails();
+        assertThat(genericReportPage.getReportTitle(), is(equalTo("Component Cost Internal Use")));
+        assertThat(genericReportPage.getComponentCostPartNumber(), is(equalTo(partNumberComponent)));
+        genericReportPage.closeTab();
+
+        String partNumberAssembly = genericReportPage.getAssemblyLinkPartNumber();
+        genericReportPage.clickAssemblyLinkAssemblyDetails();
+        assertThat(genericReportPage.getReportTitle(), is(equalTo("Component Cost Internal Use")));
+        assertThat(genericReportPage.getComponentCostPartNumber(), is(equalTo(partNumberAssembly)));
+    }
 }
