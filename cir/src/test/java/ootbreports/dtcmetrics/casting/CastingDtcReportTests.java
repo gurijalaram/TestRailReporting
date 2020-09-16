@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
@@ -279,5 +280,37 @@ public class CastingDtcReportTests extends TestBase {
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1704")
+    @Description("Verify Process Group input control functions correctly")
+    public void testProcessGroupDieCastingOnly() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testSingleProcessGroup(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                ProcessGroupEnum.CASTING_DIE.getProcessGroup()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1704")
+    @Description("Verify Process Group input control functions correctly")
+    public void testProcessGroupSandCastingOnly() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testSingleProcessGroup(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                ProcessGroupEnum.CASTING_SAND.getProcessGroup()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1704")
+    @Description("Verify Process Group input control functions correctly")
+    public void testProcessGroupSandAndDieCasting() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testTwoProcessGroupsCasting();
     }
 }
