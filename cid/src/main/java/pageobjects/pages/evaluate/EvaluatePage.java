@@ -389,7 +389,7 @@ public class EvaluatePage extends EvaluateHeader {
      *
      * @return new page object
      */
-    public ReferenceComparePage openReferenceCompare() {
+    public ReferenceComparePage expandReferencePanel() {
         if (!pageUtils.isElementDisplayed(chevron)) {
             pageUtils.waitForElementAndClick(referenceChevron);
         }
@@ -764,18 +764,6 @@ public class EvaluatePage extends EvaluateHeader {
         By secondaryProcess = By.cssSelector("[data-ap-field='userOverridesCount']");
         pageUtils.waitForElementToAppear(secondaryProcess);
         return driver.findElement(secondaryProcess).getAttribute("value");
-    }
-
-    /**
-     * Close the reference compare page
-     *
-     * @return new page object
-     */
-    public EvaluatePage collapseReferenceCompare() {
-        if (pageUtils.isElementDisplayed(chevron)) {
-            pageUtils.waitForElementAndClick(referenceChevron);
-        }
-        return this;
     }
 
     /**
