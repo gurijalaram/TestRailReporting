@@ -32,7 +32,6 @@ import pageobjects.pages.view.ViewSchedulesPage;
 import pageobjects.pages.view.ViewSearchResultsPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 
-
 public class ReportsNavigationTests extends TestBase {
 
     private PrivacyPolicyPage privacyPolicyPage;
