@@ -1234,8 +1234,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * Clicks Component Link in Assembly Details Report
      */
     public void clickComponentLinkAssemblyDetails() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementAndClick(componentLinkAssemblyDetails);
-        pageUtils.windowHandler(1);
+        if (pageUtils.getCountOfOpenTabs() == 2) {
+            pageUtils.windowHandler(1);
+        }
         pageUtils.waitForElementToAppear(componentCostReportTitle);
     }
 
