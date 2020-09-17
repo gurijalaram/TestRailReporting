@@ -5,13 +5,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 public class LoginTests extends TestBase {
 
@@ -25,6 +26,7 @@ public class LoginTests extends TestBase {
     private ExplorePage explorePage;
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Test successful login")
     public void testLogin() {
 
@@ -35,6 +37,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
 
@@ -45,6 +48,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Test unsuccessful login with incorrect email, correct password")
     public void testIncorrectEmail() {
 
@@ -55,6 +59,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
 
@@ -65,7 +70,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1574"})
+    @Category(SmokeTests.class)
     @Description("Validate Login Dialog")
     public void loginDialog() {
 
