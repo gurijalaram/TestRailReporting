@@ -15,7 +15,7 @@ import org.junit.Test;
 
 public class LoginTests extends TestBase {
 
-    private static String loginPageErrorMessage = "Wrong email or password.";
+    private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
 
     public LoginTests() {
         super();
@@ -41,20 +41,20 @@ public class LoginTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 
-        assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
+        assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }
 
-    //@Test
+    @Test
     @Description("Test unsuccessful login with incorrect email, correct password")
     public void testIncorrectEmail() {
 
         loginPage = new CidAppLoginPage(driver);
         loginPage = loginPage.failedLoginAs("jacky348@apriori.com", UserUtil.getUser().getPassword());
 
-        assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
+        assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }
 
-    //@Test
+    @Test
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
 
@@ -64,7 +64,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
-    //@Test
+    @Test
     @TestRail(testCaseId = {"1574"})
     @Description("Validate Login Dialog")
     public void loginDialog() {
