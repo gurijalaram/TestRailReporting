@@ -26,6 +26,9 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     @FindBy(css = "button[class='dropdown-toggle btn btn-primary']")
     private WebElement paginatorDropdown;
 
+    @FindBy(css = "div[class='card-header'] .left")
+    private WebElement scenarioCount;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private MainNavBar mainNavBar;
@@ -58,5 +61,13 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
      */
     public boolean isFilterButtonPresent() {
         return filtersButton.isDisplayed();
+    }
+
+    /**
+     * Gets the count of scenarios found
+     * @return string
+     */
+    public String getScenariosFound() {
+        return pageUtils.waitForElementAppear(scenarioCount).getText();
     }
 }
