@@ -4,6 +4,7 @@ import com.apriori.cis.tests.BatchPartResourcesTest;
 import com.apriori.cis.tests.BatchResourcesTest;
 import com.apriori.cis.tests.CostingScenarioTest;
 import com.apriori.cis.tests.CustomerResourcesTest;
+import com.apriori.cis.tests.MultiPartCostingScenarioTest;
 import com.apriori.cis.tests.PartResourcesTest;
 import com.apriori.cis.tests.ReportResourcesTest;
 import com.apriori.utils.ProjectRunID;
@@ -20,7 +21,8 @@ import org.junit.runners.Suite;
         PartResourcesTest.class,
         ReportResourcesTest.class,
         BatchResourcesTest.class,
-        BatchPartResourcesTest.class
+        BatchPartResourcesTest.class,
+        MultiPartCostingScenarioTest.class
 })
 public class APISuite {
 }
