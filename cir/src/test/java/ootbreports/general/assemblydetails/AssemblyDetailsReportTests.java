@@ -625,7 +625,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
         genericReportPage = new ReportsLoginPage(driver)
-                .login("qa-automation-01", "qa-automation-01")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
                 .waitForInputControlsLoad()
@@ -643,5 +643,21 @@ public class AssemblyDetailsReportTests extends TestBase {
         genericReportPage.clickAssemblyLinkAssemblyDetails();
         assertThat(genericReportPage.getReportTitle(), is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
         assertThat(genericReportPage.getComponentCostPartNumber(), is(equalTo(partNumberAssembly)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export Set search function works")
+    public void testExportSetSearch() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+                .waitForInputControlsLoad();
+
+        genericReportPage.searchForExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+
+        assertThat(genericReportPage.getExportSetOptionCount(), is(equalTo("1")));
+        assertThat(genericReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL.getExportSetName()), is(true));
     }
 }

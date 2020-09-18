@@ -1,5 +1,6 @@
 package pageobjects.pages.view.reports;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -182,6 +183,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr']")
     private WebElement exportSetList;
+
+    @FindBy(xpath = "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr']/..")
+    private WebElement exportSetListDiv;
 
     @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Invert']/a")
     private WebElement exportSetInvert;
@@ -1283,9 +1287,40 @@ public class GenericReportPage extends ReportsPageHeader {
         return componentCostReportPartNumber.getText();
     }
 
+    /**
+     * Closes current tab and switches back to main tab
+     */
     public void closeTab() {
         driver.close();
         pageUtils.windowHandler(0);
+    }
+
+    /**
+     * Searches for export set
+     * @param exportSet - String
+     */
+    public void searchForExportSet(String exportSet) {
+        pageUtils.waitForElementAndClick(exportSetSearchInput);
+        exportSetSearchInput.sendKeys(exportSet);
+        pageUtils.checkElementAttribute(exportSetSearchInput, "value", exportSet);
+        pageUtils.checkElementAttribute(exportSetList, "childElementCount", "1");
+    }
+
+    /**
+     * Checks if export set option is visible
+     * @param exportSet - String
+     * @return boolean
+     */
+    public boolean isExportSetVisible(String exportSet) {
+        WebElement exportSetElement = driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)));
+        return exportSetElement.isDisplayed() && exportSetElement.isEnabled();
+    }
+
+    /**
+     * Gets count of export sets visible
+     */
+    public String getExportSetOptionCount() {
+        return exportSetList.getAttribute("childElementCount");
     }
 
     /**
