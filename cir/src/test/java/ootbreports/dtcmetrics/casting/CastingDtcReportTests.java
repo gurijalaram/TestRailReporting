@@ -298,4 +298,15 @@ public class CastingDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsCasting();
     }
+
+    @Test
+    @TestRail(testCaseId = "1709")
+    @Description("Validate chart tool-tips")
+    public void testChartToolTips() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcChartTooltips(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
 }

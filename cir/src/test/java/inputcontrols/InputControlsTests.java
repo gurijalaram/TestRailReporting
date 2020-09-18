@@ -403,6 +403,27 @@ public class InputControlsTests extends TestBase {
         navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.STOCK_MACHINING.getProcessGroup());
     }
 
+    /**
+     * Generic test for chart tooltips on DTC Reports
+     * @param reportName - String
+     * @param exportSet - String
+     */
+    public void testDtcChartTooltips(String reportName, String exportSet) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSet)
+                .clickOk();
+
+        // hover over a bubble
+        genericReportPage.setReportName(reportName);
+        genericReportPage.hoverPartNameBubbleDtcReports();
+
+        // ensure all tspan elements are enabled and displayed
+    }
+
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
