@@ -625,7 +625,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("qa-automation-01", "qa-automation-01")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
                 .waitForInputControlsLoad()
@@ -635,13 +635,13 @@ public class AssemblyDetailsReportTests extends TestBase {
         
         String partNumberComponent = genericReportPage.getComponentLinkPartNumber();
         genericReportPage.clickComponentLinkAssemblyDetails();
-        assertThat(genericReportPage.getReportTitle(), is(equalTo("Component Cost Internal Use")));
+        assertThat(genericReportPage.getReportTitle(), is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
         assertThat(genericReportPage.getComponentCostPartNumber(), is(equalTo(partNumberComponent)));
         genericReportPage.closeTab();
 
         String partNumberAssembly = genericReportPage.getAssemblyLinkPartNumber();
         genericReportPage.clickAssemblyLinkAssemblyDetails();
-        assertThat(genericReportPage.getReportTitle(), is(equalTo("Component Cost Internal Use")));
+        assertThat(genericReportPage.getReportTitle(), is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
         assertThat(genericReportPage.getComponentCostPartNumber(), is(equalTo(partNumberAssembly)));
     }
 }
