@@ -19,11 +19,13 @@ import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.ReportAvailabilityTests;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import pageobjects.pages.view.reports.PlasticDtcReportPage;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
 
@@ -266,6 +268,18 @@ public class PlasticDtcReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1709")
+    @Description("Validate chart tool-tips")
+    public void testChartToolTips() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcChartTooltips(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
 }

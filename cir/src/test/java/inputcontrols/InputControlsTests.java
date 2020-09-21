@@ -417,11 +417,18 @@ public class InputControlsTests extends TestBase {
                 .selectExportSet(exportSet)
                 .clickOk();
 
-        // hover over a bubble
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
 
-        // ensure all tspan elements are enabled and displayed
+        assertThat(genericReportPage.isTooltipDisplayed(), is(true));
+        assertThat(genericReportPage.isTooltipElementVisible("Finish Mass Name"), is(true));
+        assertThat(genericReportPage.isTooltipElementVisible("Finish Mass Value"), is(true));
+        assertThat(genericReportPage.isTooltipElementVisible("Fbc Name"), is(true));
+        assertThat(genericReportPage.isTooltipElementVisible("Fbc Value"), is(true));
+        assertThat(genericReportPage.isTooltipElementVisible("DTC Score Name"), is(true));
+        assertThat(genericReportPage.isTooltipElementVisible("DTC Score Value"), is(true));
+        assertThat(genericReportPage.isTooltipElementVisible("Annual Spend Name"), is(true));
+        assertThat(genericReportPage.isTooltipElementVisible("Annual Spend Value"), is(true));
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {

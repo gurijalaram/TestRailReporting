@@ -43,6 +43,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> partNameMap = new HashMap<>();
     private Map<String, WebElement> bubbleMap = new HashMap<>();
     private Map<String, WebElement> fbcElementMap = new HashMap<>();
+    private Map<String, WebElement> tooltipElementMap = new HashMap<>();
     private String reportName = "";
 
     @FindBy(xpath = "(//div[@id='reportViewFrame']//div[@class='title'])[1]")
@@ -318,6 +319,36 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//div[@id='reportContainer']/table/tbody/tr[@style='height:20px'])[1]//span")
     private WebElement noDataAvailableElement;
 
+    @FindBy(xpath = "//*[local-name() = 'g' and @data-z-index='8']")
+    private WebElement dtcTooltipElement;
+
+    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[1]")
+    private WebElement tooltipPartNameValue;
+
+    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[2]")
+    private WebElement tooltipFinishMassName;
+
+    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[3]")
+    private WebElement tooltipFinishMassValue;
+
+    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[4]")
+    private WebElement tooltipFbcName;
+
+    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[5]")
+    private WebElement tooltipFbcValue;
+
+    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[6]")
+    private WebElement tooltipDtcScoreName;
+
+    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[7]")
+    private WebElement tooltipDtcScoreValue;
+
+    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[8]")
+    private WebElement tooltipAnnualSpendName;
+
+    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[9]")
+    private WebElement tooltipAnnualSpendValue;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -332,6 +363,7 @@ public class GenericReportPage extends ReportsPageHeader {
         initialisePartNameMap();
         initialiseBubbleMap();
         initialiseFbcElementMap();
+        initialiseTooltipElementMap();
     }
 
     @Override
@@ -1203,8 +1235,24 @@ public class GenericReportPage extends ReportsPageHeader {
         return headerDisplayedRollup.getText();
     }
 
+    /**
+     * Check if no data available element is displayed and enabled
+     * @return boolean
+     */
     public boolean isDataAvailableLabelDisplayedAndEnabled() {
         return noDataAvailableElement.isDisplayed() && noDataAvailableElement.isEnabled();
+    }
+
+    /**
+     * Checks if tooltip is displayed
+     * @return boolean
+     */
+    public boolean isTooltipDisplayed() {
+        return dtcTooltipElement.getAttribute("opacity").equals("1");
+    }
+
+    public boolean isTooltipElementVisible(String elementKey) {
+        return tooltipElementMap.get(elementKey).isDisplayed() && tooltipElementMap.get(elementKey).isEnabled();
     }
 
     /**
@@ -1262,5 +1310,19 @@ public class GenericReportPage extends ReportsPageHeader {
         fbcElementMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), tooltipFbcElement);
         fbcElementMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), tooltipFbcElement);
         fbcElementMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), fbcPlasticDtcReport);
+    }
+
+    /**
+     * Initialises tool tip element map
+     */
+    private void initialiseTooltipElementMap() {
+        tooltipElementMap.put("Finish Mass Name", tooltipFinishMassName);
+        tooltipElementMap.put("Finish Mass Value", tooltipFinishMassValue);
+        tooltipElementMap.put("Fbc Name", tooltipFbcName);
+        tooltipElementMap.put("Fbc Value", tooltipFbcValue);
+        tooltipElementMap.put("DTC Score Name", tooltipFinishMassName);
+        tooltipElementMap.put("DTC Score Value", tooltipFinishMassName);
+        tooltipElementMap.put("Annual Spend Name", tooltipFinishMassName);
+        tooltipElementMap.put("Annual Spend Value", tooltipFinishMassName);
     }
 }
