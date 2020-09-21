@@ -756,9 +756,8 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public GenericReportPage deselectExportSet(String exportSet) {
+    public GenericReportPage deselectExportSet() {
         int expected = getSelectedExportSetCount() - 1;
-        exportSetSearchInput.sendKeys(exportSet);
         pageUtils.waitForElementAndClick(exportSetToSelect);
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
         return this;
@@ -769,10 +768,12 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public GenericReportPage invertExportSetSelection() {
+    public GenericReportPage invertExportSetSelection(String exportSetName) {
         int expected = getAvailableExportSetCount() - getSelectedExportSetCount();
         pageUtils.waitForElementAndClick(exportSetInvert);
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        WebElement exportSet = driver.findElement(By.xpath(String.format("//li[@title='%s']", exportSetName)));
+        pageUtils.checkElementAttribute(exportSet, "class", "jr-isSelected");
         return this;
     }
 
