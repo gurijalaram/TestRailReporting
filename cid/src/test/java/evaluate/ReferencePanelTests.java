@@ -14,6 +14,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.evaluate.PublishPage;
@@ -57,7 +58,7 @@ public class ReferencePanelTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"356", "354", "957"})
+    @TestRail(testCaseId = {"356", "354"})
     @Description("Validate  the compare panel can show the comparison between the most recent public iteration")
     public void referencePublicIteration() {
 
@@ -76,7 +77,6 @@ public class ReferencePanelTests extends TestBase {
             .openScenario(scenarioName, "MultiUpload")
             .editScenario(EvaluatePage.class);
 
-        evaluatePage = new EvaluatePage(driver);
         referenceComparePage = evaluatePage
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
@@ -92,6 +92,7 @@ public class ReferencePanelTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-1212")
     @TestRail(testCaseId = {"358"})
     @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
