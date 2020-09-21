@@ -9,6 +9,7 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -287,7 +288,7 @@ public class InputControlsTests extends TestBase {
      * Generic test for cost metric input control
      */
     public void testCostMetricInputControlMachiningDtc(String costMetric) {
-        genericReportPage = testCostMetricCore(
+        testCostMetricCore(
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 costMetric
@@ -311,26 +312,10 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Core part of cost metric test
-     * @param costMetric - String
-     * @return current page object
-     */
-    private GenericReportPage testCostMetricCore(String reportName, String exportSet, String costMetric) {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(exportSet)
-                .selectCostMetric(costMetric)
-                .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
-
-        assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("\n%s", costMetric))));
-        return genericReportPage;
-    }
-
-    /**
      * Generic test for mass metric input control
+     * @param reportName - String
+     * @param exportSet - String
+     * @param massMetric - String
      */
     public void testMassMetric(String reportName, String exportSet, String massMetric) {
         genericReportPage = new ReportsLoginPage(driver)
@@ -345,5 +330,116 @@ public class InputControlsTests extends TestBase {
         if (!reportName.contains("Comparison") && !reportName.contains("Details")) {
             assertThat(genericReportPage.getMassMetricValueFromBubble(reportName), containsString(massMetric));
         }
+    }
+
+    /**
+     * Generic test for process group input control
+     * @param reportName - String
+     * @param exportSet - String
+     * @param processGroupName - String
+     */
+    public void testSingleProcessGroup(String reportName, String exportSet, String processGroupName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSet)
+                .setProcessGroup(processGroupName)
+                .clickOk();
+
+        assertThat(
+                genericReportPage.getProcessGroupValueDtc(reportName),
+                is(equalTo(processGroupName))
+        );
+
+        if (reportName.equals(ReportNamesEnum.MACHINING_DTC.getReportName()) &&
+                processGroupName.equals(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())) {
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
+        } else {
+            genericReportPage.setReportName(ReportNamesEnum.DTC_PART_SUMMARY.getReportName());
+            genericReportPage.hoverPartNameBubbleDtcReports();
+            String partName = genericReportPage.getPartNameDtcReports();
+
+            navigateToDtcPartSummaryAndAssert(partName, processGroupName);
+        }
+    }
+
+    /**
+     * Generic test for process group input control with two process groups (Casting DTC)
+     */
+    public void testTwoProcessGroupsCasting() {
+        partOneOfCheckBothProcessGroupTest(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                Constants.CASTING_DIE_SAND_NAME
+        );
+
+        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+        genericReportPage.hoverProcessGroupBubbleOne();
+        String partName = genericReportPage.getPartNameDtcReports();
+        genericReportPage.hoverProcessGroupBubbleTwo();
+        String partNameTwo = genericReportPage.getPartNameDtcReports();
+
+        navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
+        navigateToDtcPartSummaryAndAssert(partNameTwo, ProcessGroupEnum.CASTING_DIE.getProcessGroup());
+    }
+
+    /**
+     * Generic test for process group input control with two process groups (Machining DTC)
+     */
+    public void testTwoProcessGroupsMachining() {
+        partOneOfCheckBothProcessGroupTest(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                Constants.STOCK_MACHINING_TWO_MODEL_NAME
+        );
+
+        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
+        String partName = genericReportPage.getPartNameDtcReports();
+
+        navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.STOCK_MACHINING.getProcessGroup());
+    }
+
+    private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet)
+                .selectCostMetric(costMetric)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("\n%s", costMetric))));
+    }
+
+    private void partOneOfCheckBothProcessGroupTest(String reportName, String exportSetName, String processGroupName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSetName)
+                .clickOk();
+
+        assertThat(
+                genericReportPage.getProcessGroupValueDtc(reportName),
+                is(equalTo(processGroupName))
+        );
+    }
+
+    private void navigateToDtcPartSummaryAndAssert(String partName, String processGroupName) {
+        genericReportPage.navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
+                .selectComponent(partName)
+                .clickOk();
+
+        assertThat(
+                genericReportPage.getProcessGroupValueDtc(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()),
+                is(equalTo(processGroupName))
+        );
     }
 }

@@ -49,7 +49,7 @@ public class ReferencePanelTests extends TestBase {
             .enterAnnualVolume("2600")
             .enterAnnualYears("3")
             .costScenario(2)
-            .openReferenceCompare();
+            .expandReferencePanel();
 
         assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.POWDER_METAL.getProcessGroup()));
         assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
@@ -81,7 +81,7 @@ public class ReferencePanelTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
             .costScenario(2)
-            .openReferenceCompare()
+            .expandReferencePanel()
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PUBLIC.name(), scenarioName);
 
@@ -101,15 +101,13 @@ public class ReferencePanelTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        referenceComparePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
-            .openReferenceCompare();
-
-        evaluatePage = new EvaluatePage(driver);
-        evaluatePage.collapseReferenceCompare();
+            .expandReferencePanel()
+            .collapseReferencePanel();
 
         assertThat(evaluatePage.isReferencePanelExpanded(), is(false));
     }
@@ -155,7 +153,7 @@ public class ReferencePanelTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario()
-            .openReferenceCompare()
+            .expandReferencePanel()
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PRIVATE.name(), scenarioName);
 

@@ -101,6 +101,12 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     @FindBy(css = "[data-ap-field='materialCost.indicator']")
     private WebElement materialCostIndicator;
 
+    @FindBy(css = "th[data-ap-comp='comparisonSectionVisibilityButton']")
+    private WebElement referenceChevron;
+
+    @FindBy(css = ".gwt-InlineHTML.glyphicon.glyphicon-chevron-left")
+    private WebElement chevron;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -319,5 +325,17 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     private String getAttribute(By locator, String attribute) {
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getAttribute(attribute);
+    }
+
+    /**
+     * Close the reference compare page
+     *
+     * @return new page object
+     */
+    public EvaluatePage collapseReferencePanel() {
+        if (pageUtils.isElementDisplayed(chevron)) {
+            pageUtils.waitForElementAndClick(referenceChevron);
+        }
+        return new EvaluatePage(driver);
     }
 }

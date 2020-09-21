@@ -14,7 +14,6 @@ import pageobjects.pages.create.CreateDashboardPage;
 import pageobjects.pages.create.CreateDataSourcePage;
 import pageobjects.pages.create.CreateDomainPage;
 import pageobjects.pages.create.CreateReportPage;
-import pageobjects.pages.homepage.ReportsHomePage;
 import pageobjects.pages.library.LibraryPage;
 import pageobjects.pages.logout.LogoutPage;
 import pageobjects.pages.manage.ManageRolesPage;
@@ -95,6 +94,12 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(xpath = "//h2[contains(text(), 'Admin')]")
     private WebElement adminTitle;
 
+    @FindBy(xpath = "//h2[contains(text(), 'Dashboards')]")
+    private WebElement dashboardsTitle;
+
+    @FindBy(css = "button[aria-label='Create Dashboards']")
+    protected WebElement createDashboardsButton;
+
     @FindBy(css = "div[id='header']")
     private WebElement jasperLogo;
 
@@ -138,8 +143,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return Home Page page object
      */
-    public ReportsHomePage navigateToHomePage() {
-        return navigateToPage(homeMenuOption, ReportsHomePage.class);
+    public ReportsPageHeader navigateToHomePage() {
+        return navigateToPage(homeMenuOption, ReportsPageHeader.class);
     }
 
     /**
@@ -274,7 +279,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return Help Page page object
      */
     public CirUserGuidePage navigateToHelpPage() {
-        pageUtils.waitForElementToAppear(adminTitle);
+        pageUtils.waitForElementToAppear(createDashboardsButton);
         CirUserGuidePage helpPage = navigateToPage(helpButton, CirUserGuidePage.class);
         pageUtils.windowHandler(1);
         pageUtils.waitForElementToAppear(jasperLogo);
@@ -298,7 +303,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return Logout page object model
      */
     public LogoutPage navigateToReportLogout() {
-        pageUtils.waitForElementToAppear(adminTitle);
+        pageUtils.waitForElementToAppear(dashboardsTitle);
         return navigateToPage(logoutMenuOption, LogoutPage.class);
     }
 
