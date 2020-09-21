@@ -1,4 +1,4 @@
-package navtoolbars;
+package pageobjects.navtoolbars;
 
 import com.apriori.utils.PageUtils;
 

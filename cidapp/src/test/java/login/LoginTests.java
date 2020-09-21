@@ -8,10 +8,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.explore.ExplorePage;
+import pageobjects.login.CidAppLoginPage;
 import testsuites.suiteinterface.SmokeTests;
 
 public class LoginTests extends TestBase {
