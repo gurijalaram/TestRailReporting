@@ -47,18 +47,19 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574", "565", "567"})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machined Box AMERICAS.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machined Box AMERICAS.SLDPRT");
 
         loginPage = new CidLoginPage(driver);
         costDetailsPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openCostDetails()
-            .expandDropdown("Piece Part Cost")
-            .expandDropdown("Total Variable Costs");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .openCostDetails()
+                .expandDropdown("Piece Part Cost")
+                .expandDropdown("Total Variable Costs");
 
         assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("15.87"));
         assertThat(costDetailsPage.getCostContribution("Labor "), containsString("6.82"));
@@ -69,20 +70,21 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"566"})
     @Description("Be able to determine whether a decision has caused a cost increase or decrease")
     public void costIncreaseDecrease() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("powderMetal.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "powderMetal.stp");
 
         loginPage = new CidLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("FN-0205")
-            .apply()
-            .costScenario()
-            .openReferenceCompare();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .openMaterialCompositionTable()
+                .selectMaterialComposition("FN-0205")
+                .apply()
+                .costScenario()
+                .openReferenceCompare();
 
         assertThat(referenceComparePage.getMaterialCostDelta(), containsString("up"));
         assertThat(referenceComparePage.getPiecePartCostDelta(), containsString("down"));
@@ -95,14 +97,15 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - par")
     public void testCADFormatPar() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("26136.par");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "26136.par");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -112,14 +115,15 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - CATPart")
     public void testCADFormatCATPart() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap DFM.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap DFM.CATPart");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -129,14 +133,15 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("turning.prt.4");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "turning.prt.4");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -146,14 +151,15 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Creo")
     public void testCADFormatCreo() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("turning.prt.4");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "turning.prt.4");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -163,14 +169,15 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Locker_bottom_panel.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Locker_bottom_panel.prt");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -180,14 +187,15 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("VERTICAL PLATE.ipt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "VERTICAL PLATE.ipt");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -197,14 +205,15 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "partbody_2.stp");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -214,14 +223,15 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParasolid() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic_steel_PMI.x_t");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic_steel_PMI.x_t");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -231,14 +241,15 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap thinPart.SAT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap thinPart.SAT");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), (is(true)));
     }
@@ -248,12 +259,14 @@ public class CostAllCadTests extends TestBase {
     @Description("Upload large GCD part. Part should be displayed in the viewer within 60 seconds")
     public void translationTest() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("LargePart.prt.1");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "LargePart.prt.1");
 
         loginPage = new CidLoginPage(driver);
         evaluateHeader = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .checkForImage(1);
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .checkForImage(1);
 
         assertThat(new EvaluatePage(driver).isCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), (is(true)));
     }
@@ -263,11 +276,13 @@ public class CostAllCadTests extends TestBase {
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("LargePart.prt.1");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "LargePart.prt.1");
 
         loginPage = new CidLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk("<script>alert(document.cookie)</script>", resourceFile, WarningPage.class);
+                .uploadFileAndOk("<script>alert(document.cookie)</script>", resourceFile, WarningPage.class);
 
         assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
     }
@@ -277,11 +292,13 @@ public class CostAllCadTests extends TestBase {
     @Description("Failure to create a new scenario that has a blank scenario name or is named using unsupported characters")
     public void failedBlankScenarioName() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
 
         loginPage = new CidLoginPage(driver);
         warningPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk("", resourceFile, WarningPage.class);
+                .uploadFileAndOk("", resourceFile, WarningPage.class);
 
         assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
     }
