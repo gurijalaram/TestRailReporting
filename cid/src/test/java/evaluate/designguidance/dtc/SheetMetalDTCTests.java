@@ -56,25 +56,26 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"1839", "1842", "1843"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("SheMetDTC.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "SheMetDTC.SLDPRT");
 
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Hole Issue", "Diameter", "SimpleHole:2");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Hole Issue", "Diameter", "SimpleHole:2");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Hole is too small to be cut with Plasma Cutting"));
 
@@ -96,18 +97,20 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetalTray.SLDPRT");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "SheetMetalTray.SLDPRT");
 
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         guidancePage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Proximity Warning, Distance", "Complex Holes", "ComplexHole:10");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Proximity Warning, Distance", "Complex Holes", "ComplexHole:10");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Hole is too close to to the following bend(s): StraightBend:3"));
 
@@ -120,24 +123,26 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("extremebends.prt.1");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "extremebends.prt.1");
 
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Bend Issue", "Intersects", "StraightBend:4");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Bend Issue", "Intersects", "StraightBend:4");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("There is an intersection with a form and therefore cannot be made with Bending"));
 
@@ -154,21 +159,23 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("extremebends.prt.1");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "extremebends.prt.1");
 
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.getWarningsCount(), is("5"));
         assertThat(evaluatePage.getGuidanceIssuesCount(), is("9"));
@@ -181,24 +188,26 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("SheMetDTC.SLDPRT");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "SheMetDTC.SLDPRT");
 
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         investigationPage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Holes and Fillets");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Holes and Fillets");
 
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("2")));
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("4")));
@@ -221,24 +230,26 @@ public class SheetMetalDTCTests extends TestBase {
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic_matPMI.prt.1");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic_matPMI.prt.1");
 
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 
         assertThat(guidancePage.getGCDGuidance("SimpleHole:2", "Current"), is(equalTo("0.02")));
         assertThat(guidancePage.getGCDGuidance("SimpleHole:2", "Basic Machining Threshold"), is(equalTo("0.06")));
