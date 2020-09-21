@@ -1,11 +1,12 @@
 package com.apriori.utils;
 
+import com.apriori.utils.enums.ProcessGroupEnum;
+
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,7 +135,7 @@ public class FileResourceUtil {
     }
 
     private static File copyIntoTempFile(final InputStream inputStreamOfOriginalFile, final String additionalPath, final String fileName) {
-        if(inputStreamOfOriginalFile == null) {
+        if (inputStreamOfOriginalFile == null) {
             return null;
         }
 
@@ -163,7 +164,7 @@ public class FileResourceUtil {
 
         String childFilePath = "Automation-" + baseName + "%s";
 
-        if(path != null) {
+        if (path != null) {
             childFilePath = childFilePath + File.separator + path.replace(",", File.separator).trim();
         }
 

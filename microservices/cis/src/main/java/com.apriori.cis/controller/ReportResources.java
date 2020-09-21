@@ -6,7 +6,6 @@ import com.apriori.cis.entity.response.ReportExport;
 import com.apriori.cis.entity.response.ReportType;
 import com.apriori.cis.entity.response.ReportTypes;
 import com.apriori.cis.entity.response.Reports;
-
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;

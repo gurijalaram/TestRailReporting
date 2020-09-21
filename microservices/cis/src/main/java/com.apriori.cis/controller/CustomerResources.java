@@ -6,7 +6,6 @@ import com.apriori.cis.entity.response.Customers;
 import com.apriori.cis.entity.response.ProcessGroups;
 import com.apriori.cis.entity.response.UserDefinedAttributes;
 import com.apriori.cis.entity.response.VPE;
-
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;

@@ -50,27 +50,28 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"545", "731", "738", "1610", "742"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("M3CapScrew.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "M3CapScrew.CATPart");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "M3CapScrew");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "M3CapScrew");
 
         explorePage = new ExplorePage(driver);
         explorePage.selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
-            .save(ExplorePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
-            .closeJobQueue(ExplorePage.class);
+                .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
+                .save(ExplorePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
+                .closeJobQueue(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
         scenarioNotesPage = explorePage.selectScenarioInfoNotes();
@@ -84,38 +85,39 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"554", "555"})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("M3CapScrew.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "M3CapScrew.CATPart");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "M3CapScrew");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "M3CapScrew");
 
         explorePage = new ExplorePage(driver);
         explorePage.selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Analysis", "Medium", "Qa Description", "Adding QA notes")
-            .save(ExplorePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .openColumnsTable()
-            .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
-            .addColumn(ColumnsEnum.STATUS.getColumns())
-            .selectSaveButton();
+                .enterScenarioInfoNotes("Analysis", "Medium", "Qa Description", "Adding QA notes")
+                .save(ExplorePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .openColumnsTable()
+                .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
+                .addColumn(ColumnsEnum.STATUS.getColumns())
+                .selectSaveButton();
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.STATUS.getColumns(), ColumnsEnum.COST_MATURITY.getColumns()));
 
         explorePage.openColumnsTable()
-            .removeColumn(ColumnsEnum.COST_MATURITY.getColumns())
-            .removeColumn(ColumnsEnum.STATUS.getColumns())
-            .selectSaveButton();
+                .removeColumn(ColumnsEnum.COST_MATURITY.getColumns())
+                .removeColumn(ColumnsEnum.STATUS.getColumns())
+                .selectSaveButton();
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -124,19 +126,20 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"1610", "592", "593"})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "bracket_basic");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "bracket_basic");
 
         new GenericHeader(driver).toggleLock();
         genericHeader = new GenericHeader(driver);
@@ -160,22 +163,23 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"733", "739", "743", "746"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("case_002_006-8611543_prt.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_002_006-8611543_prt.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
-            .save(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("case_002_006-8611543_prt", scenarioName, "Update", "okay")
-            .closeJobQueue(EvaluatePage.class)
-            .costScenario(1)
-            .selectScenarioInfoNotes();
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectScenarioInfoNotes()
+                .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
+                .save(EvaluatePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("case_002_006-8611543_prt", scenarioName, "Update", "okay")
+                .closeJobQueue(EvaluatePage.class)
+                .costScenario(1)
+                .selectScenarioInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("Complete"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Medium"), is(true));
@@ -188,22 +192,23 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"732", "737", "741", "744"})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("BasicScenario_Forging.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "BasicScenario_Forging.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .selectInfoNotes()
-            .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
-            .save(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("BasicScenario_Forging", scenarioName, "Update", "okay")
-            .closeJobQueue(EvaluatePage.class)
-            .costScenario()
-            .selectInfoNotes();
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectInfoNotes()
+                .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
+                .save(EvaluatePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("BasicScenario_Forging", scenarioName, "Update", "okay")
+                .closeJobQueue(EvaluatePage.class)
+                .costScenario()
+                .selectInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("New"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("High"), is(true));
@@ -216,29 +221,30 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"526", "529"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "PowderMetalShaft");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "PowderMetalShaft");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectAssignScenario()
-            .selectAssignee("Moya Parker")
-            .update(ExplorePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .openScenario(testScenarioName, "PowderMetalShaft")
-            .selectInfoNotes();
+                .selectAssignee("Moya Parker")
+                .update(ExplorePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .openScenario(testScenarioName, "PowderMetalShaft")
+                .selectInfoNotes();
 
         assertThat(scenarioNotesPage.isAssignee(), is("Moya Parker"));
     }
@@ -248,27 +254,28 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"528", "527"})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(testScenarioName, "PowderMetalShaft");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .openScenario(testScenarioName, "PowderMetalShaft");
 
         genericHeader = new GenericHeader(driver);
         genericHeader.selectAssignScenario()
-            .selectAssignee("Sinead Plunkett")
-            .update(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
-            .closeJobQueue(EvaluatePage.class);
+                .selectAssignee("Sinead Plunkett")
+                .update(EvaluatePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
+                .closeJobQueue(EvaluatePage.class);
 
         genericHeader = new GenericHeader(driver);
         assignPage = genericHeader.selectAssignScenario();
@@ -281,22 +288,23 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"532", "736", "734"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .publishScenario("New", "Low", "Ciene Frith")
-            .selectPublishButton()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Assignee", "is", "Ciene Frith")
-            .apply(ExplorePage.class);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario("New", "Low", "Ciene Frith")
+                .selectPublishButton()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Assignee", "is", "Ciene Frith")
+                .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), equalTo(1));
     }
@@ -306,35 +314,36 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"543"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("BasicScenario_Forging.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "BasicScenario_Forging.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "BasicScenario_Forging");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "BasicScenario_Forging");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
-            .save(ExplorePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .openScenario(testScenarioName, "BasicScenario_Forging")
-            .selectInfoNotes()
-            .editNotes("Testing QA notes validating the ability to edit notes")
-            .save(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueRow("okay")
-            .closeJobQueue(EvaluatePage.class)
-            .selectInfoNotes();
+                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
+                .save(ExplorePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .openScenario(testScenarioName, "BasicScenario_Forging")
+                .selectInfoNotes()
+                .editNotes("Testing QA notes validating the ability to edit notes")
+                .save(EvaluatePage.class)
+                .openJobQueue()
+                .checkJobQueueRow("okay")
+                .closeJobQueue(EvaluatePage.class)
+                .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes validating the ability to edit notes"));
     }
@@ -344,32 +353,33 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"544"})
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("BasicScenario_Forging.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "BasicScenario_Forging.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "BasicScenario_Forging");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "BasicScenario_Forging");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
-            .save(ExplorePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .openScenario(testScenarioName, "BasicScenario_Forging")
-            .selectInfoNotes()
-            .editNotes("Validating the ability to edit notes")
-            .cancel(EvaluatePage.class)
-            .selectInfoNotes();
+                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
+                .save(ExplorePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .openScenario(testScenarioName, "BasicScenario_Forging")
+                .selectInfoNotes()
+                .editNotes("Validating the ability to edit notes")
+                .cancel(EvaluatePage.class)
+                .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes"));
     }
@@ -380,35 +390,36 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"542", "546"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "Push Pin");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "Push Pin");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
-            .save(ExplorePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .openScenario(testScenarioName, "Push Pin")
-            .selectInfoNotes()
-            .editNotes("")
-            .save(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueRow("okay")
-            .closeJobQueue(EvaluatePage.class)
-            .selectInfoNotes();
+                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
+                .save(ExplorePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .openScenario(testScenarioName, "Push Pin")
+                .selectInfoNotes()
+                .editNotes("")
+                .save(EvaluatePage.class)
+                .openJobQueue()
+                .checkJobQueueRow("okay")
+                .closeJobQueue(EvaluatePage.class)
+                .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getScenarioNotes(), is(""));
     }
@@ -418,36 +429,37 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"574"})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
 
         new CidLoginPage(driver).login(testUser1)
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "Push Pin");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "Push Pin");
 
         new GenericHeader(driver).selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
-            .save(ExplorePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("Push Pin", testScenarioName, "Update", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .openAdminDropdown()
-            .selectLogOut();
+                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
+                .save(ExplorePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("Push Pin", testScenarioName, "Update", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .openAdminDropdown()
+                .selectLogOut();
 
         new CidLoginPage(driver).login(testUser2);
 
         explorePage = new ExplorePage(driver);
         scenarioNotesPage = explorePage.selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(testScenarioName, "Push Pin")
-            .selectInfoNotes();
+                .openScenario(testScenarioName, "Push Pin")
+                .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes"));
     }
@@ -457,31 +469,32 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"556", "594"})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Rapid Prototyping.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Rapid Prototyping.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
-            .costScenario()
-            .publishScenario("Complete", "Medium", "Moya Parker")
-            .selectPublishButton()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Status", "is", "Complete")
-            .apply(ExplorePage.class);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario("Complete", "Medium", "Moya Parker")
+                .selectPublishButton()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Status", "is", "Complete")
+                .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "RAPID PROTOTYPING"), equalTo(1));
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Cost Maturity", "is", "Medium")
-            .apply(ExplorePage.class);
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Cost Maturity", "is", "Medium")
+                .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Rapid Prototyping"), equalTo(1));
     }
@@ -491,35 +504,36 @@ public class ActionsTests extends TestBase {
     @TestRail(testCaseId = {"740", "595"})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "Push Pin");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "Push Pin");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QAutomation Test Remove Description", "")
-            .save(ExplorePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .openScenario(testScenarioName, "Push Pin")
-            .selectInfoNotes()
-            .deleteDescription()
-            .save(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueRow("okay")
-            .closeJobQueue(EvaluatePage.class)
-            .selectInfoNotes();
+                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QAutomation Test Remove Description", "")
+                .save(ExplorePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .openScenario(testScenarioName, "Push Pin")
+                .selectInfoNotes()
+                .deleteDescription()
+                .save(EvaluatePage.class)
+                .openJobQueue()
+                .checkJobQueueRow("okay")
+                .closeJobQueue(EvaluatePage.class)
+                .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getDescription(), is(""));
     }
@@ -529,23 +543,25 @@ public class ActionsTests extends TestBase {
     @Description("Ensure scripts cannot be entered into text input fields")
     public void cannotUseScript() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, "Push Pin");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, "Push Pin");
 
         genericHeader = new GenericHeader(driver);
         warningPage = genericHeader.selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "<script src=http://www.example.com/malicious-code.js></script>", "<script>alert(document.cookie)</script>")
-            .save(WarningPage.class);
+                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "<script src=http://www.example.com/malicious-code.js></script>", "<script>alert(document.cookie)</script>")
+                .save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
