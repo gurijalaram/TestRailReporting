@@ -581,7 +581,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1918")
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
@@ -594,22 +593,21 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(
                 genericReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName()),
-                containsString("[assembly]")
+                containsString(Constants.ASSEMBLY_STRING)
         );
 
         assertThat(
                 genericReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName()),
-                containsString("[assembly]")
+                containsString(Constants.ASSEMBLY_STRING)
         );
 
         assertThat(
                 genericReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.TOP_LEVEL.getAssemblySetName()),
-                containsString("[assembly]")
+                containsString(Constants.ASSEMBLY_STRING)
         );
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1920")
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
