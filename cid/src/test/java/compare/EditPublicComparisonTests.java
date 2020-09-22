@@ -51,15 +51,15 @@ public class EditPublicComparisonTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class);
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
 
         explorePage = genericHeader.publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace());
 
         assertThat(explorePage.findComparison(testComparisonName).isDisplayed(), is(true));
     }
@@ -74,16 +74,16 @@ public class EditPublicComparisonTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class);
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
 
         explorePage = genericHeader.publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison(testComparisonName);
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+                .highlightComparison(testComparisonName);
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.editScenario(ComparePage.class);
@@ -96,30 +96,31 @@ public class EditPublicComparisonTests extends TestBase {
     @TestRail(testCaseId = {"458"})
     @Description("Delete private scenarios included in comparison from private workspace")
     public void testRemoveFromComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "PowderMetalShaft")
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(testScenarioName, "PowderMetalShaft")
-            .apply(ComparePage.class)
-            .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "PowderMetalShaft")
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(testScenarioName, "PowderMetalShaft")
+                .apply(ComparePage.class)
+                .removeScenarioFromCompareView("PowderMetalShaft", testScenarioName);
 
         assertThat(comparePage.scenarioIsNotInComparisonView(testScenarioName, "PowderMetalShaft"), is(true));
     }
@@ -131,7 +132,9 @@ public class EditPublicComparisonTests extends TestBase {
     @Description("Test you can change the basis of your comparison")
     public void testChangeComparisonBasis() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Assembly2.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
         String testAssemblyName = "Assembly2";
@@ -139,34 +142,34 @@ public class EditPublicComparisonTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
-            .costScenario()
-            .selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .openScenario(scenarioName, partName)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Private")
-            .setScenarioType("Assembly")
-            .setRowOne("Part Name", "Contains", testAssemblyName)
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(scenarioName, testAssemblyName)
-            .apply(ComparePage.class);
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectExploreButton()
+                .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+                .openScenario(scenarioName, partName)
+                .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+                .costScenario()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Assembly")
+                .setRowOne("Part Name", "Contains", testAssemblyName)
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(scenarioName, testAssemblyName)
+                .apply(ComparePage.class);
 
         new ComparePage(driver).addScenario()
-            .filter()
-            .setWorkspace("Private")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", partName)
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(scenarioName, partName)
-            .apply(ComparePage.class);
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", partName)
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(scenarioName, partName)
+                .apply(ComparePage.class);
 
         new ComparePage(driver).setBasis(partName, scenarioName);
 
