@@ -13,13 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class Emails {
-    private static PropertyStore propertyStore;
-
-    @BeforeClass
-    public static void testSetup() {
-        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromFile(Constants.getApitestsResourcePath() +
-                "/property-store.json", PropertyStore.class);
-    }
+    private PropertyStore propertyStore = new PropertyStore();
 
     @Test
     @TestRail(testCaseId = "3828")
@@ -38,10 +32,10 @@ public class Emails {
     @Description("Get a list of emails using the NTS API")
     public void getEmails() {
         GetEmailResponse getEmailResponse = NotificationService.getEmails();
-        PropertyStore store = new PropertyStore();
-        store.setEmailIdentity(getEmailResponse.getResponse().getItems().get(0).getIdentity());
-        JsonManager.serializeJsonToFile(Constants.getApitestsResourcePath() +
-                "/property-store.json", store);
+        propertyStore.setEmailIdentity(getEmailResponse.getResponse().getItems().get(0).getIdentity());
+        JsonManager.serializeJsonToFile(Thread.currentThread().getContextClassLoader().getResource("property-store" +
+                        ".json").getPath(),
+                propertyStore);
 
     }
 
@@ -50,6 +44,9 @@ public class Emails {
     @TestRail(testCaseId = "3881")
     @Description("Get a single email using the NTS API")
     public void getEmail() {
+        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromFile(
+                Thread.currentThread().getContextClassLoader().getResource("property-store.json").getPath(),
+                PropertyStore.class);
         String identity = propertyStore.getEmailIdentity();
         NotificationService.getEmail(identity);
 
