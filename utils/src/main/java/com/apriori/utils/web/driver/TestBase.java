@@ -11,14 +11,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.MDC;
 
-import java.awt.Toolkit;
 import java.io.File;
 
 /**
@@ -71,7 +68,7 @@ public class TestBase extends TestHelper {
 
         if (!df.isHeadless() && mode.equals(TestMode.LOCAL) && (os.toLowerCase().contains("linux") || os.toLowerCase().contains("mac"))) {
             // Todo 28/02/2020 - Commented out because this is causing headless on linux to crash with error message 'No X11 display...' this will be reworked in the future
-            maximizeOnUnixSystems(driver);
+            driver.manage().window().maximize();
         } else {
             driver.manage().window().maximize();
         }
@@ -90,17 +87,6 @@ public class TestBase extends TestHelper {
 
     }
 
-    public static void maximizeOnUnixSystems(WebDriver driver) {
-        Point targetPosition = new Point(0, 0);
-        driver.manage().window().setPosition(targetPosition);
-
-        java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int) screenSize.getWidth();
-        int height = (int) screenSize.getHeight();
-
-        driver.manage().window().setSize(new Dimension(width, height));
-    }
-
     @After
     public void closeBrowser() {
         MDC.remove("methodName");
@@ -113,7 +99,7 @@ public class TestBase extends TestHelper {
 
     private String getBrowserType(String browserProperty) {
         if (browserProperty == null || browserProperty.isEmpty()) {
-            return "chrome";
+            return "firefox";
         }
         return StringUtils.lowerCase(browserProperty);
     }
