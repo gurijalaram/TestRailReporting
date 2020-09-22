@@ -397,10 +397,15 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
+        WebElement exportSetToSelect = driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)));
+        pageUtils.waitForElementToAppear(exportSetToSelect);
+        pageUtils.waitForElementToAppear(okButton);
+        pageUtils.waitForElementToAppear(saveButton);
         Actions actions = new Actions(driver);
-        actions.moveToElement(
-                driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)))
-        ).click().perform();
+        actions.moveToElement(exportSetToSelect)
+                .click()
+                .build()
+                .perform();
         return this;
     }
 
@@ -599,6 +604,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage clickOk() {
         Actions actions = new Actions(driver);
         actions.moveToElement(okButton).click();
+        actions.perform();
         actions.perform();
         pageUtils.waitForElementToAppear(upperTitle);
         return this;
@@ -1118,6 +1124,16 @@ public class GenericReportPage extends ReportsPageHeader {
         if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             elementToUse.click();
         }
+    }
+
+    public void clickPartNameBubbleDtcReportsTwice() {
+        WebElement elementToUse = bubbleMap.get(this.reportName);
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse).click();
+        builder.build().perform();
+        Actions builder2 = new Actions(driver).moveToElement(elementToUse).click();
+        builder2.build().perform();
+        pageUtils.waitFor(4000);
     }
 
     /**

@@ -311,4 +311,25 @@ public class CastingDtcReportTests extends TestBase {
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "2039")
+    @Description("Validate links to component cost detail report (incl. headers etc.)")
+    public void testComponentCostDetailReportLink() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        // click bubble
+        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+        genericReportPage.clickPartNameBubbleDtcReportsTwice();
+
+        // switch tab
+        // validate correct report
+
+    }
 }
