@@ -58,6 +58,7 @@ public class Constants {
     public static final String PRIVATE_WORKSPACE = "Private";
     public static final String MANAGE_SCENARIO_TITLE = " Manage Scenario Export";
     public static final String MANAGE_SYSTEM_DATA_EXPORT_TITLE = " Manage System Data Export";
+    public static final String ASSEMBLY_STRING = "[assembly]";
     public static final String CASTING_DIE_SAND_NAME = String.format(
             "%s, %s",
             ProcessGroupEnum.CASTING_DIE.getProcessGroup(),
@@ -147,6 +148,7 @@ public class Constants {
     public static final String cirURL = getBaseUrl() + constantsInit.cirURL();
     public static final String ciaURL = getBaseUrl() + constantsInit.ciaURL();
     public static final String cicURL = constantsInit.cicURL();
+    public static final String cidAppURL = getBaseUrl();
     public static final String usersFile = constantsInit.usersCsvFileName();
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 

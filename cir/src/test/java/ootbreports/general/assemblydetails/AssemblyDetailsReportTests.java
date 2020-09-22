@@ -1,5 +1,6 @@
 package ootbreports.general.assemblydetails;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -28,6 +29,7 @@ import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.OnPremTest;
 
@@ -592,5 +594,84 @@ public class AssemblyDetailsReportTests extends TestBase {
             cidPartFourValues.equals(reportsPartTwoValues),
             is(true)
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1918")
+    @Description("Verify Export set of a part file is not available for selection")
+    public void testAssemblySelectDropdown() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+
+        assertThat(
+                genericReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName()),
+                containsString(Constants.ASSEMBLY_STRING)
+        );
+
+        assertThat(
+                genericReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName()),
+                containsString(Constants.ASSEMBLY_STRING)
+        );
+
+        assertThat(
+                genericReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.TOP_LEVEL.getAssemblySetName()),
+                containsString(Constants.ASSEMBLY_STRING)
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1920")
+    @Description("Export set count is correct")
+    public void testExportSetSelectionOptions() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetSelection(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                ExportSetEnum.TOP_LEVEL.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1931")
+    @Description("Validate links to component cost detail report (incl. headers etc.)")
+    public void testLinksToComponentCostReport() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+        
+        String partNumberComponent = genericReportPage.getComponentLinkPartNumber();
+        genericReportPage.clickComponentLinkAssemblyDetails();
+        assertThat(genericReportPage.getReportTitle(), is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
+        assertThat(genericReportPage.getComponentCostPartNumber(), is(equalTo(partNumberComponent)));
+        genericReportPage.closeTab();
+
+        String partNumberAssembly = genericReportPage.getAssemblyLinkPartNumber();
+        genericReportPage.clickAssemblyLinkAssemblyDetails();
+        assertThat(genericReportPage.getReportTitle(), is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
+        assertThat(genericReportPage.getComponentCostPartNumber(), is(equalTo(partNumberAssembly)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export Set search function works")
+    public void testExportSetSearch() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+                .waitForInputControlsLoad();
+
+        genericReportPage.searchForExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+
+        assertThat(genericReportPage.getExportSetOptionCount(), is(equalTo("1")));
+        assertThat(genericReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL.getExportSetName()), is(true));
     }
 }
