@@ -183,6 +183,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr']")
     private WebElement exportSetList;
 
+    @FindBy(xpath = "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr']/..")
+    private WebElement exportSetListDiv;
+
     @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Invert']/a")
     private WebElement exportSetInvert;
 
@@ -318,6 +321,18 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//div[@id='reportContainer']/table/tbody/tr[@style='height:20px'])[1]//span")
     private WebElement noDataAvailableElement;
 
+    @FindBy(xpath = "//span[contains(text(), '3570824')]")
+    private WebElement componentLinkAssemblyDetails;
+
+    @FindBy(xpath = "//span[contains(text(), 'SUB-SUB-ASM')]")
+    private WebElement assemblyLinkAssemblyDetails;
+
+    @FindBy(xpath = "//span[contains(text(), 'Component Cost')]")
+    private WebElement componentCostReportTitle;
+
+    @FindBy(xpath = "//span[contains(text(), 'Part Number:')]/../following-sibling::td[1]/span")
+    private WebElement componentCostReportPartNumber;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -423,6 +438,13 @@ public class GenericReportPage extends ReportsPageHeader {
             assemblyMap.get(assemblyName).click();
         }
         return this;
+    }
+
+    /**
+     * Gets assembly name from set assembly dropdown
+     */
+    public String getAssemblyNameFromSetAssemblyDropdown(String assemblyName) {
+        return assemblyMap.get(assemblyName).getAttribute("textContent");
     }
 
     /**
@@ -1204,8 +1226,101 @@ public class GenericReportPage extends ReportsPageHeader {
         return headerDisplayedRollup.getText();
     }
 
+    /**
+     * Checks if element is displayed and enabled
+     * @return boolean
+     */
     public boolean isDataAvailableLabelDisplayedAndEnabled() {
         return noDataAvailableElement.isDisplayed() && noDataAvailableElement.isEnabled();
+    }
+
+    /**
+     * Clicks Component Link in Assembly Details Report
+     */
+    public void clickComponentLinkAssemblyDetails() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitForElementAndClick(componentLinkAssemblyDetails);
+        if (pageUtils.getCountOfOpenTabs() == 2) {
+            pageUtils.windowHandler(1);
+        }
+        pageUtils.waitForElementToAppear(componentCostReportTitle);
+    }
+
+    /**
+     * Clicks Assembly Link in Assembly Details Report
+     */
+    public void clickAssemblyLinkAssemblyDetails() {
+        pageUtils.waitForElementAndClick(assemblyLinkAssemblyDetails);
+        pageUtils.windowHandler(1);
+        pageUtils.waitForElementToAppear(componentCostReportTitle);
+    }
+
+    /**
+     * Gets component link part number
+     * @return String
+     */
+    public String getComponentLinkPartNumber() {
+        return componentLinkAssemblyDetails.getText();
+    }
+
+    /**
+     * Gets assembly link part number
+     * @return String
+     */
+    public String getAssemblyLinkPartNumber() {
+        return assemblyLinkAssemblyDetails.getText();
+    }
+
+    /**
+     * Gets report title
+     * @return String
+     */
+    public String getReportTitle() {
+        return upperTitle.getText();
+    }
+
+    /**
+     * Gets component cost report part number text
+     * @return String
+     */
+    public String getComponentCostPartNumber() {
+        return componentCostReportPartNumber.getText();
+    }
+
+    /**
+     * Closes current tab and switches back to main tab
+     */
+    public void closeTab() {
+        driver.close();
+        pageUtils.windowHandler(0);
+    }
+
+    /**
+     * Searches for export set
+     * @param exportSet - String
+     */
+    public void searchForExportSet(String exportSet) {
+        pageUtils.waitForElementAndClick(exportSetSearchInput);
+        exportSetSearchInput.sendKeys(exportSet);
+        pageUtils.checkElementAttribute(exportSetSearchInput, "value", exportSet);
+        pageUtils.checkElementAttribute(exportSetList, "childElementCount", "1");
+    }
+
+    /**
+     * Checks if export set option is visible
+     * @param exportSet - String
+     * @return boolean
+     */
+    public boolean isExportSetVisible(String exportSet) {
+        WebElement exportSetElement = driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)));
+        return exportSetElement.isDisplayed() && exportSetElement.isEnabled();
+    }
+
+    /**
+     * Gets count of export sets visible
+     */
+    public String getExportSetOptionCount() {
+        return exportSetList.getAttribute("childElementCount");
     }
 
     /**
