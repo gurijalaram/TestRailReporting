@@ -55,7 +55,7 @@ public class TestBase extends TestHelper {
         df = new DriverFactory(mode, type, browser, seleniumProxy, downloadPath, remoteDownloadFolder, locale);
         driver = df.getDriver();
 
-        if (browser.equalsIgnoreCase("chrome")) {
+        if (browser.equalsIgnoreCase("firefox")) {
             driver = new EventFiringWebDriver(df.getDriver());
             TestHelper.logger.info("CONSOLE LOG LEVEL: " + Constants.consoleLogLevel.getName());
             ConsoleLogHandler consoleLogHandler = new ConsoleLogHandler(Constants.consoleLogLevel);
