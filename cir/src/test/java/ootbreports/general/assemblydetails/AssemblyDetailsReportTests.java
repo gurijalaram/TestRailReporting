@@ -597,6 +597,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1918")
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
@@ -624,6 +625,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1920")
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
@@ -635,6 +637,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1931")
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
@@ -660,6 +663,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export Set search function works")
     public void testExportSetSearch() {
