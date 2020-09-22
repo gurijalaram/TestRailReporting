@@ -10,6 +10,7 @@ include(':cid')
 include(':cir')
 include(':cas')
 include(':cia')
+include(':cidapp')
 
 //Utils
 include(':utils')
@@ -23,6 +24,7 @@ project(':cid').projectDir = file('../cid')
 project(':cir').projectDir = file('../cir')
 project(':cia').projectDir = file('../cia')
 project(':cas').projectDir = file('../cas')
+project(':cidapp').projectDir = file('../cidapp')
 
 
 //Microservices
@@ -44,10 +46,12 @@ project(':microservices:nts').projectDir = file('../microservices/nts')
 include ':web:cia'
 include ':web:cid'
 include ':web:cir'
+include ':web:cidapp'
 
 project(':web:cid').projectDir = file('../web/cid')
 project(':web:cia').projectDir = file('../web/cia')
 project(':web:cir').projectDir = file('../web/cir')
+project(':web:cidapp').projectDir = file('../web/cidapp')
 
 
 if (System.getProperty("all") != null) {
