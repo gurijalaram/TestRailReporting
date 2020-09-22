@@ -55,7 +55,7 @@ public class TestBase extends TestHelper {
         df = new DriverFactory(mode, type, browser, seleniumProxy, downloadPath, remoteDownloadFolder, locale);
         driver = df.getDriver();
 
-        if (browser.equalsIgnoreCase("firefox")) {
+        if (browser.equalsIgnoreCase("chrome")) {
             driver = new EventFiringWebDriver(df.getDriver());
             TestHelper.logger.info("CONSOLE LOG LEVEL: " + Constants.consoleLogLevel.getName());
             ConsoleLogHandler consoleLogHandler = new ConsoleLogHandler(Constants.consoleLogLevel);
@@ -68,7 +68,7 @@ public class TestBase extends TestHelper {
 
         if (!df.isHeadless() && mode.equals(TestMode.LOCAL) && (os.toLowerCase().contains("linux") || os.toLowerCase().contains("mac"))) {
             // Todo 28/02/2020 - Commented out because this is causing headless on linux to crash with error message 'No X11 display...' this will be reworked in the future
-            driver.manage().window().maximize();
+            //MaximizeBrowserOnUnix.maximizeOnUnixSystems(driver);
         } else {
             driver.manage().window().maximize();
         }
@@ -99,7 +99,7 @@ public class TestBase extends TestHelper {
 
     private String getBrowserType(String browserProperty) {
         if (browserProperty == null || browserProperty.isEmpty()) {
-            return "firefox";
+            return "chrome";
         }
         return StringUtils.lowerCase(browserProperty);
     }
