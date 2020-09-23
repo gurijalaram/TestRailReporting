@@ -12,14 +12,18 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
     private final Logger logger = LoggerFactory.getLogger(Schedule.class);
 
     @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-92'] > button") //> span:nth-of-type(3)
-    private WebElement nextBtn;
+    private WebElement detailsNextBtn;
+
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-104'] > button > span:nth-of-type(3)")
+    private WebElement queryNextBtn;
+
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-108'] > button > span:nth-of-type(3)")
+    private WebElement costingInputsNextBtn;
 
     @FindBy(xpath = "//div[@id='root_pagemashupcontainer-1_navigation-83-popup_button-92']/button[@disabled='']")
     private WebElement disabledNextBtn;
@@ -35,6 +39,9 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
     @FindBy(css = "div[class^='ss-content ss-'][class$=' ss-open'] > div > input[type='search']")
     private WebElement connectorDropdownSearch;
+
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-43'] > button")
+    private WebElement saveButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -53,15 +60,30 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
     @Override
     protected void isLoaded() {
-        pageUtils.waitForElementToAppear(nextBtn);
+        //pageUtils.waitForElementToAppear(nextBtn);
     }
 
     /**
-     * Click Next btn
+     * Click Next btn on Details tab of New Edit Workflow Modal
      */
-    public NewEditWorkflow clickNextBtn() {
-        pageUtils.waitForElementNotDisplayed(disabledNextBtn, 1);
-        nextBtn.click();
+    public NewEditWorkflow clickDetailsNextBtn() {
+        pageUtils.waitForElementAndClick(detailsNextBtn);
+        return this;
+    }
+
+    /**
+     * Click Next btn on Query tab of New Edit Workflow Modal
+     */
+    public NewEditWorkflow clickQueryNextBtn() {
+        pageUtils.waitForElementAndClick(queryNextBtn);
+        return this;
+    }
+
+    /**
+     * Click Next btn on Query tab of New Edit Workflow Modal
+     */
+    public NewEditWorkflow clickCostingInputsNextBtn() {
+        pageUtils.waitForElementAndClick(costingInputsNextBtn);
         return this;
     }
 
@@ -72,6 +94,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      * @return NewEditWorkflow page object
      */
     public NewEditWorkflow inputWorkflowName(String workflowName) {
+        pageUtils.waitForElementToAppear(detailsNextBtn);
         inputName.sendKeys(workflowName);
         return new NewEditWorkflow(driver);
     }
@@ -82,26 +105,56 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      * @param connectorName - Name of connector to be selected
      * @return NewEditWorkflow page object
      */
-    public NewEditWorkflow selectConnector(String connectorName) {
-        connectorDropdown.click();
-        pageUtils.waitForElementAndClick(connectorDropdownSearch);
-        connectorDropdownSearch.sendKeys(connectorName);
+    public NewEditWorkflow selectConnector(String connectorName) throws InterruptedException {
+        Thread.sleep(1000);
+
+        pageUtils.waitForElementAndClick(connectorDropdown);
+
         By connectorToClick = By.xpath(String.format("//div[contains(text(), '%s')]", connectorName));
-        driver.findElement(connectorToClick).click();
-        return this;
+        pageUtils.waitForElementAndClick(connectorToClick);
+        return new NewEditWorkflow(driver);
     }
 
     /**
      * Select query CI Connect field
      *
      * @param ruleNumber - Rule number, posistion of rule in list
-     * @param fieldName - Field name, CI Connect field to be used in query
+     * @param fieldName  - Field name, CI Connect field to be used in query
      * @return NewEditWorkflow page object
      */
     public NewEditWorkflow selectQueryCIConnectField(Integer ruleNumber, String fieldName) {
-        pageUtils.waitForElementToAppear(By.xpath(String.format("//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString())));
-        Select queryField = new Select(driver.findElement(By.xpath(String.format("//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString()))));
+        pageUtils.waitForElementToAppear(By.xpath(String.format(
+            "//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString())));
+        Select queryField = new Select(driver.findElement(By.xpath(String.format(
+            "//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString()))));
         queryField.selectByVisibleText(fieldName);
         return new NewEditWorkflow(driver);
     }
+
+    /**
+     * Enter query argument
+     *
+     * @param ruleNumber   - Rule number, position of rule in list of query rules
+     * @param ruleArgument - argument to be entered
+     * @return NewEditWorkflow page object
+     */
+    public NewEditWorkflow enterQueryArgument(Integer ruleNumber, String ruleArgument) {
+        WebElement inputField = driver.findElement(By.xpath(String.format(
+            "//input[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_value_0']", ruleNumber.toString())));
+        pageUtils.waitForElementAndClick(inputField);
+        pageUtils.clearInput(inputField);
+        inputField.sendKeys(ruleArgument);
+        return new NewEditWorkflow(driver);
+    }
+
+    /**
+     * Click save button on New Edit Workflow modal
+     *
+     * @return new GenericWorkflow page object
+     */
+    public Schedule clickSaveButton() {
+        pageUtils.waitForElementAndClick(saveButton);
+        return new Schedule(driver);
+    }
+
 }

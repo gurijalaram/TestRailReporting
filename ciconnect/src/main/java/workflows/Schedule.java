@@ -2,6 +2,7 @@ package workflows;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,6 +63,21 @@ public class Schedule extends LoadableComponent<Schedule> {
     @FindBy(xpath = "//div[contains(@class,'tabsv2-tab') and contains(@tab-number,'1')]")
     private WebElement scheduleTab;
 
+    @FindBy(css = "img[src='../Common/thingworx/widgets/gridadvanced/imgs/dhxgrid_material/ar_right_dis.gif']")
+    private WebElement disabledNextBtn;
+
+    @FindBy(css = "img[src='../Common/thingworx/widgets/gridadvanced/imgs/dhxgrid_material/ar_right.gif']")
+    private WebElement enabledNextBtn;
+
+    @FindBy(css = "div#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-of-type(4)")
+    private WebElement numRowsText;
+
+    @FindBy(xpath = "//div[@id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container']//div[contains(text(), ' rows per page')]")
+    private WebElement rowsPerPageText;
+
+    @FindBy(css = "div#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-of-type(1)")
+    private WebElement firstPageBtn;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -99,5 +116,72 @@ public class Schedule extends LoadableComponent<Schedule> {
     public NewEditWorkflow clickNewWorkflowBtn() {
         newWorkflowBtn.click();
         return new NewEditWorkflow(driver);
+    }
+
+    /**
+     * Select workflow in table
+     *
+     * @param workflowName  - name of workflow to select
+     * @return new Schedule page object
+     */
+    public Schedule selectWorkflow(String workflowName) {
+        ArrayList<String> workflowNames = new ArrayList<String>();
+        int numRows = getNumberOfRows();
+        int rowsPerPage = getRowsPerPage();
+        int nextClicksAllPages = numRows / rowsPerPage;
+
+        for (int i = 0; i < nextClicksAllPages; i++) {
+            List<WebElement> workflowNamesElements = driver.findElements(By.cssSelector(
+                "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr > td:nth-of-type(1)"));
+            for (WebElement workflowNamesElement : workflowNamesElements) {
+                workflowNames.add(workflowNamesElement.getText());
+            }
+            pageUtils.waitForElementAndClick(enabledNextBtn);
+        }
+
+        int workflowIndex = workflowNames.indexOf(workflowName);
+        int nextClicks = workflowIndex / rowsPerPage;
+
+        pageUtils.waitForElementAndClick(firstPageBtn);
+
+        for (int i = 0; i < nextClicks; i++) {
+            pageUtils.waitForElementAndClick(enabledNextBtn);
+        }
+
+        int rowOnPage = workflowIndex % rowsPerPage;
+        WebElement elementToClick = driver.findElement(By.cssSelector(String.format(
+            "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr:nth-of-type(%s) > td:nth-of-type(1)", rowOnPage)));
+
+        pageUtils.waitForElementAndClick(elementToClick);
+
+        return new Schedule(driver);
+    }
+
+    /**
+     * Get total number of rows in table
+     *
+     * @return numRows  - number of rows in table
+     */
+    public int getNumberOfRows() {
+        pageUtils.waitForElementToAppear(numRowsText);
+        int numRows = Integer.parseInt((numRowsText.getText()).substring(3));
+        return numRows;
+    }
+
+    /**
+     * Get number of rows per page
+     *
+     * @return numRowsPerPage   -
+     */
+    public int getRowsPerPage() {
+        pageUtils.waitForElementToAppear(rowsPerPageText);
+        String rowsPerPage = rowsPerPageText.getText();
+        int numRowsPerPage = Integer.parseInt(rowsPerPage.substring(0, rowsPerPage.length() - 14));
+        return numRowsPerPage;
+    }
+
+    public Schedule clickDeleteBtn() {
+        pageUtils.waitForElementAndClick(deleteWorkflow);
+        return new Schedule(driver);
     }
 }
