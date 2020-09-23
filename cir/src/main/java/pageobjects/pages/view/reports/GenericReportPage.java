@@ -389,6 +389,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(okButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
     }
 
     /**
@@ -397,15 +398,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
-        WebElement exportSetToSelect = driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)));
-        pageUtils.waitForElementToAppear(exportSetToSelect);
-        pageUtils.waitForElementToAppear(okButton);
-        pageUtils.waitForElementToAppear(saveButton);
+        By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.waitForElementToAppear(driver.findElement(locator));
         Actions actions = new Actions(driver);
-        actions.moveToElement(exportSetToSelect)
-                .click()
-                .build()
-                .perform();
+        actions.moveToElement(driver.findElement(locator)).click().perform();
         return this;
     }
 
