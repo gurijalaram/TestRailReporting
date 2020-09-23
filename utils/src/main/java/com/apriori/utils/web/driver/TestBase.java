@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -70,7 +71,7 @@ public class TestBase extends TestHelper {
             // Todo 28/02/2020 - Commented out because this is causing headless on linux to crash with error message 'No X11 display...' this will be reworked in the future
             //MaximizeBrowserOnUnix.maximizeOnUnixSystems(driver);
         } else {
-            driver.manage().window().maximize();
+            driver.manage().window().setSize(new Dimension(1920,1080));
         }
 
         TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
