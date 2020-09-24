@@ -155,7 +155,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
 
 
     @Test
-    @Category({CIARStagingSmokeTest.class, OnPremTest.class})
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyDetailsReportAvailableAndCorrectData() {

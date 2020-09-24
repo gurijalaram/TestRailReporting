@@ -160,7 +160,6 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1376")
     @Description("Test Plastic DTC Data Integrity")
     public void testPlasticDtcDataIntegrity() {
