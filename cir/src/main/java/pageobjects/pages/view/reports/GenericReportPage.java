@@ -55,9 +55,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[18][local-name() = 'path']")
     private WebElement castingDtcBubbleTwo;
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[55][local-name() = 'path']")
-    private WebElement castingDtcBubbleThree;
-
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[54][local-name() = 'path']")
     private WebElement processGroupBubbleOne;
 
@@ -66,6 +63,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name() = 'path'][43]")
     private WebElement machiningDtcBubble;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[41][local-name() = 'path']")
+    private WebElement machiningDtcBubbleTwo;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
     private WebElement plasticDtcBubble;
@@ -1119,7 +1119,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void hoverPartNameBubbleDtcReports() {
         //WebElement elementToUse = bubbleMap.get(this.reportName);
-        WebElement elementToUse = driver.findElement(By.xpath("//*[@class='highcharts-series-group']//*[55][local-name() = 'path']"));
+        WebElement elementToUse = driver.findElement(By.xpath("//*[@class='highcharts-series-group']//*[41][local-name() = 'path']"));
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
@@ -1128,20 +1128,26 @@ public class GenericReportPage extends ReportsPageHeader {
         }
     }
 
+    /**
+     * Gets Part Name and Clicks Bubble to Navigate to DTC Part Summary Report
+     * @return String
+     */
     public String getPartNameAndClickBubbleTwice() {
+        pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
 
         setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
-        pageUtils.waitForElementToAppear(castingDtcBubbleThree);
+        pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         for (int i = 0; i < 2; i++) {
-            Actions builder = new Actions(driver).moveToElement(castingDtcBubbleThree).click();
+            Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleTwo).click();
             builder.build().perform();
         }
         switchTab();
         pageUtils.waitForElementToAppear(upperTitle);
+        pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
         return partName;
     }
 
@@ -1389,10 +1395,16 @@ public class GenericReportPage extends ReportsPageHeader {
         return exportSetList.getAttribute("childElementCount");
     }
 
-    public String getDtcPartSummaryPartNameValue() {
-        return dtcPartSummaryPartName.getText();
-    }
+    /**
+     * Gets Part Name value from DTC Part Summary report
+     * @return String
+     */
+    public String getDtcPartSummaryPartNameValue() { return dtcPartSummaryPartName.getText(); }
 
+    /**
+     * Gets upper title text from any report
+     * @return String
+     */
     public String getUpperTitleText() { return upperTitle.getText(); }
 
     /**

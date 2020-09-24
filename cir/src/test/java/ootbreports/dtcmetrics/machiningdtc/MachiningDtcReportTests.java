@@ -2,6 +2,7 @@ package ootbreports.dtcmetrics.machiningdtc;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -15,12 +16,20 @@ import io.qameta.allure.Description;
 import navigation.ReportAvailabilityTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.pages.login.ReportsLoginPage;
+import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MachiningDtcReportTests extends TestBase {
 
     private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
+    private GenericReportPage genericReportPage;
 
     public MachiningDtcReportTests() {
         super();
@@ -248,5 +257,23 @@ public class MachiningDtcReportTests extends TestBase {
     public void testProcessGroupSandAndDieCasting() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsMachining();
+    }
+
+    @Test
+    @TestRail(testCaseId = "2039")
+    @Description("Validate links to component cost detail report (incl. headers etc.)")
+    public void testComponentCostDetailReportLink() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        String partName = genericReportPage.getPartNameAndClickBubbleTwice();
+
+        assertThat(genericReportPage.getUpperTitleText(), is(equalTo("DTC Part Summary")));
+        assertThat(partName, is(startsWith(genericReportPage.getDtcPartSummaryPartNameValue())));
     }
 }
