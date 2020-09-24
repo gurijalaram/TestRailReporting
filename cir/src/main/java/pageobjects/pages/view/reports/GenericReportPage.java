@@ -55,6 +55,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[18][local-name() = 'path']")
     private WebElement castingDtcBubbleTwo;
 
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[55][local-name() = 'path']")
+    private WebElement castingDtcBubbleThree;
+
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[54][local-name() = 'path']")
     private WebElement processGroupBubbleOne;
 
@@ -364,6 +367,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Part Number:')]/../following-sibling::td[1]/span")
     private WebElement componentCostReportPartNumber;
 
+    @FindBy(xpath = "//span[@class='_jrHyperLink Reference']")
+    private WebElement dtcPartSummaryPartName;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -573,9 +579,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage newTabTransfer() {
-        if (pageUtils.getCountOfOpenTabs() == 2) {
-            pageUtils.windowHandler(1);
-        }
+        switchTab();
         pageUtils.waitForElementToAppear(comparisonButton);
         return this;
     }
@@ -1114,7 +1118,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers over bubble in DTC Reports
      */
     public void hoverPartNameBubbleDtcReports() {
-        WebElement elementToUse = bubbleMap.get(this.reportName);
+        //WebElement elementToUse = bubbleMap.get(this.reportName);
+        WebElement elementToUse = driver.findElement(By.xpath("//*[@class='highcharts-series-group']//*[55][local-name() = 'path']"));
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
@@ -1123,14 +1128,21 @@ public class GenericReportPage extends ReportsPageHeader {
         }
     }
 
-    public void clickPartNameBubbleDtcReportsTwice() {
-        WebElement elementToUse = bubbleMap.get(this.reportName);
-        pageUtils.waitForElementToAppear(elementToUse);
-        Actions builder = new Actions(driver).moveToElement(elementToUse).click();
-        builder.build().perform();
-        Actions builder2 = new Actions(driver).moveToElement(elementToUse).click();
-        builder2.build().perform();
-        pageUtils.waitFor(4000);
+    public String getPartNameAndClickBubbleTwice() {
+        hoverPartNameBubbleDtcReports();
+        hoverPartNameBubbleDtcReports();
+
+        setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+        String partName = getPartNameDtcReports();
+
+        pageUtils.waitForElementToAppear(castingDtcBubbleThree);
+        for (int i = 0; i < 2; i++) {
+            Actions builder = new Actions(driver).moveToElement(castingDtcBubbleThree).click();
+            builder.build().perform();
+        }
+        switchTab();
+        pageUtils.waitForElementToAppear(upperTitle);
+        return partName;
     }
 
     /**
@@ -1296,9 +1308,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public void clickComponentLinkAssemblyDetails() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementAndClick(componentLinkAssemblyDetails);
-        if (pageUtils.getCountOfOpenTabs() == 2) {
-            pageUtils.windowHandler(1);
-        }
+        switchTab();
         pageUtils.waitForElementToAppear(componentCostReportTitle);
     }
 
@@ -1377,6 +1387,21 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getExportSetOptionCount() {
         return exportSetList.getAttribute("childElementCount");
+    }
+
+    public String getDtcPartSummaryPartNameValue() {
+        return dtcPartSummaryPartName.getText();
+    }
+
+    public String getUpperTitleText() { return upperTitle.getText(); }
+
+    /**
+     * Switches tab, if second tab is open
+     */
+    private void switchTab() {
+        if (pageUtils.getCountOfOpenTabs() == 2) {
+            pageUtils.windowHandler(1);
+        }
     }
 
     /**

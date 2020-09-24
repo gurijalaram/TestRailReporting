@@ -2,6 +2,9 @@ package ootbreports.dtcmetrics.casting;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.TestRail;
@@ -324,12 +327,9 @@ public class CastingDtcReportTests extends TestBase {
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        // click bubble
-        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
-        genericReportPage.clickPartNameBubbleDtcReportsTwice();
+        String partName = genericReportPage.getPartNameAndClickBubbleTwice();
 
-        // switch tab
-        // validate correct report
-
+        assertThat(genericReportPage.getUpperTitleText(), is(equalTo("DTC Part Summary")));
+        assertThat(partName, is(startsWith(genericReportPage.getDtcPartSummaryPartNameValue())));
     }
 }
