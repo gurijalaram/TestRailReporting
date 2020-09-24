@@ -12,6 +12,31 @@ allprojects {
     version = '0.0.1-SNAPSHOT'
 }
 
+String buildResources = 'build/resources'
+
+//use this template to copy specific files into modules
+if(project.findProject(":cia")) {
+    findModuleToCopyRes(":cia", "../utils/src/main/resources/cas-int", buildResources)
+}
+///////////////////////////////////////////////////////
+
+void findModuleToCopyRes(String moduleName, String fromDir, String toDir) {
+    if( findProject(moduleName) != null) {
+        project(moduleName) {
+            copyResources(fromDir, toDir)
+        }
+    }
+
+}
+
+void copyResources(String fromDir, String toDir )  {
+    println 'Copying from dir: ' + fromDir + ' to dir: ' + toDir
+    copy {
+        from (fromDir)
+        into(toDir)
+    }
+}
+
 subprojects {
 
     apply plugin: 'java'
