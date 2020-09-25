@@ -1151,12 +1151,9 @@ public class GenericReportPage extends ReportsPageHeader {
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
-        pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
+        //pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
+        pageUtils.waitForSteadinessOfElement(By.xpath("//*[@class='highcharts-series-group']//*[41][local-name() = 'path']"));
         for (int i = 0; i < 2; i++) {
-            Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleTwo).click();
-            builder.build().perform();
-        }
-        if (driver.getWindowHandles().size() == 1) {
             Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleTwo).click();
             builder.build().perform();
         }
