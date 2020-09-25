@@ -1128,7 +1128,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void hoverPartNameBubbleDtcReports() {
         WebElement elementToUse = bubbleMap.get(this.reportName);
-        //WebElement elementToUse = driver.findElement(By.xpath("//*[@class='highcharts-series-group']//*[41][local-name() = 'path']"));
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
@@ -1144,8 +1143,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public String getPartNameAndClickBubbleTwice() {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
-        hoverPartNameBubbleDtcReports();
-        hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
 
