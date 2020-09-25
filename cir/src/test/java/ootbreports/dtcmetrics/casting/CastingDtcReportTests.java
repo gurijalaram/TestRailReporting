@@ -301,7 +301,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1709")
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
