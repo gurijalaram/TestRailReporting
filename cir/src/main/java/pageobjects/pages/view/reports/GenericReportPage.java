@@ -376,6 +376,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[16]/*[local-name()='text'])[14]")
     private WebElement machiningDtcComparisonPartName;
 
+    @FindBy(xpath = "//table/tbody/tr[13]/td[2]")
+    private WebElement machiningDtcDetailsPartNameLink;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -1181,6 +1184,25 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Clicks part name link in Machining DTC Details report and switches tab
+     * @return String
+     */
+    public String clickMachiningDtcDetailsPartName() {
+        pageUtils.waitForElementToAppear(machiningDtcDetailsPartNameLink);
+
+        setReportName(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
+        String partName = getPartNameDtcReports();
+
+        pageUtils.waitForElementAndClick(machiningDtcDetailsPartNameLink);
+
+        switchTab();
+        pageUtils.waitForElementToAppear(upperTitle);
+        pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
+
+        return partName;
+    }
+
+    /**
      * Hovers bubble one for process group test
      */
     public void hoverProcessGroupBubble(boolean useBubbleOne) {
@@ -1325,11 +1347,16 @@ public class GenericReportPage extends ReportsPageHeader {
         return dtcTooltipElement.getAttribute("opacity").equals("1");
     }
 
+    /**
+     * Checks if tooltip element is displayed and enabled
+     * @param elementKey - String
+     * @return boolean
+     */
     public boolean isTooltipElementVisible(String elementKey) {
         return tooltipElementMap.get(elementKey).isDisplayed() && tooltipElementMap.get(elementKey).isEnabled();
-	}
-		
-	/**	
+    }
+
+    /**
      * Clicks Component Link in Assembly Details Report
      */
     public void clickComponentLinkAssemblyDetails() {
@@ -1420,13 +1447,17 @@ public class GenericReportPage extends ReportsPageHeader {
      * Gets Part Name value from DTC Part Summary report
      * @return String
      */
-    public String getDtcPartSummaryPartNameValue() { return dtcPartSummaryPartName.getText(); }
+    public String getDtcPartSummaryPartNameValue() {
+        return dtcPartSummaryPartName.getText();
+    }
 
     /**
      * Gets upper title text from any report
      * @return String
      */
-    public String getUpperTitleText() { return upperTitle.getText(); }
+    public String getUpperTitleText() {
+        return upperTitle.getText();
+    }
 
     /**
      * Switches tab, if second tab is open
@@ -1474,6 +1505,7 @@ public class GenericReportPage extends ReportsPageHeader {
         partNameMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), partNameCastingDtcReport);
         partNameMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), partNameCastingDtcReport);
         partNameMap.put(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), machiningDtcComparisonPartName);
+        partNameMap.put(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), machiningDtcDetailsPartNameLink);
     }
 
     /**
