@@ -273,7 +273,10 @@ public class MachiningDtcReportTests extends TestBase {
 
         String partName = genericReportPage.getPartNameAndClickBubbleTwice();
 
-        assertThat(genericReportPage.getUpperTitleText(), is(equalTo("DTC Part Summary")));
+        assertThat(
+                genericReportPage.getUpperTitleText(),
+                is(equalTo(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()))
+        );
         assertThat(partName, is(startsWith(genericReportPage.getDtcPartSummaryPartNameValue())));
     }
 }

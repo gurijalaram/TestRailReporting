@@ -370,6 +370,12 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[@class='_jrHyperLink Reference']")
     private WebElement dtcPartSummaryPartName;
 
+    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[7]/*[local-name()='rect'])[14]")
+    private WebElement machiningDtcComparisonBar;
+
+    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[16]/*[local-name()='text'])[14]")
+    private WebElement machiningDtcComparisonPartName;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -1118,8 +1124,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers over bubble in DTC Reports
      */
     public void hoverPartNameBubbleDtcReports() {
-        //WebElement elementToUse = bubbleMap.get(this.reportName);
-        WebElement elementToUse = driver.findElement(By.xpath("//*[@class='highcharts-series-group']//*[41][local-name() = 'path']"));
+        WebElement elementToUse = bubbleMap.get(this.reportName);
+        //WebElement elementToUse = driver.findElement(By.xpath("//*[@class='highcharts-series-group']//*[41][local-name() = 'path']"));
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
@@ -1134,10 +1140,12 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getPartNameAndClickBubbleTwice() {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
+        setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
+        hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
 
-        setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+        setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
@@ -1152,20 +1160,33 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Hovers bubble one for process group test
+     * Clicks bar in Machining DTC Comparison Report and switches tab
+     * @return String
      */
-    public void hoverProcessGroupBubbleOne() {
-        pageUtils.waitForElementToAppear(processGroupBubbleOne);
-        Actions builder = new Actions(driver).moveToElement(processGroupBubbleOne);
-        builder.perform();
+    public String clickMachiningDtcComparisonBar() {
+        pageUtils.waitForElementToAppear(machiningDtcComparisonPartName);
+        pageUtils.waitForElementToAppear(machiningDtcComparisonBar);
+        setReportName(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName());
+        String partName = getPartNameDtcReports();
+
+        for (int i = 0; i < 2; i++) {
+            Actions builder = new Actions(driver).moveToElement(machiningDtcComparisonBar).click();
+            builder.build().perform();
+        }
+
+        switchTab();
+        pageUtils.waitForElementToAppear(upperTitle);
+        pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
+        return partName;
     }
 
     /**
-     * Hovers bubble two for process group test
+     * Hovers bubble one for process group test
      */
-    public void hoverProcessGroupBubbleTwo() {
-        pageUtils.waitForElementToAppear(processGroupBubbleTwo);
-        Actions builder = new Actions(driver).moveToElement(processGroupBubbleTwo);
+    public void hoverProcessGroupBubble(boolean useBubbleOne) {
+        WebElement elementToUse = useBubbleOne ? processGroupBubbleOne : processGroupBubbleTwo;
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.perform();
     }
 
@@ -1452,6 +1473,7 @@ public class GenericReportPage extends ReportsPageHeader {
         partNameMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), partNamePlasticDtcReport);
         partNameMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), partNameCastingDtcReport);
         partNameMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), partNameCastingDtcReport);
+        partNameMap.put(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), machiningDtcComparisonPartName);
     }
 
     /**
@@ -1459,6 +1481,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     private void initialiseBubbleMap() {
         bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), machiningDtcBubble);
+        bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2", machiningDtcBubbleTwo);
         bubbleMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcBubble);
         bubbleMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcBubble);
         bubbleMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), castingDtcBubbleTwo);

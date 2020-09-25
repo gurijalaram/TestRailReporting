@@ -376,9 +376,9 @@ public class InputControlsTests extends TestBase {
         );
 
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
-        genericReportPage.hoverProcessGroupBubbleOne();
+        genericReportPage.hoverProcessGroupBubble(true);
         String partName = genericReportPage.getPartNameDtcReports();
-        genericReportPage.hoverProcessGroupBubbleTwo();
+        genericReportPage.hoverProcessGroupBubble(false);
         String partNameTwo = genericReportPage.getPartNameDtcReports();
 
         navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
