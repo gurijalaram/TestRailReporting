@@ -16,17 +16,12 @@ project(':apibase').projectDir = file('../apibase')
 
 
 final String[] microservicesModules = ["ats", "cds", "cis", "edc", "fms", "nts"]
-final String[] webModules = ["cid", "cia", "cir"]
-final String[] utilsModules = []
-final String[] specificModules = []
-
+final String[] webModules = ["cas", "cia", "ciconnect", "cid", "cidapp", "cir"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
         put("microservices", microservicesModules)
         put("web", webModules)
-        put("web", utilsModules)
-        put("web", specificModules)
     }
 }
 
@@ -67,35 +62,19 @@ if (configuration != null) {
     include ':web:cid'
     include ':web:cir'
     include ':web:cidapp'
+    include ':web:ciconnect'
+    include ':web:cas'
 
-    project(':web:cid').projectDir = file('../web/cid')
     project(':web:cia').projectDir = file('../web/cia')
+    project(':web:cid').projectDir = file('../web/cid')
     project(':web:cir').projectDir = file('../web/cir')
     project(':web:cidapp').projectDir = file('../web/cidapp')
-
-
-//    include(':apitests')
-//    include(':ciconnect')
-//    include(':cid')
-//    include(':cir')
-//    include(':cas')
-//    include(':cia')
-//    include(':cidapp')
-//
-//    project(':apitests').projectDir = file('../apitests')
-//    project(':ciconnect').projectDir = file('../ciconnect')
-//    project(':cid').projectDir = file('../cid')
-//    project(':cir').projectDir = file('../cir')
-//    project(':cia').projectDir = file('../cia')
-//    project(':cas').projectDir = file('../cas')
-//    project(':cidapp').projectDir = file('../cidapp')
-
+    project(':web:ciconnect').projectDir = file('../web/ciconnect')
+    project(':web:cas').projectDir = file('../web/cas')
 
     if (System.getProperty("all") != null) {
         include(':database')
         project(':database').projectDir = file('../db')
     }
 }
-include '../web/cid'
-findProject(':../web/cid')?.name = 'cid'
 
