@@ -1145,19 +1145,14 @@ public class GenericReportPage extends ReportsPageHeader {
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
-        hoverPartNameBubbleDtcReports();
 
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
-        //pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
-        pageUtils.waitForSteadinessOfElement(By.xpath("//*[@class='highcharts-series-group']//*[41][local-name() = 'path']"));
         for (int i = 0; i < 2; i++) {
             Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleTwo).click();
             builder.build().perform();
         }
-        machiningDtcBubbleTwo.click();
-        pageUtils.javaScriptClick(machiningDtcBubbleTwo);
 
         switchTab();
         pageUtils.waitForElementToAppear(upperTitle);
