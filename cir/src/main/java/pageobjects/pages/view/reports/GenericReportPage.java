@@ -1147,13 +1147,13 @@ public class GenericReportPage extends ReportsPageHeader {
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
+        hoverPartNameBubbleDtcReports();
 
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         for (int i = 0; i < 2; i++) {
-            pageUtils.waitFor(1000);
             Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleTwo).click();
             builder.build().perform();
         }
