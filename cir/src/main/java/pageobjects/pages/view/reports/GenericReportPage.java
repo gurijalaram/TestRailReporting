@@ -1144,9 +1144,8 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
-        if (isTooltipDisplayed()) {
-            hoverPartNameBubbleDtcReports();
-        }
+        hoverPartNameBubbleDtcReports();
+        hoverPartNameBubbleDtcReports();
 
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
@@ -1157,6 +1156,8 @@ public class GenericReportPage extends ReportsPageHeader {
             Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleTwo).click();
             builder.build().perform();
         }
+        machiningDtcBubbleTwo.click();
+        pageUtils.javaScriptClick(machiningDtcBubbleTwo);
 
         switchTab();
         pageUtils.waitForElementToAppear(upperTitle);
