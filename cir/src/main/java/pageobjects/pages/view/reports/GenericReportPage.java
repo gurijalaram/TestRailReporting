@@ -1153,6 +1153,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         for (int i = 0; i < 2; i++) {
+            pageUtils.waitFor(1000);
             Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleTwo).click();
             builder.build().perform();
         }
