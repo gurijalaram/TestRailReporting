@@ -1,8 +1,8 @@
-package com.apriori.nts.tests;
+package com.apriori.cds.tests;
 
 import com.apriori.cds.entity.response.Role;
 import com.apriori.cds.entity.response.Roles;
-import com.apriori.nts.tests.utils.CdsTestUtil;
+import com.apriori.cds.tests.utils.CdsTestUtil;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
