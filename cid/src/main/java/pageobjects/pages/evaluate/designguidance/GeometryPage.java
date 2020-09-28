@@ -67,7 +67,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
      * @return current page object
      */
     public GeometryPage selectGCDAndGCDProperty(String gcdParent, String gcdChild, String gcdProperty) {
-        findGCDType(gcdParent).click();
+        pageUtils.waitForElementAndClick(findGCDType(gcdParent));
         pageUtils.waitForElementAndClick(findGCDChild(gcdChild));
         selectGCDProperty(gcdProperty);
         return this;
@@ -104,7 +104,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
      * @return gcd property as webelement
      */
     private GeometryPage selectGCDProperty(String gcdProperty) {
-        By gcd = By.xpath("//div[@data-ap-comp='artifactProperties']//td[contains(text(),'" + gcdProperty + "')]/ancestor::tr");
+        By gcd = By.xpath("//div[@data-ap-comp='artifactProperties']//td[contains(text(),'" + gcdProperty + "')]");
         pageUtils.waitForElementToAppear(gcd);
         pageUtils.scrollToElement(gcd, propertiesScroller, Constants.ARROW_DOWN).click();
         return this;

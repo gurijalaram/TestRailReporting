@@ -98,7 +98,7 @@ public class TolerancePage extends EvaluatePanelToolbar {
      * @return the gcd as webelement
      */
     private WebElement findGCD(String gcdType) {
-        By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']/ancestor::tr");
+        By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']");
         return pageUtils.scrollToElement(gcd, detailsScroller, Constants.ARROW_DOWN);
     }
 
