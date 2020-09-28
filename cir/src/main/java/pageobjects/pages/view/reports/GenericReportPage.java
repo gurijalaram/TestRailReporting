@@ -68,6 +68,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[45][local-name() = 'path']")
     private WebElement machiningDtcBubbleTwo;
 
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(41)")
+    private WebElement machiningDtcBubbleThree;
+
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
     private WebElement plasticDtcBubble;
 
@@ -1125,12 +1128,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers over bubble in DTC Reports
      */
     public void hoverPartNameBubbleDtcReports() {
-        WebElement elementToUse = bubbleMap.get(this.reportName);
-        pageUtils.waitForElementToAppear(elementToUse);
-        Actions builder = new Actions(driver).moveToElement(elementToUse);
+        //WebElement elementToUse = bubbleMap.get(this.reportName);
+        pageUtils.waitForElementToAppear(machiningDtcBubbleThree);
+        Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleThree);
         builder.perform();
         if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
-            elementToUse.click();
+            machiningDtcBubbleThree.click();
         }
     }
 
@@ -1139,7 +1142,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getPartNameAndClickBubbleTwice() {
-        pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
+        pageUtils.waitForElementToAppear(machiningDtcBubbleThree);
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
@@ -1147,9 +1150,9 @@ public class GenericReportPage extends ReportsPageHeader {
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
-        assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
+        assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_FLATNESSCREO (Initial) ")));
         for (int i = 0; i < 2; i++) {
-            pageUtils.actionClick(machiningDtcBubbleTwo);
+            pageUtils.actionClick(machiningDtcBubbleThree);
         }
 
         switchTab();
