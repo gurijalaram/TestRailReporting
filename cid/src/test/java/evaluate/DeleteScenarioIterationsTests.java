@@ -39,8 +39,9 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @TestRail(testCaseId = {"588", "394", "581", "395", "589"})
     @Description("Test a public scenario can be deleted from the evaluate page")
     public void testDeletePublicScenarioIteration() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -78,8 +79,9 @@ public class DeleteScenarioIterationsTests extends TestBase {
     @TestRail(testCaseId = {"588", "572", "1089"})
     @Description("Test a private scenario can be deleted from the evaluate page")
     public void testDeletePrivateScenarioIteration() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -87,7 +89,7 @@ public class DeleteScenarioIterationsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         explorePage.uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .filter()

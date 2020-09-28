@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -36,8 +37,9 @@ public class DeletePublicScenarioTests extends TestBase {
     @TestRail(testCaseId = {"587"})
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
         testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);

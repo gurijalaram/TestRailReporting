@@ -2,6 +2,7 @@ package com.apriori.utils.enums;
 
 import java.util.stream.Stream;
 
+@Deprecated
 public enum AssemblyProcessGroupEnum {
 
     ASSEMBLY("Assembly"),

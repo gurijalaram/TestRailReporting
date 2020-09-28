@@ -49,8 +49,9 @@ public class SaveAsComparisonTests extends TestBase {
     @TestRail(testCaseId = {"419"})
     @Description("Test a private comparison can be have Save As performed on it")
     public void testSaveAsPrivateComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
         String testSaveAsComparisonName = new GenerateStringUtil().generateComparisonName();
@@ -59,7 +60,7 @@ public class SaveAsComparisonTests extends TestBase {
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .createNewComparison()
             .enterComparisonName(testComparisonName)
@@ -120,15 +121,16 @@ public class SaveAsComparisonTests extends TestBase {
     @TestRail(testCaseId = {"413"})
     @Description("Attempt to create a new comparison with a name that already exists")
     public void comparisonNameExists() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .createNewComparison()
             .enterComparisonName(testComparisonName)

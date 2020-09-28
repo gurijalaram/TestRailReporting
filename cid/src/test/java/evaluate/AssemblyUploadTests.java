@@ -60,13 +60,14 @@ public class AssemblyUploadTests extends TestBase {
     @TestRail(testCaseId = {"2628", "2647", "2653"})
     @Description("Assembly File Upload - STEP")
     public void testAssemblyFormatSTEP() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
@@ -82,14 +83,15 @@ public class AssemblyUploadTests extends TestBase {
     @TestRail(testCaseId = {"2655", "2647", "2643"})
     @Description("Uploaded STEP assembly and components can be recosted")
     public void costAssembly() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Assembly2.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
@@ -144,8 +146,9 @@ public class AssemblyUploadTests extends TestBase {
     @TestRail(testCaseId = {"2651"})
     @Description("User can delete STEP Assembly Pre-Costing")
     public void testSTEPAssemblyDeletePreCost() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -168,14 +171,15 @@ public class AssemblyUploadTests extends TestBase {
     @TestRail(testCaseId = {"2652", "1351", "1353", "1354"})
     @Description("User can delete STEP Assembly Post-Costing")
     public void testSTEPAssemblyDeletePostCost() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .enterAnnualVolume("3126")
             .enterAnnualYears("9")
@@ -202,14 +206,15 @@ public class AssemblyUploadTests extends TestBase {
     @TestRail(testCaseId = {"2648", "1352", "1355"})
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
     public void testSTEPAssemblyPowderCoatCart() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
         scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         vpeSelectionPage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openSecondaryProcess()
             .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
             .apply()
@@ -234,14 +239,15 @@ public class AssemblyUploadTests extends TestBase {
     @TestRail(testCaseId = {"1341", "1342", "1402", "1405", "1410"})
     @Description("Validate error message and cost status appears, when assembly cost is out of date")
     public void smallAssembly() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Hinge assembly.STEP");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Hinge assembly.STEP");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .selectExploreButton()
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
@@ -278,14 +284,15 @@ public class AssemblyUploadTests extends TestBase {
     @TestRail(testCaseId = {"1404", "1434", "1435"})
     @Description("Validate quantity column is correct")
     public void treeViewTests() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Assembly2.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         componentsPage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(AssemblyProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openComponentsTable()
             .selectComponentsView("Tree View")
@@ -320,8 +327,9 @@ public class AssemblyUploadTests extends TestBase {
     @TestRail(testCaseId = {"2637"})
     @Description("Ensure CAD based assemblies are prevented")
     public void testFailCADAssembly() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("multidiscclutch.asm.6");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "multidiscclutch.asm.6");
 
         loginPage = new CidLoginPage(driver);
         fileUploadPage = loginPage.login(UserUtil.getUser())
@@ -334,12 +342,13 @@ public class AssemblyUploadTests extends TestBase {
     @TestRail(testCaseId = {"2631", "2632"})
     @Description("Upload multiple STEP assemblies and parts at once")
     public void multiAssyUpload() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getResourceAsFile("Assembly2.stp");
-        resourceFile2 = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
-        resourceFile3 = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
-        resourceFile4 = FileResourceUtil.getResourceAsFile("CastedPart.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Assembly2.stp");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
+        resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
+        resourceFile4 = FileResourceUtil.getCloudFile(processGroupEnum, "CastedPart.CATPart");
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
