@@ -65,7 +65,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name() = 'path'][43]")
     private WebElement machiningDtcBubble;
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[41][local-name() = 'path']")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[45][local-name() = 'path']")
     private WebElement machiningDtcBubbleTwo;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
@@ -1147,10 +1147,9 @@ public class GenericReportPage extends ReportsPageHeader {
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
-        assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_FLATNESSCREO (Initial) ")));
+        assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
         for (int i = 0; i < 2; i++) {
-            Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleTwo).click();
-            builder.build().perform();
+            pageUtils.actionClick(machiningDtcBubbleTwo);
         }
 
         switchTab();
