@@ -68,7 +68,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[45][local-name() = 'path']")
     private WebElement machiningDtcBubbleTwo;
 
-    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(41)")
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(45)")
     private WebElement machiningDtcBubbleThree;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
@@ -1131,7 +1131,7 @@ public class GenericReportPage extends ReportsPageHeader {
         //WebElement elementToUse = bubbleMap.get(this.reportName);
         pageUtils.waitForElementToAppear(machiningDtcBubbleThree);
         Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleThree);
-        builder.perform();
+        builder.build().perform();
         if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             machiningDtcBubbleThree.click();
         }
@@ -1150,7 +1150,11 @@ public class GenericReportPage extends ReportsPageHeader {
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
-        assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_FLATNESSCREO (Initial) ")));
+        try {
+            assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
+        } catch (AssertionError e) {
+            assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
+        }
         for (int i = 0; i < 2; i++) {
             pageUtils.actionClick(machiningDtcBubbleThree);
         }
