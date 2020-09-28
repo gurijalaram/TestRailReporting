@@ -11,6 +11,7 @@ import com.apriori.cis.controller.PartResources;
 import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
+import com.apriori.cis.utils.CisProperties;
 import com.apriori.cis.utils.CisUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
@@ -35,7 +36,7 @@ public class CostingScenarioTest extends TestUtil {
     @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +
             "process to complete. Then retrieve costing results.")
     public void costPart() {
-        Integer defaultTimeout = 18;
+        Integer defaultTimeout = CisProperties.getPollingTimeout();
 
         // create batch
         Batch batch = BatchResources.createNewBatch();
@@ -51,7 +52,7 @@ public class CostingScenarioTest extends TestUtil {
         // create batch part
         NewPartRequest newPartRequest =
                 (NewPartRequest)JsonManager.deserializeJsonFromFile(
-                Thread.currentThread().getContextClassLoader().getResource("CreatePartData.json").getPath(), NewPartRequest.class);
+                Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreatePartData.json").getPath(), NewPartRequest.class);
 
         Part batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
 
@@ -71,7 +72,7 @@ public class CostingScenarioTest extends TestUtil {
         }
 
         // poll for part state/batch state
-        Object partDetails = null;
+        Object partDetails;
         Boolean isPartComplete = false;
         Integer count = 0;
         while (count <= defaultTimeout) {
@@ -93,7 +94,7 @@ public class CostingScenarioTest extends TestUtil {
         }
         Assert.assertEquals(true, isPartComplete);
 
-        Object batchDetails = null;
+        Object batchDetails;
         Boolean isBatchComplete = false;
         count = 0;
         while (count <= defaultTimeout) {

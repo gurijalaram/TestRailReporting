@@ -7,17 +7,16 @@ import com.apriori.apibase.services.nts.objects.SendEmailResponse;
 import com.apriori.apibase.services.nts.utils.EmailSetup;
 import com.apriori.utils.EmailUtil;
 import com.apriori.utils.EncryptionUtil;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.dao.ConnectionManager;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
-import com.apriori.utils.http.utils.FormParams;
-import com.apriori.utils.http.utils.MultiPartFiles;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import javax.mail.Message;
@@ -25,99 +24,125 @@ import javax.mail.Message;
 public class NotificationService {
 
     private static final Logger logger = LoggerFactory.getLogger(EncryptionUtil.class);
-    private static String url = "https://";
-    
-    private static RequestEntity defaultEmailRequest(String subject) {
-        url = url.concat(Constants.getNtsServiceHost() + "/emails?key=" + Constants.getSecretKey());
+    private static String url =
+            "https://" + Constants.getNtsServiceHost() + "/emails%s?key=" + Constants.getSecretKey();
 
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put("Content-Type", "multipart/form-data");
-        headers.put("ap-cloud-context", Constants.getNtsTargetCloudContext());
-        RequestEntity requestEntity = RequestEntity.init(url, SendEmailResponse.class)
-                .setHeaders(headers)
-                .setFormParams(new FormParams()
-                        .use("recipientAddress", Constants.getNtsEmailRecipientAddress())
-                        .use("subject", subject)
-                        .use("content", Constants.getNtsEmailContent()));
-
-        return requestEntity;
-    }
 
     public static Boolean validateEmail(String subject) {
-        EmailSetup.getCredentials();
+        EmailSetup emailSetup = new EmailSetup();
+        emailSetup.getCredentials();
 
         try {
-            Message[] messages = EmailUtil.getEmail(
-                    EmailSetup.getAddress(),
-                    EmailSetup.getUsername(),
-                    EmailSetup.getPassword()
-            );
 
-            for (Message message : messages) {
-                if (message.getSubject().toLowerCase().equals(subject)) {
+
+            int count = 0;
+            int defaultTimeout = 12;
+            while (count <= defaultTimeout) {
+                Message[] messages = EmailUtil.getEmail(
+                        emailSetup.getHost(),
+                        emailSetup.getUsername(),
+                        emailSetup.getPassword()
+                );
+                Message message = messages[messages.length - 1];
+
+                if (message.getSubject().toLowerCase().equals(subject.toLowerCase())) {
                     return true;
+                } else {
+                    Thread.sleep(5000);
                 }
-
+                count += 1;
             }
-
         } catch (Exception e) {
             logger.error(e.getMessage());
-
         }
 
         return false;
     }
 
-    public static SendEmailResponse sendEmail(String subject) {
-        RequestEntity requestEntity = defaultEmailRequest(subject);
-        return (SendEmailResponse) GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
+    private static SendEmailResponse sendEmail(String subject, Map<String, String> parameters) {
+        EmailSetup emailSetup = new EmailSetup();
+        emailSetup.getCredentials();
 
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("recipientAddress", emailSetup.getUsername());
+        params.put("subject", subject);
+        params.put("content", Constants.getNtsEmailContent());
+
+        if (parameters != null) {
+            params.putAll(parameters);
+        }
+
+        url = String.format(url, "");
+
+        SendEmailResponse smr = null;
+        try {
+            smr = (SendEmailResponse)ConnectionManager.postMultPartFormData(url, params, SendEmailResponse.class);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+
+        return smr;
+
+    }
+
+    public static SendEmailResponse sendEmail(String subject) {
+        return sendEmail(subject, null);
     }
 
     public static SendEmailResponse sendEmailWithTemplate(String subject, String templateName) {
-        RequestEntity requestEntity = defaultEmailRequest(subject);
-        requestEntity.setFormParams(requestEntity.getFormParams()
-               .use("templateName", templateName));
-
-        return (SendEmailResponse) GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("templateName", templateName);
+        return sendEmail(subject, params);
     }
 
     public static SendEmailResponse sendEmailAsBatch(String subject, String batchIdentifier) {
-        RequestEntity requestEntity = defaultEmailRequest(subject);
-        requestEntity.setFormParams(requestEntity.getFormParams()
-                .use("sendAsBatch", "true")
-                .use("batchIdentifier", batchIdentifier)
-        );
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("sendAsBatch", "true");
+        params.put("batchIdentifier", batchIdentifier);
 
-        return (SendEmailResponse) GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
+        return sendEmail(subject, params);
     }
 
-    public static SendEmailResponse sendEmailWithAttacment(String subject) {
-        RequestEntity requestEntity = defaultEmailRequest(subject);
-        requestEntity
-                .setMultiPartFiles(new MultiPartFiles()
-                        .use("data", FileResourceUtil.getLocalResourceFile(Constants.getNtsEmailAttachment())
-                )
-        );
+    public static SendEmailResponse sendEmailWithAttacment(String subject, String attacmentFile) {
+        EmailSetup emailSetup = new EmailSetup();
+        emailSetup.getCredentials();
 
-        return (SendEmailResponse) GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("recipientAddress", emailSetup.getUsername());
+        params.put("subject", subject);
+        params.put("content", Constants.getNtsEmailContent());
+
+        url = String.format(url, "");
+
+        SendEmailResponse smr = null;
+        File attachment = new File(attacmentFile);
+        try {
+            smr = (SendEmailResponse)ConnectionManager.postMultPartFormData(url, params, SendEmailResponse.class, attachment);
+        } catch (Exception e) {
+            logger.error(e.getMessage());;
+        }
+
+        return smr;
+
     }
 
     public static GetEmailResponse getEmails() {
-        url = url.concat(Constants.getNtsServiceHost() + "/emails?key=" + Constants.getSecretKey());
+
+        url = String.format(url, "");
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("ap-cloud-context", Constants.getNtsTargetCloudContext());
 
         return (GetEmailResponse) GenericRequestUtil.get(
                 RequestEntity.init(url, GetEmailResponse.class).setHeaders(headers),
                 new RequestAreaApi()
-            ).getResponseEntity();
+        ).getResponseEntity();
     }
 
     public static Email getEmail(String identity) {
-        url = url.concat(Constants.getNtsServiceHost() + "/emails/" + identity + "?key=" + Constants.getSecretKey());
 
-        Map<String, String> headers = new HashMap<String, String>();
+        url = String.format(url, "/" + identity);
+
+        Map<String, String> headers = new HashMap<>();
         headers.put("ap-cloud-context", Constants.getNtsTargetCloudContext());
 
         return (Email) GenericRequestUtil.get(
@@ -127,10 +152,11 @@ public class NotificationService {
     }
 
     public static Notifications getNotifications() {
-        url = url.concat(Constants.getNtsServiceHost() + "/notifications?key=" + Constants.getSecretKey());
+        url = "https://" + Constants.getNtsServiceHost() + "/notifications?key=" + Constants.getSecretKey();
         return (Notifications) GenericRequestUtil.get(
                 RequestEntity.init(url, Notifications.class),
                 new RequestAreaApi()
         ).getResponseEntity();
     }
+
 }

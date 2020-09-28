@@ -76,9 +76,7 @@ public class DriverFactory {
                     }
                     break;
                 case GRID:
-                    // docker.internal is used for running on docker local, the ip is used for running on docker jenkins
-                    String serverAddress = testType.equals(TestType.UI) ? "172.17.0.1" : "host.docker.internal";
-                    driver = getQADriver(("http://").concat(serverAddress).concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
+                    driver = getQADriver(("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
                     break;
                 case EXPORT:
                     throw new InvalidParameterException("Use QA mode with EXPORT type instead: " + testMode);
@@ -134,11 +132,17 @@ public class DriverFactory {
                 dc.merge(DesiredCapabilities.firefox());
 
                 result = new FirefoxDriver(dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
                 break;
             case "iexplorer11":
                 dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
                 dc.setVersion("11");
                 result = new InternetExplorerDriver(dc);
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                result = new EdgeDriver(dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
                 break;
             default:
             case "chrome":
@@ -151,10 +155,8 @@ public class DriverFactory {
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
                 result = new ChromeDriver(dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                 break;
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                result = new EdgeDriver(dc);
         }
         return result;
     }
@@ -199,6 +201,7 @@ public class DriverFactory {
                 dc.setCapability(FirefoxDriver.PROFILE, fp);
                 dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + result.getCapabilities().toString());
                 break;
             case "iexplorer11":
                 dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
@@ -214,6 +217,12 @@ public class DriverFactory {
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + (result).getCapabilities().toString());
+                break;
+            case "edge":
+                dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
+                result = new RemoteWebDriver(new URL(server), dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + (result).getCapabilities().toString());
                 break;
             default:
                 throw new InvalidParameterException("Unexpected browser type: " + browser);

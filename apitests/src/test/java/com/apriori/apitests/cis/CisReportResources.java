@@ -81,7 +81,7 @@ public class CisReportResources extends TestUtil {
                 "/apitests/cis/testdata/CreateReportData.json", NewReportRequest.class);
         Report report = ReportResources.createReport(rptObj, Constants.getCisPartIdentity());
         String reportIdentity = report.getResponse().getIdentity();
-        String reportState = "";
+        String reportState;
 
         while (count <= 15) {
             report = (Report)ReportResources.getReportRepresentation(reportIdentity).getResponseEntity();

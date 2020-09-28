@@ -1,7 +1,7 @@
 package com.apriori.apibase.services.fms.apicalls;
 
 import com.apriori.apibase.services.fms.objects.FileResponse;
-import com.apriori.apibase.services.fms.objects.FilesResponse;
+import com.apriori.apibase.services.fms.objects.FileResponses;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -18,8 +18,8 @@ public class FileManagementService {
 
     private static String finalUrl = "https://%s/files/";
 
-    public static ResponseWrapper<FilesResponse> getFiles(String token) {
-        return getFileInfo(FilesResponse.class,  Constants.getFmsServiceHost(), token, null);
+    public static ResponseWrapper<FileResponses> getFiles(String token) {
+        return getFileInfo(FileResponses.class,  Constants.getFmsServiceHost(), token, null);
     }
 
     public static ResponseWrapper<FileResponse> getFileByIdentity(String token, String fileIdentity) {

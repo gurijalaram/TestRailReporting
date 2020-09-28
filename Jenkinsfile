@@ -2,16 +2,17 @@ def buildInfo
 def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format("yyyyMMddHHmmss")
 def javaOpts = ""
+def url
 def threadCount
 def browser
 def testSuite
 
 pipeline {
     parameters {
-        string(name: 'TARGET_URL', defaultValue: 'https://automation.awsdev.apriori.com/', description: 'What is the target URL for testing?')
-        choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa'], description: 'What is the target environment for testing?')
-        choice(name: 'TEST_TYPE', choices: ['uitests', 'apitests', 'ciconnect'], description: 'What type of test is running?')
-        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'Other'], description: 'What is the test tests.suite?')
+        string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
+        choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa', 'cas-int', 'cas-qa', 'cid-int', 'cid-qa', 'cidapp-int'], description: 'What is the target environment for testing?')
+        choice(name: 'TEST_TYPE', choices: ['cid', 'apitests', 'ciconnect', 'cas', 'cir', 'cia', 'cidapp'], description: 'What type of test is running?')
+        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'CIARStagingSmokeTestSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
@@ -43,8 +44,12 @@ pipeline {
 
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
-                    javaOpts = javaOpts + " -Durl=${params.TARGET_URL}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
+
+                    url = params.TARGET_URL
+                    if(url != "none") {
+                        javaOpts = javaOpts + " -Durl=${params.TARGET_URL}"
+                    }
 
                     threadCount = params.THREAD_COUNT
                     if (threadCount.isInteger() && threadCount.toInteger() > 0) {
@@ -96,16 +101,15 @@ pipeline {
                 echo "Testing.."
 
                 script {
-                    if ("${params.TEST_MODE}" == "GRID") {
+                    if ("${params.TEST_MODE}" == "LOCAL") {
                         sh """
-                            docker ps | grep "hub" || \
-                             docker-compose up -d
+                            docker-compose up -d --force-recreate
                         """
                     }
                 }
 
                 sh """
-                    sleep 5s
+                    sleep 15s
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
@@ -130,6 +134,14 @@ pipeline {
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
+            script {
+                if ("${params.TEST_MODE}" == "LOCAL") {
+                    sh "docker rm -f \$(docker ps --filter name=chrome -q)"
+                    sh "docker rm -f \$(docker ps --filter name=firefox -q)"
+                    sh "docker rmi -f selenium/node-firefox"
+                    sh "docker rmi -f selenium/node-chrome"
+                }
+            }
             sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
             cleanWs()
         }

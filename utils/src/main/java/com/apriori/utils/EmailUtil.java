@@ -20,32 +20,20 @@ public class EmailUtil {
         String subject = null;
         Flags.Flag flag = null;
 
-        try {
-            Properties props = System.getProperties();
-            props.setProperty("mail.store.protocol", "imaps");
 
-            Session session = Session.getDefaultInstance(props, null);
+        Properties props = System.getProperties();
+        props.setProperty("mail.store.protocol", "imaps");
 
-            store = session.getStore("imaps");
-            store.connect(address, userName, password);
+        Session session = Session.getDefaultInstance(props, null);
+        store = session.getStore("imaps");
+        store.connect(address, userName, password);
+        folder = (IMAPFolder) store.getFolder("inbox"); //This works for both email account
 
-            folder = (IMAPFolder) store.getFolder("inbox"); //This works for both email account
-
-
-            if (!folder.isOpen()) {
-                folder.open(Folder.READ_WRITE);
-            }
-
-            return folder.getMessages();
-
-        } finally {
-            if (folder != null && folder.isOpen()) {
-                folder.close(true);
-            }
-            if (store != null) {
-                store.close();
-            }
+        if (!folder.isOpen()) {
+            folder.open(Folder.READ_WRITE);
         }
+
+        return folder.getMessages();
 
     }
 }

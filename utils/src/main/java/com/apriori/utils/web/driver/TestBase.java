@@ -3,7 +3,6 @@ package com.apriori.utils.web.driver;
 import com.apriori.utils.TestHelper;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.runner.ConcurrentTestRunner;
-import com.apriori.utils.web.rules.TestRailRule;
 import com.apriori.utils.web.rules.TestRule;
 import com.apriori.utils.web.util.ConsoleLogHandler;
 
@@ -11,8 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -72,6 +71,7 @@ public class TestBase extends TestHelper {
             // Todo 28/02/2020 - Commented out because this is causing headless on linux to crash with error message 'No X11 display...' this will be reworked in the future
             //MaximizeBrowserOnUnix.maximizeOnUnixSystems(driver);
         } else {
+            driver.manage().window().setSize(new Dimension(1920,1080));
             driver.manage().window().maximize();
         }
 
