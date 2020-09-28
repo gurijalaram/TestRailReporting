@@ -1,5 +1,6 @@
 package pageobjects.pages.view.reports;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -72,9 +73,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//*[text()='Fully Burdened Cost : ']/following-sibling::*[1]")
     private WebElement tooltipFbcElement;
-
-    @FindBy(xpath = "//*[text()='Finish Mass : ']/preceding-sibling::*[1]")
-    private WebElement partNameCastingDtcReport;
 
     @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name() = 'text' and position()=2]")
     private WebElement partNameCastingDtcComparisonReport;
@@ -251,13 +249,13 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement headerDisplayedRollup;
 
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[1]")
-    private WebElement partNamePlasticDtcReport;
+    private WebElement partNameDtcReports;
 
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[3]")
-    private WebElement fbcPlasticDtcReport;
+    private WebElement fbcDtcReports;
 
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[5]")
-    private WebElement annualSpendPlasticDtcReport;
+    private WebElement annualSpendDtcReports;
 
     @FindBy(id = "jr-ui-datepicker-div")
     private WebElement datePickerDiv;
@@ -1111,8 +1109,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return BigDecimal value
      */
     public BigDecimal getAnnualSpendFromBubbleTooltip() {
-        pageUtils.waitForElementToAppear(annualSpendPlasticDtcReport);
-        return new BigDecimal(annualSpendPlasticDtcReport.getText().replace(",", ""));
+        pageUtils.waitForElementToAppear(annualSpendDtcReports);
+        return new BigDecimal(annualSpendDtcReports.getText().replace(",", ""));
     }
 
     /**
@@ -1149,6 +1147,7 @@ public class GenericReportPage extends ReportsPageHeader {
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
+        assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_FLATNESSCREO (Initial) ")));
         for (int i = 0; i < 2; i++) {
             Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleTwo).click();
             builder.build().perform();
@@ -1237,7 +1236,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return BigDecimal
      */
     public BigDecimal getFbcPlasticDtc() {
-        return new BigDecimal(fbcPlasticDtcReport.getText());
+        return new BigDecimal(fbcDtcReports.getText());
     }
 
     /**
@@ -1496,12 +1495,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * Initialises part name map
      */
     private void initialisePartNameMap() {
-        partNameMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), partNameCastingDtcReport);
+        partNameMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), partNameDtcReports);
         partNameMap.put(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), partNameCastingDtcComparisonReport);
         partNameMap.put(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), partNameCastingDtcDetailsReport);
-        partNameMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), partNamePlasticDtcReport);
-        partNameMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), partNameCastingDtcReport);
-        partNameMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), partNameCastingDtcReport);
+        partNameMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), partNameDtcReports);
+        partNameMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), dtcPartSummaryPartName);
+        partNameMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), partNameDtcReports);
         partNameMap.put(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), machiningDtcComparisonPartName);
         partNameMap.put(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), machiningDtcDetailsPartNameLink);
     }
@@ -1523,7 +1522,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseFbcElementMap() {
         fbcElementMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), tooltipFbcElement);
         fbcElementMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), tooltipFbcElement);
-        fbcElementMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), fbcPlasticDtcReport);
+        fbcElementMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), fbcDtcReports);
     }
 
     /**
